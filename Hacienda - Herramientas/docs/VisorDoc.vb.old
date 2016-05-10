@@ -1,0 +1,14 @@
+﻿Public Class VisorDoc
+    Sub mostrar(raiz As String, ruta As String)
+        If Len(ruta) > 5 Then
+            WebBrowser1.Navigate(raiz & ruta)
+            'info.Text = "\\" & Microsoft.VisualBasic.Right(raiz, Len(raiz) - Len(root)) & ruta
+            info.Text = raiz & ruta
+        ElseIf Len(ruta) <= 5 Then
+            MsgBox("Documento no válido.", MsgBoxStyle.Information, "Visor de Documentos")
+        End If
+    End Sub
+    Private Sub cerrar_Click(sender As Object, e As EventArgs) Handles cerrar.Click
+        Close()
+    End Sub
+End Class
