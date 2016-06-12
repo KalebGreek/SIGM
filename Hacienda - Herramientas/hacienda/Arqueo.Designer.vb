@@ -76,11 +76,11 @@ Partial Class Arqueo
         '
         Me.MenuStrip2.AutoSize = False
         Me.MenuStrip2.BackColor = System.Drawing.Color.DimGray
-        Me.MenuStrip2.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+        Me.MenuStrip2.Font = New System.Drawing.Font("PF DinDisplay Pro", 13.0!)
         Me.MenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CalculosToolStripMenuItem})
         Me.MenuStrip2.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip2.Name = "MenuStrip2"
-        Me.MenuStrip2.Size = New System.Drawing.Size(644, 26)
+        Me.MenuStrip2.Size = New System.Drawing.Size(784, 29)
         Me.MenuStrip2.TabIndex = 11
         Me.MenuStrip2.Text = "MenuStrip2"
         '
@@ -89,80 +89,80 @@ Partial Class Arqueo
         Me.CalculosToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MovimientosToolStripMenuItem, Me.IngresosMovToolStripMenuItem, Me.EgresosMovToolStripMenuItem, Me.ToolStripSeparator1, Me.HaciendaToolStripMenuItem, Me.IngresosYEgresosPorHaciendaToolStripMenuItem, Me.ToolStripSeparator2, Me.BancosToolStripMenuItem, Me.SaldoDeCuentasBancosToolStripMenuItem, Me.ToolStripSeparator3, Me.CajaToolStripMenuItem, Me.CierreDiarioDeCajaToolStripMenuItem})
         Me.CalculosToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.CalculosToolStripMenuItem.Name = "CalculosToolStripMenuItem"
-        Me.CalculosToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
+        Me.CalculosToolStripMenuItem.Size = New System.Drawing.Size(101, 25)
         Me.CalculosToolStripMenuItem.Text = "CALCULOS"
         '
         'MovimientosToolStripMenuItem
         '
         Me.MovimientosToolStripMenuItem.Enabled = False
         Me.MovimientosToolStripMenuItem.Name = "MovimientosToolStripMenuItem"
-        Me.MovimientosToolStripMenuItem.Size = New System.Drawing.Size(255, 24)
+        Me.MovimientosToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
         Me.MovimientosToolStripMenuItem.Text = "Movimientos"
         '
         'IngresosMovToolStripMenuItem
         '
         Me.IngresosMovToolStripMenuItem.Name = "IngresosMovToolStripMenuItem"
-        Me.IngresosMovToolStripMenuItem.Size = New System.Drawing.Size(255, 24)
+        Me.IngresosMovToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
         Me.IngresosMovToolStripMenuItem.Text = "Ingresos"
         '
         'EgresosMovToolStripMenuItem
         '
         Me.EgresosMovToolStripMenuItem.Name = "EgresosMovToolStripMenuItem"
-        Me.EgresosMovToolStripMenuItem.Size = New System.Drawing.Size(255, 24)
+        Me.EgresosMovToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
         Me.EgresosMovToolStripMenuItem.Text = "Egresos"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(252, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(274, 6)
         '
         'HaciendaToolStripMenuItem
         '
         Me.HaciendaToolStripMenuItem.Enabled = False
         Me.HaciendaToolStripMenuItem.Name = "HaciendaToolStripMenuItem"
-        Me.HaciendaToolStripMenuItem.Size = New System.Drawing.Size(255, 24)
+        Me.HaciendaToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
         Me.HaciendaToolStripMenuItem.Text = "Hacienda"
         '
         'IngresosYEgresosPorHaciendaToolStripMenuItem
         '
         Me.IngresosYEgresosPorHaciendaToolStripMenuItem.Name = "IngresosYEgresosPorHaciendaToolStripMenuItem"
-        Me.IngresosYEgresosPorHaciendaToolStripMenuItem.Size = New System.Drawing.Size(255, 24)
+        Me.IngresosYEgresosPorHaciendaToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
         Me.IngresosYEgresosPorHaciendaToolStripMenuItem.Text = "Ingresos y Egresos por mes"
         '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(252, 6)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(274, 6)
         '
         'BancosToolStripMenuItem
         '
         Me.BancosToolStripMenuItem.Enabled = False
         Me.BancosToolStripMenuItem.Name = "BancosToolStripMenuItem"
-        Me.BancosToolStripMenuItem.Size = New System.Drawing.Size(255, 24)
+        Me.BancosToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
         Me.BancosToolStripMenuItem.Text = "Bancos"
         '
         'SaldoDeCuentasBancosToolStripMenuItem
         '
         Me.SaldoDeCuentasBancosToolStripMenuItem.Name = "SaldoDeCuentasBancosToolStripMenuItem"
-        Me.SaldoDeCuentasBancosToolStripMenuItem.Size = New System.Drawing.Size(255, 24)
+        Me.SaldoDeCuentasBancosToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
         Me.SaldoDeCuentasBancosToolStripMenuItem.Text = "Saldo de Cuentas"
         '
         'ToolStripSeparator3
         '
         Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.ToolStripSeparator3.Size = New System.Drawing.Size(252, 6)
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(274, 6)
         '
         'CajaToolStripMenuItem
         '
         Me.CajaToolStripMenuItem.Enabled = False
         Me.CajaToolStripMenuItem.Name = "CajaToolStripMenuItem"
-        Me.CajaToolStripMenuItem.Size = New System.Drawing.Size(255, 24)
+        Me.CajaToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
         Me.CajaToolStripMenuItem.Text = "Caja"
         '
         'CierreDiarioDeCajaToolStripMenuItem
         '
         Me.CierreDiarioDeCajaToolStripMenuItem.Name = "CierreDiarioDeCajaToolStripMenuItem"
-        Me.CierreDiarioDeCajaToolStripMenuItem.Size = New System.Drawing.Size(255, 24)
+        Me.CierreDiarioDeCajaToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
         Me.CierreDiarioDeCajaToolStripMenuItem.Text = "Cierre Diario"
         '
         'DataView
@@ -175,90 +175,97 @@ Partial Class Arqueo
         Me.DataView.Name = "DataView"
         Me.DataView.ReadOnly = True
         Me.DataView.RowHeadersVisible = False
-        Me.DataView.Size = New System.Drawing.Size(497, 237)
+        Me.DataView.Size = New System.Drawing.Size(637, 330)
         Me.DataView.TabIndex = 24
         '
         'Panel2
         '
         Me.Panel2.Controls.Add(Me.DataView)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel2.Location = New System.Drawing.Point(0, 74)
+        Me.Panel2.Location = New System.Drawing.Point(0, 80)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(497, 237)
+        Me.Panel2.Size = New System.Drawing.Size(637, 330)
         Me.Panel2.TabIndex = 30
         '
         'ToolStrip1
         '
         Me.ToolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.ToolStrip1.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ToolStrip1.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 12.0!)
         Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripDropDownButton2, Me.Connection})
-        Me.ToolStrip1.Location = New System.Drawing.Point(0, 311)
+        Me.ToolStrip1.Location = New System.Drawing.Point(0, 410)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Padding = New System.Windows.Forms.Padding(0)
-        Me.ToolStrip1.Size = New System.Drawing.Size(644, 25)
+        Me.ToolStrip1.Size = New System.Drawing.Size(784, 26)
         Me.ToolStrip1.TabIndex = 31
         '
         'ToolStripDropDownButton2
         '
         Me.ToolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
         Me.ToolStripDropDownButton2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DBFoxMuniciToolStripMenuItem, Me.DBAccessToolStripMenuItem, Me.DBPostgreSQLToolStripMenuItem})
+        Me.ToolStripDropDownButton2.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 12.0!)
         Me.ToolStripDropDownButton2.Image = CType(resources.GetObject("ToolStripDropDownButton2.Image"), System.Drawing.Image)
         Me.ToolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripDropDownButton2.Name = "ToolStripDropDownButton2"
-        Me.ToolStripDropDownButton2.Size = New System.Drawing.Size(85, 22)
+        Me.ToolStripDropDownButton2.Size = New System.Drawing.Size(105, 23)
         Me.ToolStripDropDownButton2.Text = "Conexiones"
         '
         'DBFoxMuniciToolStripMenuItem
         '
+        Me.DBFoxMuniciToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.DBFoxMuniciToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
         Me.DBFoxMuniciToolStripMenuItem.Name = "DBFoxMuniciToolStripMenuItem"
-        Me.DBFoxMuniciToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.DBFoxMuniciToolStripMenuItem.Size = New System.Drawing.Size(180, 24)
         Me.DBFoxMuniciToolStripMenuItem.Text = "DB Fox (Munici)"
         '
         'DBAccessToolStripMenuItem
         '
+        Me.DBAccessToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.DBAccessToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
         Me.DBAccessToolStripMenuItem.Name = "DBAccessToolStripMenuItem"
-        Me.DBAccessToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.DBAccessToolStripMenuItem.Size = New System.Drawing.Size(180, 24)
         Me.DBAccessToolStripMenuItem.Text = "DB Access"
         '
         'DBPostgreSQLToolStripMenuItem
         '
+        Me.DBPostgreSQLToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.DBPostgreSQLToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
         Me.DBPostgreSQLToolStripMenuItem.Name = "DBPostgreSQLToolStripMenuItem"
-        Me.DBPostgreSQLToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.DBPostgreSQLToolStripMenuItem.Size = New System.Drawing.Size(180, 24)
         Me.DBPostgreSQLToolStripMenuItem.Text = "DB PostgreSQL"
         '
         'Connection
         '
-        Me.Connection.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Connection.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
         Me.Connection.Margin = New System.Windows.Forms.Padding(3)
         Me.Connection.Name = "Connection"
-        Me.Connection.Size = New System.Drawing.Size(63, 19)
+        Me.Connection.Size = New System.Drawing.Size(74, 20)
         Me.Connection.Text = "Sin datos."
         '
         'ToolStrip2
         '
         Me.ToolStrip2.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.ToolStrip2.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ToolStrip2.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 12.0!)
         Me.ToolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.CustomCriteria})
-        Me.ToolStrip2.Location = New System.Drawing.Point(0, 336)
+        Me.ToolStrip2.Location = New System.Drawing.Point(0, 436)
         Me.ToolStrip2.Name = "ToolStrip2"
         Me.ToolStrip2.Padding = New System.Windows.Forms.Padding(0)
-        Me.ToolStrip2.Size = New System.Drawing.Size(644, 25)
+        Me.ToolStrip2.Size = New System.Drawing.Size(784, 25)
         Me.ToolStrip2.TabIndex = 32
         '
         'ToolStripLabel1
         '
         Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(132, 22)
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(168, 22)
         Me.ToolStripLabel1.Text = "Criterios de Busqueda"
         '
         'CustomCriteria
         '
-        Me.CustomCriteria.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CustomCriteria.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
         Me.CustomCriteria.Margin = New System.Windows.Forms.Padding(3)
         Me.CustomCriteria.Name = "CustomCriteria"
-        Me.CustomCriteria.Size = New System.Drawing.Size(56, 19)
+        Me.CustomCriteria.Size = New System.Drawing.Size(66, 19)
         Me.CustomCriteria.Text = "Ninguno."
         '
         'TablaPersonalizada
@@ -266,9 +273,9 @@ Partial Class Arqueo
         Me.TablaPersonalizada.ActiveLinkColor = System.Drawing.Color.Blue
         Me.TablaPersonalizada.DisabledLinkColor = System.Drawing.Color.Blue
         Me.TablaPersonalizada.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TablaPersonalizada.Location = New System.Drawing.Point(0, 53)
+        Me.TablaPersonalizada.Location = New System.Drawing.Point(0, 59)
         Me.TablaPersonalizada.Name = "TablaPersonalizada"
-        Me.TablaPersonalizada.Size = New System.Drawing.Size(644, 21)
+        Me.TablaPersonalizada.Size = New System.Drawing.Size(784, 21)
         Me.TablaPersonalizada.TabIndex = 33
         Me.TablaPersonalizada.TabStop = True
         Me.TablaPersonalizada.Text = "Click para agregar tabla."
@@ -280,9 +287,9 @@ Partial Class Arqueo
         Me.PanelColumnas.Controls.Add(Me.ListaColumnas)
         Me.PanelColumnas.Controls.Add(Me.Label1)
         Me.PanelColumnas.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PanelColumnas.Location = New System.Drawing.Point(497, 74)
+        Me.PanelColumnas.Location = New System.Drawing.Point(637, 80)
         Me.PanelColumnas.Name = "PanelColumnas"
-        Me.PanelColumnas.Size = New System.Drawing.Size(147, 237)
+        Me.PanelColumnas.Size = New System.Drawing.Size(147, 330)
         Me.PanelColumnas.TabIndex = 34
         '
         'ListaColumnas
@@ -291,7 +298,7 @@ Partial Class Arqueo
         Me.ListaColumnas.FormattingEnabled = True
         Me.ListaColumnas.Location = New System.Drawing.Point(0, 22)
         Me.ListaColumnas.Name = "ListaColumnas"
-        Me.ListaColumnas.Size = New System.Drawing.Size(147, 215)
+        Me.ListaColumnas.Size = New System.Drawing.Size(147, 308)
         Me.ListaColumnas.TabIndex = 24
         '
         'Label1
@@ -317,9 +324,9 @@ Partial Class Arqueo
         Me.FiltroFecha.Controls.Add(Me.Anual)
         Me.FiltroFecha.Controls.Add(Me.año)
         Me.FiltroFecha.Dock = System.Windows.Forms.DockStyle.Top
-        Me.FiltroFecha.Location = New System.Drawing.Point(0, 26)
+        Me.FiltroFecha.Location = New System.Drawing.Point(0, 29)
         Me.FiltroFecha.Name = "FiltroFecha"
-        Me.FiltroFecha.Size = New System.Drawing.Size(644, 27)
+        Me.FiltroFecha.Size = New System.Drawing.Size(784, 30)
         Me.FiltroFecha.TabIndex = 36
         '
         'PorFecha
@@ -331,7 +338,7 @@ Partial Class Arqueo
         Me.PorFecha.Location = New System.Drawing.Point(15, 3)
         Me.PorFecha.Margin = New System.Windows.Forms.Padding(15, 3, 3, 3)
         Me.PorFecha.Name = "PorFecha"
-        Me.PorFecha.Size = New System.Drawing.Size(93, 20)
+        Me.PorFecha.Size = New System.Drawing.Size(104, 23)
         Me.PorFecha.TabIndex = 38
         Me.PorFecha.TabStop = True
         Me.PorFecha.Text = "POR FECHA"
@@ -341,10 +348,10 @@ Partial Class Arqueo
         '
         Me.inicio.Enabled = False
         Me.inicio.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.inicio.Location = New System.Drawing.Point(113, 2)
+        Me.inicio.Location = New System.Drawing.Point(124, 2)
         Me.inicio.Margin = New System.Windows.Forms.Padding(2)
         Me.inicio.Name = "inicio"
-        Me.inicio.Size = New System.Drawing.Size(102, 23)
+        Me.inicio.Size = New System.Drawing.Size(102, 27)
         Me.inicio.TabIndex = 31
         Me.inicio.Value = New Date(2016, 6, 10, 0, 0, 0, 0)
         '
@@ -352,7 +359,7 @@ Partial Class Arqueo
         '
         Me.Label2.BackColor = System.Drawing.Color.Gray
         Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(222, 3)
+        Me.Label2.Location = New System.Drawing.Point(233, 3)
         Me.Label2.Margin = New System.Windows.Forms.Padding(5, 3, 3, 3)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(13, 20)
@@ -364,10 +371,10 @@ Partial Class Arqueo
         '
         Me.final.Enabled = False
         Me.final.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.final.Location = New System.Drawing.Point(240, 2)
+        Me.final.Location = New System.Drawing.Point(251, 2)
         Me.final.Margin = New System.Windows.Forms.Padding(2)
         Me.final.Name = "final"
-        Me.final.Size = New System.Drawing.Size(102, 23)
+        Me.final.Size = New System.Drawing.Size(102, 27)
         Me.final.TabIndex = 33
         '
         'Anual
@@ -375,10 +382,10 @@ Partial Class Arqueo
         Me.Anual.AutoSize = True
         Me.Anual.BackColor = System.Drawing.Color.Gray
         Me.Anual.ForeColor = System.Drawing.Color.White
-        Me.Anual.Location = New System.Drawing.Point(354, 3)
+        Me.Anual.Location = New System.Drawing.Point(365, 3)
         Me.Anual.Margin = New System.Windows.Forms.Padding(10, 3, 3, 3)
         Me.Anual.Name = "Anual"
-        Me.Anual.Size = New System.Drawing.Size(67, 20)
+        Me.Anual.Size = New System.Drawing.Size(75, 23)
         Me.Anual.TabIndex = 37
         Me.Anual.Text = "ANUAL"
         Me.Anual.UseVisualStyleBackColor = False
@@ -387,7 +394,7 @@ Partial Class Arqueo
         '
         Me.año.Enabled = False
         Me.año.Font = New System.Drawing.Font("PF DinDisplay Pro", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.año.Location = New System.Drawing.Point(426, 2)
+        Me.año.Location = New System.Drawing.Point(445, 2)
         Me.año.Margin = New System.Windows.Forms.Padding(2)
         Me.año.Maximum = New Decimal(New Integer() {2100, 0, 0, 0})
         Me.año.Minimum = New Decimal(New Integer() {1900, 0, 0, 0})
@@ -400,7 +407,7 @@ Partial Class Arqueo
         'Arqueo
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
-        Me.ClientSize = New System.Drawing.Size(644, 361)
+        Me.ClientSize = New System.Drawing.Size(784, 461)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.PanelColumnas)
         Me.Controls.Add(Me.TablaPersonalizada)
@@ -408,12 +415,12 @@ Partial Class Arqueo
         Me.Controls.Add(Me.ToolStrip2)
         Me.Controls.Add(Me.FiltroFecha)
         Me.Controls.Add(Me.MenuStrip2)
-        Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 10.0!)
+        Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
         Me.Margin = New System.Windows.Forms.Padding(4, 6, 4, 6)
-        Me.MinimumSize = New System.Drawing.Size(660, 400)
+        Me.MinimumSize = New System.Drawing.Size(800, 500)
         Me.Name = "Arqueo"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Arqueo"

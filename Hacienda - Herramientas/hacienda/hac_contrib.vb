@@ -4,7 +4,7 @@
         Dim contrib, deuda_total As New DataTable
         adicional = ""
         franqueo = ""
-        contrib = bd.leer(defcon, "SELECT id, impuesto, codigo, alta FROM contribuyente WHERE cuil=" & cuil)
+        contrib = bd.read(defcon, "SELECT id, impuesto, codigo, alta FROM contribuyente WHERE cuil=" & cuil)
         If contrib.Rows.Count > 0 And (sender Is ConsultaCuentaAgrupada.imp_lista_mod Or sender Is ConsultaCuentaAgrupada.con_ca) Then 'Consultas llevan deuda total incluida
             Dim fila As Integer = 0
             If contrib.Columns.Contains("deuda") Then
@@ -63,7 +63,7 @@
 
                 'Filtra desde la fecha de hoy hacia atrás
                 sel_sql += " AND " & vence & "<DATE()"
-                deuda_total = bd.leer(foxcon, sel_sql)
+                deuda_total = bd.read(foxcon, sel_sql)
                 contrib(fila)("deuda") = deuda_total(0)("deuda")
                 fila += 1
             Loop

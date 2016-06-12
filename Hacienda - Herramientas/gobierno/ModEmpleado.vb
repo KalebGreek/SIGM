@@ -57,7 +57,7 @@
         If bs_rubro.Position > -1 Then
             sel_sql = "SELECT nombre, partida FROM hacienda WHERE pertenece='9' AND anexo='1' AND inciso='1'" &
                       " AND item='1' AND rubro='" & bs_rubro.Current("rubro") & "' AND subrubro='01' AND partida>'00' AND subpartida='00'"
-            Dim dtab As DataTable = bd.leer(foxcon, sel_sql)
+            Dim dtab As DataTable = bd.read(foxcon, sel_sql)
             If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then
                     bs_partida.DataSource = dtab
@@ -76,7 +76,7 @@
             sel_sql = "SELECT nombre, subpartida FROM hacienda WHERE pertenece='9' AND anexo='1' AND inciso='1'" &
                       " AND item='1' AND rubro='" & bs_rubro.Current("rubro") & "' AND subrubro='01'" &
                       " AND partida='" & bs_partida.Current("partida") & "' AND subpartida>'00'"
-            Dim dtab As DataTable = bd.leer(foxcon, sel_sql)
+            Dim dtab As DataTable = bd.read(foxcon, sel_sql)
             If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then
                     bs_subpartida.DataSource = dtab
@@ -90,7 +90,7 @@
     Private Sub cargarJerarquiaPersonal()
         sel_sql = "SELECT nombre, rubro FROM hacienda WHERE pertenece='9' AND anexo='1' AND inciso='1' AND item='1'" &
                   " AND rubro>'00' AND rubro <'03' AND subrubro='00' AND partida='00' AND subpartida='00'"
-        Dim dtab As DataTable = bd.leer(foxcon, sel_sql)
+        Dim dtab As DataTable = bd.read(foxcon, sel_sql)
         If dtab Is Nothing = False Then
             If dtab.Rows.Count > 0 Then
                 bs_rubro.DataSource = dtab
@@ -112,7 +112,7 @@
             Else
                 sel_sql += " WHERE codigo=" & codigo
             End If
-            Dim dtab As DataTable = bd.leer(defcon, sel_sql)
+            Dim dtab As DataTable = bd.read(defcon, sel_sql)
             If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then
                     If dtab.Rows.Count = 1 And ordenanza_id > 0 Then

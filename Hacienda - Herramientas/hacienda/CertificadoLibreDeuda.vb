@@ -14,7 +14,7 @@
             sel_sql = "SELECT * FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
         End If
         sel_sql += " WHERE codigo=" & cuenta
-        Return bd.leer(foxcon, sel_sql)
+        Return bd.read(foxcon, sel_sql)
     End Function
     Private Sub CertificadoLibreDeuda_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
         If Me.Visible Then

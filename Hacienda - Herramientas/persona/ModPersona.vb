@@ -253,7 +253,7 @@ Public Class ModPersona
             msg = "Revise el Nº de CUIL antes de continuar." & Chr(13)
             valido = False
         Else
-            dtab_con = bd.leer(defcon, "SELECT id, cuil FROM persona WHERE cuil=" & cuil.Text)
+            dtab_con = bd.read(defcon, "SELECT id, cuil FROM persona WHERE cuil=" & cuil.Text)
             If dtab_con.Rows.Count > 1 Then
                 For fila As Integer = 0 To dtab_con.Rows.Count - 1
                     If dtab_con(fila)("id") <> persona_id.Text Then
@@ -316,7 +316,7 @@ Public Class ModPersona
             mod_sql = Nueva(razon.Text, CDbl(cuil.Text), fisica,
                               email.Text, tele.Text, esDifunto.Checked, ruta_defuncion.Text)
             bd.edit(defcon, mod_sql)
-            dtab = bd.leer(defcon, "SELECT MAX(id) as persona_id FROM persona WHERE razon='" & razon.Text & "'")
+            dtab = bd.read(defcon, "SELECT MAX(id) as persona_id FROM persona WHERE razon='" & razon.Text & "'")
             persona_id = dtab(0)("persona_id")
         End If
         'CREAR DOMICILIO/S

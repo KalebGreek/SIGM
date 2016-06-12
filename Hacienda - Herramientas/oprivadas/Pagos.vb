@@ -8,7 +8,7 @@
             sel_sql += " AND opr_pago.fecha_pago is null"
         End If
 
-        Return bd.leer(defcon, sel_sql)
+        Return bd.read(defcon, sel_sql)
     End Function
     Shared Sub AgregarDeuda(opr_id As Integer, desc As String, monto As Double, cuotas As Integer, fecha As Date)
         For cuota As Integer = 1 To cuotas 'Agrega monto dividido por cuotas

@@ -94,24 +94,24 @@ Public Class ControlBusquedaPersona
         keyword.Text = Trim(keyword.Text)
         With filtro1.Text
             If .Contains("PERSONA") Then
-                visor = Consulta.Mostrar(visor, bs_consulta, BuscarPorPersona(difunto.Checked, fisica.Checked,
+                visor = Query.Show(visor, bs_consulta, BuscarPorPersona(difunto.Checked, fisica.Checked,
                                                                     Val(keyword.Text), Val(keyword.Text), keyword.Text))
             ElseIf .Contains("DIRECCION") Then
-                visor = Consulta.Mostrar(visor, bs_consulta, BuscarPorDireccion(keyword.Text, difunto.Checked, fisica.Checked))
+                visor = Query.Show(visor, bs_consulta, BuscarPorDireccion(keyword.Text, difunto.Checked, fisica.Checked))
             ElseIf .Contains("EMPLEADO") Then
                 fisica.Enabled = False
                 fisica.Checked = True
-                visor = Consulta.Mostrar(visor, bs_consulta, Empleado.BuscarPorPersona(keyword.Text, difunto.Checked))
+                visor = Query.Show(visor, bs_consulta, Empleado.BuscarPorPersona(keyword.Text, difunto.Checked))
             ElseIf .Contains("PROVEEDOR") Then
                 difunto.Enabled = False
                 difunto.Checked = False
-                visor = Consulta.Mostrar(visor, bs_consulta, Proveedor.BuscarPorPersona(keyword.Text, fisica.Checked))
+                visor = Query.Show(visor, bs_consulta, Proveedor.BuscarPorPersona(keyword.Text, fisica.Checked))
             ElseIf .Contains("PROFESIONAL") Then
                 fisica.Enabled = False
                 fisica.Checked = True
                 difunto.Enabled = False
                 difunto.Checked = False
-                visor = Consulta.Mostrar(visor, bs_consulta, Profesional.BuscarPorPersona(Val(keyword.Text), Val(keyword.Text),
+                visor = Query.Show(visor, bs_consulta, Profesional.BuscarPorPersona(Val(keyword.Text), Val(keyword.Text),
                                                                                           Trim(keyword.Text)))
             Else
                 reset.PerformClick()

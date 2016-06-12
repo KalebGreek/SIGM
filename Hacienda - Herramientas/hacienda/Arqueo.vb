@@ -114,7 +114,7 @@
         End If
 
         If Connection.Text <> "Sin datos." Then
-            Consulta.Mostrar(DataView, bs, bd.leer(Connection.Text, sql))
+            Query.Show(DataView, bs, bd.read(Connection.Text, sql))
         Else
             MsgBox("Seleccione una base de datos antes de continuar.")
         End If
@@ -145,7 +145,7 @@
         Do
             name = InputBox("Ingrese nombre de tabla.", "Ingresar Tabla", "")
             If name <> "" Then
-                table = bd.leer(Connection.Text, "SELECT * FROM " & name)
+                table = bd.read(Connection.Text, "SELECT * FROM " & name)
             Else
                 name = Nothing
             End If

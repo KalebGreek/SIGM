@@ -7,7 +7,7 @@
                 If impuesto = "AGUA" Then
                     'Cargar vencimientos
                     sel_sql = "SELECT * FROM aguvence WHERE periodo=" & periodo
-                    dtab = bd.leer(foxcon, sel_sql)
+                    dtab = bd.read(foxcon, sel_sql)
                     vence(1) = dtab(0)("vence1")
                     vence(2) = dtab(0)("vence2")
                     vence(3) = dtab(0)("vence3")
@@ -16,14 +16,14 @@
                     vence(6) = dtab(0)("vence6")
                 ElseIf impuesto = "AUTO" Then
                     sel_sql = "SELECT * FROM autovence WHERE periodo=" & periodo
-                    dtab = bd.leer(foxcon, sel_sql)
+                    dtab = bd.read(foxcon, sel_sql)
                     vence(1) = dtab(0)("vence1")
                     vence(2) = dtab(0)("vence2")
                     vence(3) = dtab(0)("vence3")
                     vence(4) = dtab(0)("vence4")
                 ElseIf impuesto = "CATASTRO" Then
                     sel_sql = "SELECT * FROM catvence WHERE periodo=" & periodo
-                    dtab = bd.leer(foxcon, sel_sql)
+                    dtab = bd.read(foxcon, sel_sql)
                     vence(1) = dtab(0)("vence1")
                     vence(2) = dtab(0)("vence2")
                     vence(3) = dtab(0)("vence3")
@@ -32,7 +32,7 @@
                     vence(6) = dtab(0)("vence6")
                 ElseIf impuesto = "COMERCIO" Then
                     sel_sql = "SELECT * FROM comvence WHERE periodo=" & periodo
-                    dtab = bd.leer(foxcon, sel_sql)
+                    dtab = bd.read(foxcon, sel_sql)
                     vence(1) = dtab(0)("vence1")
                     vence(2) = dtab(0)("vence2")
                     vence(3) = dtab(0)("vence3")
@@ -51,7 +51,7 @@
             Public Class Agua 'Listo
                 Shared Function VerificarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer) As Boolean
                     sel_sql = "SELECT * FROM agucue WHERE codigo=" & registro(fila)("codigo") & " AND mes=" & cuota & " AND periodo=" & periodo
-                    Dim dtab As DataTable = bd.leer(foxcon, sel_sql)
+                    Dim dtab As DataTable = bd.read(foxcon, sel_sql)
                     If dtab.Rows.Count > 0 Then
                         Return True
                     Else
@@ -70,7 +70,7 @@
             Public Class Auto
                 Shared Function VerificarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer) As Boolean
                     sel_sql = "SELECT * FROM autocue WHERE codigo=" & registro(fila)("codigo") & " AND cuota=" & cuota & " AND ano=" & periodo
-                    Dim dtab As DataTable = bd.leer(foxcon, sel_sql)
+                    Dim dtab As DataTable = bd.read(foxcon, sel_sql)
                     If dtab.Rows.Count > 0 Then
                         Return True
                     Else
@@ -89,7 +89,7 @@
             Public Class Catastro
                 Shared Function VerificarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer) As Boolean
                     sel_sql = "SELECT * FROM catcue WHERE codigo=" & registro(fila)("codigo") & " AND mes=" & cuota & " AND periodo=" & periodo
-                    Dim dtab As DataTable = bd.leer(foxcon, sel_sql)
+                    Dim dtab As DataTable = bd.read(foxcon, sel_sql)
                     If dtab.Rows.Count > 0 Then
                         Return True
                     Else
@@ -110,7 +110,7 @@
             Public Class Comercio
                 Shared Function VerificarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer) As Boolean
                     sel_sql = "SELECT * FROM comcue WHERE codigo=" & registro(fila)("codigo") & " AND bimestre=" & cuota & " AND ano=" & periodo
-                    Dim dtab As DataTable = bd.leer(foxcon, sel_sql)
+                    Dim dtab As DataTable = bd.read(foxcon, sel_sql)
                     If dtab.Rows.Count > 0 Then
                         Return True
                     Else
@@ -130,7 +130,7 @@
             Public Class Sepelio
                 Shared Function VerificarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer) As Boolean
                     sel_sql = "SELECT * FROM sepecue WHERE codigo=" & registro(fila)("codigo") & " AND mes=" & cuota & " AND periodo=" & periodo
-                    Dim dtab As DataTable = bd.leer(foxcon, sel_sql)
+                    Dim dtab As DataTable = bd.read(foxcon, sel_sql)
                     If dtab.Rows.Count > 0 Then
                         Return True
                     Else
@@ -158,14 +158,14 @@
                     Else
                         sel_sql += " WHERE razon Like '%" & keyword & "%'"
                     End If
-                    consulta = bd.leer(defcon, sel_sql)
+                    consulta = bd.read(defcon, sel_sql)
                 ElseIf sender Is ConsultaCuentaAgrupada.mod_ca_imp_search Then 'Seleccionar impuestos sobre Fox
                     tablas_fox(impuesto)
                     sel_sql = "SELECT " & ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon, " & col_tenedor & " as tenedor FROM " & ext_persona &
                       " INNER JOIN " & ext_cuenta & " ON " & ext_persona & ".codigo = " & ext_cuenta & ".codigo"
                     sel_sql += " WHERE " & ext_persona & ".razon LIKE '%" & keyword & "%' OR " & col_tenedor & " LIKE '%" & keyword & "%'"
                     'Guarda acá, porque comercio no tiene campo "Tenedor"
-                    consulta = bd.leer(foxcon, sel_sql)
+                    consulta = bd.read(foxcon, sel_sql)
                 End If
                 Return consulta
             End Function

@@ -52,13 +52,13 @@ Public Class ControlBusquedaExpediente
         keyword.Text = Trim(keyword.Text)
         With filtro1.Text
             If .Contains("EXPEDIENTE") Then
-                visor = Consulta.Mostrar(visor, bs_consulta, Oprivadas.Expediente.Buscar(Val(keyword.Text)))
+                visor = Query.Show(visor, bs_consulta, Oprivadas.Expediente.Buscar(Val(keyword.Text)))
             ElseIf .Contains("RESPONSABLE") Then
-                visor = Consulta.Mostrar(visor, bs_consulta, Oprivadas.Expediente.Buscar(, keyword.Text))
+                visor = Query.Show(visor, bs_consulta, Oprivadas.Expediente.Buscar(, keyword.Text))
             ElseIf .Contains("PROFESIONAL") Then
-                visor = Consulta.Mostrar(visor, bs_consulta, Oprivadas.Expediente.Buscar(, , keyword.Text))
+                visor = Query.Show(visor, bs_consulta, Oprivadas.Expediente.Buscar(, , keyword.Text))
             ElseIf .Contains("CUIL") Then
-                visor = Consulta.Mostrar(visor, bs_consulta, Oprivadas.Expediente.Buscar(, , , Val(keyword.Text)))
+                visor = Query.Show(visor, bs_consulta, Oprivadas.Expediente.Buscar(, , , Val(keyword.Text)))
             Else
                 reset.PerformClick()
             End If

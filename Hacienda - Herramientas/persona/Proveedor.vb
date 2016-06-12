@@ -22,11 +22,11 @@
             End If
         End If
         sql += " ORDER By Persona.razon"
-        Return bd.leer(defcon, sql)
+        Return bd.read(defcon, sql)
     End Function
     Shared Function Seleccionar(persona_id As Integer) As DataTable
         Dim sql As String = SelectSQL & " AND persona.id=" & persona_id
-        Return bd.leer(defcon, sql)
+        Return bd.read(defcon, sql)
     End Function
     Shared Function guardar(ByVal per_id As Integer, proveedor_id As Integer, ByVal responsable As String) As Integer
         If proveedor_id Then
@@ -38,7 +38,7 @@
             bd.edit(defcon, mod_sql)
         End If
         Dim dtab As New DataTable
-        dtab = bd.leer(defcon, "SELECT * FROM proveedor WHERE per_id=" & per_id)
+        dtab = bd.read(defcon, "SELECT * FROM proveedor WHERE per_id=" & per_id)
         Return dtab(0)("id")
     End Function
     Shared Function eliminar(ByVal per_id As Integer) As Integer

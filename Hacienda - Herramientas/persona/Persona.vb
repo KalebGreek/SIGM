@@ -21,7 +21,7 @@
             End If
 
             sql += " ORDER By Persona.razon"
-            Return bd.leer(defcon, sql)
+            Return bd.read(defcon, sql)
         End Function
         Shared Function BuscarPorDireccion(ByVal calle As String, difunto As Boolean, fisica As Boolean) As DataTable
             Dim sql As String = SelectSQL
@@ -31,7 +31,7 @@
             End If
             sql += " ORDER By Per_domicilio.calle AND per_domicilio.altura"
 
-            Return bd.leer(defcon, sql)
+            Return bd.read(defcon, sql)
         End Function
         'Registro para ModPersona
         Shared Function Cargar(persona_id As Integer) As DataTable
@@ -40,7 +40,7 @@
                   " difunto, ruta_defuncion, fisica" &
                   " FROM persona WHERE id=" & persona_id
 
-            Return bd.leer(defcon, sel_sql)
+            Return bd.read(defcon, sel_sql)
         End Function
         Shared Function Nueva(razon As String, cuil As Double, fisica As Boolean,
                               email As String, telefono As String, difunto As Boolean, Optional ruta_defuncion As String = "")
@@ -135,7 +135,7 @@
             Else
                 'documentos
                 sel_sql = "SELECT descripcion, ruta FROM per_documento WHERE per_id=" & persona_id
-                dtab_con = bd.leer(defcon, sel_sql)
+                dtab_con = bd.read(defcon, sel_sql)
                 If dtab_con.Rows.Count > 0 Then
                     msg.Add("Los siguientes documentos seran eliminados del registro junto con la persona seleccionada: ")
                     For fila As Integer = 0 To dtab_con.Rows.Count - 1

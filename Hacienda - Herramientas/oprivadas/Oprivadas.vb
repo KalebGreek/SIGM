@@ -52,7 +52,7 @@
                    SelectSQL & " WHERE responsable_expediente.principal=True"
             End If
 
-            Return bd.leer(defcon, sql)
+            Return bd.read(defcon, sql)
         End Function
         Shared Function ListarPorResponsable(persona_id As Integer) As DataTable
             sel_sql = "Select responsable_expediente.Id As id, expediente, per_id" &
@@ -60,7 +60,7 @@
                   " INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id" &
                   " WHERE responsable_expediente.per_id=" & persona_id
 
-            Return bd.leer(defcon, sel_sql)
+            Return bd.read(defcon, sel_sql)
         End Function
 
         Shared Function ListarPorProfesional(prof_id As Integer)
@@ -69,7 +69,7 @@
                   " INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id" &
                   " WHERE oprivadas.profesional_id=" & prof_id
 
-            Return bd.leer(defcon, sel_sql)
+            Return bd.read(defcon, sel_sql)
         End Function
 
         Shared Function ListarResponsables(expediente As Integer) As DataTable
@@ -78,11 +78,11 @@
                   " INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id" &
                   " WHERE oprivadas.expediente=" & expediente
 
-            Return bd.leer(defcon, sel_sql)
+            Return bd.read(defcon, sel_sql)
         End Function
 
         Shared Function Seleccionar(expediente As Integer) As DataTable
-            Return bd.leer(defcon, "SELECT * FROM oprivadas WHERE Oprivadas.expediente= " & expediente)
+            Return bd.read(defcon, "SELECT * FROM oprivadas WHERE Oprivadas.expediente= " & expediente)
         End Function
 
         'MODIFICAR
@@ -125,7 +125,7 @@
             If opr_id > 0 Then
                 sel_sql += " And id=" & opr_id
             End If
-            dtab = bd.leer(defcon, sel_sql)
+            dtab = bd.read(defcon, sel_sql)
 
             If dtab.Rows.Count > 0 Then
                 LimpiarResponsable(opr_id)

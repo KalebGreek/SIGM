@@ -183,7 +183,7 @@ Public Class ConsultaCuentaAgrupada
         bs_consulta.DataSource = Nothing
         If sender Is ca_search Then 'Búsqueda de cuentas agrupadas
             dtab_cuenta = Sql.leer(keyword, "", sender)
-            visor = Consulta.Mostrar(visor, bs_consulta, dtab_cuenta)
+            visor = Query.Show(visor, bs_consulta, dtab_cuenta)
         ElseIf sender Is con_ca Then
             dtab_contrib = hac_contrib.leer(dtab_contrib, sender) 'Esta consulta vuelca los resultados directamente en el datagridview especial lista_con
             'Cuando el usuario hace click en algún impuesto de la cuenta agrupada, debería poder ver las cuotas
@@ -191,10 +191,10 @@ Public Class ConsultaCuentaAgrupada
         ElseIf sender Is bs_contrib Then 'Esta consulta muestra un id de cuenta desglosado en el datagridview de la izquierda
             tablas_fox(bs_contrib.Current("impuesto"))
             dtab_imp = deuda(False, True, bs_contrib.Current("impuesto"), 2, keyword, 0, 0, 0) 'filtrado por nombre
-            visor = Consulta.Mostrar(visor, bs_consulta, dtab_imp)
+            visor = Query.Show(visor, bs_consulta, dtab_imp)
         ElseIf sender Is mod_ca_imp_search Then
             dtab_imp = Sql.leer(keyword, Microsoft.VisualBasic.Left(impuesto, 4), sender) 'Búsqueda de id para modificar cuenta agrupada
-            visor = Consulta.Mostrar(visor, bs_consulta, dtab_imp)
+            visor = Query.Show(visor, bs_consulta, dtab_imp)
         End If
         visor.Focus()
     End Sub
@@ -224,7 +224,7 @@ Public Class ConsultaCuentaAgrupada
         If cuenta_agrupada Then
             sel_sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
         End If
-        consulta = bd.leer(foxcon, sel_sql)
+        consulta = bd.read(foxcon, sel_sql)
         progreso.Value = 20
         Return consulta
     End Function

@@ -3,7 +3,7 @@
         ' This call is required by the designer.
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
-        bs_cuenta.DataSource = bd.leer(foxcon, "SELECT nombre, orden FROM hacienda WHERE orden<9000000000000")
+        bs_cuenta.DataSource = bd.read(foxcon, "SELECT nombre, orden FROM hacienda WHERE orden<9000000000000")
         SeleccionCuenta.DataSource = bs_cuenta
         SeleccionCuenta.DisplayMember = "nombre"
         If bs_cuenta.Current("orden") > 0 Then
@@ -25,9 +25,9 @@
     End Sub
     Private Sub Ingresos_CheckedChanged(sender As Object, e As EventArgs) Handles Ingresos.CheckedChanged
         If Ingresos.Checked Then
-            bs_cuenta.DataSource = bd.leer(foxcon, "SELECT nombre, orden FROM hacienda WHERE orden<9000000000000")
+            bs_cuenta.DataSource = bd.read(foxcon, "SELECT nombre, orden FROM hacienda WHERE orden<9000000000000")
         Else
-            bs_cuenta.DataSource = bd.leer(foxcon, "SELECT nombre, orden FROM hacienda WHERE orden>8999999999999")
+            bs_cuenta.DataSource = bd.read(foxcon, "SELECT nombre, orden FROM hacienda WHERE orden>8999999999999")
         End If
         SeleccionCuenta.DataSource = bs_cuenta
         SeleccionCuenta.DisplayMember = "nombre"
@@ -51,7 +51,7 @@
         '### IMPUESTOS
         sel_sql = "SELECT * FROM movimis INNER JOIN hacienda on movimis.orden=hacienda.orden" &
                 " WHERE orden=" & cuenta & " AND movimis.nombre LIKE '" & keyword & "'"
-        visor = Consulta.Mostrar(visor, bs_consulta, bd.leer(foxcon, sel_sql))
+        visor = Query.Show(visor, bs_consulta, bd.read(foxcon, sel_sql))
         '### CUENTA AGRUPADA
         visor.Focus()
     End Sub

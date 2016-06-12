@@ -20,6 +20,6 @@
             End If
         End If
         sql += " ORDER By Persona.razon"
-        Return bd.leer(defcon, sql)
+        Return bd.read(defcon, sql)
     End Function
 End Class

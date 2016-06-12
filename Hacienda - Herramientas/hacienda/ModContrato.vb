@@ -53,7 +53,7 @@
             Else
                 sel_sql += " WHERE codigo=" & codigo
             End If
-            Dim dtab As DataTable = bd.leer(defcon, sel_sql)
+            Dim dtab As DataTable = bd.read(defcon, sel_sql)
             If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then
                     If dtab.Rows.Count = 1 And ordenanza_id > 0 Then

@@ -26,10 +26,10 @@
             sel_sql += " ORDER BY fecha ASC"
 
             If solo_ruta Then
-                Dim dtab As DataTable = bd.leer(defcon, sel_sql)
+                Dim dtab As DataTable = bd.read(defcon, sel_sql)
                 Return dtab(0)("ruta").ToString
             Else
-                Return bd.leer(defcon, sel_sql)
+                Return bd.read(defcon, sel_sql)
             End If
         End Function
         Shared Function CopiaCuil(ByVal cuil As Double) As String
@@ -40,10 +40,10 @@
             Return cuil & destino
         End Function
         Shared Function CopiaActa(ByVal persona_id As Integer, ByVal acta As String, ByVal libro As String) As String
-            Dim dtab As DataTable = bd.leer(defcon, "SELECT cuil, razon FROM persona WHERE id=" & persona_id)
+            Dim dtab As DataTable = bd.read(defcon, "SELECT cuil, razon FROM persona WHERE id=" & persona_id)
             If dtab.Rows.Count > 0 Then
                 If acta > 0 And libro > 0 Then
-                    Dim dtab_acta = bd.leer(defcon, "SELECT * FROM actas WHERE acta=" & acta & " AND libro=" & libro)
+                    Dim dtab_acta = bd.read(defcon, "SELECT * FROM actas WHERE acta=" & acta & " AND libro=" & libro)
                     If dtab.Rows.Count > 0 Then
                         If dtab_acta(0)("per_id") <> persona_id Then
                             MsgBox("El acta N." & acta & " del libro N." & libro & " no corresponde a " & dtab(0)("razon"))
@@ -88,10 +88,10 @@
             sel_sql += " ORDER BY fecha ASC"
 
             If solo_ruta Then
-                Dim dtab As DataTable = bd.leer(defcon, sel_sql)
+                Dim dtab As DataTable = bd.read(defcon, sel_sql)
                 Return dtab(0)("ruta").ToString
             Else
-                Return bd.leer(defcon, sel_sql)
+                Return bd.read(defcon, sel_sql)
             End If
         End Function
         Shared Function CargarCopia(TipoArchivo As String, cat As String)
@@ -145,10 +145,10 @@
             sel_sql += " ORDER BY fecha ASC"
 
             If solo_ruta Then
-                Dim dtab As DataTable = bd.leer(defcon, sel_sql)
+                Dim dtab As DataTable = bd.read(defcon, sel_sql)
                 Return dtab(0)("ruta").ToString
             Else
-                Return bd.leer(defcon, sel_sql)
+                Return bd.read(defcon, sel_sql)
             End If
         End Function
         Shared Function CargarCaratulaExp(exp As String) As String
@@ -196,10 +196,10 @@
             sel_sql += " ORDER BY fecha ASC"
 
             If solo_ruta Then
-                Dim dtab As DataTable = bd.leer(defcon, sel_sql)
+                Dim dtab As DataTable = bd.read(defcon, sel_sql)
                 Return dtab(0)("ruta").ToString
             Else
-                Return bd.leer(defcon, sel_sql)
+                Return bd.read(defcon, sel_sql)
             End If
         End Function
     End Class
@@ -219,10 +219,10 @@
             sel_sql += " ORDER BY fecha ASC"
 
             If solo_ruta Then
-                Dim dtab As DataTable = bd.leer(defcon, sel_sql)
+                Dim dtab As DataTable = bd.read(defcon, sel_sql)
                 Return dtab(0)("ruta").ToString
             Else
-                Return bd.leer(defcon, sel_sql)
+                Return bd.read(defcon, sel_sql)
             End If
         End Function
     End Class

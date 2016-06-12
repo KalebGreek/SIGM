@@ -72,9 +72,9 @@
         ' End If
         'End If
 
-        Dim dtab As DataTable = bd.leer(defcon, sel_sql)
+        Dim dtab As DataTable = bd.read(defcon, sel_sql)
         If dtab Is Nothing = False Then
-            visor = Consulta.Mostrar(visor, bs_consulta, dtab)
+            visor = Query.Show(visor, bs_consulta, dtab)
             If dtab.Rows.Count = 0 Then
                 MsgBox("No hay resultados.")
                 Me.Text = "Buscar Ordenanza"

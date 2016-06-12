@@ -174,10 +174,10 @@
 
 
         'frentes
-        Consulta.Mostrar(consulta_frente, bs_frente, Catastro.Frente.Cargar(catastro_id.Text))
+        Query.Show(consulta_frente, bs_frente, Catastro.Frente.Cargar(catastro_id.Text))
 
         'superficies
-        registro = bd.leer(defcon, "SELECT * FROM cat_superficie WHERE catastro_id=" & catastro_id.Text)
+        registro = bd.read(defcon, "SELECT * FROM cat_superficie WHERE catastro_id=" & catastro_id.Text)
         If registro.Rows.Count > 0 Then
             existente.Value = Val(registro(0)("existente"))
             proyecto.Value = Val(registro(0)("proyecto"))
@@ -186,11 +186,11 @@
         End If
 
         'caracteristicas
-        Consulta.Mostrar(consulta_caract, bs_car,
-                         bd.leer(defcon, "SELECT descripcion, activo FROM cat_servicio WHERE catastro_id=" & catastro_id.Text))
+        Query.Show(consulta_caract, bs_car,
+                         bd.read(defcon, "SELECT descripcion, activo FROM cat_servicio WHERE catastro_id=" & catastro_id.Text))
 
         'copias
-        Consulta.Mostrar(consulta_copia, bs_copia, Documento.Catastro.BuscarHistorial(catastro_id.Text))
+        Query.Show(consulta_copia, bs_copia, Documento.Catastro.BuscarHistorial(catastro_id.Text))
     End Sub
 
     Function validar(pagina As Integer) As Boolean

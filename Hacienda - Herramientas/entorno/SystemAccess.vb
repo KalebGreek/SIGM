@@ -3,7 +3,7 @@ Module SystemAccess
     'Funciones de inicio de sesion
     Public Function validar_inicio(user As String, pass As String) As Integer
         If Len(user) >= 5 And Len(pass) >= 5 Then
-            Dim dtab As DataTable = bd.leer(defcon,
+            Dim dtab As DataTable = bd.read(defcon,
                                             "SELECT id, usuario, pass FROM usuarios" &
                                             " WHERE usuario='" & user & "'" &
                                             " AND pass ='" & pass & "'")
@@ -25,7 +25,7 @@ Module SystemAccess
         Dim token As String = getCpuId()
         Dim equipo As String = Environment.MachineName
         'Últimos accesos
-        Dim dtab As DataTable = bd.leer(defcon, "SELECT id, fecha_hora, user_id, token, equipo, sesion FROM usr_log" &
+        Dim dtab As DataTable = bd.read(defcon, "SELECT id, fecha_hora, user_id, token, equipo, sesion FROM usr_log" &
                                 " WHERE user_id=" & user_id & " ORDER BY id DESC")
 
         If dtab.Rows.Count > 0 Then
@@ -64,7 +64,7 @@ Module SystemAccess
     End Function
     Public Function permisos(user_id As Integer)
         Dim inicio As New launcher
-        Dim dtab As DataTable = bd.leer(defcon, "SELECT * FROM usuarios WHERE id=" & user_id)
+        Dim dtab As DataTable = bd.read(defcon, "SELECT * FROM usuarios WHERE id=" & user_id)
         With inicio
             'Permisos
             .cat.Visible = dtab(0)("cat")

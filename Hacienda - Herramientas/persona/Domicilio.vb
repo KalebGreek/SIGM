@@ -3,7 +3,7 @@
         Shared Function RellenarProvincias() As BindingSource
             Dim bs As New BindingSource
             sel_sql = "Select provincia_id, provincia FROM provincias ORDER BY provincia"
-            bs.DataSource = bd.leer(defcon, sel_sql)
+            bs.DataSource = bd.read(defcon, sel_sql)
             Return bs
         End Function
         Shared Function RellenarLocalidades(provincia_id As Integer) As BindingSource
@@ -11,7 +11,7 @@
             sel_sql = "Select id, localidad, cp" &
                       " FROM provincias INNER JOIN localidades On provincias.provincia_id = localidades.provincia_id" &
                       " WHERE localidades.provincia_id=" & provincia_id & " ORDER BY localidad"
-            bs.DataSource = bd.leer(defcon, sel_sql)
+            bs.DataSource = bd.read(defcon, sel_sql)
             Return bs
         End Function
         Shared Function Listar(persona_id As Integer) As DataTable
@@ -23,7 +23,7 @@
                      " ON provincias.provincia_id = localidades.provincia_id"
 
             sel_sql += " WHERE per_domicilio.per_id=" & persona_id & " ORDER BY per_domicilio.id"
-            Return bd.leer(defcon, sel_sql)
+            Return bd.read(defcon, sel_sql)
         End Function
         Shared Function Nuevo(persona_id As Integer, calle As String, altura As Integer, piso As Integer,
                               dpto As String, localidad_id As Integer, principal As Boolean) As String

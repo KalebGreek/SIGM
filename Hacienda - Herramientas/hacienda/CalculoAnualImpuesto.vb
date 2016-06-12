@@ -9,7 +9,7 @@ Public Class CalculoAnualImpuesto
         dtab_cuenta = Nothing
         dtab_zona = Nothing
 
-        Dim dtab As DataTable = bd.leer(foxcon, "SELECT MAX(codigo) as codigo FROM " & impuesto.Text)
+        Dim dtab As DataTable = bd.read(foxcon, "SELECT MAX(codigo) as codigo FROM " & impuesto.Text)
         If dtab.Rows.Count > 0 Then
             If CuentaInicial.Value > dtab(0)("codigo") Then
                 MsgBox("No se encuentra la cuenta inicial.", MsgBoxStyle.OkOnly, Nothing)
@@ -34,11 +34,11 @@ Public Class CalculoAnualImpuesto
 
     Public Sub agua()
         'Zonas
-        dtab_zona = bd.leer(foxcon, "SELECT * FROM aguzona")
+        dtab_zona = bd.read(foxcon, "SELECT * FROM aguzona")
         'Cuentas
         sel_sql = "SELECT codigo, potable, comercial, industrial FROM aguas" &
                   " WHERE codigo=>" & CuentaInicial.Value & " ORDER BY codigo"
-        dtab_cuenta = bd.leer(foxcon, sel_sql)
+        dtab_cuenta = bd.read(foxcon, sel_sql)
         'Iniciar busqueda y reemplazo
         progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -84,7 +84,7 @@ Public Class CalculoAnualImpuesto
         'Cuentas
         sel_sql = "SELECT codigo, razon, marca, modelo, apagar FROM automovil" &
                   " WHERE apagar>0 AND baja={} AND codigo=>" & CuentaInicial.Value & " ORDER BY codigo"
-        dtab_cuenta = bd.leer(foxcon, sel_sql)
+        dtab_cuenta = bd.read(foxcon, sel_sql)
 
         progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -111,7 +111,7 @@ Public Class CalculoAnualImpuesto
                   " catzona.jubilado As desc_jubilado, catzona.baldio As monto_baldio, catzona.pasillo As monto_pasillo, catzona.agrario1 As monto_agrario" &
                   " FROM catastro JOIN catzona On catastro.zona1=catzona.zona" &
                   " WHERE catastro.codigo=>" & CuentaInicial.Value & " ORDER BY catastro.codigo"
-        dtab_cuenta = bd.leer(foxcon, sel_sql)
+        dtab_cuenta = bd.read(foxcon, sel_sql)
         progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
         For fila As Integer = 1 To progreso.Maximum
@@ -165,7 +165,7 @@ Public Class CalculoAnualImpuesto
         sel_sql = "SELECT comercio.codigo as codigo, comercio.actividad as actividad, detalle, minimo, formapago" &
                   " FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad" &
                   " WHERE comercio.baja = {} AND minimo>0 AND codigo=>" & CuentaInicial.Value
-        dtab_cuenta = bd.leer(foxcon, sel_sql)
+        dtab_cuenta = bd.read(foxcon, sel_sql)
         progreso.Maximum = Me.dtab_cuenta.Rows.Count - 1
 
         For fila As Integer = 1 To progreso.Maximum
@@ -231,7 +231,7 @@ Public Class CalculoAnualImpuesto
                   " sepevar.fila4 as fila4, sepevar.fila5 as fila5" &
                   " FROM sepelio JOIN sepevar ON sepelio.ubicacion=sepevar.orden" &
                   " WHERE sepelio.ubicacion > 0 AND sepelio.codigo =>" & CuentaInicial.Value & " ORDER BY sepelio.codigo"
-        dtab_cuenta = bd.leer(foxcon, sel_sql)
+        dtab_cuenta = bd.read(foxcon, sel_sql)
 
         progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -279,7 +279,7 @@ Public Class CalculoAnualImpuesto
         periodo.Minimum = 1990
         periodo.Value = Today.Year
 
-        dtab_var = bd.leer(foxcon, "SELECT * FROM numeros")
+        dtab_var = bd.read(foxcon, "SELECT * FROM numeros")
     End Sub
     Private Sub iniciar_Click(sender As Object, e As EventArgs) Handles iniciar.Click
         validar()

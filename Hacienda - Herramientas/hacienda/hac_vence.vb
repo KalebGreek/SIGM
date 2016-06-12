@@ -3,7 +3,7 @@
         Dim vencimientos As New DataTable
 
         If año_menor = año_mayor And mostrar Then
-            vencimientos = bd.leer(foxcon, "SELECT * FROM " & ext_vence & " WHERE periodo=" & año_menor)
+            vencimientos = bd.read(foxcon, "SELECT * FROM " & ext_vence & " WHERE periodo=" & año_menor)
         End If
         Return vencimientos
     End Function

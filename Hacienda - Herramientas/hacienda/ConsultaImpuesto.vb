@@ -249,11 +249,11 @@
         If sender Is imp_search Then
             If mostrar_f1b.Checked = False Then
                 dtab_imp = deuda(False, False, f1_impuesto.Text, f3_campo.SelectedIndex, keyword, f1b_deuda_total.SelectedIndex, f1b_minimo.Value, f1b_maximo.Value) 'Consulta básica de impuesto específico sobre Fox
-                visor = Consulta.Mostrar(visor, bs_consulta, dtab_imp)
+                visor = Query.Show(visor, bs_consulta, dtab_imp)
             Else 'Consulta especial que muestra deudas totales
                 dtab_deto = deuda(True, False, f1_impuesto.Text, f3_campo.SelectedIndex, keyword, f1b_deuda_total.SelectedIndex, f1b_minimo.Value, f1b_maximo.Value) 'Se debe calcular cada vez que se realizan cambios en la bd
                 progreso.Value = 10
-                visor = Consulta.Mostrar(visor, bs_consulta, dtab_deto)
+                visor = Query.Show(visor, bs_consulta, dtab_deto)
             End If
         ElseIf sender Is bs_consulta And grupo_imp.Visible Then
 
@@ -261,7 +261,7 @@
         ElseIf sender Is bs_contrib Then 'Esta consulta muestra un id de cuenta desglosado en el datagridview de la izquierda
             tablas_fox(bs_contrib.Current("impuesto"))
             dtab_imp = deuda(False, True, bs_contrib.Current("impuesto"), 2, keyword, 0, 0, 0) 'filtrado por nombre
-            visor = Consulta.Mostrar(visor, bs_consulta, dtab_imp)
+            visor = Query.Show(visor, bs_consulta, dtab_imp)
         End If
         visor.Focus()
     End Sub
@@ -345,7 +345,7 @@
         ElseIf cuenta_agrupada Then
             sel_sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
         End If
-        consulta = bd.leer(foxcon, sel_sql)
+        consulta = bd.read(foxcon, sel_sql)
         progreso.Value = 20
         Return consulta
     End Function

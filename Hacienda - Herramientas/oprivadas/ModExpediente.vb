@@ -127,7 +127,7 @@
         End If
 
         '##### Cargar personas
-        Consulta.Mostrar(consulta_resp, bs_resp, Oprivadas.Expediente.ListarResponsables(expediente.Text))
+        Query.Show(consulta_resp, bs_resp, Oprivadas.Expediente.ListarResponsables(expediente.Text))
 
         'PROFESIONAL
         prof_id.Text = registro(0)("profesional_id").ToString
@@ -147,7 +147,7 @@
         End If
 
         'INMUEBLES
-        Consulta.Mostrar(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
+        Query.Show(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
 
         'CARGAR COPIAS DIGITALES
         Dim copias As DataTable = Documento.OPrivadas.BuscarHistorial(opr_id.Text)
@@ -376,7 +376,7 @@
             .ShowDialog(Me)
             .Dispose()
             'Recargar
-            Consulta.Mostrar(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
+            Query.Show(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
         End With
     End Sub
     Private Sub mod_inmueble_Click(sender As Object, e As EventArgs) Handles mod_inmueble.Click
@@ -392,7 +392,7 @@
                 .ShowDialog(Me)
                 .Dispose()
                 'Recargar
-                Consulta.Mostrar(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
+                Query.Show(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
             End If
         End With
     End Sub

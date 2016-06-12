@@ -21,15 +21,15 @@
         End If
 
         sql += " ORDER By Persona.razon"
-        Return bd.leer(defcon, sql)
+        Return bd.read(defcon, sql)
     End Function
     Shared Function Seleccionar(profesional_id As Integer) As DataTable
         Dim sql As String = SelectSQL & " AND profesional.id=" & profesional_id
-        Return bd.leer(defcon, sql)
+        Return bd.read(defcon, sql)
     End Function
     Shared Function ListarTitulos() As BindingSource
         Dim bs As New BindingSource
-        bs.DataSource = bd.leer(defcon, "SELECT * FROM prof_titulo ORDER BY titulo")
+        bs.DataSource = bd.read(defcon, "SELECT * FROM prof_titulo ORDER BY titulo")
         Return bs
     End Function
 
@@ -44,7 +44,7 @@
         bd.edit(defcon, mod_sql)
 
         Dim dtab As New DataTable
-        dtab = bd.leer(defcon, "SELECT id FROM profesional WHERE per_id=" & persona_id)
+        dtab = bd.read(defcon, "SELECT id FROM profesional WHERE per_id=" & persona_id)
         Return dtab(0)("id")
     End Function
     Shared Function eliminar(ByVal per_id As Integer) As Integer

@@ -32,7 +32,7 @@
             sql += " ORDER BY catastro.id ASC"
         End If
 
-        Return bd.leer(defcon, sql) 'Modificar / consultar
+        Return bd.read(defcon, sql) 'Modificar / consultar
     End Function
     Shared Function BuscarPorPartida(Optional zona As Integer = 0, Optional circ As Integer = 0, Optional secc As Integer = 0,
                                      Optional manz As Integer = 0, Optional parc As Integer = 0, Optional lote As Integer = 0) As DataTable
@@ -58,7 +58,7 @@
         End If
         sql += " ORDER BY catastro.id ASC"
 
-        Return bd.leer(defcon, sql)
+        Return bd.read(defcon, sql)
     End Function
     Shared Function BuscarPorDireccion(Optional calle As String = "", Optional barrio As String = "")
         Dim sql As String = SelectSQL & " WHERE ubicacion = True"
@@ -73,7 +73,7 @@
             sql += " ORDER BY catastro.id ASC"
         End If
 
-        Return bd.leer(defcon, sql)
+        Return bd.read(defcon, sql)
     End Function
     '##### 'LEER
     Shared Function ListarInmueblePorTitular(persona_id As Integer) As DataTable
@@ -81,20 +81,20 @@
         If persona_id > 0 Then
             sql += " AND persona.id=" & persona_id
         End If
-        Return bd.leer(defcon, sql)
+        Return bd.read(defcon, sql)
     End Function
     Shared Function ListarInmueblePorExpediente(expediente As Integer) As DataTable
         Dim sql As String = SelectSQL & " WHERE ubicacion=True"
         If expediente > 0 Then
             sql += " AND oprivadas.expediente=" & expediente
         End If
-        Return bd.leer(defcon, sql)
+        Return bd.read(defcon, sql)
     End Function
     Shared Function Seleccionar(cat_id As Integer) As DataTable
         Dim sql As String = SelectSQL
         If cat_id > -1 Then
             sql += " WHERE catastro.id=" & cat_id
-            Return bd.leer(defcon, sql)
+            Return bd.read(defcon, sql)
         Else
             Return Nothing
         End If
@@ -106,7 +106,7 @@
 
             sql += " WHERE catastro.zona=" & zona & " AND catastro.circ=" & circ & " AND catastro.secc=" & secc &
                    " AND catastro.manz=" & manz & " AND catastro.parc=" & parc & " AND catastro.lote=" & lote
-            Dim dtab As DataTable = bd.leer(defcon, sql)
+            Dim dtab As DataTable = bd.read(defcon, sql)
             If dtab.Rows.Count > 0 Then
                 Return dtab(0)("catastro_id")
             Else
@@ -122,7 +122,7 @@
             Dim dtab As New DataTable
             Dim sql As String = "SELECT * FROM catastro
                                  WHERE id=" & catastro_id & " AND user_id=" & user_id
-            dtab = bd.leer(defcon, sql)
+            dtab = bd.read(defcon, sql)
             If dtab.Rows.Count > 0 Then
                 sql = DeleteSQL &
                     " WHERE catastro.id=" & catastro_id & " AND catastro.user_id=" & user_id
@@ -136,7 +136,7 @@
     Public Class Frente
         Shared Function Cargar(catastro_id As Integer, Optional ubicacion As Boolean = False) As Object
             If ubicacion Then
-                Dim dtab As DataTable = bd.leer(defcon, "SELECT calle, altura FROM cat_frente" &
+                Dim dtab As DataTable = bd.read(defcon, "SELECT calle, altura FROM cat_frente" &
                                                        " WHERE catastro_id=" & catastro_id & " AND ubicacion=True")
                 If dtab.Rows.Count > 0 Then
                     Return dtab(0)("calle") & " " & dtab(0)("altura")
@@ -144,7 +144,7 @@
                     Return " S/N "
                 End If
             Else
-                Return bd.leer(defcon, "SELECT id, calle, altura, metros FROM cat_frente WHERE catastro_id=" & catastro_id)
+                Return bd.read(defcon, "SELECT id, calle, altura, metros FROM cat_frente WHERE catastro_id=" & catastro_id)
             End If
         End Function
     End Class

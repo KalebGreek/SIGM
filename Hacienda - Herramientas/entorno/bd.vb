@@ -19,12 +19,10 @@
            ext_actividad, ext_muerto, ext_tipo, ext_zona,
            col_tenedor, col_importe, col_pagado, col_periodo, col_vence As String
 
-
-
     '###### READ: Rutinas de lectura #####################################################################
 
-    '###### Solo datatable
-    Function leer(ByVal constr As String, ByVal sql As String,
+    '###### Reads datatable
+    Function read(ByVal constr As String, ByVal sql As String,
                   Optional OleDBProcedure As OleDb.OleDbCommand = Nothing)
         Dim dtab As New DataTable
         If constr Is foxcon Then 'Compatibilidad con Fox
@@ -79,11 +77,35 @@
 
     End Function
 
+    '###### SAVE: Rutinas para grabar registros #################################################################
+    Function edit(ByVal constr As String, ByVal sql As String, Optional OleDBProcedure As OleDb.OleDbCommand = Nothing) As String
+        'Para conectarse a la bd en modo de inserción
+        'Se necesita convertir el string a un objeto ConnectionString
+        'antes de aplicarlo al OleDbCommand "Comm"
+        If OleDBProcedure Is Nothing And sql.Contains("INSERT") Or sql.Contains("UPDATE") Or sql.Contains("DELETE") Then
+            Dim SQLCommand As New OleDb.OleDbCommand
+            SQLCommand.CommandText = sql
+            OleDBProcedure = SQLCommand
+        End If
+        If OleDBProcedure Is Nothing = False Then
+            olecon.ConnectionString = constr
+            OleDBProcedure.Connection = olecon
+            'Abrir la conexión y ejecutar
+            olecon.Open()
+            OleDBProcedure.ExecuteNonQuery()
+            olecon.Close()
+            sql = ""
+            Return Nothing
+        Else
+            Return "Datos insuficientes para realizar la operación."
+        End If
+
+    End Function
+    '###### END SAVE ############################################################################################   
+
     '###### Visor + Binding + Datatable
-
-
-    Public Class Consulta
-        Shared Function Mostrar(ByVal visor As DataGridView, ByVal bs As BindingSource, ByVal dtab As DataTable) As DataGridView
+    Public Class Query
+        Shared Function Show(ByVal visor As DataGridView, ByVal bs As BindingSource, ByVal dtab As DataTable) As DataGridView
             'Esta rutina va después de que la consulta genera la instrucción SQL
             'y lee la datatable; es igual para todos los servicios.
             bs.DataSource = dtab
@@ -91,10 +113,10 @@
             visor.Update()
             'Con VB .Net sobre la tabla de consulta
             'Dar formato
-            visor = Consulta.Formato(visor)
+            visor = Query.Format(visor)
             Return visor
         End Function
-        Shared Function Formato(ByVal visor As DataGridView) As DataGridView
+        Shared Function Format(ByVal visor As DataGridView) As DataGridView
             With visor.Columns
                 If .Contains("codigo") Then
                     visor.Columns("codigo").AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader
@@ -234,7 +256,7 @@
 
     '### Tablas externas
     Sub tablas_fox(ByVal impuesto As String)
-        Dim dtab As DataTable = bd.leer(defcon,
+        Dim dtab As DataTable = bd.read(defcon,
                                         "SELECT * FROM tablas_externas
                                          WHERE servicio='" & impuesto & "'
                                          ORDER BY tabla")
@@ -281,32 +303,6 @@
             col_vence = ext_cuenta & ".vencio"
         End If
     End Sub
-
     '###### END READ ############################################################################################
 
-    '###### SAVE: Rutinas para grabar registros #################################################################
-    Function edit(ByVal constr As String, ByVal sql As String, Optional OleDBProcedure As OleDb.OleDbCommand = Nothing) As String
-        'Para conectarse a la bd en modo de inserción
-        'Se necesita convertir el string a un objeto ConnectionString
-        'antes de aplicarlo al OleDbCommand "Comm"
-        If OleDBProcedure Is Nothing And sql.Contains("INSERT") Or sql.Contains("UPDATE") Or sql.Contains("DELETE") Then
-            Dim SQLCommand As New OleDb.OleDbCommand
-            SQLCommand.CommandText = sql
-            OleDBProcedure = SQLCommand
-        End If
-        If OleDBProcedure Is Nothing = False Then
-            olecon.ConnectionString = constr
-            OleDBProcedure.Connection = olecon
-            'Abrir la conexión y ejecutar
-            olecon.Open()
-            OleDBProcedure.ExecuteNonQuery()
-            olecon.Close()
-            sql = ""
-            Return Nothing
-        Else
-            Return "Datos insuficientes para realizar la operación."
-        End If
-
-    End Function
-    '###### END SAVE ############################################################################################   
 End Module

@@ -108,7 +108,7 @@
     Private Sub validar_conexion(ByVal conexion As TextBox, ByVal save As Boolean)
         Dim dtab_con As New DataTable
         sel_sql = "SELECT * FROM opciones WHERE opcion='" & conexion.Name & "'"
-        dtab_con = bd.leer(defcon, sel_sql)
+        dtab_con = bd.read(defcon, sel_sql)
         If Len(conexion.Text) < 11 Then 'Restaurar
             MsgBox("La conexión indicada para " & conexion.Name & " es inválida.")
             If dtab_con.Rows.Count > 0 Then
@@ -177,7 +177,7 @@
 
         'Si no funciona
 
-        dtab = bd.leer(conexion_fox.Text, "SELECT codigo, " & periodo & ", " & vence & " WHERE " & vence & " IS NULL FROM " & cuenta)
+        dtab = bd.read(conexion_fox.Text, "SELECT codigo, " & periodo & ", " & vence & " WHERE " & vence & " IS NULL FROM " & cuenta)
 
         If dtab.Rows.Count > 0 Then
             Dim fila As Integer = 0
@@ -192,7 +192,7 @@
     Public Sub cargar_tablas_ext()
         Dim dtab_ext As New DataTable
         dtab_ext.Locale = System.Globalization.CultureInfo.CurrentCulture
-        dtab_ext = bd.leer(defcon, "SELECT * FROM tablas_externas WHERE servicio='AGUA'")
+        dtab_ext = bd.read(defcon, "SELECT * FROM tablas_externas WHERE servicio='AGUA'")
         If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS AGUA ##########################################################
             agua_personas.Text = dtab_ext(0)("persona")
@@ -203,7 +203,7 @@
             agua_zonas.Text = dtab_ext(0)("zona")
         End If
 
-        dtab_ext = bd.leer(defcon, "SELECT * FROM tablas_externas WHERE servicio='AUTO'")
+        dtab_ext = bd.read(defcon, "SELECT * FROM tablas_externas WHERE servicio='AUTO'")
         If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS AUTO ##########################################################
             auto_personas.Text = dtab_ext(0)("persona")
@@ -212,7 +212,7 @@
             auto_tipo.Text = dtab_ext(0)("tipo")
         End If
 
-        dtab_ext = bd.leer(defcon, "SELECT * FROM tablas_externas WHERE servicio='CATA'")
+        dtab_ext = bd.read(defcon, "SELECT * FROM tablas_externas WHERE servicio='CATA'")
         If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS CATA ##########################################################
             cata_personas.Text = dtab_ext(0)("persona")
@@ -222,7 +222,7 @@
             cata_zonas.Text = dtab_ext(0)("zona")
         End If
 
-        dtab_ext = bd.leer(defcon, "SELECT * FROM tablas_externas WHERE servicio='COME'")
+        dtab_ext = bd.read(defcon, "SELECT * FROM tablas_externas WHERE servicio='COME'")
         If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS COME ##########################################################
             come_personas.Text = dtab_ext(0)("persona")
@@ -233,7 +233,7 @@
             come_actividades.Text = dtab_ext(0)("actividad")
         End If
 
-        dtab_ext = bd.leer(defcon, "SELECT * FROM tablas_externas WHERE servicio='SEPE'")
+        dtab_ext = bd.read(defcon, "SELECT * FROM tablas_externas WHERE servicio='SEPE'")
         If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS SEPE ##########################################################
             sepe_personas.Text = dtab_ext(0)("persona")

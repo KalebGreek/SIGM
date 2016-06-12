@@ -3,7 +3,7 @@
         ' This call is required by the designer.
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
-        Consulta.Mostrar(consulta_acta, bs_acta, buscar(persona_id))
+        Query.Show(consulta_acta, bs_acta, buscar(persona_id))
     End Sub
 
     '###### GUI ##########################################################################################
@@ -105,7 +105,7 @@
             sel_sql += " libro = " & libro & " AND acta = " & acta
         End If
 
-        Return bd.leer(defcon, sel_sql)
+        Return bd.read(defcon, sel_sql)
     End Function
 
     Private Sub add_acta_Click(sender As Object, e As EventArgs) Handles add_acta.Click
