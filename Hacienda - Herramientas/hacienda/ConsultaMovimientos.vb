@@ -1,19 +1,15 @@
 ﻿Public Class ConsultaMovimientos
-    '###### VARIABLES #######################################################################################
-    Private Sub hacienda_VisibleChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.VisibleChanged
-        If Ingresos.Checked Then
-            bs_cuenta.DataSource = bd.leer(foxcon, "SELECT nombre, orden FROM hacienda WHERE orden<9000000000000")
-        Else
-            bs_cuenta.DataSource = bd.leer(foxcon, "SELECT nombre, orden FROM hacienda WHERE orden>8999999999999")
-        End If
+    Public Sub New()
+        ' This call is required by the designer.
+        InitializeComponent()
+        ' Add any initialization after the InitializeComponent() call.
+        bs_cuenta.DataSource = bd.leer(foxcon, "SELECT nombre, orden FROM hacienda WHERE orden<9000000000000")
         SeleccionCuenta.DataSource = bs_cuenta
         SeleccionCuenta.DisplayMember = "nombre"
         If bs_cuenta.Current("orden") > 0 Then
             ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text)
         End If
     End Sub
-
-    '###### FIN VARIABLES ###################################################################################
     '###### GUI #############################################################################################
     Private Sub et_con_imp_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles et_con_imp.DoubleClick
         If grupo_imp.Width = 100 Then
@@ -36,15 +32,8 @@
         SeleccionCuenta.DataSource = bs_cuenta
         SeleccionCuenta.DisplayMember = "nombre"
     End Sub
-    '#### IMPUESTOS ##############################################
-    '## EVENTOS
-    '## RUTINAS
-    '## RUTINAS DE LIMPIEZA
     '###### FIN GUI #############################################################################################
     '------------------------------------------------------------------------------------------------------------
-    '###### FILTER ##############################################################################################
-    '#### FILTROS AUTOMATICOS ################################
-
     '#### FILTROS MANUALES ################################
     Private Sub bs_consulta_CurrentChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles bs_consulta.CurrentChanged
         With bs_consulta

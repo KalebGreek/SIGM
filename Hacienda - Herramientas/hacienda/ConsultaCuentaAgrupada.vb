@@ -199,7 +199,9 @@ Public Class ConsultaCuentaAgrupada
         visor.Focus()
     End Sub
 
-    Function deuda(ByVal deuda_total As Boolean, ByVal cuenta_agrupada As Boolean, ByVal impuesto As String, ByVal filter As Integer, ByVal keyword As String, ByVal range As Integer, ByVal dmin As Integer, ByVal dmax As Integer)
+    Function deuda(ByVal deuda_total As Boolean, ByVal cuenta_agrupada As Boolean,
+                   ByVal impuesto As String, ByVal filter As Integer, ByVal keyword As String,
+                   ByVal range As Integer, ByVal dmin As Integer, ByVal dmax As Integer)
         progreso.Value = 5
         Dim consulta As New DataTable
         '### Crear consulta sin filtros

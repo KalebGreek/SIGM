@@ -184,6 +184,7 @@
     <Compile Include="ControlBusquedaGen.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="entorno\SystemAccess.vb" />
     <Compile Include="gobierno\ConsultaOrdenanza.Designer.vb">
       <DependentUpon>ConsultaOrdenanza.vb</DependentUpon>
     </Compile>
@@ -261,10 +262,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="catastro\Catastro.vb" />
-    <Compile Include="hacienda\ComparadorTablas.Designer.vb">
-      <DependentUpon>ComparadorTablas.vb</DependentUpon>
+    <Compile Include="hacienda\Arqueo.Designer.vb">
+      <DependentUpon>Arqueo.vb</DependentUpon>
     </Compile>
-    <Compile Include="hacienda\ComparadorTablas.vb">
+    <Compile Include="hacienda\Arqueo.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="entorno\visor_error.Designer.vb">
@@ -411,8 +412,8 @@
       <DependentUpon>ConsultaImpuesto.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\ComparadorTablas.resx">
-      <DependentUpon>ComparadorTablas.vb</DependentUpon>
+    <EmbeddedResource Include="hacienda\Arqueo.resx">
+      <DependentUpon>Arqueo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="gobierno\ConsultaEmpleado.resx">
       <DependentUpon>ConsultaEmpleado.vb</DependentUpon>

@@ -46,7 +46,7 @@ Partial Class ContenedorGen
         Me.HaciendaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MovimientosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
-        Me.CompararTablasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ArqueoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OprivadasMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.BuscarExpedienteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BuscarProfesionalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -218,7 +218,7 @@ Partial Class ContenedorGen
         '
         'HaciendaToolStripMenuItem
         '
-        Me.HaciendaToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MovimientosToolStripMenuItem, Me.ToolStripSeparator4, Me.CompararTablasToolStripMenuItem})
+        Me.HaciendaToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MovimientosToolStripMenuItem, Me.ToolStripSeparator4, Me.ArqueoToolStripMenuItem})
         Me.HaciendaToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
         Me.HaciendaToolStripMenuItem.ForeColor = System.Drawing.Color.Black
         Me.HaciendaToolStripMenuItem.Name = "HaciendaToolStripMenuItem"
@@ -228,19 +228,19 @@ Partial Class ContenedorGen
         'MovimientosToolStripMenuItem
         '
         Me.MovimientosToolStripMenuItem.Name = "MovimientosToolStripMenuItem"
-        Me.MovimientosToolStripMenuItem.Size = New System.Drawing.Size(185, 24)
+        Me.MovimientosToolStripMenuItem.Size = New System.Drawing.Size(160, 24)
         Me.MovimientosToolStripMenuItem.Text = "Movimientos"
         '
         'ToolStripSeparator4
         '
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(182, 6)
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(157, 6)
         '
-        'CompararTablasToolStripMenuItem
+        'ArqueoToolStripMenuItem
         '
-        Me.CompararTablasToolStripMenuItem.Name = "CompararTablasToolStripMenuItem"
-        Me.CompararTablasToolStripMenuItem.Size = New System.Drawing.Size(185, 24)
-        Me.CompararTablasToolStripMenuItem.Text = "Comparar Tablas"
+        Me.ArqueoToolStripMenuItem.Name = "ArqueoToolStripMenuItem"
+        Me.ArqueoToolStripMenuItem.Size = New System.Drawing.Size(160, 24)
+        Me.ArqueoToolStripMenuItem.Text = "Arqueo"
         '
         'OprivadasMenu
         '
@@ -391,7 +391,7 @@ Partial Class ContenedorGen
     Friend WithEvents HaciendaMenu As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents HaciendaToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
-    Friend WithEvents CompararTablasToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ArqueoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents OprivadasMenu As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents PersonaMenu As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents CatastroMenu As System.Windows.Forms.ToolStripMenuItem

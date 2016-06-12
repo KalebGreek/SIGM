@@ -146,7 +146,6 @@ Partial Class config
         Me.agua_variables.Name = "agua_variables"
         Me.agua_variables.Size = New System.Drawing.Size(88, 23)
         Me.agua_variables.TabIndex = 11
-        Me.agua_variables.Text = "aguvar"
         '
         'et_agua5
         '
@@ -165,7 +164,6 @@ Partial Class config
         Me.agua_zonas.Name = "agua_zonas"
         Me.agua_zonas.Size = New System.Drawing.Size(88, 23)
         Me.agua_zonas.TabIndex = 9
-        Me.agua_zonas.Text = "aguzona"
         '
         'et_agua4
         '
@@ -184,7 +182,6 @@ Partial Class config
         Me.agua_vencimientos.Name = "agua_vencimientos"
         Me.agua_vencimientos.Size = New System.Drawing.Size(88, 23)
         Me.agua_vencimientos.TabIndex = 7
-        Me.agua_vencimientos.Text = "aguvence"
         '
         'et_agua3
         '
@@ -203,7 +200,6 @@ Partial Class config
         Me.agua_historial.Name = "agua_historial"
         Me.agua_historial.Size = New System.Drawing.Size(88, 23)
         Me.agua_historial.TabIndex = 5
-        Me.agua_historial.Text = "aguhis"
         '
         'et_agua2
         '
@@ -222,7 +218,6 @@ Partial Class config
         Me.agua_cuentas.Name = "agua_cuentas"
         Me.agua_cuentas.Size = New System.Drawing.Size(88, 23)
         Me.agua_cuentas.TabIndex = 3
-        Me.agua_cuentas.Text = "agucue"
         '
         'et_agua1
         '
@@ -241,7 +236,6 @@ Partial Class config
         Me.agua_personas.Name = "agua_personas"
         Me.agua_personas.Size = New System.Drawing.Size(88, 23)
         Me.agua_personas.TabIndex = 0
-        Me.agua_personas.Text = "aguas"
         '
         'Label3
         '
@@ -290,7 +284,6 @@ Partial Class config
         Me.cata_zonas.Name = "cata_zonas"
         Me.cata_zonas.Size = New System.Drawing.Size(88, 23)
         Me.cata_zonas.TabIndex = 21
-        Me.cata_zonas.Text = "catzona"
         '
         'et_cata4
         '
@@ -309,7 +302,6 @@ Partial Class config
         Me.cata_vencimientos.Name = "cata_vencimientos"
         Me.cata_vencimientos.Size = New System.Drawing.Size(88, 23)
         Me.cata_vencimientos.TabIndex = 19
-        Me.cata_vencimientos.Text = "catvence"
         '
         'et_cata3
         '
@@ -328,7 +320,6 @@ Partial Class config
         Me.cata_historial.Name = "cata_historial"
         Me.cata_historial.Size = New System.Drawing.Size(88, 23)
         Me.cata_historial.TabIndex = 17
-        Me.cata_historial.Text = "cathis"
         '
         'et_cata2
         '
@@ -347,7 +338,6 @@ Partial Class config
         Me.cata_cuentas.Name = "cata_cuentas"
         Me.cata_cuentas.Size = New System.Drawing.Size(88, 23)
         Me.cata_cuentas.TabIndex = 15
-        Me.cata_cuentas.Text = "catcue"
         '
         'et_cata1
         '
@@ -366,7 +356,6 @@ Partial Class config
         Me.cata_personas.Name = "cata_personas"
         Me.cata_personas.Size = New System.Drawing.Size(88, 23)
         Me.cata_personas.TabIndex = 13
-        Me.cata_personas.Text = "catastro"
         '
         'grupo_come
         '
@@ -407,7 +396,6 @@ Partial Class config
         Me.come_variables.Name = "come_variables"
         Me.come_variables.Size = New System.Drawing.Size(88, 23)
         Me.come_variables.TabIndex = 23
-        Me.come_variables.Text = "comvar"
         '
         'et_come5
         '
@@ -426,7 +414,6 @@ Partial Class config
         Me.come_actividades.Name = "come_actividades"
         Me.come_actividades.Size = New System.Drawing.Size(88, 23)
         Me.come_actividades.TabIndex = 21
-        Me.come_actividades.Text = "comact"
         '
         'et_come4
         '
@@ -445,7 +432,6 @@ Partial Class config
         Me.come_vencimientos.Name = "come_vencimientos"
         Me.come_vencimientos.Size = New System.Drawing.Size(88, 23)
         Me.come_vencimientos.TabIndex = 19
-        Me.come_vencimientos.Text = "comvence"
         '
         'et_come3
         '
@@ -464,7 +450,6 @@ Partial Class config
         Me.come_historial.Name = "come_historial"
         Me.come_historial.Size = New System.Drawing.Size(88, 23)
         Me.come_historial.TabIndex = 17
-        Me.come_historial.Text = "comhis"
         '
         'et_come2
         '
@@ -483,7 +468,6 @@ Partial Class config
         Me.come_cuentas.Name = "come_cuentas"
         Me.come_cuentas.Size = New System.Drawing.Size(88, 23)
         Me.come_cuentas.TabIndex = 15
-        Me.come_cuentas.Text = "comcue"
         '
         'et_come1
         '
@@ -502,7 +486,6 @@ Partial Class config
         Me.come_personas.Name = "come_personas"
         Me.come_personas.Size = New System.Drawing.Size(88, 23)
         Me.come_personas.TabIndex = 13
-        Me.come_personas.Text = "comercio"
         '
         'grupo_sepe
         '
@@ -528,7 +511,7 @@ Partial Class config
         '
         Me.et_sepe5.AutoSize = True
         Me.et_sepe5.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.749999!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.et_sepe5.Location = New System.Drawing.Point(14, 166)
+        Me.et_sepe5.Location = New System.Drawing.Point(14, 137)
         Me.et_sepe5.Name = "et_sepe5"
         Me.et_sepe5.Size = New System.Drawing.Size(66, 16)
         Me.et_sepe5.TabIndex = 10
@@ -537,7 +520,7 @@ Partial Class config
         'sepe_variables
         '
         Me.sepe_variables.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.749999!)
-        Me.sepe_variables.Location = New System.Drawing.Point(103, 163)
+        Me.sepe_variables.Location = New System.Drawing.Point(103, 134)
         Me.sepe_variables.Name = "sepe_variables"
         Me.sepe_variables.Size = New System.Drawing.Size(88, 23)
         Me.sepe_variables.TabIndex = 9
@@ -560,7 +543,6 @@ Partial Class config
         Me.sepe_muertos.Name = "sepe_muertos"
         Me.sepe_muertos.Size = New System.Drawing.Size(88, 23)
         Me.sepe_muertos.TabIndex = 7
-        Me.sepe_muertos.Text = "sepemuer"
         '
         'et_sepe3
         '
@@ -579,7 +561,6 @@ Partial Class config
         Me.sepe_historial.Name = "sepe_historial"
         Me.sepe_historial.Size = New System.Drawing.Size(88, 23)
         Me.sepe_historial.TabIndex = 5
-        Me.sepe_historial.Text = "sepehis"
         '
         'et_sepe2
         '
@@ -598,7 +579,6 @@ Partial Class config
         Me.sepe_cuentas.Name = "sepe_cuentas"
         Me.sepe_cuentas.Size = New System.Drawing.Size(88, 23)
         Me.sepe_cuentas.TabIndex = 3
-        Me.sepe_cuentas.Text = "sepecue"
         '
         'et_sepe1
         '
@@ -617,7 +597,6 @@ Partial Class config
         Me.sepe_personas.Name = "sepe_personas"
         Me.sepe_personas.Size = New System.Drawing.Size(88, 23)
         Me.sepe_personas.TabIndex = 1
-        Me.sepe_personas.Text = "sepelio"
         '
         'grupo_auto
         '
@@ -641,7 +620,7 @@ Partial Class config
         '
         Me.et_vehi4.AutoSize = True
         Me.et_vehi4.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.749999!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.et_vehi4.Location = New System.Drawing.Point(14, 137)
+        Me.et_vehi4.Location = New System.Drawing.Point(14, 107)
         Me.et_vehi4.Name = "et_vehi4"
         Me.et_vehi4.Size = New System.Drawing.Size(35, 16)
         Me.et_vehi4.TabIndex = 10
@@ -650,17 +629,16 @@ Partial Class config
         'auto_tipo
         '
         Me.auto_tipo.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.749999!)
-        Me.auto_tipo.Location = New System.Drawing.Point(103, 134)
+        Me.auto_tipo.Location = New System.Drawing.Point(103, 104)
         Me.auto_tipo.Name = "auto_tipo"
         Me.auto_tipo.Size = New System.Drawing.Size(88, 23)
         Me.auto_tipo.TabIndex = 9
-        Me.auto_tipo.Text = "tipauto"
         '
         'et_vehi3
         '
         Me.et_vehi3.AutoSize = True
         Me.et_vehi3.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.749999!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.et_vehi3.Location = New System.Drawing.Point(14, 108)
+        Me.et_vehi3.Location = New System.Drawing.Point(14, 78)
         Me.et_vehi3.Name = "et_vehi3"
         Me.et_vehi3.Size = New System.Drawing.Size(90, 16)
         Me.et_vehi3.TabIndex = 8
@@ -669,11 +647,10 @@ Partial Class config
         'auto_vencimientos
         '
         Me.auto_vencimientos.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.749999!)
-        Me.auto_vencimientos.Location = New System.Drawing.Point(103, 105)
+        Me.auto_vencimientos.Location = New System.Drawing.Point(103, 75)
         Me.auto_vencimientos.Name = "auto_vencimientos"
         Me.auto_vencimientos.Size = New System.Drawing.Size(88, 23)
         Me.auto_vencimientos.TabIndex = 7
-        Me.auto_vencimientos.Text = "autovence"
         '
         'et_vehi2
         '
@@ -692,7 +669,6 @@ Partial Class config
         Me.auto_cuentas.Name = "auto_cuentas"
         Me.auto_cuentas.Size = New System.Drawing.Size(88, 23)
         Me.auto_cuentas.TabIndex = 3
-        Me.auto_cuentas.Text = "autocue"
         '
         'et_vehi1
         '
@@ -711,7 +687,6 @@ Partial Class config
         Me.auto_personas.Name = "auto_personas"
         Me.auto_personas.Size = New System.Drawing.Size(88, 23)
         Me.auto_personas.TabIndex = 1
-        Me.auto_personas.Text = "automovil"
         '
         'MenuStrip1
         '
@@ -757,6 +732,7 @@ Partial Class config
         Me.conexion_fox.Name = "conexion_fox"
         Me.conexion_fox.Size = New System.Drawing.Size(499, 23)
         Me.conexion_fox.TabIndex = 7
+        Me.conexion_fox.Text = "No hay datos."
         '
         'Label4
         '
@@ -785,13 +761,14 @@ Partial Class config
         Me.conexion_std.Name = "conexion_std"
         Me.conexion_std.Size = New System.Drawing.Size(499, 23)
         Me.conexion_std.TabIndex = 5
+        Me.conexion_std.Text = "No hay datos."
         '
         'rutina_fecha_null
         '
         Me.rutina_fecha_null.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rutina_fecha_null.Location = New System.Drawing.Point(12, 22)
         Me.rutina_fecha_null.Name = "rutina_fecha_null"
-        Me.rutina_fecha_null.Size = New System.Drawing.Size(136, 22)
+        Me.rutina_fecha_null.Size = New System.Drawing.Size(138, 22)
         Me.rutina_fecha_null.TabIndex = 0
         Me.rutina_fecha_null.Text = "Reparar fechas NULL"
         Me.rutina_fecha_null.UseVisualStyleBackColor = True
@@ -834,6 +811,7 @@ Partial Class config
         Me.conexion_pgsql.Name = "conexion_pgsql"
         Me.conexion_pgsql.Size = New System.Drawing.Size(499, 23)
         Me.conexion_pgsql.TabIndex = 10
+        Me.conexion_pgsql.Text = "No hay datos."
         '
         'Label6
         '
@@ -852,6 +830,7 @@ Partial Class config
         Me.conexion_acc.Name = "conexion_acc"
         Me.conexion_acc.Size = New System.Drawing.Size(499, 23)
         Me.conexion_acc.TabIndex = 11
+        Me.conexion_acc.Text = "No hay datos."
         '
         'config
         '

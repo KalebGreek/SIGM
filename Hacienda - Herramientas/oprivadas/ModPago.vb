@@ -84,7 +84,18 @@
         With visor.DataSource
             If Len(desc.Text) > 0 And monto.Value > 0 And fecha.Value.Date <= Date.Today Then
                 If .Current("fecha_pago").ToString = "" And .Current("pago").ToString = "0,00" Then
+                    'Agregar Pago
                     Pagos.AgregarPago(.Current("id"), opr_id.Text, fecha.Value, monto.Value)
+                    'Generar recibo
+                    Dim parametros As New Generic.List(Of ReportParameter)
+
+                    'Crear informe
+                    Dim formPAGO As New VisorReporte("Recibo de pago por " & .current("tipo_deuda"), "OPR\REC", parametros, False)
+                    With formPAGO
+                        .ShowDialog()
+                        .Dispose()
+                    End With
+
                     ConsultarDeudas()
                 End If
             End If

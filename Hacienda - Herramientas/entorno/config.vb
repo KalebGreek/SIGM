@@ -1,5 +1,17 @@
 ﻿Public Class config
-    Private Sub config_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Public Sub New()
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+        '### CONEXION POR DEFECTO
+        If defcon <> "" Then
+            conexion_std.Text = defcon
+        End If
+        '### CONEXION ACCESS
+        If adbcon <> "" Then
+            conexion_acc.Text = adbcon
+        End If
         '### CONEXION FOX
         If foxcon <> "" Then
             conexion_fox.Text = foxcon
@@ -8,10 +20,29 @@
         If pgsqlcon <> "" Then
             conexion_pgsql.Text = pgsqlcon
         End If
+
+        cargar_tablas_ext()
     End Sub
 
     '###### GUI
     Private Sub RestablecerToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RestablecerToolStripMenuItem.Click
+        If defcon <> "" Then
+            conexion_std.Text = defcon
+        End If
+        '### CONEXION ACCESS
+        If adbcon <> "" Then
+            conexion_acc.Text = adbcon
+        End If
+        '### CONEXION FOX
+        If foxcon <> "" Then
+            conexion_fox.Text = foxcon
+        End If
+        '### CONEXION PSQL
+        If pgsqlcon <> "" Then
+            conexion_pgsql.Text = pgsqlcon
+        End If
+
+        cargar_tablas_ext()
 
         RestablecerToolStripMenuItem.Enabled = False
     End Sub
@@ -45,142 +76,34 @@
     End Sub
 
     '###### VALIDACION
-    Private Sub conexion_std_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles conexion_fox.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_cata_zonas_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cata_zonas.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_sepe_cuentas_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles sepe_cuentas.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_sepe_historial_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles sepe_historial.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_sepe_muertos_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles sepe_muertos.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_sepe_variables_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles sepe_variables.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_vehi_personas_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles auto_personas.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_vehi_cuentas_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles auto_cuentas.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_vehi_vencimientos_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles auto_vencimientos.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_vehi_tipo_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles auto_tipo.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_come_personas_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles come_personas.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_come_cuentas_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles come_cuentas.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_come_historial_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles come_historial.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_come_vencimientos_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles come_vencimientos.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_come_actividades_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles come_actividades.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_come_variables_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles come_variables.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_agua_personas_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles agua_personas.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_agua_cuentas_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles agua_cuentas.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_agua_historial_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles agua_historial.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_agua_vencimientos_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles agua_vencimientos.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_agua_zonas_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles agua_zonas.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_agua_variables_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles agua_variables.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_cata_personas_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cata_personas.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_cata_cuentas_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cata_cuentas.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_cata_historial_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cata_historial.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_cata_vencimientos_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cata_vencimientos.TextChanged
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
-    Private Sub ext_sepe_personas_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles sepe_personas.TextChanged
+    Private Sub DetectarCambios() Handles conexion_std.TextChanged, conexion_acc.TextChanged,
+                                          conexion_fox.TextChanged, conexion_pgsql.TextChanged,
+                                          cata_cuentas.TextChanged, cata_historial.TextChanged,
+                                          cata_personas.TextChanged, cata_vencimientos.TextChanged,
+                                          come_actividades.TextChanged, come_cuentas.TextChanged,
+                                          come_historial.TextChanged, come_personas.TextChanged,
+                                          come_variables.TextChanged, come_vencimientos.TextChanged,
+                                          auto_cuentas.TextChanged, auto_personas.TextChanged,
+                                          auto_tipo.TextChanged, auto_vencimientos.TextChanged,
+                                          grupo_auto.TextChanged,
+                                          agua_cuentas.TextChanged, agua_historial.TextChanged,
+                                          agua_personas.TextChanged, agua_variables.TextChanged,
+                                          agua_vencimientos.TextChanged,
+                                          sepe_cuentas.TextChanged, sepe_historial.TextChanged,
+                                          sepe_muertos.TextChanged, sepe_personas.TextChanged,
+                                          sepe_variables.TextChanged
+
         RestablecerToolStripMenuItem.Enabled = True
     End Sub
 
     '### RUTINAS
     Private Sub rutina_fecha_null_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rutina_fecha_null.Click
-        Dim dtab_con As New DataTable
-        Dim d, m, y, vence, pago, periodo As String
-        d = Today.Day
-        m = Today.Month
-        y = Today.Year
 
-        vence = ""
-        pago = ""
-        periodo = ""
-
-        For imp As Integer = 0 To 4 Step 1 '5 impuestos
-            If imp = 0 Then 'AGUA
-                ext_cuenta = agua_cuentas.Text
-                vence = "vencio"
-                pago = "pago"
-                periodo = "periodo"
-            ElseIf imp = 1 Then 'AUTO
-                ext_cuenta = auto_cuentas.Text
-                vence = "vencimi1"
-                pago = "apagado"
-                periodo = "ano"
-            ElseIf imp = 2 Then 'CATA
-                ext_cuenta = cata_cuentas.Text
-                vence = "vencio"
-                pago = "pago"
-                periodo = "periodo"
-            ElseIf imp = 3 Then 'COME
-                ext_cuenta = come_cuentas.Text
-                vence = "vence1"
-                pago = "pago"
-                periodo = "ano"
-            ElseIf imp = 4 Then 'SEPE
-                ext_cuenta = sepe_cuentas.Text
-                vence = "vencio"
-                pago = "pago"
-                periodo = "periodo"
-            End If
-
-            bd.edit(conexion_fox.Text, "UPDATE " & ext_cuenta & " SET " & vence & "=" & pago & " WHERE " & vence & " IS NULL AND " & pago & " IS NOT NULL")
-
-            'Si no funciona
-            dtab_con = bd.leer(conexion_fox.Text, "SELECT codigo, " & periodo & ", " & vence & " WHERE " & vence & " IS NULL FROM " & ext_cuenta)
-
-            If dtab_con.Rows.Count > 0 Then
-                Dim fila As Integer = 0
-                Do While fila < dtab_con.Rows.Count
-                    mod_sql = "UPDATE " & ext_cuenta & " SET " & vence & "=#" & Today.Day & "/" & Today.Month & "/" & dtab_con(fila)(periodo) & _
-                    "# WHERE codigo=" & dtab_con(fila)("codigo") & " AND " & vence & " IS NULL"
-                    bd.edit(conexion_fox.Text, mod_sql)
-                Loop
-            End If
-        Next
+        If MsgBoxResult.Yes = MsgBox("Esto reemplazara las fechas con valor NULL en la base de datos seleccionada." & Chr(13) &
+                                     "ESTA OPERACION NO SE PUEDE DESHACER." & Chr(13) &
+                                     "Desea continuar?", MsgBoxStyle.Critical, "Reparar fechas en tablas Fox") Then
+            RepararFechasNulas()
+        End If
     End Sub
     Private Sub validar_conexion(ByVal conexion As TextBox, ByVal save As Boolean)
         Dim dtab_con As New DataTable
@@ -206,44 +129,118 @@
             End If
         End If
     End Sub
-    Public Sub cargar_tablas_ext()
-        Dim dtab_ext As New DataTable
-        dtab_ext.locale = System.Globalization.CultureInfo.CurrentCulture
-        dtab_ext = bd.leer(defcon, "SELECT * FROM tablas_externas ORDER BY nombre")
-        If dtab_ext.Rows.Count > 0 Then
-            '#### TABLAS EXTERNAS AGUA ##########################################################
-            agua_personas.Text = dtab_ext(0)("nombre")
-            agua_cuentas.Text = dtab_ext(1)("nombre")
-            agua_historial.Text = dtab_ext(2)("nombre")
-            agua_variables.Text = dtab_ext(3)("nombre")
-            agua_vencimientos.Text = dtab_ext(4)("nombre")
-            agua_zonas.Text = dtab_ext(5)("nombre")
+    Private Sub RepararFechasNulas()
+        Dim d, m, y, cuenta, vence, pago, periodo As String
+        Dim dtab As New DataTable
+        d = Today.Day
+        m = Today.Month
+        y = Today.Year
 
-            '#### TABLAS EXTERNAS VEHI ##########################################################
-            auto_cuentas.Text = dtab_ext(6)("nombre")
-            auto_personas.Text = dtab_ext(7)("nombre")
-            auto_vencimientos.Text = dtab_ext(8)("nombre")
-            auto_tipo.Text = dtab_ext(25)("nombre")
-            '#### TABLAS EXTERNAS CATA ##########################################################
-            cata_personas.Text = dtab_ext(9)("nombre")
-            cata_cuentas.Text = dtab_ext(10)("nombre")
-            cata_historial.Text = dtab_ext(11)("nombre")
-            cata_vencimientos.Text = dtab_ext(12)("nombre")
-            cata_zonas.Text = dtab_ext(13)("nombre")
-            '#### TABLAS EXTERNAS COME ##########################################################
-            come_actividades.Text = dtab_ext(14)("nombre")
-            come_cuentas.Text = dtab_ext(15)("nombre")
-            come_personas.Text = dtab_ext(16)("nombre")
-            come_historial.Text = dtab_ext(17)("nombre")
-            come_variables.Text = dtab_ext(18)("nombre")
-            come_vencimientos.Text = dtab_ext(19)("nombre")
-            '#### TABLAS EXTERNAS SEPE ##########################################################
-            sepe_cuentas.Text = dtab_ext(20)("nombre")
-            sepe_historial.Text = dtab_ext(21)("nombre")
-            sepe_personas.Text = dtab_ext(22)("nombre")
-            sepe_muertos.Text = dtab_ext(23)("nombre")
-            sepe_variables.Text = dtab_ext(24)("nombre")
+        cuenta = ""
+        vence = ""
+        pago = ""
+        periodo = ""
+
+
+
+        For imp As Integer = 0 To 4 Step 1 '5 impuestos
+            If imp = 0 Then 'AGUA
+                cuenta = agua_cuentas.Text
+                vence = "vencio"
+                pago = "pago"
+                periodo = "periodo"
+            ElseIf imp = 1 Then 'AUTO
+                cuenta = auto_cuentas.Text
+                vence = "vencimi1"
+                pago = "apagado"
+                periodo = "ano"
+            ElseIf imp = 2 Then 'CATA
+                cuenta = cata_cuentas.Text
+                vence = "vencio"
+                pago = "pago"
+                periodo = "periodo"
+            ElseIf imp = 3 Then 'COME
+                cuenta = come_cuentas.Text
+                vence = "vence1"
+                pago = "pago"
+                periodo = "ano"
+            ElseIf imp = 4 Then 'SEPE
+                cuenta = sepe_cuentas.Text
+                vence = "vencio"
+                pago = "pago"
+                periodo = "periodo"
+            End If
+        Next
+
+
+        bd.edit(conexion_fox.Text, "UPDATE " & cuenta & " SET " & vence & "=" & pago & " WHERE " & vence & " IS NULL AND " & pago & " IS NOT NULL")
+
+        'Si no funciona
+
+        dtab = bd.leer(conexion_fox.Text, "SELECT codigo, " & periodo & ", " & vence & " WHERE " & vence & " IS NULL FROM " & cuenta)
+
+        If dtab.Rows.Count > 0 Then
+            Dim fila As Integer = 0
+            Do While fila < dtab.Rows.Count
+                mod_sql = "UPDATE " & cuenta & " SET " & vence & "=#" & Today.Day & "/" & Today.Month & "/" & dtab(fila)(periodo) &
+                "# WHERE codigo=" & dtab(fila)("codigo") & " AND " & vence & " IS NULL"
+                bd.edit(conexion_fox.Text, mod_sql)
+            Loop
         End If
     End Sub
 
+    Public Sub cargar_tablas_ext()
+        Dim dtab_ext As New DataTable
+        dtab_ext.Locale = System.Globalization.CultureInfo.CurrentCulture
+        dtab_ext = bd.leer(defcon, "SELECT * FROM tablas_externas WHERE servicio='AGUA'")
+        If dtab_ext.Rows.Count > 0 Then
+            '#### TABLAS EXTERNAS AGUA ##########################################################
+            agua_personas.Text = dtab_ext(0)("persona")
+            agua_cuentas.Text = dtab_ext(0)("cuenta")
+            agua_historial.Text = dtab_ext(0)("historial")
+            agua_variables.Text = dtab_ext(0)("variable")
+            agua_vencimientos.Text = dtab_ext(0)("vencimiento")
+            agua_zonas.Text = dtab_ext(0)("zona")
+        End If
+
+        dtab_ext = bd.leer(defcon, "SELECT * FROM tablas_externas WHERE servicio='AUTO'")
+        If dtab_ext.Rows.Count > 0 Then
+            '#### TABLAS EXTERNAS AUTO ##########################################################
+            auto_personas.Text = dtab_ext(0)("persona")
+            auto_cuentas.Text = dtab_ext(0)("cuenta")
+            auto_vencimientos.Text = dtab_ext(0)("vencimiento")
+            auto_tipo.Text = dtab_ext(0)("tipo")
+        End If
+
+        dtab_ext = bd.leer(defcon, "SELECT * FROM tablas_externas WHERE servicio='CATA'")
+        If dtab_ext.Rows.Count > 0 Then
+            '#### TABLAS EXTERNAS CATA ##########################################################
+            cata_personas.Text = dtab_ext(0)("persona")
+            cata_cuentas.Text = dtab_ext(0)("cuenta")
+            cata_historial.Text = dtab_ext(0)("historial")
+            cata_vencimientos.Text = dtab_ext(0)("vencimiento")
+            cata_zonas.Text = dtab_ext(0)("zona")
+        End If
+
+        dtab_ext = bd.leer(defcon, "SELECT * FROM tablas_externas WHERE servicio='COME'")
+        If dtab_ext.Rows.Count > 0 Then
+            '#### TABLAS EXTERNAS COME ##########################################################
+            come_personas.Text = dtab_ext(0)("persona")
+            come_cuentas.Text = dtab_ext(0)("cuenta")
+            come_historial.Text = dtab_ext(0)("historial")
+            come_variables.Text = dtab_ext(0)("variable")
+            come_vencimientos.Text = dtab_ext(0)("vencimiento")
+            come_actividades.Text = dtab_ext(0)("actividad")
+        End If
+
+        dtab_ext = bd.leer(defcon, "SELECT * FROM tablas_externas WHERE servicio='SEPE'")
+        If dtab_ext.Rows.Count > 0 Then
+            '#### TABLAS EXTERNAS SEPE ##########################################################
+            sepe_personas.Text = dtab_ext(0)("persona")
+            sepe_cuentas.Text = dtab_ext(0)("cuenta")
+            sepe_historial.Text = dtab_ext(0)("historial")
+            sepe_variables.Text = dtab_ext(0)("variable")
+            sepe_muertos.Text = dtab_ext(0)("vencimiento")
+        End If
+    End Sub
 End Class

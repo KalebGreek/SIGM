@@ -35,11 +35,10 @@ Partial Class visor_error
         Me.visor.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.visor.Dock = System.Windows.Forms.DockStyle.Fill
         Me.visor.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-        Me.visor.FormattingEnabled = True
         Me.visor.ItemHeight = 19
         Me.visor.Location = New System.Drawing.Point(0, 0)
         Me.visor.Name = "visor"
-        Me.visor.Size = New System.Drawing.Size(350, 303)
+        Me.visor.Size = New System.Drawing.Size(291, 272)
         Me.visor.TabIndex = 1
         '
         'Panel1
@@ -49,7 +48,7 @@ Partial Class visor_error
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel1.Location = New System.Drawing.Point(0, 272)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(350, 31)
+        Me.Panel1.Size = New System.Drawing.Size(291, 31)
         Me.Panel1.TabIndex = 5
         '
         'cancel
@@ -59,11 +58,11 @@ Partial Class visor_error
         Me.cancel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.cancel.FlatAppearance.BorderSize = 0
         Me.cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cancel.Font = New System.Drawing.Font("PF DinDisplay Pro", 15.0!)
+        Me.cancel.Font = New System.Drawing.Font("PF DinDisplay Pro", 14.0!)
         Me.cancel.ForeColor = System.Drawing.Color.White
         Me.cancel.Location = New System.Drawing.Point(0, 0)
         Me.cancel.Name = "cancel"
-        Me.cancel.Size = New System.Drawing.Size(175, 31)
+        Me.cancel.Size = New System.Drawing.Size(146, 31)
         Me.cancel.TabIndex = 6
         Me.cancel.Text = "CANCELAR"
         Me.cancel.UseVisualStyleBackColor = False
@@ -75,11 +74,11 @@ Partial Class visor_error
         Me.ok.Dock = System.Windows.Forms.DockStyle.Right
         Me.ok.FlatAppearance.BorderSize = 0
         Me.ok.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ok.Font = New System.Drawing.Font("PF DinDisplay Pro", 15.0!)
+        Me.ok.Font = New System.Drawing.Font("PF DinDisplay Pro", 14.0!)
         Me.ok.ForeColor = System.Drawing.Color.White
-        Me.ok.Location = New System.Drawing.Point(175, 0)
+        Me.ok.Location = New System.Drawing.Point(146, 0)
         Me.ok.Name = "ok"
-        Me.ok.Size = New System.Drawing.Size(175, 31)
+        Me.ok.Size = New System.Drawing.Size(145, 31)
         Me.ok.TabIndex = 5
         Me.ok.Text = "CONTINUAR"
         Me.ok.UseVisualStyleBackColor = False
@@ -88,9 +87,9 @@ Partial Class visor_error
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(350, 303)
-        Me.Controls.Add(Me.Panel1)
+        Me.ClientSize = New System.Drawing.Size(291, 303)
         Me.Controls.Add(Me.visor)
+        Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.KeyPreview = True

@@ -15,11 +15,11 @@
     Public pgsqlcon As String = "Provider=PostgreSQL.1;Data Source=\\MALINGUNVILA;Location=sigmDB;User ID=admin;Password=hf32n64;"
     'Public pgsqlcon2 As String = "Provider=PostgreSQL OLE DB Provider;Data Source=\\malingunvila;Location=vrosas;User ID=sigm;password=sigm2013;"
 
-    'Rutas a tablas externas (a VB no le gusta que referencies mucho desde otros forms)
-    Public ext_persona, ext_cuenta, ext_variable, ext_vence, _
-    ext_historial, ext_zona, ext_actividad, ext_muerto, _
-    ext_tipo As String
-    Public col_tenedor, col_importe, col_pagado, col_periodo, col_vence As String
+    Public ext_persona, ext_cuenta, ext_vence, ext_historial, ext_variable,
+           ext_actividad, ext_muerto, ext_tipo, ext_zona,
+           col_tenedor, col_importe, col_pagado, col_periodo, col_vence As String
+
+
 
     '###### READ: Rutinas de lectura #####################################################################
 
@@ -234,45 +234,46 @@
 
     '### Tablas externas
     Sub tablas_fox(ByVal impuesto As String)
+        Dim dtab As DataTable = bd.leer(defcon,
+                                        "SELECT * FROM tablas_externas
+                                         WHERE servicio='" & impuesto & "'
+                                         ORDER BY tabla")
+
+        ext_actividad = dtab(0)("actividad")
+        ext_cuenta = dtab(0)("cuenta")
+        ext_historial = dtab(0)("historial")
+        ext_muerto = dtab(0)("muerto")
+        ext_persona = dtab(0)("persona")
+        ext_tipo = dtab(0)("tipo")
+        ext_variable = dtab(0)("variable")
+        ext_vence = dtab(0)("vencimiento")
+        ext_zona = dtab(0)("zona")
+
         If impuesto.Contains("AGUA") Then 'AGUA
-            ext_persona = config.agua_personas.Text
-            ext_cuenta = config.agua_cuentas.Text
-            ext_vence = config.agua_vencimientos.Text
             col_tenedor = ext_persona & ".tenedor"
             col_importe = ext_cuenta & ".original"
             col_pagado = ext_cuenta & ".pagado"
             col_periodo = ext_cuenta & ".periodo"
             col_vence = ext_cuenta & ".vencio"
         ElseIf impuesto.Contains("AUTO") Then 'AUTO
-            ext_persona = config.auto_personas.Text
-            ext_cuenta = config.auto_cuentas.Text
-            ext_vence = config.auto_vencimientos.Text
             col_tenedor = ext_persona & ".tenedor"
             col_importe = ext_cuenta & ".apagar"
             col_pagado = ext_cuenta & ".apagado"
             col_periodo = ext_cuenta & ".ano"
             col_vence = ext_cuenta & ".vencimi1"
         ElseIf impuesto.Contains("CATA") Then 'CATA
-            ext_persona = config.cata_personas.Text
-            ext_cuenta = config.cata_cuentas.Text
-            ext_vence = config.cata_vencimientos.Text
             col_tenedor = ext_persona & ".tenedor"
             col_importe = ext_cuenta & ".original"
             col_pagado = ext_cuenta & ".pagado"
             col_periodo = ext_cuenta & ".periodo"
             col_vence = ext_cuenta & ".vencio"
         ElseIf impuesto.Contains("COME") Then 'COME
-            ext_persona = config.come_personas.Text
-            ext_cuenta = config.come_cuentas.Text
-            ext_vence = config.come_vencimientos.Text
             col_tenedor = ext_persona & ".razon"
             col_importe = ext_cuenta & ".importe"
             col_pagado = ext_cuenta & ".pagado"
             col_periodo = ext_cuenta & ".ano"
             col_vence = ext_cuenta & ".vence1"
         ElseIf impuesto.Contains("SEPE") Then 'SEPE
-            ext_persona = config.sepe_personas.Text
-            ext_cuenta = config.sepe_cuentas.Text
             col_tenedor = ext_persona & ".tenedor"
             col_importe = ext_cuenta & ".original"
             col_pagado = ext_cuenta & ".pagado"

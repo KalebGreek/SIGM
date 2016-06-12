@@ -59,10 +59,10 @@
         ConsultaCuentaAgrupada1.Show()
     End Sub
 
-    Private Sub CompararTablasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CompararTablasToolStripMenuItem.Click
-        Dim comparador1 As New ComparadorTablas
-        comparador1.MdiParent = Me
-        comparador1.Show()
+    Private Sub ArqueoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ArqueoToolStripMenuItem.Click
+        Dim arqueo1 As New Arqueo
+        arqueo1.MdiParent = Me
+        arqueo1.Show()
     End Sub
     Private Sub MovimientosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MovimientosToolStripMenuItem.Click
 
