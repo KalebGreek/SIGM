@@ -28,7 +28,8 @@ Partial Class Arqueo
         Me.CalculosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.HaciendaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.IngresosYEgresosPorHaciendaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.IngresosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EgresosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.BancosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaldoDeCuentasBancosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -62,7 +63,7 @@ Partial Class Arqueo
         Me.inicio = New System.Windows.Forms.DateTimePicker()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.final = New System.Windows.Forms.DateTimePicker()
-        Me.Anual = New System.Windows.Forms.RadioButton()
+        Me.PorAño = New System.Windows.Forms.RadioButton()
         Me.año = New System.Windows.Forms.NumericUpDown()
         Me.MenuStrip2.SuspendLayout()
         CType(Me.DataView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -89,7 +90,7 @@ Partial Class Arqueo
         '
         'CalculosToolStripMenuItem
         '
-        Me.CalculosToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripSeparator1, Me.HaciendaToolStripMenuItem, Me.IngresosYEgresosPorHaciendaToolStripMenuItem, Me.ToolStripSeparator2, Me.BancosToolStripMenuItem, Me.SaldoDeCuentasBancosToolStripMenuItem, Me.ToolStripSeparator3, Me.CajaToolStripMenuItem, Me.CierreDiarioDeCajaToolStripMenuItem, Me.ToolStripSeparator4, Me.OtrosToolStripMenuItem, Me.DiferenciaIngresoEntreCajaYMovimientosToolStripMenuItem})
+        Me.CalculosToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripSeparator1, Me.HaciendaToolStripMenuItem, Me.IngresosToolStripMenuItem, Me.EgresosToolStripMenuItem, Me.ToolStripSeparator2, Me.BancosToolStripMenuItem, Me.SaldoDeCuentasBancosToolStripMenuItem, Me.ToolStripSeparator3, Me.CajaToolStripMenuItem, Me.CierreDiarioDeCajaToolStripMenuItem, Me.ToolStripSeparator4, Me.OtrosToolStripMenuItem, Me.DiferenciaIngresoEntreCajaYMovimientosToolStripMenuItem})
         Me.CalculosToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.CalculosToolStripMenuItem.Name = "CalculosToolStripMenuItem"
         Me.CalculosToolStripMenuItem.Size = New System.Drawing.Size(101, 25)
@@ -107,11 +108,17 @@ Partial Class Arqueo
         Me.HaciendaToolStripMenuItem.Size = New System.Drawing.Size(336, 26)
         Me.HaciendaToolStripMenuItem.Text = "Hacienda"
         '
-        'IngresosYEgresosPorHaciendaToolStripMenuItem
+        'IngresosToolStripMenuItem
         '
-        Me.IngresosYEgresosPorHaciendaToolStripMenuItem.Name = "IngresosYEgresosPorHaciendaToolStripMenuItem"
-        Me.IngresosYEgresosPorHaciendaToolStripMenuItem.Size = New System.Drawing.Size(336, 26)
-        Me.IngresosYEgresosPorHaciendaToolStripMenuItem.Text = "Ingresos y Egresos por mes"
+        Me.IngresosToolStripMenuItem.Name = "IngresosToolStripMenuItem"
+        Me.IngresosToolStripMenuItem.Size = New System.Drawing.Size(336, 26)
+        Me.IngresosToolStripMenuItem.Text = "Ingresos"
+        '
+        'EgresosToolStripMenuItem
+        '
+        Me.EgresosToolStripMenuItem.Name = "EgresosToolStripMenuItem"
+        Me.EgresosToolStripMenuItem.Size = New System.Drawing.Size(336, 26)
+        Me.EgresosToolStripMenuItem.Text = "Egresos"
         '
         'ToolStripSeparator2
         '
@@ -255,8 +262,8 @@ Partial Class Arqueo
         Me.Connection.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
         Me.Connection.Margin = New System.Windows.Forms.Padding(3)
         Me.Connection.Name = "Connection"
-        Me.Connection.Size = New System.Drawing.Size(74, 20)
-        Me.Connection.Text = "Sin datos."
+        Me.Connection.Size = New System.Drawing.Size(333, 20)
+        Me.Connection.Text = "Seleccione una base de datos antes de continuar."
         '
         'ToolStrip2
         '
@@ -339,7 +346,7 @@ Partial Class Arqueo
         Me.PanelFiltroFecha.Controls.Add(Me.inicio)
         Me.PanelFiltroFecha.Controls.Add(Me.Label2)
         Me.PanelFiltroFecha.Controls.Add(Me.final)
-        Me.PanelFiltroFecha.Controls.Add(Me.Anual)
+        Me.PanelFiltroFecha.Controls.Add(Me.PorAño)
         Me.PanelFiltroFecha.Controls.Add(Me.año)
         Me.PanelFiltroFecha.Dock = System.Windows.Forms.DockStyle.Top
         Me.PanelFiltroFecha.Location = New System.Drawing.Point(0, 29)
@@ -407,18 +414,18 @@ Partial Class Arqueo
         Me.final.Size = New System.Drawing.Size(102, 27)
         Me.final.TabIndex = 33
         '
-        'Anual
+        'PorAño
         '
-        Me.Anual.AutoSize = True
-        Me.Anual.BackColor = System.Drawing.Color.Gray
-        Me.Anual.ForeColor = System.Drawing.Color.White
-        Me.Anual.Location = New System.Drawing.Point(472, 3)
-        Me.Anual.Margin = New System.Windows.Forms.Padding(10, 3, 3, 3)
-        Me.Anual.Name = "Anual"
-        Me.Anual.Size = New System.Drawing.Size(75, 23)
-        Me.Anual.TabIndex = 37
-        Me.Anual.Text = "ANUAL"
-        Me.Anual.UseVisualStyleBackColor = False
+        Me.PorAño.AutoSize = True
+        Me.PorAño.BackColor = System.Drawing.Color.Gray
+        Me.PorAño.ForeColor = System.Drawing.Color.White
+        Me.PorAño.Location = New System.Drawing.Point(472, 3)
+        Me.PorAño.Margin = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        Me.PorAño.Name = "PorAño"
+        Me.PorAño.Size = New System.Drawing.Size(75, 23)
+        Me.PorAño.TabIndex = 37
+        Me.PorAño.Text = "ANUAL"
+        Me.PorAño.UseVisualStyleBackColor = False
         '
         'año
         '
@@ -474,7 +481,6 @@ Partial Class Arqueo
     Friend WithEvents CalculosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents HaciendaToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents IngresosYEgresosPorHaciendaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents BancosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SaldoDeCuentasBancosToolStripMenuItem As ToolStripMenuItem
@@ -498,7 +504,7 @@ Partial Class Arqueo
     Friend WithEvents ListaColumnas As CheckedListBox
     Friend WithEvents Label1 As Label
     Friend WithEvents PanelFiltroFecha As FlowLayoutPanel
-    Friend WithEvents Anual As RadioButton
+    Friend WithEvents PorAño As RadioButton
     Friend WithEvents año As NumericUpDown
     Friend WithEvents PorFecha As RadioButton
     Friend WithEvents inicio As DateTimePicker
@@ -510,4 +516,6 @@ Partial Class Arqueo
     Friend WithEvents OtrosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CompararIngresosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CompararEgresosToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents IngresosToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents EgresosToolStripMenuItem As ToolStripMenuItem
 End Class

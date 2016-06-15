@@ -15,32 +15,37 @@
     End Sub
 
     'HACIENDA
-    Private Sub IngresosYEgresosPorHaciendaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IngresosYEgresosPorHaciendaToolStripMenuItem.Click
-        SQLSelect = "SELECT hacienda.orden, hacienda.nombre, 
-                           (  
-                            SUM(mes1) + SUM(mes2) + SUM(mes3) + SUM(mes4) +
-                            SUM(mes5) + SUM(mes6) + SUM(mes7) + SUM(mes8) +
-                            SUM(mes9) + SUM(mes10) + SUM(mes11) + SUM(mes12)
-                           ) as total_ingreso,
-                           (
-                            SUM(mes1) + SUM(mes2) + SUM(mes3) + SUM(mes4) +
-                            SUM(mes5) + SUM(mes6) + SUM(mes7) + SUM(mes8) +
-                            SUM(mes9) + SUM(mes10) + SUM(mes11) + SUM(mes12)
-                           ) as total_egreso"
-
+    Private Sub IngresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IngresosToolStripMenuItem.Click
+        SQLSelect = "SELECT orden, nombre, gastado as ingresado, (autorizado - gastado) as restante"
         SQLTable = " FROM hacienda"
-        SQLCriteria = ""
-        SQLGrouping = "  GROUP BY hacienda.orden, hacienda.nombre"
+        SQLCriteria = " WHERE sumado = 2 and orden < 900000000000"
+        SQLGrouping = ""
 
         ProcessQuery(True, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
     End Sub
+    Private Sub EgresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EgresosToolStripMenuItem.Click
+        SQLSelect = "SELECT orden, nombre, gastado, (autorizado - gastado) as restante"
+        SQLTable = " FROM hacienda"
+        SQLCriteria = " WHERE sumado = 2 and orden > 899999999999"
+        SQLGrouping = ""
+
+        ProcessQuery(True, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
+    End Sub
+
     'BANCOS
     Private Sub SaldoDeCuentasBancosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaldoDeCuentasBancosToolStripMenuItem.Click
         PanelFiltroFecha.Visible = True
-        SQLSelect = "SELECT banco, (SELECT SUM(importe) FROM bancos WHERE tipo=2) as egreso, 
-                                   (SELECT SUM(importe) FROM bancos WHERE tipo=1) as ingreso"
+        SQLSelect = "SELECT banco, 
+                           (SELECT SUM(b3.importe) FROM bancos as b3
+                            WHERE b3.tipo=2 AND b3.banco=b1.banco) AS ingreso,
+                           (SELECT SUM(b2.importe) FROM bancos as b2
+                            WHERE b2.tipo=1 AND b2.banco=b1.banco) AS egreso,
+                           (SELECT SUM(b3.importe) FROM bancos as b3
+                            WHERE b3.tipo=2 AND b3.banco=b1.banco) - 
+                           (SELECT SUM(b2.importe) FROM bancos as b2
+                            WHERE b2.tipo=1 AND b2.banco=b1.banco) AS diferencia"
 
-        SQLTable = " FROM bancos"
+        SQLTable = " FROM bancos as b1"
         SQLCriteria = ""
         SQLGrouping = " GROUP BY banco"
 
@@ -49,10 +54,11 @@
     'CAJA
     Private Sub CierreDiarioDeCajaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CierreDiarioDeCajaToolStripMenuItem.Click
         PanelFiltroFecha.Visible = True
+        CampoFecha = "fecha"
 
         SQLSelect = "SELECT * "
         SQLTable += " FROM caja"
-        SQLCriteria = ""
+        SQLCriteria = " WHERE importe>0"
         SQLGrouping = ""
 
         PorFecha.Checked = True
@@ -103,22 +109,25 @@
             Next
         End If
 
-        If Connection.Text <> "Sin datos." Then
+        If Connection.Text <> "Seleccione una base de datos antes de continuar." Then
             Query.Show(DataView, bs, bd.read(Connection.Text, sql))
         Else
-            MsgBox("Seleccione una base de datos antes de continuar.")
+            Connection.Text = "Seleccione una base de datos antes de continuar."
         End If
-
     End Sub
 
     Private Sub Filtros_CheckedChanged(sender As Object, e As EventArgs) Handles _
-                SinFiltro.CheckedChanged, PorFecha.CheckedChanged, Anual.CheckedChanged,
-                SinFiltro.Click, PorFecha.Click, Anual.Click,
+                SinFiltro.CheckedChanged, PorFecha.CheckedChanged, PorAño.CheckedChanged,
+                SinFiltro.Click, PorFecha.Click, PorAño.Click,
                 inicio.ValueChanged, final.ValueChanged, año.ValueChanged
 
-        If PorFecha.Checked Or Anual.Checked Then
-            FiltroFecha()
-        End If
+        inicio.Enabled = PorFecha.Checked
+        inicio.MaxDate = final.Value
+        final.Enabled = PorFecha.Checked
+        final.MinDate = inicio.Value
+        año.Enabled = PorAño.Checked
+
+        FiltroFecha()
     End Sub
 
     Private Function FiltroColumna()
@@ -135,17 +144,22 @@
     End Function
 
     Private Sub FiltroFecha()
-
-        If Anual.Checked Then
+        If PorAño.Checked Then
             ProcessQuery(False, SQLSelect, SQLTable,
                          SQLCriteria & " AND YEAR(" & CampoFecha & ") = " & año.Value, SQLGrouping)
         ElseIf PorFecha.Checked Then
-            ProcessQuery(False, SQLSelect, SQLTable,
-                         SQLCriteria & " AND " & CampoFecha & " => '" & inicio.Value & "' AND " & CampoFecha & " <= '" & final.Value & "'", SQLGrouping)
+            If Connection.Text = foxcon Then
+                ProcessQuery(False, SQLSelect, SQLTable,
+                         SQLCriteria & " AND " & CampoFecha & " => {" & inicio.Value.ToString("MM/dd/yyyy") & "}" &
+                         " AND " & CampoFecha & " <= {" & final.Value.ToString("MM/dd/yyyy") & "}", SQLGrouping)
+            Else
+                ProcessQuery(False, SQLSelect, SQLTable,
+                         SQLCriteria & " AND " & CampoFecha & " => {" & inicio.Value.ToShortDateString & "}" &
+                         " AND " & CampoFecha & " <= {" & final.Value.ToShortDateString & "}", SQLGrouping)
+            End If
         Else
             ProcessQuery(False, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
         End If
-
     End Sub
 
     Private Sub path_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles TablaPersonalizada.LinkClicked
@@ -192,6 +206,7 @@
     Private Sub ColumnList_KeyUp(sender As Object, e As KeyEventArgs) Handles ListaColumnas.KeyUp
         ProcessQuery(False, "SELECT " & FiltroColumna(), SQLTable, SQLCriteria, SQLGrouping)
     End Sub
+
 
     Private Sub DBFoxMuniciToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DBFoxMuniciToolStripMenuItem.Click
         Connection.Text = foxcon

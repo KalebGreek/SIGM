@@ -26,7 +26,7 @@
                   Optional OleDBProcedure As OleDb.OleDbCommand = Nothing)
         Dim dtab As New DataTable
         If constr Is foxcon Then 'Compatibilidad con Fox
-            dtab.Locale = New System.Globalization.CultureInfo("EN-US")
+            dtab.Locale = New System.Globalization.CultureInfo("fr-FR")
         End If
 
         'Crear adaptador de datos
