@@ -329,7 +329,7 @@
     <Compile Include="oprivadas\ModExpediente.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="entorno\misc.vb" />
+    <Compile Include="entorno\entorno.vb" />
     <Compile Include="entorno\config.Designer.vb">
       <DependentUpon>config.vb</DependentUpon>
     </Compile>

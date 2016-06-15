@@ -1,4 +1,4 @@
-﻿Module misc
+﻿Module entorno
     '####### CARPETAS
     Public root As String = Environment.CurrentDirectory
 
@@ -12,9 +12,9 @@
 
     '###### VENTANAS
     'Impedir creación de ventanas que deben abrirse una sola vez en el formulario MDI
-    Function VentanaUnica(instancia As Form) As Boolean
-        If TypeOf instancia Is ContenedorGen Then
-            For Each f As Form In instancia.MdiChildren
+    Function UniqueWindow(instance As Form) As Boolean
+        If TypeOf instance Is ContenedorGen Then
+            For Each f As Form In instance.MdiChildren
                 If TypeOf f Is ModInmueble Then
                     Return True
                 End If
@@ -50,23 +50,21 @@
 
         Dim dtab_con As New DataTable
         '### CONEXION FOX
-        dtab_con = bd.leer(defcon, "SELECT * FROM opciones WHERE opcion='conexion_fox'")
+        dtab_con = bd.read(defcon, "SELECT * FROM opciones WHERE opcion='conexion_fox'")
 
         If dtab_con.Rows.Count > 0 Then
             foxcon = dtab_con(0)("valor")
         End If
         '### CONEXION PSQL
-        dtab_con = bd.leer(defcon, "SELECT * FROM opciones WHERE opcion='conexion_sql'")
+        dtab_con = bd.read(defcon, "SELECT * FROM opciones WHERE opcion='conexion_sql'")
         If dtab_con.Rows.Count > 0 Then
             pgsqlcon = dtab_con(0)("valor")
         End If
 
     End Sub
 
-
-
     '###### MISC
-    Sub reset_campos(ByVal campo As Object)
+    Sub ResetControls(ByVal campo As Object)
         For Each c As Control In campo.Controls
             If TypeOf c Is DateTimePicker Then
                 CType(c, DateTimePicker).Value = Date.Today
@@ -85,7 +83,7 @@
             End If
         Next
     End Sub
-    Function fecha_a_archivo(fecha_hora As Date) As String
+    Function DateToFilename(fecha_hora As Date) As String
         Dim texto As String = fecha_hora.Year.ToString
         If fecha_hora.Month < 10 Then
             texto += "0"
@@ -114,17 +112,18 @@
 
         Return texto
     End Function
-    Function calc_vence(vencimiento As Date, Optional cuotas As Integer = 1)
+
+    Function CalculateExpirationDate(Expiration As Date, Optional cuotas As Integer = 1)
         For c As Integer = 0 To cuotas
-            vencimiento = vencimiento.AddDays(Date.DaysInMonth(vencimiento.Year, vencimiento.Month))
+            Expiration = Expiration.AddDays(Date.DaysInMonth(Expiration.Year, Expiration.Month))
         Next
-        Do While vencimiento.DayOfWeek = DayOfWeek.Saturday Or vencimiento.DayOfWeek = DayOfWeek.Sunday
-            If vencimiento.DayOfWeek = DayOfWeek.Saturday Then
-                vencimiento = vencimiento.AddDays(-1)
+        Do While Expiration.DayOfWeek = DayOfWeek.Saturday Or Expiration.DayOfWeek = DayOfWeek.Sunday
+            If Expiration.DayOfWeek = DayOfWeek.Saturday Then
+                Expiration = Expiration.AddDays(-1)
             Else
-                vencimiento = vencimiento.AddDays(1)
+                Expiration = Expiration.AddDays(1)
             End If
         Loop
-        Return FormatDateTime(vencimiento, DateFormat.ShortDate)
+        Return FormatDateTime(Expiration, DateFormat.ShortDate)
     End Function
 End Module

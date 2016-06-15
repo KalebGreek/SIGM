@@ -1,4 +1,7 @@
 ﻿Public Class Arqueo
+    Private SQLSelect, SQLTable, SQLCriteria, SQLGrouping As String
+    Private CampoFecha As String
+
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
@@ -7,110 +10,97 @@
         año.Value = Today.Year
         PanelColumnas.Visible = False
         TablaPersonalizada.Visible = False
-        FiltroFecha.Visible = False
+        PanelFiltroFecha.Visible = False
         Connection.Text = foxcon
     End Sub
 
-    'MOVIMIENTOS
-    Private Sub IngresosMovToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IngresosMovToolStripMenuItem.Click
-        FiltroFecha.Visible = True
-        sel_sql = "SELECT hacienda.nombre, movimis.orden, SUM(movimientos.pagado) as ingreso 
-                    FROM movimientos INNER JOIN hacienda ON movimientos.orden=hacienda.orden
-                    WHERE orden < 900000000000"
-
-        If Anual.Checked Then
-            sel_sql += " AND fecha LIKE '" & año.Value & "'"
-        ElseIf PorFecha.Checked Then
-            sel_sql += " AND fecha => '" & inicio.Value & "' AND fecha <= '" & final.Value & "'"
-        End If
-
-        sel_sql += " GROUP BY movimis.orden"
-
-        MostrarTabla(True, sel_sql)
-    End Sub
-    Private Sub EgresosMovToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EgresosMovToolStripMenuItem.Click
-        FiltroFecha.Visible = True
-        sel_sql = "SELECT hacienda.nombre, movimis.orden, SUM(movimientos.pagado) as egreso
-        FROM movimientos INNER JOIN hacienda ON movimientos.orden=hacienda.orden
-        WHERE orden > 899999999999"
-
-        If Anual.Checked Then
-            sel_sql += " AND fecha LIKE '" & año.Value & "'"
-        ElseIf PorFecha.Checked Then
-            sel_sql += " AND fecha => '" & inicio.Value & "' AND fecha <= '" & final.Value & "'"
-        End If
-
-        sel_sql += " GROUP BY movimis.orden"
-
-        MostrarTabla(True, sel_sql)
-    End Sub
     'HACIENDA
     Private Sub IngresosYEgresosPorHaciendaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IngresosYEgresosPorHaciendaToolStripMenuItem.Click
-        sel_sql = "SELECT  (SUM(enero) + SUM(febrero) + SUM(marzo) + SUM(abril) +
-                            SUM(mayo) + SUM(junio) + SUM(julio) + SUM(agosto) +
-                            SUM(septiembre) + SUM(octubre) + SUM(noviembre) + SUM(diciembre)) as total_ingreso,
-                           (SUM(enero) + SUM(febrero) + SUM(marzo) + SUM(abril) +
-                            SUM(mayo) + SUM(junio) + SUM(julio) + SUM(agosto) +
-                            SUM(septiembre) + SUM(octubre) + SUM(noviembre) + SUM(diciembre)) as total_egreso
-                    FROM hacienda   
-                    GROUP BY total_ingreso, total_egreso"
+        SQLSelect = "SELECT hacienda.orden, hacienda.nombre, 
+                           (  
+                            SUM(mes1) + SUM(mes2) + SUM(mes3) + SUM(mes4) +
+                            SUM(mes5) + SUM(mes6) + SUM(mes7) + SUM(mes8) +
+                            SUM(mes9) + SUM(mes10) + SUM(mes11) + SUM(mes12)
+                           ) as total_ingreso,
+                           (
+                            SUM(mes1) + SUM(mes2) + SUM(mes3) + SUM(mes4) +
+                            SUM(mes5) + SUM(mes6) + SUM(mes7) + SUM(mes8) +
+                            SUM(mes9) + SUM(mes10) + SUM(mes11) + SUM(mes12)
+                           ) as total_egreso"
 
-        MostrarTabla(True, sel_sql)
+        SQLTable = " FROM hacienda"
+        SQLCriteria = ""
+        SQLGrouping = "  GROUP BY hacienda.orden, hacienda.nombre"
+
+        ProcessQuery(True, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
     End Sub
     'BANCOS
     Private Sub SaldoDeCuentasBancosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaldoDeCuentasBancosToolStripMenuItem.Click
-        FiltroFecha.Visible = True
-        sel_sql = "SELECT banco, 
-                                (SELECT SUM(importe) FROM banco WHERE tipo=2) - 
-                                (SELECT SUM(importe) FROM banco WHERE tipo=1) as saldo"
+        PanelFiltroFecha.Visible = True
+        SQLSelect = "SELECT banco, (SELECT SUM(importe) FROM bancos WHERE tipo=2) as egreso, 
+                                   (SELECT SUM(importe) FROM bancos WHERE tipo=1) as ingreso"
 
-        If Anual.Checked Then
-            sel_sql += " AND fecha LIKE '" & año.Value & "'"
-        ElseIf PorFecha.Checked Then
-            sel_sql += " AND fecha => '" & inicio.Value & "' AND fecha <= '" & final.Value & "'"
-        End If
+        SQLTable = " FROM bancos"
+        SQLCriteria = ""
+        SQLGrouping = " GROUP BY banco"
 
-        sel_sql += " FROM banco    
-        GROUP BY banco"
-
-        MostrarTabla(True, sel_sql)
+        ProcessQuery(True, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
     End Sub
     'CAJA
     Private Sub CierreDiarioDeCajaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CierreDiarioDeCajaToolStripMenuItem.Click
-        FiltroFecha.Visible = True
+        PanelFiltroFecha.Visible = True
 
-        sel_sql = "SELECT * "
+        SQLSelect = "SELECT * "
+        SQLTable += " FROM caja"
+        SQLCriteria = ""
+        SQLGrouping = ""
 
-        If Anual.Checked Then
-            sel_sql += " WHERE fecha LIKE '" & año.Value & "'"
-        ElseIf PorFecha.Checked Then
-            sel_sql += " WHERE fecha => '" & inicio.Value & "' AND fecha <= '" & final.Value & "'"
-        End If
+        PorFecha.Checked = True
 
-        sel_sql += " FROM caja"
+    End Sub
 
-        MostrarTabla(True, sel_sql)
+    'OTROS
+    Private Sub CompararIngresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CompararIngresosToolStripMenuItem.Click
+        SQLSelect = "SELECT movimis.detalle, movimis.documento as movimis_documento,
+                            SUM(movimis.pagado) as suma_movimis_pagado, caja.recibo as caja_recibo,
+                            caja.importe as caja_importe, SUM(movimis.pagado)-importe as diferencia"
+        SQLTable = " FROM caja INNER JOIN movimis ON caja.recibo=movimis.documento"
+        SQLCriteria = " WHERE movimis.orden<900000000000"
+        SQLGrouping = "GROUP BY movimis.documento, movimis.detalle, caja.recibo, caja.importe"
+
+        ProcessQuery(False, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
+    End Sub
+
+    Private Sub CompararEgresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CompararEgresosToolStripMenuItem.Click
+        'cambiar caja por pagos y corregir tema de documento <> orden
+        SQLSelect = "SELECT movimis.detalle, movimis.documento as movimis_documento,
+                            movimis.pagado as movimis_pagado, opagos.orden as opagos_orden,
+                            opagos.importe as opagos_importe, SUM(movimis.pagado)-importe as diferencia,
+                            movimis.orden, hacienda.nombre"
+        SQLTable = " FROM opagos INNER JOIN (movimis
+                     INNER JOIN hacienda ON movimis.orden=hacienda.orden)
+                     ON opagos.orden=movimis.documento"
+        SQLCriteria = " WHERE movimis.orden>899999999999"
+        SQLGrouping = " GROUP BY movimis.documento, movimis.detalle, movimis.pagado, opagos.orden,
+                        opagos.importe, movimis.orden, hacienda.nombre"
+
+        ProcessQuery(False, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
     End Sub
 
     'RUTINAS
-    Private Sub MostrarTabla(reset As Boolean, Optional CustomQuery As String = "Ninguno.")
-        Dim sql As String = ""
+    Private Sub ProcessQuery(ByVal reset As Boolean, ByVal CustomSelect As String, ByVal CustomTable As String,
+                             ByVal CustomCriteria As String, ByVal CustomGrouping As String)
+        Dim sql As String = CustomSelect & CustomTable & CustomCriteria & CustomGrouping
         Dim dtab As New DataTable
 
         DataView.DataSource = Nothing
         bs.DataSource = Nothing
 
-        CustomCriteria.Text = CustomQuery
-        If CustomQuery <> "Ninguno." Then
-            sql = CustomQuery
-        Else
-            If reset Then
-                ListaColumnas.Items.Clear()
-                For Each col As DataColumn In dtab.Columns
-                    ListaColumnas.Items.Add(col.ToString, True)
-                Next
-            End If
-            sql = FiltroColumna(sql)
+        If reset Then
+            ListaColumnas.Items.Clear()
+            For Each col As DataColumn In dtab.Columns
+                ListaColumnas.Items.Add(col.ToString, True)
+            Next
         End If
 
         If Connection.Text <> "Sin datos." Then
@@ -120,19 +110,43 @@
         End If
 
     End Sub
-    Private Function FiltroColumna(sql As String)
+
+    Private Sub Filtros_CheckedChanged(sender As Object, e As EventArgs) Handles _
+                SinFiltro.CheckedChanged, PorFecha.CheckedChanged, Anual.CheckedChanged,
+                SinFiltro.Click, PorFecha.Click, Anual.Click,
+                inicio.ValueChanged, final.ValueChanged, año.ValueChanged
+
+        If PorFecha.Checked Or Anual.Checked Then
+            FiltroFecha()
+        End If
+    End Sub
+
+    Private Function FiltroColumna()
+        Dim sql As String = ""
         If ListaColumnas.CheckedItems.Count > 0 Then
-            sql = "SELECT "
             For Each item In ListaColumnas.CheckedItems
                 sql += item.ToString & ", "
             Next
             sql = Microsoft.VisualBasic.Left(sel_sql, Len(sel_sql) - 2)
         Else
-            sql = "SELECT *"
+            sql = "*"
         End If
-        sql += " FROM " & TablaPersonalizada.Text
         Return sql
     End Function
+
+    Private Sub FiltroFecha()
+
+        If Anual.Checked Then
+            ProcessQuery(False, SQLSelect, SQLTable,
+                         SQLCriteria & " AND YEAR(" & CampoFecha & ") = " & año.Value, SQLGrouping)
+        ElseIf PorFecha.Checked Then
+            ProcessQuery(False, SQLSelect, SQLTable,
+                         SQLCriteria & " AND " & CampoFecha & " => '" & inicio.Value & "' AND " & CampoFecha & " <= '" & final.Value & "'", SQLGrouping)
+        Else
+            ProcessQuery(False, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
+        End If
+
+    End Sub
 
     Private Sub path_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles TablaPersonalizada.LinkClicked
         Dim name As String = ""
@@ -152,10 +166,17 @@
         Loop Until name Is Nothing Or table Is Nothing = False
 
         If name <> "" Then
-            MostrarTabla(True)
+            SQLSelect = "SELECT *"
+            SQLTable = "FROM " & name
+            SQLCriteria = ""
+            SQLGrouping = ""
+
+            ProcessQuery(True, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
+
             If name <> TablaPersonalizada.Text Then
                 TablaPersonalizada.Text = name
             End If
+
         Else
             TablaPersonalizada.Text = "Click para agregar tabla."
         End If
@@ -163,13 +184,13 @@
     End Sub
 
     Private Sub ColumnList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListaColumnas.SelectedIndexChanged
-        MostrarTabla(False)
+        ProcessQuery(False, "SELECT " & FiltroColumna(), SQLTable, SQLCriteria, SQLGrouping)
     End Sub
     Private Sub ColumnList_MouseUp(sender As Object, e As MouseEventArgs) Handles ListaColumnas.MouseUp
-        MostrarTabla(False)
+        ProcessQuery(False, "SELECT " & FiltroColumna(), SQLTable, SQLCriteria, SQLGrouping)
     End Sub
     Private Sub ColumnList_KeyUp(sender As Object, e As KeyEventArgs) Handles ListaColumnas.KeyUp
-        MostrarTabla(False)
+        ProcessQuery(False, "SELECT " & FiltroColumna(), SQLTable, SQLCriteria, SQLGrouping)
     End Sub
 
     Private Sub DBFoxMuniciToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DBFoxMuniciToolStripMenuItem.Click
@@ -181,4 +202,9 @@
     Private Sub DBPostgreSQLToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles DBPostgreSQLToolStripMenuItem.Click
         Connection.Text = pgsqlcon
     End Sub
+
+
+
+
+
 End Class

@@ -45,7 +45,7 @@
 
     'HACIENDA
     Private Sub ConsultarImpuestoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsultarImpuestoToolStripMenuItem.Click
-        If VentanaUnica(Me) Then
+        If UniqueWindow(Me) Then
             MsgBox("Debe cerrar el expediente actual antes de continuar.", MsgBoxStyle.Critical, "Expediente Abierto")
         Else
             Dim ConsultaImpuesto1 As New ConsultaImpuesto
@@ -65,7 +65,9 @@
         arqueo1.Show()
     End Sub
     Private Sub MovimientosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MovimientosToolStripMenuItem.Click
-
+        Dim movimis1 As New ConsultaMovimientos
+        movimis1.MdiParent = Me
+        movimis1.Show()
     End Sub
 
     Private Sub CalculoAnualDeImpuestosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CalculoAnualDeImpuestosToolStripMenuItem.Click

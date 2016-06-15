@@ -34,49 +34,32 @@
     End Sub
 
     Private Sub sig_Click(sender As Object, e As EventArgs) Handles siguiente.Click
-        With grupo_mod
-            If validar(.SelectedIndex) Then
-                If .SelectedIndex < 5 Then
-                    If .SelectedIndex = 0 Then
-                        cargar(dtab_cat)
-                    Else
-                        agregar(operacion.Text, .SelectedIndex)
-                    End If
-                    .SelectTab(.SelectedIndex + 1)
-                Else
-                    agregar(operacion.Text, .SelectedIndex)
-                    Me.Close()
-                End If
-            End If
-        End With
+        GuardarCambios()
+        If grupo_mod.SelectedIndex = 5 Then
+            Me.Close()
+        End If
     End Sub
     Private Sub back_Click(sender As Object, e As EventArgs) Handles back.Click
+        GuardarCambios()
         If grupo_mod.SelectedIndex > 1 Then
             grupo_mod.SelectTab(grupo_mod.SelectedIndex - 1)
         End If
     End Sub
     Private Sub cancel_Click(sender As Object, e As EventArgs) Handles cancel.Click
-        With grupo_mod
-            If validar(.SelectedIndex) Then
-                If .SelectedIndex > 0 Then
-                    agregar(operacion.Text, .SelectedIndex)
-                End If
-            End If
-        End With
+        GuardarCambios()
         Me.Close()
     End Sub
 
     '## RUTINAS
     '## PARTIDA
-    '## Validar
     Private Sub SelectorCatastro(Optional sender As Object = Nothing, Optional e As KeyEventArgs = Nothing) _
         Handles zona.KeyUp, circ.KeyUp, secc.KeyUp, manz.KeyUp, parc.KeyUp, lote.KeyUp
         catastro_id.Text = 0
         catastro_id.Text = Catastro.SeleccionarPartida(zona.Value, circ.Value, secc.Value, manz.Value, parc.Value, lote.Value)
         dtab_cat = Catastro.Seleccionar(catastro_id.Text)
-        mostrar(dtab_cat)
+        Mostrar(dtab_cat)
     End Sub
-    Private Sub mostrar(registro As DataTable)
+    Private Sub Mostrar(registro As DataTable)
         titular_id.Text = 0
         razon.Text = " - "
         cuil.Text = " - "
@@ -146,7 +129,7 @@
                       " M" & manz.Value & " P" & parc.Value & " L" & lote.Value
     End Sub
 
-    Private Sub cargar(registro As DataTable)
+    Private Sub Cargar(registro As DataTable)
         cuenta.Value = 0
         barrio.SelectedIndex = -1
         uso.SelectedIndex = -1
@@ -193,7 +176,7 @@
         Query.Show(consulta_copia, bs_copia, Documento.Catastro.BuscarHistorial(catastro_id.Text))
     End Sub
 
-    Function validar(pagina As Integer) As Boolean
+    Function Validar(pagina As Integer) As Boolean
         Dim msg As New List(Of String)
         Dim valido As Boolean = True
 
@@ -284,6 +267,32 @@
         Return valido
     End Function
 
+    Private Sub GuardarCambios()
+        With grupo_mod
+            If validar(.SelectedIndex) Then
+                If .SelectedIndex = 0 Then
+                    cargar(dtab_cat)
+                ElseIf .SelectedIndex = 1 Then
+                    Catastro.Agregar.Inmueble(operacion.Text, user_id.Text, opr_id.Text,
+                                              catastro_id.Text, titular_id.Text,
+                                              barrio.Text, uso.Text, cuenta.Value, archivado.Checked,
+                                              zona.Value, circ.Value, secc.Value,
+                                              manz.Value, parc.Value, lote.Value)
+                ElseIf .SelectedIndex = 2 Then
+                    Catastro.Agregar.Frente(bs_frente, catastro_id.Text)
+                ElseIf .SelectedIndex = 3 Then
+                    Catastro.Agregar.Superficie(catastro_id.Text, existente.Value, relevamiento.Value,
+                                     proyecto.Value, terreno.Value)
+                ElseIf .SelectedIndex = 4 Then 'caracteristicas
+                    Catastro.Agregar.Caracteristica(bs_car, catastro_id.Text)
+                ElseIf .SelectedIndex = 5 Then 'documentos
+                    Catastro.Agregar.Documento(bs_copia, catastro_id.Text)
+                End If
+                .SelectTab(.SelectedIndex + 1)
+            End If
+        End With
+    End Sub
+
     'UBICACIÓN Y TITULAR
     Private Sub cuenta_ValueChanged(sender As Object, e As EventArgs) Handles cuenta.ValueChanged
         info_cuenta.Text = cuenta.Value
@@ -364,16 +373,12 @@
     End Sub
 
     '## SUPERFICIE
-    Sub CalcularSuperficie() Handles existente.ValueChanged, proyecto.ValueChanged,
-                                     relevamiento.ValueChanged, terreno.ValueChanged,
-                                     cubierto.ValueChanged
+    Private Sub existente_ValueChanged(sender As Object, e As EventArgs) Handles existente.ValueChanged, proyecto.ValueChanged,
+                                                                                relevamiento.ValueChanged, terreno.ValueChanged,
+                                                                                libre.ValueChanged, cubierto.ValueChanged
 
-        cubierto.Value = proyecto.Value + relevamiento.Value + existente.Value
-        If terreno.Value < cubierto.Value Then
-            libre.Value = 0
-        Else
-            libre.Value = terreno.Value - cubierto.Value
-        End If
+        Catastro.CalcularSuperficie(existente.Value, proyecto.Value, relevamiento.Value,
+                                    terreno.Value, libre.Value, cubierto.Value)
     End Sub
 
     '## CARACTERISTICAS
@@ -437,92 +442,6 @@
         End If
     End Sub
 
-    '## Agregar y guardar inmueble
-    Sub agregar(operacion As String, pagina As Integer)
-        If pagina = 1 Then
-            If operacion = "MOD" Then
-                'Modificar
-                mod_sql = "UPDATE catastro SET user_id=" & user_id.Text & ", opr_id=" & opr_id.Text & ", " &
-                          " barrio='" & barrio.Text & "', uso='" & uso.Text & "', cuenta=" & Val(cuenta.Text) &
-                          " WHERE id=" & catastro_id.Text
-                bd.edit(defcon, mod_sql)
-            ElseIf operacion <> "" Then
-                'Agregar
-                mod_sql = "INSERT INTO catastro(user_id, opr_id, zona, circ, secc, manz, parc, lote, barrio, uso, cuenta, archivado) " &
-                          " VALUES(" & user_id.Text & "," & opr_id.Text & ", " & zona.Value & ", " & circ.Value & ", " & secc.Value & "," &
-                          " " & manz.Value & ", " & parc.Value & ", " & lote.Value & ",'" & barrio.Text & "', '" & uso.Text & "', " & cuenta.Value &
-                          "," & archivado.Checked & ")"
-                bd.edit(defcon, mod_sql)
-                'leer ultimo inmueble
-                catastro_id.Text = Catastro.SeleccionarPartida(zona.Value, circ.Value, secc.Value, manz.Value, parc.Value, lote.Value)
-                operacion = "MOD"
-            End If
-            If catastro_id.Text > 0 And titular_id.Text > 0 Then
-                'Guardar titular
-                bd.edit(defcon, "DELETE * FROM titular_catastro WHERE cat_id=" & catastro_id.Text)
-                bd.edit(defcon, "INSERT INTO titular_catastro(cat_id, per_id)" &
-                               " VALUES(" & catastro_id.Text & ", " & titular_id.Text & ")")
-            End If
-        ElseIf pagina = 2 Then
-            With bs_frente
-                'cat_frente
-                del_sql = "DELETE * FROM cat_frente WHERE catastro_id=" & catastro_id.Text
-                bd.edit(defcon, del_sql)
-
-                For fila As Integer = 0 To .Count - 1
-                    .Position = fila
-                    If .Position = 0 Then
-                        mod_sql = "INSERT INTO cat_frente(catastro_id, calle, altura, metros, ubicacion)" &
-                          " VALUES(" & catastro_id.Text & ",'" & .Current("calle") & "', " & .Current("altura") & "," &
-                          " '" & .Current("metros") & "', True)"
-                    Else
-                        mod_sql = "INSERT INTO cat_frente(catastro_id, calle, altura, metros)" &
-                          " VALUES(" & catastro_id.Text & ",'" & .Current("calle") & "', " & .Current("altura") & "," &
-                          " '" & .Current("metros") & "')"
-                    End If
-                    bd.edit(defcon, mod_sql)
-                Next
-            End With
-        ElseIf pagina = 3 Then
-            'cat_superficie
-            del_sql = "DELETE * FROM cat_superficie WHERE catastro_id=" & catastro_id.Text
-            bd.edit(defcon, del_sql)
-
-            mod_sql = "INSERT INTO cat_superficie(catastro_id, existente, proyecto, relevamiento, terreno)" &
-                     " VALUES(" & catastro_id.Text & ", '" & existente.Value & "', '" & proyecto.Value & "'," &
-                     " '" & relevamiento.Value & "', '" & terreno.Value & "')"
-
-            bd.edit(defcon, mod_sql)
-
-        ElseIf pagina = 4 Then
-            'cat_servicio
-            del_sql = "DELETE * FROM cat_servicio WHERE catastro_id=" & catastro_id.Text
-            bd.edit(defcon, del_sql)
-            With bs_car
-                For fila As Integer = 0 To .Count - 1
-                    .Position = fila
-                    mod_sql = "INSERT INTO cat_servicio(catastro_id, descripcion, activo)" &
-                              " VALUES(" & catastro_id.Text & ",'" & .Current("descripcion") & "', " & .Current("activo") & ")"
-                    bd.edit(defcon, mod_sql)
-                Next
-            End With
-
-        ElseIf pagina = 5 Then
-            'cat_documento
-            del_sql = "DELETE * FROM cat_documento WHERE catastro_id=" & catastro_id.Text
-            bd.edit(defcon, del_sql)
-            With bs_copia
-                For fila As Integer = 0 To .Count - 1
-                    .Position = fila
-                    mod_sql = "INSERT INTO cat_documento(catastro_id, descripcion, fecha, ruta)" &
-                          " VALUES(" & catastro_id.Text & ",'" & .Current("descripcion") & "'," &
-                          " '" & .Current("fecha") & "', '" & .Current("ruta") & "')"
-                    bd.edit(defcon, mod_sql)
-                Next
-            End With
-
-        End If
-    End Sub
 
 
 End Class

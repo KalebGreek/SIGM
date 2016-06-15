@@ -1,4 +1,6 @@
 ﻿Public Class ConsultaMovimientos
+    Private SQLSelect, SQLTable, SQLCriteria, SQLGrouping As String
+
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
@@ -74,9 +76,23 @@
 
     '###### END PRINT ###########################################################################################
 
-  
-   
-  
-  
+    Private Sub IngresosMovToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        SQLSelect = "SELECT hacienda.nombre, movimis.orden, SUM(movimientos.pagado) as ingreso"
+        SQLTable = " FROM movimientos INNER JOIN hacienda ON movimientos.orden=hacienda.orden"
+        SQLCriteria = " WHERE orden < 900000000000"
+        SQLGrouping = " GROUP BY movimis.orden"
+
+        bd.read(foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
+    End Sub
+    Private Sub EgresosMovToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        SQLSelect = "SELECT hacienda.nombre, movimis.orden, SUM(movimientos.pagado) as egreso"
+        SQLTable = " FROM movimientos INNER JOIN hacienda On movimientos.orden=hacienda.orden"
+        SQLCriteria = " WHERE orden > 899999999999"
+        SQLGrouping = " GROUP BY movimis.orden"
+
+        bd.read(foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
+    End Sub
+
+
 End Class
 

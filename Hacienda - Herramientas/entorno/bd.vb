@@ -39,6 +39,7 @@
             OleDBProcedure = New OleDb.OleDbCommand
             OleDBProcedure.CommandType = CommandType.Text
             OleDBProcedure.CommandText = sql
+            last_sql = sql
         End If
         dada.SelectCommand = OleDBProcedure
 
@@ -67,7 +68,6 @@
             End Try
             olecon.Close()
             dada.Dispose()
-            last_sql = sql
             sql = ""
             Return dtab
         Else

@@ -40,7 +40,9 @@ Module SystemAccess
                     bd.edit(defcon, mod_sql)
                 ElseIf dtab(0)("token").ToString <> token Then
                     'Sesión iniciada en otro equipo
-                    If MsgBoxResult.Yes = MsgBox("Sesion abierta en " & dtab(0)("equipo") & ". Presione SI para continuar, NO para salir") Then
+                    If MsgBoxResult.Yes = MsgBox("Sesion abierta en " & dtab(0)("equipo") & "." &
+                                                 " Presione SI para continuar, NO para salir", MsgBoxStyle.YesNo,
+                                                 " Sesion iniciada en otro equipo") Then
                         'Sesión iniciada en este equipo, cerrar sesión de accesos anteriores
                         mod_sql = "UPDATE usr_log SET sesion=False WHERE user_id=" & user_id
                         bd.edit(defcon, mod_sql)

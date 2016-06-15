@@ -34,7 +34,7 @@
         End Function
         Shared Function CopiaCuil(ByVal cuil As Double) As String
             titulo = "Buscar Copia de DNI / CUIL | CUIL N° " & cuil
-            destino = "\copia_dni_" & fecha_a_archivo(Date.Now) & ".pdf"
+            destino = "\copia_dni_" & DateToFilename(Date.Now) & ".pdf"
             'Muestra diálogo de búsqueda
             destino = Documento.cargar(folder_per & cuil, destino, titulo)
             Return cuil & destino
@@ -66,7 +66,7 @@
         End Function
         Shared Function CertificadoDefuncion(ByVal cuil As Double) As String
             titulo = "Buscar Certificado de Defuncion | CUIL N° " & cuil
-            destino = "\defuncion_" & fecha_a_archivo(Date.Now) & ".pdf"
+            destino = "\defuncion_" & DateToFilename(Date.Now) & ".pdf"
             'Muestra diálogo de búsqueda
             destino = cargar(folder_per & cuil, destino, titulo)
             Return cuil & destino
@@ -116,7 +116,7 @@
                     destino = "\linea_municipal"
                 End If
 
-                destino += "_" & fecha_a_archivo(Date.Now) & ".pdf"
+                destino += "_" & DateToFilename(Date.Now) & ".pdf"
 
                 titulo = "Buscar Copia de Escritura | Partida: " & cat
 
@@ -152,7 +152,7 @@
             End If
         End Function
         Shared Function CargarCaratulaExp(exp As String) As String
-            destino = "\Caratula_" & fecha_a_archivo(Date.Now) & ".pdf"
+            destino = "\Caratula_" & DateToFilename(Date.Now) & ".pdf"
             titulo = "Buscar Caratula de Expediente | Expediente N° " & exp
 
             'Muestra diálogo de búsqueda
@@ -160,7 +160,7 @@
             Return exp & destino
         End Function
         Shared Function CargarFinalObra(exp As String) As String
-            destino = "\FinalObra_" & fecha_a_archivo(Date.Now) & ".pdf"
+            destino = "\FinalObra_" & DateToFilename(Date.Now) & ".pdf"
             titulo = "Buscar copia de Final de Obra | Expediente N° " & exp
 
             'Muestra diálogo de búsqueda
@@ -171,7 +171,7 @@
     Public Class Gobierno
         Shared Function CopiaOrdenanza(ventana As Form, ByVal codigo As Double) As String
             If codigo > 0 Then
-                destino = "\CopiaOrdenanza_" & fecha_a_archivo(Date.Now) & ".pdf"
+                destino = "\CopiaOrdenanza_" & DateToFilename(Date.Now) & ".pdf"
                 titulo = "Buscar Copia de Ordenanza N° " & Microsoft.VisualBasic.Left(codigo, Len(codigo.ToString) - 4) & "/" & Microsoft.VisualBasic.Right(codigo, 4)
                 'Muestra diálogo de búsqueda
                 destino = cargar(folder_ord & codigo, destino, titulo)

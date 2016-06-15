@@ -17,7 +17,7 @@
             mod_sql = "INSERT INTO opr_pago(opr_id, tipo_deuda, cuota, deuda, vence)" &
                      " VALUES(" & opr_id & ", '" & desc & "'," &
                      " " & cuota & ", '" & monto / cuotas & "'," &
-                     " '" & calc_vence(fecha, cuota) & "');"
+                     " '" & CalculateExpirationDate(fecha, cuota) & "');"
             bd.edit(defcon, mod_sql)
         Next
     End Sub
