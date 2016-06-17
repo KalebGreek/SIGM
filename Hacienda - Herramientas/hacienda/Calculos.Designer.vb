@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class Arqueo
+Partial Class Calculos
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -23,7 +23,7 @@ Partial Class Arqueo
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Arqueo))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Calculos))
         Me.MenuStrip2 = New System.Windows.Forms.MenuStrip()
         Me.CalculosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
@@ -50,9 +50,6 @@ Partial Class Arqueo
         Me.DBAccessToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DBPostgreSQLToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Connection = New System.Windows.Forms.ToolStripLabel()
-        Me.ToolStrip2 = New System.Windows.Forms.ToolStrip()
-        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
-        Me.CustomCriteria = New System.Windows.Forms.ToolStripLabel()
         Me.TablaPersonalizada = New System.Windows.Forms.LinkLabel()
         Me.PanelColumnas = New System.Windows.Forms.Panel()
         Me.ListaColumnas = New System.Windows.Forms.CheckedListBox()
@@ -65,12 +62,13 @@ Partial Class Arqueo
         Me.final = New System.Windows.Forms.DateTimePicker()
         Me.PorAño = New System.Windows.Forms.RadioButton()
         Me.año = New System.Windows.Forms.NumericUpDown()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.SelectorCampoFecha = New System.Windows.Forms.ComboBox()
         Me.MenuStrip2.SuspendLayout()
         CType(Me.DataView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel2.SuspendLayout()
         CType(Me.bs, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip1.SuspendLayout()
-        Me.ToolStrip2.SuspendLayout()
         Me.PanelColumnas.SuspendLayout()
         Me.PanelFiltroFecha.SuspendLayout()
         CType(Me.año, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -197,16 +195,16 @@ Partial Class Arqueo
         Me.DataView.Name = "DataView"
         Me.DataView.ReadOnly = True
         Me.DataView.RowHeadersVisible = False
-        Me.DataView.Size = New System.Drawing.Size(637, 330)
+        Me.DataView.Size = New System.Drawing.Size(637, 356)
         Me.DataView.TabIndex = 24
         '
         'Panel2
         '
         Me.Panel2.Controls.Add(Me.DataView)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel2.Location = New System.Drawing.Point(0, 80)
+        Me.Panel2.Location = New System.Drawing.Point(0, 79)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(637, 330)
+        Me.Panel2.Size = New System.Drawing.Size(637, 356)
         Me.Panel2.TabIndex = 30
         '
         'ToolStrip1
@@ -216,7 +214,7 @@ Partial Class Arqueo
         Me.ToolStrip1.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 12.0!)
         Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripDropDownButton2, Me.Connection})
-        Me.ToolStrip1.Location = New System.Drawing.Point(0, 410)
+        Me.ToolStrip1.Location = New System.Drawing.Point(0, 435)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Padding = New System.Windows.Forms.Padding(0)
         Me.ToolStrip1.Size = New System.Drawing.Size(784, 26)
@@ -265,39 +263,12 @@ Partial Class Arqueo
         Me.Connection.Size = New System.Drawing.Size(333, 20)
         Me.Connection.Text = "Seleccione una base de datos antes de continuar."
         '
-        'ToolStrip2
-        '
-        Me.ToolStrip2.AutoSize = False
-        Me.ToolStrip2.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.ToolStrip2.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 12.0!)
-        Me.ToolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.CustomCriteria})
-        Me.ToolStrip2.Location = New System.Drawing.Point(0, 436)
-        Me.ToolStrip2.Name = "ToolStrip2"
-        Me.ToolStrip2.Padding = New System.Windows.Forms.Padding(0)
-        Me.ToolStrip2.Size = New System.Drawing.Size(784, 25)
-        Me.ToolStrip2.TabIndex = 32
-        '
-        'ToolStripLabel1
-        '
-        Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(168, 22)
-        Me.ToolStripLabel1.Text = "Criterios de Busqueda"
-        '
-        'CustomCriteria
-        '
-        Me.CustomCriteria.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-        Me.CustomCriteria.Margin = New System.Windows.Forms.Padding(3)
-        Me.CustomCriteria.Name = "CustomCriteria"
-        Me.CustomCriteria.Size = New System.Drawing.Size(66, 19)
-        Me.CustomCriteria.Text = "Ninguno."
-        '
         'TablaPersonalizada
         '
         Me.TablaPersonalizada.ActiveLinkColor = System.Drawing.Color.Blue
         Me.TablaPersonalizada.DisabledLinkColor = System.Drawing.Color.Blue
         Me.TablaPersonalizada.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TablaPersonalizada.Location = New System.Drawing.Point(0, 59)
+        Me.TablaPersonalizada.Location = New System.Drawing.Point(0, 58)
         Me.TablaPersonalizada.Name = "TablaPersonalizada"
         Me.TablaPersonalizada.Size = New System.Drawing.Size(784, 21)
         Me.TablaPersonalizada.TabIndex = 33
@@ -311,10 +282,11 @@ Partial Class Arqueo
         Me.PanelColumnas.Controls.Add(Me.ListaColumnas)
         Me.PanelColumnas.Controls.Add(Me.Label1)
         Me.PanelColumnas.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PanelColumnas.Location = New System.Drawing.Point(637, 80)
+        Me.PanelColumnas.Location = New System.Drawing.Point(637, 79)
         Me.PanelColumnas.Name = "PanelColumnas"
-        Me.PanelColumnas.Size = New System.Drawing.Size(147, 330)
+        Me.PanelColumnas.Size = New System.Drawing.Size(147, 356)
         Me.PanelColumnas.TabIndex = 34
+        Me.PanelColumnas.Visible = False
         '
         'ListaColumnas
         '
@@ -322,7 +294,7 @@ Partial Class Arqueo
         Me.ListaColumnas.FormattingEnabled = True
         Me.ListaColumnas.Location = New System.Drawing.Point(0, 22)
         Me.ListaColumnas.Name = "ListaColumnas"
-        Me.ListaColumnas.Size = New System.Drawing.Size(147, 308)
+        Me.ListaColumnas.Size = New System.Drawing.Size(147, 334)
         Me.ListaColumnas.TabIndex = 24
         '
         'Label1
@@ -348,11 +320,15 @@ Partial Class Arqueo
         Me.PanelFiltroFecha.Controls.Add(Me.final)
         Me.PanelFiltroFecha.Controls.Add(Me.PorAño)
         Me.PanelFiltroFecha.Controls.Add(Me.año)
+        Me.PanelFiltroFecha.Controls.Add(Me.Label3)
+        Me.PanelFiltroFecha.Controls.Add(Me.SelectorCampoFecha)
         Me.PanelFiltroFecha.Dock = System.Windows.Forms.DockStyle.Top
+        Me.PanelFiltroFecha.Font = New System.Drawing.Font("PF DinDisplay Pro", 11.0!)
         Me.PanelFiltroFecha.Location = New System.Drawing.Point(0, 29)
         Me.PanelFiltroFecha.Name = "PanelFiltroFecha"
-        Me.PanelFiltroFecha.Size = New System.Drawing.Size(784, 30)
+        Me.PanelFiltroFecha.Size = New System.Drawing.Size(784, 29)
         Me.PanelFiltroFecha.TabIndex = 36
+        Me.PanelFiltroFecha.Visible = False
         '
         'SinFiltro
         '
@@ -360,13 +336,13 @@ Partial Class Arqueo
         Me.SinFiltro.BackColor = System.Drawing.Color.Gray
         Me.SinFiltro.Checked = True
         Me.SinFiltro.ForeColor = System.Drawing.Color.White
-        Me.SinFiltro.Location = New System.Drawing.Point(15, 3)
-        Me.SinFiltro.Margin = New System.Windows.Forms.Padding(15, 3, 3, 3)
+        Me.SinFiltro.Location = New System.Drawing.Point(5, 3)
+        Me.SinFiltro.Margin = New System.Windows.Forms.Padding(5, 3, 3, 3)
         Me.SinFiltro.Name = "SinFiltro"
-        Me.SinFiltro.Size = New System.Drawing.Size(101, 23)
+        Me.SinFiltro.Size = New System.Drawing.Size(44, 22)
         Me.SinFiltro.TabIndex = 40
         Me.SinFiltro.TabStop = True
-        Me.SinFiltro.Text = "SIN FILTRO"
+        Me.SinFiltro.Text = "NO"
         Me.SinFiltro.UseVisualStyleBackColor = False
         '
         'PorFecha
@@ -374,9 +350,9 @@ Partial Class Arqueo
         Me.PorFecha.AutoSize = True
         Me.PorFecha.BackColor = System.Drawing.Color.Gray
         Me.PorFecha.ForeColor = System.Drawing.Color.White
-        Me.PorFecha.Location = New System.Drawing.Point(122, 3)
+        Me.PorFecha.Location = New System.Drawing.Point(55, 3)
         Me.PorFecha.Name = "PorFecha"
-        Me.PorFecha.Size = New System.Drawing.Size(104, 23)
+        Me.PorFecha.Size = New System.Drawing.Size(99, 22)
         Me.PorFecha.TabIndex = 38
         Me.PorFecha.Text = "POR FECHA"
         Me.PorFecha.UseVisualStyleBackColor = False
@@ -385,10 +361,10 @@ Partial Class Arqueo
         '
         Me.inicio.Enabled = False
         Me.inicio.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.inicio.Location = New System.Drawing.Point(231, 2)
+        Me.inicio.Location = New System.Drawing.Point(159, 2)
         Me.inicio.Margin = New System.Windows.Forms.Padding(2)
         Me.inicio.Name = "inicio"
-        Me.inicio.Size = New System.Drawing.Size(102, 27)
+        Me.inicio.Size = New System.Drawing.Size(110, 25)
         Me.inicio.TabIndex = 31
         Me.inicio.Value = New Date(2016, 6, 10, 0, 0, 0, 0)
         '
@@ -396,7 +372,7 @@ Partial Class Arqueo
         '
         Me.Label2.BackColor = System.Drawing.Color.Gray
         Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(340, 3)
+        Me.Label2.Location = New System.Drawing.Point(276, 3)
         Me.Label2.Margin = New System.Windows.Forms.Padding(5, 3, 3, 3)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(13, 20)
@@ -408,10 +384,10 @@ Partial Class Arqueo
         '
         Me.final.Enabled = False
         Me.final.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.final.Location = New System.Drawing.Point(358, 2)
+        Me.final.Location = New System.Drawing.Point(294, 2)
         Me.final.Margin = New System.Windows.Forms.Padding(2)
         Me.final.Name = "final"
-        Me.final.Size = New System.Drawing.Size(102, 27)
+        Me.final.Size = New System.Drawing.Size(110, 25)
         Me.final.TabIndex = 33
         '
         'PorAño
@@ -419,10 +395,10 @@ Partial Class Arqueo
         Me.PorAño.AutoSize = True
         Me.PorAño.BackColor = System.Drawing.Color.Gray
         Me.PorAño.ForeColor = System.Drawing.Color.White
-        Me.PorAño.Location = New System.Drawing.Point(472, 3)
-        Me.PorAño.Margin = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        Me.PorAño.Location = New System.Drawing.Point(411, 3)
+        Me.PorAño.Margin = New System.Windows.Forms.Padding(5, 3, 3, 3)
         Me.PorAño.Name = "PorAño"
-        Me.PorAño.Size = New System.Drawing.Size(75, 23)
+        Me.PorAño.Size = New System.Drawing.Size(70, 22)
         Me.PorAño.TabIndex = 37
         Me.PorAño.Text = "ANUAL"
         Me.PorAño.UseVisualStyleBackColor = False
@@ -430,18 +406,38 @@ Partial Class Arqueo
         'año
         '
         Me.año.Enabled = False
-        Me.año.Font = New System.Drawing.Font("PF DinDisplay Pro", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.año.Location = New System.Drawing.Point(552, 2)
+        Me.año.Location = New System.Drawing.Point(486, 2)
         Me.año.Margin = New System.Windows.Forms.Padding(2)
         Me.año.Maximum = New Decimal(New Integer() {2100, 0, 0, 0})
         Me.año.Minimum = New Decimal(New Integer() {1900, 0, 0, 0})
         Me.año.Name = "año"
-        Me.año.Size = New System.Drawing.Size(58, 23)
+        Me.año.Size = New System.Drawing.Size(58, 25)
         Me.año.TabIndex = 36
         Me.año.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.año.Value = New Decimal(New Integer() {1900, 0, 0, 0})
         '
-        'Arqueo
+        'Label3
+        '
+        Me.Label3.ForeColor = System.Drawing.Color.White
+        Me.Label3.Location = New System.Drawing.Point(549, 3)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(72, 22)
+        Me.Label3.TabIndex = 42
+        Me.Label3.Text = "FILTRAR"
+        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'SelectorCampoFecha
+        '
+        Me.SelectorCampoFecha.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.SelectorCampoFecha.FormattingEnabled = True
+        Me.SelectorCampoFecha.Location = New System.Drawing.Point(626, 2)
+        Me.SelectorCampoFecha.Margin = New System.Windows.Forms.Padding(2)
+        Me.SelectorCampoFecha.Name = "SelectorCampoFecha"
+        Me.SelectorCampoFecha.Size = New System.Drawing.Size(155, 26)
+        Me.SelectorCampoFecha.TabIndex = 41
+        '
+        'Calculos
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.ClientSize = New System.Drawing.Size(784, 461)
@@ -449,7 +445,6 @@ Partial Class Arqueo
         Me.Controls.Add(Me.PanelColumnas)
         Me.Controls.Add(Me.TablaPersonalizada)
         Me.Controls.Add(Me.ToolStrip1)
-        Me.Controls.Add(Me.ToolStrip2)
         Me.Controls.Add(Me.PanelFiltroFecha)
         Me.Controls.Add(Me.MenuStrip2)
         Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
@@ -458,7 +453,7 @@ Partial Class Arqueo
         Me.KeyPreview = True
         Me.Margin = New System.Windows.Forms.Padding(4, 6, 4, 6)
         Me.MinimumSize = New System.Drawing.Size(800, 500)
-        Me.Name = "Arqueo"
+        Me.Name = "Calculos"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Arqueo"
         Me.MenuStrip2.ResumeLayout(False)
@@ -468,8 +463,6 @@ Partial Class Arqueo
         CType(Me.bs, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
-        Me.ToolStrip2.ResumeLayout(False)
-        Me.ToolStrip2.PerformLayout()
         Me.PanelColumnas.ResumeLayout(False)
         Me.PanelFiltroFecha.ResumeLayout(False)
         Me.PanelFiltroFecha.PerformLayout()
@@ -496,9 +489,6 @@ Partial Class Arqueo
     Friend WithEvents DBAccessToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DBPostgreSQLToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Connection As ToolStripLabel
-    Friend WithEvents ToolStrip2 As ToolStrip
-    Friend WithEvents ToolStripLabel1 As ToolStripLabel
-    Friend WithEvents CustomCriteria As ToolStripLabel
     Friend WithEvents TablaPersonalizada As LinkLabel
     Friend WithEvents PanelColumnas As Panel
     Friend WithEvents ListaColumnas As CheckedListBox
@@ -518,4 +508,6 @@ Partial Class Arqueo
     Friend WithEvents CompararEgresosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents IngresosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EgresosToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Label3 As Label
+    Friend WithEvents SelectorCampoFecha As ComboBox
 End Class

@@ -44,9 +44,7 @@ Partial Class ContenedorGen
         Me.GenerarCertificadoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.HaciendaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MovimientosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ArqueoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CalculosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OprivadasMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.BuscarExpedienteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BuscarProfesionalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -164,7 +162,7 @@ Partial Class ContenedorGen
         '
         'HaciendaMenu
         '
-        Me.HaciendaMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConsultarImpuestoToolStripMenuItem, Me.ConsultarCuentaAgrupadaToolStripMenuItem, Me.ToolStripSeparator5, Me.CalculoAnualDeImpuestosToolStripMenuItem, Me.LibreDeudaToolStripMenuItem, Me.ToolStripSeparator3, Me.HaciendaToolStripMenuItem})
+        Me.HaciendaMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConsultarImpuestoToolStripMenuItem, Me.ConsultarCuentaAgrupadaToolStripMenuItem, Me.ToolStripSeparator5, Me.CalculoAnualDeImpuestosToolStripMenuItem, Me.LibreDeudaToolStripMenuItem, Me.ToolStripSeparator3, Me.HaciendaToolStripMenuItem, Me.CalculosToolStripMenuItem})
         Me.HaciendaMenu.ForeColor = System.Drawing.Color.White
         Me.HaciendaMenu.Name = "HaciendaMenu"
         Me.HaciendaMenu.Size = New System.Drawing.Size(109, 27)
@@ -218,29 +216,18 @@ Partial Class ContenedorGen
         '
         'HaciendaToolStripMenuItem
         '
-        Me.HaciendaToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MovimientosToolStripMenuItem, Me.ToolStripSeparator4, Me.ArqueoToolStripMenuItem})
         Me.HaciendaToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-        Me.HaciendaToolStripMenuItem.ForeColor = System.Drawing.Color.Black
+        Me.HaciendaToolStripMenuItem.ForeColor = System.Drawing.Color.DimGray
         Me.HaciendaToolStripMenuItem.Name = "HaciendaToolStripMenuItem"
         Me.HaciendaToolStripMenuItem.Size = New System.Drawing.Size(259, 24)
         Me.HaciendaToolStripMenuItem.Text = "Herramientas"
         '
-        'MovimientosToolStripMenuItem
+        'CalculosToolStripMenuItem
         '
-        Me.MovimientosToolStripMenuItem.Name = "MovimientosToolStripMenuItem"
-        Me.MovimientosToolStripMenuItem.Size = New System.Drawing.Size(160, 24)
-        Me.MovimientosToolStripMenuItem.Text = "Movimientos"
-        '
-        'ToolStripSeparator4
-        '
-        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(157, 6)
-        '
-        'ArqueoToolStripMenuItem
-        '
-        Me.ArqueoToolStripMenuItem.Name = "ArqueoToolStripMenuItem"
-        Me.ArqueoToolStripMenuItem.Size = New System.Drawing.Size(160, 24)
-        Me.ArqueoToolStripMenuItem.Text = "Arqueo"
+        Me.CalculosToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+        Me.CalculosToolStripMenuItem.Name = "CalculosToolStripMenuItem"
+        Me.CalculosToolStripMenuItem.Size = New System.Drawing.Size(259, 24)
+        Me.CalculosToolStripMenuItem.Text = "Calculos"
         '
         'OprivadasMenu
         '
@@ -390,8 +377,6 @@ Partial Class ContenedorGen
     Friend WithEvents GobiernoMenu As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents HaciendaMenu As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents HaciendaToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
-    Friend WithEvents ArqueoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents OprivadasMenu As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents PersonaMenu As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents CatastroMenu As System.Windows.Forms.ToolStripMenuItem
@@ -408,7 +393,6 @@ Partial Class ContenedorGen
     Friend WithEvents BuscarOrdenanzaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ConsultarImpuestoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ConsultarCuentaAgrupadaToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents MovimientosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
     Friend WithEvents CalculoAnualDeImpuestosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents NuevaPersonaToolStripMenuItem As ToolStripMenuItem
@@ -422,4 +406,5 @@ Partial Class ContenedorGen
     Friend WithEvents LibreDeudaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents GenerarCertificadoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ComercioMenu As ToolStripMenuItem
+    Friend WithEvents CalculosToolStripMenuItem As ToolStripMenuItem
 End Class
