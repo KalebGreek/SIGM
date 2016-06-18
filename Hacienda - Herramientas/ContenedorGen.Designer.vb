@@ -36,15 +36,16 @@ Partial Class ContenedorGen
         Me.NuevaOrdenanzaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BuscarOrdenanzaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HaciendaMenu = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HaciendaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConsultarImpuestoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConsultarCuentaAgrupadaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ConsultaDeMovimientosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ConsultasEspecialesStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.CalculoAnualDeImpuestosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LibreDeudaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GenerarCertificadoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
-        Me.HaciendaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CalculosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OprivadasMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.BuscarExpedienteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BuscarProfesionalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -162,31 +163,61 @@ Partial Class ContenedorGen
         '
         'HaciendaMenu
         '
-        Me.HaciendaMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConsultarImpuestoToolStripMenuItem, Me.ConsultarCuentaAgrupadaToolStripMenuItem, Me.ToolStripSeparator5, Me.CalculoAnualDeImpuestosToolStripMenuItem, Me.LibreDeudaToolStripMenuItem, Me.ToolStripSeparator3, Me.HaciendaToolStripMenuItem, Me.CalculosToolStripMenuItem})
+        Me.HaciendaMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HaciendaToolStripMenuItem, Me.ConsultarImpuestoToolStripMenuItem, Me.ConsultarCuentaAgrupadaToolStripMenuItem, Me.ConsultaDeMovimientosToolStripMenuItem, Me.ConsultasEspecialesStripMenuItem, Me.ToolStripSeparator3, Me.ToolStripMenuItem1, Me.CalculoAnualDeImpuestosToolStripMenuItem, Me.LibreDeudaToolStripMenuItem})
         Me.HaciendaMenu.ForeColor = System.Drawing.Color.White
         Me.HaciendaMenu.Name = "HaciendaMenu"
         Me.HaciendaMenu.Size = New System.Drawing.Size(109, 27)
         Me.HaciendaMenu.Text = "HACIENDA"
         Me.HaciendaMenu.Visible = False
         '
+        'HaciendaToolStripMenuItem
+        '
+        Me.HaciendaToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+        Me.HaciendaToolStripMenuItem.ForeColor = System.Drawing.Color.DimGray
+        Me.HaciendaToolStripMenuItem.Name = "HaciendaToolStripMenuItem"
+        Me.HaciendaToolStripMenuItem.Size = New System.Drawing.Size(259, 24)
+        Me.HaciendaToolStripMenuItem.Text = "Consultas"
+        '
         'ConsultarImpuestoToolStripMenuItem
         '
         Me.ConsultarImpuestoToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
         Me.ConsultarImpuestoToolStripMenuItem.Name = "ConsultarImpuestoToolStripMenuItem"
         Me.ConsultarImpuestoToolStripMenuItem.Size = New System.Drawing.Size(259, 24)
-        Me.ConsultarImpuestoToolStripMenuItem.Text = "Consultar Impuesto"
+        Me.ConsultarImpuestoToolStripMenuItem.Text = "Impuestos y Deuda Total"
         '
         'ConsultarCuentaAgrupadaToolStripMenuItem
         '
         Me.ConsultarCuentaAgrupadaToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
         Me.ConsultarCuentaAgrupadaToolStripMenuItem.Name = "ConsultarCuentaAgrupadaToolStripMenuItem"
         Me.ConsultarCuentaAgrupadaToolStripMenuItem.Size = New System.Drawing.Size(259, 24)
-        Me.ConsultarCuentaAgrupadaToolStripMenuItem.Text = "Consultar Cuenta Agrupada"
+        Me.ConsultarCuentaAgrupadaToolStripMenuItem.Text = "Cuenta Agrupada"
         '
-        'ToolStripSeparator5
+        'ConsultaDeMovimientosToolStripMenuItem
         '
-        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
-        Me.ToolStripSeparator5.Size = New System.Drawing.Size(256, 6)
+        Me.ConsultaDeMovimientosToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+        Me.ConsultaDeMovimientosToolStripMenuItem.Name = "ConsultaDeMovimientosToolStripMenuItem"
+        Me.ConsultaDeMovimientosToolStripMenuItem.Size = New System.Drawing.Size(259, 24)
+        Me.ConsultaDeMovimientosToolStripMenuItem.Text = "Movimientos por Cuenta"
+        '
+        'ConsultasEspecialesStripMenuItem
+        '
+        Me.ConsultasEspecialesStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+        Me.ConsultasEspecialesStripMenuItem.Name = "ConsultasEspecialesStripMenuItem"
+        Me.ConsultasEspecialesStripMenuItem.Size = New System.Drawing.Size(259, 24)
+        Me.ConsultasEspecialesStripMenuItem.Text = "Consultas Especiales"
+        '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(256, 6)
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+        Me.ToolStripMenuItem1.ForeColor = System.Drawing.Color.DimGray
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(259, 24)
+        Me.ToolStripMenuItem1.Text = "Herramientas"
         '
         'CalculoAnualDeImpuestosToolStripMenuItem
         '
@@ -208,26 +239,6 @@ Partial Class ContenedorGen
         Me.GenerarCertificadoToolStripMenuItem.Name = "GenerarCertificadoToolStripMenuItem"
         Me.GenerarCertificadoToolStripMenuItem.Size = New System.Drawing.Size(202, 24)
         Me.GenerarCertificadoToolStripMenuItem.Text = "Generar Certificado"
-        '
-        'ToolStripSeparator3
-        '
-        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.ToolStripSeparator3.Size = New System.Drawing.Size(256, 6)
-        '
-        'HaciendaToolStripMenuItem
-        '
-        Me.HaciendaToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-        Me.HaciendaToolStripMenuItem.ForeColor = System.Drawing.Color.DimGray
-        Me.HaciendaToolStripMenuItem.Name = "HaciendaToolStripMenuItem"
-        Me.HaciendaToolStripMenuItem.Size = New System.Drawing.Size(259, 24)
-        Me.HaciendaToolStripMenuItem.Text = "Herramientas"
-        '
-        'CalculosToolStripMenuItem
-        '
-        Me.CalculosToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-        Me.CalculosToolStripMenuItem.Name = "CalculosToolStripMenuItem"
-        Me.CalculosToolStripMenuItem.Size = New System.Drawing.Size(259, 24)
-        Me.CalculosToolStripMenuItem.Text = "Calculos"
         '
         'OprivadasMenu
         '
@@ -402,9 +413,10 @@ Partial Class ContenedorGen
     Friend WithEvents BuscarInmuebleToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ConsultarPagosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SalirToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator5 As ToolStripSeparator
     Friend WithEvents LibreDeudaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents GenerarCertificadoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ComercioMenu As ToolStripMenuItem
-    Friend WithEvents CalculosToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ConsultasEspecialesStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ConsultaDeMovimientosToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
 End Class

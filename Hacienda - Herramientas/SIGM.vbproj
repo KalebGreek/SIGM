@@ -262,10 +262,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="catastro\Catastro.vb" />
-    <Compile Include="hacienda\Calculos.Designer.vb">
-      <DependentUpon>Calculos.vb</DependentUpon>
+    <Compile Include="hacienda\ConsultasEspeciales.Designer.vb">
+      <DependentUpon>ConsultasEspeciales.vb</DependentUpon>
     </Compile>
-    <Compile Include="hacienda\Calculos.vb">
+    <Compile Include="hacienda\ConsultasEspeciales.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="entorno\visor_error.Designer.vb">
@@ -412,8 +412,8 @@
       <DependentUpon>ConsultaImpuesto.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\Calculos.resx">
-      <DependentUpon>Calculos.vb</DependentUpon>
+    <EmbeddedResource Include="hacienda\ConsultasEspeciales.resx">
+      <DependentUpon>ConsultasEspeciales.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="gobierno\ConsultaEmpleado.resx">
       <DependentUpon>ConsultaEmpleado.vb</DependentUpon>

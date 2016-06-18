@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class ConsultaMovimientos
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class ConsultaMovimientos
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ConsultaMovimientos))
@@ -35,31 +35,33 @@ Partial Class ConsultaMovimientos
         Me.bs_persona = New System.Windows.Forms.BindingSource(Me.components)
         Me.bs_contrib = New System.Windows.Forms.BindingSource(Me.components)
         Me.bs_mod_contrib = New System.Windows.Forms.BindingSource(Me.components)
-        Me.grupo_imp = New System.Windows.Forms.Panel()
-        Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.ActivarFiltro = New System.Windows.Forms.CheckBox()
-        Me.Keyword = New System.Windows.Forms.TextBox()
-        Me.SeleccionFiltro = New System.Windows.Forms.ComboBox()
-        Me.Search = New System.Windows.Forms.Button()
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.SeleccionCuenta = New System.Windows.Forms.ListBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.Egresos = New System.Windows.Forms.RadioButton()
-        Me.Ingresos = New System.Windows.Forms.RadioButton()
-        Me.et_con_imp = New System.Windows.Forms.Label()
         Me.visor = New System.Windows.Forms.DataGridView()
+        Me.grupo_imp = New System.Windows.Forms.Panel()
+        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
+        Me.Ingresos = New System.Windows.Forms.RadioButton()
+        Me.Egresos = New System.Windows.Forms.RadioButton()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.SeleccionCuenta = New System.Windows.Forms.ListBox()
+        Me.ActivarFiltro = New System.Windows.Forms.CheckBox()
+        Me.GrupoFiltro = New System.Windows.Forms.FlowLayoutPanel()
+        Me.fecha = New System.Windows.Forms.RadioButton()
+        Me.Razon = New System.Windows.Forms.RadioButton()
+        Me.Keyword = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.inicio = New System.Windows.Forms.DateTimePicker()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.final = New System.Windows.Forms.DateTimePicker()
+        Me.et_con_imp = New System.Windows.Forms.Label()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.bs_consulta, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.bs_cuenta, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.bs_persona, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.bs_contrib, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.bs_mod_contrib, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.grupo_imp.SuspendLayout()
-        Me.Panel3.SuspendLayout()
-        Me.Panel1.SuspendLayout()
-        Me.Panel2.SuspendLayout()
         CType(Me.visor, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.grupo_imp.SuspendLayout()
+        Me.FlowLayoutPanel1.SuspendLayout()
+        Me.GrupoFiltro.SuspendLayout()
         Me.SuspendLayout()
         '
         'basura1
@@ -81,10 +83,11 @@ Partial Class ConsultaMovimientos
         Me.StatusStrip1.BackColor = System.Drawing.SystemColors.Control
         Me.StatusStrip1.Font = New System.Drawing.Font("PF DinDisplay Pro", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.progreso, Me.info, Me.info2})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 587)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 437)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(1, 0, 9, 0)
-        Me.StatusStrip1.Size = New System.Drawing.Size(684, 24)
+        Me.StatusStrip1.Size = New System.Drawing.Size(784, 24)
+        Me.StatusStrip1.SizingGrip = False
         Me.StatusStrip1.TabIndex = 2
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -102,177 +105,18 @@ Partial Class ConsultaMovimientos
         Me.info.BackColor = System.Drawing.SystemColors.Control
         Me.info.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.info.Name = "info"
-        Me.info.Size = New System.Drawing.Size(15, 19)
-        Me.info.Text = "-"
+        Me.info.Size = New System.Drawing.Size(56, 19)
+        Me.info.Text = "TOTAL:"
         '
         'info2
         '
         Me.info2.BackColor = System.Drawing.SystemColors.Control
         Me.info2.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.info2.ForeColor = System.Drawing.Color.DimGray
+        Me.info2.ForeColor = System.Drawing.Color.Black
         Me.info2.Name = "info2"
         Me.info2.Size = New System.Drawing.Size(15, 19)
         Me.info2.Text = "-"
         Me.info2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'bs_consulta
-        '
-        '
-        'grupo_imp
-        '
-        Me.grupo_imp.BackColor = System.Drawing.Color.Gainsboro
-        Me.grupo_imp.Controls.Add(Me.Panel3)
-        Me.grupo_imp.Controls.Add(Me.Panel1)
-        Me.grupo_imp.Controls.Add(Me.Panel2)
-        Me.grupo_imp.Controls.Add(Me.et_con_imp)
-        Me.grupo_imp.Dock = System.Windows.Forms.DockStyle.Right
-        Me.grupo_imp.Location = New System.Drawing.Point(403, 0)
-        Me.grupo_imp.Name = "grupo_imp"
-        Me.grupo_imp.Size = New System.Drawing.Size(281, 587)
-        Me.grupo_imp.TabIndex = 4
-        '
-        'Panel3
-        '
-        Me.Panel3.Controls.Add(Me.ActivarFiltro)
-        Me.Panel3.Controls.Add(Me.Keyword)
-        Me.Panel3.Controls.Add(Me.SeleccionFiltro)
-        Me.Panel3.Controls.Add(Me.Search)
-        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel3.Location = New System.Drawing.Point(0, 385)
-        Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(281, 202)
-        Me.Panel3.TabIndex = 152
-        '
-        'ActivarFiltro
-        '
-        Me.ActivarFiltro.AutoSize = True
-        Me.ActivarFiltro.BackColor = System.Drawing.Color.Transparent
-        Me.ActivarFiltro.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ActivarFiltro.Location = New System.Drawing.Point(5, 2)
-        Me.ActivarFiltro.Margin = New System.Windows.Forms.Padding(2)
-        Me.ActivarFiltro.Name = "ActivarFiltro"
-        Me.ActivarFiltro.Size = New System.Drawing.Size(94, 23)
-        Me.ActivarFiltro.TabIndex = 97
-        Me.ActivarFiltro.Text = "Filtrar por"
-        Me.ActivarFiltro.UseVisualStyleBackColor = False
-        '
-        'Keyword
-        '
-        Me.Keyword.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.Keyword.Enabled = False
-        Me.Keyword.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Keyword.Location = New System.Drawing.Point(2, 61)
-        Me.Keyword.Name = "Keyword"
-        Me.Keyword.Size = New System.Drawing.Size(277, 27)
-        Me.Keyword.TabIndex = 96
-        '
-        'SeleccionFiltro
-        '
-        Me.SeleccionFiltro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.SeleccionFiltro.Enabled = False
-        Me.SeleccionFiltro.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.SeleccionFiltro.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SeleccionFiltro.FormattingEnabled = True
-        Me.SeleccionFiltro.Items.AddRange(New Object() {"RAZON", "CUIL"})
-        Me.SeleccionFiltro.Location = New System.Drawing.Point(2, 29)
-        Me.SeleccionFiltro.Margin = New System.Windows.Forms.Padding(2)
-        Me.SeleccionFiltro.Name = "SeleccionFiltro"
-        Me.SeleccionFiltro.Size = New System.Drawing.Size(277, 27)
-        Me.SeleccionFiltro.TabIndex = 95
-        '
-        'Search
-        '
-        Me.Search.BackColor = System.Drawing.SystemColors.Control
-        Me.Search.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Search.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Search.Location = New System.Drawing.Point(147, 93)
-        Me.Search.Margin = New System.Windows.Forms.Padding(2)
-        Me.Search.Name = "Search"
-        Me.Search.Size = New System.Drawing.Size(127, 26)
-        Me.Search.TabIndex = 94
-        Me.Search.Text = "Crear consulta"
-        Me.Search.UseVisualStyleBackColor = False
-        '
-        'Panel1
-        '
-        Me.Panel1.Controls.Add(Me.SeleccionCuenta)
-        Me.Panel1.Controls.Add(Me.Label1)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel1.Location = New System.Drawing.Point(0, 53)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(281, 534)
-        Me.Panel1.TabIndex = 150
-        '
-        'SeleccionCuenta
-        '
-        Me.SeleccionCuenta.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SeleccionCuenta.Font = New System.Drawing.Font("PF DinDisplay Pro", 11.0!)
-        Me.SeleccionCuenta.FormattingEnabled = True
-        Me.SeleccionCuenta.ItemHeight = 18
-        Me.SeleccionCuenta.Location = New System.Drawing.Point(0, 22)
-        Me.SeleccionCuenta.Name = "SeleccionCuenta"
-        Me.SeleccionCuenta.Size = New System.Drawing.Size(281, 512)
-        Me.SeleccionCuenta.TabIndex = 1
-        '
-        'Label1
-        '
-        Me.Label1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label1.Font = New System.Drawing.Font("PF DinDisplay Pro", 11.0!, System.Drawing.FontStyle.Bold)
-        Me.Label1.Location = New System.Drawing.Point(0, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(281, 22)
-        Me.Label1.TabIndex = 147
-        Me.Label1.Text = " Seleccionar Cuenta"
-        '
-        'Panel2
-        '
-        Me.Panel2.Controls.Add(Me.Egresos)
-        Me.Panel2.Controls.Add(Me.Ingresos)
-        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel2.Location = New System.Drawing.Point(0, 22)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(281, 31)
-        Me.Panel2.TabIndex = 151
-        '
-        'Egresos
-        '
-        Me.Egresos.AutoSize = True
-        Me.Egresos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Egresos.Font = New System.Drawing.Font("PF DinDisplay Pro", 11.0!)
-        Me.Egresos.Location = New System.Drawing.Point(89, 0)
-        Me.Egresos.Name = "Egresos"
-        Me.Egresos.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
-        Me.Egresos.Size = New System.Drawing.Size(192, 31)
-        Me.Egresos.TabIndex = 3
-        Me.Egresos.Text = "Egresos"
-        Me.Egresos.UseVisualStyleBackColor = True
-        '
-        'Ingresos
-        '
-        Me.Ingresos.AutoSize = True
-        Me.Ingresos.Checked = True
-        Me.Ingresos.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Ingresos.Font = New System.Drawing.Font("PF DinDisplay Pro", 11.0!)
-        Me.Ingresos.Location = New System.Drawing.Point(0, 0)
-        Me.Ingresos.Name = "Ingresos"
-        Me.Ingresos.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
-        Me.Ingresos.Size = New System.Drawing.Size(89, 31)
-        Me.Ingresos.TabIndex = 2
-        Me.Ingresos.TabStop = True
-        Me.Ingresos.Text = "Ingresos"
-        Me.Ingresos.UseVisualStyleBackColor = True
-        '
-        'et_con_imp
-        '
-        Me.et_con_imp.BackColor = System.Drawing.Color.FromArgb(CType(CType(155, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.et_con_imp.Dock = System.Windows.Forms.DockStyle.Top
-        Me.et_con_imp.Font = New System.Drawing.Font("PF DinDisplay Pro", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.et_con_imp.ForeColor = System.Drawing.Color.White
-        Me.et_con_imp.Location = New System.Drawing.Point(0, 0)
-        Me.et_con_imp.Name = "et_con_imp"
-        Me.et_con_imp.Size = New System.Drawing.Size(281, 22)
-        Me.et_con_imp.TabIndex = 146
-        Me.et_con_imp.Text = " FILTROS"
         '
         'visor
         '
@@ -287,15 +131,190 @@ Partial Class ConsultaMovimientos
         Me.visor.RowHeadersVisible = False
         Me.visor.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.visor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.visor.Size = New System.Drawing.Size(403, 587)
+        Me.visor.Size = New System.Drawing.Size(503, 437)
         Me.visor.TabIndex = 5
+        '
+        'grupo_imp
+        '
+        Me.grupo_imp.BackColor = System.Drawing.Color.Gainsboro
+        Me.grupo_imp.Controls.Add(Me.FlowLayoutPanel1)
+        Me.grupo_imp.Controls.Add(Me.et_con_imp)
+        Me.grupo_imp.Dock = System.Windows.Forms.DockStyle.Right
+        Me.grupo_imp.Location = New System.Drawing.Point(503, 0)
+        Me.grupo_imp.Name = "grupo_imp"
+        Me.grupo_imp.Size = New System.Drawing.Size(281, 437)
+        Me.grupo_imp.TabIndex = 4
+        '
+        'FlowLayoutPanel1
+        '
+        Me.FlowLayoutPanel1.BackColor = System.Drawing.Color.Gainsboro
+        Me.FlowLayoutPanel1.Controls.Add(Me.Ingresos)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Egresos)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Label1)
+        Me.FlowLayoutPanel1.Controls.Add(Me.SeleccionCuenta)
+        Me.FlowLayoutPanel1.Controls.Add(Me.ActivarFiltro)
+        Me.FlowLayoutPanel1.Controls.Add(Me.GrupoFiltro)
+        Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 22)
+        Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(281, 415)
+        Me.FlowLayoutPanel1.TabIndex = 147
+        '
+        'Ingresos
+        '
+        Me.Ingresos.AutoSize = True
+        Me.Ingresos.Checked = True
+        Me.Ingresos.Location = New System.Drawing.Point(3, 3)
+        Me.Ingresos.Name = "Ingresos"
+        Me.Ingresos.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
+        Me.Ingresos.Size = New System.Drawing.Size(92, 23)
+        Me.Ingresos.TabIndex = 148
+        Me.Ingresos.TabStop = True
+        Me.Ingresos.Text = "Ingresos"
+        Me.Ingresos.UseVisualStyleBackColor = True
+        '
+        'Egresos
+        '
+        Me.Egresos.AutoSize = True
+        Me.Egresos.Location = New System.Drawing.Point(101, 3)
+        Me.Egresos.Name = "Egresos"
+        Me.Egresos.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
+        Me.Egresos.Size = New System.Drawing.Size(89, 23)
+        Me.Egresos.TabIndex = 149
+        Me.Egresos.Text = "Egresos"
+        Me.Egresos.UseVisualStyleBackColor = True
+        '
+        'Label1
+        '
+        Me.Label1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(3, 29)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(275, 22)
+        Me.Label1.TabIndex = 150
+        Me.Label1.Text = " Seleccionar Cuenta"
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft
+        '
+        'SeleccionCuenta
+        '
+        Me.SeleccionCuenta.FormattingEnabled = True
+        Me.SeleccionCuenta.ItemHeight = 19
+        Me.SeleccionCuenta.Location = New System.Drawing.Point(3, 54)
+        Me.SeleccionCuenta.Name = "SeleccionCuenta"
+        Me.SeleccionCuenta.Size = New System.Drawing.Size(275, 175)
+        Me.SeleccionCuenta.TabIndex = 151
+        '
+        'ActivarFiltro
+        '
+        Me.ActivarFiltro.BackColor = System.Drawing.Color.Transparent
+        Me.ActivarFiltro.Location = New System.Drawing.Point(2, 234)
+        Me.ActivarFiltro.Margin = New System.Windows.Forms.Padding(2)
+        Me.ActivarFiltro.Name = "ActivarFiltro"
+        Me.ActivarFiltro.Size = New System.Drawing.Size(274, 23)
+        Me.ActivarFiltro.TabIndex = 165
+        Me.ActivarFiltro.Text = "Filtrar por"
+        Me.ActivarFiltro.UseVisualStyleBackColor = False
+        '
+        'GrupoFiltro
+        '
+        Me.GrupoFiltro.BackColor = System.Drawing.Color.Gainsboro
+        Me.GrupoFiltro.Controls.Add(Me.fecha)
+        Me.GrupoFiltro.Controls.Add(Me.Razon)
+        Me.GrupoFiltro.Controls.Add(Me.Keyword)
+        Me.GrupoFiltro.Controls.Add(Me.Label2)
+        Me.GrupoFiltro.Controls.Add(Me.inicio)
+        Me.GrupoFiltro.Controls.Add(Me.Label3)
+        Me.GrupoFiltro.Controls.Add(Me.final)
+        Me.GrupoFiltro.Location = New System.Drawing.Point(3, 262)
+        Me.GrupoFiltro.Name = "GrupoFiltro"
+        Me.GrupoFiltro.Size = New System.Drawing.Size(276, 131)
+        Me.GrupoFiltro.TabIndex = 166
+        Me.GrupoFiltro.Visible = False
+        '
+        'fecha
+        '
+        Me.fecha.AutoSize = True
+        Me.fecha.Checked = True
+        Me.fecha.Location = New System.Drawing.Point(3, 3)
+        Me.fecha.Name = "fecha"
+        Me.fecha.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
+        Me.fecha.Size = New System.Drawing.Size(77, 23)
+        Me.fecha.TabIndex = 166
+        Me.fecha.TabStop = True
+        Me.fecha.Text = "Fecha"
+        Me.fecha.UseVisualStyleBackColor = True
+        '
+        'Razon
+        '
+        Me.Razon.AutoSize = True
+        Me.Razon.Location = New System.Drawing.Point(86, 3)
+        Me.Razon.Name = "Razon"
+        Me.Razon.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
+        Me.Razon.Size = New System.Drawing.Size(77, 23)
+        Me.Razon.TabIndex = 165
+        Me.Razon.Text = "Razon"
+        Me.Razon.UseVisualStyleBackColor = True
+        '
+        'Keyword
+        '
+        Me.Keyword.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.Keyword.Enabled = False
+        Me.Keyword.Location = New System.Drawing.Point(3, 32)
+        Me.Keyword.Name = "Keyword"
+        Me.Keyword.Size = New System.Drawing.Size(270, 27)
+        Me.Keyword.TabIndex = 163
+        '
+        'Label2
+        '
+        Me.Label2.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(5, 67)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(5)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(53, 22)
+        Me.Label2.TabIndex = 168
+        Me.Label2.Text = "Desde"
+        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'inicio
+        '
+        Me.inicio.Location = New System.Drawing.Point(66, 65)
+        Me.inicio.Name = "inicio"
+        Me.inicio.Size = New System.Drawing.Size(207, 27)
+        Me.inicio.TabIndex = 167
+        '
+        'Label3
+        '
+        Me.Label3.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(5, 100)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(5)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(53, 22)
+        Me.Label3.TabIndex = 169
+        Me.Label3.Text = "Hasta"
+        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'final
+        '
+        Me.final.Location = New System.Drawing.Point(66, 98)
+        Me.final.Name = "final"
+        Me.final.Size = New System.Drawing.Size(207, 27)
+        Me.final.TabIndex = 170
+        '
+        'et_con_imp
+        '
+        Me.et_con_imp.BackColor = System.Drawing.Color.FromArgb(CType(CType(155, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.et_con_imp.Dock = System.Windows.Forms.DockStyle.Top
+        Me.et_con_imp.Font = New System.Drawing.Font("PF DinDisplay Pro", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.et_con_imp.ForeColor = System.Drawing.Color.White
+        Me.et_con_imp.Location = New System.Drawing.Point(0, 0)
+        Me.et_con_imp.Name = "et_con_imp"
+        Me.et_con_imp.Size = New System.Drawing.Size(281, 22)
+        Me.et_con_imp.TabIndex = 146
+        Me.et_con_imp.Text = " FILTROS"
         '
         'ConsultaMovimientos
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
-        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.BackgroundImage = Global.Sigm.My.Resources.Resources.trama41
-        Me.ClientSize = New System.Drawing.Size(684, 611)
+        Me.ClientSize = New System.Drawing.Size(784, 461)
         Me.Controls.Add(Me.visor)
         Me.Controls.Add(Me.grupo_imp)
         Me.Controls.Add(Me.StatusStrip1)
@@ -303,10 +322,11 @@ Partial Class ConsultaMovimientos
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.MinimumSize = New System.Drawing.Size(700, 650)
+        Me.MinimumSize = New System.Drawing.Size(800, 500)
         Me.Name = "ConsultaMovimientos"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Consulta de Movimientos"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
         CType(Me.bs_consulta, System.ComponentModel.ISupportInitialize).EndInit()
@@ -314,13 +334,12 @@ Partial Class ConsultaMovimientos
         CType(Me.bs_persona, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.bs_contrib, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.bs_mod_contrib, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.grupo_imp.ResumeLayout(False)
-        Me.Panel3.ResumeLayout(False)
-        Me.Panel3.PerformLayout()
-        Me.Panel1.ResumeLayout(False)
-        Me.Panel2.ResumeLayout(False)
-        Me.Panel2.PerformLayout()
         CType(Me.visor, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.grupo_imp.ResumeLayout(False)
+        Me.FlowLayoutPanel1.ResumeLayout(False)
+        Me.FlowLayoutPanel1.PerformLayout()
+        Me.GrupoFiltro.ResumeLayout(False)
+        Me.GrupoFiltro.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -336,19 +355,21 @@ Partial Class ConsultaMovimientos
     Friend WithEvents progreso As System.Windows.Forms.ToolStripProgressBar
     Friend WithEvents bs_contrib As System.Windows.Forms.BindingSource
     Friend WithEvents bs_mod_contrib As System.Windows.Forms.BindingSource
-    Friend WithEvents grupo_imp As System.Windows.Forms.Panel
     Friend WithEvents visor As System.Windows.Forms.DataGridView
-    Friend WithEvents et_con_imp As System.Windows.Forms.Label
-    Friend WithEvents Panel1 As System.Windows.Forms.Panel
-    Friend WithEvents SeleccionCuenta As System.Windows.Forms.ListBox
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents Panel2 As System.Windows.Forms.Panel
-    Friend WithEvents Egresos As System.Windows.Forms.RadioButton
-    Friend WithEvents Ingresos As System.Windows.Forms.RadioButton
-    Friend WithEvents Panel3 As System.Windows.Forms.Panel
-    Friend WithEvents ActivarFiltro As System.Windows.Forms.CheckBox
-    Friend WithEvents Keyword As System.Windows.Forms.TextBox
-    Friend WithEvents SeleccionFiltro As System.Windows.Forms.ComboBox
-    Friend WithEvents Search As System.Windows.Forms.Button
-
+    Friend WithEvents grupo_imp As Panel
+    Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Ingresos As RadioButton
+    Friend WithEvents Egresos As RadioButton
+    Friend WithEvents SeleccionCuenta As ListBox
+    Friend WithEvents et_con_imp As Label
+    Friend WithEvents ActivarFiltro As CheckBox
+    Friend WithEvents GrupoFiltro As FlowLayoutPanel
+    Friend WithEvents fecha As RadioButton
+    Friend WithEvents Razon As RadioButton
+    Friend WithEvents Keyword As TextBox
+    Friend WithEvents Label2 As Label
+    Friend WithEvents inicio As DateTimePicker
+    Friend WithEvents Label3 As Label
+    Friend WithEvents final As DateTimePicker
 End Class

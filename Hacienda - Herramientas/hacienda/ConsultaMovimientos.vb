@@ -5,94 +5,119 @@
         ' This call is required by the designer.
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
-        bs_cuenta.DataSource = bd.read(foxcon, "SELECT nombre, orden FROM hacienda WHERE orden<9000000000000")
+        bs_cuenta.DataSource = RellenarCuentas(Ingresos.Checked)
         SeleccionCuenta.DataSource = bs_cuenta
         SeleccionCuenta.DisplayMember = "nombre"
-        If bs_cuenta.Current("orden") > 0 Then
-            ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text)
-        End If
     End Sub
     '###### GUI #############################################################################################
-    Private Sub et_con_imp_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles et_con_imp.DoubleClick
-        If grupo_imp.Width = 100 Then
-            grupo_imp.Width = 289
-        Else
-            grupo_imp.Width = 100
-        End If
-        visor.Refresh()
-    End Sub
-    Private Sub ActivarFiltro_CheckedChanged(sender As Object, e As EventArgs) Handles ActivarFiltro.CheckedChanged
-        ActivarFiltro.Checked = SeleccionFiltro.Enabled
-        ActivarFiltro.Checked = Keyword.Enabled
-    End Sub
-    Private Sub Ingresos_CheckedChanged(sender As Object, e As EventArgs) Handles Ingresos.CheckedChanged
-        If Ingresos.Checked Then
-            bs_cuenta.DataSource = bd.read(foxcon, "SELECT nombre, orden FROM hacienda WHERE orden<9000000000000")
-        Else
-            bs_cuenta.DataSource = bd.read(foxcon, "SELECT nombre, orden FROM hacienda WHERE orden>8999999999999")
-        End If
+
+    '###### FIN GUI #############################################################################################
+
+    '### EVENTOS  
+    Private Sub Ingresos_CheckedChanged(sender As Object, e As EventArgs) Handles Ingresos.CheckedChanged, Egresos.CheckedChanged
+        visor.DataSource = Nothing
+        bs_consulta.DataSource = Nothing
+        bs_cuenta.DataSource = RellenarCuentas(Ingresos.Checked)
         SeleccionCuenta.DataSource = bs_cuenta
         SeleccionCuenta.DisplayMember = "nombre"
+        bs_cuenta.Position = 1
     End Sub
-    '###### FIN GUI #############################################################################################
-    '------------------------------------------------------------------------------------------------------------
-    '#### FILTROS MANUALES ################################
-    Private Sub bs_consulta_CurrentChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles bs_consulta.CurrentChanged
-        With bs_consulta
-            If .Position >= 0 Then
-
-            End If
-            info.Text = ""
-            info2.Text = ""
-        End With
-    End Sub
-    Private Sub ConsultarMovimientos(ByVal cuenta As Double, ByVal keyword As String)
+    Private Sub SeleccionCuenta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles SeleccionCuenta.SelectedIndexChanged
         progreso.Value = 0
         visor.DataSource = Nothing
         bs_consulta.DataSource = Nothing
-        '### IMPUESTOS
-        sel_sql = "SELECT * FROM movimis INNER JOIN hacienda on movimis.orden=hacienda.orden" &
-                " WHERE orden=" & cuenta & " AND movimis.nombre LIKE '" & keyword & "'"
-        visor = Query.Show(visor, bs_consulta, bd.read(foxcon, sel_sql))
-        '### CUENTA AGRUPADA
-        visor.Focus()
-    End Sub
-    Private Sub search_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Search.Click
         If SeleccionCuenta.SelectedIndex > -1 Then
-            ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text)
+            visor = Query.Show(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+                                                                        fecha.Checked, inicio.Value, final.Value))
+            SumarTotales(Ingresos.Checked)
+        End If
+
+    End Sub
+
+    Private Sub ActivarFiltro_CheckedChanged(sender As Object, e As EventArgs) Handles ActivarFiltro.CheckedChanged
+        GrupoFiltro.Visible = ActivarFiltro.Checked
+        If SeleccionCuenta.SelectedIndex > -1 Then
+            visor = Query.Show(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+                                                                        fecha.Checked, inicio.Value, final.Value))
+            SumarTotales(Ingresos.Checked)
+        End If
+    End Sub
+    Private Sub fecha_CheckedChanged(sender As Object, e As EventArgs) Handles fecha.CheckedChanged, Razon.CheckedChanged
+        inicio.Enabled = fecha.Checked
+        final.Enabled = fecha.Checked
+        Keyword.Enabled = Razon.Checked
+        If SeleccionCuenta.SelectedIndex > -1 Then
+            visor = Query.Show(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+                                                                        fecha.Checked, inicio.Value, final.Value))
+            SumarTotales(Ingresos.Checked)
+        End If
+    End Sub
+    Private Sub Keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles Keyword.KeyUp
+        If SeleccionCuenta.SelectedIndex > -1 Then
+            visor = Query.Show(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+                                                                        fecha.Checked, inicio.Value, final.Value))
+            SumarTotales(Ingresos.Checked)
+        End If
+    End Sub
+    Private Sub inicio_ValueChanged(sender As Object, e As EventArgs) Handles inicio.ValueChanged, final.ValueChanged
+        inicio.MaxDate = final.Value
+        final.MinDate = inicio.Value
+        If SeleccionCuenta.SelectedIndex > -1 Then
+            visor = Query.Show(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+                                                                        fecha.Checked, inicio.Value, final.Value))
+            SumarTotales(Ingresos.Checked)
         End If
     End Sub
 
-    '### EVENTOS DE LISTAS
-    Private Sub SeleccionCuenta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles SeleccionCuenta.SelectedIndexChanged
-        If SeleccionCuenta.SelectedIndex > -1 Then
-            ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text)
+    '### RUTINAS
+    Private Function RellenarCuentas(ingresos As Boolean) As DataTable
+        Dim dtab As New DataTable
+        SQLSelect = "SELECT nombre, orden"
+        SQLTable = " FROM hacienda"
+        If ingresos Then
+            SQLCriteria = "  WHERE orden<900000000000 AND sumado=2"
+        Else
+            SQLCriteria = "  WHERE orden>899999999999 AND sumado=2"
+        End If
+        SQLGrouping = ""
+
+        Return bd.read(foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
+    End Function
+    Private Function ConsultarMovimientos(ByVal cuenta As Double, ByVal keyword As String,
+                                          Filtrado As Boolean, FiltroFecha As Boolean,
+                                          ByVal FechaInicio As Date, ByVal FechaFinal As Date) As DataTable
+        SQLSelect = "SELECT *"
+        SQLTable = " FROM movimis"
+        SQLCriteria = " WHERE orden=" & cuenta
+        If Filtrado Then
+            If FiltroFecha Then
+                SQLCriteria += " AND fecha => {" & FechaInicio.ToString("MM/dd/yyyy") & "}
+                                 AND fecha <= {" & FechaFinal.ToString("MM/dd/yyyy") & "}"
+            ElseIf Len(keyword) > 2 Then
+                SQLCriteria += " AND detalle LIKE '%" & keyword & "%'"
+            End If
+        End If
+        SQLGrouping = ""
+
+        Return bd.read(foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
+    End Function
+    Private Sub SumarTotales(ingreso As Boolean)
+        If ingreso Then
+            info.Text = "TOTAL INGRESOS:"
+        Else
+            info.Text = "TOTAL EGRESOS:"
+        End If
+
+        info2.Text = " - "
+
+        Dim dtab As DataTable = bd.read(foxcon, "SELECT SUM(pagado) as total_pagado, orden" & SQLTable & SQLCriteria & " GROUP BY orden")
+
+        If dtab Is Nothing = False Then
+            If dtab.Rows.Count > 0 Then
+                info2.Text = " $ " & dtab(0)("total_pagado").ToString
+            End If
         End If
     End Sub
-
-    '###### END FILTER ##########################################################################################
-
-    '###### PRINT ###############################################################################################
-
-    '###### END PRINT ###########################################################################################
-
-    Private Sub IngresosMovToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        SQLSelect = "SELECT hacienda.nombre, movimis.orden, SUM(movimientos.pagado) as ingreso"
-        SQLTable = " FROM movimientos INNER JOIN hacienda ON movimientos.orden=hacienda.orden"
-        SQLCriteria = " WHERE orden < 900000000000"
-        SQLGrouping = " GROUP BY movimis.orden"
-
-        bd.read(foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
-    End Sub
-    Private Sub EgresosMovToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        SQLSelect = "SELECT hacienda.nombre, movimis.orden, SUM(movimientos.pagado) as egreso"
-        SQLTable = " FROM movimientos INNER JOIN hacienda On movimientos.orden=hacienda.orden"
-        SQLCriteria = " WHERE orden > 899999999999"
-        SQLGrouping = " GROUP BY movimis.orden"
-
-        bd.read(foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
-    End Sub
-
 
 End Class
 

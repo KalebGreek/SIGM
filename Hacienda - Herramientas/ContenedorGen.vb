@@ -59,12 +59,12 @@
         ConsultaCuentaAgrupada1.Show()
     End Sub
     'Herramientas
-    Private Sub CalculosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CalculosToolStripMenuItem.Click
-        Dim arqueo1 As New Calculos
+    Private Sub ConsultasEspecialesStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsultasEspecialesStripMenuItem.Click
+        Dim arqueo1 As New ConsultasEspeciales
         arqueo1.MdiParent = Me
         arqueo1.Show()
     End Sub
-    Private Sub MovimientosToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Private Sub ConsultaDeMovimientosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsultaDeMovimientosToolStripMenuItem.Click
         Dim movimis1 As New ConsultaMovimientos
         movimis1.MdiParent = Me
         movimis1.Show()
@@ -140,6 +140,8 @@
     Private Sub BuscarActaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarActaToolStripMenuItem.Click
 
     End Sub
+
+
 
 
 

@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class Calculos
+Partial Class ConsultasEspeciales
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -23,7 +23,7 @@ Partial Class Calculos
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Calculos))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ConsultasEspeciales))
         Me.MenuStrip2 = New System.Windows.Forms.MenuStrip()
         Me.CalculosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
@@ -91,8 +91,8 @@ Partial Class Calculos
         Me.CalculosToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripSeparator1, Me.HaciendaToolStripMenuItem, Me.IngresosToolStripMenuItem, Me.EgresosToolStripMenuItem, Me.ToolStripSeparator2, Me.BancosToolStripMenuItem, Me.SaldoDeCuentasBancosToolStripMenuItem, Me.ToolStripSeparator3, Me.CajaToolStripMenuItem, Me.CierreDiarioDeCajaToolStripMenuItem, Me.ToolStripSeparator4, Me.OtrosToolStripMenuItem, Me.DiferenciaIngresoEntreCajaYMovimientosToolStripMenuItem})
         Me.CalculosToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.CalculosToolStripMenuItem.Name = "CalculosToolStripMenuItem"
-        Me.CalculosToolStripMenuItem.Size = New System.Drawing.Size(101, 25)
-        Me.CalculosToolStripMenuItem.Text = "CALCULOS"
+        Me.CalculosToolStripMenuItem.Size = New System.Drawing.Size(61, 25)
+        Me.CalculosToolStripMenuItem.Text = "Menu"
         '
         'ToolStripSeparator1
         '
@@ -366,7 +366,7 @@ Partial Class Calculos
         Me.inicio.Name = "inicio"
         Me.inicio.Size = New System.Drawing.Size(110, 25)
         Me.inicio.TabIndex = 31
-        Me.inicio.Value = New Date(2016, 6, 10, 0, 0, 0, 0)
+        Me.inicio.Value = New Date(2016, 6, 17, 0, 0, 0, 0)
         '
         'Label2
         '
@@ -455,7 +455,7 @@ Partial Class Calculos
         Me.MinimumSize = New System.Drawing.Size(800, 500)
         Me.Name = "Calculos"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Arqueo"
+        Me.Text = "CALCULOS"
         Me.MenuStrip2.ResumeLayout(False)
         Me.MenuStrip2.PerformLayout()
         CType(Me.DataView, System.ComponentModel.ISupportInitialize).EndInit()

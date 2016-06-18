@@ -1,17 +1,21 @@
-﻿Public Class Calculos
+﻿Public Class ConsultasEspeciales
     Private SQLSelect, SQLTable, SQLCriteria, SQLGrouping As String
+    Private titulo As String = "CALCULOS"
 
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
+
         año.Value = Today.Year
         Connection.Text = foxcon
     End Sub
 
     'HACIENDA
     Private Sub IngresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IngresosToolStripMenuItem.Click
+        Me.Name = titulo & " | " & sender.Text
+
         SQLSelect = "SELECT orden, nombre, gastado as ingresado, (autorizado - gastado) as restante"
         SQLTable = " FROM hacienda"
         SQLCriteria = " WHERE sumado = 2 and orden < 900000000000"
@@ -20,6 +24,8 @@
         ProcessQuery(True, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
     End Sub
     Private Sub EgresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EgresosToolStripMenuItem.Click
+        Me.Name = titulo & " | " & sender.Text
+
         SQLSelect = "SELECT orden, nombre, gastado, (autorizado - gastado) as restante"
         SQLTable = " FROM hacienda"
         SQLCriteria = " WHERE sumado = 2 and orden > 899999999999"
@@ -30,27 +36,53 @@
 
     'BANCOS
     Private Sub SaldoDeCuentasBancosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaldoDeCuentasBancosToolStripMenuItem.Click
+        Me.Name = titulo & " | " & sender.Text
+
+        Dim dtab As DataTable = bd.read(Connection.Text, "SELECT MIN(fecha) as fecha FROM bancos")
+        inicio.Value = dtab(0)("fecha")
+
+        SQLBancos()
+
+        ProcessQuery(True, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
+
+        SelectorCampoFecha.SelectedIndex = -1
+        PanelFiltroFecha.Visible = True
+        PorFecha.Checked = True
+
+    End Sub
+    Private Sub SQLBancos()
         SQLSelect = "SELECT banco, 
+                           (SELECT SUM(b3.importe)
+                            FROM bancos as b3
+                            WHERE b3.tipo=2 AND b3.banco=b1.banco
+                            AND fecha=>{" & inicio.Value.ToString("MM/dd/yyyy") & "} 
+                            AND fecha<={" & final.Value.ToString("MM/dd/yyyy") & "}) AS ingreso,
+                           (SELECT SUM(b2.importe)
+                            FROM bancos as b2
+                            WHERE b2.tipo=1 AND b2.banco=b1.banco
+                            AND fecha=>{" & inicio.Value.ToString("MM/dd/yyyy") & "}
+                            AND fecha<={" & final.Value.ToString("MM/dd/yyyy") & "}) AS egreso,
                            (SELECT SUM(b3.importe) FROM bancos as b3
-                            WHERE b3.tipo=2 AND b3.banco=b1.banco) AS ingreso,
+                            WHERE b3.tipo=2 AND b3.banco=b1.banco
+                            AND fecha=>{" & inicio.Value.ToString("MM/dd/yyyy") & "} 
+                            AND fecha<={" & final.Value.ToString("MM/dd/yyyy") & "}) - 
                            (SELECT SUM(b2.importe) FROM bancos as b2
-                            WHERE b2.tipo=1 AND b2.banco=b1.banco) AS egreso,
-                           (SELECT SUM(b3.importe) FROM bancos as b3
-                            WHERE b3.tipo=2 AND b3.banco=b1.banco) - 
-                           (SELECT SUM(b2.importe) FROM bancos as b2
-                            WHERE b2.tipo=1 AND b2.banco=b1.banco) AS diferencia"
+                            WHERE b2.tipo=1 AND b2.banco=b1.banco
+                            AND fecha=>{" & inicio.Value.ToString("MM/dd/yyyy") & "} 
+                            AND fecha<={" & final.Value.ToString("MM/dd/yyyy") & "}) AS diferencia"
 
         SQLTable = " FROM bancos as b1"
         SQLCriteria = ""
         SQLGrouping = " GROUP BY banco"
-
-        ProcessQuery(True, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
     End Sub
+
     'CAJA
     Private Sub CierreDiarioDeCajaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CierreDiarioDeCajaToolStripMenuItem.Click
+        Me.Name = titulo & " | " & sender.Text
+
         SQLSelect = "SELECT * "
         SQLTable = " FROM caja"
-        SQLCriteria = " WHERE importe>0"
+        SQLCriteria = " WHERE importe > 0"
         SQLGrouping = ""
 
         ProcessQuery(True, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
@@ -60,21 +92,24 @@
         PorFecha.Checked = True
     End Sub
 
-    'OTROS
+    'CAJA <> MOVIMIS
     Private Sub CompararIngresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CompararIngresosToolStripMenuItem.Click
+        Me.Name = titulo & " | " & sender.Text
+
         SQLSelect = "SELECT caja.fecha, movimis.documento as movimis_documento,
                             SUM(movimis.pagado) as suma_movimis_pagado, caja.recibo as caja_recibo,
                             caja.importe as caja_importe, SUM(movimis.pagado)-importe as diferencia, movimis.detalle"
         SQLTable = " FROM caja INNER JOIN movimis ON caja.recibo=movimis.documento"
         SQLCriteria = " WHERE movimis.orden<900000000000"
-        SQLGrouping = "GROUP BY caja.fecha, movimis.documento, caja.recibo, caja.importe, movimis.detalle"
+        SQLGrouping = " GROUP BY caja.fecha, movimis.documento, caja.recibo, caja.importe, movimis.detalle"
 
         ProcessQuery(True, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
     End Sub
-
     Private Sub CompararEgresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CompararEgresosToolStripMenuItem.Click
+        Me.Name = titulo & " | " & sender.Text
+
         'cambiar caja por pagos y corregir tema de documento <> orden
-        SQLSelect = "SELECT opagos.fecha as fecha_opago, movimis.documento as movimis_documento,
+        SQLSelect = "SELECT opagos.dia, movimis.documento as movimis_documento,
                             movimis.pagado as movimis_pagado, opagos.orden as opagos_orden,
                             opagos.importe as opagos_importe, SUM(movimis.pagado)-importe as diferencia,
                             movimis.detalle, movimis.orden, hacienda.nombre"
@@ -82,7 +117,7 @@
                      INNER JOIN hacienda ON movimis.orden=hacienda.orden)
                      ON opagos.orden=movimis.documento"
         SQLCriteria = " WHERE movimis.orden>899999999999"
-        SQLGrouping = " GROUP BY opagos.fecha, movimis.documento, movimis.detalle, movimis.pagado, opagos.orden,
+        SQLGrouping = " GROUP BY opagos.dia, movimis.documento, movimis.detalle, movimis.pagado, opagos.orden,
                         opagos.importe, movimis.orden, hacienda.nombre"
 
         ProcessQuery(True, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
@@ -125,7 +160,6 @@
         End If
     End Sub
 
-
     Private Function FiltroColumna()
         Dim sql As String = ""
         If ListaColumnas.CheckedItems.Count > 0 Then
@@ -140,7 +174,7 @@
     End Function
 
     Private Function FiltroFecha()
-        Dim sql As String
+        Dim sql As String = ""
         If SQLCriteria.Contains(" WHERE") Then
             sql = " AND"
         Else
@@ -152,38 +186,16 @@
         ElseIf PorFecha.Checked Then
             If Connection.Text = foxcon Then
                 sql += " " & SelectorCampoFecha.Text & " => {" & inicio.Value.ToString("MM/dd/yyyy") & "}" &
-                       " AND " & SelectorCampoFecha.Text & " <= {" & final.Value.ToString("MM/dd/yyyy") & "}"
+                           " AND " & SelectorCampoFecha.Text & " <= {" & final.Value.ToString("MM/dd/yyyy") & "}"
             Else
                 sql += " " & SelectorCampoFecha.Text & " => {" & inicio.Value.ToShortDateString & "}" &
-                       " AND " & SelectorCampoFecha.Text & " <= {" & final.Value.ToShortDateString & "}"
+                           " AND " & SelectorCampoFecha.Text & " <= {" & final.Value.ToShortDateString & "}"
             End If
-        Else
-            Return ""
         End If
         Return sql
     End Function
 
     'EVENTOS
-    Private Sub PanelFiltroFecha_VisibleChanged(sender As Object, e As EventArgs) Handles PanelFiltroFecha.VisibleChanged
-        SinFiltro.Checked = True
-    End Sub
-
-    Private Sub Filtros_CheckedChanged(sender As Object, e As EventArgs) Handles _
-                SinFiltro.CheckedChanged, PorFecha.CheckedChanged, PorAño.CheckedChanged,
-                SinFiltro.Click, PorFecha.Click, PorAño.Click,
-                inicio.ValueChanged, final.ValueChanged, año.ValueChanged
-
-        inicio.Enabled = PorFecha.Checked
-        inicio.MaxDate = final.Value
-        final.Enabled = PorFecha.Checked
-        final.MinDate = inicio.Value
-        año.Enabled = PorAño.Checked
-
-        If PanelFiltroFecha.Visible Then
-            ProcessQuery(False, SQLSelect, SQLTable, SQLCriteria & FiltroFecha(), SQLGrouping)
-        End If
-    End Sub
-
     Private Sub path_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles TablaPersonalizada.LinkClicked
         Dim name As String = ""
         Dim table As New DataTable
@@ -227,6 +239,35 @@
         End If
 
     End Sub
+
+    Private Sub PanelFiltroFecha_VisibleChanged(sender As Object, e As EventArgs) Handles PanelFiltroFecha.VisibleChanged
+        SinFiltro.Checked = True
+    End Sub
+
+    Private Sub Filtros_CheckedChanged(sender As Object, e As EventArgs) Handles _
+                SinFiltro.CheckedChanged, PorFecha.CheckedChanged, PorAño.CheckedChanged,
+                SinFiltro.Click, PorFecha.Click, PorAño.Click,
+                inicio.ValueChanged, final.ValueChanged, año.ValueChanged
+
+        inicio.Enabled = PorFecha.Checked
+        inicio.MaxDate = final.Value
+        final.Enabled = PorFecha.Checked
+        final.MinDate = inicio.Value
+        año.Enabled = PorAño.Checked
+
+        If PanelFiltroFecha.Visible Then
+            If SelectorCampoFecha.SelectedIndex > -1 Then
+                ProcessQuery(False, SQLSelect, SQLTable, SQLCriteria & FiltroFecha(), SQLGrouping)
+            Else
+                If Me.Name.Contains("Saldo de Cuenta") Then
+                    SQLBancos()
+                End If
+                ProcessQuery(False, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
+                End If
+            End If
+    End Sub
+
+
 
     Private Sub ColumnList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListaColumnas.SelectedIndexChanged
         If ListaColumnas.SelectedIndex > -1 Then

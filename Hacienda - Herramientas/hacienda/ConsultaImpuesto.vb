@@ -345,6 +345,7 @@
         ElseIf cuenta_agrupada Then
             sel_sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
         End If
+        MsgBox(sel_sql)
         consulta = bd.read(foxcon, sel_sql)
         progreso.Value = 20
         Return consulta

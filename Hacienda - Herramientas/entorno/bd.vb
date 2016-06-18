@@ -249,6 +249,12 @@
                 If .Contains("ruta_copia") Then
                     visor.Columns("ruta_copia").AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
                 End If
+
+                'MOVIMIS
+                If .Contains("detalle") Then
+                    visor.Columns("detalle").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                End If
+
                 Return visor
             End With
         End Function
@@ -257,19 +263,17 @@
     '### Tablas externas
     Sub tablas_fox(ByVal impuesto As String)
         Dim dtab As DataTable = bd.read(defcon,
-                                        "SELECT * FROM tablas_externas
-                                         WHERE servicio='" & impuesto & "'
-                                         ORDER BY tabla")
+                                        "SELECT * FROM tablas_externas WHERE servicio='" & impuesto & "'")
 
-        ext_actividad = dtab(0)("actividad")
-        ext_cuenta = dtab(0)("cuenta")
-        ext_historial = dtab(0)("historial")
-        ext_muerto = dtab(0)("muerto")
-        ext_persona = dtab(0)("persona")
-        ext_tipo = dtab(0)("tipo")
-        ext_variable = dtab(0)("variable")
-        ext_vence = dtab(0)("vencimiento")
-        ext_zona = dtab(0)("zona")
+        ext_actividad = dtab(0)("actividad").ToString
+        ext_cuenta = dtab(0)("cuenta").ToString
+        ext_historial = dtab(0)("historial").ToString
+        ext_muerto = dtab(0)("muerto").ToString
+        ext_persona = dtab(0)("persona").ToString
+        ext_tipo = dtab(0)("tipo").ToString
+        ext_variable = dtab(0)("variable").ToString
+        ext_vence = dtab(0)("vencimiento").ToString
+        ext_zona = dtab(0)("zona").ToString
 
         If impuesto.Contains("AGUA") Then 'AGUA
             col_tenedor = ext_persona & ".tenedor"
