@@ -45,15 +45,15 @@
     Private Function ValidarCodigo(ordenanza_id As Integer, codigo As Integer) As Boolean
         Dim valido As Boolean = True
         Dim msg As String = ""
+        Dim sql As String = "SELECT id, codigo FROM ordenanza"
 
         If codigo >= 11899 Or ordenanza_id > 0 Then
-            sel_sql = "SELECT id, codigo FROM ordenanza"
             If ordenanza_id > 0 Then
-                sel_sql += " WHERE id=" & ordenanza_id
+                sql += " WHERE id=" & ordenanza_id
             Else
-                sel_sql += " WHERE codigo=" & codigo
+                sql += " WHERE codigo=" & codigo
             End If
-            Dim dtab As DataTable = bd.read(defcon, sel_sql)
+            Dim dtab As DataTable = bd.read(defcon, sql)
             If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then
                     If dtab.Rows.Count = 1 And ordenanza_id > 0 Then
@@ -84,7 +84,7 @@
 
     '###### GUARDAR ##########################################################################################
     Private Sub guardar()
-        bd.edit(defcon, mod_sql)
+        bd.edit(defcon, "")
     End Sub
 
 

@@ -36,9 +36,9 @@ Public Class CalculoAnualImpuesto
         'Zonas
         dtab_zona = bd.read(foxcon, "SELECT * FROM aguzona")
         'Cuentas
-        sel_sql = "SELECT codigo, potable, comercial, industrial FROM aguas" &
-                  " WHERE codigo=>" & CuentaInicial.Value & " ORDER BY codigo"
-        dtab_cuenta = bd.read(foxcon, sel_sql)
+        dtab_cuenta = bd.read(foxcon,
+                              "SELECT codigo, potable, comercial, industrial FROM aguas
+                               WHERE codigo=>" & CuentaInicial.Value & " ORDER BY codigo")
         'Iniciar busqueda y reemplazo
         progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -82,9 +82,10 @@ Public Class CalculoAnualImpuesto
     End Sub
     Public Sub auto()
         'Cuentas
-        sel_sql = "SELECT codigo, razon, marca, modelo, apagar FROM automovil" &
-                  " WHERE apagar>0 AND baja={} AND codigo=>" & CuentaInicial.Value & " ORDER BY codigo"
-        dtab_cuenta = bd.read(foxcon, sel_sql)
+        dtab_cuenta = bd.read(foxcon,
+                              "SELECT codigo, razon, marca, modelo, apagar FROM automovil
+                               WHERE apagar>0 And baja={} And codigo=>" & CuentaInicial.Value & "
+                               ORDER BY codigo")
 
         progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -106,12 +107,12 @@ Public Class CalculoAnualImpuesto
     End Sub
     Public Sub catastro()
         'Cuentas
-        sel_sql = "SELECT catastro.codigo As codigo, catastro.jubilado As jubilado, catastro.baldio As baldio, catastro.pasillo As pasillo," &
-                  " catastro.agrario As agrario, catastro.frente1 As metros, catzona.minimo As monto_minimo, catzona.unidad As monto_unidad," &
-                  " catzona.jubilado As desc_jubilado, catzona.baldio As monto_baldio, catzona.pasillo As monto_pasillo, catzona.agrario1 As monto_agrario" &
-                  " FROM catastro JOIN catzona On catastro.zona1=catzona.zona" &
-                  " WHERE catastro.codigo=>" & CuentaInicial.Value & " ORDER BY catastro.codigo"
-        dtab_cuenta = bd.read(foxcon, sel_sql)
+        dtab_cuenta = bd.read(foxcon,
+                              "SELECT catastro.codigo As codigo, catastro.jubilado As jubilado, catastro.baldio As baldio, catastro.pasillo As pasillo,
+                               catastro.agrario As agrario, catastro.frente1 As metros, catzona.minimo As monto_minimo, catzona.unidad As monto_unidad,
+                               catzona.jubilado As desc_jubilado, catzona.baldio As monto_baldio, catzona.pasillo As monto_pasillo, catzona.agrario1 As monto_agrario
+                               FROM catastro JOIN catzona On catastro.zona1=catzona.zona
+                               WHERE catastro.codigo=>" & CuentaInicial.Value & " ORDER BY catastro.codigo")
         progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
         For fila As Integer = 1 To progreso.Maximum
@@ -162,10 +163,10 @@ Public Class CalculoAnualImpuesto
         Next
     End Sub
     Public Sub comercio()
-        sel_sql = "SELECT comercio.codigo as codigo, comercio.actividad as actividad, detalle, minimo, formapago" &
-                  " FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad" &
-                  " WHERE comercio.baja = {} AND minimo>0 AND codigo=>" & CuentaInicial.Value
-        dtab_cuenta = bd.read(foxcon, sel_sql)
+        dtab_cuenta = bd.read(foxcon,
+                              "SELECT comercio.codigo as codigo, comercio.actividad as actividad, detalle, minimo, formapago
+                               FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad
+                               WHERE comercio.baja = {} And minimo>0 And codigo=>" & CuentaInicial.Value)
         progreso.Maximum = Me.dtab_cuenta.Rows.Count - 1
 
         For fila As Integer = 1 To progreso.Maximum
@@ -226,12 +227,13 @@ Public Class CalculoAnualImpuesto
     End Sub
     Public Sub sepelio()
         'Cuentas
-        sel_sql = "SELECT sepelio.codigo as codigo, sepelio.fila as fila, sepelio.jubilado as jubilado, sepevar.minimo as minimo," &
-                  " sepevar.jubilado as desc_jubilado, sepevar.fila1 as fila1, sepevar.fila2 as fila2, sepevar.fila3 as fila3," &
-                  " sepevar.fila4 as fila4, sepevar.fila5 as fila5" &
-                  " FROM sepelio JOIN sepevar ON sepelio.ubicacion=sepevar.orden" &
-                  " WHERE sepelio.ubicacion > 0 AND sepelio.codigo =>" & CuentaInicial.Value & " ORDER BY sepelio.codigo"
-        dtab_cuenta = bd.read(foxcon, sel_sql)
+        dtab_cuenta = bd.read(foxcon,
+                              "SELECT sepelio.codigo as codigo, sepelio.fila as fila, sepelio.jubilado as jubilado, sepevar.minimo as minimo,
+                               sepevar.jubilado as desc_jubilado, sepevar.fila1 as fila1, sepevar.fila2 as fila2, sepevar.fila3 as fila3,
+                               sepevar.fila4 as fila4, sepevar.fila5 as fila5
+                               FROM sepelio JOIN sepevar ON sepelio.ubicacion=sepevar.orden
+                               WHERE sepelio.ubicacion > 0 AND sepelio.codigo =>" & CuentaInicial.Value & "
+                               ORDER BY sepelio.codigo")
 
         progreso.Maximum = dtab_cuenta.Rows.Count - 1
 

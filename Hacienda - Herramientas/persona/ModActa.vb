@@ -96,16 +96,16 @@
     End Function
 
     Function buscar(Optional persona_id As Integer = 0, Optional libro As Integer = 0, Optional acta As Integer = 0) As DataTable
-        sel_sql = "SELECT actas.id, per_id, cuil, fecha, acta, libro, copia, nota" &
-                 " FROM actas INNER JOIN persona ON persona.id=actas.per_id WHERE"
+        Dim sql As String = "SELECT actas.id, per_id, cuil, fecha, acta, libro, copia, nota
+                             FROM actas INNER JOIN persona ON persona.id=actas.per_id WHERE"
 
         If persona_id > 0 Then
-            sel_sql += " per_id=" & persona_id
+            sql += " per_id=" & persona_id
         Else
-            sel_sql += " libro = " & libro & " AND acta = " & acta
+            sql += " libro = " & libro & " AND acta = " & acta
         End If
 
-        Return bd.read(defcon, sel_sql)
+        Return bd.read(defcon, sql)
     End Function
 
     Private Sub add_acta_Click(sender As Object, e As EventArgs) Handles add_acta.Click
@@ -136,18 +136,16 @@
         With registro
             For fila As Integer = 0 To .Count - 1
                 .Position = fila
-                mod_sql = "INSERT INTO actas(per_id, fecha, acta, libro, copia, nota)" &
-                          " VALUES(" & per_id & ", #" & .Current("fecha") & "#," &
-                          " " & .Current("acta") & ", " & .Current("libro") & ", '" & .Current("copia") & "'," &
-                          " '" & .Current("nota") & "')"
-                bd.edit(defcon, mod_sql)
+                bd.edit(defcon, "INSERT INTO actas(per_id, fecha, acta, libro, copia, nota)
+                                 VALUES(" & per_id & ", #" & .Current("fecha") & "#,
+                                  " & .Current("acta") & ", " & .Current("libro") & ", '" & .Current("copia") & "',
+                                 '" & .Current("nota") & "')")
             Next
         End With
     End Sub
 
     Sub limpiar(ByVal per_id As Integer) 'Temporales
-        del_sql = "DELETE * FROM actas WHERE per_id=" & per_id
-        bd.edit(defcon, del_sql)
+        bd.edit(defcon, "DELETE * FROM actas WHERE per_id=" & per_id)
     End Sub
     '###### MODIFICAR ##########################################################################################
     '# ACTAS

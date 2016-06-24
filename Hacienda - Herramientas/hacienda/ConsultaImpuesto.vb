@@ -270,14 +270,14 @@
         progreso.Value = 5
         Dim consulta As New DataTable
         '### Crear consulta sin filtros
-        sel_sql = "SELECT " & ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon,"
+        Dim sql As String = "SELECT " & ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon,"
 
         If deuda_total Then
-            sel_sql += " SUM(" & col_importe & ") as deuda"
+            sql += " SUM(" & col_importe & ") as deuda"
         Else  'Deuda detallada (Normal)
-            sel_sql += col_importe & " as original, " & col_pagado & " as pagado, " & col_vence & " as vencimiento, " & col_periodo & " as periodo "
+            sql += col_importe & " as original, " & col_pagado & " as pagado, " & col_vence & " as vencimiento, " & col_periodo & " as periodo "
         End If
-        sel_sql += " FROM " & ext_cuenta & " INNER JOIN " & ext_persona & " ON " & ext_cuenta & ".codigo = " & ext_persona & ".codigo"
+        sql += " FROM " & ext_cuenta & " INNER JOIN " & ext_persona & " ON " & ext_cuenta & ".codigo = " & ext_persona & ".codigo"
         'Con interés de 1% diario
         'sel_sql += ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon, " & importe & " as original, " & _
         '           "ROUND((" & importe & " + (" & importe & " * ((DATE() - " & vence & ") * 0.01))), 2) as deuda, " & _
@@ -288,22 +288,22 @@
 
         If cuenta_agrupada = False Then
             If mostrar_f1.Checked Or mostrar_f2.Checked Or mostrar_f3.Checked Then
-                sel_sql += " WHERE " & col_vence & "<DATE() AND"
+                sql += " WHERE " & col_vence & "<DATE() AND"
 
                 '### Opción deudor/sin deuda
                 If mostrar_f1.Checked Then
                     If f1_deudor.SelectedIndex = 0 Then
-                        sel_sql += " " & col_pagado & "=0 AND"
+                        sql += " " & col_pagado & "=0 AND"
                     Else
-                        sel_sql += " " & col_pagado & "=>" & col_importe & " AND"
+                        sql += " " & col_pagado & "=>" & col_importe & " AND"
                     End If
                 End If
                 '### Rango de años o único año?
                 If mostrar_f2.Checked Then
                     If f2_año_minimo.Value = f2_año_maximo.Value Then
-                        sel_sql += " " & col_periodo & "=" & f2_año_minimo.Value & " AND"
+                        sql += " " & col_periodo & "=" & f2_año_minimo.Value & " AND"
                     Else
-                        sel_sql += " " & col_periodo & "=>" & f2_año_minimo.Value & " AND " & col_periodo & "<=" & f2_año_maximo.Value & " AND"
+                        sql += " " & col_periodo & "=>" & f2_año_minimo.Value & " AND " & col_periodo & "<=" & f2_año_maximo.Value & " AND"
                     End If
                     '### Hay cuotas seleccionadas?
                     'If cuota_vence > 0 Then
@@ -313,40 +313,40 @@
                 '### Valor específico?
                 If keyword Is Nothing = False And mostrar_f3.Checked Then
                     If filter = 0 And Val(keyword) > 0 Then
-                        sel_sql += " " & ext_persona & ".codigo=" & Val(keyword) & " AND"
+                        sql += " " & ext_persona & ".codigo=" & Val(keyword) & " AND"
                     ElseIf filter = 1 And Val(keyword) > 999999 Then
-                        sel_sql += " documento=" & Val(keyword) & " AND"
+                        sql += " documento=" & Val(keyword) & " AND"
                     ElseIf filter = 2 Then
-                        sel_sql += " " & ext_persona & ".razon LIKE '%" & keyword & "%'"
+                        sql += " " & ext_persona & ".razon LIKE '%" & keyword & "%'"
                         If impuesto.Contains("COME") = False Then
-                            sel_sql += " OR " & ext_persona & ".tenedor LIKE '%" & keyword & "%'"
+                            sql += " OR " & ext_persona & ".tenedor LIKE '%" & keyword & "%'"
                         End If
-                        sel_sql += " AND"
+                        sql += " AND"
                     ElseIf filter = 3 And Val(keyword) > 0 Then
-                        sel_sql += " " & ext_persona & ".actividad=" & Val(keyword) & " AND"
+                        sql += " " & ext_persona & ".actividad=" & Val(keyword) & " AND"
                     End If
                 End If
 
                 'Borra el último AND antes de pasar a GROUP BY
-                sel_sql = Microsoft.VisualBasic.Left(sel_sql, Len(sel_sql) - 4)
+                sql = Microsoft.VisualBasic.Left(sql, Len(sql) - 4)
             End If
             If deuda_total Then
                 '### Límite mínimo y máximo de deuda total
-                sel_sql += " GROUP BY " & ext_persona & ".razon, " & ext_persona & ".codigo"
+                sql += " GROUP BY " & ext_persona & ".razon, " & ext_persona & ".codigo"
                 If range = 2 Then 'Entre
-                    sel_sql += " HAVING SUM(" & col_importe & ")>" & Val(dmin) & " AND SUM(" & col_importe & ")<" & Val(dmax)
+                    sql += " HAVING SUM(" & col_importe & ")>" & Val(dmin) & " AND SUM(" & col_importe & ")<" & Val(dmax)
                 ElseIf range = 1 Then          'Hasta
-                    sel_sql += " HAVING SUM(" & col_importe & ")<" & Val(dmax)
+                    sql += " HAVING SUM(" & col_importe & ")<" & Val(dmax)
                 ElseIf range = 0 Then          'Desde
-                    sel_sql += " HAVING SUM(" & col_importe & ")>" & Val(dmin)
+                    sql += " HAVING SUM(" & col_importe & ")>" & Val(dmin)
                 End If
             End If
-            sel_sql += " ORDER BY " & ext_persona & ".codigo"
+            sql += " ORDER BY " & ext_persona & ".codigo"
         ElseIf cuenta_agrupada Then
-            sel_sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
+            sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
         End If
-        MsgBox(sel_sql)
-        consulta = bd.read(foxcon, sel_sql)
+        MsgBox(sql)
+        consulta = bd.read(foxcon, sql)
         progreso.Value = 20
         Return consulta
     End Function

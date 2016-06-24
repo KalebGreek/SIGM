@@ -35,12 +35,10 @@
         End Function
         'Registro para ModPersona
         Shared Function Cargar(persona_id As Integer) As DataTable
-            sel_sql = "SELECT id as persona_id, razon, cuil," &
-                  " telefono, email," &
-                  " difunto, ruta_defuncion, fisica" &
-                  " FROM persona WHERE id=" & persona_id
-
-            Return bd.read(defcon, sel_sql)
+            Return bd.read(defcon, "SELECT id as persona_id, razon, cuil," &
+                                  " telefono, email," &
+                                  " difunto, ruta_defuncion, fisica" &
+                                  " FROM persona WHERE id=" & persona_id)
         End Function
         Shared Function Nueva(razon As String, cuil As Double, fisica As Boolean,
                               email As String, telefono As String, difunto As Boolean, Optional ruta_defuncion As String = "")
@@ -134,8 +132,7 @@
                 Return False
             Else
                 'documentos
-                sel_sql = "SELECT descripcion, ruta FROM per_documento WHERE per_id=" & persona_id
-                dtab_con = bd.read(defcon, sel_sql)
+                dtab_con = bd.read(defcon, "SELECT descripcion, ruta FROM per_documento WHERE per_id=" & persona_id)
                 If dtab_con.Rows.Count > 0 Then
                     msg.Add("Los siguientes documentos seran eliminados del registro junto con la persona seleccionada: ")
                     For fila As Integer = 0 To dtab_con.Rows.Count - 1
@@ -148,10 +145,8 @@
 
                 Dim errormsg As New visor_error("Eliminar persona", msg)
                 If errormsg.ShowDialog() = DialogResult.OK Then
-                    del_sql = "DELETE FROM per_documento WHERE per_id=" & persona_id
-                    bd.edit(defcon, del_sql)
-                    del_sql = "DELETE FROM persona WHERE id=" & persona_id
-                    bd.edit(defcon, del_sql)
+                    bd.edit(defcon, "DELETE FROM per_documento WHERE per_id=" & persona_id)
+                    bd.edit(defcon, "DELETE FROM persona WHERE id=" & persona_id)
                     Return True
                 Else
                     Return False

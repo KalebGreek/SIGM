@@ -54,15 +54,16 @@
     Private Function ValidarCodigo(ordenanza_id As Integer, codigo As Integer) As Boolean
         Dim valido As Boolean = True
         Dim msg As String = ""
+        Dim dtab As New DataTable
 
         If codigo >= 11899 Or ordenanza_id > 0 Then
-            sel_sql = "SELECT id, codigo FROM ordenanza"
+
             If ordenanza_id > 0 Then
-                sel_sql += " WHERE id=" & ordenanza_id
+                bd.read(defcon, "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id)
             Else
-                sel_sql += " WHERE codigo=" & codigo
+                bd.read(defcon, "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo)
             End If
-            Dim dtab As DataTable = bd.read(defcon, sel_sql)
+
             If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then
                     If dtab.Rows.Count = 1 And ordenanza_id > 0 Then
@@ -103,14 +104,14 @@
     '###### GUARDAR ##########################################################################################
     Private Sub guardar()
         If Val(ordenanza_id.text) > -1 Then 'Mod
-            mod_sql = "UPDATE ordenanza SET fecha='" & fecha.Text & "', concepto='" & concepto.Text & "'," & _
-                      " ruta_copia='" & ruta_doc.Text & "'"
+            bd.edit(defcon,
+                    "UPDATE ordenanza SET fecha='" & fecha.Text & "', concepto='" & concepto.Text & "',
+                     ruta_copia='" & ruta_doc.Text & "'")
         Else 'Nueva
-            mod_sql = "INSERT INTO ordenanza(codigo, fecha, concepto, ruta_copia)" & _
-                      " VALUES(" & Val(codigo.Text) & ", '" & fecha.Text & "', '" & concepto.Text & "', '" & ruta_doc.Text & "')"
+            bd.edit(defcon,
+                    "INSERT INTO ordenanza(codigo, fecha, concepto, ruta_copia)
+                     VALUES(" & Val(codigo.Text) & ", '" & fecha.Text & "',
+                    '" & concepto.Text & "', '" & ruta_doc.Text & "')")
         End If
-        bd.edit(defcon, mod_sql)
     End Sub
-
-
 End Class

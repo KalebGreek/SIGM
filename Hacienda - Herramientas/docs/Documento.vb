@@ -1,6 +1,11 @@
 ﻿Public Class Documento
     Shared titulo As String = ""
     Shared destino As String = ""
+    Shared SQLSelect As String = "SELECT id, descripcion, fecha, ruta"
+    Shared SQLTable As String = ""
+    Shared SQLCriteria As String = ""
+    Shared SQLGrouping As String = " ORDER BY fecha ASC"
+
     Shared ultima_ubicacion As String = Environment.SpecialFolder.Desktop
     Public Shared folder_hac As String = root & "\HACIENDA\"
     Public Shared folder_cat As String = root & "\CATASTRO\"
@@ -11,26 +16,15 @@
     Public Shared folder_per As String = root & "\PERSONA\"
 
     Public Class Persona
-        Shared Function BuscarHistorial(persona_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
-            sel_sql = "SELECT id,"
-            If tipo_archivo = "" Then
-                sel_sql += " descripcion,"
-            End If
+        Shared Function BuscarDoc(persona_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
+            SQLTable = " FROM per_documento"
 
-            sel_sql += " fecha, ruta FROM per_documento WHERE persona_id=" & persona_id
-
+            SQLCriteria = " WHERE persona_id=" & persona_id
             If tipo_archivo <> "" Then
-                sel_sql += " AND descripcion='" & tipo_archivo & "'"
+                SQLCriteria += " AND descripcion='" & tipo_archivo & "'"
             End If
 
-            sel_sql += " ORDER BY fecha ASC"
-
-            If solo_ruta Then
-                Dim dtab As DataTable = bd.read(defcon, sel_sql)
-                Return dtab(0)("ruta").ToString
-            Else
-                Return bd.read(defcon, sel_sql)
-            End If
+            Return ConsultarHistorial(solo_ruta)
         End Function
         Shared Function CopiaCuil(ByVal cuil As Double) As String
             titulo = "Buscar Copia de DNI / CUIL | CUIL N° " & cuil
@@ -73,26 +67,15 @@
         End Function
     End Class
     Public Class Catastro
-        Shared Function BuscarHistorial(catastro_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
-            sel_sql = "SELECT id,"
-            If tipo_archivo = "" Then
-                sel_sql += " descripcion,"
-            End If
+        Shared Function BuscarDoc(catastro_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
+            SQLTable = " FROM cat_documento"
 
-            sel_sql += " fecha, ruta FROM cat_documento WHERE catastro_id=" & catastro_id
-
+            SQLCriteria = " WHERE catastro_id=" & catastro_id
             If tipo_archivo <> "" Then
-                sel_sql += " AND descripcion='" & tipo_archivo & "'"
+                SQLCriteria += " AND descripcion='" & tipo_archivo & "'"
             End If
 
-            sel_sql += " ORDER BY fecha ASC"
-
-            If solo_ruta Then
-                Dim dtab As DataTable = bd.read(defcon, sel_sql)
-                Return dtab(0)("ruta").ToString
-            Else
-                Return bd.read(defcon, sel_sql)
-            End If
+            Return ConsultarHistorial(solo_ruta)
         End Function
         Shared Function CargarCopia(TipoArchivo As String, cat As String)
             If Len(cat) > 0 Then 'Catastro
@@ -130,26 +113,15 @@
         End Function
     End Class
     Public Class OPrivadas
-        Shared Function BuscarHistorial(opr_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
-            sel_sql = "SELECT id,"
-            If tipo_archivo = "" Then
-                sel_sql += " descripcion,"
-            End If
+        Shared Function BuscarDoc(opr_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
+            SQLTable = " FROM opr_documento"
 
-            sel_sql += " fecha, ruta FROM opr_documento WHERE opr_id=" & opr_id
-
+            SQLCriteria = " WHERE opr_id=" & opr_id
             If tipo_archivo <> "" Then
-                sel_sql += " And descripcion='" & tipo_archivo & "'"
+                SQLCriteria += " AND descripcion='" & tipo_archivo & "'"
             End If
 
-            sel_sql += " ORDER BY fecha ASC"
-
-            If solo_ruta Then
-                Dim dtab As DataTable = bd.read(defcon, sel_sql)
-                Return dtab(0)("ruta").ToString
-            Else
-                Return bd.read(defcon, sel_sql)
-            End If
+            Return ConsultarHistorial(solo_ruta)
         End Function
         Shared Function CargarCaratulaExp(exp As String) As String
             destino = "\Caratula_" & DateToFilename(Date.Now) & ".pdf"
@@ -181,52 +153,38 @@
         End Function
     End Class
     Public Class Hacienda
-        Shared Function BuscarHistorial(tabla As String, id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
-            sel_sql = "SELECT id,"
-            If tipo_archivo = "" Then
-                sel_sql += " descripcion,"
-            End If
-
-            sel_sql += " fecha, ruta FROM hac_documento WHERE =" & id
-
+        Shared Function BuscarDoc(id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
+            SQLTable = " FROM hac_documento"
+            SQLCriteria = " WHERE =" & id
             If tipo_archivo <> "" Then
-                sel_sql += " AND descripcion='" & tipo_archivo & "'"
+                SQLCriteria += " AND descripcion='" & tipo_archivo & "'"
             End If
 
-            sel_sql += " ORDER BY fecha ASC"
-
-            If solo_ruta Then
-                Dim dtab As DataTable = bd.read(defcon, sel_sql)
-                Return dtab(0)("ruta").ToString
-            Else
-                Return bd.read(defcon, sel_sql)
-            End If
+            Return ConsultarHistorial(solo_ruta)
         End Function
     End Class
     Public Class Comercio
-        Shared Function BuscarHistorial(tabla As String, col_id As String, id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
-            sel_sql = "SELECT id,"
-            If tipo_archivo = "" Then
-                sel_sql += " descripcion,"
-            End If
+        Shared Function BuscarDoc(id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
+            SQLTable = " FROM com_documento"
 
-            sel_sql += " fecha, ruta FROM " & tabla & " WHERE " & col_id & "=" & id
-
+            SQLCriteria = " WHERE com_id=" & id
             If tipo_archivo <> "" Then
-                sel_sql += " AND descripcion='" & tipo_archivo & "'"
+                SQLCriteria += " AND descripcion='" & tipo_archivo & "'"
             End If
 
-            sel_sql += " ORDER BY fecha ASC"
-
-            If solo_ruta Then
-                Dim dtab As DataTable = bd.read(defcon, sel_sql)
-                Return dtab(0)("ruta").ToString
-            Else
-                Return bd.read(defcon, sel_sql)
-            End If
+            Return ConsultarHistorial(solo_ruta)
         End Function
     End Class
 
+    Private Shared Function ConsultarHistorial(RutaDoc As Boolean)
+        Dim dtab As DataTable = bd.read(defcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
+
+        If RutaDoc Then
+            Return dtab(0)("ruta").ToString
+        Else
+            Return dtab
+        End If
+    End Function
     Private Shared Function cargar(carpeta_raiz As String, destino As String, titulo As String, Optional ventana As Form = Nothing) As String
         Dim accion As Integer
         Dim load_dialog As New OpenFileDialog
@@ -273,18 +231,17 @@
         With registro
             For fila As Integer = 0 To .Count - 1
                 .Position = fila
-                mod_sql = "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)" &
+                bd.edit(defcon, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)" &
                           " VALUES(" & id & ", #" & .Current("fecha") & "# ,'" & descripcion & "'," &
-                          " '" & .Current("ruta") & "')"
-                bd.edit(defcon, mod_sql)
+                          " '" & .Current("ruta") & "')")
             Next
         End With
     End Sub
     Shared Sub limpiar(tabla As String, col_id As String, id As Integer, Optional tipo_archivo As String = "")
-        del_sql = "DELETE * FROM " & tabla & " WHERE " & col_id & "=" & id
+        Dim sql As String = "DELETE * FROM " & tabla & " WHERE " & col_id & "=" & id
         If tipo_archivo <> "" Then
-            del_sql += " AND descripcion='" & tipo_archivo & "'"
+            sql += " AND descripcion='" & tipo_archivo & "'"
         End If
-        bd.edit(defcon, del_sql)
+        bd.edit(defcon, sql)
     End Sub
 End Class

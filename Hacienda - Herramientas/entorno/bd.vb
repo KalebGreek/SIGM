@@ -1,8 +1,8 @@
 ﻿Module bd
     'Los siguientes strings contienen comandos SQL
-    Public sel_sql As String = "" 'SELECT
-    Public mod_sql As String = "" 'INSERT o UPDATE
-    Public del_sql As String = "" 'DELETE
+    'Public sel_sql As String = "" 'SELECT
+    'Public mod_sql As String = "" 'INSERT o UPDATE
+    'Public del_sql As String = "" 'DELETE
     Public last_sql As String = ""
 
     'Conexiones de base de datos

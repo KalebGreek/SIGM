@@ -35,21 +35,20 @@
 
     Shared Function guardar(prof_id As Integer, persona_id As Integer, titulo_id As Integer, ByVal matricula As String) As Integer
         If prof_id > 0 Then
-            mod_sql = "UPDATE profesional SET titulo_id=" & titulo_id & ", matricula='" & matricula & "'" &
-                          " WHERE id=" & prof_id
+            bd.edit(defcon, "UPDATE profesional SET titulo_id=" & titulo_id & ", matricula='" & matricula & "'" &
+                          " WHERE id=" & prof_id)
         Else
-            mod_sql = "INSERT INTO profesional(per_id, titulo_id, matricula)" &
-                         " VALUES(" & persona_id & ", " & titulo_id & ", '" & matricula & "')"
+            bd.edit(defcon, "INSERT INTO profesional(per_id, titulo_id, matricula)" &
+                         " VALUES(" & persona_id & ", " & titulo_id & ", '" & matricula & "')")
         End If
-        bd.edit(defcon, mod_sql)
+
 
         Dim dtab As New DataTable
         dtab = bd.read(defcon, "SELECT id FROM profesional WHERE per_id=" & persona_id)
         Return dtab(0)("id")
     End Function
     Shared Function eliminar(ByVal per_id As Integer) As Integer
-        mod_sql = "DELETE * FROM profesional WHERE per_id=" & per_id
-        bd.edit(defcon, mod_sql)
+        bd.edit(defcon, "DELETE * FROM profesional WHERE per_id=" & per_id)
         Return 0
     End Function
 End Class

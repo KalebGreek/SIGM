@@ -46,24 +46,24 @@
                     vence = ext_cuenta & ".vencio"
                 End If
                 'Calcular deuda total del código y agregar
-                sel_sql = "SELECT (SUM(" & pagado & ")"
+                Dim sql As String = "SELECT (SUM(" & pagado & ")"
 
 
                 '## BUSCAR VARIABLES PARA CALCULAR CORRECTAMENTE LOS INTERESES Y RECARGOS
                 '## COMBINAR ESTO CON DETO (básicamente son lo mismo duh)
                 If adicional <> "" And franqueo <> "" Then
-                    sel_sql += " -(SUM(" & importe & ") + SUM(" & adicional & ") + SUM(" & franqueo & ")))"
+                    sql += " -(SUM(" & importe & ") + SUM(" & adicional & ") + SUM(" & franqueo & ")))"
                 ElseIf adicional <> "" Then
-                    sel_sql += " -(SUM(" & importe & ") + SUM(" & adicional & ")))"
+                    sql += " -(SUM(" & importe & ") + SUM(" & adicional & ")))"
                 Else
-                    sel_sql += " - SUM(" & importe & "))"
+                    sql += " - SUM(" & importe & "))"
                 End If
-                sel_sql += " as deuda FROM " & ext_cuenta & " WHERE codigo=" & contrib(fila)("codigo")
-                sel_sql += " AND " & pagado & " < " & importe
+                sql += " as deuda FROM " & ext_cuenta & " WHERE codigo=" & contrib(fila)("codigo")
+                sql += " AND " & pagado & " < " & importe
 
                 'Filtra desde la fecha de hoy hacia atrás
-                sel_sql += " AND " & vence & "<DATE()"
-                deuda_total = bd.read(foxcon, sel_sql)
+                sql += " AND " & vence & "<DATE()"
+                deuda_total = bd.read(foxcon, sql)
                 contrib(fila)("deuda") = deuda_total(0)("deuda")
                 fila += 1
             Loop

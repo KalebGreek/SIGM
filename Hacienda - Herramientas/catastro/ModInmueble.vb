@@ -173,7 +173,7 @@
                          bd.read(defcon, "SELECT descripcion, activo FROM cat_servicio WHERE catastro_id=" & catastro_id.Text))
 
         'copias
-        Query.Show(consulta_copia, bs_copia, Documento.Catastro.BuscarHistorial(catastro_id.Text))
+        Query.Show(consulta_copia, bs_copia, Documento.Catastro.BuscarDoc(catastro_id.Text))
     End Sub
 
     Function Validar(pagina As Integer) As Boolean

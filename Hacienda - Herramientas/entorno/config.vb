@@ -106,9 +106,8 @@
         End If
     End Sub
     Private Sub validar_conexion(ByVal conexion As TextBox, ByVal save As Boolean)
-        Dim dtab_con As New DataTable
-        sel_sql = "SELECT * FROM opciones WHERE opcion='" & conexion.Name & "'"
-        dtab_con = bd.read(defcon, sel_sql)
+        Dim dtab_con As DataTable = bd.read(defcon,
+                                            "SELECT * FROM opciones WHERE opcion='" & conexion.Name & "'")
         If Len(conexion.Text) < 11 Then 'Restaurar
             MsgBox("La conexión indicada para " & conexion.Name & " es inválida.")
             If dtab_con.Rows.Count > 0 Then
@@ -118,12 +117,13 @@
             If save = True Then
                 If dtab_con.Rows.Count = 0 Then
                     MsgBox("No se encuentra el registro de esta conexión, se creará uno nuevo.")
-                    mod_sql = "INSERT INTO opciones(opcion, valor) VALUES '" & conexion.Name & "', '" & conexion.Text & "'"
-                    bd.edit(defcon, mod_sql)
+                    bd.edit(defcon,
+                            "INSERT INTO opciones(opcion, valor) VALUES '" & conexion.Name & "', '" & conexion.Text & "'")
                 Else
                     If conexion.Text <> dtab_con(0)("valor") Then
-                        mod_sql = "UPDATE opciones SET valor='" & conexion.Text & "' WHERE opcion='" & conexion.Name & "'"
-                        bd.edit(defcon, mod_sql)
+
+                        bd.edit(defcon,
+                                "UPDATE opciones SET valor='" & conexion.Text & "' WHERE opcion='" & conexion.Name & "'")
                     End If
                 End If
             End If
@@ -182,9 +182,8 @@
         If dtab.Rows.Count > 0 Then
             Dim fila As Integer = 0
             Do While fila < dtab.Rows.Count
-                mod_sql = "UPDATE " & cuenta & " SET " & vence & "=#" & Today.Day & "/" & Today.Month & "/" & dtab(fila)(periodo) &
-                "# WHERE codigo=" & dtab(fila)("codigo") & " AND " & vence & " IS NULL"
-                bd.edit(conexion_fox.Text, mod_sql)
+                bd.edit(conexion_fox.Text, "UPDATE " & cuenta & " SET " & vence & "=#" & Today.Day & "/" & Today.Month & "/" & dtab(fila)(periodo) &
+                "# WHERE codigo=" & dtab(fila)("codigo") & " AND " & vence & " IS NULL")
             Loop
         End If
     End Sub

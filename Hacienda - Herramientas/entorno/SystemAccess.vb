@@ -32,35 +32,32 @@ Module SystemAccess
             If dtab(0)("sesion") Then
                 If dtab(0)("token").ToString = token Then
                     If lock Then 'Actualizar a último accceso 
-                        mod_sql = "UPDATE usr_log SET fecha_hora='" & fecha_hora & "', sesion=True" &
-                                  " WHERE id=" & dtab(0)("id")
+                        bd.edit(defcon, "UPDATE usr_log SET fecha_hora='" & fecha_hora & "', sesion=True" &
+                                  " WHERE id=" & dtab(0)("id"))
                     Else
-                        mod_sql = "UPDATE usr_log SET sesion=False WHERE user_id=" & user_id
+                        bd.edit(defcon, "UPDATE usr_log SET sesion=False WHERE user_id=" & user_id)
                     End If
-                    bd.edit(defcon, mod_sql)
+
                 ElseIf dtab(0)("token").ToString <> token Then
                     'Sesión iniciada en otro equipo
                     If MsgBoxResult.Yes = MsgBox("Sesion abierta en " & dtab(0)("equipo") & "." &
                                                  " Presione SI para continuar, NO para salir", MsgBoxStyle.YesNo,
                                                  " Sesion iniciada en otro equipo") Then
                         'Sesión iniciada en este equipo, cerrar sesión de accesos anteriores
-                        mod_sql = "UPDATE usr_log SET sesion=False WHERE user_id=" & user_id
-                        bd.edit(defcon, mod_sql)
+                        bd.edit(defcon, "UPDATE usr_log SET sesion=False WHERE user_id=" & user_id)
                     Else
                         Return False
                     End If
                 End If
             ElseIf dtab(0)("sesion") = False Then 'Agregar registro a historial
-                mod_sql = "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
+                bd.edit(defcon, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
                                    " VALUES(" & user_id & ", '" & fecha_hora & "' ," &
-                                   " '" & token & "', '" & equipo & "', True)"
-                bd.edit(defcon, mod_sql)
+                                   " '" & token & "', '" & equipo & "', True)")
             End If
         ElseIf dtab.Rows.Count = 0 Then
-            mod_sql = "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
+            bd.edit(defcon, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
                                   " VALUES(" & user_id & ", '" & fecha_hora & "' ," &
-                                  " '" & token & "', '" & equipo & "', True)"
-            bd.edit(defcon, mod_sql)
+                                  " '" & token & "', '" & equipo & "', True)")
         End If
         Return True
     End Function

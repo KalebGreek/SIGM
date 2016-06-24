@@ -30,20 +30,17 @@
     End Function
     Shared Function guardar(ByVal per_id As Integer, proveedor_id As Integer, ByVal responsable As String) As Integer
         If proveedor_id Then
-            mod_sql = "UPDATE proveedor Set responsable='" & responsable & "'" &
-                          " WHERE per_id=" & per_id
-            bd.edit(defcon, mod_sql)
+            bd.edit(defcon, "UPDATE proveedor Set responsable='" & responsable & "'" &
+                          " WHERE per_id=" & per_id)
         Else
-            mod_sql = "INSERT INTO proveedor(per_id, responsable) VALUES(" & per_id & ", '" & responsable & "')"
-            bd.edit(defcon, mod_sql)
+            bd.edit(defcon, "INSERT INTO proveedor(per_id, responsable) VALUES(" & per_id & ", '" & responsable & "')")
         End If
         Dim dtab As New DataTable
         dtab = bd.read(defcon, "SELECT * FROM proveedor WHERE per_id=" & per_id)
         Return dtab(0)("id")
     End Function
     Shared Function eliminar(ByVal per_id As Integer) As Integer
-        mod_sql = "DELETE * FROM proveedor WHERE per_id=" & per_id
-        bd.edit(defcon, mod_sql)
+        bd.edit(defcon, "DELETE * FROM proveedor WHERE per_id=" & per_id)
         Return 0
     End Function
 End Class

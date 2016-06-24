@@ -143,17 +143,15 @@
 
             If operacion = "MOD" Then
                 'Modificar
-                mod_sql = "UPDATE catastro SET user_id=" & user_id & ", opr_id=" & opr_id & ", " &
+                bd.edit(defcon, "UPDATE catastro SET user_id=" & user_id & ", opr_id=" & opr_id & ", " &
                       " barrio='" & barrio & "', uso='" & uso & "', cuenta=" & Val(cuenta) &
-                      " WHERE id=" & catastro_id
-                bd.edit(defcon, mod_sql)
+                      " WHERE id=" & catastro_id)
             ElseIf operacion <> "" Then
                 'Agregar
-                mod_sql = "INSERT INTO catastro(user_id, opr_id, zona, circ, secc, manz, parc, lote, barrio, uso, cuenta, archivado) " &
+                bd.edit(defcon, "INSERT INTO catastro(user_id, opr_id, zona, circ, secc, manz, parc, lote, barrio, uso, cuenta, archivado) " &
                           " VALUES(" & user_id & "," & opr_id & ", " & zona & ", " & circ & ", " & secc & "," &
                           " " & manz & ", " & parc & ", " & lote & ",'" & barrio & "', '" & uso & "', " & cuenta &
-                          "," & archivado & ")"
-                bd.edit(defcon, mod_sql)
+                          "," & archivado & ")")
                 'leer ultimo inmueble
                 catastro_id = Catastro.SeleccionarPartida(zona, circ, secc, manz, parc, lote)
                 operacion = "MOD"
@@ -168,21 +166,20 @@
         Overloads Shared Sub Frente(bs_frente As BindingSource, catastro_id As Integer)
             With bs_frente
                 'cat_frente
-                del_sql = "DELETE * FROM cat_frente WHERE catastro_id=" & catastro_id
-                bd.edit(defcon, del_sql)
+                bd.edit(defcon, "DELETE * FROM cat_frente WHERE catastro_id=" & catastro_id)
 
                 For fila As Integer = 0 To .Count - 1
                     .Position = fila
                     If .Position = 0 Then
-                        mod_sql = "INSERT INTO cat_frente(catastro_id, calle, altura, metros, ubicacion)" &
+                        bd.edit(defcon, "INSERT INTO cat_frente(catastro_id, calle, altura, metros, ubicacion)" &
                       " VALUES(" & catastro_id & ",'" & .Current("calle") & "', " & .Current("altura") & "," &
-                      " '" & .Current("metros") & "', True)"
+                      " '" & .Current("metros") & "', True)")
                     Else
-                        mod_sql = "INSERT INTO cat_frente(catastro_id, calle, altura, metros)" &
+                        bd.edit(defcon, "INSERT INTO cat_frente(catastro_id, calle, altura, metros)" &
                       " VALUES(" & catastro_id & ",'" & .Current("calle") & "', " & .Current("altura") & "," &
-                      " '" & .Current("metros") & "')"
+                      " '" & .Current("metros") & "')")
                     End If
-                    bd.edit(defcon, mod_sql)
+
                 Next
             End With
         End Sub
@@ -190,40 +187,33 @@
                                  existente As Decimal, relevamiento As Decimal,
                                  proyecto As Decimal, terreno As Decimal)
             'cat_superficie
-            del_sql = "DELETE * FROM cat_superficie WHERE catastro_id=" & catastro_id
-            bd.edit(defcon, del_sql)
+            bd.edit(defcon, "DELETE * FROM cat_superficie WHERE catastro_id=" & catastro_id)
 
-            mod_sql = "INSERT INTO cat_superficie(catastro_id, existente, proyecto, relevamiento, terreno)" &
+            bd.edit(defcon, "INSERT INTO cat_superficie(catastro_id, existente, proyecto, relevamiento, terreno)" &
                      " VALUES(" & catastro_id & ", '" & existente & "', '" & proyecto & "'," &
-                     " '" & relevamiento & "', '" & terreno & "')"
-
-            bd.edit(defcon, mod_sql)
+                     " '" & relevamiento & "', '" & terreno & "')")
 
         End Sub
         Overloads Shared Sub Caracteristica(bs_car As BindingSource, catastro_id As Integer)
             'cat_servicio
-            del_sql = "DELETE * FROM cat_servicio WHERE catastro_id=" & catastro_id
-            bd.edit(defcon, del_sql)
+            bd.edit(defcon, "DELETE * FROM cat_servicio WHERE catastro_id=" & catastro_id)
             With bs_car
                 For fila As Integer = 0 To .Count - 1
                     .Position = fila
-                    mod_sql = "INSERT INTO cat_servicio(catastro_id, descripcion, activo)" &
-                              " VALUES(" & catastro_id & ",'" & .Current("descripcion") & "', " & .Current("activo") & ")"
-                    bd.edit(defcon, mod_sql)
+                    bd.edit(defcon, "INSERT INTO cat_servicio(catastro_id, descripcion, activo)" &
+                              " VALUES(" & catastro_id & ",'" & .Current("descripcion") & "', " & .Current("activo") & ")")
                 Next
             End With
         End Sub
         Overloads Shared Sub Documento(bs_copia As BindingSource, catastro_id As Integer)
             'cat_documento
-            del_sql = "DELETE * FROM cat_documento WHERE catastro_id=" & catastro_id
-            bd.edit(defcon, del_sql)
+            bd.edit(defcon, "DELETE * FROM cat_documento WHERE catastro_id=" & catastro_id)
             With bs_copia
                 For fila As Integer = 0 To .Count - 1
                     .Position = fila
-                    mod_sql = "INSERT INTO cat_documento(catastro_id, descripcion, fecha, ruta)" &
+                    bd.edit(defcon, "INSERT INTO cat_documento(catastro_id, descripcion, fecha, ruta)" &
                           " VALUES(" & catastro_id & ",'" & .Current("descripcion") & "'," &
-                          " '" & .Current("fecha") & "', '" & .Current("ruta") & "')"
-                    bd.edit(defcon, mod_sql)
+                          " '" & .Current("fecha") & "', '" & .Current("ruta") & "')")
                 Next
             End With
         End Sub

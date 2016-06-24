@@ -49,10 +49,8 @@
                 If temporal.Visible Then
                     answer = MsgBox("¿Desea guardar este expediente temporal bajo el N° " & expediente.Text & "?", MsgBoxStyle.YesNoCancel, "Guardar Expediente")
                     If answer = MsgBoxResult.Yes Then 'Asignar N° de Expediente y quitar temporal
-                        mod_sql = "UPDATE oprivadas SET"
-                        mod_sql += " expediente=" & expediente.Text & ", temporal=False"
-                        mod_sql += " WHERE id=" & opr_id.Text
-                        bd.edit(defcon, mod_sql)
+                        bd.edit(defcon, "UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
+                                         WHERE id=" & opr_id.Text)
                         Me.Close()
                     End If
                 End If
@@ -150,7 +148,7 @@
         Query.Show(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
 
         'CARGAR COPIAS DIGITALES
-        Dim copias As DataTable = Documento.OPrivadas.BuscarHistorial(opr_id.Text)
+        Dim copias As DataTable = Documento.OPrivadas.BuscarDoc(opr_id.Text)
         If copias.Rows.Count > 0 Then
             For fila As Integer = 0 To copias.Rows.Count - 1
                 If copias(fila)("descripcion").ToString = "FIN DE OBRA" Then

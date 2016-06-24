@@ -1,10 +1,14 @@
 ﻿Public Class ConsultaOrdenanza
+    Shared SQLSelect As String = "SELECT *"
+    Shared SQLTable As String = " FROM ordenanza"
+    Shared SQLCriteria As String = ""
+    Shared SQLGrouping As String = ""
     Private Sub ConsultaOrdenanza_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
         KeyFecha.MaxDate = Date.Today
         KeyFecha.Value = Date.Today
     End Sub
     Private Sub bs_consulta_PositionChanged(sender As Object, e As EventArgs) Handles bs_consulta.PositionChanged
-      
+
     End Sub
 
     '###### GUI #################################################################################################
@@ -56,23 +60,22 @@
     End Sub
     Private Sub buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
         grupo_mod.Enabled = False
-        sel_sql = "SELECT * FROM ordenanza"
         If filtro.SelectedIndex > -1 Then
             If KeyCodigo.Visible And Val(Microsoft.VisualBasic.Left(KeyCodigo.Text, 4)) > 0 _
             And Val(Microsoft.VisualBasic.Right(KeyCodigo.Text, 4)) > 1899 Then
-                sel_sql += " WHERE codigo=" & Val(KeyCodigo.Text)
+                SQLCriteria = " WHERE codigo=" & Val(KeyCodigo.Text)
                 Me.Text = "Buscar Ordenanza | " &
                           Microsoft.VisualBasic.Left(KeyCodigo.Text, Len(KeyCodigo.Text) - 4) & "/" & Microsoft.VisualBasic.Right(KeyCodigo.Text, 4)
             ElseIf KeyFecha.Visible Then
-                sel_sql += " WHERE fecha='" & KeyFecha.Text & "'"
+                SQLCriteria = " WHERE fecha='" & KeyFecha.Text & "'"
                 Me.Text = "Buscar Ordenanza | " & KeyFecha.Text
             ElseIf KeyConcepto.Visible And Len(KeyConcepto.Text) > 3 Then
-                sel_sql += " WHERE concepto LIKE '%" & Trim(KeyConcepto.Text) & "%'"
+                SQLCriteria = " WHERE concepto LIKE '%" & Trim(KeyConcepto.Text) & "%'"
                 Me.Text = "Buscar Ordenanza | " & KeyConcepto.Text
             End If
         End If
 
-        Dim dtab As DataTable = bd.read(defcon, sel_sql)
+        Dim dtab As DataTable = bd.read(defcon, SQLSelect & SQLTable & SQLCriteria)
         If dtab Is Nothing = False Then
             visor = Query.Show(visor, bs_consulta, dtab)
             If dtab.Rows.Count = 0 Then
@@ -117,8 +120,7 @@
         With bs_consulta
             If .Position > -1 Then
                 If MsgBoxResult.Yes = MsgBox("¿Desea eliminar el registro seleccionado?", MsgBoxStyle.YesNo, "Eliminar registro") Then
-                    mod_sql = "DELETE * FROM ordenanza WHERE id=" & .Current("id")
-                    bd.edit(defcon, mod_sql)
+                    bd.edit(defcon, "DELETE * FROM ordenanza WHERE id=" & .Current("id"))
                     buscar.PerformClick()
                 End If
             End If
@@ -129,5 +131,5 @@
 
 
 
-  
+
 End Class

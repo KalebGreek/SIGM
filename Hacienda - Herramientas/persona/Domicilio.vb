@@ -2,28 +2,26 @@
     Public Class sql
         Shared Function RellenarProvincias() As BindingSource
             Dim bs As New BindingSource
-            sel_sql = "Select provincia_id, provincia FROM provincias ORDER BY provincia"
-            bs.DataSource = bd.read(defcon, sel_sql)
+            bs.DataSource = bd.read(defcon, "Select provincia_id, provincia FROM provincias ORDER BY provincia")
             Return bs
         End Function
         Shared Function RellenarLocalidades(provincia_id As Integer) As BindingSource
             Dim bs As New BindingSource
-            sel_sql = "Select id, localidad, cp" &
-                      " FROM provincias INNER JOIN localidades On provincias.provincia_id = localidades.provincia_id" &
-                      " WHERE localidades.provincia_id=" & provincia_id & " ORDER BY localidad"
-            bs.DataSource = bd.read(defcon, sel_sql)
+            bs.DataSource = bd.read(defcon,
+                                    "Select id, localidad, cp
+                                     FROM provincias INNER JOIN localidades On provincias.provincia_id = localidades.provincia_id
+                                     WHERE localidades.provincia_id=" & provincia_id & " ORDER BY localidad")
             Return bs
         End Function
         Shared Function Listar(persona_id As Integer) As DataTable
-            sel_sql = "SELECT per_domicilio.id, per_domicilio.calle, per_domicilio.altura," &
-                     " per_domicilio.piso, per_domicilio.dpto, per_domicilio.principal," &
-                     " per_domicilio.localidad_id, localidades.localidad, provincias.provincia" &
-                     " FROM provincias INNER JOIN (per_domicilio" &
-                     " INNER JOIN localidades ON per_domicilio.localidad_id = localidades.id)" &
-                     " ON provincias.provincia_id = localidades.provincia_id"
-
-            sel_sql += " WHERE per_domicilio.per_id=" & persona_id & " ORDER BY per_domicilio.id"
-            Return bd.read(defcon, sel_sql)
+            Return bd.read(defcon,
+                           "SELECT per_domicilio.id, per_domicilio.calle, per_domicilio.altura,
+                            per_domicilio.piso, per_domicilio.dpto, per_domicilio.principal, 
+                            per_domicilio.localidad_id, localidades.localidad, provincias.provincia
+                            FROM provincias INNER JOIN (per_domicilio 
+                            INNER JOIN localidades On per_domicilio.localidad_id = localidades.id)
+                            ON provincias.provincia_id = localidades.provincia_id 
+                            WHERE per_domicilio.per_id = " & persona_id & " ORDER BY per_domicilio.id")
         End Function
         Shared Function Nuevo(persona_id As Integer, calle As String, altura As Integer, piso As Integer,
                               dpto As String, localidad_id As Integer, principal As Boolean) As String
@@ -36,7 +34,7 @@
         Shared Function Eliminar(persona_id As Integer, Optional domicilio_id As Integer = 0) As String
             Dim sql As String = "DELETE * FROM per_domicilio WHERE per_id=" & persona_id
             If domicilio_id > 0 Then
-                mod_sql += " AND id=" & domicilio_id
+                sql += " AND id=" & domicilio_id
             End If
             Return sql
         End Function

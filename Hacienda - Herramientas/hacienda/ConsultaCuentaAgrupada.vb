@@ -204,15 +204,16 @@ Public Class ConsultaCuentaAgrupada
                    ByVal range As Integer, ByVal dmin As Integer, ByVal dmax As Integer)
         progreso.Value = 5
         Dim consulta As New DataTable
+        Dim sql As String
         '### Crear consulta sin filtros
-        sel_sql = "SELECT " & ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon,"
+        sql = "SELECT " & ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon,"
 
         If deuda_total Then
-            sel_sql += " SUM(" & col_importe & ") as deuda"
+            sql += " SUM(" & col_importe & ") as deuda"
         Else  'Deuda detallada (Normal)
-            sel_sql += col_importe & " as original, " & col_pagado & " as pagado, " & col_vence & " as vencimiento, " & col_periodo & " as periodo "
+            sql += col_importe & " as original, " & col_pagado & " as pagado, " & col_vence & " as vencimiento, " & col_periodo & " as periodo "
         End If
-        sel_sql += " FROM " & ext_cuenta & " INNER JOIN " & ext_persona & " ON " & ext_cuenta & ".codigo = " & ext_persona & ".codigo"
+        sql += " FROM " & ext_cuenta & " INNER JOIN " & ext_persona & " ON " & ext_cuenta & ".codigo = " & ext_persona & ".codigo"
         'Con interés de 1% diario
         'sel_sql += ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon, " & importe & " as original, " & _
         '           "ROUND((" & importe & " + (" & importe & " * ((DATE() - " & vence & ") * 0.01))), 2) as deuda, " & _
@@ -222,9 +223,9 @@ Public Class ConsultaCuentaAgrupada
         '### Hay otros filtros activos?
 
         If cuenta_agrupada Then
-            sel_sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
+            sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
         End If
-        consulta = bd.read(foxcon, sel_sql)
+        consulta = bd.read(foxcon, sql)
         progreso.Value = 20
         Return consulta
     End Function
@@ -347,16 +348,14 @@ Public Class ConsultaCuentaAgrupada
             If .RowCount > 0 Then
                 Do While fila < .RowCount
                     If .Item(0, fila).Value.ToString = Nothing Then
-                        mod_sql = "INSERT INTO contribuyente(razon, cuil, impuesto, codigo, alta) VALUES ('" &
-                            razon.Text & "', " & cuil.Text & ", '" & .Item(1, fila).Value & "', " &
-                            .Item(2, fila).Value & ", '" & .Item(3, fila).Value & "');"
-                        bd.edit(defcon, mod_sql)
+                        bd.edit(defcon, "INSERT INTO contribuyente(razon, cuil, impuesto, codigo, alta)
+                                         VALUES ('" & razon.Text & "', " & cuil.Text & ", '" & .Item(1, fila).Value & "'," &
+                                        " " & .Item(2, fila).Value & ", '" & .Item(3, fila).Value & "')")
                         nins += 1
                     Else
-                        mod_sql = "UPDATE contribuyente SET razon='" & razon.Text & "', impuesto='" & .Item(1, fila).Value &
-                            "', codigo=" & .Item(2, fila).Value & ", alta='" & .Item(3, fila).Value & "'" &
-                            " WHERE id=" & .Item(0, fila).Value
-                        bd.edit(defcon, mod_sql)
+                        bd.edit(defcon, "UPDATE contribuyente SET razon='" & razon.Text & "', impuesto='" & .Item(1, fila).Value &
+                                        "', codigo=" & .Item(2, fila).Value & ", alta='" & .Item(3, fila).Value & "'" &
+                                        " WHERE id=" & .Item(0, fila).Value)
                         nupd += 1
                     End If
                     fila += 1
@@ -364,8 +363,7 @@ Public Class ConsultaCuentaAgrupada
                 ndel = 0
                 If found = True Then
                     Do While ndel < del_rows.Count And del_rows(ndel) <> Nothing
-                        del_sql = "DELETE FROM contribuyente WHERE id=" & del_rows(ndel) & ";"
-                        bd.edit(defcon, del_sql)
+                        bd.edit(defcon, "DELETE FROM contribuyente WHERE id=" & del_rows(ndel))
                         ndel += 1
                     Loop
                 End If

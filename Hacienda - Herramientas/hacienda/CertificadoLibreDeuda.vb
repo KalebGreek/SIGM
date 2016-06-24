@@ -3,18 +3,22 @@
     Public RazonBaja, DetalleVencimiento As String
     Public Function ConsultarCuenta(tipo As String, cuenta As Integer) As DataTable
         If tipo.Contains("AGUA") Then
-            sel_sql = "SELECT * FROM aguas"
+            Return bd.read(foxcon, "SELECT * FROM aguas WHERE codigo=" & cuenta)
         ElseIf tipo.Contains("AUTO") Then
-            sel_sql = "SELECT * FROM automovil INNER JOIN tipauto ON automovil.tipo=tipauto.tipo"
+            Return bd.read(foxcon, "SELECT * FROM automovil INNER JOIN tipauto ON automovil.tipo=tipauto.tipo
+                                    WHERE codigo=" & cuenta)
         ElseIf tipo.Contains("CATA") Then
-            sel_sql = "SELECT * FROM catastro"
+            Return bd.read(foxcon, "SELECT * FROM catastro 
+                                    WHERE codigo=" & cuenta)
         ElseIf tipo.Contains("CEME") Then
-            sel_sql = "SELECT * FROM sepelio"
+            Return bd.read(foxcon, "SELECT * FROM sepelio 
+                                    WHERE codigo=" & cuenta)
         ElseIf tipo.Contains("COME") Then
-            sel_sql = "SELECT * FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
+            Return bd.read(foxcon, "SELECT * FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad 
+                                    WHERE codigo=" & cuenta)
+        Else
+            Return Nothing
         End If
-        sel_sql += " WHERE codigo=" & cuenta
-        Return bd.read(foxcon, sel_sql)
     End Function
     Private Sub CertificadoLibreDeuda_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
         If Me.Visible Then
@@ -51,7 +55,6 @@
             GrupoBaja.Visible = GrupoFecha.Visible
         End If
     End Sub
-
 
     Private Sub OpcionesBaja(sender As Object, e As EventArgs) Handles SinBaja.CheckedChanged, BajaRadicacion.CheckedChanged, BajaDenuncia.CheckedChanged
         FechaBaja.Visible = False

@@ -309,13 +309,12 @@ Public Class ModPersona
         End If
         'CREAR/EDITAR PERSONA
         If persona_id > 0 Then
-            mod_sql = Modificar(persona_id, razon.Text, CDbl(cuil.Text), fisica,
-                                      email.Text, tele.Text, esDifunto.Checked, ruta_defuncion.Text)
-            bd.edit(defcon, mod_sql)
+            bd.edit(defcon, Modificar(persona_id, razon.Text, CDbl(cuil.Text), fisica,
+                                      email.Text, tele.Text, esDifunto.Checked, ruta_defuncion.Text))
         Else
-            mod_sql = Nueva(razon.Text, CDbl(cuil.Text), fisica,
-                              email.Text, tele.Text, esDifunto.Checked, ruta_defuncion.Text)
-            bd.edit(defcon, mod_sql)
+            bd.edit(defcon, Nueva(razon.Text, CDbl(cuil.Text), fisica,
+                              email.Text, tele.Text, esDifunto.Checked, ruta_defuncion.Text))
+
             dtab = bd.read(defcon, "SELECT MAX(id) as persona_id FROM persona WHERE razon='" & razon.Text & "'")
             persona_id = dtab(0)("persona_id")
         End If
@@ -323,9 +322,8 @@ Public Class ModPersona
         bd.edit(defcon, Domicilio.sql.Eliminar(persona_id))
         For Each tab As Domicilio.Tab In TabControl1.TabPages
             With tab
-                mod_sql = Domicilio.sql.Nuevo(persona_id, .calle.Text, .altura.Value,
-                          .piso.Value, .dpto.Text, .localidad.SelectedValue, TabControl1.SelectedTab Is tab)
-                bd.edit(defcon, mod_sql)
+                bd.edit(defcon, Domicilio.sql.Nuevo(persona_id, .calle.Text, .altura.Value,
+                          .piso.Value, .dpto.Text, .localidad.SelectedValue, TabControl1.SelectedTab Is tab))
             End With
         Next
         'CREAR PROF

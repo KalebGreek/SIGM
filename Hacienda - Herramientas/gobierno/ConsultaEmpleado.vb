@@ -56,7 +56,6 @@
     End Sub
     Private Sub buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
         grupo_mod.Enabled = False
-        sel_sql = "SELECT * FROM ordenanza"
         ' If filtro.SelectedIndex > -1 Then
         ' If KeyCodigo.Visible And Val(Microsoft.VisualBasic.Left(KeyCodigo.Text, 4)) > 0 _
         ' And Val(Microsoft.VisualBasic.Right(KeyCodigo.Text, 4)) > 1899 Then
@@ -72,7 +71,7 @@
         ' End If
         'End If
 
-        Dim dtab As DataTable = bd.read(defcon, sel_sql)
+        Dim dtab As DataTable = bd.read(defcon, "SELECT * FROM ordenanza")
         If dtab Is Nothing = False Then
             visor = Query.Show(visor, bs_consulta, dtab)
             If dtab.Rows.Count = 0 Then
@@ -117,8 +116,7 @@
         With bs_consulta
             If .Position > -1 Then
                 If MsgBoxResult.Yes = MsgBox("¿Desea eliminar el registro seleccionado?", MsgBoxStyle.YesNo, "Eliminar registro") Then
-                    mod_sql = "DELETE * FROM ordenanza WHERE id=" & .Current("id")
-                    bd.edit(defcon, mod_sql)
+                    bd.edit(defcon, "DELETE * FROM ordenanza WHERE id=" & .Current("id"))
                     buscar.PerformClick()
                 End If
             End If
