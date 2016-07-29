@@ -27,7 +27,7 @@
         visor.DataSource = Nothing
         bs_consulta.DataSource = Nothing
         If SeleccionCuenta.SelectedIndex > -1 Then
-            visor = Query.Show(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+            visor = Data.ToDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
                                                                         fecha.Checked, inicio.Value, final.Value))
             SumarTotales(Ingresos.Checked)
         End If
@@ -37,7 +37,7 @@
     Private Sub ActivarFiltro_CheckedChanged(sender As Object, e As EventArgs) Handles ActivarFiltro.CheckedChanged
         GrupoFiltro.Visible = ActivarFiltro.Checked
         If SeleccionCuenta.SelectedIndex > -1 Then
-            visor = Query.Show(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+            visor = Data.ToDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
                                                                         fecha.Checked, inicio.Value, final.Value))
             SumarTotales(Ingresos.Checked)
         End If
@@ -47,14 +47,14 @@
         final.Enabled = fecha.Checked
         Keyword.Enabled = Razon.Checked
         If SeleccionCuenta.SelectedIndex > -1 Then
-            visor = Query.Show(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+            visor = Data.ToDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
                                                                         fecha.Checked, inicio.Value, final.Value))
             SumarTotales(Ingresos.Checked)
         End If
     End Sub
     Private Sub Keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles Keyword.KeyUp
         If SeleccionCuenta.SelectedIndex > -1 Then
-            visor = Query.Show(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+            visor = Data.ToDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
                                                                         fecha.Checked, inicio.Value, final.Value))
             SumarTotales(Ingresos.Checked)
         End If
@@ -63,7 +63,7 @@
         inicio.MaxDate = final.Value
         final.MinDate = inicio.Value
         If SeleccionCuenta.SelectedIndex > -1 Then
-            visor = Query.Show(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+            visor = Data.ToDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
                                                                         fecha.Checked, inicio.Value, final.Value))
             SumarTotales(Ingresos.Checked)
         End If
@@ -81,7 +81,7 @@
         End If
         SQLGrouping = ""
 
-        Return bd.read(foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
+        Return bd.read(my.settings.foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
     End Function
     Private Function ConsultarMovimientos(ByVal cuenta As Double, ByVal keyword As String,
                                           Filtrado As Boolean, FiltroFecha As Boolean,
@@ -99,7 +99,7 @@
         End If
         SQLGrouping = ""
 
-        Return bd.read(foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
+        Return bd.read(my.settings.foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
     End Function
     Private Sub SumarTotales(ingreso As Boolean)
         If ingreso Then
@@ -110,7 +110,7 @@
 
         info2.Text = " - "
 
-        Dim dtab As DataTable = bd.read(foxcon, "SELECT SUM(pagado) as total_pagado, orden" & SQLTable & SQLCriteria & " GROUP BY orden")
+        Dim dtab As DataTable = bd.read(my.settings.foxcon, "SELECT SUM(pagado) as total_pagado, orden" & SQLTable & SQLCriteria & " GROUP BY orden")
 
         If dtab Is Nothing = False Then
             If dtab.Rows.Count > 0 Then

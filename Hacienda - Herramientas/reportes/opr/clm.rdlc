@@ -2,7 +2,7 @@
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
-      <Textbox Name="razon">
+      <Textbox Name="ubic">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
@@ -22,10 +22,10 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>6.01619cm</Top>
-        <Left>10.11289cm</Left>
+        <Top>5.4523cm</Top>
+        <Left>3.41235cm</Left>
         <Height>0.63704cm</Height>
-        <Width>9.68149cm</Width>
+        <Width>16.38203cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -55,10 +55,10 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>6.82962cm</Top>
-        <Left>2.59821cm</Left>
+        <Top>4.60712cm</Top>
+        <Left>2.73932cm</Left>
         <Height>0.63704cm</Height>
-        <Width>5.09665cm</Width>
+        <Width>5.27304cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -70,16 +70,16 @@
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
-      <Textbox Name="ubicacion">
+      <Textbox Name="razon">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value />
+                <Value>=Parameters!razon.Value</Value>
                 <Style>
-                  <FontFamily>PF DinText Pro</FontFamily>
+                  <FontFamily>PF DinText Pro Medium</FontFamily>
                   <FontSize>16pt</FontSize>
                   <FontWeight>Normal</FontWeight>
                 </Style>
@@ -90,22 +90,19 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>4.32334cm</Top>
-        <Left>3.70946cm</Left>
-        <Height>0.63704cm</Height>
-        <Width>16.08492cm</Width>
+        <Top>1.98999cm</Top>
+        <Left>0.28575cm</Left>
+        <Height>0.70605cm</Height>
+        <Width>19.41338cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
-          <BottomBorder>
-            <Style>Dotted</Style>
-          </BottomBorder>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
-      <Textbox Name="barrio">
+      <Textbox Name="personal">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
@@ -124,10 +121,10 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>7.67127cm</Top>
-        <Left>0.22225cm</Left>
+        <Top>8.01075cm</Top>
+        <Left>5.28562cm</Left>
         <Height>0.63704cm</Height>
-        <Width>19.57213cm</Width>
+        <Width>14.50876cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -146,7 +143,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>La autoridad Municipal que suscribe, deja constancia que conforme al acuerdo</Value>
+                <Value>La Autoridad Municipal que suscribe, deja constancia que conforme al acuerdo</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontFamily>PF DinText Pro</FontFamily>
@@ -162,8 +159,8 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>3.49882cm</Top>
-        <Left>1.48974cm</Left>
+        <Top>0.32382cm</Top>
+        <Left>1.42624cm</Left>
         <Height>0.63704cm</Height>
         <Width>18.30464cm</Width>
         <ZIndex>4</ZIndex>
@@ -193,7 +190,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>4.32334cm</Top>
+        <Top>1.14834cm</Top>
         <Left>0.22225cm</Left>
         <Height>0.63704cm</Height>
         <Width>3.31082cm</Width>
@@ -212,7 +209,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>se ha otorgado y delimitado LÍNEA MUNICIPAL a la propiedad designada en el </Value>
+                <Value>se ha otorgado y delimitado LÍNEA MUNICIPAL </Value>
                 <Style>
                   <FontFamily>PF DinText Pro</FontFamily>
                   <FontSize>16pt</FontSize>
@@ -224,73 +221,11 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>5.14785cm</Top>
+        <Top>2.8936cm</Top>
         <Left>0.22225cm</Left>
         <Height>0.63704cm</Height>
-        <Width>19.57213cm</Width>
+        <Width>19.50863cm</Width>
         <ZIndex>6</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <VerticalAlign>Top</VerticalAlign>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox16">
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value> Villa de Las Rosas,</Value>
-                <Style>
-                  <FontFamily>PF DinText Pro</FontFamily>
-                  <FontSize>16pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>1.87325cm</Top>
-        <Left>6.18596cm</Left>
-        <Height>0.63704cm</Height>
-        <Width>4.6602cm</Width>
-        <ZIndex>7</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <VerticalAlign>Top</VerticalAlign>
-        </Style>
-      </Textbox>
-      <Textbox Name="fecha">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value EvaluationMode="Constant" />
-                <Style>
-                  <FontFamily>PF DinText Pro</FontFamily>
-                  <FontSize>16pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <Top>1.87325cm</Top>
-        <Left>11.02255cm</Left>
-        <Height>0.63704cm</Height>
-        <Width>8.77183cm</Width>
-        <ZIndex>8</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -304,7 +239,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value> Inspector:</Value>
+                <Value> Observaciones:</Value>
                 <Style>
                   <FontFamily>PF DinText Pro</FontFamily>
                   <FontSize>16pt</FontSize>
@@ -317,49 +252,15 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>11.65178cm</Top>
+        <Top>10.98503cm</Top>
         <Left>0.28575cm</Left>
         <Height>0.63704cm</Height>
-        <Width>2.57176cm</Width>
-        <ZIndex>9</ZIndex>
+        <Width>4.1328cm</Width>
+        <ZIndex>7</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
-          <VerticalAlign>Top</VerticalAlign>
-        </Style>
-      </Textbox>
-      <Textbox Name="retira2">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value xml:space="preserve"> </Value>
-                <Style>
-                  <FontFamily>PF DinText Pro</FontFamily>
-                  <FontSize>16pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <Top>11.65178cm</Top>
-        <Left>3.07446cm</Left>
-        <Height>0.63704cm</Height>
-        <Width>16.71992cm</Width>
-        <ZIndex>10</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <BottomBorder>
-            <Style>Dotted</Style>
-          </BottomBorder>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
@@ -371,7 +272,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>FIRMA SOLICITANTE</Value>
+                    <Value>SELLO Y FIRMA EMPLEADO MUNICIPAL</Value>
                     <Style>
                       <FontFamily>PF DinText Pro</FontFamily>
                     </Style>
@@ -399,11 +300,11 @@
           </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>15.0804cm</Top>
+        <Top>14.7629cm</Top>
         <Left>0.15875cm</Left>
         <Height>2.97513cm</Height>
         <Width>9.77775cm</Width>
-        <ZIndex>11</ZIndex>
+        <ZIndex>8</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -418,7 +319,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>SELLO Y FIRMA INSPECTOR</Value>
+                    <Value>FIRMA/ACLARACION INTERESADO</Value>
                     <Style>
                       <FontFamily>PF DinText Pro</FontFamily>
                     </Style>
@@ -446,11 +347,11 @@
           </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>15.08041cm</Top>
+        <Top>14.76291cm</Top>
         <Left>10.03175cm</Left>
         <Height>2.97513cm</Height>
         <Width>9.6699cm</Width>
-        <ZIndex>12</ZIndex>
+        <ZIndex>9</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -464,7 +365,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value> propiedad de </Value>
+                <Value> Ubicacion:</Value>
                 <Style>
                   <FontFamily>PF DinText Pro</FontFamily>
                   <FontSize>16pt</FontSize>
@@ -476,11 +377,11 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>5.98951cm</Top>
-        <Left>6.35707cm</Left>
+        <Top>5.4523cm</Top>
+        <Left>0.22225cm</Left>
         <Height>0.63704cm</Height>
-        <Width>3.57943cm</Width>
-        <ZIndex>13</ZIndex>
+        <Width>3.01371cm</Width>
+        <ZIndex>10</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -495,7 +396,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value> ubicada en</Value>
+                <Value> Expediente Municipal:</Value>
                 <Style>
                   <FontFamily>PF DinText Pro</FontFamily>
                   <FontSize>16pt</FontSize>
@@ -507,11 +408,11 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>6.82962cm</Top>
-        <Left>7.83245cm</Left>
+        <Top>6.28987cm</Top>
+        <Left>0.22225cm</Left>
         <Height>0.63704cm</Height>
-        <Width>3.01371cm</Width>
-        <ZIndex>14</ZIndex>
+        <Width>5.73892cm</Width>
+        <ZIndex>11</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -538,11 +439,11 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>6.82962cm</Top>
+        <Top>4.60712cm</Top>
         <Left>0.22225cm</Left>
         <Height>0.63704cm</Height>
-        <Width>2.19605cm</Width>
-        <ZIndex>15</ZIndex>
+        <Width>2.34068cm</Width>
+        <ZIndex>12</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -557,7 +458,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Villa de Las Rosas, Departamento San Javier, Provincia de Córdoba, conforme según</Value>
+                <Value>Según inspección realizada por la Dirección de Planeamiento, Obras y Servicios </Value>
                 <Style>
                   <FontFamily>PF DinText Pro</FontFamily>
                   <FontSize>16pt</FontSize>
@@ -569,11 +470,11 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>8.4847cm</Top>
+        <Top>8.9927cm</Top>
         <Left>0.22225cm</Left>
         <Height>0.63704cm</Height>
         <Width>19.57213cm</Width>
-        <ZIndex>16</ZIndex>
+        <ZIndex>13</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -588,7 +489,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Expediente N°</Value>
+                <Value>Titular / Poseedor:</Value>
                 <Style>
                   <FontFamily>PF DinText Pro</FontFamily>
                   <FontSize>16pt</FontSize>
@@ -600,11 +501,11 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>5.99303cm</Top>
+        <Top>3.73878cm</Top>
         <Left>0.22225cm</Left>
         <Height>0.63704cm</Height>
-        <Width>3.43959cm</Width>
-        <ZIndex>17</ZIndex>
+        <Width>4.5773cm</Width>
+        <ZIndex>14</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -612,7 +513,7 @@
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
-      <Textbox Name="razon2">
+      <Textbox Name="titular">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
@@ -632,11 +533,11 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>5.99303cm</Top>
-        <Left>3.83823cm</Left>
+        <Top>3.73878cm</Top>
+        <Left>4.97594cm</Left>
         <Height>0.63704cm</Height>
-        <Width>2.413cm</Width>
-        <ZIndex>18</ZIndex>
+        <Width>14.81844cm</Width>
+        <ZIndex>15</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -647,7 +548,7 @@
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
-      <Textbox Name="barrio3">
+      <Textbox Name="expediente">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
@@ -666,11 +567,11 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>6.82962cm</Top>
-        <Left>11.0155cm</Left>
+        <Top>6.28987cm</Top>
+        <Left>6.12776cm</Left>
         <Height>0.63704cm</Height>
-        <Width>8.77888cm</Width>
-        <ZIndex>19</ZIndex>
+        <Width>13.66662cm</Width>
+        <ZIndex>16</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -688,7 +589,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Inspección realizada por la Dirección de Planeamiento, Obras y Servicios Públicos</Value>
+                <Value>Públicos de esta Municipalidad.-</Value>
                 <Style>
                   <FontFamily>PF DinText Pro</FontFamily>
                   <FontSize>16pt</FontSize>
@@ -700,11 +601,11 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>9.31668cm</Top>
+        <Top>9.82468cm</Top>
         <Left>0.22225cm</Left>
         <Height>0.63704cm</Height>
         <Width>19.57213cm</Width>
-        <ZIndex>20</ZIndex>
+        <ZIndex>17</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -712,14 +613,14 @@
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
-      <Textbox Name="barrio5">
+      <Textbox Name="notas6">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>de esta Municipalidad.-</Value>
+                <Value> Fecha:</Value>
                 <Style>
                   <FontFamily>PF DinText Pro</FontFamily>
                   <FontSize>16pt</FontSize>
@@ -731,11 +632,11 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>10.17393cm</Top>
+        <Top>7.14143cm</Top>
         <Left>0.22225cm</Left>
         <Height>0.63704cm</Height>
-        <Width>19.57213cm</Width>
-        <ZIndex>21</ZIndex>
+        <Width>2.05987cm</Width>
+        <ZIndex>18</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -743,8 +644,175 @@
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
+      <Textbox Name="notas7">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value> Personal Municipal:</Value>
+                <Style>
+                  <FontFamily>PF DinText Pro</FontFamily>
+                  <FontSize>16pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>8.01075cm</Top>
+        <Left>0.22225cm</Left>
+        <Height>0.63704cm</Height>
+        <Width>4.83934cm</Width>
+        <ZIndex>19</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Top</VerticalAlign>
+        </Style>
+      </Textbox>
+      <Textbox Name="fecha">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value xml:space="preserve"> </Value>
+                <Style>
+                  <FontFamily>PF DinText Pro</FontFamily>
+                  <FontSize>16pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>7.16327cm</Top>
+        <Left>2.45851cm</Left>
+        <Height>0.63704cm</Height>
+        <Width>5.23635cm</Width>
+        <ZIndex>20</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <BottomBorder>
+            <Style>Dotted</Style>
+          </BottomBorder>
+          <VerticalAlign>Top</VerticalAlign>
+        </Style>
+      </Textbox>
+      <Textbox Name="retira3">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value xml:space="preserve"> </Value>
+                <Style>
+                  <FontFamily>PF DinText Pro</FontFamily>
+                  <FontSize>16pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>11.83021cm</Top>
+        <Left>0.28575cm</Left>
+        <Height>0.63704cm</Height>
+        <Width>19.50863cm</Width>
+        <ZIndex>21</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <BottomBorder>
+            <Style>Dotted</Style>
+          </BottomBorder>
+          <VerticalAlign>Top</VerticalAlign>
+        </Style>
+      </Textbox>
+      <Textbox Name="retira4">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value xml:space="preserve"> </Value>
+                <Style>
+                  <FontFamily>PF DinText Pro</FontFamily>
+                  <FontSize>16pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>12.64364cm</Top>
+        <Left>0.28575cm</Left>
+        <Height>0.63704cm</Height>
+        <Width>19.50863cm</Width>
+        <ZIndex>22</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <BottomBorder>
+            <Style>Dotted</Style>
+          </BottomBorder>
+          <VerticalAlign>Top</VerticalAlign>
+        </Style>
+      </Textbox>
+      <Textbox Name="retira5">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value xml:space="preserve"> </Value>
+                <Style>
+                  <FontFamily>PF DinText Pro</FontFamily>
+                  <FontSize>16pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>13.47175cm</Top>
+        <Left>0.27744cm</Left>
+        <Height>0.63704cm</Height>
+        <Width>19.50863cm</Width>
+        <ZIndex>23</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <BottomBorder>
+            <Style>Dotted</Style>
+          </BottomBorder>
+          <VerticalAlign>Top</VerticalAlign>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>7.10848in</Height>
+    <Height>6.98348in</Height>
     <Style />
   </Body>
   <Width>7.89902in</Width>
@@ -901,6 +969,12 @@
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
+  <ReportParameters>
+    <ReportParameter Name="razon">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <EmbeddedImages>
     <EmbeddedImage Name="logo">
       <MIMEType>image/jpeg</MIMEType>

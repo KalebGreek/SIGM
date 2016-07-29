@@ -70,13 +70,6 @@ Partial Class ModInmueble
         Me.tab_ubicacion = New System.Windows.Forms.TabPage()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.archivado = New System.Windows.Forms.CheckBox()
-        Me.grupo_titular = New System.Windows.Forms.Panel()
-        Me.difunto = New System.Windows.Forms.CheckBox()
-        Me.mod_titular = New System.Windows.Forms.Button()
-        Me.razon = New System.Windows.Forms.TextBox()
-        Me.Label26 = New System.Windows.Forms.Label()
-        Me.Label37 = New System.Windows.Forms.Label()
-        Me.cuil = New System.Windows.Forms.MaskedTextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.uso = New System.Windows.Forms.ComboBox()
         Me.barrio = New System.Windows.Forms.ComboBox()
@@ -122,6 +115,12 @@ Partial Class ModInmueble
         Me.bs_car = New System.Windows.Forms.BindingSource(Me.components)
         Me.bs_copia = New System.Windows.Forms.BindingSource(Me.components)
         Me.subtitulo = New System.Windows.Forms.Label()
+        Me.difunto = New System.Windows.Forms.CheckBox()
+        Me.mod_titular = New System.Windows.Forms.Button()
+        Me.titular = New System.Windows.Forms.TextBox()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.Label37 = New System.Windows.Forms.Label()
+        Me.cuil = New System.Windows.Forms.MaskedTextBox()
         Me.Menu1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.grupo_mod.SuspendLayout()
@@ -134,7 +133,6 @@ Partial Class ModInmueble
         CType(Me.zona, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel5.SuspendLayout()
         Me.tab_ubicacion.SuspendLayout()
-        Me.grupo_titular.SuspendLayout()
         CType(Me.cuenta, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tab_frente.SuspendLayout()
         CType(Me.consulta_frente, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -738,9 +736,14 @@ Partial Class ModInmueble
         'tab_ubicacion
         '
         Me.tab_ubicacion.BackColor = System.Drawing.Color.Gainsboro
+        Me.tab_ubicacion.Controls.Add(Me.difunto)
+        Me.tab_ubicacion.Controls.Add(Me.mod_titular)
+        Me.tab_ubicacion.Controls.Add(Me.titular)
+        Me.tab_ubicacion.Controls.Add(Me.Label26)
+        Me.tab_ubicacion.Controls.Add(Me.Label37)
+        Me.tab_ubicacion.Controls.Add(Me.cuil)
         Me.tab_ubicacion.Controls.Add(Me.Label8)
         Me.tab_ubicacion.Controls.Add(Me.archivado)
-        Me.tab_ubicacion.Controls.Add(Me.grupo_titular)
         Me.tab_ubicacion.Controls.Add(Me.Label2)
         Me.tab_ubicacion.Controls.Add(Me.uso)
         Me.tab_ubicacion.Controls.Add(Me.barrio)
@@ -773,96 +776,6 @@ Partial Class ModInmueble
         Me.archivado.TabIndex = 927
         Me.archivado.Text = "Archivado"
         Me.archivado.UseVisualStyleBackColor = True
-        '
-        'grupo_titular
-        '
-        Me.grupo_titular.BackColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(230, Byte), Integer), CType(CType(230, Byte), Integer))
-        Me.grupo_titular.Controls.Add(Me.difunto)
-        Me.grupo_titular.Controls.Add(Me.mod_titular)
-        Me.grupo_titular.Controls.Add(Me.razon)
-        Me.grupo_titular.Controls.Add(Me.Label26)
-        Me.grupo_titular.Controls.Add(Me.Label37)
-        Me.grupo_titular.Controls.Add(Me.cuil)
-        Me.grupo_titular.Location = New System.Drawing.Point(0, 123)
-        Me.grupo_titular.Name = "grupo_titular"
-        Me.grupo_titular.Size = New System.Drawing.Size(530, 141)
-        Me.grupo_titular.TabIndex = 925
-        '
-        'difunto
-        '
-        Me.difunto.AutoSize = True
-        Me.difunto.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.difunto.Enabled = False
-        Me.difunto.Font = New System.Drawing.Font("PF DinText Pro", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.difunto.Location = New System.Drawing.Point(27, 73)
-        Me.difunto.Name = "difunto"
-        Me.difunto.Size = New System.Drawing.Size(83, 26)
-        Me.difunto.TabIndex = 928
-        Me.difunto.Text = "Difunto"
-        Me.difunto.UseVisualStyleBackColor = True
-        '
-        'mod_titular
-        '
-        Me.mod_titular.BackColor = System.Drawing.Color.DimGray
-        Me.mod_titular.FlatAppearance.BorderSize = 0
-        Me.mod_titular.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.mod_titular.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
-        Me.mod_titular.ForeColor = System.Drawing.Color.White
-        Me.mod_titular.Location = New System.Drawing.Point(376, 6)
-        Me.mod_titular.Name = "mod_titular"
-        Me.mod_titular.Size = New System.Drawing.Size(110, 30)
-        Me.mod_titular.TabIndex = 355
-        Me.mod_titular.Text = "MODIFICAR"
-        Me.mod_titular.UseVisualStyleBackColor = False
-        '
-        'razon
-        '
-        Me.razon.BackColor = System.Drawing.SystemColors.Window
-        Me.razon.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.razon.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
-        Me.razon.Location = New System.Drawing.Point(94, 6)
-        Me.razon.Name = "razon"
-        Me.razon.ReadOnly = True
-        Me.razon.Size = New System.Drawing.Size(276, 30)
-        Me.razon.TabIndex = 353
-        '
-        'Label26
-        '
-        Me.Label26.AutoSize = True
-        Me.Label26.BackColor = System.Drawing.Color.Transparent
-        Me.Label26.Font = New System.Drawing.Font("PF DinText Pro", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label26.ForeColor = System.Drawing.Color.Black
-        Me.Label26.Location = New System.Drawing.Point(33, 9)
-        Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(59, 22)
-        Me.Label26.TabIndex = 351
-        Me.Label26.Text = "Titular"
-        '
-        'Label37
-        '
-        Me.Label37.AutoSize = True
-        Me.Label37.BackColor = System.Drawing.Color.Transparent
-        Me.Label37.Font = New System.Drawing.Font("PF DinText Pro", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label37.ForeColor = System.Drawing.Color.Black
-        Me.Label37.Location = New System.Drawing.Point(46, 44)
-        Me.Label37.Name = "Label37"
-        Me.Label37.Size = New System.Drawing.Size(46, 22)
-        Me.Label37.TabIndex = 352
-        Me.Label37.Text = "CUIL"
-        '
-        'cuil
-        '
-        Me.cuil.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.cuil.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.cuil.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
-        Me.cuil.Location = New System.Drawing.Point(95, 44)
-        Me.cuil.Mask = "99-99999999-9"
-        Me.cuil.Name = "cuil"
-        Me.cuil.ReadOnly = True
-        Me.cuil.Size = New System.Drawing.Size(146, 23)
-        Me.cuil.TabIndex = 354
-        Me.cuil.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.cuil.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals
         '
         'Label2
         '
@@ -1436,6 +1349,82 @@ Partial Class ModInmueble
         Me.subtitulo.Text = " INGRESAR N° DE PARTIDA"
         Me.subtitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'difunto
+        '
+        Me.difunto.AutoSize = True
+        Me.difunto.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.difunto.Enabled = False
+        Me.difunto.Font = New System.Drawing.Font("PF DinText Pro", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.difunto.Location = New System.Drawing.Point(26, 193)
+        Me.difunto.Name = "difunto"
+        Me.difunto.Size = New System.Drawing.Size(83, 26)
+        Me.difunto.TabIndex = 937
+        Me.difunto.Text = "Difunto"
+        Me.difunto.UseVisualStyleBackColor = True
+        '
+        'mod_titular
+        '
+        Me.mod_titular.BackColor = System.Drawing.Color.DimGray
+        Me.mod_titular.FlatAppearance.BorderSize = 0
+        Me.mod_titular.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.mod_titular.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
+        Me.mod_titular.ForeColor = System.Drawing.Color.White
+        Me.mod_titular.Location = New System.Drawing.Point(375, 126)
+        Me.mod_titular.Name = "mod_titular"
+        Me.mod_titular.Size = New System.Drawing.Size(110, 30)
+        Me.mod_titular.TabIndex = 936
+        Me.mod_titular.Text = "MODIFICAR"
+        Me.mod_titular.UseVisualStyleBackColor = False
+        '
+        'titular
+        '
+        Me.titular.BackColor = System.Drawing.SystemColors.Window
+        Me.titular.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.titular.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
+        Me.titular.Location = New System.Drawing.Point(93, 126)
+        Me.titular.Name = "titular"
+        Me.titular.ReadOnly = True
+        Me.titular.Size = New System.Drawing.Size(276, 30)
+        Me.titular.TabIndex = 934
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.BackColor = System.Drawing.Color.Transparent
+        Me.Label26.Font = New System.Drawing.Font("PF DinText Pro", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label26.ForeColor = System.Drawing.Color.Black
+        Me.Label26.Location = New System.Drawing.Point(32, 129)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(59, 22)
+        Me.Label26.TabIndex = 932
+        Me.Label26.Text = "Titular"
+        '
+        'Label37
+        '
+        Me.Label37.AutoSize = True
+        Me.Label37.BackColor = System.Drawing.Color.Transparent
+        Me.Label37.Font = New System.Drawing.Font("PF DinText Pro", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label37.ForeColor = System.Drawing.Color.Black
+        Me.Label37.Location = New System.Drawing.Point(45, 164)
+        Me.Label37.Name = "Label37"
+        Me.Label37.Size = New System.Drawing.Size(46, 22)
+        Me.Label37.TabIndex = 933
+        Me.Label37.Text = "CUIL"
+        '
+        'cuil
+        '
+        Me.cuil.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.cuil.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.cuil.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
+        Me.cuil.Location = New System.Drawing.Point(94, 164)
+        Me.cuil.Mask = "99-99999999-9"
+        Me.cuil.Name = "cuil"
+        Me.cuil.ReadOnly = True
+        Me.cuil.Size = New System.Drawing.Size(146, 23)
+        Me.cuil.TabIndex = 935
+        Me.cuil.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.cuil.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals
+        '
         'ModInmueble
         '
         Me.AcceptButton = Me.siguiente
@@ -1469,8 +1458,6 @@ Partial Class ModInmueble
         Me.Panel5.PerformLayout()
         Me.tab_ubicacion.ResumeLayout(False)
         Me.tab_ubicacion.PerformLayout()
-        Me.grupo_titular.ResumeLayout(False)
-        Me.grupo_titular.PerformLayout()
         CType(Me.cuenta, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tab_frente.ResumeLayout(False)
         CType(Me.consulta_frente, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1554,12 +1541,6 @@ Partial Class ModInmueble
     Friend WithEvents opr_id As System.Windows.Forms.Label
     Friend WithEvents titular_id As System.Windows.Forms.Label
     Friend WithEvents add_copia As System.Windows.Forms.Button
-    Friend WithEvents grupo_titular As System.Windows.Forms.Panel
-    Friend WithEvents mod_titular As System.Windows.Forms.Button
-    Friend WithEvents razon As System.Windows.Forms.TextBox
-    Friend WithEvents Label26 As System.Windows.Forms.Label
-    Friend WithEvents Label37 As System.Windows.Forms.Label
-    Friend WithEvents cuil As System.Windows.Forms.MaskedTextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents uso As System.Windows.Forms.ComboBox
     Friend WithEvents bs_frente As System.Windows.Forms.BindingSource
@@ -1570,7 +1551,6 @@ Partial Class ModInmueble
     Friend WithEvents del_copia As System.Windows.Forms.Button
     Friend WithEvents archivado As System.Windows.Forms.CheckBox
     Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents difunto As System.Windows.Forms.CheckBox
     Friend WithEvents Label9 As System.Windows.Forms.Label
     Friend WithEvents user_id As System.Windows.Forms.Label
     Friend WithEvents Label23 As System.Windows.Forms.Label
@@ -1594,4 +1574,10 @@ Partial Class ModInmueble
     Friend WithEvents Label27 As Label
     Friend WithEvents existente As NumericUpDown
     Friend WithEvents Label25 As Label
+    Friend WithEvents difunto As CheckBox
+    Friend WithEvents mod_titular As Button
+    Friend WithEvents titular As TextBox
+    Friend WithEvents Label26 As Label
+    Friend WithEvents Label37 As Label
+    Friend WithEvents cuil As MaskedTextBox
 End Class

@@ -3,7 +3,7 @@ Module SystemAccess
     'Funciones de inicio de sesion
     Public Function validar_inicio(user As String, pass As String) As Integer
         If Len(user) >= 5 And Len(pass) >= 5 Then
-            Dim dtab As DataTable = bd.read(defcon,
+            Dim dtab As DataTable = bd.read(my.settings.DefaultCon,
                                             "SELECT id, usuario, pass FROM usuarios" &
                                             " WHERE usuario='" & user & "'" &
                                             " AND pass ='" & pass & "'")
@@ -25,17 +25,17 @@ Module SystemAccess
         Dim token As String = getCpuId()
         Dim equipo As String = Environment.MachineName
         'Últimos accesos
-        Dim dtab As DataTable = bd.read(defcon, "SELECT id, fecha_hora, user_id, token, equipo, sesion FROM usr_log" &
+        Dim dtab As DataTable = bd.read(my.settings.DefaultCon, "SELECT id, fecha_hora, user_id, token, equipo, sesion FROM usr_log" &
                                 " WHERE user_id=" & user_id & " ORDER BY id DESC")
 
         If dtab.Rows.Count > 0 Then
             If dtab(0)("sesion") Then
                 If dtab(0)("token").ToString = token Then
                     If lock Then 'Actualizar a último accceso 
-                        bd.edit(defcon, "UPDATE usr_log SET fecha_hora='" & fecha_hora & "', sesion=True" &
+                        bd.edit(my.settings.DefaultCon, "UPDATE usr_log SET fecha_hora='" & fecha_hora & "', sesion=True" &
                                   " WHERE id=" & dtab(0)("id"))
                     Else
-                        bd.edit(defcon, "UPDATE usr_log SET sesion=False WHERE user_id=" & user_id)
+                        bd.edit(my.settings.DefaultCon, "UPDATE usr_log SET sesion=False WHERE user_id=" & user_id)
                     End If
 
                 ElseIf dtab(0)("token").ToString <> token Then
@@ -44,18 +44,18 @@ Module SystemAccess
                                                  " Presione SI para continuar, NO para salir", MsgBoxStyle.YesNo,
                                                  " Sesion iniciada en otro equipo") Then
                         'Sesión iniciada en este equipo, cerrar sesión de accesos anteriores
-                        bd.edit(defcon, "UPDATE usr_log SET sesion=False WHERE user_id=" & user_id)
+                        bd.edit(my.settings.DefaultCon, "UPDATE usr_log SET sesion=False WHERE user_id=" & user_id)
                     Else
                         Return False
                     End If
                 End If
             ElseIf dtab(0)("sesion") = False Then 'Agregar registro a historial
-                bd.edit(defcon, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
+                bd.edit(my.settings.DefaultCon, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
                                    " VALUES(" & user_id & ", '" & fecha_hora & "' ," &
                                    " '" & token & "', '" & equipo & "', True)")
             End If
         ElseIf dtab.Rows.Count = 0 Then
-            bd.edit(defcon, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
+            bd.edit(my.settings.DefaultCon, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
                                   " VALUES(" & user_id & ", '" & fecha_hora & "' ," &
                                   " '" & token & "', '" & equipo & "', True)")
         End If
@@ -63,7 +63,7 @@ Module SystemAccess
     End Function
     Public Function permisos(user_id As Integer)
         Dim inicio As New launcher
-        Dim dtab As DataTable = bd.read(defcon, "SELECT * FROM usuarios WHERE id=" & user_id)
+        Dim dtab As DataTable = bd.read(my.settings.DefaultCon, "SELECT * FROM usuarios WHERE id=" & user_id)
         With inicio
             'Permisos
             .cat.Visible = dtab(0)("cat")

@@ -123,29 +123,29 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <Private>True</Private>
+      <Private>False</Private>
       <HintPath>C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll</HintPath>
     </Reference>
     <Reference Include="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml.Linq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -162,10 +162,10 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsultaGen.Designer.vb">
+    <Compile Include="consultas\ConsultaGen.Designer.vb">
       <DependentUpon>ConsultaGen.vb</DependentUpon>
     </Compile>
-    <Compile Include="ConsultaGen.vb">
+    <Compile Include="consultas\ConsultaGen.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="catastro\ModInmueble.Designer.vb">
@@ -181,14 +181,14 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="docs\Documento.vb" />
-    <Compile Include="ControlBusquedaGen.vb">
+    <Compile Include="consultas\ControlBusquedaGen.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="entorno\SystemAccess.vb" />
-    <Compile Include="gobierno\ConsultaOrdenanza.Designer.vb">
+    <Compile Include="consultas\ConsultaOrdenanza.Designer.vb">
       <DependentUpon>ConsultaOrdenanza.vb</DependentUpon>
     </Compile>
-    <Compile Include="gobierno\ConsultaOrdenanza.vb">
+    <Compile Include="consultas\ConsultaOrdenanza.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="gobierno\ModOrdenanza.Designer.vb">
@@ -215,10 +215,10 @@
     <Compile Include="hacienda\ModCuentaAgrupada.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="hacienda\ConsultaCuentaAgrupada.Designer.vb">
+    <Compile Include="consultas\ConsultaCuentaAgrupada.Designer.vb">
       <DependentUpon>ConsultaCuentaAgrupada.vb</DependentUpon>
     </Compile>
-    <Compile Include="hacienda\ConsultaCuentaAgrupada.vb">
+    <Compile Include="consultas\ConsultaCuentaAgrupada.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hacienda\CertificadoLibreDeuda.Designer.vb">
@@ -227,16 +227,16 @@
     <Compile Include="hacienda\CertificadoLibreDeuda.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="hacienda\ConsultaMovimientos.Designer.vb">
+    <Compile Include="consultas\ConsultaMovimientos.Designer.vb">
       <DependentUpon>ConsultaMovimientos.vb</DependentUpon>
     </Compile>
-    <Compile Include="hacienda\ConsultaMovimientos.vb">
+    <Compile Include="consultas\ConsultaMovimientos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="hacienda\ConsultaImpuesto.Designer.vb">
+    <Compile Include="consultas\ConsultaImpuesto.Designer.vb">
       <DependentUpon>ConsultaImpuesto.vb</DependentUpon>
     </Compile>
-    <Compile Include="hacienda\ConsultaImpuesto.vb">
+    <Compile Include="consultas\ConsultaImpuesto.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hacienda\Hacienda.vb" />
@@ -249,10 +249,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="entorno\bd.vb" />
-    <Compile Include="catastro\ConsultaCatastro.Designer.vb">
+    <Compile Include="consultas\ConsultaCatastro.Designer.vb">
       <DependentUpon>ConsultaCatastro.vb</DependentUpon>
     </Compile>
-    <Compile Include="catastro\ConsultaCatastro.vb">
+    <Compile Include="consultas\ConsultaCatastro.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="launcher.designer.vb">
@@ -262,10 +262,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="catastro\Catastro.vb" />
-    <Compile Include="hacienda\ConsultasEspeciales.Designer.vb">
+    <Compile Include="consultas\ConsultasEspeciales.Designer.vb">
       <DependentUpon>ConsultasEspeciales.vb</DependentUpon>
     </Compile>
-    <Compile Include="hacienda\ConsultasEspeciales.vb">
+    <Compile Include="consultas\ConsultasEspeciales.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="entorno\visor_error.Designer.vb">
@@ -274,10 +274,10 @@
     <Compile Include="entorno\visor_error.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="gobierno\ConsultaEmpleado.Designer.vb">
+    <Compile Include="consultas\ConsultaEmpleado.Designer.vb">
       <DependentUpon>ConsultaEmpleado.vb</DependentUpon>
     </Compile>
-    <Compile Include="gobierno\ConsultaEmpleado.vb">
+    <Compile Include="consultas\ConsultaEmpleado.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hacienda\ModContrato.Designer.vb">
@@ -292,11 +292,16 @@
     <Compile Include="gobierno\ModEmpleado.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="oprivadas\ControlBusquedaExpediente.vb">
+    <Compile Include="consultas\ControlBusquedaExpediente.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="oprivadas\Pagos.vb" />
-    <Compile Include="persona\ControlBusquedaPersona.vb">
+    <Compile Include="consultas\ControlBusquedaPersona.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="persona\ModActa.Designer.vb">
@@ -346,11 +351,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="My Project\Settings.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
     <Compile Include="persona\ModPersona.Designer.vb">
       <DependentUpon>ModPersona.vb</DependentUpon>
     </Compile>
@@ -358,12 +358,13 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="persona\Persona.vb" />
+    <Compile Include="Settings.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ConsultaGen.resx">
+    <EmbeddedResource Include="consultas\ConsultaGen.resx">
       <DependentUpon>ConsultaGen.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="catastro\ConsultaCatastro.resx">
+    <EmbeddedResource Include="consultas\ConsultaCatastro.resx">
       <DependentUpon>ConsultaCatastro.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="catastro\ModInmueble.resx">
@@ -375,10 +376,10 @@
     <EmbeddedResource Include="acceso.resx">
       <DependentUpon>acceso.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ControlBusquedaGen.resx">
+    <EmbeddedResource Include="consultas\ControlBusquedaGen.resx">
       <DependentUpon>ControlBusquedaGen.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="gobierno\ConsultaOrdenanza.resx">
+    <EmbeddedResource Include="consultas\ConsultaOrdenanza.resx">
       <DependentUpon>ConsultaOrdenanza.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="gobierno\ModOrdenanza.resx">
@@ -396,7 +397,7 @@
       <DependentUpon>ModCuentaAgrupada.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\ConsultaCuentaAgrupada.resx">
+    <EmbeddedResource Include="consultas\ConsultaCuentaAgrupada.resx">
       <DependentUpon>ConsultaCuentaAgrupada.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -404,18 +405,18 @@
       <DependentUpon>CertificadoLibreDeuda.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\ConsultaMovimientos.resx">
+    <EmbeddedResource Include="consultas\ConsultaMovimientos.resx">
       <DependentUpon>ConsultaMovimientos.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\ConsultaImpuesto.resx">
+    <EmbeddedResource Include="consultas\ConsultaImpuesto.resx">
       <DependentUpon>ConsultaImpuesto.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\ConsultasEspeciales.resx">
+    <EmbeddedResource Include="consultas\ConsultasEspeciales.resx">
       <DependentUpon>ConsultasEspeciales.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="gobierno\ConsultaEmpleado.resx">
+    <EmbeddedResource Include="consultas\ConsultaEmpleado.resx">
       <DependentUpon>ConsultaEmpleado.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\ModContrato.resx">
@@ -424,10 +425,10 @@
     <EmbeddedResource Include="gobierno\ModEmpleado.resx">
       <DependentUpon>ModEmpleado.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\ControlBusquedaExpediente.resx">
+    <EmbeddedResource Include="consultas\ControlBusquedaExpediente.resx">
       <DependentUpon>ControlBusquedaExpediente.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="persona\ControlBusquedaPersona.resx">
+    <EmbeddedResource Include="consultas\ControlBusquedaPersona.resx">
       <DependentUpon>ControlBusquedaPersona.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="persona\ModActa.resx">
@@ -526,12 +527,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
     <None Include="My Project\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
@@ -581,7 +583,6 @@
     <None Include="Resources\DISK.ICO" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="My Project\app.manifest" />
     <None Include="Resources\SHOPPING.ICO" />
   </ItemGroup>

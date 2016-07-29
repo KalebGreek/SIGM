@@ -78,7 +78,7 @@ Public Class ModCuentaAgrupada
         If cuenta_agrupada Then
             sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
         End If
-        consulta = bd.read(foxcon, sql)
+        consulta = bd.read(my.settings.foxcon, sql)
         progreso.Value = 20
         Return consulta
     End Function
@@ -118,13 +118,13 @@ Public Class ModCuentaAgrupada
                         'mod_sql = "INSERT INTO contribuyente(razon, cuil, impuesto, codigo, alta) VALUES ('" &
                         'razon.Text & "', " & cuil.Text & ", '" & .Item(1, fila).Value & "', " &
                         '.Item(2, fila).Value & ", '" & .Item(3, fila).Value & "');"
-                        bd.edit(defcon, "")
+                        bd.edit(my.settings.DefaultCon, "")
                         nins += 1
                     Else
                         'mod_sql = "UPDATE contribuyente SET razon='" & razon.Text & "', impuesto='" & .Item(1, fila).Value &
                         '   "', codigo=" & .Item(2, fila).Value & ", alta='" & .Item(3, fila).Value & "'" &
                         '   " WHERE id=" & .Item(0, fila).Value
-                        bd.edit(defcon, "")
+                        bd.edit(my.settings.DefaultCon, "")
                         nupd += 1
                     End If
                     fila += 1
@@ -132,13 +132,13 @@ Public Class ModCuentaAgrupada
                 ndel = 0
                 If found = True Then
                     Do While ndel < del_rows.Count And del_rows(ndel) <> Nothing
-                        bd.edit(defcon, "DELETE FROM contribuyente WHERE id=" & del_rows(ndel) & ";")
+                        bd.edit(my.settings.DefaultCon, "DELETE FROM contribuyente WHERE id=" & del_rows(ndel) & ";")
                         ndel += 1
                     Loop
                 End If
             Else
                 If MsgBoxResult.Ok = MsgBox("Esto eliminará todos los registros de la cuenta agrupada, ¿desea continuar?.", MsgBoxStyle.OkCancel) Then
-                    '    bd.edit(defcon, "DELETE FROM contribuyente WHERE cuil=" & cuil.Text & ";")
+                    '    bd.edit(my.settings.DefaultCon, "DELETE FROM contribuyente WHERE cuil=" & cuil.Text & ";")
                 End If
             End If
             info.Text = nins & " nuevos registros, " & nupd & " registros modificados y " & ndel & " registros eliminados."

@@ -53,7 +53,7 @@
             Else
                 sql += " WHERE codigo=" & codigo
             End If
-            Dim dtab As DataTable = bd.read(defcon, sql)
+            Dim dtab As DataTable = bd.read(my.settings.DefaultCon, sql)
             If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then
                     If dtab.Rows.Count = 1 And ordenanza_id > 0 Then
@@ -84,7 +84,7 @@
 
     '###### GUARDAR ##########################################################################################
     Private Sub guardar()
-        bd.edit(defcon, "")
+        bd.edit(my.settings.DefaultCon, "")
     End Sub
 
 

@@ -3,18 +3,18 @@
     Public RazonBaja, DetalleVencimiento As String
     Public Function ConsultarCuenta(tipo As String, cuenta As Integer) As DataTable
         If tipo.Contains("AGUA") Then
-            Return bd.read(foxcon, "SELECT * FROM aguas WHERE codigo=" & cuenta)
+            Return bd.read(my.settings.foxcon, "SELECT * FROM aguas WHERE codigo=" & cuenta)
         ElseIf tipo.Contains("AUTO") Then
-            Return bd.read(foxcon, "SELECT * FROM automovil INNER JOIN tipauto ON automovil.tipo=tipauto.tipo
+            Return bd.read(my.settings.foxcon, "SELECT * FROM automovil INNER JOIN tipauto ON automovil.tipo=tipauto.tipo
                                     WHERE codigo=" & cuenta)
         ElseIf tipo.Contains("CATA") Then
-            Return bd.read(foxcon, "SELECT * FROM catastro 
+            Return bd.read(my.settings.foxcon, "SELECT * FROM catastro 
                                     WHERE codigo=" & cuenta)
         ElseIf tipo.Contains("CEME") Then
-            Return bd.read(foxcon, "SELECT * FROM sepelio 
+            Return bd.read(my.settings.foxcon, "SELECT * FROM sepelio 
                                     WHERE codigo=" & cuenta)
         ElseIf tipo.Contains("COME") Then
-            Return bd.read(foxcon, "SELECT * FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad 
+            Return bd.read(my.settings.foxcon, "SELECT * FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad 
                                     WHERE codigo=" & cuenta)
         Else
             Return Nothing

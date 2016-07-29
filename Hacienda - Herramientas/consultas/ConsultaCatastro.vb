@@ -56,7 +56,7 @@
                 dtab = Catastro.ListarInmueblePorExpediente(Val(Keyword.Text))
             End If
         End With
-        Query.Show(tabla_consulta, bs_consulta, dtab)
+        Data.ToDataGridView(tabla_consulta, bs_consulta, dtab)
     End Sub
     Private Sub reset_Click(sender As Object, e As EventArgs) Handles reset.Click
         tabla_consulta.DataSource = Nothing

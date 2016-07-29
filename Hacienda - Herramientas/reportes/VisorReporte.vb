@@ -90,7 +90,12 @@ Public Class VisorReporte
         mostrar("OPR\CFO")
     End Sub
     Private Sub LíneaMunicipalToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles LíneaMunicipalToolStripMenuItem1.Click
-        mostrar("OPR\CLM")
+        Dim param As New Generic.List(Of ReportParameter)
+        Dim razon As String = InputBox("Ingresar Razon Social", "Ingresar Razon Social", "APELLIDO, NOMBRE")
+        If Len(razon) > 4 Then
+            param.Add(New ReportParameter("razon", razon))
+            mostrar("OPR\CLM", param, False)
+        End If
     End Sub
 
     Private Sub SalirToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalirToolStripMenuItem.Click

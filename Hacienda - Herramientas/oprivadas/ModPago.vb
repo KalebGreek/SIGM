@@ -20,7 +20,7 @@
     End Sub
     Private Sub ConsultarDeudas()
         If Me.Visible Then
-            visor = Query.Show(visor, bs_pago, Pagos.Consultar(opr_id.Text, solo_deuda.Checked))
+            visor = Data.ToDataGridView(visor, bs_pago, Pagos.Consultar(opr_id.Text, solo_deuda.Checked))
         End If
     End Sub
 

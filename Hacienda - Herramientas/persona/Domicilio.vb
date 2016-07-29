@@ -2,19 +2,19 @@
     Public Class sql
         Shared Function RellenarProvincias() As BindingSource
             Dim bs As New BindingSource
-            bs.DataSource = bd.read(defcon, "Select provincia_id, provincia FROM provincias ORDER BY provincia")
+            bs.DataSource = bd.read(my.settings.DefaultCon, "Select provincia_id, provincia FROM provincias ORDER BY provincia")
             Return bs
         End Function
         Shared Function RellenarLocalidades(provincia_id As Integer) As BindingSource
             Dim bs As New BindingSource
-            bs.DataSource = bd.read(defcon,
+            bs.DataSource = bd.read(my.settings.DefaultCon,
                                     "Select id, localidad, cp
                                      FROM provincias INNER JOIN localidades On provincias.provincia_id = localidades.provincia_id
                                      WHERE localidades.provincia_id=" & provincia_id & " ORDER BY localidad")
             Return bs
         End Function
         Shared Function Listar(persona_id As Integer) As DataTable
-            Return bd.read(defcon,
+            Return bd.read(my.settings.DefaultCon,
                            "SELECT per_domicilio.id, per_domicilio.calle, per_domicilio.altura,
                             per_domicilio.piso, per_domicilio.dpto, per_domicilio.principal, 
                             per_domicilio.localidad_id, localidades.localidad, provincias.provincia

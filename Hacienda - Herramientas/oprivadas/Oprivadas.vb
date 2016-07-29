@@ -52,10 +52,10 @@
                    SQLTable & " WHERE responsable_expediente.principal=True"
             End If
 
-            Return bd.read(defcon, sql)
+            Return bd.read(my.settings.DefaultCon, sql)
         End Function
         Shared Function ListarPorResponsable(persona_id As Integer) As DataTable
-            Return bd.read(defcon,
+            Return bd.read(my.settings.DefaultCon,
                            "SELECT responsable_expediente.Id As id, expediente, per_id 
                             FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id) 
                             INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id
@@ -63,7 +63,7 @@
         End Function
 
         Shared Function ListarPorProfesional(prof_id As Integer)
-            Return bd.read(defcon,
+            Return bd.read(my.settings.DefaultCon,
                            "SELECT responsable_expediente.Id As id, expediente, profesional_id
                             FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id)
                             INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id
@@ -71,7 +71,7 @@
         End Function
 
         Shared Function ListarResponsables(expediente As Integer) As DataTable
-            Return bd.read(defcon,
+            Return bd.read(my.settings.DefaultCon,
                            "SELECT persona.id As persona_id, razon, cuil, email, telefono, difunto
                             FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id)
                             INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id
@@ -79,7 +79,7 @@
         End Function
 
         Shared Function Seleccionar(expediente As Integer) As DataTable
-            Return bd.read(defcon, "SELECT * FROM oprivadas WHERE Oprivadas.expediente= " & expediente)
+            Return bd.read(my.settings.DefaultCon, "SELECT * FROM oprivadas WHERE Oprivadas.expediente= " & expediente)
         End Function
 
         'MODIFICAR
@@ -98,11 +98,11 @@
                                           MsgBoxStyle.YesNo, "Obras Privadas") Then
                     LimpiarTemporal(user_id, dtab(0)("id"), Nothing, True)
                     'Recrear expediente por defecto
-                    bd.edit(defcon, InsertExpSQL)
+                    bd.edit(my.settings.DefaultCon, InsertExpSQL)
                 End If
             Else
                 'Crear expediente por defecto
-                bd.edit(defcon, InsertExpSQL)
+                bd.edit(my.settings.DefaultCon, InsertExpSQL)
             End If
             Return Seleccionar(exp)
         End Function
@@ -112,7 +112,7 @@
             Else
                 user_id = 0
             End If
-            bd.edit(defcon, "UPDATE oprivadas Set user_id=" & user_id & " WHERE id=" & opr_id)
+            bd.edit(my.settings.DefaultCon, "UPDATE oprivadas Set user_id=" & user_id & " WHERE id=" & opr_id)
         End Sub
 
         Shared Sub LimpiarTemporal(user_id As Integer, opr_id As Integer, inmuebles As BindingSource, Optional temp As Boolean = False)
@@ -121,7 +121,7 @@
             If opr_id > 0 Then
                 sql += " And id=" & opr_id
             End If
-            dtab = bd.read(defcon, sql)
+            dtab = bd.read(my.settings.DefaultCon, sql)
 
             If dtab.Rows.Count > 0 Then
                 LimpiarResponsable(opr_id)
@@ -133,7 +133,7 @@
             If opr_id > 0 Then
                 sql += " And id=" & opr_id
             End If
-            bd.edit(defcon, sql)
+            bd.edit(my.settings.DefaultCon, sql)
 
         End Sub
 
@@ -143,18 +143,18 @@
             With registro
                 For fila As Integer = 0 To .Count - 1
                     .Position = fila
-                    bd.edit(defcon, "INSERT INTO responsable_expediente(opr_id, per_id, principal) 
+                    bd.edit(my.settings.DefaultCon, "INSERT INTO responsable_expediente(opr_id, per_id, principal) 
                                      VALUES(" & opr_id & ",
                                             " & .Current("persona_id") & ",
-                                            " & registro.Current("persona_id") = ResponsablePrincipal & ")")
+                                            " & CBool(registro.Current("persona_id") = ResponsablePrincipal) & ")")
                 Next
             End With
         End Sub
         Shared Sub LimpiarResponsable(opr_id As Integer)
-            bd.edit(defcon, "DELETE * FROM responsable_expediente WHERE opr_id=" & opr_id)
+            bd.edit(my.settings.DefaultCon, "DELETE * FROM responsable_expediente WHERE opr_id=" & opr_id)
         End Sub
         Shared Sub ActualizarProfesional(opr_id As Integer, prof_id As Integer)
-            bd.edit(defcon, "UPDATE oprivadas SET profesional_id=" & prof_id &
+            bd.edit(my.settings.DefaultCon, "UPDATE oprivadas SET profesional_id=" & prof_id &
                             " WHERE id=" & opr_id)
         End Sub
 
@@ -170,7 +170,7 @@
             sql += " inicio_obra=#" & inicio_obra & "#,  recibe='" & recibe & "',
                      tarea='" & tarea & "', tarea2='" & tarea2 & "', observaciones='" & observaciones & "'
                      WHERE id=" & opr_id
-            bd.edit(defcon, sql)
+            bd.edit(my.settings.DefaultCon, sql)
         End Sub
     End Class
 End Class

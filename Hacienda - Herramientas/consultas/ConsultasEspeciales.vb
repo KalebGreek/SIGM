@@ -9,7 +9,7 @@
         ' Add any initialization after the InitializeComponent() call.
 
         año.Value = Today.Year
-        Connection.Text = foxcon
+        Connection.Text = My.Settings.foxcon
     End Sub
 
     'HACIENDA
@@ -154,7 +154,7 @@
                 End If
             End If
 
-            Query.Show(DataView, bs, dtab)
+            Data.ToDataGridView(DataView, bs, dtab)
         Else
             Connection.Text = "Seleccione una base de datos antes de continuar."
         End If
@@ -184,7 +184,7 @@
         If PorAño.Checked Then
             sql += " YEAR(" & SelectorCampoFecha.Text & ") = " & año.Value
         ElseIf PorFecha.Checked Then
-            If Connection.Text = foxcon Then
+            If Connection.Text = My.Settings.foxcon Then
                 sql += " " & SelectorCampoFecha.Text & " => {" & inicio.Value.ToString("MM/dd/yyyy") & "}" &
                            " AND " & SelectorCampoFecha.Text & " <= {" & final.Value.ToString("MM/dd/yyyy") & "}"
             Else
@@ -263,8 +263,8 @@
                     SQLBancos()
                 End If
                 ProcessQuery(False, SQLSelect, SQLTable, SQLCriteria, SQLGrouping)
-                End If
             End If
+        End If
     End Sub
 
 
@@ -286,13 +286,13 @@
     End Sub
 
     Private Sub DBFoxMuniciToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DBFoxMuniciToolStripMenuItem.Click
-        Connection.Text = foxcon
+        Connection.Text = My.Settings.foxcon
     End Sub
     Private Sub DBAccessToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DBAccessToolStripMenuItem.Click
-        Connection.Text = adbcon
+        Connection.Text = My.Settings.adbcon
     End Sub
     Private Sub DBPostgreSQLToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles DBPostgreSQLToolStripMenuItem.Click
-        Connection.Text = pgsqlcon
+        Connection.Text = My.Settings.pgsqlcon
     End Sub
 
 

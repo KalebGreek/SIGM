@@ -52,13 +52,13 @@ Public Class ControlBusquedaExpediente
         keyword.Text = Trim(keyword.Text)
         With filtro1.Text
             If .Contains("EXPEDIENTE") Then
-                visor = Query.Show(visor, bs_consulta, Oprivadas.Expediente.Buscar(Val(keyword.Text)))
+                visor = Data.ToDataGridView(visor, bs_consulta, Oprivadas.Expediente.Buscar(Val(keyword.Text)))
             ElseIf .Contains("RESPONSABLE") Then
-                visor = Query.Show(visor, bs_consulta, Oprivadas.Expediente.Buscar(, keyword.Text))
+                visor = Data.ToDataGridView(visor, bs_consulta, Oprivadas.Expediente.Buscar(, keyword.Text))
             ElseIf .Contains("PROFESIONAL") Then
-                visor = Query.Show(visor, bs_consulta, Oprivadas.Expediente.Buscar(, , keyword.Text))
+                visor = Data.ToDataGridView(visor, bs_consulta, Oprivadas.Expediente.Buscar(, , keyword.Text))
             ElseIf .Contains("CUIL") Then
-                visor = Query.Show(visor, bs_consulta, Oprivadas.Expediente.Buscar(, , , Val(keyword.Text)))
+                visor = Data.ToDataGridView(visor, bs_consulta, Oprivadas.Expediente.Buscar(, , , Val(keyword.Text)))
             Else
                 reset.PerformClick()
             End If

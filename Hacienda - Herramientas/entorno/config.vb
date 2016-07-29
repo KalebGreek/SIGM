@@ -5,20 +5,20 @@
 
         ' Add any initialization after the InitializeComponent() call.
         '### CONEXION POR DEFECTO
-        If defcon <> "" Then
-            conexion_std.Text = defcon
+        If my.settings.DefaultCon <> "" Then
+            conexion_std.Text = my.settings.DefaultCon
         End If
         '### CONEXION ACCESS
-        If adbcon <> "" Then
-            conexion_acc.Text = adbcon
+        If my.settings.adbcon <> "" Then
+            conexion_acc.Text = my.settings.adbcon
         End If
         '### CONEXION FOX
-        If foxcon <> "" Then
-            conexion_fox.Text = foxcon
+        If my.settings.foxcon <> "" Then
+            conexion_fox.Text = my.settings.foxcon
         End If
         '### CONEXION PSQL
-        If pgsqlcon <> "" Then
-            conexion_pgsql.Text = pgsqlcon
+        If my.settings.pgsqlcon <> "" Then
+            conexion_pgsql.Text = my.settings.pgsqlcon
         End If
 
         cargar_tablas_ext()
@@ -26,52 +26,27 @@
 
     '###### GUI
     Private Sub RestablecerToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RestablecerToolStripMenuItem.Click
-        If defcon <> "" Then
-            conexion_std.Text = defcon
-        End If
-        '### CONEXION ACCESS
-        If adbcon <> "" Then
-            conexion_acc.Text = adbcon
-        End If
-        '### CONEXION FOX
-        If foxcon <> "" Then
-            conexion_fox.Text = foxcon
-        End If
-        '### CONEXION PSQL
-        If pgsqlcon <> "" Then
-            conexion_pgsql.Text = pgsqlcon
-        End If
+        conexion_std.Text = My.Settings.DefaultAdbCon
+        conexion_acc.Text = My.Settings.DefaultAdbCon
+        conexion_fox.Text = My.Settings.DefaultFoxCon
+        conexion_pgsql.Text = My.Settings.DefaultPgsqlCon
 
         cargar_tablas_ext()
 
         RestablecerToolStripMenuItem.Enabled = False
     End Sub
-    Private Sub GuardarToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles GuardarToolStripMenuItem.Click
+    Private Sub CerrarToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CerrarSinGuardarToolStripMenuItem.Click
         Dim dtab_con As New DataTable
         If MsgBox("¿Desea guardar los cambios?", MsgBoxStyle.YesNo, "Configuración") = MsgBoxResult.Yes Then
             'Guardar conexiones
-            validar_conexion(conexion_std, True)
-            validar_conexion(conexion_fox, True)
-            validar_conexion(conexion_pgsql, True)
-            validar_conexion(conexion_acc, True)
-
-            'Guardar tablas externas
-            'Aguas
-
-            'Auto
-
-            'Catastro
-
-            'Comercio
-
-            'Sepelio
-
+            My.Settings.DefaultCon = conexion_std.Text
+            My.Settings.foxcon = conexion_fox.Text
+            My.Settings.pgsqlcon = conexion_pgsql.Text
+            My.Settings.adbcon = conexion_acc.Text
 
             RestablecerToolStripMenuItem.Enabled = False
             MsgBox("Configuración guardada correctamente.")
         End If
-    End Sub
-    Private Sub CerrarSinGuardarToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CerrarSinGuardarToolStripMenuItem.Click
         Me.Close()
     End Sub
 
@@ -105,30 +80,7 @@
             RepararFechasNulas()
         End If
     End Sub
-    Private Sub validar_conexion(ByVal conexion As TextBox, ByVal save As Boolean)
-        Dim dtab_con As DataTable = bd.read(defcon,
-                                            "SELECT * FROM opciones WHERE opcion='" & conexion.Name & "'")
-        If Len(conexion.Text) < 11 Then 'Restaurar
-            MsgBox("La conexión indicada para " & conexion.Name & " es inválida.")
-            If dtab_con.Rows.Count > 0 Then
-                conexion.Text = dtab_con(0)("valor")
-            End If
-        Else 'Crear o actualizar
-            If save = True Then
-                If dtab_con.Rows.Count = 0 Then
-                    MsgBox("No se encuentra el registro de esta conexión, se creará uno nuevo.")
-                    bd.edit(defcon,
-                            "INSERT INTO opciones(opcion, valor) VALUES '" & conexion.Name & "', '" & conexion.Text & "'")
-                Else
-                    If conexion.Text <> dtab_con(0)("valor") Then
 
-                        bd.edit(defcon,
-                                "UPDATE opciones SET valor='" & conexion.Text & "' WHERE opcion='" & conexion.Name & "'")
-                    End If
-                End If
-            End If
-        End If
-    End Sub
     Private Sub RepararFechasNulas()
         Dim d, m, y, cuenta, vence, pago, periodo As String
         Dim dtab As New DataTable
@@ -191,7 +143,7 @@
     Public Sub cargar_tablas_ext()
         Dim dtab_ext As New DataTable
         dtab_ext.Locale = System.Globalization.CultureInfo.CurrentCulture
-        dtab_ext = bd.read(defcon, "SELECT * FROM tablas_externas WHERE servicio='AGUA'")
+        dtab_ext = bd.read(my.settings.DefaultCon, "SELECT * FROM tablas_externas WHERE servicio='AGUA'")
         If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS AGUA ##########################################################
             agua_personas.Text = dtab_ext(0)("persona")
@@ -202,7 +154,7 @@
             agua_zonas.Text = dtab_ext(0)("zona")
         End If
 
-        dtab_ext = bd.read(defcon, "SELECT * FROM tablas_externas WHERE servicio='AUTO'")
+        dtab_ext = bd.read(my.settings.DefaultCon, "SELECT * FROM tablas_externas WHERE servicio='AUTO'")
         If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS AUTO ##########################################################
             auto_personas.Text = dtab_ext(0)("persona")
@@ -211,7 +163,7 @@
             auto_tipo.Text = dtab_ext(0)("tipo")
         End If
 
-        dtab_ext = bd.read(defcon, "SELECT * FROM tablas_externas WHERE servicio='CATA'")
+        dtab_ext = bd.read(my.settings.DefaultCon, "SELECT * FROM tablas_externas WHERE servicio='CATA'")
         If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS CATA ##########################################################
             cata_personas.Text = dtab_ext(0)("persona")
@@ -221,7 +173,7 @@
             cata_zonas.Text = dtab_ext(0)("zona")
         End If
 
-        dtab_ext = bd.read(defcon, "SELECT * FROM tablas_externas WHERE servicio='COME'")
+        dtab_ext = bd.read(my.settings.DefaultCon, "SELECT * FROM tablas_externas WHERE servicio='COME'")
         If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS COME ##########################################################
             come_personas.Text = dtab_ext(0)("persona")
@@ -232,7 +184,7 @@
             come_actividades.Text = dtab_ext(0)("actividad")
         End If
 
-        dtab_ext = bd.read(defcon, "SELECT * FROM tablas_externas WHERE servicio='SEPE'")
+        dtab_ext = bd.read(my.settings.DefaultCon, "SELECT * FROM tablas_externas WHERE servicio='SEPE'")
         If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS SEPE ##########################################################
             sepe_personas.Text = dtab_ext(0)("persona")

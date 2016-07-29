@@ -71,9 +71,9 @@
         ' End If
         'End If
 
-        Dim dtab As DataTable = bd.read(defcon, "SELECT * FROM ordenanza")
+        Dim dtab As DataTable = bd.read(my.settings.DefaultCon, "SELECT * FROM ordenanza")
         If dtab Is Nothing = False Then
-            visor = Query.Show(visor, bs_consulta, dtab)
+            visor = Data.ToDataGridView(visor, bs_consulta, dtab)
             If dtab.Rows.Count = 0 Then
                 MsgBox("No hay resultados.")
                 Me.Text = "Buscar Ordenanza"
@@ -98,7 +98,7 @@
     End Sub
     Private Sub ver_Click(sender As Object, e As EventArgs) Handles ver.Click
         If bs_consulta.Position > -1 Then
-            Process.Start(Documento.folder_ord & bs_consulta.Current("ruta_copia").ToString)
+            Process.Start(root & My.Settings.DocFolderOrdenanza & bs_consulta.Current("ruta_copia").ToString)
         End If
     End Sub
     Private Sub modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles modificar.Click
@@ -116,7 +116,7 @@
         With bs_consulta
             If .Position > -1 Then
                 If MsgBoxResult.Yes = MsgBox("¿Desea eliminar el registro seleccionado?", MsgBoxStyle.YesNo, "Eliminar registro") Then
-                    bd.edit(defcon, "DELETE * FROM ordenanza WHERE id=" & .Current("id"))
+                    bd.edit(my.settings.DefaultCon, "DELETE * FROM ordenanza WHERE id=" & .Current("id"))
                     buscar.PerformClick()
                 End If
             End If

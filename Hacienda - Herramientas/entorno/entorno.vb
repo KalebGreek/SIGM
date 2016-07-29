@@ -50,15 +50,15 @@
 
         Dim dtab_con As New DataTable
         '### CONEXION FOX
-        dtab_con = bd.read(defcon, "SELECT * FROM opciones WHERE opcion='conexion_fox'")
+        dtab_con = bd.read(my.settings.DefaultCon, "SELECT * FROM opciones WHERE opcion='conexion_fox'")
 
         If dtab_con.Rows.Count > 0 Then
-            foxcon = dtab_con(0)("valor")
+            my.settings.foxcon = dtab_con(0)("valor")
         End If
         '### CONEXION PSQL
-        dtab_con = bd.read(defcon, "SELECT * FROM opciones WHERE opcion='conexion_sql'")
+        dtab_con = bd.read(my.settings.DefaultCon, "SELECT * FROM opciones WHERE opcion='conexion_sql'")
         If dtab_con.Rows.Count > 0 Then
-            pgsqlcon = dtab_con(0)("valor")
+            my.settings.pgsqlcon = dtab_con(0)("valor")
         End If
 
     End Sub

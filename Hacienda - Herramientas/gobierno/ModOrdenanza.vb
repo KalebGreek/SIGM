@@ -59,9 +59,9 @@
         If codigo >= 11899 Or ordenanza_id > 0 Then
 
             If ordenanza_id > 0 Then
-                bd.read(defcon, "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id)
+                bd.read(my.settings.DefaultCon, "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id)
             Else
-                bd.read(defcon, "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo)
+                bd.read(my.settings.DefaultCon, "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo)
             End If
 
             If dtab Is Nothing = False Then
@@ -104,11 +104,11 @@
     '###### GUARDAR ##########################################################################################
     Private Sub guardar()
         If Val(ordenanza_id.text) > -1 Then 'Mod
-            bd.edit(defcon,
+            bd.edit(my.settings.DefaultCon,
                     "UPDATE ordenanza SET fecha='" & fecha.Text & "', concepto='" & concepto.Text & "',
                      ruta_copia='" & ruta_doc.Text & "'")
         Else 'Nueva
-            bd.edit(defcon,
+            bd.edit(my.settings.DefaultCon,
                     "INSERT INTO ordenanza(codigo, fecha, concepto, ruta_copia)
                      VALUES(" & Val(codigo.Text) & ", '" & fecha.Text & "',
                     '" & concepto.Text & "', '" & ruta_doc.Text & "')")

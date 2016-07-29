@@ -1,19 +1,9 @@
 ﻿Module bd
     'Los siguientes strings contienen comandos SQL
-    'Public sel_sql As String = "" 'SELECT
-    'Public mod_sql As String = "" 'INSERT o UPDATE
-    'Public del_sql As String = "" 'DELETE
     Public last_sql As String = ""
 
     'Conexiones de base de datos
     Public olecon As New OleDb.OleDbConnection
-    'Default
-    Public defcon As String = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & root & "\vrosas.accdb"
-    'Otros
-    Public adbcon As String = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & root & "\vrosas.accdb"
-    Public foxcon As String = "Provider=vfpoledb.1;Data Source=z:\datos"
-    Public pgsqlcon As String = "Provider=PostgreSQL.1;Data Source=\\MALINGUNVILA;Location=sigmDB;User ID=admin;Password=hf32n64;"
-    'Public pgsqlcon2 As String = "Provider=PostgreSQL OLE DB Provider;Data Source=\\malingunvila;Location=vrosas;User ID=sigm;password=sigm2013;"
 
     Public ext_persona, ext_cuenta, ext_vence, ext_historial, ext_variable,
            ext_actividad, ext_muerto, ext_tipo, ext_zona,
@@ -25,7 +15,7 @@
     Function read(ByVal constr As String, ByVal sql As String,
                   Optional OleDBProcedure As OleDb.OleDbCommand = Nothing)
         Dim dtab As New DataTable
-        If constr Is foxcon Then 'Compatibilidad con Fox
+        If constr Is My.settings.foxcon Then 'Compatibilidad con Fox
             dtab.Locale = New System.Globalization.CultureInfo("fr-FR")
         End If
 
@@ -77,6 +67,7 @@
 
     End Function
 
+
     '###### SAVE: Rutinas para grabar registros #################################################################
     Function edit(ByVal constr As String, ByVal sql As String, Optional OleDBProcedure As OleDb.OleDbCommand = Nothing) As String
         'Para conectarse a la bd en modo de inserción
@@ -104,8 +95,8 @@
     '###### END SAVE ############################################################################################   
 
     '###### Visor + Binding + Datatable
-    Public Class Query
-        Shared Function Show(ByVal visor As DataGridView, ByVal bs As BindingSource, ByVal dtab As DataTable) As DataGridView
+    Public Class Data
+        Shared Function ToDataGridView(ByVal visor As DataGridView, ByVal bs As BindingSource, ByVal dtab As DataTable) As DataGridView
             'Esta rutina va después de que la consulta genera la instrucción SQL
             'y lee la datatable; es igual para todos los servicios.
             bs.DataSource = dtab
@@ -113,7 +104,7 @@
             visor.Update()
             'Con VB .Net sobre la tabla de consulta
             'Dar formato
-            visor = Query.Format(visor)
+            visor = Data.Format(visor)
             Return visor
         End Function
         Shared Function Format(ByVal visor As DataGridView) As DataGridView
@@ -135,6 +126,13 @@
                 If .Contains("catastro_id") Then
                     visor.Columns("catastro_id").Width = 0
                 End If
+                If .Contains("expediente_id") Then
+                    visor.Columns("expediente_id").Width = 0
+                End If
+                If .Contains("responsable") Then
+                    visor.Columns("responsable").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                End If
+
 
                 'PERSONAS
                 If .Contains("per_id") Then
@@ -258,11 +256,52 @@
                 Return visor
             End With
         End Function
+
+        'Una funcion para cargarlos a todos, una funcion para bindearlos y atraerlos a Shadows
+        Overloads Shared Function ToControls(drow As DataRow, ByVal target As Object) As Object
+            'Carga los registros de cada columna en los controles con el nombre de la columna correspondiente
+            For Each c As Control In target.Controls
+                If drow.Table.Columns.Contains(c.Name) And drow(c.Name) Is DBNull.Value = False Then
+                    If TypeOf c Is TextBox Then
+                        c.Text = drow(c.Name).ToString
+                    ElseIf TypeOf c Is ComboBox Then
+                        CType(c, ComboBox).DataSource.Position = CType(c, ComboBox).DataSource.Find("id", drow("id" & c.Name))
+                    ElseIf TypeOf c Is NumericUpDown Then
+                        CType(c, NumericUpDown).Value = drow(c.Name)
+                    ElseIf TypeOf c Is DateTimePicker Then
+                        CType(c, DateTimePicker).Value = drow(c.Name)
+                    ElseIf TypeOf c Is CheckBox Then
+                        CType(c, CheckBox).Checked = drow(c.Name)
+                    End If
+                End If
+            Next
+            Return target
+        End Function
+        Overloads Shared Function ToControls(dtab As DataTable, ByVal target As Object) As Object
+            'Carga los registros de cada columna en los controles con el nombre de la columna correspondiente
+            For Each c As Control In target.Controls
+                If dtab.Columns.Contains(c.Name) And dtab(0)(c.Name) Is DBNull.Value = False Then
+                    If TypeOf c Is TextBox Then
+                        c.Text = dtab(0)(c.Name).ToString
+                    ElseIf TypeOf c Is ComboBox Then
+                        CType(c, ComboBox).DataSource.Position = CType(c, ComboBox).DataSource.Find("id", dtab(0)("id" & c.Name))
+                    ElseIf TypeOf c Is NumericUpDown Then
+                        CType(c, NumericUpDown).Value = dtab(0)(c.Name)
+                    ElseIf TypeOf c Is DateTimePicker Then
+                        CType(c, DateTimePicker).Value = dtab(0)(c.Name)
+                    ElseIf TypeOf c Is CheckBox Then
+                        CType(c, CheckBox).Checked = dtab(0)(c.Name)
+                    End If
+                End If
+            Next
+            Return target
+        End Function
+
     End Class
 
     '### Tablas externas
     Sub tablas_fox(ByVal impuesto As String)
-        Dim dtab As DataTable = bd.read(defcon,
+        Dim dtab As DataTable = bd.read(my.settings.DefaultCon,
                                         "SELECT * FROM tablas_externas WHERE servicio='" & impuesto & "'")
 
         ext_actividad = dtab(0)("actividad").ToString

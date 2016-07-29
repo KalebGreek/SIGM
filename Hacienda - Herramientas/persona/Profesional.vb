@@ -21,34 +21,34 @@
         End If
 
         sql += " ORDER By Persona.razon"
-        Return bd.read(defcon, sql)
+        Return bd.read(my.settings.DefaultCon, sql)
     End Function
     Shared Function Seleccionar(profesional_id As Integer) As DataTable
         Dim sql As String = SelectSQL & " AND profesional.id=" & profesional_id
-        Return bd.read(defcon, sql)
+        Return bd.read(my.settings.DefaultCon, sql)
     End Function
     Shared Function ListarTitulos() As BindingSource
         Dim bs As New BindingSource
-        bs.DataSource = bd.read(defcon, "SELECT * FROM prof_titulo ORDER BY titulo")
+        bs.DataSource = bd.read(my.settings.DefaultCon, "SELECT * FROM prof_titulo ORDER BY titulo")
         Return bs
     End Function
 
     Shared Function guardar(prof_id As Integer, persona_id As Integer, titulo_id As Integer, ByVal matricula As String) As Integer
         If prof_id > 0 Then
-            bd.edit(defcon, "UPDATE profesional SET titulo_id=" & titulo_id & ", matricula='" & matricula & "'" &
+            bd.edit(my.settings.DefaultCon, "UPDATE profesional SET titulo_id=" & titulo_id & ", matricula='" & matricula & "'" &
                           " WHERE id=" & prof_id)
         Else
-            bd.edit(defcon, "INSERT INTO profesional(per_id, titulo_id, matricula)" &
+            bd.edit(my.settings.DefaultCon, "INSERT INTO profesional(per_id, titulo_id, matricula)" &
                          " VALUES(" & persona_id & ", " & titulo_id & ", '" & matricula & "')")
         End If
 
 
         Dim dtab As New DataTable
-        dtab = bd.read(defcon, "SELECT id FROM profesional WHERE per_id=" & persona_id)
+        dtab = bd.read(my.settings.DefaultCon, "SELECT id FROM profesional WHERE per_id=" & persona_id)
         Return dtab(0)("id")
     End Function
     Shared Function eliminar(ByVal per_id As Integer) As Integer
-        bd.edit(defcon, "DELETE * FROM profesional WHERE per_id=" & per_id)
+        bd.edit(my.settings.DefaultCon, "DELETE * FROM profesional WHERE per_id=" & per_id)
         Return 0
     End Function
 End Class

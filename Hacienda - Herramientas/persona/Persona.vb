@@ -21,7 +21,7 @@
             End If
 
             sql += " ORDER By Persona.razon"
-            Return bd.read(defcon, sql)
+            Return bd.read(my.settings.DefaultCon, sql)
         End Function
         Shared Function BuscarPorDireccion(ByVal calle As String, difunto As Boolean, fisica As Boolean) As DataTable
             Dim sql As String = SelectSQL
@@ -31,11 +31,11 @@
             End If
             sql += " ORDER By Per_domicilio.calle AND per_domicilio.altura"
 
-            Return bd.read(defcon, sql)
+            Return bd.read(my.settings.DefaultCon, sql)
         End Function
         'Registro para ModPersona
         Shared Function Cargar(persona_id As Integer) As DataTable
-            Return bd.read(defcon, "SELECT id as persona_id, razon, cuil," &
+            Return bd.read(my.settings.DefaultCon, "SELECT id as persona_id, razon, cuil," &
                                   " telefono, email," &
                                   " difunto, ruta_defuncion, fisica" &
                                   " FROM persona WHERE id=" & persona_id)
@@ -132,7 +132,7 @@
                 Return False
             Else
                 'documentos
-                dtab_con = bd.read(defcon, "SELECT descripcion, ruta FROM per_documento WHERE per_id=" & persona_id)
+                dtab_con = bd.read(my.settings.DefaultCon, "SELECT descripcion, ruta FROM per_documento WHERE per_id=" & persona_id)
                 If dtab_con.Rows.Count > 0 Then
                     msg.Add("Los siguientes documentos seran eliminados del registro junto con la persona seleccionada: ")
                     For fila As Integer = 0 To dtab_con.Rows.Count - 1
@@ -145,8 +145,8 @@
 
                 Dim errormsg As New visor_error("Eliminar persona", msg)
                 If errormsg.ShowDialog() = DialogResult.OK Then
-                    bd.edit(defcon, "DELETE FROM per_documento WHERE per_id=" & persona_id)
-                    bd.edit(defcon, "DELETE FROM persona WHERE id=" & persona_id)
+                    bd.edit(my.settings.DefaultCon, "DELETE FROM per_documento WHERE per_id=" & persona_id)
+                    bd.edit(my.settings.DefaultCon, "DELETE FROM persona WHERE id=" & persona_id)
                     Return True
                 Else
                     Return False

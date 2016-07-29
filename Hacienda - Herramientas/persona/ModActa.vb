@@ -3,7 +3,7 @@
         ' This call is required by the designer.
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
-        Query.Show(consulta_acta, bs_acta, buscar(persona_id))
+        Data.ToDataGridView(consulta_acta, bs_acta, buscar(persona_id))
     End Sub
 
     '###### GUI ##########################################################################################
@@ -46,7 +46,7 @@
     End Sub
     Private Sub copia_DoubleClick(sender As Object, e As EventArgs) Handles copia.DoubleClick
         If Len(copia.Text) > 0 Then
-            Process.Start(Documento.folder_per, copia.Text)
+            Process.Start(root & My.Settings.DocFolderPersona, copia.Text)
         End If
     End Sub
 
@@ -105,7 +105,7 @@
             sql += " libro = " & libro & " AND acta = " & acta
         End If
 
-        Return bd.read(defcon, sql)
+        Return bd.read(my.settings.DefaultCon, sql)
     End Function
 
     Private Sub add_acta_Click(sender As Object, e As EventArgs) Handles add_acta.Click
@@ -136,7 +136,7 @@
         With registro
             For fila As Integer = 0 To .Count - 1
                 .Position = fila
-                bd.edit(defcon, "INSERT INTO actas(per_id, fecha, acta, libro, copia, nota)
+                bd.edit(my.settings.DefaultCon, "INSERT INTO actas(per_id, fecha, acta, libro, copia, nota)
                                  VALUES(" & per_id & ", #" & .Current("fecha") & "#,
                                   " & .Current("acta") & ", " & .Current("libro") & ", '" & .Current("copia") & "',
                                  '" & .Current("nota") & "')")
@@ -145,7 +145,7 @@
     End Sub
 
     Sub limpiar(ByVal per_id As Integer) 'Temporales
-        bd.edit(defcon, "DELETE * FROM actas WHERE per_id=" & per_id)
+        bd.edit(my.settings.DefaultCon, "DELETE * FROM actas WHERE per_id=" & per_id)
     End Sub
     '###### MODIFICAR ##########################################################################################
     '# ACTAS

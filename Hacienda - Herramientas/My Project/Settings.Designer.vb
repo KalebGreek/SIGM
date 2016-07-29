@@ -15,9 +15,9 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
-    Partial Friend NotInheritable Class MySettings
+    Partial Public NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
         
         Private Shared defaultInstance As MySettings = CType(Global.System.Configuration.ApplicationSettingsBase.Synchronized(New MySettings()),MySettings)
@@ -52,6 +52,181 @@ Namespace My
 #End If
                 Return defaultInstance
             End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=vrosas.accdb")>  _
+        Public ReadOnly Property DefaultAdbCon() As String
+            Get
+                Return CType(Me("DefaultAdbCon"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=PostgreSQL.1;Data Source=\\MALINGUNVILA;Location=sigmDB;User ID=admin;Pa"& _ 
+            "ssword=hf32n64;")>  _
+        Public ReadOnly Property DefaultPgsqlCon() As String
+            Get
+                Return CType(Me("DefaultPgsqlCon"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=vrosas.accdb")>  _
+        Public Property adbcon() As String
+            Get
+                Return CType(Me("adbcon"),String)
+            End Get
+            Set
+                Me("adbcon") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=vfpoledb.1;Data Source=z:\datos")>  _
+        Public Property foxcon() As String
+            Get
+                Return CType(Me("foxcon"),String)
+            End Get
+            Set
+                Me("foxcon") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=PostgreSQL.1;Data Source=\\MALINGUNVILA;Location=sigmDB;User ID=admin;Pa"& _ 
+            "ssword=hf32n64;")>  _
+        Public Property pgsqlcon() As String
+            Get
+                Return CType(Me("pgsqlcon"),String)
+            End Get
+            Set
+                Me("pgsqlcon") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=vfpoledb.1;Data Source=z:\datos")>  _
+        Public ReadOnly Property DefaultFoxCon() As String
+            Get
+                Return CType(Me("DefaultFoxCon"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=PostgreSQL OLE DB Provider;Data Source=\\malingunvila;Location=vrosas;Us"& _ 
+            "er ID=sigm;password=sigm2013;")>  _
+        Public ReadOnly Property DefaultPgsqlCon2() As String
+            Get
+                Return CType(Me("DefaultPgsqlCon2"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=vrosas.accdb")>  _
+        Public Property DefaultCon() As String
+            Get
+                Return CType(Me("DefaultCon"),String)
+            End Get
+            Set
+                Me("DefaultCon") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("HACIENDA\")>  _
+        Public Property DocFolderHacienda() As String
+            Get
+                Return CType(Me("DocFolderHacienda"),String)
+            End Get
+            Set
+                Me("DocFolderHacienda") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("CATASTRO\")>  _
+        Public Property DocFolderCatastro() As String
+            Get
+                Return CType(Me("DocFolderCatastro"),String)
+            End Get
+            Set
+                Me("DocFolderCatastro") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("COMERCIO\")>  _
+        Public Property DocFolderComercio() As String
+            Get
+                Return CType(Me("DocFolderComercio"),String)
+            End Get
+            Set
+                Me("DocFolderComercio") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("OPRIVADAS\")>  _
+        Public Property DocFolderOprivadas() As String
+            Get
+                Return CType(Me("DocFolderOprivadas"),String)
+            End Get
+            Set
+                Me("DocFolderOprivadas") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("GOBIERNO\")>  _
+        Public Property DocFolderGobierno() As String
+            Get
+                Return CType(Me("DocFolderGobierno"),String)
+            End Get
+            Set
+                Me("DocFolderGobierno") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("ORDENANZAS")>  _
+        Public Property DocFolderOrdenanza() As String
+            Get
+                Return CType(Me("DocFolderOrdenanza"),String)
+            End Get
+            Set
+                Me("DocFolderOrdenanza") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("PERSONA\")>  _
+        Public Property DocFolderPersona() As String
+            Get
+                Return CType(Me("DocFolderPersona"),String)
+            End Get
+            Set
+                Me("DocFolderPersona") = value
+            End Set
         End Property
     End Class
 End Namespace

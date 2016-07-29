@@ -111,6 +111,7 @@ Partial Class launcher
         Me.user_id.Size = New System.Drawing.Size(27, 23)
         Me.user_id.TabIndex = 157
         Me.user_id.Text = "0"
+        Me.user_id.Visible = False
         '
         'FlowLayoutPanel1
         '

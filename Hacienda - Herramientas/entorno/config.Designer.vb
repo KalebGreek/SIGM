@@ -84,7 +84,6 @@ Partial Class config
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.OpcionesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RestablecerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.GuardarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CerrarSinGuardarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.conexion_fox = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -701,7 +700,7 @@ Partial Class config
         '
         'OpcionesToolStripMenuItem
         '
-        Me.OpcionesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RestablecerToolStripMenuItem, Me.GuardarToolStripMenuItem, Me.CerrarSinGuardarToolStripMenuItem})
+        Me.OpcionesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RestablecerToolStripMenuItem, Me.CerrarSinGuardarToolStripMenuItem})
         Me.OpcionesToolStripMenuItem.Name = "OpcionesToolStripMenuItem"
         Me.OpcionesToolStripMenuItem.Size = New System.Drawing.Size(76, 22)
         Me.OpcionesToolStripMenuItem.Text = "Opciones"
@@ -710,20 +709,14 @@ Partial Class config
         '
         Me.RestablecerToolStripMenuItem.Enabled = False
         Me.RestablecerToolStripMenuItem.Name = "RestablecerToolStripMenuItem"
-        Me.RestablecerToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
+        Me.RestablecerToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.RestablecerToolStripMenuItem.Text = "Restablecer"
-        '
-        'GuardarToolStripMenuItem
-        '
-        Me.GuardarToolStripMenuItem.Name = "GuardarToolStripMenuItem"
-        Me.GuardarToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.GuardarToolStripMenuItem.Text = "Guardar"
         '
         'CerrarSinGuardarToolStripMenuItem
         '
         Me.CerrarSinGuardarToolStripMenuItem.Name = "CerrarSinGuardarToolStripMenuItem"
-        Me.CerrarSinGuardarToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.CerrarSinGuardarToolStripMenuItem.Text = "Cerrar sin Guardar"
+        Me.CerrarSinGuardarToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.CerrarSinGuardarToolStripMenuItem.Text = "Cerrar"
         '
         'conexion_fox
         '
@@ -916,7 +909,6 @@ Partial Class config
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
     Friend WithEvents OpcionesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents RestablecerToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents GuardarToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents CerrarSinGuardarToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents conexion_fox As System.Windows.Forms.TextBox
     Friend WithEvents Label4 As System.Windows.Forms.Label

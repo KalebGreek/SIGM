@@ -7,13 +7,13 @@
     Shared SQLGrouping As String = " ORDER BY fecha ASC"
 
     Shared ultima_ubicacion As String = Environment.SpecialFolder.Desktop
-    Public Shared folder_hac As String = root & "\HACIENDA\"
-    Public Shared folder_cat As String = root & "\CATASTRO\"
-    Public Shared folder_com As String = root & "\COMERCIO\"
-    Public Shared folder_opr As String = root & "\OPRIVADAS\"
-    Public Shared folder_gob As String = root & "\GOBIERNO\"
-    Public Shared folder_ord As String = folder_gob & "ORDENANZAS\"
-    Public Shared folder_per As String = root & "\PERSONA\"
+    'Public Shared My.Settings.DocFolderHacienda As String = "HACIENDA\"
+    'Public Shared My.Settings.DocFolderCatastro As String = "CATASTRO\"
+    'Public Shared folder_com As String = "COMERCIO\"
+    'Public Shared My.Settings.DocFolderOprivadas As String = "OPRIVADAS\"
+    'Public Shared folder_gob As String = "GOBIERNO\"
+    'Public Shared My.Settings.DocFolderOrdenanza As String = "ORDENANZAS\"
+    'Public Shared My.Settings.DocFolderPersona As String = "PERSONA\"
 
     Public Class Persona
         Shared Function BuscarDoc(persona_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
@@ -30,14 +30,14 @@
             titulo = "Buscar Copia de DNI / CUIL | CUIL N° " & cuil
             destino = "\copia_dni_" & DateToFilename(Date.Now) & ".pdf"
             'Muestra diálogo de búsqueda
-            destino = Documento.cargar(folder_per & cuil, destino, titulo)
+            destino = Documento.Cargar(My.Settings.DocFolderPersona & cuil, destino, titulo)
             Return cuil & destino
         End Function
         Shared Function CopiaActa(ByVal persona_id As Integer, ByVal acta As String, ByVal libro As String) As String
-            Dim dtab As DataTable = bd.read(defcon, "SELECT cuil, razon FROM persona WHERE id=" & persona_id)
+            Dim dtab As DataTable = bd.read(My.Settings.DefaultCon, "SELECT cuil, razon FROM persona WHERE id=" & persona_id)
             If dtab.Rows.Count > 0 Then
                 If acta > 0 And libro > 0 Then
-                    Dim dtab_acta = bd.read(defcon, "SELECT * FROM actas WHERE acta=" & acta & " AND libro=" & libro)
+                    Dim dtab_acta = bd.read(My.Settings.DefaultCon, "SELECT * FROM actas WHERE acta=" & acta & " AND libro=" & libro)
                     If dtab.Rows.Count > 0 Then
                         If dtab_acta(0)("per_id") <> persona_id Then
                             MsgBox("El acta N." & acta & " del libro N." & libro & " no corresponde a " & dtab(0)("razon"))
@@ -47,7 +47,7 @@
                     titulo = "Buscar Acta N° " & acta & " del libro N°" & libro & " | CUIL N° " & dtab(0)("cuil")
                     destino = "\acta[" & acta & "]_libro[" & libro & "].pdf"
                     'Muestra diálogo de búsqueda
-                    destino = cargar(folder_per & dtab(0)("cuil"), destino, titulo)
+                    destino = Cargar(My.Settings.DocFolderPersona & dtab(0)("cuil"), destino, titulo)
                     Return dtab(0)("cuil") & "\ACTAS" & destino
                 Else
                     MsgBox("Debe indicar número de acta y libro antes de continuar.")
@@ -62,7 +62,7 @@
             titulo = "Buscar Certificado de Defuncion | CUIL N° " & cuil
             destino = "\defuncion_" & DateToFilename(Date.Now) & ".pdf"
             'Muestra diálogo de búsqueda
-            destino = cargar(folder_per & cuil, destino, titulo)
+            destino = Cargar(My.Settings.DocFolderPersona & cuil, destino, titulo)
             Return cuil & destino
         End Function
     End Class
@@ -104,7 +104,7 @@
                 titulo = "Buscar Copia de Escritura | Partida: " & cat
 
                 'Muestra diálogo de búsqueda
-                cargar(folder_cat & cat, destino, titulo)
+                Cargar(My.Settings.DocFolderCatastro & cat, destino, titulo)
 
                 Return cat & destino
             Else
@@ -128,7 +128,7 @@
             titulo = "Buscar Caratula de Expediente | Expediente N° " & exp
 
             'Muestra diálogo de búsqueda
-            destino = cargar(folder_opr & exp, destino, titulo)
+            destino = Cargar(My.Settings.DocFolderOprivadas & exp, destino, titulo)
             Return exp & destino
         End Function
         Shared Function CargarFinalObra(exp As String) As String
@@ -136,7 +136,7 @@
             titulo = "Buscar copia de Final de Obra | Expediente N° " & exp
 
             'Muestra diálogo de búsqueda
-            destino = cargar(folder_opr & exp, destino, titulo)
+            destino = Cargar(My.Settings.DocFolderOprivadas & exp, destino, titulo)
             Return exp & destino
         End Function
     End Class
@@ -146,7 +146,7 @@
                 destino = "\CopiaOrdenanza_" & DateToFilename(Date.Now) & ".pdf"
                 titulo = "Buscar Copia de Ordenanza N° " & Microsoft.VisualBasic.Left(codigo, Len(codigo.ToString) - 4) & "/" & Microsoft.VisualBasic.Right(codigo, 4)
                 'Muestra diálogo de búsqueda
-                destino = cargar(folder_ord & codigo, destino, titulo)
+                destino = Cargar(My.Settings.DocFolderOrdenanza & codigo, destino, titulo)
                 Return codigo & destino
             End If
             Return "No se encuentra el archivo."
@@ -177,7 +177,7 @@
     End Class
 
     Private Shared Function ConsultarHistorial(RutaDoc As Boolean)
-        Dim dtab As DataTable = bd.read(defcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
+        Dim dtab As DataTable = bd.read(my.settings.DefaultCon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
 
         If RutaDoc Then
             Return dtab(0)("ruta").ToString
@@ -185,9 +185,11 @@
             Return dtab
         End If
     End Function
-    Private Shared Function cargar(carpeta_raiz As String, destino As String, titulo As String, Optional ventana As Form = Nothing) As String
+    Private Shared Function Cargar(carpeta_raiz As String, destino As String, titulo As String, Optional ventana As Form = Nothing) As String
         Dim accion As Integer
         Dim load_dialog As New OpenFileDialog
+
+        carpeta_raiz = root & carpeta_raiz
 
         With My.Computer.FileSystem
             If .DirectoryExists(carpeta_raiz) = False Then
@@ -227,21 +229,21 @@
         End With
         Return destino
     End Function
-    Shared Sub guardar(registro As BindingSource, descripcion As String, tabla As String, col_id As String, id As Integer) 'Se usa solo al final cuando se guarda el expediente
+    Shared Sub Guardar(registro As BindingSource, descripcion As String, tabla As String, col_id As String, id As Integer) 'Se usa solo al final cuando se guarda el expediente
         With registro
             For fila As Integer = 0 To .Count - 1
                 .Position = fila
-                bd.edit(defcon, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)" &
+                bd.edit(My.Settings.DefaultCon, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)" &
                           " VALUES(" & id & ", #" & .Current("fecha") & "# ,'" & descripcion & "'," &
                           " '" & .Current("ruta") & "')")
             Next
         End With
     End Sub
-    Shared Sub limpiar(tabla As String, col_id As String, id As Integer, Optional tipo_archivo As String = "")
+    Shared Sub Limpiar(tabla As String, col_id As String, id As Integer, Optional tipo_archivo As String = "")
         Dim sql As String = "DELETE * FROM " & tabla & " WHERE " & col_id & "=" & id
         If tipo_archivo <> "" Then
             sql += " AND descripcion='" & tipo_archivo & "'"
         End If
-        bd.edit(defcon, sql)
+        bd.edit(My.Settings.DefaultCon, sql)
     End Sub
 End Class

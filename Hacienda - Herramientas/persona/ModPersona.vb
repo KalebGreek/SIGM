@@ -193,7 +193,7 @@ Public Class ModPersona
     End Sub
     Private Sub ruta_defuncion_Click(sender As Object, e As EventArgs) Handles ruta_defuncion.Click
         If Len(ruta_defuncion.Text) > 0 Then
-            Process.Start(Documento.folder_per & ruta_defuncion.Text)
+            Process.Start(root & My.Settings.DocFolderPersona & ruta_defuncion.Text)
         End If
     End Sub
     Private Sub cargar_defu_Click(sender As Object, e As EventArgs) Handles cargar_defu.Click
@@ -253,7 +253,7 @@ Public Class ModPersona
             msg = "Revise el Nº de CUIL antes de continuar." & Chr(13)
             valido = False
         Else
-            dtab_con = bd.read(defcon, "SELECT id, cuil FROM persona WHERE cuil=" & cuil.Text)
+            dtab_con = bd.read(my.settings.DefaultCon, "SELECT id, cuil FROM persona WHERE cuil=" & cuil.Text)
             If dtab_con.Rows.Count > 1 Then
                 For fila As Integer = 0 To dtab_con.Rows.Count - 1
                     If dtab_con(fila)("id") <> persona_id.Text Then
@@ -309,20 +309,20 @@ Public Class ModPersona
         End If
         'CREAR/EDITAR PERSONA
         If persona_id > 0 Then
-            bd.edit(defcon, Modificar(persona_id, razon.Text, CDbl(cuil.Text), fisica,
+            bd.edit(my.settings.DefaultCon, Modificar(persona_id, razon.Text, CDbl(cuil.Text), fisica,
                                       email.Text, tele.Text, esDifunto.Checked, ruta_defuncion.Text))
         Else
-            bd.edit(defcon, Nueva(razon.Text, CDbl(cuil.Text), fisica,
+            bd.edit(my.settings.DefaultCon, Nueva(razon.Text, CDbl(cuil.Text), fisica,
                               email.Text, tele.Text, esDifunto.Checked, ruta_defuncion.Text))
 
-            dtab = bd.read(defcon, "SELECT MAX(id) as persona_id FROM persona WHERE razon='" & razon.Text & "'")
+            dtab = bd.read(my.settings.DefaultCon, "SELECT MAX(id) as persona_id FROM persona WHERE razon='" & razon.Text & "'")
             persona_id = dtab(0)("persona_id")
         End If
         'CREAR DOMICILIO/S
-        bd.edit(defcon, Domicilio.sql.Eliminar(persona_id))
+        bd.edit(my.settings.DefaultCon, Domicilio.sql.Eliminar(persona_id))
         For Each tab As Domicilio.Tab In TabControl1.TabPages
             With tab
-                bd.edit(defcon, Domicilio.sql.Nuevo(persona_id, .calle.Text, .altura.Value,
+                bd.edit(my.settings.DefaultCon, Domicilio.sql.Nuevo(persona_id, .calle.Text, .altura.Value,
                           .piso.Value, .dpto.Text, .localidad.SelectedValue, TabControl1.SelectedTab Is tab))
             End With
         Next

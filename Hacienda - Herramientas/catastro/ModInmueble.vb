@@ -61,7 +61,7 @@
     End Sub
     Private Sub Mostrar(registro As DataTable)
         titular_id.Text = 0
-        razon.Text = " - "
+        titular.Text = " - "
         cuil.Text = " - "
         info_ubicacion.Text = " - "
         info_barrio.Text = " - "
@@ -76,14 +76,14 @@
             info_estado.Text = "NUEVO"
             operacion.Text = "NEW"
         ElseIf registro.Rows.Count > 0 Then
-            titular_id.Text = registro(0)("titular_id")
-            razon.Text = registro(0)("titular")
-            cuil.Text = registro(0)("cuil")
-            barrio.Text = registro(0)("barrio").ToString
-            uso.Text = registro(0)("uso").ToString
-            cuenta.Text = registro(0)("cuenta").ToString
+            Data.ToControls(registro, tab_ubicacion)
+            'titular_id.Text = registro(0)("titular_id")
+            'razon.Text = registro(0)("titular")
+            'cuil.Text = registro(0)("cuil")
+            'barrio.Text = registro(0)("barrio").ToString
+            'uso.Text = registro(0)("uso").ToString
+            'cuenta.Text = registro(0)("cuenta").ToString
             info_ubicacion.Text = registro(0)("calle").ToString & " " & registro(0)("altura").ToString
-
 
             If registro(0)("expediente") Is DBNull.Value = False Then
                 info_exp.Text = registro(0)("expediente")
@@ -137,43 +137,47 @@
 
         'detalles
         If registro.Rows.Count > 0 Then
-            If registro(0)("titular_id") Is DBNull.Value = False Then
-                titular_id.Text = registro(0)("titular_id")
-            End If
-            archivado.Checked = registro(0)("archivado")
+            Data.ToControls(registro, tab_ubicacion)
+            'If registro(0)("titular_id") Is DBNull.Value = False Then
+            'titular_id.Text = registro(0)("titular_id")
+            'End If
+            'archivado.Checked = registro(0)("archivado")
+            'If registro(0)("barrio") Is DBNull.Value = False Then
+            'barrio.Text = registro(0)("barrio")
+            'End If
+            'If registro(0)("uso") Is DBNull.Value = False Then
+            'uso.Text = registro(0)("uso")
+            'End If
+            'If registro(0)("cuenta") Is DBNull.Value = False Then
+            'cuenta.Text = registro(0)("cuenta")
+            'End If
             If archivado.Checked Then
                 archivado.Enabled = False
             End If
-            If registro(0)("barrio") Is DBNull.Value = False Then
-                barrio.Text = registro(0)("barrio")
-            End If
-            If registro(0)("uso") Is DBNull.Value = False Then
-                uso.Text = registro(0)("uso")
-            End If
-            If registro(0)("cuenta") Is DBNull.Value = False Then
-                cuenta.Text = registro(0)("cuenta")
-            End If
+
         End If
 
 
         'frentes
-        Query.Show(consulta_frente, bs_frente, Catastro.Frente.Cargar(catastro_id.Text))
+        Data.ToDataGridView(consulta_frente, bs_frente, Catastro.Frente.Cargar(catastro_id.Text))
 
         'superficies
-        registro = bd.read(defcon, "SELECT * FROM cat_superficie WHERE catastro_id=" & catastro_id.Text)
-        If registro.Rows.Count > 0 Then
-            existente.Value = Val(registro(0)("existente"))
-            proyecto.Value = Val(registro(0)("proyecto"))
-            relevamiento.Value = Val(registro(0)("relevamiento"))
-            terreno.Value = Val(registro(0)("terreno"))
-        End If
+        registro = bd.read(My.Settings.DefaultCon, "SELECT * FROM cat_superficie WHERE catastro_id=" & catastro_id.Text)
+
+        Data.ToControls(registro, tab_sup)
+        'If registro.Rows.Count > 0 Then
+        'existente.Value = Val(registro(0)("existente"))
+        'proyecto.Value = Val(registro(0)("proyecto"))
+        'relevamiento.Value = Val(registro(0)("relevamiento"))
+        'terreno.Value = Val(registro(0)("terreno"))
+        'End If
 
         'caracteristicas
-        Query.Show(consulta_caract, bs_car,
-                         bd.read(defcon, "SELECT descripcion, activo FROM cat_servicio WHERE catastro_id=" & catastro_id.Text))
+        Data.ToDataGridView(consulta_caract, bs_car,
+                         bd.read(My.Settings.DefaultCon, "SELECT descripcion, activo FROM cat_servicio WHERE catastro_id=" & catastro_id.Text))
 
         'copias
-        Query.Show(consulta_copia, bs_copia, Documento.Catastro.BuscarDoc(catastro_id.Text))
+        Data.ToDataGridView(consulta_copia, bs_copia, Documento.Catastro.BuscarDoc(catastro_id.Text))
     End Sub
 
     Function Validar(pagina As Integer) As Boolean
@@ -269,9 +273,9 @@
 
     Private Sub GuardarCambios()
         With grupo_mod
-            If validar(.SelectedIndex) Then
+            If Validar(.SelectedIndex) Then
                 If .SelectedIndex = 0 Then
-                    cargar(dtab_cat)
+                    Cargar(dtab_cat)
                 ElseIf .SelectedIndex = 1 Then
                     Catastro.Agregar.Inmueble(operacion.Text, user_id.Text, opr_id.Text,
                                               catastro_id.Text, titular_id.Text,
@@ -305,42 +309,46 @@
         info_barrio.Text = barrio.Text
     End Sub
 
-    Private Sub mod_titular_Click(sender As Object, e As EventArgs) Handles mod_titular.Click
+    Private Sub mod_titular_Click(sender As Object, e As EventArgs)
         Dim sel_per As New ConsultaGen("PERSONA", user_id.Text, titular_id.Text)
         sel_per.ShowDialog(Me)
         With sel_per.resultado
             If .Position > -1 Then
                 titular_id.Text = .Current("persona_id").ToString
-                razon.Text = .Current("razon").ToString
+                titular.Text = .Current("razon").ToString
                 cuil.Text = .Current("cuil").ToString
                 difunto.Checked = .Current("difunto")
             Else
-                razon.Clear()
+                titular.Clear()
                 cuil.Clear()
                 difunto.Checked = False
             End If
             .Dispose()
         End With
     End Sub
-    Private Sub razon_TextChanged(sender As Object, e As EventArgs) Handles razon.TextChanged
-        info_titular.Text = razon.Text
+    Private Sub razon_TextChanged(sender As Object, e As EventArgs)
+        info_titular.Text = titular.Text
     End Sub
-    Private Sub cuil_TextChanged(sender As Object, e As EventArgs) Handles cuil.TextChanged
+    Private Sub cuil_TextChanged(sender As Object, e As EventArgs)
         info_cuil.Text = cuil.Text
     End Sub
     Private Sub archivado_CheckedChanged(sender As Object, e As EventArgs) Handles archivado.CheckedChanged
         With archivado
-            .Checked = cuenta.Enabled.CompareTo(True)
-            .Checked = barrio.Enabled.CompareTo(True)
-            .Checked = uso.Enabled.CompareTo(True)
-            .Checked = grupo_titular.Enabled.CompareTo(True)
-            .Checked = menu_frente.Enabled.CompareTo(True)
-            .Checked = proyecto.Enabled.CompareTo(True)
-            .Checked = relevamiento.Enabled.CompareTo(True)
-            .Checked = terreno.Enabled.CompareTo(True)
-            .Checked = menu_caract.Enabled.CompareTo(True)
-            .Checked = consulta_caract.ReadOnly
-            .Checked = menu_copia.Enabled.CompareTo(True)
+            .Checked = tab_ubicacion.Enabled.CompareTo(True)
+            .Checked = tab_sup.Enabled.CompareTo(True)
+            .Checked = tab_caracter.Enabled.CompareTo(True)
+            .Checked = tab_frente.Enabled.CompareTo(True)
+            .Checked = tab_copia.Enabled.CompareTo(True)
+            '.Checked = cuenta.Enabled.CompareTo(True)
+            '.Checked = barrio.Enabled.CompareTo(True)
+            '.Checked = uso.Enabled.CompareTo(True)
+            '.Checked = menu_frente.Enabled.CompareTo(True)
+            '.Checked = proyecto.Enabled.CompareTo(True)
+            '.Checked = relevamiento.Enabled.CompareTo(True)
+            '.Checked = terreno.Enabled.CompareTo(True)
+            '.Checked = menu_caract.Enabled.CompareTo(True)
+            '.Checked = consulta_caract.ReadOnly
+            '.Checked = menu_copia.Enabled.CompareTo(True)
         End With
     End Sub
 
@@ -438,10 +446,7 @@
     End Sub
     Private Sub consulta_copia_CellContentDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles consulta_copia.CellContentDoubleClick
         If bs_copia.Position > -1 Then
-            Process.Start(Documento.folder_cat & bs_copia.Current("ruta"))
+            Process.Start(root & My.Settings.DocFolderCatastro & bs_copia.Current("ruta"))
         End If
     End Sub
-
-
-
 End Class

@@ -9,7 +9,7 @@ Public Class CalculoAnualImpuesto
         dtab_cuenta = Nothing
         dtab_zona = Nothing
 
-        Dim dtab As DataTable = bd.read(foxcon, "SELECT MAX(codigo) as codigo FROM " & impuesto.Text)
+        Dim dtab As DataTable = bd.read(my.settings.foxcon, "SELECT MAX(codigo) as codigo FROM " & impuesto.Text)
         If dtab.Rows.Count > 0 Then
             If CuentaInicial.Value > dtab(0)("codigo") Then
                 MsgBox("No se encuentra la cuenta inicial.", MsgBoxStyle.OkOnly, Nothing)
@@ -34,9 +34,9 @@ Public Class CalculoAnualImpuesto
 
     Public Sub agua()
         'Zonas
-        dtab_zona = bd.read(foxcon, "SELECT * FROM aguzona")
+        dtab_zona = bd.read(my.settings.foxcon, "SELECT * FROM aguzona")
         'Cuentas
-        dtab_cuenta = bd.read(foxcon,
+        dtab_cuenta = bd.read(my.settings.foxcon,
                               "SELECT codigo, potable, comercial, industrial FROM aguas
                                WHERE codigo=>" & CuentaInicial.Value & " ORDER BY codigo")
         'Iniciar busqueda y reemplazo
@@ -82,7 +82,7 @@ Public Class CalculoAnualImpuesto
     End Sub
     Public Sub auto()
         'Cuentas
-        dtab_cuenta = bd.read(foxcon,
+        dtab_cuenta = bd.read(my.settings.foxcon,
                               "SELECT codigo, razon, marca, modelo, apagar FROM automovil
                                WHERE apagar>0 And baja={} And codigo=>" & CuentaInicial.Value & "
                                ORDER BY codigo")
@@ -107,7 +107,7 @@ Public Class CalculoAnualImpuesto
     End Sub
     Public Sub catastro()
         'Cuentas
-        dtab_cuenta = bd.read(foxcon,
+        dtab_cuenta = bd.read(my.settings.foxcon,
                               "SELECT catastro.codigo As codigo, catastro.jubilado As jubilado, catastro.baldio As baldio, catastro.pasillo As pasillo,
                                catastro.agrario As agrario, catastro.frente1 As metros, catzona.minimo As monto_minimo, catzona.unidad As monto_unidad,
                                catzona.jubilado As desc_jubilado, catzona.baldio As monto_baldio, catzona.pasillo As monto_pasillo, catzona.agrario1 As monto_agrario
@@ -163,7 +163,7 @@ Public Class CalculoAnualImpuesto
         Next
     End Sub
     Public Sub comercio()
-        dtab_cuenta = bd.read(foxcon,
+        dtab_cuenta = bd.read(my.settings.foxcon,
                               "SELECT comercio.codigo as codigo, comercio.actividad as actividad, detalle, minimo, formapago
                                FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad
                                WHERE comercio.baja = {} And minimo>0 And codigo=>" & CuentaInicial.Value)
@@ -227,7 +227,7 @@ Public Class CalculoAnualImpuesto
     End Sub
     Public Sub sepelio()
         'Cuentas
-        dtab_cuenta = bd.read(foxcon,
+        dtab_cuenta = bd.read(my.settings.foxcon,
                               "SELECT sepelio.codigo as codigo, sepelio.fila as fila, sepelio.jubilado as jubilado, sepevar.minimo as minimo,
                                sepevar.jubilado as desc_jubilado, sepevar.fila1 as fila1, sepevar.fila2 as fila2, sepevar.fila3 as fila3,
                                sepevar.fila4 as fila4, sepevar.fila5 as fila5
@@ -281,7 +281,7 @@ Public Class CalculoAnualImpuesto
         periodo.Minimum = 1990
         periodo.Value = Today.Year
 
-        dtab_var = bd.read(foxcon, "SELECT * FROM numeros")
+        dtab_var = bd.read(my.settings.foxcon, "SELECT * FROM numeros")
     End Sub
     Private Sub iniciar_Click(sender As Object, e As EventArgs) Handles iniciar.Click
         validar()

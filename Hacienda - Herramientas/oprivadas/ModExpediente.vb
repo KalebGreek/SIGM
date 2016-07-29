@@ -49,7 +49,7 @@
                 If temporal.Visible Then
                     answer = MsgBox("¿Desea guardar este expediente temporal bajo el N° " & expediente.Text & "?", MsgBoxStyle.YesNoCancel, "Guardar Expediente")
                     If answer = MsgBoxResult.Yes Then 'Asignar N° de Expediente y quitar temporal
-                        bd.edit(defcon, "UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
+                        bd.edit(my.settings.DefaultCon, "UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
                                          WHERE id=" & opr_id.Text)
                         Me.Close()
                     End If
@@ -106,26 +106,26 @@
 
         If registro.Rows.Count > 0 Then
             '##### EXPEDIENTE (base)
-
+            Data.ToControls(registro, grupoExp)
             'ARCHIVO
-            opr_id.Text = registro(0)("id")
-            temporal.Visible = registro(0)("temporal")
-            expediente.Text = registro(0)("expediente")
-            inicio_obra.Text = registro(0)("inicio_obra")
-            recibe.Text = registro(0)("recibe").ToString
-            observaciones.Text = registro(0)("observaciones").ToString
+            'opr_id.Text = registro(0)("id")
+            'temporal.Visible = registro(0)("temporal")
+            'expediente.Text = registro(0)("expediente")
+            'inicio_obra.Text = registro(0)("inicio_obra")
+            'recibe.Text = registro(0)("recibe").ToString
+            'observaciones.Text = registro(0)("observaciones").ToString
             'Copias Digitales (Original y fin de obra)
             'Reset
             check_fin_obra.Checked = False
             fin_obra.Value = Date.Today
             ruta_fin_obra.Text = ""
             'Tareas
-            tarea.Text = registro(0)("tarea").ToString
-            tarea2.Text = registro(0)("tarea2").ToString
+            'tarea.Text = registro(0)("tarea").ToString
+            'tarea2.Text = registro(0)("tarea2").ToString
         End If
 
         '##### Cargar personas
-        Query.Show(consulta_resp, bs_resp, Oprivadas.Expediente.ListarResponsables(expediente.Text))
+        Data.ToDataGridView(consulta_resp, bs_resp, Oprivadas.Expediente.ListarResponsables(expediente.Text))
 
         'PROFESIONAL
         prof_id.Text = registro(0)("profesional_id").ToString
@@ -145,7 +145,7 @@
         End If
 
         'INMUEBLES
-        Query.Show(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
+        Data.ToDataGridView(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
 
         'CARGAR COPIAS DIGITALES
         Dim copias As DataTable = Documento.OPrivadas.BuscarDoc(opr_id.Text)
@@ -293,7 +293,7 @@
     End Sub
     Private Sub ver_fin_obra_Click(sender As Object, e As EventArgs) Handles ver_fin_obra.Click, ruta_fin_obra.DoubleClick
         If Len(ruta_fin_obra.Text) > 5 Then
-            Process.Start(Documento.folder_opr & ruta_fin_obra.Text)
+            Process.Start(root & My.Settings.DocFolderOprivadas & ruta_fin_obra.Text)
         End If
     End Sub
 
@@ -374,7 +374,7 @@
             .ShowDialog(Me)
             .Dispose()
             'Recargar
-            Query.Show(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
+            Data.ToDataGridView(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
         End With
     End Sub
     Private Sub mod_inmueble_Click(sender As Object, e As EventArgs) Handles mod_inmueble.Click
@@ -390,7 +390,7 @@
                 .ShowDialog(Me)
                 .Dispose()
                 'Recargar
-                Query.Show(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
+                Data.ToDataGridView(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
             End If
         End With
     End Sub

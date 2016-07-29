@@ -1,5 +1,67 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" UseMySettingsClassName="true">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
   <Profiles />
-  <Settings />
+  <Settings>
+    <Setting Name="DefaultAdbCon" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Provider=Microsoft.ACE.OLEDB.12.0;Data Source=vrosas.accdb&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.12.0;Data Source=vrosas.accdb</Value>
+    </Setting>
+    <Setting Name="DefaultPgsqlCon" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Provider=PostgreSQL.1;Data Source=\\MALINGUNVILA;Location=sigmDB;User ID=admin;Password=hf32n64;&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Provider=PostgreSQL.1;Data Source=\\MALINGUNVILA;Location=sigmDB;User ID=admin;Password=hf32n64;</Value>
+    </Setting>
+    <Setting Name="adbcon" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.12.0;Data Source=vrosas.accdb</Value>
+    </Setting>
+    <Setting Name="foxcon" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Provider=vfpoledb.1;Data Source=z:\datos</Value>
+    </Setting>
+    <Setting Name="pgsqlcon" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Provider=PostgreSQL.1;Data Source=\\MALINGUNVILA;Location=sigmDB;User ID=admin;Password=hf32n64;</Value>
+    </Setting>
+    <Setting Name="DefaultFoxCon" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Provider=vfpoledb.1;Data Source=z:\datos&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Provider=vfpoledb.1;Data Source=z:\datos</Value>
+    </Setting>
+    <Setting Name="DefaultPgsqlCon2" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Provider=PostgreSQL OLE DB Provider;Data Source=\\malingunvila;Location=vrosas;User ID=sigm;password=sigm2013;&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Provider=PostgreSQL OLE DB Provider;Data Source=\\malingunvila;Location=vrosas;User ID=sigm;password=sigm2013;</Value>
+    </Setting>
+    <Setting Name="DefaultCon" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.12.0;Data Source=vrosas.accdb</Value>
+    </Setting>
+    <Setting Name="DocFolderHacienda" Type="System.String" Scope="User">
+      <Value Profile="(Default)">HACIENDA\</Value>
+    </Setting>
+    <Setting Name="DocFolderCatastro" Type="System.String" Scope="User">
+      <Value Profile="(Default)">CATASTRO\</Value>
+    </Setting>
+    <Setting Name="DocFolderComercio" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COMERCIO\</Value>
+    </Setting>
+    <Setting Name="DocFolderOprivadas" Type="System.String" Scope="User">
+      <Value Profile="(Default)">OPRIVADAS\</Value>
+    </Setting>
+    <Setting Name="DocFolderGobierno" Type="System.String" Scope="User">
+      <Value Profile="(Default)">GOBIERNO\</Value>
+    </Setting>
+    <Setting Name="DocFolderOrdenanza" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ORDENANZAS</Value>
+    </Setting>
+    <Setting Name="DocFolderPersona" Type="System.String" Scope="User">
+      <Value Profile="(Default)">PERSONA\</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>
