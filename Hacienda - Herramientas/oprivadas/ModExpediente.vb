@@ -33,8 +33,8 @@
     End Sub
 
     Private Sub ModExpediente_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        If id.Text > 0 And temporal.Visible = False Then
-            Oprivadas.Expediente.Bloquear(user_id.Text, id.Text, False)
+        If opr_id.Text > 0 And temporal.Visible = False Then
+            Oprivadas.Expediente.Bloquear(user_id.Text, opr_id.Text, False)
         End If
     End Sub
 
@@ -50,7 +50,7 @@
                     answer = MsgBox("¿Desea guardar este expediente temporal bajo el N° " & expediente.Text & "?", MsgBoxStyle.YesNoCancel, "Guardar Expediente")
                     If answer = MsgBoxResult.Yes Then 'Asignar N° de Expediente y quitar temporal
                         bd.edit(My.Settings.DefaultCon, "UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
-                                                        WHERE id=" & id.Text)
+                                                        WHERE id=" & opr_id.Text)
                         Me.Close()
                     End If
                 End If
@@ -105,23 +105,25 @@
         matricula.Clear()
 
         If registro.Rows.Count > 0 Then
-            '##### EXPEDIENTE (base)
-            Data.ToControls(registro, grupoExp)
-            'ARCHIVO
-            'opr_id.Text = registro(0)("id")
-            'temporal.Visible = registro(0)("temporal")
-            'expediente.Text = registro(0)("expediente")
-            'inicio_obra.Text = registro(0)("inicio_obra")
-            'recibe.Text = registro(0)("recibe").ToString
-            'observaciones.Text = registro(0)("observaciones").ToString
-            'Copias Digitales (Original y fin de obra)
             'Reset
             check_fin_obra.Checked = False
             fin_obra.Value = Date.Today
             ruta_fin_obra.Text = ""
-            'Tareas
-            'tarea.Text = registro(0)("tarea").ToString
-            'tarea2.Text = registro(0)("tarea2").ToString
+            '##### EXPEDIENTE (base)
+            Data.ToControls(registro, grupoExp)
+            'Tareas se carga al reves por alguna razon, asi que no sirve
+            tarea.Text = registro(0)("tarea").ToString
+            tarea2.Text = registro(0)("tarea2").ToString
+            'Estos controles estan fuera de GrupoExp
+            opr_id.Text = registro(0)("id")
+            temporal.Visible = registro(0)("temporal")
+            expediente.Text = registro(0)("expediente")
+
+            'ARCHIVO
+            'inicio_obra.Text = registro(0)("inicio_obra")
+            'recibe.Text = registro(0)("recibe").ToString
+            'observaciones.Text = registro(0)("observaciones").ToString
+            'Copias Digitales (Original y fin de obra)
         End If
 
         '##### Cargar personas
@@ -149,7 +151,7 @@
         Data.ToDataGridView(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
 
         'CARGAR COPIAS DIGITALES
-        Dim copias As DataTable = Documento.OPrivadas.BuscarDoc(id.Text)
+        Dim copias As DataTable = Documento.OPrivadas.BuscarDoc(opr_id.Text)
         If copias.Rows.Count > 0 Then
             For fila As Integer = 0 To copias.Rows.Count - 1
                 If copias(fila)("descripcion").ToString = "FIN DE OBRA" Then
@@ -238,15 +240,15 @@
         Dim result As MsgBoxResult = MsgBoxResult.Yes
 
         If pagina = 0 Then 'Responsables
-            Oprivadas.Expediente.LimpiarResponsable(id.Text)
-            Oprivadas.Expediente.AgregarResponsable(bs_resp, id.Text, bs_resp.Current("persona_id"))
-            Oprivadas.Expediente.ActualizarProfesional(id.Text, prof_id.Text)
+            Oprivadas.Expediente.LimpiarResponsable(opr_id.Text)
+            Oprivadas.Expediente.AgregarResponsable(bs_resp, opr_id.Text, bs_resp.Current("persona_id"))
+            Oprivadas.Expediente.ActualizarProfesional(opr_id.Text, prof_id.Text)
 
         ElseIf pagina = 1 Then 'Inmuebles
             'Los cambios se producen en el momento, no es necesario guardar
 
         ElseIf pagina = 2 Then 'Expediente
-            Oprivadas.Expediente.ActualizarDetalle(id.Text, inicio_obra.Value, check_fin_obra.Checked, fin_obra.Value,
+            Oprivadas.Expediente.ActualizarDetalle(opr_id.Text, inicio_obra.Value, check_fin_obra.Checked, fin_obra.Value,
                                                    recibe.Text, tarea.Text, tarea2.Text, Trim(observaciones.Text))
         End If
 
@@ -370,7 +372,7 @@
         End With
     End Sub
     Private Sub add_inmueble_Click(sender As Object, e As EventArgs) Handles add_inmueble.Click
-        Dim agregar_inmueble As New ModInmueble(user_id.Text, id.Text)
+        Dim agregar_inmueble As New ModInmueble(user_id.Text, opr_id.Text)
         With agregar_inmueble
             .ShowDialog(Me)
             .Dispose()
@@ -379,7 +381,7 @@
         End With
     End Sub
     Private Sub mod_inmueble_Click(sender As Object, e As EventArgs) Handles mod_inmueble.Click
-        Dim agregar_inmueble As New ModInmueble(user_id.Text, id.Text)
+        Dim agregar_inmueble As New ModInmueble(user_id.Text, opr_id.Text)
         With agregar_inmueble
             If bs_catastro.Position > -1 Then 'Modificar
                 .zona.Value = bs_catastro.Current("zona")
@@ -421,7 +423,7 @@
         If temporal.Visible Then
             MsgBox("No se pueden agregar deudas a un expediente temporal.")
         Else
-            Dim deudas As New ModPago(id.Text, True)
+            Dim deudas As New ModPago(opr_id.Text, True)
             deudas.ShowDialog()
         End If
     End Sub
@@ -429,7 +431,7 @@
         If temporal.Visible Then
             MsgBox("No se pueden agregar pagos a un expediente temporal.")
         Else
-            Dim pagos As New ModPago(id.Text, False)
+            Dim pagos As New ModPago(opr_id.Text, False)
             pagos.ShowDialog()
         End If
     End Sub

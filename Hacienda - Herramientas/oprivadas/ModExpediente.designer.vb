@@ -115,7 +115,7 @@ Partial Class ModExpediente
         Me.temporal = New System.Windows.Forms.ToolStripStatusLabel()
         Me.espacio = New System.Windows.Forms.ToolStripStatusLabel()
         Me.user_id = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.id = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.opr_id = New System.Windows.Forms.ToolStripStatusLabel()
         Me.prof_id = New System.Windows.Forms.ToolStripStatusLabel()
         Me.responsable_id = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Help = New System.Windows.Forms.ToolTip(Me.components)
@@ -837,7 +837,6 @@ Partial Class ModExpediente
         Me.tarea2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.tarea2.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tarea2.FormattingEnabled = True
-        Me.tarea2.Items.AddRange(New Object() {"SIMPLE", "LOTEO", "POSESIÓN", "SUBDIVISIÓN SIMPLE", "UNIÓN", "UNIÓN Y LOTEO", "UNIÓN Y SUBDIVISIÓN"})
         Me.tarea2.Location = New System.Drawing.Point(320, 59)
         Me.tarea2.Name = "tarea2"
         Me.tarea2.Size = New System.Drawing.Size(224, 27)
@@ -1130,7 +1129,7 @@ Partial Class ModExpediente
         '
         Me.estado.BackColor = System.Drawing.Color.Silver
         Me.estado.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.estado.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel4, Me.expediente, Me.temporal, Me.espacio, Me.user_id, Me.id, Me.prof_id, Me.responsable_id})
+        Me.estado.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel4, Me.expediente, Me.temporal, Me.espacio, Me.user_id, Me.opr_id, Me.prof_id, Me.responsable_id})
         Me.estado.Location = New System.Drawing.Point(0, 362)
         Me.estado.Name = "estado"
         Me.estado.Size = New System.Drawing.Size(609, 24)
@@ -1194,16 +1193,16 @@ Partial Class ModExpediente
         Me.user_id.Text = "0"
         Me.user_id.VisitedLinkColor = System.Drawing.Color.Black
         '
-        'id
+        'opr_id
         '
-        Me.id.ActiveLinkColor = System.Drawing.Color.Black
-        Me.id.BackColor = System.Drawing.Color.Transparent
-        Me.id.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.id.LinkColor = System.Drawing.Color.Black
-        Me.id.Name = "id"
-        Me.id.Size = New System.Drawing.Size(17, 19)
-        Me.id.Text = "0"
-        Me.id.VisitedLinkColor = System.Drawing.Color.Black
+        Me.opr_id.ActiveLinkColor = System.Drawing.Color.Black
+        Me.opr_id.BackColor = System.Drawing.Color.Transparent
+        Me.opr_id.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.opr_id.LinkColor = System.Drawing.Color.Black
+        Me.opr_id.Name = "opr_id"
+        Me.opr_id.Size = New System.Drawing.Size(17, 19)
+        Me.opr_id.Text = "0"
+        Me.opr_id.VisitedLinkColor = System.Drawing.Color.Black
         '
         'prof_id
         '
@@ -1337,7 +1336,7 @@ Partial Class ModExpediente
     Friend WithEvents add_resp As System.Windows.Forms.Button
     Friend WithEvents estado As System.Windows.Forms.StatusStrip
     Friend WithEvents user_id As System.Windows.Forms.ToolStripStatusLabel
-    Friend WithEvents id As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents opr_id As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents ToolStripStatusLabel4 As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents expediente As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents temporal As System.Windows.Forms.ToolStripStatusLabel

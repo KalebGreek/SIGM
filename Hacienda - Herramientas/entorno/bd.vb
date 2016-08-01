@@ -261,17 +261,25 @@
         Overloads Shared Function ToControls(drow As DataRow, ByVal target As Object) As Object
             'Carga los registros de cada columna en los controles con el nombre de la columna correspondiente
             For Each c As Control In target.Controls
-                If drow.Table.Columns.Contains(c.Name) And drow(c.Name) Is DBNull.Value = False Then
-                    If TypeOf c Is TextBox Then
-                        c.Text = drow(c.Name).ToString
-                    ElseIf TypeOf c Is ComboBox Then
-                        CType(c, ComboBox).DataSource.Position = CType(c, ComboBox).DataSource.Find("id", drow("id" & c.Name))
-                    ElseIf TypeOf c Is NumericUpDown Then
-                        CType(c, NumericUpDown).Value = drow(c.Name)
-                    ElseIf TypeOf c Is DateTimePicker Then
-                        CType(c, DateTimePicker).Value = drow(c.Name)
-                    ElseIf TypeOf c Is CheckBox Then
-                        CType(c, CheckBox).Checked = drow(c.Name)
+                If drow.Table.Columns.Contains(c.Name) Then
+                    If drow(c.Name) Is DBNull.Value = False Then
+                        If TypeOf c Is ComboBox Then
+                            If CType(c, ComboBox).DataSource Is Nothing Then
+                                CType(c, ComboBox).Text = drow(c.Name).ToString
+                            Else 'Se busca posicion del registro solo si Combobox posee datasource
+                                CType(c, ComboBox).DataSource.Position = CType(c, ComboBox).DataSource.Find("id", drow("id" & c.Name))
+                            End If
+                        ElseIf TypeOf c Is NumericUpDown Then
+                            CType(c, NumericUpDown).Value = drow(c.Name)
+                        ElseIf TypeOf c Is DateTimePicker Then
+                            CType(c, DateTimePicker).Value = drow(c.Name)
+                        ElseIf TypeOf c Is CheckBox Then
+                            CType(c, CheckBox).Checked = drow(c.Name)
+                        ElseIf TypeOf c Is Button Then 'Usado para habilitar opciones segun usuario
+                            CType(c, Button).Visible = drow(c.Name)
+                        Else
+                            c.Text = drow(c.Name).ToString
+                        End If
                     End If
                 End If
             Next
@@ -282,9 +290,7 @@
             For Each c As Control In target.Controls
                 If dtab.Columns.Contains(c.Name) Then
                     If dtab(0)(c.Name) Is DBNull.Value = False Then
-                        If TypeOf c Is TextBox Then
-                            c.Text = dtab(0)(c.Name).ToString
-                        ElseIf TypeOf c Is ComboBox Then
+                        If TypeOf c Is ComboBox Then
                             If CType(c, ComboBox).DataSource Is Nothing Then
                                 CType(c, ComboBox).Text = dtab(0)(c.Name).ToString
                             Else 'Se busca posicion del registro solo si Combobox posee datasource
@@ -298,6 +304,8 @@
                             CType(c, CheckBox).Checked = dtab(0)(c.Name)
                         ElseIf TypeOf c Is Button Then 'Usado para habilitar opciones segun usuario
                             CType(c, Button).Visible = dtab(0)(c.Name)
+                        Else
+                            c.Text = dtab(0)(c.Name).ToString
                         End If
                     End If
                 End If
@@ -307,17 +315,25 @@
         Overloads Shared Function ToControls(bs As BindingSource, ByVal target As Object) As Object
             'Carga los registros de cada columna en los controles con el nombre de la columna correspondiente
             For Each c As Control In target.Controls
-                If bs.Current.Columns.Contains(c.Name) And bs.Current(c.Name) Is DBNull.Value = False Then
-                    If TypeOf c Is TextBox Then
-                        c.Text = bs.Current(c.Name).ToString
-                    ElseIf TypeOf c Is ComboBox Then
-                        CType(c, ComboBox).DataSource.Position = bs.Position
-                    ElseIf TypeOf c Is NumericUpDown Then
-                        CType(c, NumericUpDown).Value = bs.Current(c.Name)
-                    ElseIf TypeOf c Is DateTimePicker Then
-                        CType(c, DateTimePicker).Value = bs.Current(c.Name)
-                    ElseIf TypeOf c Is CheckBox Then
-                        CType(c, CheckBox).Checked = bs.Current(c.Name)
+                If bs.Current.Columns.Contains(c.Name) Then
+                    If bs.Current(c.Name) Is DBNull.Value = False Then
+                        If TypeOf c Is ComboBox Then
+                            If CType(c, ComboBox).DataSource Is Nothing Then
+                                CType(c, ComboBox).Text = bs.Current(c.Name).ToString
+                            Else 'Se busca posicion del registro solo si Combobox posee datasource
+                                CType(c, ComboBox).DataSource.Position = CType(c, ComboBox).DataSource.Find("id", bs.Current("id" & c.Name))
+                            End If
+                        ElseIf TypeOf c Is NumericUpDown Then
+                            CType(c, NumericUpDown).Value = bs.Current(c.Name)
+                        ElseIf TypeOf c Is DateTimePicker Then
+                            CType(c, DateTimePicker).Value = bs.Current(c.Name)
+                        ElseIf TypeOf c Is CheckBox Then
+                            CType(c, CheckBox).Checked = bs.Current(c.Name)
+                        ElseIf TypeOf c Is Button Then 'Usado para habilitar opciones segun usuario
+                            CType(c, Button).Visible = bs.Current(c.Name)
+                        Else
+                            c.Text = bs.Current(c.Name).ToString
+                        End If
                     End If
                 End If
             Next
