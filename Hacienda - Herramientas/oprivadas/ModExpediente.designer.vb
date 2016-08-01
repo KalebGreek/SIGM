@@ -40,16 +40,16 @@ Partial Class ModExpediente
         Me.add_resp = New System.Windows.Forms.Button()
         Me.Label55 = New System.Windows.Forms.Label()
         Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.TipoProf = New System.Windows.Forms.TextBox()
+        Me.titulo = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Panel6 = New System.Windows.Forms.Panel()
         Me.mod_prof = New System.Windows.Forms.Button()
-        Me.RazonProf = New System.Windows.Forms.TextBox()
+        Me.razon = New System.Windows.Forms.TextBox()
         Me.Label14 = New System.Windows.Forms.Label()
-        Me.CuilProf = New System.Windows.Forms.MaskedTextBox()
+        Me.cuil = New System.Windows.Forms.MaskedTextBox()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label23 = New System.Windows.Forms.Label()
-        Me.MatrProf = New System.Windows.Forms.TextBox()
+        Me.matricula = New System.Windows.Forms.TextBox()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.tab_inmueble = New System.Windows.Forms.TabPage()
         Me.page_inmueble = New System.Windows.Forms.Panel()
@@ -115,7 +115,7 @@ Partial Class ModExpediente
         Me.temporal = New System.Windows.Forms.ToolStripStatusLabel()
         Me.espacio = New System.Windows.Forms.ToolStripStatusLabel()
         Me.user_id = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.opr_id = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.id = New System.Windows.Forms.ToolStripStatusLabel()
         Me.prof_id = New System.Windows.Forms.ToolStripStatusLabel()
         Me.responsable_id = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Help = New System.Windows.Forms.ToolTip(Me.components)
@@ -301,29 +301,29 @@ Partial Class ModExpediente
         '
         'Panel3
         '
-        Me.Panel3.Controls.Add(Me.TipoProf)
+        Me.Panel3.Controls.Add(Me.titulo)
         Me.Panel3.Controls.Add(Me.Label4)
         Me.Panel3.Controls.Add(Me.Panel6)
-        Me.Panel3.Controls.Add(Me.RazonProf)
+        Me.Panel3.Controls.Add(Me.razon)
         Me.Panel3.Controls.Add(Me.Label14)
-        Me.Panel3.Controls.Add(Me.CuilProf)
+        Me.Panel3.Controls.Add(Me.cuil)
         Me.Panel3.Controls.Add(Me.Label24)
         Me.Panel3.Controls.Add(Me.Label23)
-        Me.Panel3.Controls.Add(Me.MatrProf)
+        Me.Panel3.Controls.Add(Me.matricula)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel3.Location = New System.Drawing.Point(0, 223)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(601, 105)
         Me.Panel3.TabIndex = 342
         '
-        'TipoProf
+        'titulo
         '
-        Me.TipoProf.BackColor = System.Drawing.SystemColors.Window
-        Me.TipoProf.Location = New System.Drawing.Point(80, 35)
-        Me.TipoProf.Name = "TipoProf"
-        Me.TipoProf.ReadOnly = True
-        Me.TipoProf.Size = New System.Drawing.Size(330, 27)
-        Me.TipoProf.TabIndex = 351
+        Me.titulo.BackColor = System.Drawing.SystemColors.Window
+        Me.titulo.Location = New System.Drawing.Point(80, 35)
+        Me.titulo.Name = "titulo"
+        Me.titulo.ReadOnly = True
+        Me.titulo.Size = New System.Drawing.Size(330, 27)
+        Me.titulo.TabIndex = 351
         '
         'Label4
         '
@@ -359,14 +359,14 @@ Partial Class ModExpediente
         Me.mod_prof.Text = "MODIFICAR"
         Me.mod_prof.UseVisualStyleBackColor = False
         '
-        'RazonProf
+        'razon
         '
-        Me.RazonProf.BackColor = System.Drawing.SystemColors.Window
-        Me.RazonProf.Location = New System.Drawing.Point(80, 1)
-        Me.RazonProf.Name = "RazonProf"
-        Me.RazonProf.ReadOnly = True
-        Me.RazonProf.Size = New System.Drawing.Size(330, 27)
-        Me.RazonProf.TabIndex = 345
+        Me.razon.BackColor = System.Drawing.SystemColors.Window
+        Me.razon.Location = New System.Drawing.Point(80, 1)
+        Me.razon.Name = "razon"
+        Me.razon.ReadOnly = True
+        Me.razon.Size = New System.Drawing.Size(330, 27)
+        Me.razon.TabIndex = 345
         '
         'Label14
         '
@@ -379,17 +379,17 @@ Partial Class ModExpediente
         Me.Label14.TabIndex = 344
         Me.Label14.Text = "CUIL"
         '
-        'CuilProf
+        'cuil
         '
-        Me.CuilProf.BackColor = System.Drawing.SystemColors.Window
-        Me.CuilProf.Location = New System.Drawing.Point(80, 69)
-        Me.CuilProf.Mask = "99-99999999-9"
-        Me.CuilProf.Name = "CuilProf"
-        Me.CuilProf.ReadOnly = True
-        Me.CuilProf.Size = New System.Drawing.Size(138, 27)
-        Me.CuilProf.TabIndex = 346
-        Me.CuilProf.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.CuilProf.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals
+        Me.cuil.BackColor = System.Drawing.SystemColors.Window
+        Me.cuil.Location = New System.Drawing.Point(80, 69)
+        Me.cuil.Mask = "99-99999999-9"
+        Me.cuil.Name = "cuil"
+        Me.cuil.ReadOnly = True
+        Me.cuil.Size = New System.Drawing.Size(138, 27)
+        Me.cuil.TabIndex = 346
+        Me.cuil.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.cuil.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals
         '
         'Label24
         '
@@ -413,15 +413,15 @@ Partial Class ModExpediente
         Me.Label23.TabIndex = 342
         Me.Label23.Text = "Matrícula"
         '
-        'MatrProf
+        'matricula
         '
-        Me.MatrProf.BackColor = System.Drawing.SystemColors.Window
-        Me.MatrProf.Location = New System.Drawing.Point(309, 71)
-        Me.MatrProf.MaxLength = 128
-        Me.MatrProf.Name = "MatrProf"
-        Me.MatrProf.ReadOnly = True
-        Me.MatrProf.Size = New System.Drawing.Size(101, 27)
-        Me.MatrProf.TabIndex = 347
+        Me.matricula.BackColor = System.Drawing.SystemColors.Window
+        Me.matricula.Location = New System.Drawing.Point(309, 71)
+        Me.matricula.MaxLength = 128
+        Me.matricula.Name = "matricula"
+        Me.matricula.ReadOnly = True
+        Me.matricula.Size = New System.Drawing.Size(101, 27)
+        Me.matricula.TabIndex = 347
         '
         'Label29
         '
@@ -473,7 +473,7 @@ Partial Class ModExpediente
         Me.consulta_inmueble.ReadOnly = True
         Me.consulta_inmueble.RowHeadersVisible = False
         Me.consulta_inmueble.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.consulta_inmueble.Size = New System.Drawing.Size(501, 103)
+        Me.consulta_inmueble.Size = New System.Drawing.Size(501, 157)
         Me.consulta_inmueble.TabIndex = 338
         '
         'Panel7
@@ -484,7 +484,7 @@ Partial Class ModExpediente
         Me.Panel7.Dock = System.Windows.Forms.DockStyle.Right
         Me.Panel7.Location = New System.Drawing.Point(501, 25)
         Me.Panel7.Name = "Panel7"
-        Me.Panel7.Size = New System.Drawing.Size(100, 103)
+        Me.Panel7.Size = New System.Drawing.Size(100, 157)
         Me.Panel7.TabIndex = 930
         '
         'del_inmueble
@@ -539,9 +539,9 @@ Partial Class ModExpediente
         Me.Panel8.Controls.Add(Me.Label17)
         Me.Panel8.Controls.Add(Me.info_titular)
         Me.Panel8.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel8.Location = New System.Drawing.Point(0, 128)
+        Me.Panel8.Location = New System.Drawing.Point(0, 182)
         Me.Panel8.Name = "Panel8"
-        Me.Panel8.Size = New System.Drawing.Size(601, 100)
+        Me.Panel8.Size = New System.Drawing.Size(601, 73)
         Me.Panel8.TabIndex = 931
         '
         'Label9
@@ -570,7 +570,7 @@ Partial Class ModExpediente
         '
         Me.info_estado.AutoSize = True
         Me.info_estado.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-        Me.info_estado.Location = New System.Drawing.Point(97, 76)
+        Me.info_estado.Location = New System.Drawing.Point(371, 51)
         Me.info_estado.Name = "info_estado"
         Me.info_estado.Size = New System.Drawing.Size(15, 19)
         Me.info_estado.TabIndex = 929
@@ -581,7 +581,7 @@ Partial Class ModExpediente
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-        Me.Label7.Location = New System.Drawing.Point(30, 76)
+        Me.Label7.Location = New System.Drawing.Point(310, 51)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(55, 19)
         Me.Label7.TabIndex = 921
@@ -634,16 +634,16 @@ Partial Class ModExpediente
         Me.Panel5.Controls.Add(Me.Label10)
         Me.Panel5.Controls.Add(Me.Label16)
         Me.Panel5.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel5.Location = New System.Drawing.Point(0, 228)
+        Me.Panel5.Location = New System.Drawing.Point(0, 255)
         Me.Panel5.Name = "Panel5"
-        Me.Panel5.Size = New System.Drawing.Size(601, 100)
+        Me.Panel5.Size = New System.Drawing.Size(601, 73)
         Me.Panel5.TabIndex = 933
         '
         'info_cuenta
         '
         Me.info_cuenta.AutoSize = True
         Me.info_cuenta.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.info_cuenta.Location = New System.Drawing.Point(97, 75)
+        Me.info_cuenta.Location = New System.Drawing.Point(371, 52)
         Me.info_cuenta.Name = "info_cuenta"
         Me.info_cuenta.Size = New System.Drawing.Size(15, 19)
         Me.info_cuenta.TabIndex = 932
@@ -655,7 +655,7 @@ Partial Class ModExpediente
         Me.Label21.AutoSize = True
         Me.Label21.BackColor = System.Drawing.Color.Transparent
         Me.Label21.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label21.Location = New System.Drawing.Point(30, 75)
+        Me.Label21.Location = New System.Drawing.Point(310, 52)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(55, 19)
         Me.Label21.TabIndex = 931
@@ -1130,7 +1130,7 @@ Partial Class ModExpediente
         '
         Me.estado.BackColor = System.Drawing.Color.Silver
         Me.estado.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.estado.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel4, Me.expediente, Me.temporal, Me.espacio, Me.user_id, Me.opr_id, Me.prof_id, Me.responsable_id})
+        Me.estado.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel4, Me.expediente, Me.temporal, Me.espacio, Me.user_id, Me.id, Me.prof_id, Me.responsable_id})
         Me.estado.Location = New System.Drawing.Point(0, 362)
         Me.estado.Name = "estado"
         Me.estado.Size = New System.Drawing.Size(609, 24)
@@ -1194,16 +1194,16 @@ Partial Class ModExpediente
         Me.user_id.Text = "0"
         Me.user_id.VisitedLinkColor = System.Drawing.Color.Black
         '
-        'opr_id
+        'id
         '
-        Me.opr_id.ActiveLinkColor = System.Drawing.Color.Black
-        Me.opr_id.BackColor = System.Drawing.Color.Transparent
-        Me.opr_id.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.opr_id.LinkColor = System.Drawing.Color.Black
-        Me.opr_id.Name = "opr_id"
-        Me.opr_id.Size = New System.Drawing.Size(17, 19)
-        Me.opr_id.Text = "0"
-        Me.opr_id.VisitedLinkColor = System.Drawing.Color.Black
+        Me.id.ActiveLinkColor = System.Drawing.Color.Black
+        Me.id.BackColor = System.Drawing.Color.Transparent
+        Me.id.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.id.LinkColor = System.Drawing.Color.Black
+        Me.id.Name = "id"
+        Me.id.Size = New System.Drawing.Size(17, 19)
+        Me.id.Text = "0"
+        Me.id.VisitedLinkColor = System.Drawing.Color.Black
         '
         'prof_id
         '
@@ -1326,18 +1326,18 @@ Partial Class ModExpediente
     Friend WithEvents save As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents print As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Panel3 As System.Windows.Forms.Panel
-    Friend WithEvents RazonProf As System.Windows.Forms.TextBox
+    Friend WithEvents razon As System.Windows.Forms.TextBox
     Friend WithEvents Label14 As System.Windows.Forms.Label
-    Friend WithEvents CuilProf As System.Windows.Forms.MaskedTextBox
+    Friend WithEvents cuil As System.Windows.Forms.MaskedTextBox
     Friend WithEvents Label24 As System.Windows.Forms.Label
     Friend WithEvents Label23 As System.Windows.Forms.Label
-    Friend WithEvents MatrProf As System.Windows.Forms.TextBox
+    Friend WithEvents matricula As System.Windows.Forms.TextBox
     Friend WithEvents Panel4 As System.Windows.Forms.Panel
     Friend WithEvents del_resp As System.Windows.Forms.Button
     Friend WithEvents add_resp As System.Windows.Forms.Button
     Friend WithEvents estado As System.Windows.Forms.StatusStrip
     Friend WithEvents user_id As System.Windows.Forms.ToolStripStatusLabel
-    Friend WithEvents opr_id As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents id As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents ToolStripStatusLabel4 As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents expediente As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents temporal As System.Windows.Forms.ToolStripStatusLabel
@@ -1364,7 +1364,7 @@ Partial Class ModExpediente
     Friend WithEvents CaratulaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CopiaDeExpedienteToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents del_inmueble As Button
-    Friend WithEvents TipoProf As TextBox
+    Friend WithEvents titulo As TextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents observaciones As TextBox
     Friend WithEvents Label1 As Label

@@ -15,8 +15,8 @@
     End Sub
     '###### GUI #################################################################################################
     Private Sub SeleccionForm(sender As Object, e As EventArgs) Handles hac.Click, gob.Click, cat.Click, opu.Click, opr.Click, _
-                                                                        com.Click, per.Click, frm.Click, opcion.Click
-        If sender Is opcion Then
+                                                                        com.Click, per.Click, frm.Click, opc.Click
+        If sender Is opc Then
             config.ShowDialog()
         Else
             Dim form1 As New Form
@@ -25,7 +25,7 @@
                 form1 = New VisorReporte(sender.Text)
                 CType(form1, VisorReporte).FormulariosToolStripMenuItem1.Visible = True
             Else
-                form1 = New ContenedorGen(user_id.Text, sender)
+                form1 = New ContenedorGen(id.Text, sender)
             End If
             Me.Hide()
             form1.ShowDialog(Me)

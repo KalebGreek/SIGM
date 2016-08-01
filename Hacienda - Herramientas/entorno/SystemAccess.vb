@@ -25,15 +25,16 @@ Module SystemAccess
         Dim token As String = getCpuId()
         Dim equipo As String = Environment.MachineName
         'Últimos accesos
-        Dim dtab As DataTable = bd.read(my.settings.DefaultCon, "SELECT id, fecha_hora, user_id, token, equipo, sesion FROM usr_log" &
-                                " WHERE user_id=" & user_id & " ORDER BY id DESC")
+        Dim dtab As DataTable = bd.read(My.Settings.DefaultCon, "SELECT id, fecha_hora, user_id, token, equipo, sesion 
+                                                                FROM usr_log
+                                                                WHERE user_id=" & user_id & " ORDER BY id DESC")
 
         If dtab.Rows.Count > 0 Then
             If dtab(0)("sesion") Then
                 If dtab(0)("token").ToString = token Then
                     If lock Then 'Actualizar a último accceso 
-                        bd.edit(my.settings.DefaultCon, "UPDATE usr_log SET fecha_hora='" & fecha_hora & "', sesion=True" &
-                                  " WHERE id=" & dtab(0)("id"))
+                        bd.edit(My.Settings.DefaultCon, "UPDATE usr_log SET fecha_hora='" & fecha_hora & "', sesion=True
+                                                        WHERE id=" & dtab(0)("id"))
                     Else
                         bd.edit(my.settings.DefaultCon, "UPDATE usr_log SET sesion=False WHERE user_id=" & user_id)
                     End If
@@ -63,20 +64,11 @@ Module SystemAccess
     End Function
     Public Function permisos(user_id As Integer)
         Dim inicio As New launcher
+        'Leer
         Dim dtab As DataTable = bd.read(my.settings.DefaultCon, "SELECT * FROM usuarios WHERE id=" & user_id)
-        With inicio
-            'Permisos
-            .cat.Visible = dtab(0)("cat")
-            .com.Visible = dtab(0)("com")
-            .frm.Visible = dtab(0)("frm")
-            .gob.Visible = dtab(0)("gob")
-            .hac.Visible = dtab(0)("hac")
-            .opcion.Visible = dtab(0)("opc")
-            .opr.Visible = dtab(0)("opr")
-            .opu.Visible = dtab(0)("opu")
-            .per.Visible = dtab(0)("per")
-            .user_id.Text = user_id
-        End With
+        'Cargar
+        bd.Data.ToControls(dtab, inicio.FlowLayoutPanel1)
+        bd.Data.ToControls(dtab, inicio)
         Return inicio
     End Function
 

@@ -25,10 +25,10 @@ Partial Class launcher
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(launcher))
         Me.opendialog = New System.Windows.Forms.OpenFileDialog()
         Me.salir = New System.Windows.Forms.Button()
-        Me.opcion = New System.Windows.Forms.Button()
+        Me.opc = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.logo = New System.Windows.Forms.PictureBox()
-        Me.user_id = New System.Windows.Forms.TextBox()
+        Me.id = New System.Windows.Forms.TextBox()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.hac = New System.Windows.Forms.Button()
         Me.gob = New System.Windows.Forms.Button()
@@ -62,21 +62,21 @@ Partial Class launcher
         Me.salir.Text = "CERRAR SESIÓN"
         Me.salir.UseVisualStyleBackColor = False
         '
-        'opcion
+        'opc
         '
-        Me.opcion.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.opcion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.opcion.FlatAppearance.BorderSize = 0
-        Me.opcion.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.opcion.Font = New System.Drawing.Font("PF DinText Pro", 13.0!)
-        Me.opcion.ForeColor = System.Drawing.Color.LightGray
-        Me.opcion.Location = New System.Drawing.Point(4, 378)
-        Me.opcion.Name = "opcion"
-        Me.opcion.Size = New System.Drawing.Size(110, 29)
-        Me.opcion.TabIndex = 80
-        Me.opcion.Text = "OPCIONES"
-        Me.opcion.UseVisualStyleBackColor = False
-        Me.opcion.Visible = False
+        Me.opc.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.opc.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.opc.FlatAppearance.BorderSize = 0
+        Me.opc.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.opc.Font = New System.Drawing.Font("PF DinText Pro", 13.0!)
+        Me.opc.ForeColor = System.Drawing.Color.LightGray
+        Me.opc.Location = New System.Drawing.Point(4, 378)
+        Me.opc.Name = "opc"
+        Me.opc.Size = New System.Drawing.Size(110, 29)
+        Me.opc.TabIndex = 80
+        Me.opc.Text = "OPCIONES"
+        Me.opc.UseVisualStyleBackColor = False
+        Me.opc.Visible = False
         '
         'Panel1
         '
@@ -99,19 +99,19 @@ Partial Class launcher
         Me.logo.TabIndex = 152
         Me.logo.TabStop = False
         '
-        'user_id
+        'id
         '
-        Me.user_id.BackColor = System.Drawing.Color.Yellow
-        Me.user_id.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.user_id.Font = New System.Drawing.Font("PF DinText Pro", 10.0!)
-        Me.user_id.ForeColor = System.Drawing.SystemColors.InactiveCaptionText
-        Me.user_id.Location = New System.Drawing.Point(518, 383)
-        Me.user_id.MaxLength = 32
-        Me.user_id.Name = "user_id"
-        Me.user_id.Size = New System.Drawing.Size(27, 23)
-        Me.user_id.TabIndex = 157
-        Me.user_id.Text = "0"
-        Me.user_id.Visible = False
+        Me.id.BackColor = System.Drawing.Color.Yellow
+        Me.id.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.id.Font = New System.Drawing.Font("PF DinText Pro", 10.0!)
+        Me.id.ForeColor = System.Drawing.SystemColors.InactiveCaptionText
+        Me.id.Location = New System.Drawing.Point(518, 383)
+        Me.id.MaxLength = 32
+        Me.id.Name = "id"
+        Me.id.ReadOnly = True
+        Me.id.Size = New System.Drawing.Size(27, 23)
+        Me.id.TabIndex = 157
+        Me.id.Text = "0"
         '
         'FlowLayoutPanel1
         '
@@ -273,8 +273,8 @@ Partial Class launcher
         Me.Controls.Add(Me.FlowLayoutPanel1)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.salir)
-        Me.Controls.Add(Me.opcion)
-        Me.Controls.Add(Me.user_id)
+        Me.Controls.Add(Me.opc)
+        Me.Controls.Add(Me.id)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("PF DinText Pro", 48.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -294,10 +294,10 @@ Partial Class launcher
     End Sub
     Friend WithEvents opendialog As System.Windows.Forms.OpenFileDialog
     Friend WithEvents salir As System.Windows.Forms.Button
-    Friend WithEvents opcion As System.Windows.Forms.Button
+    Friend WithEvents opc As System.Windows.Forms.Button
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents logo As System.Windows.Forms.PictureBox
-    Friend WithEvents user_id As System.Windows.Forms.TextBox
+    Friend WithEvents id As System.Windows.Forms.TextBox
     Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
     Friend WithEvents hac As System.Windows.Forms.Button
     Friend WithEvents gob As System.Windows.Forms.Button

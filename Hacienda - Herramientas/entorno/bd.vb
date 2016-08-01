@@ -211,22 +211,22 @@
                     visor.Columns("titular_id").Width = 0
                 End If
                 If .Contains("zona") Then
-                    visor.Columns("zona").Width = 20
+                    visor.Columns("zona").Width = 40
                 End If
                 If .Contains("circ") Then
-                    visor.Columns("circ").Width = 20
+                    visor.Columns("circ").Width = 40
                 End If
                 If .Contains("secc") Then
-                    visor.Columns("secc").Width = 20
+                    visor.Columns("secc").Width = 40
                 End If
                 If .Contains("manz") Then
-                    visor.Columns("manz").Width = 20
+                    visor.Columns("manz").Width = 40
                 End If
                 If .Contains("parc") Then
-                    visor.Columns("parc").Width = 20
+                    visor.Columns("parc").Width = 40
                 End If
                 If .Contains("lote") Then
-                    visor.Columns("lote").Width = 20
+                    visor.Columns("lote").Width = 40
                 End If
                 If .Contains("archivado") Then
                     visor.Columns("archivado").AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
@@ -280,23 +280,49 @@
         Overloads Shared Function ToControls(dtab As DataTable, ByVal target As Object) As Object
             'Carga los registros de cada columna en los controles con el nombre de la columna correspondiente
             For Each c As Control In target.Controls
-                If dtab.Columns.Contains(c.Name) And dtab(0)(c.Name) Is DBNull.Value = False Then
-                    If TypeOf c Is TextBox Then
-                        c.Text = dtab(0)(c.Name).ToString
-                    ElseIf TypeOf c Is ComboBox Then
-                        CType(c, ComboBox).DataSource.Position = CType(c, ComboBox).DataSource.Find("id", dtab(0)("id" & c.Name))
-                    ElseIf TypeOf c Is NumericUpDown Then
-                        CType(c, NumericUpDown).Value = dtab(0)(c.Name)
-                    ElseIf TypeOf c Is DateTimePicker Then
-                        CType(c, DateTimePicker).Value = dtab(0)(c.Name)
-                    ElseIf TypeOf c Is CheckBox Then
-                        CType(c, CheckBox).Checked = dtab(0)(c.Name)
+                If dtab.Columns.Contains(c.Name) Then
+                    If dtab(0)(c.Name) Is DBNull.Value = False Then
+                        If TypeOf c Is TextBox Then
+                            c.Text = dtab(0)(c.Name).ToString
+                        ElseIf TypeOf c Is ComboBox Then
+                            If CType(c, ComboBox).DataSource Is Nothing Then
+                                CType(c, ComboBox).Text = dtab(0)(c.Name).ToString
+                            Else 'Se busca posicion del registro solo si Combobox posee datasource
+                                CType(c, ComboBox).DataSource.Position = CType(c, ComboBox).DataSource.Find("id", dtab(0)("id" & c.Name))
+                            End If
+                        ElseIf TypeOf c Is NumericUpDown Then
+                            CType(c, NumericUpDown).Value = dtab(0)(c.Name)
+                        ElseIf TypeOf c Is DateTimePicker Then
+                            CType(c, DateTimePicker).Value = dtab(0)(c.Name)
+                        ElseIf TypeOf c Is CheckBox Then
+                            CType(c, CheckBox).Checked = dtab(0)(c.Name)
+                        ElseIf TypeOf c Is Button Then 'Usado para habilitar opciones segun usuario
+                            CType(c, Button).Visible = dtab(0)(c.Name)
+                        End If
                     End If
                 End If
             Next
             Return target
         End Function
-
+        Overloads Shared Function ToControls(bs As BindingSource, ByVal target As Object) As Object
+            'Carga los registros de cada columna en los controles con el nombre de la columna correspondiente
+            For Each c As Control In target.Controls
+                If bs.Current.Columns.Contains(c.Name) And bs.Current(c.Name) Is DBNull.Value = False Then
+                    If TypeOf c Is TextBox Then
+                        c.Text = bs.Current(c.Name).ToString
+                    ElseIf TypeOf c Is ComboBox Then
+                        CType(c, ComboBox).DataSource.Position = bs.Position
+                    ElseIf TypeOf c Is NumericUpDown Then
+                        CType(c, NumericUpDown).Value = bs.Current(c.Name)
+                    ElseIf TypeOf c Is DateTimePicker Then
+                        CType(c, DateTimePicker).Value = bs.Current(c.Name)
+                    ElseIf TypeOf c Is CheckBox Then
+                        CType(c, CheckBox).Checked = bs.Current(c.Name)
+                    End If
+                End If
+            Next
+            Return target
+        End Function
     End Class
 
     '### Tablas externas

@@ -33,8 +33,8 @@
     End Sub
 
     Private Sub ModExpediente_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        If opr_id.Text > 0 And temporal.Visible = False Then
-            Oprivadas.Expediente.Bloquear(user_id.Text, opr_id.Text, False)
+        If id.Text > 0 And temporal.Visible = False Then
+            Oprivadas.Expediente.Bloquear(user_id.Text, id.Text, False)
         End If
     End Sub
 
@@ -49,8 +49,8 @@
                 If temporal.Visible Then
                     answer = MsgBox("¿Desea guardar este expediente temporal bajo el N° " & expediente.Text & "?", MsgBoxStyle.YesNoCancel, "Guardar Expediente")
                     If answer = MsgBoxResult.Yes Then 'Asignar N° de Expediente y quitar temporal
-                        bd.edit(my.settings.DefaultCon, "UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
-                                         WHERE id=" & opr_id.Text)
+                        bd.edit(My.Settings.DefaultCon, "UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
+                                                        WHERE id=" & id.Text)
                         Me.Close()
                     End If
                 End If
@@ -100,9 +100,9 @@
 
     '###### VALIDATION ##########################################################################################
     Private Sub cargar(registro As DataTable)
-        RazonProf.Clear()
-        CuilProf.Clear()
-        MatrProf.Clear()
+        razon.Clear()
+        cuil.Clear()
+        matricula.Clear()
 
         If registro.Rows.Count > 0 Then
             '##### EXPEDIENTE (base)
@@ -134,10 +134,11 @@
             Dim prof As DataTable = Profesional.Seleccionar(prof_id.Text)
 
             If prof.Rows.Count > 0 Then
-                RazonProf.Text = prof(0)("razon").ToString
-                TipoProf.Text = prof(0)("titulo").ToString
-                CuilProf.Text = prof(0)("cuil").ToString
-                MatrProf.Text = prof(0)("matricula").ToString
+                bd.Data.ToControls(prof, Panel3)
+                'razon.Text = prof(0)("razon").ToString
+                'titulo.Text = prof(0)("titulo").ToString
+                'cuil.Text = prof(0)("cuil").ToString
+                'matricula.Text = prof(0)("matricula").ToString
             Else
                 MsgBox("Profesional no válido.", MsgBoxStyle.Exclamation)
                 prof_id.Text = 0
@@ -148,7 +149,7 @@
         Data.ToDataGridView(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
 
         'CARGAR COPIAS DIGITALES
-        Dim copias As DataTable = Documento.OPrivadas.BuscarDoc(opr_id.Text)
+        Dim copias As DataTable = Documento.OPrivadas.BuscarDoc(id.Text)
         If copias.Rows.Count > 0 Then
             For fila As Integer = 0 To copias.Rows.Count - 1
                 If copias(fila)("descripcion").ToString = "FIN DE OBRA" Then
@@ -237,15 +238,15 @@
         Dim result As MsgBoxResult = MsgBoxResult.Yes
 
         If pagina = 0 Then 'Responsables
-            Oprivadas.Expediente.LimpiarResponsable(opr_id.Text)
-            Oprivadas.Expediente.AgregarResponsable(bs_resp, opr_id.Text, bs_resp.Current("persona_id"))
-            Oprivadas.Expediente.ActualizarProfesional(opr_id.Text, prof_id.Text)
+            Oprivadas.Expediente.LimpiarResponsable(id.Text)
+            Oprivadas.Expediente.AgregarResponsable(bs_resp, id.Text, bs_resp.Current("persona_id"))
+            Oprivadas.Expediente.ActualizarProfesional(id.Text, prof_id.Text)
 
         ElseIf pagina = 1 Then 'Inmuebles
             'Los cambios se producen en el momento, no es necesario guardar
 
         ElseIf pagina = 2 Then 'Expediente
-            Oprivadas.Expediente.ActualizarDetalle(opr_id.Text, inicio_obra.Value, check_fin_obra.Checked, fin_obra.Value,
+            Oprivadas.Expediente.ActualizarDetalle(id.Text, inicio_obra.Value, check_fin_obra.Checked, fin_obra.Value,
                                                    recibe.Text, tarea.Text, tarea2.Text, Trim(observaciones.Text))
         End If
 
@@ -323,15 +324,15 @@
         End If
     End Sub
     Private Sub mod_prof_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mod_prof.Click
-        Dim sel_prof As New ConsultaGen("PROFESIONAL", user_id.Text, RazonProf.Text)
+        Dim sel_prof As New ConsultaGen("PROFESIONAL", user_id.Text, razon.Text)
         With sel_prof
             .ShowDialog(Me)
             If .resultado.Count > 0 Then
                 prof_id.Text = .resultado.Current("prof_id")
-                RazonProf.Text = .resultado.Current("razon")
-                TipoProf.Text = .resultado.Current("titulo")
-                CuilProf.Text = .resultado.Current("cuil")
-                MatrProf.Text = .resultado.Current("matricula")
+                razon.Text = .resultado.Current("razon")
+                titulo.Text = .resultado.Current("titulo")
+                cuil.Text = .resultado.Current("cuil")
+                matricula.Text = .resultado.Current("matricula")
             End If
             .Dispose()
         End With
@@ -369,7 +370,7 @@
         End With
     End Sub
     Private Sub add_inmueble_Click(sender As Object, e As EventArgs) Handles add_inmueble.Click
-        Dim agregar_inmueble As New ModInmueble(user_id.Text, opr_id.Text)
+        Dim agregar_inmueble As New ModInmueble(user_id.Text, id.Text)
         With agregar_inmueble
             .ShowDialog(Me)
             .Dispose()
@@ -378,7 +379,7 @@
         End With
     End Sub
     Private Sub mod_inmueble_Click(sender As Object, e As EventArgs) Handles mod_inmueble.Click
-        Dim agregar_inmueble As New ModInmueble(user_id.Text, opr_id.Text)
+        Dim agregar_inmueble As New ModInmueble(user_id.Text, id.Text)
         With agregar_inmueble
             If bs_catastro.Position > -1 Then 'Modificar
                 .zona.Value = bs_catastro.Current("zona")
@@ -420,7 +421,7 @@
         If temporal.Visible Then
             MsgBox("No se pueden agregar deudas a un expediente temporal.")
         Else
-            Dim deudas As New ModPago(opr_id.Text, True)
+            Dim deudas As New ModPago(id.Text, True)
             deudas.ShowDialog()
         End If
     End Sub
@@ -428,7 +429,7 @@
         If temporal.Visible Then
             MsgBox("No se pueden agregar pagos a un expediente temporal.")
         Else
-            Dim pagos As New ModPago(opr_id.Text, False)
+            Dim pagos As New ModPago(id.Text, False)
             pagos.ShowDialog()
         End If
     End Sub
@@ -470,10 +471,10 @@
 
             parametros = ParamReporte.ListarResponsables(parametros, bs_resp)
 
-            CuilProf.TextMaskFormat = MaskFormat.IncludePromptAndLiterals
-            Dim prof_completo As String = "Razon: " & RazonProf.Text & System.Environment.NewLine &
-                                          "CUIL: " & CuilProf.Text & " | Matricula: " & MatrProf.Text
-            CuilProf.TextMaskFormat = MaskFormat.ExcludePromptAndLiterals
+            cuil.TextMaskFormat = MaskFormat.IncludePromptAndLiterals
+            Dim prof_completo As String = "Razon: " & razon.Text & System.Environment.NewLine &
+                                          "CUIL: " & cuil.Text & " | Matricula: " & matricula.Text
+            cuil.TextMaskFormat = MaskFormat.ExcludePromptAndLiterals
 
             parametros = ParamReporte.DetalleExpediente(parametros, prof_completo,
                                                         recibe.Text, Trim(observaciones.Text),
