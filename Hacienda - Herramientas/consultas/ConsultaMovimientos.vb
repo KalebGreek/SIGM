@@ -102,20 +102,19 @@
         Return bd.read(my.settings.foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
     End Function
     Private Sub SumarTotales(ingreso As Boolean)
-        If ingreso Then
-            info.Text = "TOTAL INGRESOS:"
-        Else
-            info.Text = "TOTAL EGRESOS:"
-        End If
-
+        Dim dtab As DataTable = bd.read(My.Settings.foxcon,
+                                        "SELECT SUM(pagado) as total_pagado, orden" &
+                                        SQLTable & SQLCriteria & " GROUP BY orden")
         info2.Text = " - "
-
-        Dim dtab As DataTable = bd.read(my.settings.foxcon, "SELECT SUM(pagado) as total_pagado, orden" & SQLTable & SQLCriteria & " GROUP BY orden")
-
         If dtab Is Nothing = False Then
             If dtab.Rows.Count > 0 Then
                 info2.Text = " $ " & dtab(0)("total_pagado").ToString
             End If
+        End If
+
+        info.Text = "TOTAL EGRESOS:"
+        If ingreso Then
+            info.Text = "TOTAL INGRESOS:"
         End If
     End Sub
 

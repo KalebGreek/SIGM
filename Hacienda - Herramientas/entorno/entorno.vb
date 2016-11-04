@@ -113,17 +113,5 @@
         Return texto
     End Function
 
-    Function CalculateExpirationDate(Expiration As Date, Optional cuotas As Integer = 1)
-        For c As Integer = 0 To cuotas
-            Expiration = Expiration.AddDays(Date.DaysInMonth(Expiration.Year, Expiration.Month))
-        Next
-        Do While Expiration.DayOfWeek = DayOfWeek.Saturday Or Expiration.DayOfWeek = DayOfWeek.Sunday
-            If Expiration.DayOfWeek = DayOfWeek.Saturday Then
-                Expiration = Expiration.AddDays(-1)
-            Else
-                Expiration = Expiration.AddDays(1)
-            End If
-        Loop
-        Return FormatDateTime(Expiration, DateFormat.ShortDate)
-    End Function
+
 End Module

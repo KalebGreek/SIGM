@@ -331,7 +331,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Parameters!RazonBaja.Value</Value>
+                <Value>=Parameters!DetalleBaja.Value</Value>
                 <Style>
                   <FontFamily>PF DinText Pro</FontFamily>
                   <FontSize>15pt</FontSize>
@@ -457,7 +457,7 @@
         <Top>5.72075cm</Top>
         <Left>2.9122cm</Left>
         <Height>0.63704cm</Height>
-        <Width>2.52639cm</Width>
+        <Width>2.97366cm</Width>
         <ZIndex>11</ZIndex>
         <Style>
           <Border>
@@ -614,7 +614,7 @@
         <Top>6.55268cm</Top>
         <Left>8.62973cm</Left>
         <Height>0.63704cm</Height>
-        <Width>2.52639cm</Width>
+        <Width>4.12219cm</Width>
         <ZIndex>16</ZIndex>
         <Style>
           <Border>
@@ -993,7 +993,7 @@
         <Top>6.55268cm</Top>
         <Left>14.85675cm</Left>
         <Height>0.63704cm</Height>
-        <Width>3.99168cm</Width>
+        <Width>4.80861cm</Width>
         <ZIndex>28</ZIndex>
         <Style>
           <Border>
@@ -1268,22 +1268,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>CERTIFICADO DE LIBRE DEUDA </Value>
-                  <Style>
-                    <FontFamily>PF DinText Pro</FontFamily>
-                    <FontSize>23pt</FontSize>
-                    <Language>es-AR</Language>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>DE IMPUESTO AL AUTOMOTOR</Value>
+                  <Value>=Parameters!TITULO.Value</Value>
                   <Style>
                     <FontFamily>PF DinText Pro</FontFamily>
                     <FontSize>23pt</FontSize>
@@ -1297,9 +1282,9 @@
             </Paragraph>
           </Paragraphs>
           <Top>0.98629cm</Top>
-          <Left>3.56199cm</Left>
+          <Left>2.38724cm</Left>
           <Height>1.8065cm</Height>
-          <Width>13.03479cm</Width>
+          <Width>15.25729cm</Width>
           <ZIndex>2</ZIndex>
           <Style>
             <Border>
@@ -1464,7 +1449,7 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
-    <ReportParameter Name="RazonBaja">
+    <ReportParameter Name="DetalleBaja">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
@@ -1492,6 +1477,10 @@
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="TITULO">
+      <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>

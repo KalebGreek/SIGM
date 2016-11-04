@@ -65,26 +65,24 @@
             End With
             Return parametros
         End Function
-        Shared Function DetalleAuto(parametros As Generic.List(Of ReportParameter), SinBaja As Boolean,
-                             BajaRadicacion As Boolean, BajaDenuncia As Boolean,
-                             BajaDestruccion As Boolean, FechaBaja As DateTimePicker)
+        Shared Function DetalleAuto(parametros As Generic.List(Of ReportParameter), OpcionBaja As Integer, FechaBaja As DateTimePicker)
 
-            Dim RazonBaja As String = ""
+            Dim DetalleBaja As String = ""
             Dim DetalleVencimiento As String = ""
 
-            If SinBaja = False Then
-                RazonBaja = "El automotor segun datos precedentes ha sido dado de baja de este municipio por"
-                If BajaRadicacion Then
-                    RazonBaja += " cambio de radicacion a partir del " & FechaBaja.Text & "."
-                ElseIf BajaDenuncia Then
-                    RazonBaja += " denuncia por robo a partir del " & FechaBaja.Text & "."
-                ElseIf BajaDestruccion Then
-                    RazonBaja += " destruccion del vehiculo a partir del " & FechaBaja.Text & "."
+            If OpcionBaja > 0 Then
+                DetalleBaja = "El automotor segun datos precedentes ha sido dado de baja de este municipio por"
+                If OpcionBaja = 1 Then
+                    DetalleBaja += " cambio de radicacion a partir del " & FechaBaja.Text & "."
+                ElseIf OpcionBaja = 2 Then
+                    DetalleBaja += " denuncia por robo a partir del " & FechaBaja.Text & "."
+                ElseIf OpcionBaja = 3 Then
+                    DetalleBaja += " destruccion del vehiculo a partir del " & FechaBaja.Text & "."
                 End If
             End If
 
             With parametros
-                .Add(New ReportParameter("RazonBaja", RazonBaja))
+                .Add(New ReportParameter("DetalleBaja", DetalleBaja))
             End With
             Return parametros
         End Function
@@ -122,8 +120,13 @@
         End With
         Return parametros
         End Function
-    Shared Function Automotor(dtab As DataTable, parametros As Generic.List(Of ReportParameter), RazonBaja As String)
+    Shared Function Automotor(dtab As DataTable, parametros As Generic.List(Of ReportParameter), SinBaja As Boolean)
         With parametros
+            If SinBaja Then
+                .Add(New ReportParameter("TITULO", "CERTIFICADO DE LIBRE DEUDA DE IMPUESTO AL AUTOMOTOR"))
+            Else
+                .Add(New ReportParameter("TITULO", "CERTIFICADO DE BAJA Y LIBRE DEUDA DE IMPUESTO AL AUTOMOTOR"))
+            End If
             'Persona
             .Add(New ReportParameter("Razon", dtab(0)("razon").ToString))
             .Add(New ReportParameter("Calle", dtab(0)("calle").ToString))

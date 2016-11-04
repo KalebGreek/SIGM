@@ -180,9 +180,15 @@
     <Compile Include="catastro\AgregarFrente.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="hacienda\ControlVencimiento.Designer.vb">
+      <DependentUpon>ControlVencimiento.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\ControlVencimiento.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="docs\Documento.vb" />
     <Compile Include="consultas\ControlBusquedaGen.vb">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="entorno\SystemAccess.vb" />
     <Compile Include="consultas\ConsultaOrdenanza.Designer.vb">
@@ -241,7 +247,7 @@
     </Compile>
     <Compile Include="hacienda\Hacienda.vb" />
     <Compile Include="hacienda\hac_contrib.vb" />
-    <Compile Include="hacienda\hac_vence.vb" />
+    <Compile Include="hacienda\Vencimientos.vb" />
     <Compile Include="acceso.designer.vb">
       <DependentUpon>acceso.vb</DependentUpon>
     </Compile>
@@ -293,7 +299,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="consultas\ControlBusquedaExpediente.vb">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -302,7 +308,7 @@
     </Compile>
     <Compile Include="oprivadas\Pagos.vb" />
     <Compile Include="consultas\ControlBusquedaPersona.vb">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="persona\ModActa.Designer.vb">
       <DependentUpon>ModActa.vb</DependentUpon>
@@ -381,6 +387,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="consultas\ConsultaOrdenanza.resx">
       <DependentUpon>ConsultaOrdenanza.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\ControlVencimiento.resx">
+      <DependentUpon>ControlVencimiento.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="gobierno\ModOrdenanza.resx">
       <DependentUpon>ModOrdenanza.vb</DependentUpon>

@@ -131,13 +131,11 @@
 
         dtab = bd.read(conexion_fox.Text, "SELECT codigo, " & periodo & ", " & vence & " WHERE " & vence & " IS NULL FROM " & cuenta)
 
-        If dtab.Rows.Count > 0 Then
-            Dim fila As Integer = 0
-            Do While fila < dtab.Rows.Count
-                bd.edit(conexion_fox.Text, "UPDATE " & cuenta & " SET " & vence & "=#" & Today.Day & "/" & Today.Month & "/" & dtab(fila)(periodo) &
-                "# WHERE codigo=" & dtab(fila)("codigo") & " AND " & vence & " IS NULL")
-            Loop
-        End If
+        For Each drow As DataRow In dtab.Rows
+            bd.edit(conexion_fox.Text,
+                    "UPDATE " & cuenta & " SET " & vence & "=#" & Today.Day & "/" & Today.Month & "/" & drow(periodo) & "#
+                    WHERE codigo=" & drow("codigo") & " AND " & vence & " IS NULL")
+        Next
     End Sub
 
     Public Sub cargar_tablas_ext()

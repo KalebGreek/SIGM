@@ -1,6 +1,6 @@
 ﻿Public Class CertificadoLibreDeuda
     Public registro As DataTable
-    Public RazonBaja, DetalleVencimiento As String
+    Public DetalleVencimiento As String
     Public Function ConsultarCuenta(tipo As String, cuenta As Integer) As DataTable
         If tipo.Contains("AGUA") Then
             Return bd.read(my.settings.foxcon, "SELECT * FROM aguas WHERE codigo=" & cuenta)
@@ -92,21 +92,30 @@
                     Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HAC\LAG", parametros, False)
                     certificado.ShowDialog()
                 ElseIf tipo.Text.Contains("AUTO") Then
-                    parametros = ParamReporte.Automotor(registro, parametros, RazonBaja)
-                    parametros = ParamReporte.LibreDeuda.DetalleAuto(parametros, SinBaja.Checked, BajaRadicacion.Checked,
-                                                                     BajaDenuncia.Checked, BajaDestruccion.Checked, FechaBaja)
+                    parametros = ParamReporte.Automotor(registro, parametros, SinBaja.Checked)
+
+                    Dim OpcionBaja As Integer
+                    If BajaRadicacion.Checked Then
+                        OpcionBaja = 1
+                    ElseIf BajaDenuncia.Checked Then
+                        OpcionBaja = 2
+                    ElseIf BajaDestruccion.Checked Then
+                        OpcionBaja = 3
+                    End If
+
+                    parametros = ParamReporte.LibreDeuda.DetalleAuto(parametros, OpcionBaja, FechaBaja)
                     Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HAC\LAU", parametros, False)
-                    certificado.ShowDialog()
-                ElseIf tipo.Text.Contains("CATA") Then
-                    parametros = ParamReporte.Catastro(registro, parametros)
-                    Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HAC\LCA", parametros, False)
-                    certificado.ShowDialog()
-                ElseIf tipo.Text.Contains("CEME") Then
-                    parametros = ParamReporte.Cementerio(registro, parametros)
-                    Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HAC\LCE", parametros, False)
-                    certificado.ShowDialog()
-                ElseIf tipo.Text.Contains("COME") Then
-                    parametros = ParamReporte.Comercio(registro, parametros)
+                        certificado.ShowDialog()
+                    ElseIf tipo.Text.Contains("CATA") Then
+                        parametros = ParamReporte.Catastro(registro, parametros)
+                        Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HAC\LCA", parametros, False)
+                        certificado.ShowDialog()
+                    ElseIf tipo.Text.Contains("CEME") Then
+                        parametros = ParamReporte.Cementerio(registro, parametros)
+                        Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HAC\LCE", parametros, False)
+                        certificado.ShowDialog()
+                    ElseIf tipo.Text.Contains("COME") Then
+                        parametros = ParamReporte.Comercio(registro, parametros)
                     Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HAC\LCO", parametros, False)
                     certificado.ShowDialog()
                 End If

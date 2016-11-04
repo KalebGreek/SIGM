@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class CertificadoLibreDeuda
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class CertificadoLibreDeuda
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CertificadoLibreDeuda))
         Me.GrupoControles = New System.Windows.Forms.FlowLayoutPanel()
@@ -42,6 +42,7 @@ Partial Class CertificadoLibreDeuda
         Me.Verificar = New System.Windows.Forms.Button()
         Me.Cuenta = New System.Windows.Forms.NumericUpDown()
         Me.GrupoBaja = New System.Windows.Forms.Panel()
+        Me.BajaDestruccion = New System.Windows.Forms.RadioButton()
         Me.SinBaja = New System.Windows.Forms.RadioButton()
         Me.etFechaBaja = New System.Windows.Forms.Label()
         Me.FechaBaja = New System.Windows.Forms.DateTimePicker()
@@ -51,7 +52,6 @@ Partial Class CertificadoLibreDeuda
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Creado = New System.Windows.Forms.DateTimePicker()
-        Me.BajaDestruccion = New System.Windows.Forms.RadioButton()
         Me.GrupoControles.SuspendLayout()
         Me.GrupoFecha.SuspendLayout()
         Me.GrupoCuenta.SuspendLayout()
@@ -290,6 +290,16 @@ Partial Class CertificadoLibreDeuda
         Me.GrupoBaja.TabIndex = 390
         Me.GrupoBaja.Visible = False
         '
+        'BajaDestruccion
+        '
+        Me.BajaDestruccion.AutoSize = True
+        Me.BajaDestruccion.Location = New System.Drawing.Point(202, 57)
+        Me.BajaDestruccion.Name = "BajaDestruccion"
+        Me.BajaDestruccion.Size = New System.Drawing.Size(208, 25)
+        Me.BajaDestruccion.TabIndex = 13
+        Me.BajaDestruccion.Text = "Destruccion del  vehiculo"
+        Me.BajaDestruccion.UseVisualStyleBackColor = True
+        '
         'SinBaja
         '
         Me.SinBaja.AutoSize = True
@@ -377,16 +387,6 @@ Partial Class CertificadoLibreDeuda
         Me.Creado.Name = "Creado"
         Me.Creado.Size = New System.Drawing.Size(284, 28)
         Me.Creado.TabIndex = 393
-        '
-        'BajaDestruccion
-        '
-        Me.BajaDestruccion.AutoSize = True
-        Me.BajaDestruccion.Location = New System.Drawing.Point(202, 57)
-        Me.BajaDestruccion.Name = "BajaDestruccion"
-        Me.BajaDestruccion.Size = New System.Drawing.Size(208, 25)
-        Me.BajaDestruccion.TabIndex = 13
-        Me.BajaDestruccion.Text = "Destruccion del  vehiculo"
-        Me.BajaDestruccion.UseVisualStyleBackColor = True
         '
         'CertificadoLibreDeuda
         '

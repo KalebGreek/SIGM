@@ -106,7 +106,7 @@ Partial Class ContenedorGen
         Me.BaseMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CatastroMenu, Me.GobiernoMenu, Me.HaciendaMenu, Me.OprivadasMenu, Me.OPublicasMenu, Me.PersonaMenu, Me.ComercioMenu, Me.SalirToolStripMenuItem})
         Me.BaseMenu.Location = New System.Drawing.Point(0, 0)
         Me.BaseMenu.Name = "BaseMenu"
-        Me.BaseMenu.Size = New System.Drawing.Size(990, 31)
+        Me.BaseMenu.Size = New System.Drawing.Size(990, 27)
         Me.BaseMenu.TabIndex = 388
         Me.BaseMenu.Text = "MenuStrip1"
         '
@@ -353,13 +353,12 @@ Partial Class ContenedorGen
         Me.SalirToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
         Me.SalirToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.SalirToolStripMenuItem.Name = "SalirToolStripMenuItem"
-        Me.SalirToolStripMenuItem.Size = New System.Drawing.Size(51, 27)
+        Me.SalirToolStripMenuItem.Size = New System.Drawing.Size(51, 23)
         Me.SalirToolStripMenuItem.Text = "Salir"
         '
         'ContenedorGen
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
-        Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(990, 437)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.BaseMenu)
@@ -372,6 +371,7 @@ Partial Class ContenedorGen
         Me.Name = "ContenedorGen"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "SIGM"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
         Me.BaseMenu.ResumeLayout(False)

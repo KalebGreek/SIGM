@@ -479,7 +479,7 @@
         <Top>8.39741cm</Top>
         <Left>0.04234cm</Left>
         <Height>0.63704cm</Height>
-        <Width>2.31246cm</Width>
+        <Width>1.67746cm</Width>
         <ZIndex>14</ZIndex>
         <Style>
           <Border>
@@ -508,7 +508,7 @@
           </Paragraph>
         </Paragraphs>
         <Top>8.39741cm</Top>
-        <Left>2.55376cm</Left>
+        <Left>1.88701cm</Left>
         <Height>0.63704cm</Height>
         <Width>3.82624cm</Width>
         <ZIndex>15</ZIndex>
@@ -774,7 +774,7 @@
         <Top>9.17203cm</Top>
         <Left>0.04799cm</Left>
         <Height>0.63704cm</Height>
-        <Width>2.31246cm</Width>
+        <Width>1.67746cm</Width>
         <ZIndex>23</ZIndex>
         <Style>
           <Border>
@@ -804,7 +804,7 @@
           </Paragraph>
         </Paragraphs>
         <Top>9.17203cm</Top>
-        <Left>2.55376cm</Left>
+        <Left>1.88701cm</Left>
         <Height>0.63704cm</Height>
         <Width>3.82624cm</Width>
         <ZIndex>24</ZIndex>
@@ -1144,6 +1144,198 @@
           <BottomBorder>
             <Style>Dotted</Style>
           </BottomBorder>
+          <VerticalAlign>Top</VerticalAlign>
+        </Style>
+      </Textbox>
+      <Textbox Name="ampliaciones2">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>mts</Value>
+                <Style>
+                  <FontFamily>PF DinText Pro</FontFamily>
+                  <FontSize>16pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>8.39741cm</Top>
+        <Left>11.96763cm</Left>
+        <Height>0.63704cm</Height>
+        <Width>3.82624cm</Width>
+        <ZIndex>34</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <BottomBorder>
+            <Style>Dotted</Style>
+          </BottomBorder>
+          <VerticalAlign>Top</VerticalAlign>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox20">
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Lateral 1:</Value>
+                <Style>
+                  <FontFamily>PF DinText Pro</FontFamily>
+                  <FontSize>15pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>8.39741cm</Top>
+        <Left>9.47878cm</Left>
+        <Height>0.63704cm</Height>
+        <Width>2.31246cm</Width>
+        <ZIndex>35</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Top</VerticalAlign>
+        </Style>
+      </Textbox>
+      <Textbox Name="ampliaciones3">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>mts</Value>
+                <Style>
+                  <FontFamily>PF DinText Pro</FontFamily>
+                  <FontSize>16pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>9.17203cm</Top>
+        <Left>11.94506cm</Left>
+        <Height>0.63704cm</Height>
+        <Width>3.84881cm</Width>
+        <ZIndex>36</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <BottomBorder>
+            <Style>Dotted</Style>
+          </BottomBorder>
+          <VerticalAlign>Top</VerticalAlign>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox21">
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Lateral 2:</Value>
+                <Style>
+                  <FontFamily>PF DinText Pro</FontFamily>
+                  <FontSize>15pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>9.17203cm</Top>
+        <Left>9.45621cm</Left>
+        <Height>0.63704cm</Height>
+        <Width>2.31246cm</Width>
+        <ZIndex>37</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Top</VerticalAlign>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox17">
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value> EXPEDIENTE Nº</Value>
+                <Style>
+                  <FontFamily>PF DinText Pro</FontFamily>
+                  <FontSize>13pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>0.29768cm</Top>
+        <Left>0.22225cm</Left>
+        <Height>0.54179cm</Height>
+        <Width>3.19441cm</Width>
+        <ZIndex>38</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Top</VerticalAlign>
+        </Style>
+      </Textbox>
+      <Textbox Name="fecha2">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value EvaluationMode="Constant" />
+                <Style>
+                  <FontFamily>PF DinText Pro</FontFamily>
+                  <FontSize>13pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>0.29768cm</Top>
+        <Left>3.59305cm</Left>
+        <Height>0.54179cm</Height>
+        <Width>5.30048cm</Width>
+        <ZIndex>39</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>

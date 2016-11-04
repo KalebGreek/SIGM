@@ -1,6 +1,6 @@
 ﻿Imports Sigm.Persona.sql
 Public Class ControlBusquedaGen
-    Inherits Panel
+    Inherits UserControl
     Public WithEvents PanelBusqueda As FlowLayoutPanel
     Public WithEvents reset As Button
     Public WithEvents keyword As TextBox
@@ -42,7 +42,7 @@ Public Class ControlBusquedaGen
         Me.visor.RowHeadersVisible = False
         Me.visor.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.visor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.visor.Size = New System.Drawing.Size(834, 287)
+        Me.visor.Size = New System.Drawing.Size(861, 519)
         Me.visor.TabIndex = 337
         '
         'PanelBusqueda
@@ -55,9 +55,9 @@ Public Class ControlBusquedaGen
         Me.PanelBusqueda.Controls.Add(Me.Modificar)
         Me.PanelBusqueda.Controls.Add(Me.Eliminar)
         Me.PanelBusqueda.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PanelBusqueda.Location = New System.Drawing.Point(0, 287)
+        Me.PanelBusqueda.Location = New System.Drawing.Point(0, 519)
         Me.PanelBusqueda.Name = "PanelBusqueda"
-        Me.PanelBusqueda.Size = New System.Drawing.Size(834, 34)
+        Me.PanelBusqueda.Size = New System.Drawing.Size(861, 34)
         Me.PanelBusqueda.TabIndex = 339
         '
         'reset
@@ -96,7 +96,7 @@ Public Class ControlBusquedaGen
         Me.filtros.Location = New System.Drawing.Point(260, 0)
         Me.filtros.Margin = New System.Windows.Forms.Padding(0)
         Me.filtros.Name = "filtros"
-        Me.filtros.Size = New System.Drawing.Size(156, 27)
+        Me.filtros.Size = New System.Drawing.Size(156, 33)
         Me.filtros.TabIndex = 351
         '
         'filtro1
@@ -107,7 +107,7 @@ Public Class ControlBusquedaGen
         Me.filtro1.FormattingEnabled = True
         Me.filtro1.Location = New System.Drawing.Point(3, 3)
         Me.filtro1.Name = "filtro1"
-        Me.filtro1.Size = New System.Drawing.Size(150, 21)
+        Me.filtro1.Size = New System.Drawing.Size(150, 27)
         Me.filtro1.TabIndex = 353
         '
         'Nuevo
@@ -160,10 +160,9 @@ Public Class ControlBusquedaGen
         '
         Me.Controls.Add(Me.visor)
         Me.Controls.Add(Me.PanelBusqueda)
-        Me.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Font = New System.Drawing.Font("PF DinText Pro", 12.0!)
-        Me.Size = New System.Drawing.Size(834, 321)
-        Me.TabIndex = 337
+        Me.Name = "ControlBusquedaGen"
+        Me.Size = New System.Drawing.Size(861, 553)
         CType(Me.visor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelBusqueda.ResumeLayout(False)
         Me.PanelBusqueda.PerformLayout()

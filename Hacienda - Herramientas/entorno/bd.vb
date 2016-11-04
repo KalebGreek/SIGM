@@ -343,44 +343,65 @@
 
     '### Tablas externas
     Sub tablas_fox(ByVal impuesto As String)
-        Dim dtab As DataTable = bd.read(my.settings.DefaultCon,
-                                        "SELECT * FROM tablas_externas WHERE servicio='" & impuesto & "'")
+        'Las tablas correspondientes a personas tienen los nombres correctos
+        Dim dtab As DataTable = bd.read(My.Settings.DefaultCon,
+                                        "SELECT * FROM tablas_externas WHERE personas='" & impuesto & "'")
 
-        ext_actividad = dtab(0)("actividad").ToString
-        ext_cuenta = dtab(0)("cuenta").ToString
-        ext_historial = dtab(0)("historial").ToString
-        ext_muerto = dtab(0)("muerto").ToString
-        ext_persona = dtab(0)("persona").ToString
-        ext_tipo = dtab(0)("tipo").ToString
-        ext_variable = dtab(0)("variable").ToString
-        ext_vence = dtab(0)("vencimiento").ToString
-        ext_zona = dtab(0)("zona").ToString
+        'Tablas generales
+        ext_persona = dtab(0)("personas").ToString
+        ext_cuenta = dtab(0)("cuentas").ToString
 
         If impuesto.Contains("AGUA") Then 'AGUA
+            'Tablas puntuales
+            ext_historial = dtab(0)("historial").ToString
+            ext_variable = dtab(0)("variables").ToString
+            ext_vence = dtab(0)("vencimientos").ToString
+            ext_zona = dtab(0)("zona").ToString
+            'Columnas puntuales
             col_tenedor = ext_persona & ".tenedor"
             col_importe = ext_cuenta & ".original"
             col_pagado = ext_cuenta & ".pagado"
             col_periodo = ext_cuenta & ".periodo"
             col_vence = ext_cuenta & ".vencio"
         ElseIf impuesto.Contains("AUTO") Then 'AUTO
+            'Tablas puntuales
+            ext_tipo = dtab(0)("tipo").ToString
+            ext_vence = dtab(0)("vencimientos").ToString
+            'Columnas puntuales
             col_tenedor = ext_persona & ".tenedor"
             col_importe = ext_cuenta & ".apagar"
             col_pagado = ext_cuenta & ".apagado"
             col_periodo = ext_cuenta & ".ano"
             col_vence = ext_cuenta & ".vencimi1"
         ElseIf impuesto.Contains("CATA") Then 'CATA
+            'Tablas puntuales
+            ext_historial = dtab(0)("historial").ToString
+            ext_vence = dtab(0)("vencimientos").ToString
+            ext_zona = dtab(0)("zona").ToString
+            'Columnas puntuales
             col_tenedor = ext_persona & ".tenedor"
             col_importe = ext_cuenta & ".original"
             col_pagado = ext_cuenta & ".pagado"
             col_periodo = ext_cuenta & ".periodo"
             col_vence = ext_cuenta & ".vencio"
         ElseIf impuesto.Contains("COME") Then 'COME
+            'Tablas puntuales
+            ext_actividad = dtab(0)("actividad").ToString
+            ext_historial = dtab(0)("historial").ToString
+            ext_variable = dtab(0)("variables").ToString
+            ext_vence = dtab(0)("vencimientos").ToString
+            'Columnas puntuales
             col_tenedor = ext_persona & ".razon"
             col_importe = ext_cuenta & ".importe"
             col_pagado = ext_cuenta & ".pagado"
             col_periodo = ext_cuenta & ".ano"
             col_vence = ext_cuenta & ".vence1"
         ElseIf impuesto.Contains("SEPE") Then 'SEPE
+            'Tablas puntuales
+            ext_historial = dtab(0)("historial").ToString
+            ext_muerto = dtab(0)("muertos").ToString
+            ext_variable = dtab(0)("variables").ToString
+            'Columnas puntuales
             col_tenedor = ext_persona & ".tenedor"
             col_importe = ext_cuenta & ".original"
             col_pagado = ext_cuenta & ".pagado"

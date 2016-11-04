@@ -90,11 +90,11 @@
                     Dim parametros As New Generic.List(Of ReportParameter)
 
                     'Crear informe
-                    Dim formPAGO As New VisorReporte("Recibo de pago por " & .current("tipo_deuda"), "OPR\REC", parametros, False)
-                    With formPAGO
-                        .ShowDialog()
-                        .Dispose()
-                    End With
+                    'Dim formPAGO As New VisorReporte("Recibo de pago por " & .current("tipo_deuda"), "OPR\REC", parametros, False)
+                    'With formPAGO
+                    '.ShowDialog()
+                    '.Dispose()
+                    'End With
 
                     ConsultarDeudas()
                 End If

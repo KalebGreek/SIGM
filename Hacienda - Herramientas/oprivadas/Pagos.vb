@@ -13,10 +13,10 @@
         For cuota As Integer = 1 To cuotas 'Agrega monto dividido por cuotas
             'Calcular vencimientos
             'Agregar
-            bd.edit(my.settings.DefaultCon,
+            bd.edit(My.Settings.DefaultCon,
                     "INSERT INTO opr_pago(opr_id, tipo_deuda, cuota, deuda, vence)
                      VALUES(" & opr_id & ", '" & desc & "', " & cuota & ", '" & monto / cuotas & "'," &
-                    " '" & CalculateExpirationDate(fecha, cuota) & "')")
+                    " '" & Vencimientos.Calcular(fecha, cuota) & "')")
         Next
     End Sub
     Shared Sub EliminarDeuda(deuda_id As Integer, opr_id As Integer)

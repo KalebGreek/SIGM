@@ -50,11 +50,7 @@
                                                     "SELECT * FROM agucue 
                                                     WHERE codigo=" & registro(fila)("codigo") & " 
                                                     AND mes=" & cuota & " AND periodo=" & periodo)
-                    If dtab.Rows.Count > 0 Then
-                        Return True
-                    Else
-                        Return False
-                    End If
+                    Return dtab.Rows.Count > 0
                 End Function
                 Shared Sub InsertarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer, importe As Decimal,
                                           vence As Date(), reside As Decimal, comercio As Decimal, industria As Decimal, franqueo As Decimal)
@@ -73,11 +69,7 @@
                                                     "SELECT * FROM autocue
                                                      WHERE codigo=" & registro(fila)("codigo") & "
                                                      AND cuota=" & cuota & " AND ano=" & periodo)
-                    If dtab.Rows.Count > 0 Then
-                        Return True
-                    Else
-                        Return False
-                    End If
+                    Return dtab.Rows.Count > 0
                 End Function
                 Shared Sub InsertarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer, importe As Decimal, vence As Date())
                     bd.edit(my.settings.foxcon,
@@ -94,11 +86,7 @@
                                                     "SELECT * FROM catcue
                                                      WHERE codigo=" & registro(fila)("codigo") & " 
                                                      AND mes=" & cuota & " AND periodo=" & periodo)
-                    If dtab.Rows.Count > 0 Then
-                        Return True
-                    Else
-                        Return False
-                    End If
+                    Return dtab.Rows.Count > 0
                 End Function
                 Shared Sub InsertarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer, importe As Decimal,
                                      vence As Date(), minimo As Decimal, baldio As Decimal, jubilado As Decimal, pasillo As Decimal,
@@ -117,11 +105,7 @@
                                                     "SELECT * FROM comcue 
                                                      WHERE codigo=" & registro(fila)("codigo") & " 
                                                      AND bimestre=" & cuota & " AND ano=" & periodo)
-                    If dtab.Rows.Count > 0 Then
-                        Return True
-                    Else
-                        Return False
-                    End If
+                    Return dtab.Rows.Count > 0
                 End Function
                 Shared Sub InsertarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer, minimo As Decimal,
                                       taecom As Decimal, franqueo As Decimal, importe As Decimal, vence As Date())
@@ -138,11 +122,7 @@
                                                     "SELECT * FROM sepecue
                                                     WHERE codigo=" & registro(fila)("codigo") & " 
                                                     AND mes=" & cuota & " AND periodo=" & periodo)
-                    If dtab.Rows.Count > 0 Then
-                        Return True
-                    Else
-                        Return False
-                    End If
+                    Return dtab.Rows.Count > 0
                 End Function
                 Shared Sub InsertarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer, importe As Decimal, vence As Date())
                     bd.edit(my.settings.foxcon, "INSERT INTO sepecue(tipo, mes, agrupado, periodo, codigo, cedulon, importe, original, vencio, pagado, pago)" &
