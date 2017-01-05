@@ -8,7 +8,7 @@
 
     'Paleta
     Public ColorPersona, ColorOprivadas, ColorCatastro, ColorHacienda, ColorComercio,
-           ColorFormulario, ColorOpublicas, ColorGobierno As System.Drawing.Color
+		   ColorFormulario, ColorOpublicas, ColorGobierno, ColorAsocial As System.Drawing.Color
 
     '###### VENTANAS
     'Impedir creación de ventanas que deben abrirse una sola vez en el formulario MDI

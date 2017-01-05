@@ -66,10 +66,9 @@ Module SystemAccess
         Dim inicio As New launcher
         'Leer
         Dim dtab As DataTable = bd.read(my.settings.DefaultCon, "SELECT * FROM usuarios WHERE id=" & user_id)
-        'Cargar
-        bd.Data.ToControls(dtab, inicio.FlowLayoutPanel1)
-        bd.Data.ToControls(dtab, inicio)
-        Return inicio
+		'Cargar
+		CtrlMan.LoadAllControls(dtab(0), inicio)
+		Return inicio
     End Function
 
     'Leer MAC o CPU para identificar pc

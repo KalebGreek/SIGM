@@ -141,55 +141,55 @@
     Public Sub cargar_tablas_ext()
         Dim dtab_ext As New DataTable
         dtab_ext.Locale = System.Globalization.CultureInfo.CurrentCulture
-        dtab_ext = bd.read(my.settings.DefaultCon, "SELECT * FROM tablas_externas WHERE servicio='AGUA'")
-        If dtab_ext.Rows.Count > 0 Then
+		dtab_ext = bd.read(My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE personas='aguas'")
+		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS AGUA ##########################################################
-            agua_personas.Text = dtab_ext(0)("persona")
-            agua_cuentas.Text = dtab_ext(0)("cuenta")
-            agua_historial.Text = dtab_ext(0)("historial")
-            agua_variables.Text = dtab_ext(0)("variable")
-            agua_vencimientos.Text = dtab_ext(0)("vencimiento")
-            agua_zonas.Text = dtab_ext(0)("zona")
+            agua_personas.Text = dtab_ext(0)("personas")
+			agua_cuentas.Text = dtab_ext(0)("cuentas")
+			agua_historial.Text = dtab_ext(0)("historial")
+			agua_variables.Text = dtab_ext(0)("variables")
+			agua_vencimientos.Text = dtab_ext(0)("vencimientos")
+			agua_zonas.Text = dtab_ext(0)("zona")
         End If
 
-        dtab_ext = bd.read(my.settings.DefaultCon, "SELECT * FROM tablas_externas WHERE servicio='AUTO'")
-        If dtab_ext.Rows.Count > 0 Then
+		dtab_ext = bd.read(My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE  personas='automovil'")
+		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS AUTO ##########################################################
-            auto_personas.Text = dtab_ext(0)("persona")
-            auto_cuentas.Text = dtab_ext(0)("cuenta")
-            auto_vencimientos.Text = dtab_ext(0)("vencimiento")
-            auto_tipo.Text = dtab_ext(0)("tipo")
+            auto_personas.Text = dtab_ext(0)("personas")
+			auto_cuentas.Text = dtab_ext(0)("cuentas")
+			auto_vencimientos.Text = dtab_ext(0)("vencimientos")
+			auto_tipo.Text = dtab_ext(0)("tipo")
         End If
 
-        dtab_ext = bd.read(my.settings.DefaultCon, "SELECT * FROM tablas_externas WHERE servicio='CATA'")
-        If dtab_ext.Rows.Count > 0 Then
+		dtab_ext = bd.read(My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE  personas='catastro'")
+		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS CATA ##########################################################
-            cata_personas.Text = dtab_ext(0)("persona")
-            cata_cuentas.Text = dtab_ext(0)("cuenta")
-            cata_historial.Text = dtab_ext(0)("historial")
-            cata_vencimientos.Text = dtab_ext(0)("vencimiento")
-            cata_zonas.Text = dtab_ext(0)("zona")
+            cata_personas.Text = dtab_ext(0)("personas")
+			cata_cuentas.Text = dtab_ext(0)("cuentas")
+			cata_historial.Text = dtab_ext(0)("historial")
+			cata_vencimientos.Text = dtab_ext(0)("vencimientos")
+			cata_zonas.Text = dtab_ext(0)("zona")
         End If
 
-        dtab_ext = bd.read(my.settings.DefaultCon, "SELECT * FROM tablas_externas WHERE servicio='COME'")
-        If dtab_ext.Rows.Count > 0 Then
+		dtab_ext = bd.read(My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE  personas='comercio'")
+		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS COME ##########################################################
-            come_personas.Text = dtab_ext(0)("persona")
-            come_cuentas.Text = dtab_ext(0)("cuenta")
-            come_historial.Text = dtab_ext(0)("historial")
-            come_variables.Text = dtab_ext(0)("variable")
-            come_vencimientos.Text = dtab_ext(0)("vencimiento")
-            come_actividades.Text = dtab_ext(0)("actividad")
+            come_personas.Text = dtab_ext(0)("personas")
+			come_cuentas.Text = dtab_ext(0)("cuentas")
+			come_historial.Text = dtab_ext(0)("historial")
+			come_variables.Text = dtab_ext(0)("variables")
+			come_vencimientos.Text = dtab_ext(0)("vencimientos")
+			come_actividades.Text = dtab_ext(0)("actividad")
         End If
 
-        dtab_ext = bd.read(my.settings.DefaultCon, "SELECT * FROM tablas_externas WHERE servicio='SEPE'")
-        If dtab_ext.Rows.Count > 0 Then
+		dtab_ext = bd.read(My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE  personas='sepelio'")
+		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS SEPE ##########################################################
-            sepe_personas.Text = dtab_ext(0)("persona")
-            sepe_cuentas.Text = dtab_ext(0)("cuenta")
-            sepe_historial.Text = dtab_ext(0)("historial")
-            sepe_variables.Text = dtab_ext(0)("variable")
-            sepe_muertos.Text = dtab_ext(0)("vencimiento")
-        End If
+            sepe_personas.Text = dtab_ext(0)("personas")
+			sepe_cuentas.Text = dtab_ext(0)("cuentas")
+			sepe_historial.Text = dtab_ext(0)("historial")
+			sepe_variables.Text = dtab_ext(0)("variables")
+			sepe_muertos.Text = dtab_ext(0)("muertos")
+		End If
     End Sub
 End Class

@@ -392,9 +392,9 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>10.3285cm</Top>
+        <Top>10.9635cm</Top>
         <Left>0.29635cm</Left>
-        <Height>5.74349cm</Height>
+        <Height>5.82287cm</Height>
         <Width>19.40278cm</Width>
         <ZIndex>9</ZIndex>
         <Style>
@@ -518,8 +518,8 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>9.01867cm</Top>
-        <Left>2.01791cm</Left>
+        <Top>9.05042cm</Top>
+        <Left>1.98616cm</Left>
         <Height>0.63704cm</Height>
         <Width>6.74587cm</Width>
         <ZIndex>13</ZIndex>
@@ -549,8 +549,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>9.01867cm</Top>
-        <Left>0.3175cm</Left>
+        <Top>9.05042cm</Top>
+        <Left>0.28575cm</Left>
         <Height>0.63704cm</Height>
         <Width>1.53106cm</Width>
         <ZIndex>14</ZIndex>
@@ -580,8 +580,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>6.55268cm</Top>
-        <Left>6.47046cm</Left>
+        <Top>8.20368cm</Top>
+        <Left>0.27921cm</Left>
         <Height>0.63704cm</Height>
         <Width>1.93146cm</Width>
         <ZIndex>15</ZIndex>
@@ -611,10 +611,10 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>6.55268cm</Top>
-        <Left>8.62973cm</Left>
+        <Top>8.20368cm</Top>
+        <Left>2.43848cm</Left>
         <Height>0.63704cm</Height>
-        <Width>4.12219cm</Width>
+        <Width>6.29355cm</Width>
         <ZIndex>16</ZIndex>
         <Style>
           <Border>
@@ -704,7 +704,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>7.37818cm</Top>
+        <Top>6.58443cm</Top>
         <Left>0.29635cm</Left>
         <Height>0.63704cm</Height>
         <Width>1.54517cm</Width>
@@ -735,7 +735,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>7.37818cm</Top>
+        <Top>6.58443cm</Top>
         <Left>2.01791cm</Left>
         <Height>0.63704cm</Height>
         <Width>17.68122cm</Width>
@@ -753,7 +753,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Patente:</Value>
+                <Value>Patente Mercosur:</Value>
                 <Style>
                   <FontFamily>PF DinText Pro</FontFamily>
                   <FontSize>15pt</FontSize>
@@ -766,10 +766,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>6.55268cm</Top>
-        <Left>0.29862cm</Left>
+        <Top>9.88643cm</Top>
+        <Left>0.26687cm</Left>
         <Height>0.63704cm</Height>
-        <Width>1.92617cm</Width>
+        <Width>3.97405cm</Width>
         <ZIndex>21</ZIndex>
         <Style>
           <Border>
@@ -785,7 +785,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Parameters!Patente.Value</Value>
+                <Value>=Parameters!PatenteMercosur.Value</Value>
                 <Style>
                   <FontFamily>PF DinText Pro</FontFamily>
                   <FontSize>16pt</FontSize>
@@ -797,10 +797,10 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>6.55268cm</Top>
-        <Left>2.40118cm</Left>
+        <Top>9.88643cm</Top>
+        <Left>4.43318cm</Left>
         <Height>0.63704cm</Height>
-        <Width>3.48468cm</Width>
+        <Width>4.29885cm</Width>
         <ZIndex>22</ZIndex>
         <Style>
           <Border>
@@ -890,8 +890,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>9.01867cm</Top>
-        <Left>9.19825cm</Left>
+        <Top>9.05042cm</Top>
+        <Left>9.1665cm</Left>
         <Height>0.63704cm</Height>
         <Width>1.68981cm</Width>
         <ZIndex>25</ZIndex>
@@ -921,8 +921,8 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>9.01867cm</Top>
-        <Left>11.06445cm</Left>
+        <Top>9.05042cm</Top>
+        <Left>11.0327cm</Left>
         <Height>0.63704cm</Height>
         <Width>6.74587cm</Width>
         <ZIndex>26</ZIndex>
@@ -952,10 +952,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>6.55268cm</Top>
-        <Left>13.3839cm</Left>
+        <Top>8.20368cm</Top>
+        <Left>9.1665cm</Left>
         <Height>0.63704cm</Height>
-        <Width>1.29646cm</Width>
+        <Width>1.32286cm</Width>
         <ZIndex>27</ZIndex>
         <Style>
           <Border>
@@ -990,8 +990,8 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>6.55268cm</Top>
-        <Left>14.85675cm</Left>
+        <Top>8.20368cm</Top>
+        <Left>10.66575cm</Left>
         <Height>0.63704cm</Height>
         <Width>4.80861cm</Width>
         <ZIndex>28</ZIndex>
@@ -1021,7 +1021,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>8.18844cm</Top>
+        <Top>7.39469cm</Top>
         <Left>0.29862cm</Left>
         <Height>0.63704cm</Height>
         <Width>1.22767cm</Width>
@@ -1052,7 +1052,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>8.18844cm</Top>
+        <Top>7.39469cm</Top>
         <Left>1.70268cm</Left>
         <Height>0.63704cm</Height>
         <Width>17.99872cm</Width>
@@ -1083,7 +1083,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>5.75603cm</Top>
+        <Top>5.72075cm</Top>
         <Left>6.47046cm</Left>
         <Height>0.63704cm</Height>
         <Width>3.16971cm</Width>
@@ -1114,7 +1114,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>5.75603cm</Top>
+        <Top>5.72075cm</Top>
         <Left>13.3839cm</Left>
         <Height>0.63704cm</Height>
         <Width>3.16971cm</Width>
@@ -1176,7 +1176,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>5.75603cm</Top>
+        <Top>5.72075cm</Top>
         <Left>16.73cm</Left>
         <Height>0.63704cm</Height>
         <Width>2.93536cm</Width>
@@ -1188,11 +1188,73 @@
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
+      <Textbox Name="Textbox38">
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Patente Argentina:</Value>
+                <Style>
+                  <FontFamily>PF DinText Pro</FontFamily>
+                  <FontSize>15pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>9.88643cm</Top>
+        <Left>9.1665cm</Left>
+        <Height>0.63704cm</Height>
+        <Width>4.04151cm</Width>
+        <ZIndex>35</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Top</VerticalAlign>
+        </Style>
+      </Textbox>
+      <Textbox Name="ubicacion9">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Parameters!PatenteArgentina.Value</Value>
+                <Style>
+                  <FontFamily>PF DinText Pro</FontFamily>
+                  <FontSize>16pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>9.88643cm</Top>
+        <Left>13.39631cm</Left>
+        <Height>0.63704cm</Height>
+        <Width>4.38226cm</Width>
+        <ZIndex>36</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Top</VerticalAlign>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>6.32756in</Height>
+    <Height>6.60881in</Height>
     <Style />
   </Body>
-  <Width>7.89902in</Width>
+  <Width>7.88652in</Width>
   <Page>
     <PageHeader>
       <Height>3cm</Height>
@@ -1443,7 +1505,7 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
-    <ReportParameter Name="Patente">
+    <ReportParameter Name="PatenteMercosur">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
@@ -1481,6 +1543,11 @@
     </ReportParameter>
     <ReportParameter Name="TITULO">
       <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="PatenteArgentina">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>

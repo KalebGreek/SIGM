@@ -162,6 +162,12 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="asocial\ModBeneficiario.Designer.vb">
+      <DependentUpon>ModBeneficiario.vb</DependentUpon>
+    </Compile>
+    <Compile Include="asocial\ModBeneficiario.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="consultas\ConsultaGen.Designer.vb">
       <DependentUpon>ConsultaGen.vb</DependentUpon>
     </Compile>
@@ -178,6 +184,14 @@
       <DependentUpon>AgregarFrente.vb</DependentUpon>
     </Compile>
     <Compile Include="catastro\AgregarFrente.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="entorno\CtrlMan.vb" />
+    <Compile Include="entorno\DbMan.vb" />
+    <Compile Include="entorno\DialogoGen.Designer.vb">
+      <DependentUpon>DialogoGen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="entorno\DialogoGen.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hacienda\ControlVencimiento.Designer.vb">
@@ -203,10 +217,10 @@
     <Compile Include="gobierno\ModOrdenanza.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ContenedorGen.Designer.vb">
+    <Compile Include="entorno\ContenedorGen.Designer.vb">
       <DependentUpon>ContenedorGen.vb</DependentUpon>
     </Compile>
-    <Compile Include="ContenedorGen.vb">
+    <Compile Include="entorno\ContenedorGen.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hacienda\CalculoAnualImpuesto.Designer.vb">
@@ -317,6 +331,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="persona\Empleado.vb" />
+    <Compile Include="persona\tabDatosPersonales.Designer.vb">
+      <DependentUpon>tabDatosPersonales.vb</DependentUpon>
+    </Compile>
+    <Compile Include="persona\tabDatosPersonales.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="persona\Profesional.vb" />
     <Compile Include="persona\Proveedor.vb" />
     <Compile Include="persona\Domicilio.vb" />
@@ -367,6 +387,9 @@
     <Compile Include="Settings.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="asocial\ModBeneficiario.resx">
+      <DependentUpon>ModBeneficiario.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="consultas\ConsultaGen.resx">
       <DependentUpon>ConsultaGen.vb</DependentUpon>
     </EmbeddedResource>
@@ -388,13 +411,17 @@
     <EmbeddedResource Include="consultas\ConsultaOrdenanza.resx">
       <DependentUpon>ConsultaOrdenanza.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="entorno\DialogoGen.resx">
+      <DependentUpon>DialogoGen.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="hacienda\ControlVencimiento.resx">
       <DependentUpon>ControlVencimiento.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="gobierno\ModOrdenanza.resx">
       <DependentUpon>ModOrdenanza.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ContenedorGen.resx">
+    <EmbeddedResource Include="entorno\ContenedorGen.resx">
       <DependentUpon>ContenedorGen.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -443,6 +470,9 @@
     <EmbeddedResource Include="persona\ModActa.resx">
       <DependentUpon>ModActa.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="persona\tabDatosPersonales.resx">
+      <DependentUpon>tabDatosPersonales.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="reportes\gob\sid.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -645,6 +675,9 @@
     <None Include="Resources\docs.png" />
     <None Include="Resources\escaner.png" />
     <None Include="Resources\blanco 50%251.png" />
+    <Content Include="vrosas.accdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\fondo_rojo_test.png" />
     <Content Include="Resources\fondo_rojo_test1.png" />
     <None Include="Resources\logo.jpg" />

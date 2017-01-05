@@ -4,38 +4,39 @@
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        ColorCatastro = cat.BackColor
-        ColorComercio = com.BackColor
-        ColorHacienda = hac.BackColor
-        ColorFormulario = frm.BackColor
-        ColorGobierno = gob.BackColor
-        ColorOprivadas = opr.BackColor
-        ColorOpublicas = opu.BackColor
-        ColorPersona = per.BackColor
-    End Sub
+        ColorCatastro = l_catastro.BackColor
+        ColorComercio = l_comercio.BackColor
+        ColorHacienda = l_hacienda.BackColor
+        ColorFormulario = l_formularios.BackColor
+        ColorGobierno = l_gobierno.BackColor
+        ColorOprivadas = l_oprivadas.BackColor
+        ColorOpublicas = l_opublicas.BackColor
+		ColorPersona = l_persona.BackColor
+		ColorAsocial = l_asocial.BackColor
+	End Sub
     '###### GUI #################################################################################################
-    Private Sub SeleccionForm(sender As Object, e As EventArgs) Handles hac.Click, gob.Click, cat.Click, opu.Click, opr.Click, _
-                                                                        com.Click, per.Click, frm.Click, opc.Click
-        If sender Is opc Then
-            config.ShowDialog()
-        Else
-            Dim form1 As New Form
-            If sender Is frm Then
+    Private Sub SeleccionForm(sender As Object, e As EventArgs) Handles l_hacienda.Click, l_gobierno.Click, l_catastro.Click, l_opublicas.Click, l_oprivadas.Click,
+																		l_comercio.Click, l_persona.Click, l_asocial.Click, l_formularios.Click, opcion.Click
+		If sender Is opcion Then
+			config.ShowDialog()
+		Else
+			Dim form1 As New Form
+			If sender Is l_formularios Then
 
-                form1 = New VisorReporte(sender.Text)
-                CType(form1, VisorReporte).FormulariosToolStripMenuItem1.Visible = True
-            Else
-                form1 = New ContenedorGen(id.Text, sender)
-            End If
-            Me.Hide()
-            form1.ShowDialog(Me)
-            form1.Dispose()
-            Me.Show()
-            Me.Focus()
-        End If
-    End Sub
+				form1 = New VisorReporte(sender.Text)
+				CType(form1, VisorReporte).FormulariosToolStripMenuItem1.Visible = True
+			Else
+				form1 = New ContenedorGen(id.Text, sender)
+			End If
+			Me.Hide()
+			form1.ShowDialog(Me)
+			form1.Dispose()
+			Me.Show()
+			Me.Focus()
+		End If
+	End Sub
 
-    Private Sub salir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles salir.Click
+	Private Sub salir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles salir.Click
         Me.Close()
     End Sub
     '###### END GUI #############################################################################################
