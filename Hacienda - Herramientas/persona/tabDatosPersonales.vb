@@ -17,15 +17,10 @@
 
 	Public Sub cargar(dr As DataRow, Optional sectionColor As System.Drawing.Color = Nothing)
 		If sectionColor <> Nothing Then
-			For Each b In Me.Controls
-				If TypeOf b Is Button Then
-					b.BackColor = sectionColor
-				End If
-			Next
+			CtrlMan.SetFormStyle(Me, sectionColor)
 		End If
 
 		Dim genero As Integer = 0
-
 
 		razon.Text = dr("razon").ToString
 
@@ -63,9 +58,9 @@
 
 	Public Sub guardar()
 		If validar() Then
-			If persona_id.Text Then
+			'If persona_id.Text Then
 
-			End if
+			'End if
 		End If
     End Sub
 End Class

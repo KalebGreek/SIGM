@@ -79,7 +79,7 @@ Public Class CalculoAnualImpuesto
             cuota_max = 6
 			cuota = 1
 			Do While cuota <= cuota_max
-				If sql.Agua.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) = False Then
+				If sql.Agua.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
 					sql.Agua.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, importe, dtab_vence(0),
 					reside, comercio, industria, franqueo)
 				End If
@@ -108,7 +108,7 @@ Public Class CalculoAnualImpuesto
 			cuota = 1
 			cuota_max = 4
 			Do While cuota <= cuota_max
-				If sql.Auto.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) = False Then
+				If sql.Auto.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
 					sql.Auto.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, importe, dtab_vence(0))
 				End If
 				cuota += 1
@@ -321,7 +321,7 @@ Public Class CalculoAnualImpuesto
 					franqueo = dtab_var(0)("franqueo")
 					importe = minimo + taecom + franqueo
 
-					If sql.Comercio.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) = False Then
+					If sql.Comercio.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
 						sql.Comercio.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, minimo, taecom,
 																		franqueo, importe, dtab_vence(0))
 					End If
@@ -337,7 +337,7 @@ Public Class CalculoAnualImpuesto
 					franqueo = dtab_var(0)("franqueo") 'Mensual
 					importe = minimo + taecom + franqueo
 
-					If sql.Comercio.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) = False Then
+					If sql.Comercio.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
 						sql.Comercio.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, minimo, taecom,
 																		franqueo, importe, dtab_vence(0))
 					End If
@@ -349,7 +349,7 @@ Public Class CalculoAnualImpuesto
 				taecom = importe * (dtab_var(0)("taecom") / 100)
 				franqueo = dtab_var(0)("franqueo") * 6
 				importe = minimo + taecom + franqueo
-				If sql.Comercio.VerificarCuota(dtab_cuenta, fila, 1, periodo.Value) = False Then
+				If sql.Comercio.VerificarCuota(dtab_cuenta, fila, 1, periodo.Value) Then
 					sql.Comercio.InsertarCuota(dtab_cuenta, fila, 1, periodo.Value, minimo, taecom,
 																		franqueo, importe, dtab_vence(0))
 				End If
@@ -392,7 +392,7 @@ Public Class CalculoAnualImpuesto
 				importe = importe - jubilado
 			End If
 
-			If sql.Sepelio.VerificarCuota(dtab_cuenta, fila, periodo.Value) = False Then
+			If sql.Sepelio.VerificarCuota(dtab_cuenta, fila, periodo.Value) Then
 				sql.Sepelio.InsertarCuota(dtab_cuenta, fila, periodo.Value, importe, vence)
 			End If
 		Next

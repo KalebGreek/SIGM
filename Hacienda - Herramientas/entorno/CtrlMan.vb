@@ -136,6 +136,17 @@
 		visor = FormatColumns(visor)
 		Return visor
 	End Function
+	Shared Sub SetFormStyle(ByRef container As Object, BColor As System.Drawing.Color)
+		For Each c As Control In container.Controls
+			If TypeOf c Is Button Then
+				c.BackColor = BColor
+			ElseIf TypeOf c Is MenuStrip Then
+				c.BackColor = BColor
+			ElseIf TypeOf c Is FlowLayoutPanel Or TypeOf c Is Panel Then
+				SetFormStyle(c, BColor)
+			End If
+		Next
+	End Sub
 
 	'Formatting
 	Shared Function FormatColumns(ByVal visor As DataGridView) As DataGridView
