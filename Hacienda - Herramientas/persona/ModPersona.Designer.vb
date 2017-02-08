@@ -29,7 +29,7 @@ Partial Class ModPersona
 		Me.Button1 = New System.Windows.Forms.Button()
 		Me.MainTabControl = New System.Windows.Forms.TabControl()
 		Me.TabPage1 = New System.Windows.Forms.TabPage()
-		Me.TabDatosPersonales1 = New Sigm.tabDatosPersonales()
+		Me.TabDatosPersonales1 = New Sigm.tabPersonaDatos()
 		Me.TabPage2 = New System.Windows.Forms.TabPage()
 		Me.GrupoDO = New System.Windows.Forms.FlowLayoutPanel()
 		Me.TabPage3 = New System.Windows.Forms.TabPage()
@@ -268,7 +268,7 @@ Partial Class ModPersona
 	Friend WithEvents MainTabControl As TabControl
 	Friend WithEvents TabPage1 As TabPage
 	Friend WithEvents TabPage2 As TabPage
-	Friend WithEvents TabDatosPersonales1 As tabDatosPersonales
+	Friend WithEvents TabDatosPersonales1 As tabPersonaDatos
 	Friend WithEvents Button1 As Button
 	Friend WithEvents GrupoDO As FlowLayoutPanel
 	Friend WithEvents TabPage3 As TabPage

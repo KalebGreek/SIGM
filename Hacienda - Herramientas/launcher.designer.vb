@@ -28,7 +28,6 @@ Partial Class launcher
 		Me.opcion = New System.Windows.Forms.Button()
 		Me.Panel1 = New System.Windows.Forms.Panel()
 		Me.logo = New System.Windows.Forms.PictureBox()
-		Me.id = New System.Windows.Forms.TextBox()
 		Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
 		Me.l_hacienda = New System.Windows.Forms.Button()
 		Me.l_gobierno = New System.Windows.Forms.Button()
@@ -58,7 +57,7 @@ Partial Class launcher
 		Me.salir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.salir.Font = New System.Drawing.Font("PF DinText Pro", 13.0!)
 		Me.salir.ForeColor = System.Drawing.Color.LightGray
-		Me.salir.Location = New System.Drawing.Point(311, 3)
+		Me.salir.Location = New System.Drawing.Point(344, 3)
 		Me.salir.Name = "salir"
 		Me.salir.Size = New System.Drawing.Size(153, 29)
 		Me.salir.TabIndex = 100
@@ -73,7 +72,7 @@ Partial Class launcher
 		Me.opcion.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.opcion.Font = New System.Drawing.Font("PF DinText Pro", 13.0!)
 		Me.opcion.ForeColor = System.Drawing.Color.LightGray
-		Me.opcion.Location = New System.Drawing.Point(195, 3)
+		Me.opcion.Location = New System.Drawing.Point(228, 3)
 		Me.opcion.Name = "opcion"
 		Me.opcion.Size = New System.Drawing.Size(110, 29)
 		Me.opcion.TabIndex = 80
@@ -102,20 +101,6 @@ Partial Class launcher
 		Me.logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
 		Me.logo.TabIndex = 152
 		Me.logo.TabStop = False
-		'
-		'id
-		'
-		Me.id.BackColor = System.Drawing.Color.Yellow
-		Me.id.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-		Me.id.Font = New System.Drawing.Font("PF DinText Pro", 10.0!)
-		Me.id.ForeColor = System.Drawing.SystemColors.InactiveCaptionText
-		Me.id.Location = New System.Drawing.Point(470, 3)
-		Me.id.MaxLength = 32
-		Me.id.Name = "id"
-		Me.id.ReadOnly = True
-		Me.id.Size = New System.Drawing.Size(27, 23)
-		Me.id.TabIndex = 157
-		Me.id.Text = "0"
 		'
 		'FlowLayoutPanel1
 		'
@@ -246,7 +231,7 @@ Partial Class launcher
 		'l_persona
 		'
 		Me.l_persona.Anchor = System.Windows.Forms.AnchorStyles.Right
-		Me.l_persona.BackColor = System.Drawing.Color.FromArgb(CType(CType(15, Byte), Integer), CType(CType(90, Byte), Integer), CType(CType(183, Byte), Integer))
+		Me.l_persona.BackColor = System.Drawing.Color.RoyalBlue
 		Me.l_persona.BackgroundImage = CType(resources.GetObject("l_persona.BackgroundImage"), System.Drawing.Image)
 		Me.l_persona.FlatAppearance.BorderSize = 0
 		Me.l_persona.FlatStyle = System.Windows.Forms.FlatStyle.Flat
@@ -264,7 +249,7 @@ Partial Class launcher
 		'l_asocial
 		'
 		Me.l_asocial.Anchor = System.Windows.Forms.AnchorStyles.Right
-		Me.l_asocial.BackColor = System.Drawing.Color.FromArgb(CType(CType(122, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(185, Byte), Integer))
+		Me.l_asocial.BackColor = System.Drawing.Color.MediumPurple
 		Me.l_asocial.BackgroundImage = CType(resources.GetObject("l_asocial.BackgroundImage"), System.Drawing.Image)
 		Me.l_asocial.FlatAppearance.BorderSize = 0
 		Me.l_asocial.FlatStyle = System.Windows.Forms.FlatStyle.Flat
@@ -298,7 +283,6 @@ Partial Class launcher
 		'
 		'FlowLayoutPanel2
 		'
-		Me.FlowLayoutPanel2.Controls.Add(Me.id)
 		Me.FlowLayoutPanel2.Controls.Add(Me.salir)
 		Me.FlowLayoutPanel2.Controls.Add(Me.opcion)
 		Me.FlowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -329,7 +313,6 @@ Partial Class launcher
 		CType(Me.logo, System.ComponentModel.ISupportInitialize).EndInit()
 		Me.FlowLayoutPanel1.ResumeLayout(False)
 		Me.FlowLayoutPanel2.ResumeLayout(False)
-		Me.FlowLayoutPanel2.PerformLayout()
 		Me.ResumeLayout(False)
 
 	End Sub
@@ -338,9 +321,8 @@ Partial Class launcher
     Friend WithEvents opcion As System.Windows.Forms.Button
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents logo As System.Windows.Forms.PictureBox
-    Friend WithEvents id As System.Windows.Forms.TextBox
-    Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
-    Friend WithEvents l_hacienda As System.Windows.Forms.Button
+	Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
+	Friend WithEvents l_hacienda As System.Windows.Forms.Button
     Friend WithEvents l_gobierno As System.Windows.Forms.Button
     Friend WithEvents l_catastro As System.Windows.Forms.Button
     Friend WithEvents l_opublicas As System.Windows.Forms.Button

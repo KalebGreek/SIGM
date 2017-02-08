@@ -4,8 +4,8 @@
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        ConfigInit(Me, 0)
-        user.Focus()
+        ConfigInit(Me)
+		user.Focus()
     End Sub
 
     '###### GUI #################################################################################################
@@ -47,18 +47,18 @@
     '###### END GUI #############################################################################################
     '###### VALIDATION ##########################################################################################
     Private Sub login_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles login.Click
-        user_id.Text = validar_inicio(user.Text, pass.Text)
-        If user_id.Text > 0 Then 'Iniciar sesión
-            If registrar_user(user_id.Text, True) Then
+		My.Settings.UserId = validar_inicio(user.Text, pass.Text)
+		If My.Settings.UserId > 0 Then 'Iniciar sesión
+            If registrar_user(My.Settings.UserId, True) Then
 				Me.Hide()
-				permisos(user_id.Text).ShowDialog() 'Mostrar inicio
+				permisos(My.Settings.UserId).ShowDialog() 'Mostrar inicio
 				Me.Show()
-				registrar_user(user_id.Text, False) 'Cerrar Sesión
+				registrar_user(My.Settings.UserId, False) 'Cerrar Sesión
             End If
-			user_id.Text = -1
-            info.Text = "Ingrese usuario y contraseña."
-        Else
-            info.Text = "Usuario o contraseña incorrecta."
+			My.Settings.UserId = -1
+			info.Text = "Ingrese usuario y contraseña."
+		Else
+			info.Text = "Usuario o contraseña incorrecta."
             user.Clear()
             pass.Clear()
             user.Focus()

@@ -228,6 +228,18 @@ Namespace My
                 Me("DocFolderPersona") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property UserId() As Integer
+            Get
+                Return CType(Me("UserId"),Integer)
+            End Get
+            Set
+                Me("UserId") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

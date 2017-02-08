@@ -52,8 +52,8 @@
                    SQLTable & " WHERE responsable_expediente.principal=True"
             End If
 
-            Return bd.read(my.settings.DefaultCon, sql)
-        End Function
+			Return bd.read(My.Settings.DefaultCon, sql)
+		End Function
         Shared Function ListarPorResponsable(persona_id As Integer) As DataTable
             Return bd.read(my.settings.DefaultCon,
                            "SELECT responsable_expediente.Id As id, expediente, per_id 
@@ -79,63 +79,64 @@
         End Function
 
         Shared Function Seleccionar(expediente As Integer) As DataTable
-            Return bd.read(my.settings.DefaultCon, "SELECT * FROM oprivadas WHERE Oprivadas.expediente= " & expediente)
-        End Function
+			Return bd.read(My.Settings.DefaultCon, "SELECT * FROM oprivadas 
+													WHERE Oprivadas.expediente= " & expediente)
+		End Function
 
         'MODIFICAR
-        Shared Function Generar(user_id As Integer, exp As String) As DataTable
-            Dim dtab As New DataTable
-            Dim InsertExpSQL As String = "INSERT INTO oprivadas(expediente, tarea, tarea2, inicio_obra, " &
-                                     " profesional_id, user_id, temporal)" &
-                                     " VALUES(" & exp & ", 'MENSURA','SIMPLE', '" & Date.Today.ToShortDateString & "'," &
-                                     " 0, " & user_id & ", True)"
+        Shared Function Generar(exp As String) As DataTable
+			Dim dtab As New DataTable
+			Dim InsertExpSQL As String = "INSERT INTO oprivadas(expediente, tarea, tarea2, inicio_obra, " &
+									 " profesional_id, user_id, temporal)" &
+									 " VALUES(" & exp & ", 'MENSURA','SIMPLE', '" & Date.Today.ToShortDateString & "'," &
+									 " 0, " & My.Settings.UserId & ", True)"
 
-            dtab = Seleccionar(exp)
-            If dtab.Rows.Count > 0 Then
+			dtab = Seleccionar(exp)
+			If dtab.Rows.Count > 0 Then
                 'Último expediente creado por el usuario
                 If MsgBoxResult.No = MsgBox("¿Desea recuperar datos del último expediente no guardado?" &
-                                        " Presione Sí para recuperar, No para eliminar.",
-                                          MsgBoxStyle.YesNo, "Obras Privadas") Then
-                    LimpiarTemporal(user_id, dtab(0)("id"), Nothing, True)
+										" Presione Sí para recuperar, No para eliminar.",
+										  MsgBoxStyle.YesNo, "Obras Privadas") Then
+					LimpiarTemporal(dtab(0)("id"), Nothing, True)
                     'Recrear expediente por defecto
-                    bd.edit(my.settings.DefaultCon, InsertExpSQL)
-                End If
-            Else
+                    bd.edit(My.Settings.DefaultCon, InsertExpSQL)
+				End If
+			Else
                 'Crear expediente por defecto
-                bd.edit(my.settings.DefaultCon, InsertExpSQL)
-            End If
-            Return Seleccionar(exp)
-        End Function
+                bd.edit(My.Settings.DefaultCon, InsertExpSQL)
+			End If
+			Return Seleccionar(exp)
+		End Function
 
-        Public Shared Sub Bloquear(user_id As Integer, opr_id As Integer, lock As Boolean)
-            If lock And user_id > 0 Then
-            Else
-                user_id = 0
-            End If
-            bd.edit(my.settings.DefaultCon, "UPDATE oprivadas Set user_id=" & user_id & " WHERE id=" & opr_id)
-        End Sub
+		Public Shared Sub Bloquear(opr_id As Integer, lock As Boolean)
+			Dim user_id As Integer = 0
+			If lock And My.Settings.UserId > 0 Then
+				user_id = My.Settings.UserId
+			End If
+			bd.edit(My.Settings.DefaultCon, "UPDATE oprivadas Set user_id=" & user_id & " WHERE id=" & opr_id)
+		End Sub
 
-        Shared Sub LimpiarTemporal(user_id As Integer, opr_id As Integer, inmuebles As BindingSource, Optional temp As Boolean = False)
-            Dim dtab As DataTable
-            Dim sql As String = "Select id FROM oprivadas WHERE user_id=" & user_id & " And temporal=" & temp
-            If opr_id > 0 Then
-                sql += " And id=" & opr_id
-            End If
-            dtab = bd.read(my.settings.DefaultCon, sql)
+		Shared Sub LimpiarTemporal(opr_id As Integer, inmuebles As BindingSource, Optional temp As Boolean = False)
+			Dim dtab As DataTable
+			Dim sql As String = "Select id FROM oprivadas WHERE user_id=" & My.Settings.UserId & " And temporal=" & temp
+			If opr_id > 0 Then
+				sql += " And id=" & opr_id
+			End If
+			dtab = bd.read(My.Settings.DefaultCon, sql)
 
-            If dtab.Rows.Count > 0 Then
-                LimpiarResponsable(opr_id)
+			If dtab.Rows.Count > 0 Then
+				LimpiarResponsable(opr_id)
                 'Buscar inmuebles relacionados y eliminarlos
                 'Catastro.eliminar(opr_id, inmuebles)
             End If
 
-            sql = "DELETE * FROM oprivadas WHERE user_id=" & user_id & " And temporal=" & temp
-            If opr_id > 0 Then
-                sql += " And id=" & opr_id
-            End If
-            bd.edit(my.settings.DefaultCon, sql)
+			sql = "DELETE * FROM oprivadas WHERE user_id=" & My.Settings.UserId & " And temporal=" & temp
+			If opr_id > 0 Then
+				sql += " And id=" & opr_id
+			End If
+			bd.edit(My.Settings.DefaultCon, sql)
 
-        End Sub
+		End Sub
 
         'Seccion Persona
         Shared Sub AgregarResponsable(registro As BindingSource, opr_id As Integer, ResponsablePrincipal As Integer)

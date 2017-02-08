@@ -1,32 +1,31 @@
 ﻿Public Class ModExpediente
     Public dtab_exp As DataTable
 
-    Public Sub New(user As Integer, Optional exp As Integer = 0)
+	Public Sub New(Optional exp As Integer = 0)
         ' This call is required by the designer.
         InitializeComponent()
-        ' Add any initialization after the InitializeComponent() call.
-        user_id.Text = user
-        Do
-            If exp = 0 Then
-                exp = Val(Date.Today.Year) * 10000
-            End If
-            exp = Val(InputBox("Ingrese Nº de Expediente", "Seleccionar Expediente", exp))
-            If exp <> Nothing Then
-                dtab_exp = Oprivadas.Expediente.Seleccionar(exp)
-                If dtab_exp.Rows.Count = 0 Then
-                    dtab_exp = Oprivadas.Expediente.Generar(user_id.Text, exp)
-                End If
-            End If
-        Loop Until exp = Nothing Or dtab_exp Is Nothing = False
-        If exp = Nothing Then
-            dtab_exp = Nothing
-        Else
-            Oprivadas.Expediente.Bloquear(user_id.Text, dtab_exp(0)("id"), True)
-            cargar(dtab_exp)
-        End If
-    End Sub
+		' Add any initialization after the InitializeComponent() call.
+		Do
+			If exp = 0 Then
+				exp = Val(Date.Today.Year) * 10000
+			End If
+			exp = Val(InputBox("Ingrese Nº de Expediente", "Seleccionar Expediente", exp))
+			If exp <> Nothing Then
+				dtab_exp = Oprivadas.Expediente.Seleccionar(exp)
+				If dtab_exp.Rows.Count = 0 Then
+					dtab_exp = Oprivadas.Expediente.Generar(exp)
+				End If
+			End If
+		Loop Until exp = Nothing Or dtab_exp Is Nothing = False
+		If exp = Nothing Then
+			dtab_exp = Nothing
+		Else
+			Oprivadas.Expediente.Bloquear(dtab_exp(0)("id"), True)
+			cargar(dtab_exp)
+		End If
+	End Sub
 
-    Private Sub ModExpediente_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+	Private Sub ModExpediente_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
         If Me.Visible And dtab_exp Is Nothing Then
             Me.Close()
         End If
@@ -34,8 +33,8 @@
 
     Private Sub ModExpediente_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         If opr_id.Text > 0 And temporal.Visible = False Then
-            Oprivadas.Expediente.Bloquear(user_id.Text, opr_id.Text, False)
-        End If
+			Oprivadas.Expediente.Bloquear(opr_id.Text, False)
+		End If
     End Sub
 
     '###### GUI #################################################################################################
@@ -47,8 +46,9 @@
             answer = validar()
             If answer = MsgBoxResult.Yes Then
                 If temporal.Visible Then
-                    answer = MsgBox("¿Desea guardar este expediente temporal bajo el N° " & expediente.Text & "?", MsgBoxStyle.YesNoCancel, "Guardar Expediente")
-                    If answer = MsgBoxResult.Yes Then 'Asignar N° de Expediente y quitar temporal
+					answer = MsgBox("¿Desea guardar este expediente temporal bajo el N° " & expediente.Text & "?",
+									MsgBoxStyle.YesNoCancel, "Guardar Expediente")
+					If answer = MsgBoxResult.Yes Then 'Asignar N° de Expediente y quitar temporal
                         bd.edit(My.Settings.DefaultCon, "UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
                                                         WHERE id=" & opr_id.Text)
                         Me.Close()
@@ -302,21 +302,21 @@
 
     '# PERSONA 
     Private Sub add_resp_Click(sender As Object, e As EventArgs) Handles add_resp.Click
-        Dim seleccion_persona As New ConsultaGen("PERSONA", user_id.Text)
-        With seleccion_persona
+		Dim seleccion_persona As New ControlBusquedaPersona()
+		With seleccion_persona
             .ShowDialog(Me)
             'Se agrega el registro temporal
-            If .resultado.Position > -1 Then
-                bs_resp.AddNew()
-                bs_resp.Current("persona_id") = .resultado.Current("persona_id").ToString
-                bs_resp.Current("razon") = .resultado.Current("razon").ToString
-                bs_resp.Current("cuil") = .resultado.Current("cuil").ToString
-                bs_resp.Current("email") = .resultado.Current("email").ToString
-                bs_resp.Current("telefono") = .resultado.Current("telefono").ToString
-                bs_resp.Current("difunto") = .resultado.Current("difunto")
-                bs_resp.EndEdit()
-            End If
-            .Dispose()
+            If .bs_resultado.Position > -1 Then
+				bs_resp.AddNew()
+				bs_resp.Current("persona_id") = .bs_resultado.Current("persona_id").ToString
+				bs_resp.Current("razon") = .bs_resultado.Current("razon").ToString
+				bs_resp.Current("cuil") = .bs_resultado.Current("cuil").ToString
+				bs_resp.Current("email") = .bs_resultado.Current("email").ToString
+				bs_resp.Current("telefono") = .bs_resultado.Current("telefono").ToString
+				bs_resp.Current("difunto") = .bs_resultado.Current("difunto")
+				bs_resp.EndEdit()
+			End If
+			.Dispose()
         End With
     End Sub
     Private Sub del_resp_Click(sender As Object, e As EventArgs) Handles del_resp.Click
@@ -326,17 +326,19 @@
         End If
     End Sub
     Private Sub mod_prof_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mod_prof.Click
-        Dim sel_prof As New ConsultaGen("PROFESIONAL", user_id.Text, razon.Text)
-        With sel_prof
+		Dim sel_prof As New ControlBusquedaPersona()
+		'sel_prof. = razon.Text
+
+		With sel_prof
             .ShowDialog(Me)
-            If .resultado.Count > 0 Then
-                prof_id.Text = .resultado.Current("prof_id")
-                razon.Text = .resultado.Current("razon")
-                titulo.Text = .resultado.Current("titulo")
-                cuil.Text = .resultado.Current("cuil")
-                matricula.Text = .resultado.Current("matricula")
-            End If
-            .Dispose()
+			If .bs_resultado.Count > 0 Then
+				prof_id.Text = .bs_resultado.Current("prof_id")
+				razon.Text = .bs_resultado.Current("razon")
+				titulo.Text = .bs_resultado.Current("titulo")
+				cuil.Text = .bs_resultado.Current("cuil")
+				matricula.Text = .bs_resultado.Current("matricula")
+			End If
+			.Dispose()
         End With
     End Sub
 
@@ -372,8 +374,8 @@
         End With
     End Sub
     Private Sub add_inmueble_Click(sender As Object, e As EventArgs) Handles add_inmueble.Click
-        Dim agregar_inmueble As New ModInmueble(user_id.Text, opr_id.Text)
-        With agregar_inmueble
+		Dim agregar_inmueble As New ModInmueble(opr_id.Text)
+		With agregar_inmueble
             .ShowDialog(Me)
             .Dispose()
             'Recargar
@@ -381,8 +383,8 @@
         End With
     End Sub
     Private Sub mod_inmueble_Click(sender As Object, e As EventArgs) Handles mod_inmueble.Click
-        Dim agregar_inmueble As New ModInmueble(user_id.Text, opr_id.Text)
-        With agregar_inmueble
+		Dim agregar_inmueble As New ModInmueble(opr_id.Text)
+		With agregar_inmueble
             If bs_catastro.Position > -1 Then 'Modificar
                 .zona.Value = bs_catastro.Current("zona")
                 .circ.Value = bs_catastro.Current("circ")

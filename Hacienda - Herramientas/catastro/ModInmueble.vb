@@ -1,12 +1,11 @@
 ﻿Public Class ModInmueble
     Dim dtab_cat As DataTable
-    Public Sub New(UserId As Integer, OprId As Integer)
+	Public Sub New(OprId As Integer)
         ' This call is required by the designer.
         InitializeComponent()
-        ' Add any initialization after the InitializeComponent() call.
-        user_id.Text = UserId
-        opr_id.Text = OprId
-    End Sub
+		' Add any initialization after the InitializeComponent() call.
+		opr_id.Text = OprId
+	End Sub
     '## GUI
 
     Private Sub grupo_mod_VisibleChanged(sender As Object, e As EventArgs) Handles grupo_mod.VisibleChanged
@@ -89,27 +88,27 @@
                 info_exp.Text = registro(0)("expediente")
             End If
 
-            If user_id.Text = registro(0)("user_id") Then
-                If opr_id.Text = registro(0)("opr_id") Then 'Modificar
+			If My.Settings.UserId = registro(0)("user_id") Then
+				If opr_id.Text = registro(0)("opr_id") Then 'Modificar
                     If registro(0)("archivado") Then 'Solo lectura
                         info_estado.Text = "CONSULTA"
-                    Else
-                        info_estado.Text = "ACTIVO"
-                        operacion.Text = "MOD"
-                    End If
-                ElseIf opr_id.Text <> registro(0)("opr_id") Then
-                    If registro(0)("archivado") Then 'Duplicar
+					Else
+						info_estado.Text = "ACTIVO"
+						operacion.Text = "MOD"
+					End If
+				ElseIf opr_id.Text <> registro(0)("opr_id") Then
+					If registro(0)("archivado") Then 'Duplicar
                         operacion.Text = "DUP"
-                        info_estado.Text = "LISTO PARA DUPLICAR"
-                    Else
-                        info_estado.Text = "CONSULTA"
-                    End If
-                Else 'Temporal
+						info_estado.Text = "LISTO PARA DUPLICAR"
+					Else
+						info_estado.Text = "CONSULTA"
+					End If
+				Else 'Temporal
                     operacion.Text = "MOD"
-                    info_estado.Text = "TEMPORAL"
-                End If
-            Else
-                info_estado.Text = "BLOQUEADO"
+					info_estado.Text = "TEMPORAL"
+				End If
+			Else
+				info_estado.Text = "BLOQUEADO"
             End If
         End If
 
@@ -277,12 +276,12 @@
                 If .SelectedIndex = 0 Then
                     Cargar(dtab_cat)
                 ElseIf .SelectedIndex = 1 Then
-                    Catastro.Agregar.Inmueble(operacion.Text, user_id.Text, opr_id.Text,
-                                              catastro_id.Text, titular_id.Text,
-                                              barrio.Text, uso.Text, cuenta.Value, archivado.Checked,
-                                              zona.Value, circ.Value, secc.Value,
-                                              manz.Value, parc.Value, lote.Value)
-                ElseIf .SelectedIndex = 2 Then
+					Catastro.Agregar.Inmueble(operacion.Text, opr_id.Text,
+											  catastro_id.Text, titular_id.Text,
+											  barrio.Text, uso.Text, cuenta.Value, archivado.Checked,
+											  zona.Value, circ.Value, secc.Value,
+											  manz.Value, parc.Value, lote.Value)
+				ElseIf .SelectedIndex = 2 Then
                     Catastro.Agregar.Frente(bs_frente, catastro_id.Text)
                 ElseIf .SelectedIndex = 3 Then
                     Catastro.Agregar.Superficie(catastro_id.Text, existente.Value, relevamiento.Value,
@@ -309,24 +308,24 @@
         info_barrio.Text = barrio.Text
     End Sub
 
-    Private Sub mod_titular_Click(sender As Object, e As EventArgs)
-        Dim sel_per As New ConsultaGen("PERSONA", user_id.Text, titular_id.Text)
-        sel_per.ShowDialog(Me)
-        With sel_per.resultado
-            If .Position > -1 Then
-                titular_id.Text = .Current("persona_id").ToString
-                titular.Text = .Current("razon").ToString
-                cuil.Text = .Current("cuil").ToString
-                difunto.Checked = .Current("difunto")
-            Else
-                titular.Clear()
-                cuil.Clear()
-                difunto.Checked = False
-            End If
-            .Dispose()
-        End With
-    End Sub
-    Private Sub razon_TextChanged(sender As Object, e As EventArgs)
+	Private Sub mod_titular_Click(sender As Object, e As EventArgs)
+		Dim sel_per As New ControlBusquedaPersona()
+		sel_per.ShowDialog(Me)
+		With sel_per.bs_resultado
+			If .DataSource.Position > -1 Then
+				titular_id.Text = .DataSource.Current("persona_id").ToString
+				titular.Text = .DataSource.Current("razon").ToString
+				cuil.Text = .DataSource.Current("cuil").ToString
+				difunto.Checked = .DataSource.Current("difunto")
+			Else
+				titular.Clear()
+				cuil.Clear()
+				difunto.Checked = False
+			End If
+			.Dispose()
+		End With
+	End Sub
+	Private Sub razon_TextChanged(sender As Object, e As EventArgs)
         info_titular.Text = titular.Text
     End Sub
     Private Sub cuil_TextChanged(sender As Object, e As EventArgs)

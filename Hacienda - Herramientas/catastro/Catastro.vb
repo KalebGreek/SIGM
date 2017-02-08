@@ -134,36 +134,36 @@
 
     '##### 'MOD
     Public Class Agregar
-        Overloads Shared Sub Inmueble(operacion As String, user_id As Integer, opr_id As Integer,
-                                      catastro_id As Integer, titular_id As Integer,
-                                      barrio As String, uso As String, cuenta As Integer,
-                                      archivado As Boolean,
-                                      zona As Integer, circ As Integer, secc As Integer,
-                                      manz As Integer, parc As Integer, lote As Integer)
+		Overloads Shared Sub Inmueble(operacion As String, opr_id As Integer,
+									  catastro_id As Integer, titular_id As Integer,
+									  barrio As String, uso As String, cuenta As Integer,
+									  archivado As Boolean,
+									  zona As Integer, circ As Integer, secc As Integer,
+									  manz As Integer, parc As Integer, lote As Integer)
 
-            If operacion = "MOD" Then
+			If operacion = "MOD" Then
                 'Modificar
-                bd.edit(My.Settings.DefaultCon, "UPDATE catastro SET user_id=" & user_id & ", opr_id=" & opr_id & ", " &
-                      " barrio='" & barrio & "', uso='" & uso & "', cuenta=" & Val(cuenta) &
-                      " WHERE id=" & catastro_id)
-            ElseIf operacion <> "" Then
+                bd.edit(My.Settings.DefaultCon, "UPDATE catastro SET user_id=" & My.Settings.UserId & ", opr_id=" & opr_id & ", " &
+					  " barrio='" & barrio & "', uso='" & uso & "', cuenta=" & Val(cuenta) &
+					  " WHERE id=" & catastro_id)
+			ElseIf operacion <> "" Then
                 'Agregar
                 bd.edit(My.Settings.DefaultCon, "INSERT INTO catastro(user_id, opr_id, zona, circ, secc, manz, parc, lote, barrio, uso, cuenta, archivado) " &
-                          " VALUES(" & user_id & "," & opr_id & ", " & zona & ", " & circ & ", " & secc & "," &
-                          " " & manz & ", " & parc & ", " & lote & ",'" & barrio & "', '" & uso & "', " & cuenta &
-                          "," & archivado & ")")
+						  " VALUES(" & My.Settings.UserId & "," & opr_id & ", " & zona & ", " & circ & ", " & secc & "," &
+						  " " & manz & ", " & parc & ", " & lote & ",'" & barrio & "', '" & uso & "', " & cuenta &
+						  "," & archivado & ")")
                 'leer ultimo inmueble
                 catastro_id = Catastro.SeleccionarPartida(zona, circ, secc, manz, parc, lote)
-                operacion = "MOD"
-            End If
-            If catastro_id > 0 And titular_id > 0 Then
+				operacion = "MOD"
+			End If
+			If catastro_id > 0 And titular_id > 0 Then
                 'Guardar titular
                 bd.edit(My.Settings.DefaultCon, "DELETE * FROM titular_catastro WHERE cat_id=" & catastro_id)
-                bd.edit(My.Settings.DefaultCon, "INSERT INTO titular_catastro(cat_id, per_id)" &
-                               " VALUES(" & catastro_id & ", " & titular_id & ")")
-            End If
-        End Sub
-        Overloads Shared Sub Frente(bs_frente As BindingSource, catastro_id As Integer)
+				bd.edit(My.Settings.DefaultCon, "INSERT INTO titular_catastro(cat_id, per_id)" &
+							   " VALUES(" & catastro_id & ", " & titular_id & ")")
+			End If
+		End Sub
+		Overloads Shared Sub Frente(bs_frente As BindingSource, catastro_id As Integer)
             With bs_frente
                 'cat_frente
                 bd.edit(My.Settings.DefaultCon, "DELETE * FROM cat_frente WHERE catastro_id=" & catastro_id)

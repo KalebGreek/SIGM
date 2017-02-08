@@ -26,7 +26,7 @@
 				form1 = New VisorReporte(sender.Text)
 				CType(form1, VisorReporte).FormulariosToolStripMenuItem1.Visible = True
 			Else
-				form1 = New ContenedorGen(id.Text, sender)
+				form1 = New FormContenedorGen(sender)
 			End If
 			Me.Hide()
 			form1.ShowDialog(Me)

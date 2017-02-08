@@ -16,20 +16,20 @@
 				sql += " AND Persona.id=" & cuil
 			ElseIf Len(cuil) = 11 Then
 				sql += " AND Persona.cuil='" & cuil & "'"
-			ElseIf razon.Contains("BUSCAR") = False And Len(razon) > 2 Then
+			ElseIf Len(razon) > 2 Then
 				sql += " AND Persona.razon LIKE '%" & razon & "%'"
 			End If
 
-			sql += " ORDER By Persona.razon"
+			sql += " ORDER By Persona.razon ASC"
 			Return bd.read(my.settings.DefaultCon, sql)
 		End Function
 		Shared Function BuscarPorDireccion(ByVal calle As String, difunto As Boolean, fisica As Boolean) As DataTable
 			Dim sql As String = SelectSQL
 			sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
-			If calle.Contains("BUSCAR") = False And Len(calle) > 2 Then
+			If Len(calle) > 2 Then
 				sql += " AND per_domicilio.calle LIKE '%" & calle & "%'"
 			End If
-			sql += " ORDER By Per_domicilio.calle AND per_domicilio.altura"
+			sql += " ORDER By Per_domicilio.calle ASC"
 
 			Return bd.read(my.settings.DefaultCon, sql)
 		End Function
