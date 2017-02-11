@@ -220,6 +220,12 @@
     <Compile Include="hacienda\Combustibles\BusquedaCombustible.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="hacienda\Combustibles\CtrlModTicket.Designer.vb">
+      <DependentUpon>CtrlModTicket.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\Combustibles\CtrlModTicket.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="hacienda\CtrlVenceImpuesto.Designer.vb">
       <DependentUpon>CtrlVenceImpuesto.vb</DependentUpon>
     </Compile>
@@ -477,6 +483,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\Combustibles\BusquedaCombustible.resx">
       <DependentUpon>BusquedaCombustible.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\Combustibles\CtrlModTicket.resx">
+      <DependentUpon>CtrlModTicket.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\CtrlVenceImpuesto.resx">
       <DependentUpon>CtrlVenceImpuesto.vb</DependentUpon>

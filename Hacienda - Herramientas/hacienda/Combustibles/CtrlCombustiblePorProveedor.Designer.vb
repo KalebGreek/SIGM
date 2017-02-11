@@ -26,9 +26,6 @@ Partial Class CtrlCombustiblePorProveedor
 		Me.Label5 = New System.Windows.Forms.Label()
 		Me.ComboBox5 = New System.Windows.Forms.ComboBox()
 		Me.Button2 = New System.Windows.Forms.Button()
-		Me.Button21 = New System.Windows.Forms.Button()
-		Me.Button22 = New System.Windows.Forms.Button()
-		Me.Button23 = New System.Windows.Forms.Button()
 		Me.Label6 = New System.Windows.Forms.Label()
 		Me.MaskedTextBox2 = New System.Windows.Forms.MaskedTextBox()
 		Me.FlowLayoutPanel3.SuspendLayout()
@@ -40,15 +37,12 @@ Partial Class CtrlCombustiblePorProveedor
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label5)
 		Me.FlowLayoutPanel3.Controls.Add(Me.ComboBox5)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Button2)
-		Me.FlowLayoutPanel3.Controls.Add(Me.Button21)
-		Me.FlowLayoutPanel3.Controls.Add(Me.Button22)
-		Me.FlowLayoutPanel3.Controls.Add(Me.Button23)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label6)
 		Me.FlowLayoutPanel3.Controls.Add(Me.MaskedTextBox2)
 		Me.FlowLayoutPanel3.Location = New System.Drawing.Point(0, 0)
 		Me.FlowLayoutPanel3.Margin = New System.Windows.Forms.Padding(0)
 		Me.FlowLayoutPanel3.Name = "FlowLayoutPanel3"
-		Me.FlowLayoutPanel3.Size = New System.Drawing.Size(500, 65)
+		Me.FlowLayoutPanel3.Size = New System.Drawing.Size(423, 65)
 		Me.FlowLayoutPanel3.TabIndex = 401
 		'
 		'Label5
@@ -85,51 +79,6 @@ Partial Class CtrlCombustiblePorProveedor
 		Me.Button2.Text = ""
 		Me.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
 		Me.Button2.UseVisualStyleBackColor = False
-		'
-		'Button21
-		'
-		Me.Button21.FlatAppearance.BorderSize = 0
-		Me.Button21.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.Button21.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Button21.ForeColor = System.Drawing.Color.White
-		Me.Button21.Location = New System.Drawing.Point(419, 2)
-		Me.Button21.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.Button21.Name = "Button21"
-		Me.Button21.Size = New System.Drawing.Size(27, 27)
-		Me.Button21.TabIndex = 413
-		Me.Button21.Text = ""
-		Me.Button21.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-		Me.Button21.UseVisualStyleBackColor = False
-		'
-		'Button22
-		'
-		Me.Button22.FlatAppearance.BorderSize = 0
-		Me.Button22.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.Button22.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Button22.ForeColor = System.Drawing.Color.White
-		Me.Button22.Location = New System.Drawing.Point(446, 2)
-		Me.Button22.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.Button22.Name = "Button22"
-		Me.Button22.Size = New System.Drawing.Size(27, 27)
-		Me.Button22.TabIndex = 414
-		Me.Button22.Text = ""
-		Me.Button22.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-		Me.Button22.UseVisualStyleBackColor = False
-		'
-		'Button23
-		'
-		Me.Button23.FlatAppearance.BorderSize = 0
-		Me.Button23.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.Button23.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Button23.ForeColor = System.Drawing.Color.White
-		Me.Button23.Location = New System.Drawing.Point(473, 2)
-		Me.Button23.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.Button23.Name = "Button23"
-		Me.Button23.Size = New System.Drawing.Size(27, 27)
-		Me.Button23.TabIndex = 415
-		Me.Button23.Text = ""
-		Me.Button23.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-		Me.Button23.UseVisualStyleBackColor = False
 		'
 		'Label6
 		'
@@ -175,9 +124,6 @@ Partial Class CtrlCombustiblePorProveedor
 	Friend WithEvents Label5 As Label
 	Friend WithEvents ComboBox5 As ComboBox
 	Friend WithEvents Button2 As Button
-	Friend WithEvents Button21 As Button
-	Friend WithEvents Button22 As Button
-	Friend WithEvents Button23 As Button
 	Friend WithEvents Label6 As Label
 	Friend WithEvents MaskedTextBox2 As MaskedTextBox
 End Class
