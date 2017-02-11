@@ -6,7 +6,7 @@
 								" FROM (persona LEFT JOIN per_domicilio ON persona.id = per_domicilio.per_id)" &
 								" LEFT JOIN localidades ON per_domicilio.localidad_id = localidades.id" &
 								" WHERE per_domicilio.principal=True"
-		Shared Function BuscarPorPersona(difunto As Boolean, fisica As Boolean,
+		Shared Function Buscar(difunto As Boolean, fisica As Boolean,
 									 Optional persona_id As Integer = 0, Optional cuil As Double = 0,
 									 Optional razon As String = "") As DataTable
 			Dim sql As String = SelectSQL
@@ -21,7 +21,7 @@
 			End If
 
 			sql += " ORDER By Persona.razon ASC"
-			Return bd.read(my.settings.DefaultCon, sql)
+			Return bd.read(My.Settings.DefaultCon, sql)
 		End Function
 		Shared Function BuscarPorDireccion(ByVal calle As String, difunto As Boolean, fisica As Boolean) As DataTable
 			Dim sql As String = SelectSQL
