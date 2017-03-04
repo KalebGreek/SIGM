@@ -8,8 +8,8 @@ Public Class CalculoAnualImpuesto
         dtab_cuenta = Nothing
         dtab_zona = Nothing
 
-        Dim dtab As DataTable = bd.read(my.settings.foxcon, "SELECT MAX(codigo) as codigo FROM " & impuesto.Text)
-        If dtab.Rows.Count > 0 Then
+		Dim dtab As DataTable = DbMan.read(My.Settings.foxcon, "SELECT MAX(codigo) as codigo FROM " & impuesto.Text)
+		If dtab.Rows.Count > 0 Then
             If CuentaInicial.Value > dtab(0)("codigo") Then
                 MsgBox("No se encuentra la cuenta inicial.", MsgBoxStyle.OkOnly, Nothing)
             Else
@@ -34,12 +34,12 @@ Public Class CalculoAnualImpuesto
 		Dim cuota, cuota_max As New Integer
 
 		'Zonas
-		dtab_zona = bd.read(My.Settings.foxcon, "SELECT * FROM aguzona")
+		dtab_zona = DbMan.read(My.Settings.foxcon, "SELECT * FROM aguzona")
 		'Vencimientos
-		dtab_vence = bd.read(My.Settings.foxcon, "SELECT * FROM aguvence 
+		dtab_vence = DbMan.read(My.Settings.foxcon, "SELECT * FROM aguvence 
 												  WHERE periodo=" & periodo.Value)
 		'Cuentas
-		dtab_cuenta = bd.read(My.Settings.foxcon,
+		dtab_cuenta = DbMan.read(My.Settings.foxcon,
 							  "SELECT codigo, potable, comercial, industrial FROM aguas
                                WHERE codigo=>" & CuentaInicial.Value & " ORDER BY codigo")
         'Iniciar busqueda y reemplazo
@@ -89,10 +89,10 @@ Public Class CalculoAnualImpuesto
 	End Sub
 	Public Sub auto()
 		'Vencimientos
-		dtab_vence = bd.read(My.Settings.foxcon, "SELECT * FROM autovence
+		dtab_vence = DbMan.read(My.Settings.foxcon, "SELECT * FROM autovence
 							  WHERE periodo=" & periodo.Value)
 		'Cuentas
-		dtab_cuenta = bd.read(My.Settings.foxcon,
+		dtab_cuenta = DbMan.read(My.Settings.foxcon,
 							  "SELECT codigo, razon, marca, modelo, apagar FROM automovil
                                WHERE apagar>0 And baja={} And codigo=>" & CuentaInicial.Value & "
                                ORDER BY codigo")
@@ -121,10 +121,10 @@ Public Class CalculoAnualImpuesto
 		Dim cuota, cuota_max As Integer
 
 		'Vencimientos
-		dtab_vence = bd.read(My.Settings.foxcon, "SELECT * FROM catvence
+		dtab_vence = DbMan.read(My.Settings.foxcon, "SELECT * FROM catvence
 												  WHERE periodo=" & periodo.Value)
 		'Cuentas
-		dtab_cuenta = bd.read(My.Settings.foxcon,
+		dtab_cuenta = DbMan.read(My.Settings.foxcon,
 							  "SELECT catastro.codigo As codigo, catastro.jubilado As jubilado, 
 							   catastro.baldio As baldio, catastro.pasillo As pasillo,
                                catastro.agrario As agrario, catastro.comercial as comercial,
@@ -288,10 +288,10 @@ Public Class CalculoAnualImpuesto
 		Dim cuota, cuota_max As Integer
 
 		'Vencimientos
-		dtab_vence = bd.read(My.Settings.foxcon, "SELECT * FROM comvence WHERE periodo=" & periodo.Value)
+		dtab_vence = DbMan.read(My.Settings.foxcon, "SELECT * FROM comvence WHERE periodo=" & periodo.Value)
 
 		'Cuentas
-		dtab_cuenta = bd.read(My.Settings.foxcon,
+		dtab_cuenta = DbMan.read(My.Settings.foxcon,
 							  "SELECT comercio.codigo as codigo, comercio.actividad as actividad, detalle, 
 							   minimo, formapago, cantidad
                                FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad
@@ -363,7 +363,7 @@ Public Class CalculoAnualImpuesto
 			vence = vence.AddDays(1)
 		Loop
         'Cuentas
-        dtab_cuenta = bd.read(My.Settings.foxcon,
+        dtab_cuenta = DbMan.read(My.Settings.foxcon,
 							  "SELECT sepelio.codigo as codigo, sepelio.fila as fila, sepelio.jubilado as jubilado, sepevar.minimo as minimo,
                                sepevar.jubilado as desc_jubilado, sepevar.fila1 as fila1, sepevar.fila2 as fila2, sepevar.fila3 as fila3,
                                sepevar.fila4 as fila4, sepevar.fila5 as fila5, sepelio.ubicacion as ubicacion
@@ -419,8 +419,8 @@ Public Class CalculoAnualImpuesto
         periodo.Minimum = 1990
         periodo.Value = Today.Year
 
-        dtab_var = bd.read(my.settings.foxcon, "SELECT * FROM numeros")
-    End Sub
+		dtab_var = DbMan.read(My.Settings.foxcon, "SELECT * FROM numeros")
+	End Sub
     Private Sub iniciar_Click(sender As Object, e As EventArgs) Handles iniciar.Click
         validar()
     End Sub

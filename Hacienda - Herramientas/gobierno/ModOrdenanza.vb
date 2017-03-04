@@ -59,10 +59,10 @@
         If codigo >= 11899 Or ordenanza_id > 0 Then
 
             If ordenanza_id > 0 Then
-                bd.read(my.settings.DefaultCon, "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id)
-            Else
-                bd.read(my.settings.DefaultCon, "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo)
-            End If
+				DbMan.read(My.Settings.DefaultCon, "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id)
+			Else
+				DbMan.read(My.Settings.DefaultCon, "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo)
+			End If
 
             If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then
@@ -104,14 +104,14 @@
     '###### GUARDAR ##########################################################################################
     Private Sub guardar()
         If Val(ordenanza_id.text) > -1 Then 'Mod
-            bd.edit(my.settings.DefaultCon,
-                    "UPDATE ordenanza SET fecha='" & fecha.Text & "', concepto='" & concepto.Text & "',
+            DbMan.edit(My.Settings.DefaultCon,
+					"UPDATE ordenanza SET fecha='" & fecha.Text & "', concepto='" & concepto.Text & "',
                      ruta_copia='" & ruta_doc.Text & "'")
-        Else 'Nueva
-            bd.edit(my.settings.DefaultCon,
-                    "INSERT INTO ordenanza(codigo, fecha, concepto, ruta_copia)
+		Else 'Nueva
+            DbMan.edit(My.Settings.DefaultCon,
+					"INSERT INTO ordenanza(codigo, fecha, concepto, ruta_copia)
                      VALUES(" & Val(codigo.Text) & ", '" & fecha.Text & "',
                     '" & concepto.Text & "', '" & ruta_doc.Text & "')")
-        End If
+		End If
     End Sub
 End Class

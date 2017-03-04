@@ -12,7 +12,7 @@
 			CtrlMan.SetFormColor(Me, sectionColor)
 		End If
 
-		Dim registro As DataTable = DbMan.read("SELECT * FROM persona WHERE id=" & persona_id)
+		Dim registro As DataTable = DbMan.read(My.Settings.DefaultCon, "SELECT * FROM persona WHERE id=" & persona_id)
 
 		tele.Text = registro(0)("telefono").ToString
 		email.Text = registro(0)("email").ToString

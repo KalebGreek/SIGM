@@ -1,5 +1,4 @@
-﻿Imports Sigm.Persona.sql
-Public Class ControlBusquedaPersona
+﻿Public Class ControlBusquedaPersona
 	Inherits ControlBusquedaGen
 
 	Private components As System.ComponentModel.IContainer
@@ -83,32 +82,27 @@ Public Class ControlBusquedaPersona
 	End Sub
 
 	'-- RUTINAS
-	Private Function Consultar()
-
-	End Function
-
-	Private Sub RazonSocial(keyword As String)
-		keyword = Trim(keyword)
+	Private Sub Consultar()
 		Dim dtab_result As New DataTable
 
 		If Vista.Text.Contains("PERSONA") Then
 			If filtro.Text.Contains("RAZON SOCIAL") Then
-				dtab_result = BuscarPorPersona(difunto.Checked, fisica.Checked,
-																Val(keyword), Val(keyword), keyword)
+				dtab_result = Persona.sql.Buscar(keyword.Text, difunto.Checked, fisica.Checked)
+			ElseIf filtro.Text.Contains("CUIL/DNI") Then
+				dtab_result = Persona.sql.Buscar(CDbl(keyword.Text), difunto.Checked, fisica.Checked)
 			ElseIf filtro.Text.Contains("DIRECCION") Then
-				dtab_result = BuscarPorDireccion(keyword, difunto.Checked, fisica.Checked)
+				dtab_result = Persona.sql.Buscar(keyword.Text, Val(keyword.Text), 0, difunto.Checked, fisica.Checked)
 			ElseIf filtro.Text.Contains("LOCALIDAD") Then
-
-			ElseIf filtro.Text.Contains("DIRECCION") Then
-
-			ElseIf filtro.Text.Contains("DIRECCION") Then
-
+				dtab_result = Persona.sql.Buscar("", 0, Val(keyword.Text), difunto.Checked, fisica.Checked)
+			ElseIf filtro.Text.Contains("ID") Then
+				dtab_result = Persona.sql.Buscar(CInt(keyword.Text), difunto.Checked, fisica.Checked)
 			End If
+
 		ElseIf Vista.Text.Contains("EMPLEADO") Then
 			If filtro.Text.Contains("RAZON SOCIAL") Then
 				fisica.Enabled = False
 				fisica.Checked = True
-				dtab_result = Empleado.BuscarPorPersona(keyword, difunto.Checked)
+				dtab_result = Empleado.BuscarPorPersona(keyword.Text, difunto.Checked)
 			ElseIf filtro.Text.Contains("CUIL") Then
 
 			ElseIf filtro.Text.Contains("DIRECCION") Then
@@ -123,8 +117,8 @@ Public Class ControlBusquedaPersona
 				fisica.Checked = True
 				difunto.Enabled = False
 				difunto.Checked = False
-				dtab_result = Profesional.BuscarPorPersona(Val(keyword), Val(keyword),
-													  Trim(keyword))
+				dtab_result = Profesional.BuscarPorPersona(Val(keyword.Text), Val(keyword.Text),
+													  Trim(keyword.Text))
 			ElseIf filtro.Text.Contains("CUIL") Then
 
 			ElseIf filtro.Text.Contains("DIRECCION") Then
@@ -136,7 +130,7 @@ Public Class ControlBusquedaPersona
 			If filtro.Text.Contains("RAZON SOCIAL") Then
 				difunto.Enabled = False
 				difunto.Checked = False
-				dtab_result = Proveedor.BuscarPorPersona(keyword, fisica.Checked)
+				dtab_result = Proveedor.BuscarPorPersona(keyword.Text, fisica.Checked)
 			ElseIf filtro.Text.Contains("CUIL") Then
 
 			ElseIf filtro.Text.Contains("DIRECCION") Then
@@ -150,111 +144,93 @@ Public Class ControlBusquedaPersona
 
 		CtrlMan.LoadDataGridView(DataGridView1, bs_resultado, dtab_result)
 	End Sub
-	Private Overloads Sub Direccion(direccion As String, altura As Integer)
-
-	End Sub
-	Private Overloads Sub Direccion(barrio As String)
-
-	End Sub
-	Private Overloads Sub Direccion(localidad_id As Integer, localidad As String, postal As Integer)
-
-	End Sub
-	Private Overloads Sub CUILDNI(cuil As Double)
-
-	End Sub
-	Private Overloads Sub CUILDNI(dni As Integer)
-
-	End Sub
-	Private Overloads Sub fecha_empleado(alta As Date, baja As Date)
-
-	End Sub
 
 	Private Overloads Sub resetForm()
+		difunto.Checked = False
+		fisica.Checked = True
+		keyword.Text = ""
+		bs_resultado.DataSource = Nothing
+	End Sub
+
+	'Private Sub Nueva_Persona_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NuevoToolStripMenuItem.Click
+	'La búsqueda se va a realizar automáticamente, para mostrar personas coincidentes con la razón
+	'social o el cuil ingresado
+	'Dim agregar_per As New ModPersona
+	'With agregar_per
+	'.ShowDialog(Me)
+	'End With
+	'End Sub
+	'Private Sub Modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ModificarToolStripMenuItem.Click
+	'With bs_resultado
+	'If .Position > -1 Then
+	'Dim edit_per As New ModPersona(.Current("persona_id"))
+	'With edit_per
+	'.ShowDialog(Me)
+	'End With
+	'Consultar(keyword.Text)
+	'End If
+	'End With
+	'End Sub
+	'Private Sub Eliminar_Click(sender As Object, e As EventArgs) Handles EliminarToolStripMenuItem.Click
+	'With bs_resultado
+	'If .Position > -1 Then
+	'If Persona.sql.Eliminar(.Current("persona_id")) Then
+	'.RemoveCurrent()
+	'reset.PerformClick()
+	'Consultar(keyword.Text)
+	'End If
+	'End If
+	'End With
+	'End Sub
+
+	'-- EVENTOS UNICOS
+
+	Private Sub search_Click(sender As Object, e As EventArgs) Handles search.Click
+		Consultar()
+	End Sub
+	Private Overloads Sub reset_Click(sender As Object, e As EventArgs) Handles reset.Click
+		resetForm()
+		Consultar()
+	End Sub
+	Private Sub filtrospersona_CheckedChanged(sender As Object, e As EventArgs) Handles fisica.CheckedChanged, difunto.CheckedChanged
+		difunto.Enabled = fisica.Checked
+		If fisica.Checked = False Then
 			difunto.Checked = False
-			fisica.Checked = True
-			keyword.Text = ""
-			bs_resultado.DataSource = Nothing
-		End Sub
-
-		'Private Sub Nueva_Persona_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NuevoToolStripMenuItem.Click
-		'La búsqueda se va a realizar automáticamente, para mostrar personas coincidentes con la razón
-		'social o el cuil ingresado
-		'Dim agregar_per As New ModPersona
-		'With agregar_per
-		'.ShowDialog(Me)
-		'End With
-		'End Sub
-		'Private Sub Modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ModificarToolStripMenuItem.Click
-		'With bs_resultado
-		'If .Position > -1 Then
-		'Dim edit_per As New ModPersona(.Current("persona_id"))
-		'With edit_per
-		'.ShowDialog(Me)
-		'End With
-		'Consultar(keyword.Text)
-		'End If
-		'End With
-		'End Sub
-		'Private Sub Eliminar_Click(sender As Object, e As EventArgs) Handles EliminarToolStripMenuItem.Click
-		'With bs_resultado
-		'If .Position > -1 Then
-		'If Persona.sql.Eliminar(.Current("persona_id")) Then
-		'.RemoveCurrent()
-		'reset.PerformClick()
-		'Consultar(keyword.Text)
-		'End If
-		'End If
-		'End With
-		'End Sub
-
-		'-- EVENTOS UNICOS
-
-		Private Sub search_Click(sender As Object, e As EventArgs) Handles search.Click
+		End If
 		Consultar()
 	End Sub
-		Private Overloads Sub reset_Click(sender As Object, e As EventArgs) Handles reset.Click
-			resetForm()
-		Consultar()
-	End Sub
-		Private Sub filtrospersona_CheckedChanged(sender As Object, e As EventArgs) Handles fisica.CheckedChanged, difunto.CheckedChanged
-			difunto.Enabled = fisica.Checked
-			If fisica.Checked = False Then
-				difunto.Checked = False
-			End If
-		Consultar()
-	End Sub
-		Private Sub filtro_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Filtro.SelectedIndexChanged
-			If filtro.SelectedIndex > -1 Then
+	Private Sub filtro_SelectedIndexChanged(sender As Object, e As EventArgs) Handles filtro.SelectedIndexChanged
+		If filtro.SelectedIndex > -1 Then
 			Consultar()
 		End If
-		End Sub
-		Private Sub vista_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Vista.SelectedIndexChanged
-			If filtro.SelectedIndex > -1 Then
-				filtro.Items.Clear()
-				If Vista.Text = "PERSONA" Then
-					filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIL/DNI", "DIRECCION", "LOCALIDAD"})
-					filtro.Text = "RAZON SOCIAL"
+	End Sub
+	Private Sub vista_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Vista.SelectedIndexChanged
+		If filtro.SelectedIndex > -1 Then
+			filtro.Items.Clear()
+			If Vista.Text = "PERSONA" Then
+				filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIL/DNI", "DIRECCION", "LOCALIDAD", "ID"})
+				filtro.Text = "RAZON SOCIAL"
 
-				ElseIf Vista.Text = "EMPLEADO" Then
-					filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIL/DNI", "DIRECCION", "LOCALIDAD", "ALTA / BAJA"})
-					filtro.Text = "RAZON SOCIAL"
+			ElseIf Vista.Text = "EMPLEADO" Then
+				filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIL/DNI", "DIRECCION", "LOCALIDAD", "ALTA / BAJA"})
+				filtro.Text = "RAZON SOCIAL"
 
-				ElseIf Vista.Text = "PROFESIONAL" Then
-					filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIL/DNI", "DIRECCION", "LOCALIDAD", "TITULO"})
-					filtro.Text = "RAZON SOCIAL"
+			ElseIf Vista.Text = "PROFESIONAL" Then
+				filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIL/DNI", "DIRECCION", "LOCALIDAD", "TITULO"})
+				filtro.Text = "RAZON SOCIAL"
 
-				ElseIf Vista.Text = "PROVEEDOR" Then
-					filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIT", "DIRECCION", "LOCALIDAD", "ACTIVIDAD"})
-					filtro.Text = "RAZON SOCIAL"
-				End If
+			ElseIf Vista.Text = "PROVEEDOR" Then
+				filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIT", "DIRECCION", "LOCALIDAD", "ACTIVIDAD"})
+				filtro.Text = "RAZON SOCIAL"
+			End If
 			Consultar()
 		Else
-				resetForm()
-			End If
-		End Sub
-		Private Sub keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles keyword.KeyUp
-			If e.KeyValue = Keys.Enter Then
+			resetForm()
+		End If
+	End Sub
+	Private Sub keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles keyword.KeyUp
+		If e.KeyValue = Keys.Enter Then
 			Consultar()
 		End If
-		End Sub
-	End Class
+	End Sub
+End Class

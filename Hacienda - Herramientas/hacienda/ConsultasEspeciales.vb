@@ -38,7 +38,7 @@
     Private Sub SaldoDeCuentasBancosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaldoDeCuentasBancosToolStripMenuItem.Click
 		Me.Name = titulo & " | " & sender.Text
 
-		Dim dtab As DataTable = bd.read(Connection.Text, "SELECT MIN(fecha) as fecha FROM bancos")
+		Dim dtab As DataTable = DbMan.read(Connection.Text, "SELECT MIN(fecha) as fecha FROM bancos")
 		inicio.Value = dtab(0)("fecha")
 
 		SQLBancos()
@@ -134,7 +134,7 @@
 
 		If Connection.Text <> "Seleccione una base de datos antes de continuar." Then
 			Dim dtab As New DataTable
-			dtab = bd.read(Connection.Text, sql)
+			dtab = DbMan.read(Connection.Text, sql)
 
 			If reset Then
 				If dtab.Columns.Count > 0 Then
@@ -156,7 +156,7 @@
 						SelectorCampoFecha.SelectedIndex = 0
 						'PanelFiltroFecha.Visible = True
 					End If
-					Data.ToDataGridView(DataView, bs, dtab)
+					CtrlMan.LoadDataGridView(DataView, bs, dtab)
 				End If
 			End If
 
@@ -212,7 +212,7 @@
 		Do
 			name = InputBox("Ingrese nombre de tabla.", "Ingresar Tabla", "")
 			If name <> "" Then
-				table = bd.read(Connection.Text, "SELECT * FROM " & name)
+				table = DbMan.read(Connection.Text, "SELECT * FROM " & name)
 			Else
 				name = Nothing
 			End If

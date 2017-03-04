@@ -34,11 +34,11 @@
             Return cuil & destino
         End Function
         Shared Function CopiaActa(ByVal persona_id As Integer, ByVal acta As String, ByVal libro As String) As String
-            Dim dtab As DataTable = bd.read(My.Settings.DefaultCon, "SELECT cuil, razon FROM persona WHERE id=" & persona_id)
-            If dtab.Rows.Count > 0 Then
+			Dim dtab As DataTable = DbMan.read(My.Settings.DefaultCon, "SELECT cuil, razon FROM persona WHERE id=" & persona_id)
+			If dtab.Rows.Count > 0 Then
                 If acta > 0 And libro > 0 Then
-                    Dim dtab_acta = bd.read(My.Settings.DefaultCon, "SELECT * FROM actas WHERE acta=" & acta & " AND libro=" & libro)
-                    If dtab.Rows.Count > 0 Then
+					Dim dtab_acta = DbMan.read(My.Settings.DefaultCon, "SELECT * FROM actas WHERE acta=" & acta & " AND libro=" & libro)
+					If dtab.Rows.Count > 0 Then
                         If dtab_acta(0)("per_id") <> persona_id Then
                             MsgBox("El acta N." & acta & " del libro N." & libro & " no corresponde a " & dtab(0)("razon"))
                             Return ""
@@ -177,9 +177,9 @@
     End Class
 
     Private Shared Function ConsultarHistorial(RutaDoc As Boolean)
-        Dim dtab As DataTable = bd.read(my.settings.DefaultCon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
+		Dim dtab As DataTable = DbMan.read(My.Settings.DefaultCon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
 
-        If RutaDoc Then
+		If RutaDoc Then
             Return dtab(0)("ruta").ToString
         Else
             Return dtab
@@ -233,10 +233,10 @@
         With registro
             For fila As Integer = 0 To .Count - 1
                 .Position = fila
-                bd.edit(My.Settings.DefaultCon, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)" &
-                          " VALUES(" & id & ", #" & .Current("fecha") & "# ,'" & descripcion & "'," &
-                          " '" & .Current("ruta") & "')")
-            Next
+				DbMan.edit(My.Settings.DefaultCon, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)" &
+						  " VALUES(" & id & ", #" & .Current("fecha") & "# ,'" & descripcion & "'," &
+						  " '" & .Current("ruta") & "')")
+			Next
         End With
     End Sub
     Shared Sub Limpiar(tabla As String, col_id As String, id As Integer, Optional tipo_archivo As String = "")
@@ -244,6 +244,6 @@
         If tipo_archivo <> "" Then
             sql += " AND descripcion='" & tipo_archivo & "'"
         End If
-        bd.edit(My.Settings.DefaultCon, sql)
-    End Sub
+		DbMan.edit(My.Settings.DefaultCon, sql)
+	End Sub
 End Class

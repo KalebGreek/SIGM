@@ -20,6 +20,6 @@
             End If
         End If
         sql += " ORDER By Persona.razon"
-        Return bd.read(my.settings.DefaultCon, sql)
-    End Function
+		Return DbMan.read(My.Settings.DefaultCon, sql)
+	End Function
 End Class

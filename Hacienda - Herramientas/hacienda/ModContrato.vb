@@ -53,39 +53,39 @@
             Else
                 sql += " WHERE codigo=" & codigo
             End If
-            Dim dtab As DataTable = bd.read(my.settings.DefaultCon, sql)
-            If dtab Is Nothing = False Then
-                If dtab.Rows.Count > 0 Then
-                    If dtab.Rows.Count = 1 And ordenanza_id > 0 Then
-                        If ordenanza_id = dtab(0)("id") Then
+			Dim dtab As DataTable = DbMan.read(My.Settings.DefaultCon, sql)
+			If dtab Is Nothing = False Then
+				If dtab.Rows.Count > 0 Then
+					If dtab.Rows.Count = 1 And ordenanza_id > 0 Then
+						If ordenanza_id = dtab(0)("id") Then
                             'Editar
                         Else
                             'Mal cargado
                             MsgBox("Registro invalido.")
-                            Return False
-                        End If
-                    Else
+							Return False
+						End If
+					Else
                         'Codigo duplicado
                         MsgBox("Esta ordenanza ya se encuentra cargada en el sistema.")
-                        Return False
-                    End If
-                End If
-            End If
-        Else
-            MsgBox("Codigo invalido.")
-            Return False
-        End If
-        Return True
-    End Function
-    Private Function ValidarCambios() As Boolean
+						Return False
+					End If
+				End If
+			End If
+		Else
+			MsgBox("Codigo invalido.")
+			Return False
+		End If
+		Return True
+	End Function
+	Private Function ValidarCambios() As Boolean
 
-        Return True
-    End Function
+		Return True
+	End Function
 
     '###### GUARDAR ##########################################################################################
     Private Sub guardar()
-        bd.edit(my.settings.DefaultCon, "")
-    End Sub
+		DbMan.edit(My.Settings.DefaultCon, "")
+	End Sub
 
 
    

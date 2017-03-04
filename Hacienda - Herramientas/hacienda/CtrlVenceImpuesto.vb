@@ -9,8 +9,8 @@
         vence6.Text = "No hay datos"
 
         If año_menor = año_mayor And mostrar Then
-            vencimientos = bd.read(My.Settings.foxcon, "SELECT * FROM " & ext_vence & " WHERE periodo=" & año_menor)
-            If vencimientos.Rows.Count > 0 Then
+			vencimientos = DbMan.read(My.Settings.foxcon, "SELECT * FROM " & ext_vence & " WHERE periodo=" & año_menor)
+			If vencimientos.Rows.Count > 0 Then
                 vence1.Text = Convert.ToString(vencimientos(0)("vence1"))
                 vence2.Text = Convert.ToString(vencimientos(0)("vence2"))
                 vence3.Text = Convert.ToString(vencimientos(0)("vence3"))

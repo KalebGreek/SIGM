@@ -5,14 +5,11 @@
     'Conexiones de base de datos
     Public olecon As New OleDb.OleDbConnection
 
-    Public ext_persona, ext_cuenta, ext_vence, ext_historial, ext_variable,
-           ext_actividad, ext_muerto, ext_tipo, ext_zona,
-           col_tenedor, col_importe, col_pagado, col_periodo, col_vence As String
 
-    '###### READ: Rutinas de lectura #####################################################################
+	'###### READ: Rutinas de lectura #####################################################################
 
-    '###### Reads datatable
-    Function read(ByVal constr As String, ByVal sql As String,
+	'###### Reads datatable
+	Function read(ByVal constr As String, ByVal sql As String,
                   Optional OleDBProcedure As OleDb.OleDbCommand = Nothing)
         Dim dtab As New DataTable
         If constr Is My.settings.foxcon Then 'Compatibilidad con Fox
@@ -342,73 +339,6 @@
     End Class
 
     '### Tablas externas
-    Sub tablas_fox(ByVal impuesto As String)
-        'Las tablas correspondientes a personas tienen los nombres correctos
-        Dim dtab As DataTable = bd.read(My.Settings.DefaultCon,
-                                        "SELECT * FROM tablas_externas WHERE personas='" & impuesto & "'")
-
-        'Tablas generales
-        ext_persona = dtab(0)("personas").ToString
-        ext_cuenta = dtab(0)("cuentas").ToString
-
-        If impuesto.Contains("AGUA") Then 'AGUA
-            'Tablas puntuales
-            ext_historial = dtab(0)("historial").ToString
-            ext_variable = dtab(0)("variables").ToString
-            ext_vence = dtab(0)("vencimientos").ToString
-            ext_zona = dtab(0)("zona").ToString
-            'Columnas puntuales
-            col_tenedor = ext_persona & ".tenedor"
-            col_importe = ext_cuenta & ".original"
-            col_pagado = ext_cuenta & ".pagado"
-            col_periodo = ext_cuenta & ".periodo"
-            col_vence = ext_cuenta & ".vencio"
-        ElseIf impuesto.Contains("AUTO") Then 'AUTO
-            'Tablas puntuales
-            ext_tipo = dtab(0)("tipo").ToString
-            ext_vence = dtab(0)("vencimientos").ToString
-            'Columnas puntuales
-            col_tenedor = ext_persona & ".tenedor"
-            col_importe = ext_cuenta & ".apagar"
-            col_pagado = ext_cuenta & ".apagado"
-            col_periodo = ext_cuenta & ".ano"
-            col_vence = ext_cuenta & ".vencimi1"
-        ElseIf impuesto.Contains("CATA") Then 'CATA
-            'Tablas puntuales
-            ext_historial = dtab(0)("historial").ToString
-            ext_vence = dtab(0)("vencimientos").ToString
-            ext_zona = dtab(0)("zona").ToString
-            'Columnas puntuales
-            col_tenedor = ext_persona & ".tenedor"
-            col_importe = ext_cuenta & ".original"
-            col_pagado = ext_cuenta & ".pagado"
-            col_periodo = ext_cuenta & ".periodo"
-            col_vence = ext_cuenta & ".vencio"
-        ElseIf impuesto.Contains("COME") Then 'COME
-            'Tablas puntuales
-            ext_actividad = dtab(0)("actividad").ToString
-            ext_historial = dtab(0)("historial").ToString
-            ext_variable = dtab(0)("variables").ToString
-            ext_vence = dtab(0)("vencimientos").ToString
-            'Columnas puntuales
-            col_tenedor = ext_persona & ".razon"
-            col_importe = ext_cuenta & ".importe"
-            col_pagado = ext_cuenta & ".pagado"
-            col_periodo = ext_cuenta & ".ano"
-            col_vence = ext_cuenta & ".vence1"
-        ElseIf impuesto.Contains("SEPE") Then 'SEPE
-            'Tablas puntuales
-            ext_historial = dtab(0)("historial").ToString
-            ext_muerto = dtab(0)("muertos").ToString
-            ext_variable = dtab(0)("variables").ToString
-            'Columnas puntuales
-            col_tenedor = ext_persona & ".tenedor"
-            col_importe = ext_cuenta & ".original"
-            col_pagado = ext_cuenta & ".pagado"
-            col_periodo = ext_cuenta & ".periodo"
-            col_vence = ext_cuenta & ".vencio"
-        End If
-    End Sub
     '###### END READ ############################################################################################
 
 End Module

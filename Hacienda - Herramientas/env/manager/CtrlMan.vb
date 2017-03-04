@@ -210,7 +210,7 @@
 		End Sub
 		Shared Sub States(ByRef StateList As ComboBox, ByRef bs As BindingSource)
 			StateList.BeginUpdate()
-			bs.DataSource = DbMan.read("SELECT * FROM provincia")
+			bs.DataSource = DbMan.read(My.Settings.DefaultCon, "SELECT * FROM provincia")
 			StateList.DataSource = bs
 			StateList.DisplayMember = "nombre"
 			StateList.ValueMember = "id"
@@ -218,7 +218,7 @@
 		End Sub
 		Shared Sub Cities(ByRef CityList As ComboBox, ByRef bs As BindingSource, State As Integer)
 			CityList.BeginUpdate()
-			bs.DataSource = DbMan.read("SELECT * FROM Localidad WHERE provincia_id=" & State)
+			bs.DataSource = DbMan.read(My.Settings.DefaultCon, "SELECT * FROM Localidad WHERE provincia_id=" & State)
 			CityList.DataSource = bs
 			CityList.DisplayMember = "nombre"
 			CityList.ValueMember = "id"

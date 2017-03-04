@@ -2,27 +2,27 @@
     Public Class sql
         Shared Function RellenarProvincias() As BindingSource
             Dim bs As New BindingSource
-            bs.DataSource = bd.read(my.settings.DefaultCon, "Select provincia_id, provincia FROM provincias ORDER BY provincia")
-            Return bs
-        End Function
-        Shared Function RellenarLocalidades(provincia_id As Integer) As BindingSource
-            Dim bs As New BindingSource
-            bs.DataSource = bd.read(my.settings.DefaultCon,
-                                    "Select id, localidad, cp
+			bs.DataSource = DbMan.read(My.Settings.DefaultCon, "Select provincia_id, provincia FROM provincias ORDER BY provincia")
+			Return bs
+		End Function
+		Shared Function RellenarLocalidades(provincia_id As Integer) As BindingSource
+			Dim bs As New BindingSource
+			bs.DataSource = DbMan.read(My.Settings.DefaultCon,
+									"Select id, localidad, cp
                                      FROM provincias INNER JOIN localidades On provincias.provincia_id = localidades.provincia_id
                                      WHERE localidades.provincia_id=" & provincia_id & " ORDER BY localidad")
-            Return bs
-        End Function
-        Shared Function Listar(persona_id As Integer) As DataTable
-            Return bd.read(my.settings.DefaultCon,
-                           "SELECT per_domicilio.id, per_domicilio.calle, per_domicilio.altura,
+			Return bs
+		End Function
+		Shared Function Listar(persona_id As Integer) As DataTable
+			Return DbMan.read(My.Settings.DefaultCon,
+						   "SELECT per_domicilio.id, per_domicilio.calle, per_domicilio.altura,
                             per_domicilio.piso, per_domicilio.dpto, per_domicilio.principal, 
                             per_domicilio.localidad_id, localidades.localidad, provincias.provincia
                             FROM provincias INNER JOIN (per_domicilio 
                             INNER JOIN localidades On per_domicilio.localidad_id = localidades.id)
                             ON provincias.provincia_id = localidades.provincia_id 
                             WHERE per_domicilio.per_id = " & persona_id & " ORDER BY per_domicilio.id")
-        End Function
+		End Function
         Shared Function Nuevo(persona_id As Integer, calle As String, altura As Integer, piso As Integer,
                               dpto As String, localidad_id As Integer, principal As Boolean) As String
             Dim sql _

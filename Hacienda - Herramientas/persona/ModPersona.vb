@@ -102,7 +102,7 @@ Public Class ModPersona
 			msg = "Revise el Nº de CUIL antes de continuar." & Chr(13)
 			valido = False
 		Else
-			dtab_con = bd.read(My.Settings.DefaultCon, "SELECT id, cuil FROM persona WHERE cuil=" & cuil)
+			dtab_con = DbMan.read(My.Settings.DefaultCon, "SELECT id, cuil FROM persona WHERE cuil=" & cuil)
 			If dtab_con.Rows.Count > 1 Then
 				For fila As Integer = 0 To dtab_con.Rows.Count - 1
 					If dtab_con(fila)("id") <> persona_id Then
@@ -158,20 +158,20 @@ Public Class ModPersona
 		End If
         'CREAR/EDITAR PERSONA
         If persona_id > 0 Then
-			'bd.edit(My.Settings.DefaultCon, Modificar(persona_id, razon, CDbl(cuil), fisica,
+			'dbMan.edit(My.Settings.DefaultCon, Modificar(persona_id, razon, CDbl(cuil), fisica,
 			'email.Text, tele.Text, esDifunto.Checked, ruta_defuncion.Text))
 		Else
-			'bd.edit(My.Settings.DefaultCon, Nueva(razon, CDbl(cuil), fisica,
+			'dbMan.edit(My.Settings.DefaultCon, Nueva(razon, CDbl(cuil), fisica,
 			'email.Text, tele.Text, esDifunto.Checked, ruta_defuncion.Text))
 
-			dtab = bd.read(My.Settings.DefaultCon, "SELECT MAX(id) as persona_id FROM persona WHERE razon='" & razon & "'")
+			dtab = DbMan.read(My.Settings.DefaultCon, "SELECT MAX(id) as persona_id FROM persona WHERE razon='" & razon & "'")
 			persona_id = dtab(0)("persona_id")
 		End If
         'CREAR DOMICILIO/S
-        bd.edit(My.Settings.DefaultCon, Domicilio.sql.Eliminar(persona_id))
+        DbMan.edit(My.Settings.DefaultCon, Domicilio.sql.Eliminar(persona_id))
 		'For Each tab As Domicilio.Tab In TabControl1.TabPages
 		'With tab
-		'bd.edit(My.Settings.DefaultCon, Domicilio.sql.Nuevo(persona_id, .calle.Text, .altura.Value,
+		'dbMan.edit(My.Settings.DefaultCon, Domicilio.sql.Nuevo(persona_id, .calle.Text, .altura.Value,
 		'.piso.Value, .dpto.Text, .localidad.SelectedValue, TabControl1.SelectedTab Is tab))
 		'End With
 		'Next

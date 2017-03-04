@@ -129,10 +129,10 @@ Public Class ControlBusquedaGen
 		Me.Close()
 	End Sub
 
-	Overloads Sub Consultar(keyword As String)
+	Private Sub Consultar(keyword As String)
 		'Funcion modelo
 	End Sub
-	Overloads Sub ResetForm()
+	Private Sub ResetForm()
 		'Funcion modelo
 	End Sub
 

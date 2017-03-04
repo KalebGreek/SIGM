@@ -17,7 +17,7 @@
 							ON hac_combustible_historial.tipo_combustible_id = hac_combustible_tipo.Id"
 
 		Shared Function LoadTicket(id As Integer) As DataTable
-			DbMan.read("SELECT hac_combustible_historial.Id, usuarios.Id, persona_2.razon, 
+			DbMan.read(My.Settings.DefaultCon, "SELECT hac_combustible_historial.Id, usuarios.Id, persona_2.razon, 
 							hac_combustible_historial.fecha, hac_combustible_historial.ticket, 
 							hac_combustible_historial.responsable_id, persona.razon, 
 							hac_combustible_historial.proveedor_id, persona_1.razon,

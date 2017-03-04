@@ -22,45 +22,52 @@ Partial Class CtrlCombustiblePorReceptor
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
 	Private Sub InitializeComponent()
+		Me.components = New System.ComponentModel.Container()
 		Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
 		Me.Label7 = New System.Windows.Forms.Label()
-		Me.ComboBox2 = New System.Windows.Forms.ComboBox()
+		Me.seccion = New System.Windows.Forms.ComboBox()
 		Me.Button4 = New System.Windows.Forms.Button()
 		Me.Button12 = New System.Windows.Forms.Button()
 		Me.Button13 = New System.Windows.Forms.Button()
 		Me.Button14 = New System.Windows.Forms.Button()
 		Me.Label3 = New System.Windows.Forms.Label()
-		Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+		Me.categoria = New System.Windows.Forms.ComboBox()
 		Me.Button3 = New System.Windows.Forms.Button()
 		Me.Button6 = New System.Windows.Forms.Button()
 		Me.Button7 = New System.Windows.Forms.Button()
 		Me.Button9 = New System.Windows.Forms.Button()
 		Me.Label1 = New System.Windows.Forms.Label()
-		Me.ComboBox3 = New System.Windows.Forms.ComboBox()
+		Me.receptor = New System.Windows.Forms.ComboBox()
 		Me.Button1 = New System.Windows.Forms.Button()
 		Me.Button8 = New System.Windows.Forms.Button()
 		Me.Button10 = New System.Windows.Forms.Button()
 		Me.Button11 = New System.Windows.Forms.Button()
+		Me.bs_seccion = New System.Windows.Forms.BindingSource(Me.components)
+		Me.bs_categoria = New System.Windows.Forms.BindingSource(Me.components)
+		Me.bs_receptor = New System.Windows.Forms.BindingSource(Me.components)
 		Me.FlowLayoutPanel1.SuspendLayout()
+		CType(Me.bs_seccion, System.ComponentModel.ISupportInitialize).BeginInit()
+		CType(Me.bs_categoria, System.ComponentModel.ISupportInitialize).BeginInit()
+		CType(Me.bs_receptor, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
 		'
 		'FlowLayoutPanel1
 		'
 		Me.FlowLayoutPanel1.BackColor = System.Drawing.Color.Silver
 		Me.FlowLayoutPanel1.Controls.Add(Me.Label7)
-		Me.FlowLayoutPanel1.Controls.Add(Me.ComboBox2)
+		Me.FlowLayoutPanel1.Controls.Add(Me.seccion)
 		Me.FlowLayoutPanel1.Controls.Add(Me.Button4)
 		Me.FlowLayoutPanel1.Controls.Add(Me.Button12)
 		Me.FlowLayoutPanel1.Controls.Add(Me.Button13)
 		Me.FlowLayoutPanel1.Controls.Add(Me.Button14)
 		Me.FlowLayoutPanel1.Controls.Add(Me.Label3)
-		Me.FlowLayoutPanel1.Controls.Add(Me.ComboBox1)
+		Me.FlowLayoutPanel1.Controls.Add(Me.categoria)
 		Me.FlowLayoutPanel1.Controls.Add(Me.Button3)
 		Me.FlowLayoutPanel1.Controls.Add(Me.Button6)
 		Me.FlowLayoutPanel1.Controls.Add(Me.Button7)
 		Me.FlowLayoutPanel1.Controls.Add(Me.Button9)
 		Me.FlowLayoutPanel1.Controls.Add(Me.Label1)
-		Me.FlowLayoutPanel1.Controls.Add(Me.ComboBox3)
+		Me.FlowLayoutPanel1.Controls.Add(Me.receptor)
 		Me.FlowLayoutPanel1.Controls.Add(Me.Button1)
 		Me.FlowLayoutPanel1.Controls.Add(Me.Button8)
 		Me.FlowLayoutPanel1.Controls.Add(Me.Button10)
@@ -82,14 +89,16 @@ Partial Class CtrlCombustiblePorReceptor
 		Me.Label7.Text = "Seccion"
 		Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
-		'ComboBox2
+		'seccion
 		'
-		Me.ComboBox2.FormattingEnabled = True
-		Me.ComboBox2.Location = New System.Drawing.Point(92, 2)
-		Me.ComboBox2.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.ComboBox2.Name = "ComboBox2"
-		Me.ComboBox2.Size = New System.Drawing.Size(300, 27)
-		Me.ComboBox2.TabIndex = 400
+		Me.seccion.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+		Me.seccion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+		Me.seccion.FormattingEnabled = True
+		Me.seccion.Location = New System.Drawing.Point(92, 2)
+		Me.seccion.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.seccion.Name = "seccion"
+		Me.seccion.Size = New System.Drawing.Size(300, 27)
+		Me.seccion.TabIndex = 400
 		'
 		'Button4
 		'
@@ -165,14 +174,16 @@ Partial Class CtrlCombustiblePorReceptor
 		Me.Label3.Text = "Categoria"
 		Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
-		'ComboBox1
+		'categoria
 		'
-		Me.ComboBox1.FormattingEnabled = True
-		Me.ComboBox1.Location = New System.Drawing.Point(92, 31)
-		Me.ComboBox1.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.ComboBox1.Name = "ComboBox1"
-		Me.ComboBox1.Size = New System.Drawing.Size(300, 27)
-		Me.ComboBox1.TabIndex = 397
+		Me.categoria.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+		Me.categoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+		Me.categoria.FormattingEnabled = True
+		Me.categoria.Location = New System.Drawing.Point(92, 31)
+		Me.categoria.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.categoria.Name = "categoria"
+		Me.categoria.Size = New System.Drawing.Size(300, 27)
+		Me.categoria.TabIndex = 397
 		'
 		'Button3
 		'
@@ -248,14 +259,16 @@ Partial Class CtrlCombustiblePorReceptor
 		Me.Label1.Text = "Receptor"
 		Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
-		'ComboBox3
+		'receptor
 		'
-		Me.ComboBox3.FormattingEnabled = True
-		Me.ComboBox3.Location = New System.Drawing.Point(92, 60)
-		Me.ComboBox3.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.ComboBox3.Name = "ComboBox3"
-		Me.ComboBox3.Size = New System.Drawing.Size(300, 27)
-		Me.ComboBox3.TabIndex = 402
+		Me.receptor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+		Me.receptor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+		Me.receptor.FormattingEnabled = True
+		Me.receptor.Location = New System.Drawing.Point(92, 60)
+		Me.receptor.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.receptor.Name = "receptor"
+		Me.receptor.Size = New System.Drawing.Size(300, 27)
+		Me.receptor.TabIndex = 402
 		'
 		'Button1
 		'
@@ -320,6 +333,15 @@ Partial Class CtrlCombustiblePorReceptor
 		Me.Button11.UseVisualStyleBackColor = False
 		Me.Button11.Visible = False
 		'
+		'bs_seccion
+		'
+		'
+		'bs_categoria
+		'
+		'
+		'bs_receptor
+		'
+		'
 		'CtrlCombustiblePorReceptor
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
@@ -331,19 +353,21 @@ Partial Class CtrlCombustiblePorReceptor
 		Me.Name = "CtrlCombustiblePorReceptor"
 		Me.Size = New System.Drawing.Size(500, 90)
 		Me.FlowLayoutPanel1.ResumeLayout(False)
+		CType(Me.bs_seccion, System.ComponentModel.ISupportInitialize).EndInit()
+		CType(Me.bs_categoria, System.ComponentModel.ISupportInitialize).EndInit()
+		CType(Me.bs_receptor, System.ComponentModel.ISupportInitialize).EndInit()
 		Me.ResumeLayout(False)
 
 	End Sub
 
 	Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
 	Friend WithEvents Label7 As Label
-	Friend WithEvents ComboBox2 As ComboBox
+	Friend WithEvents seccion As ComboBox
 	Friend WithEvents Button4 As Button
 	Friend WithEvents Label3 As Label
-	Friend WithEvents ComboBox1 As ComboBox
+	Friend WithEvents categoria As ComboBox
 	Friend WithEvents Button3 As Button
 	Friend WithEvents Label1 As Label
-	Friend WithEvents ComboBox3 As ComboBox
 	Friend WithEvents Button1 As Button
 	Friend WithEvents Button12 As Button
 	Friend WithEvents Button13 As Button
@@ -354,4 +378,8 @@ Partial Class CtrlCombustiblePorReceptor
 	Friend WithEvents Button8 As Button
 	Friend WithEvents Button10 As Button
 	Friend WithEvents Button11 As Button
+	Public WithEvents bs_seccion As BindingSource
+	Public WithEvents bs_categoria As BindingSource
+	Public WithEvents bs_receptor As BindingSource
+	Public WithEvents receptor As ComboBox
 End Class

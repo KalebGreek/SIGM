@@ -22,25 +22,25 @@
             End If
         End If
         sql += " ORDER By Persona.razon"
-        Return bd.read(my.settings.DefaultCon, sql)
-    End Function
-    Shared Function Seleccionar(persona_id As Integer) As DataTable
-        Dim sql As String = SelectSQL & " AND persona.id=" & persona_id
-        Return bd.read(my.settings.DefaultCon, sql)
-    End Function
-    Shared Function guardar(ByVal per_id As Integer, proveedor_id As Integer, ByVal responsable As String) As Integer
-        If proveedor_id Then
-            bd.edit(my.settings.DefaultCon, "UPDATE proveedor Set responsable='" & responsable & "'" &
-                          " WHERE per_id=" & per_id)
-        Else
-            bd.edit(my.settings.DefaultCon, "INSERT INTO proveedor(per_id, responsable) VALUES(" & per_id & ", '" & responsable & "')")
-        End If
-        Dim dtab As New DataTable
-        dtab = bd.read(my.settings.DefaultCon, "SELECT * FROM proveedor WHERE per_id=" & per_id)
-        Return dtab(0)("id")
-    End Function
-    Shared Function eliminar(ByVal per_id As Integer) As Integer
-        bd.edit(my.settings.DefaultCon, "DELETE * FROM proveedor WHERE per_id=" & per_id)
-        Return 0
+		Return DbMan.read(My.Settings.DefaultCon, sql)
+	End Function
+	Shared Function Seleccionar(persona_id As Integer) As DataTable
+		Dim sql As String = SelectSQL & " AND persona.id=" & persona_id
+		Return DbMan.read(My.Settings.DefaultCon, sql)
+	End Function
+	Shared Function guardar(ByVal per_id As Integer, proveedor_id As Integer, ByVal responsable As String) As Integer
+		If proveedor_id Then
+			DbMan.edit(My.Settings.DefaultCon, "UPDATE proveedor Set responsable='" & responsable & "'" &
+						  " WHERE per_id=" & per_id)
+		Else
+			DbMan.edit(My.Settings.DefaultCon, "INSERT INTO proveedor(per_id, responsable) VALUES(" & per_id & ", '" & responsable & "')")
+		End If
+		Dim dtab As New DataTable
+		dtab = DbMan.read(My.Settings.DefaultCon, "SELECT * FROM proveedor WHERE per_id=" & per_id)
+		Return dtab(0)("id")
+	End Function
+	Shared Function eliminar(ByVal per_id As Integer) As Integer
+		DbMan.edit(My.Settings.DefaultCon, "DELETE * FROM proveedor WHERE per_id=" & per_id)
+		Return 0
     End Function
 End Class

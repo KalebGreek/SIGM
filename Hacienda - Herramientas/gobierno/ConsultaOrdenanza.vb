@@ -75,10 +75,10 @@
             End If
         End If
 
-        Dim dtab As DataTable = bd.read(my.settings.DefaultCon, SQLSelect & SQLTable & SQLCriteria)
-        If dtab Is Nothing = False Then
-            visor = Data.ToDataGridView(visor, bs_consulta, dtab)
-            If dtab.Rows.Count = 0 Then
+		Dim dtab As DataTable = DbMan.read(My.Settings.DefaultCon, SQLSelect & SQLTable & SQLCriteria)
+		If dtab Is Nothing = False Then
+			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, dtab)
+			If dtab.Rows.Count = 0 Then
                 MsgBox("No hay resultados.")
                 Me.Text = "Buscar Ordenanza"
             Else
@@ -120,8 +120,8 @@
         With bs_consulta
             If .Position > -1 Then
                 If MsgBoxResult.Yes = MsgBox("¿Desea eliminar el registro seleccionado?", MsgBoxStyle.YesNo, "Eliminar registro") Then
-                    bd.edit(my.settings.DefaultCon, "DELETE * FROM ordenanza WHERE id=" & .Current("id"))
-                    buscar.PerformClick()
+					DbMan.edit(My.Settings.DefaultCon, "DELETE * FROM ordenanza WHERE id=" & .Current("id"))
+					buscar.PerformClick()
                 End If
             End If
         End With

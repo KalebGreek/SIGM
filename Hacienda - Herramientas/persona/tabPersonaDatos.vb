@@ -49,7 +49,7 @@
 				Return False
 			Else
 				Dim dtab As New DataTable
-				dtab = bd.read(My.Settings.foxcon, "SELECT * FROM persona
+				dtab = DbMan.read(My.Settings.foxcon, "SELECT * FROM persona
 													WHERE cuil='" & cuil.Text & "'")
 			End If
 		End If

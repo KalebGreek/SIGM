@@ -13,8 +13,8 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTitle("SIGM")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("Sistema Integral de Gestión Municipal")> 
-<Assembly: AssemblyCopyright("Copyright ©  2014")> 
+<Assembly: AssemblyProduct("Sistema Integral de Gestión Municipal")>
+<Assembly: AssemblyCopyright("©  2017")>
 <Assembly: AssemblyTrademark("SIGM")> 
 
 <Assembly: ComVisible(False)> 

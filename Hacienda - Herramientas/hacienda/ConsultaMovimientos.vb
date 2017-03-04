@@ -27,45 +27,45 @@
         visor.DataSource = Nothing
         bs_consulta.DataSource = Nothing
         If SeleccionCuenta.SelectedIndex > -1 Then
-            visor = Data.ToDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
-                                                                        fecha.Checked, inicio.Value, final.Value))
-            SumarTotales(Ingresos.Checked)
-        End If
+			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+																		fecha.Checked, inicio.Value, final.Value))
+			SumarTotales(Ingresos.Checked)
+		End If
 
-    End Sub
+	End Sub
 
-    Private Sub ActivarFiltro_CheckedChanged(sender As Object, e As EventArgs) Handles ActivarFiltro.CheckedChanged
-        GrupoFiltro.Visible = ActivarFiltro.Checked
-        If SeleccionCuenta.SelectedIndex > -1 Then
-            visor = Data.ToDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
-                                                                        fecha.Checked, inicio.Value, final.Value))
-            SumarTotales(Ingresos.Checked)
-        End If
-    End Sub
-    Private Sub fecha_CheckedChanged(sender As Object, e As EventArgs) Handles fecha.CheckedChanged, Razon.CheckedChanged
-        inicio.Enabled = fecha.Checked
-        final.Enabled = fecha.Checked
-        Keyword.Enabled = Razon.Checked
-        If SeleccionCuenta.SelectedIndex > -1 Then
-            visor = Data.ToDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
-                                                                        fecha.Checked, inicio.Value, final.Value))
-            SumarTotales(Ingresos.Checked)
-        End If
-    End Sub
-    Private Sub Keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles Keyword.KeyUp
-        If SeleccionCuenta.SelectedIndex > -1 Then
-            visor = Data.ToDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
-                                                                        fecha.Checked, inicio.Value, final.Value))
-            SumarTotales(Ingresos.Checked)
-        End If
-    End Sub
-    Private Sub inicio_ValueChanged(sender As Object, e As EventArgs) Handles inicio.ValueChanged, final.ValueChanged
-        inicio.MaxDate = final.Value
-        final.MinDate = inicio.Value
-        If SeleccionCuenta.SelectedIndex > -1 Then
-            visor = Data.ToDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
-                                                                        fecha.Checked, inicio.Value, final.Value))
-            SumarTotales(Ingresos.Checked)
+	Private Sub ActivarFiltro_CheckedChanged(sender As Object, e As EventArgs) Handles ActivarFiltro.CheckedChanged
+		GrupoFiltro.Visible = ActivarFiltro.Checked
+		If SeleccionCuenta.SelectedIndex > -1 Then
+			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+																		fecha.Checked, inicio.Value, final.Value))
+			SumarTotales(Ingresos.Checked)
+		End If
+	End Sub
+	Private Sub fecha_CheckedChanged(sender As Object, e As EventArgs) Handles fecha.CheckedChanged, Razon.CheckedChanged
+		inicio.Enabled = fecha.Checked
+		final.Enabled = fecha.Checked
+		Keyword.Enabled = Razon.Checked
+		If SeleccionCuenta.SelectedIndex > -1 Then
+			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+																		fecha.Checked, inicio.Value, final.Value))
+			SumarTotales(Ingresos.Checked)
+		End If
+	End Sub
+	Private Sub Keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles Keyword.KeyUp
+		If SeleccionCuenta.SelectedIndex > -1 Then
+			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+																		fecha.Checked, inicio.Value, final.Value))
+			SumarTotales(Ingresos.Checked)
+		End If
+	End Sub
+	Private Sub inicio_ValueChanged(sender As Object, e As EventArgs) Handles inicio.ValueChanged, final.ValueChanged
+		inicio.MaxDate = final.Value
+		final.MinDate = inicio.Value
+		If SeleccionCuenta.SelectedIndex > -1 Then
+			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+																		fecha.Checked, inicio.Value, final.Value))
+			SumarTotales(Ingresos.Checked)
         End If
     End Sub
 
@@ -81,8 +81,8 @@
         End If
         SQLGrouping = ""
 
-        Return bd.read(my.settings.foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
-    End Function
+		Return DbMan.read(My.Settings.foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
+	End Function
     Private Function ConsultarMovimientos(ByVal cuenta As Double, ByVal keyword As String,
                                           Filtrado As Boolean, FiltroFecha As Boolean,
                                           ByVal FechaInicio As Date, ByVal FechaFinal As Date) As DataTable
@@ -99,13 +99,13 @@
         End If
         SQLGrouping = ""
 
-        Return bd.read(my.settings.foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
-    End Function
+		Return DbMan.read(My.Settings.foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
+	End Function
     Private Sub SumarTotales(ingreso As Boolean)
-        Dim dtab As DataTable = bd.read(My.Settings.foxcon,
-                                        "SELECT SUM(pagado) as total_pagado, orden" &
-                                        SQLTable & SQLCriteria & " GROUP BY orden")
-        info2.Text = " - "
+		Dim dtab As DataTable = DbMan.read(My.Settings.foxcon,
+										"SELECT SUM(pagado) as total_pagado, orden" &
+										SQLTable & SQLCriteria & " GROUP BY orden")
+		info2.Text = " - "
         If dtab Is Nothing = False Then
             If dtab.Rows.Count > 0 Then
                 info2.Text = " $ " & dtab(0)("total_pagado").ToString

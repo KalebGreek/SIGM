@@ -75,7 +75,7 @@
             info_estado.Text = "NUEVO"
             operacion.Text = "NEW"
         ElseIf registro.Rows.Count > 0 Then
-            Data.ToControls(registro, tab_ubicacion)
+			CtrlMan.LoadAllControls(registro(0), tab_ubicacion)
             'titular_id.Text = registro(0)("titular_id")
             'razon.Text = registro(0)("titular")
             'cuil.Text = registro(0)("cuil")
@@ -136,7 +136,7 @@
 
         'detalles
         If registro.Rows.Count > 0 Then
-            Data.ToControls(registro, tab_ubicacion)
+			CtrlMan.LoadAllControls(registro(0), tab_ubicacion)
             'If registro(0)("titular_id") Is DBNull.Value = False Then
             'titular_id.Text = registro(0)("titular_id")
             'End If
@@ -158,12 +158,12 @@
 
 
         'frentes
-        Data.ToDataGridView(consulta_frente, bs_frente, Catastro.Frente.Cargar(catastro_id.Text))
+        CtrlMan.LoadDataGridView(consulta_frente, bs_frente, Catastro.Frente.Cargar(catastro_id.Text))
 
         'superficies
-        registro = bd.read(My.Settings.DefaultCon, "SELECT * FROM cat_superficie WHERE catastro_id=" & catastro_id.Text)
+        registro = DbMan.read(My.Settings.DefaultCon, "SELECT * FROM cat_superficie WHERE catastro_id=" & catastro_id.Text)
 
-        Data.ToControls(registro, tab_sup)
+		CtrlMan.LoadAllControls(registro(0), tab_sup)
         'If registro.Rows.Count > 0 Then
         'existente.Value = Val(registro(0)("existente"))
         'proyecto.Value = Val(registro(0)("proyecto"))
@@ -172,12 +172,14 @@
         'End If
 
         'caracteristicas
-        Data.ToDataGridView(consulta_caract, bs_car,
-                         bd.read(My.Settings.DefaultCon, "SELECT descripcion, activo FROM cat_servicio WHERE catastro_id=" & catastro_id.Text))
+        CtrlMan.LoadDataGridView(consulta_caract, bs_car,
+								 DbMan.read(My.Settings.DefaultCon,
+											"SELECT descripcion, activo FROM cat_servicio 
+											 WHERE catastro_id=" & catastro_id.Text))
 
         'copias
-        Data.ToDataGridView(consulta_copia, bs_copia, Documento.Catastro.BuscarDoc(catastro_id.Text))
-    End Sub
+        CtrlMan.LoadDataGridView(consulta_copia, bs_copia, Documento.Catastro.BuscarDoc(catastro_id.Text))
+	End Sub
 
     Function Validar(pagina As Integer) As Boolean
         Dim msg As New List(Of String)

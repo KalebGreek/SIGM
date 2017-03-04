@@ -6,36 +6,68 @@
 								" FROM (persona LEFT JOIN per_domicilio ON persona.id = per_domicilio.per_id)" &
 								" LEFT JOIN localidades ON per_domicilio.localidad_id = localidades.id" &
 								" WHERE per_domicilio.principal=True"
-		Shared Function Buscar(difunto As Boolean, fisica As Boolean,
-									 Optional persona_id As Integer = 0, Optional cuil As Double = 0,
-									 Optional razon As String = "") As DataTable
+
+		Overloads Shared Function Buscar(difunto As Boolean, fisica As Boolean) As DataTable
+			Dim sql As String = SelectSQL
+			sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
+			sql += " ORDER By Persona.razon ASC"
+			Return DbMan.read(My.Settings.DefaultCon, sql)
+		End Function
+		Overloads Shared Function Buscar(persona_id As Integer, difunto As Boolean, fisica As Boolean) As DataTable
 			Dim sql As String = SelectSQL
 			sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
 
 			If persona_id > 0 Then
-				sql += " AND Persona.id=" & cuil
-			ElseIf Len(cuil) = 11 Then
+				sql += " AND Persona.id=" & persona_id
+			End If
+
+			sql += " ORDER By Persona.razon ASC"
+			Return DbMan.read(My.Settings.DefaultCon, sql)
+		End Function
+		Overloads Shared Function Buscar(cuil As Double, difunto As Boolean, fisica As Boolean) As DataTable
+			Dim sql As String = SelectSQL
+			sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
+
+			If Len(cuil) = 11 Then
 				sql += " AND Persona.cuil='" & cuil & "'"
-			ElseIf Len(razon) > 2 Then
+			End If
+
+			sql += " ORDER By Persona.razon ASC"
+			Return DbMan.read(My.Settings.DefaultCon, sql)
+		End Function
+		Overloads Shared Function Buscar(razon As String, difunto As Boolean, fisica As Boolean) As DataTable
+
+			Dim sql As String = SelectSQL
+			sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
+
+			razon = Trim(razon)
+			If Len(razon) > 2 Then
 				sql += " AND Persona.razon LIKE '%" & razon & "%'"
 			End If
 
 			sql += " ORDER By Persona.razon ASC"
-			Return bd.read(My.Settings.DefaultCon, sql)
+			Return DbMan.read(My.Settings.DefaultCon, sql)
 		End Function
-		Shared Function BuscarPorDireccion(ByVal calle As String, difunto As Boolean, fisica As Boolean) As DataTable
+		Overloads Shared Function Buscar(calle As String, altura As Integer, localidad_id As Integer,
+										 difunto As Boolean, fisica As Boolean) As DataTable
 			Dim sql As String = SelectSQL
 			sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
 			If Len(calle) > 2 Then
 				sql += " AND per_domicilio.calle LIKE '%" & calle & "%'"
+				If altura > 0 Then
+					sql += " AND per_domicilio.altura=" & altura
+				End If
+			ElseIf localidad_id > 0 Then
+				sql += " AND localidades.id=" & localidad_id
 			End If
+
 			sql += " ORDER By Per_domicilio.calle ASC"
 
-			Return bd.read(my.settings.DefaultCon, sql)
+			Return DbMan.read(My.Settings.DefaultCon, sql)
 		End Function
         'Registro para ModPersona
         Shared Function Cargar(persona_id As Integer) As DataTable
-			Return bd.read(my.settings.DefaultCon, "SELECT id as persona_id, razon, cuil," &
+			Return DbMan.read(My.Settings.DefaultCon, "SELECT id as persona_id, razon, cuil," &
 								  " telefono, email," &
 								  " difunto, ruta_defuncion, fisica" &
 								  " FROM persona WHERE id=" & persona_id)
@@ -132,7 +164,7 @@
 				Return False
 			Else
                 'documentos
-                dtab_con = bd.read(my.settings.DefaultCon, "SELECT descripcion, ruta FROM per_documento WHERE per_id=" & persona_id)
+                dtab_con = DbMan.read(My.Settings.DefaultCon, "SELECT descripcion, ruta FROM per_documento WHERE per_id=" & persona_id)
 				If dtab_con.Rows.Count > 0 Then
 					msg.Add("Los siguientes documentos seran eliminados del registro junto con la persona seleccionada: ")
 					For fila As Integer = 0 To dtab_con.Rows.Count - 1
@@ -145,8 +177,8 @@
 
 				Dim errormsg As New visor_error("Eliminar persona", msg)
 				If errormsg.ShowDialog() = DialogResult.OK Then
-					bd.edit(my.settings.DefaultCon, "DELETE FROM per_documento WHERE per_id=" & persona_id)
-					bd.edit(my.settings.DefaultCon, "DELETE FROM persona WHERE id=" & persona_id)
+					DbMan.edit(My.Settings.DefaultCon, "DELETE FROM per_documento WHERE per_id=" & persona_id)
+					DbMan.edit(My.Settings.DefaultCon, "DELETE FROM persona WHERE id=" & persona_id)
 					Return True
 				Else
 					Return False

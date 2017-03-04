@@ -183,19 +183,19 @@ Public Class ConsultaCuentaAgrupada
         bs_consulta.DataSource = Nothing
         If sender Is ca_search Then 'Búsqueda de cuentas agrupadas
             dtab_cuenta = CuentaAgrupada.sql.leer(keyword, "", sender)
-			visor = Data.ToDataGridView(visor, bs_consulta, dtab_cuenta)
-        ElseIf sender Is con_ca Then
-            dtab_contrib = hac_contrib.leer(dtab_contrib, sender) 'Esta consulta vuelca los resultados directamente en el datagridview especial lista_con
+			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, dtab_cuenta)
+		ElseIf sender Is con_ca Then
+			dtab_contrib = hac_contrib.leer(dtab_contrib, sender) 'Esta consulta vuelca los resultados directamente en el datagridview especial lista_con
             'Cuando el usuario hace click en algún impuesto de la cuenta agrupada, debería poder ver las cuotas
             'desglosadas en el datagridview a la izquierda
         ElseIf sender Is bs_contrib Then 'Esta consulta muestra un id de cuenta desglosado en el datagridview de la izquierda
             tablas_fox(bs_contrib.Current("impuesto"))
-            dtab_imp = deuda(False, True, bs_contrib.Current("impuesto"), 2, keyword, 0, 0, 0) 'filtrado por nombre
-            visor = Data.ToDataGridView(visor, bs_consulta, dtab_imp)
-        ElseIf sender Is mod_ca_imp_search Then
+			dtab_imp = deuda(False, True, bs_contrib.Current("impuesto"), 2, keyword, 0, 0, 0) 'filtrado por nombre
+            visor = CtrlMan.LoadDataGridView(visor, bs_consulta, dtab_imp)
+		ElseIf sender Is mod_ca_imp_search Then
 			dtab_imp = CuentaAgrupada.sql.leer(keyword, Microsoft.VisualBasic.Left(impuesto, 4), sender) 'Búsqueda de id para modificar cuenta agrupada
-            visor = Data.ToDataGridView(visor, bs_consulta, dtab_imp)
-        End If
+            visor = CtrlMan.LoadDataGridView(visor, bs_consulta, dtab_imp)
+		End If
         visor.Focus()
     End Sub
 
@@ -225,8 +225,8 @@ Public Class ConsultaCuentaAgrupada
         If cuenta_agrupada Then
             sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
         End If
-        consulta = bd.read(my.settings.foxcon, sql)
-        progreso.Value = 20
+		consulta = DbMan.read(My.Settings.foxcon, sql)
+		progreso.Value = 20
         Return consulta
     End Function
 
@@ -348,29 +348,29 @@ Public Class ConsultaCuentaAgrupada
             If .RowCount > 0 Then
                 Do While fila < .RowCount
                     If .Item(0, fila).Value.ToString = Nothing Then
-                        bd.edit(My.Settings.DefaultCon, "INSERT INTO contribuyente(razon, cuil, impuesto, codigo, alta)
+						DbMan.edit(My.Settings.DefaultCon, "INSERT INTO contribuyente(razon, cuil, impuesto, codigo, alta)
                                          VALUES ('" & razon.Text & "', " & cuil.Text & ", '" & .Item(1, fila).Value & "'," &
-                                        " " & .Item(2, fila).Value & ", '" & .Item(3, fila).Value & "')")
-                        nins += 1
-                    Else
-                        bd.edit(My.Settings.DefaultCon, "UPDATE contribuyente SET razon='" & razon.Text & "', impuesto='" & .Item(1, fila).Value &
-                                        "', codigo=" & .Item(2, fila).Value & ", alta='" & .Item(3, fila).Value & "'" &
-                                        " WHERE id=" & .Item(0, fila).Value)
-                        nupd += 1
-                    End If
-                    fila += 1
-                Loop
-                ndel = 0
-                If found = True Then
-                    Do While ndel < del_rows.Count And del_rows(ndel) <> Nothing
-                        bd.edit(My.Settings.DefaultCon, "DELETE FROM contribuyente WHERE id=" & del_rows(ndel))
-                        ndel += 1
-                    Loop
-                End If
-            Else
-                If MsgBoxResult.Ok = MsgBox("Esto eliminará todos los registros de la cuenta agrupada, ¿desea continuar?.", MsgBoxStyle.OkCancel) Then
-                    bd.edit(My.Settings.DefaultCon, "DELETE FROM contribuyente WHERE cuil=" & cuil.Text & ";")
-                End If
+										" " & .Item(2, fila).Value & ", '" & .Item(3, fila).Value & "')")
+						nins += 1
+					Else
+						DbMan.edit(My.Settings.DefaultCon, "UPDATE contribuyente SET razon='" & razon.Text & "', impuesto='" & .Item(1, fila).Value &
+										"', codigo=" & .Item(2, fila).Value & ", alta='" & .Item(3, fila).Value & "'" &
+										" WHERE id=" & .Item(0, fila).Value)
+						nupd += 1
+					End If
+					fila += 1
+				Loop
+				ndel = 0
+				If found = True Then
+					Do While ndel < del_rows.Count And del_rows(ndel) <> Nothing
+						DbMan.edit(My.Settings.DefaultCon, "DELETE FROM contribuyente WHERE id=" & del_rows(ndel))
+						ndel += 1
+					Loop
+				End If
+			Else
+				If MsgBoxResult.Ok = MsgBox("Esto eliminará todos los registros de la cuenta agrupada, ¿desea continuar?.", MsgBoxStyle.OkCancel) Then
+					DbMan.edit(My.Settings.DefaultCon, "DELETE FROM contribuyente WHERE cuil=" & cuil.Text & ";")
+				End If
             End If
             info.Text = nins & " nuevos registros, " & nupd & " registros modificados y " & ndel & " registros eliminados."
             'Resetear contadores y registro de eliminados
