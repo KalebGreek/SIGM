@@ -73,12 +73,17 @@
         CalculoAnualImpuesto.ShowDialog()
         System.Windows.Forms.Application.CurrentCulture = New System.Globalization.CultureInfo("ES-AR")
     End Sub
-    Private Sub GenerarCertificadoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GenerarCertificadoToolStripMenuItem.Click
-        Dim certld As New CertificadoLibreDeuda
-        With certld
-            .ShowDialog()
-        End With
-    End Sub
+	Private Sub GenerarCertificadoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GenerarCertificadoToolStripMenuItem.Click
+		Dim certld As New CertificadoLibreDeuda
+		certld.ShowDialog()
+	End Sub
+	Private Sub TicketsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TicketsToolStripMenuItem.Click
+		Dim mcomb As New ModCombustible
+		mcomb.MdiParent = Me
+		mcomb.Show()
+	End Sub
+
+
 
 	'GOBIERNO
 	Private Sub NuevaOrdenanzaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevaOrdenanzaToolStripMenuItem.Click

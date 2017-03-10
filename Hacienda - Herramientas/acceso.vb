@@ -41,9 +41,10 @@
         End If
     End Sub
 
-    Private Sub salir_Click(sender As Object, e As EventArgs) Handles salir.Click
-        End
-    End Sub
+	Private Sub salir_Click(sender As Object, e As EventArgs) Handles salir.Click
+		Me.Dispose()
+		End
+	End Sub
     '###### END GUI #############################################################################################
     '###### VALIDATION ##########################################################################################
     Private Sub login_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles login.Click

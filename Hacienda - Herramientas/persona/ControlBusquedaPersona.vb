@@ -40,9 +40,9 @@
 		Me.PanelFiltros.Controls.Add(Me.difunto)
 		Me.PanelFiltros.Controls.Add(Me.fisica)
 		Me.PanelFiltros.Dock = System.Windows.Forms.DockStyle.Bottom
-		Me.PanelFiltros.Location = New System.Drawing.Point(0, 185)
+		Me.PanelFiltros.Location = New System.Drawing.Point(0, 311)
 		Me.PanelFiltros.Name = "PanelFiltros"
-		Me.PanelFiltros.Size = New System.Drawing.Size(484, 26)
+		Me.PanelFiltros.Size = New System.Drawing.Size(570, 26)
 		Me.PanelFiltros.TabIndex = 363
 		'
 		'difunto
@@ -58,6 +58,8 @@
 		'fisica
 		'
 		Me.fisica.AutoSize = True
+		Me.fisica.Checked = True
+		Me.fisica.CheckState = System.Windows.Forms.CheckState.Checked
 		Me.fisica.Location = New System.Drawing.Point(85, 3)
 		Me.fisica.Name = "fisica"
 		Me.fisica.Size = New System.Drawing.Size(66, 23)
@@ -67,11 +69,10 @@
 		'
 		'ControlBusquedaPersona
 		'
-		Me.ClientSize = New System.Drawing.Size(484, 211)
+		Me.ClientSize = New System.Drawing.Size(570, 337)
 		Me.Controls.Add(Me.PanelFiltros)
 		Me.Name = "ControlBusquedaPersona"
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-		Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
 		Me.Controls.SetChildIndex(Me.PanelFiltros, 0)
 		CType(Me.bs_resultado, System.ComponentModel.ISupportInitialize).EndInit()
 		Me.PanelFiltros.ResumeLayout(False)
@@ -205,7 +206,7 @@
 		End If
 	End Sub
 	Private Sub vista_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Vista.SelectedIndexChanged
-		If filtro.SelectedIndex > -1 Then
+		If Vista.SelectedIndex > -1 Then
 			filtro.Items.Clear()
 			If Vista.Text = "PERSONA" Then
 				filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIL/DNI", "DIRECCION", "LOCALIDAD", "ID"})

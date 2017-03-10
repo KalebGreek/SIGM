@@ -65,6 +65,8 @@ Partial Class FormContenedorGen
 		Me.BuscarActaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.comercioMenu = New System.Windows.Forms.ToolStripMenuItem()
 		Me.SalirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.CombustibleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.TicketsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.StatusStrip1.SuspendLayout()
 		Me.BaseMenu.SuspendLayout()
 		Me.SuspendLayout()
@@ -192,7 +194,7 @@ Partial Class FormContenedorGen
 		'
 		'haciendaMenu
 		'
-		Me.haciendaMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HaciendaToolStripMenuItem, Me.ConsultarImpuestoToolStripMenuItem, Me.ConsultarCuentaAgrupadaToolStripMenuItem, Me.ConsultaDeMovimientosToolStripMenuItem, Me.ConsultasEspecialesStripMenuItem, Me.ToolStripSeparator3, Me.ToolStripMenuItem1, Me.CalculoAnualDeImpuestosToolStripMenuItem, Me.LibreDeudaToolStripMenuItem})
+		Me.haciendaMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HaciendaToolStripMenuItem, Me.ConsultarImpuestoToolStripMenuItem, Me.ConsultarCuentaAgrupadaToolStripMenuItem, Me.ConsultaDeMovimientosToolStripMenuItem, Me.ConsultasEspecialesStripMenuItem, Me.ToolStripSeparator3, Me.ToolStripMenuItem1, Me.CalculoAnualDeImpuestosToolStripMenuItem, Me.LibreDeudaToolStripMenuItem, Me.CombustibleToolStripMenuItem})
 		Me.haciendaMenu.ForeColor = System.Drawing.Color.White
 		Me.haciendaMenu.Name = "haciendaMenu"
 		Me.haciendaMenu.Padding = New System.Windows.Forms.Padding(0)
@@ -391,6 +393,20 @@ Partial Class FormContenedorGen
 		Me.SalirToolStripMenuItem.Size = New System.Drawing.Size(43, 23)
 		Me.SalirToolStripMenuItem.Text = "Salir"
 		'
+		'CombustibleToolStripMenuItem
+		'
+		Me.CombustibleToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TicketsToolStripMenuItem})
+		Me.CombustibleToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.CombustibleToolStripMenuItem.Name = "CombustibleToolStripMenuItem"
+		Me.CombustibleToolStripMenuItem.Size = New System.Drawing.Size(258, 24)
+		Me.CombustibleToolStripMenuItem.Text = "Combustible"
+		'
+		'TicketsToolStripMenuItem
+		'
+		Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
+		Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(152, 24)
+		Me.TicketsToolStripMenuItem.Text = "Tickets"
+		'
 		'FormContenedorGen
 		'
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
@@ -457,4 +473,6 @@ Partial Class FormContenedorGen
 	Friend WithEvents asocialMenu As ToolStripMenuItem
 	Friend WithEvents NuevoBeneficiarioToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents BuscarBeneficiarioToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents CombustibleToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents TicketsToolStripMenuItem As ToolStripMenuItem
 End Class

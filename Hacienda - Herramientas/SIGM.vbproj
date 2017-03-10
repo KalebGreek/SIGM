@@ -214,10 +214,16 @@
     <Compile Include="hacienda\Combustibles\CtrlBusquedaCombustiblePorTicket.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="hacienda\Combustibles\CtrlModTicket.Designer.vb">
-      <DependentUpon>CtrlModTicket.vb</DependentUpon>
+    <Compile Include="hacienda\Combustibles\ModCombustibleReceptor.Designer.vb">
+      <DependentUpon>ModCombustibleReceptor.vb</DependentUpon>
     </Compile>
-    <Compile Include="hacienda\Combustibles\CtrlModTicket.vb">
+    <Compile Include="hacienda\Combustibles\ModCombustibleReceptor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="hacienda\Combustibles\ModCombustibleTicket.Designer.vb">
+      <DependentUpon>ModCombustibleTicket.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\Combustibles\ModCombustibleTicket.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hacienda\CtrlVenceImpuesto.Designer.vb">
@@ -474,8 +480,11 @@
     <EmbeddedResource Include="hacienda\Combustibles\CtrlBusquedaCombustiblePorTicket.resx">
       <DependentUpon>CtrlBusquedaCombustiblePorTicket.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\Combustibles\CtrlModTicket.resx">
-      <DependentUpon>CtrlModTicket.vb</DependentUpon>
+    <EmbeddedResource Include="hacienda\Combustibles\ModCombustibleReceptor.resx">
+      <DependentUpon>ModCombustibleReceptor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\Combustibles\ModCombustibleTicket.resx">
+      <DependentUpon>ModCombustibleTicket.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\CtrlVenceImpuesto.resx">
       <DependentUpon>CtrlVenceImpuesto.vb</DependentUpon>
