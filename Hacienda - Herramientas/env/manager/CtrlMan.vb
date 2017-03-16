@@ -94,30 +94,32 @@
 		'Carga los registros de cada columna en los controles con el nombre de la columna correspondiente
 		For Each c As Control In target.Controls
 			If drow.Table.Columns.Contains(c.Name) Then
-				If TypeOf c Is Label Then
-					c.Text = drow(c.Name).ToString
-				ElseIf TypeOf c Is LinkLabel Then
-					c.Text = drow(c.Name).ToString
-				ElseIf TypeOf c Is TextBox Then
-					c.Text = drow(c.Name).ToString
-				ElseIf TypeOf c Is MaskedTextBox Then
-					c.Text = drow(c.Name).ToString
-				ElseIf TypeOf c Is ComboBox Then
-					If CType(c, ComboBox).DataSource Is Nothing Then
+				If drow(c.Name) Is DBNull.Value = False Then
+					If TypeOf c Is Label Then
 						c.Text = drow(c.Name).ToString
-					Else
-						CType(c, ComboBox).DataSource.Position = CType(c, ComboBox).DataSource.Find("id", drow(c.Name & "_id")) 'localidad_id
+					ElseIf TypeOf c Is LinkLabel Then
+						c.Text = drow(c.Name).ToString
+					ElseIf TypeOf c Is TextBox Then
+						c.Text = drow(c.Name).ToString
+					ElseIf TypeOf c Is MaskedTextBox Then
+						c.Text = drow(c.Name).ToString
+					ElseIf TypeOf c Is ComboBox Then
+						If CType(c, ComboBox).DataSource Is Nothing Then
+							c.Text = drow(c.Name).ToString
+						Else
+							CType(c, ComboBox).DataSource.Position = CType(c, ComboBox).DataSource.Find("id", drow(c.Name & "_id")) 'localidad_id
+						End If
+					ElseIf TypeOf c Is NumericUpDown Then
+						CType(c, NumericUpDown).Value = drow(c.Name)
+					ElseIf TypeOf c Is DateTimePicker Then
+						CType(c, DateTimePicker).Value = CDate(drow(c.Name))
+					ElseIf TypeOf c Is CheckBox Then
+						CType(c, CheckBox).Checked = drow(c.Name)
+					ElseIf TypeOf c Is RadioButton Then
+						CType(c, RadioButton).Checked = drow(c.Name)
+					ElseIf TypeOf c Is Button Then
+						CType(c, Button).Visible = drow(c.Name)
 					End If
-				ElseIf TypeOf c Is NumericUpDown Then
-					CType(c, NumericUpDown).Value = drow(c.Name)
-				ElseIf TypeOf c Is DateTimePicker Then
-					CType(c, DateTimePicker).Value = CDate(drow(c.Name))
-				ElseIf TypeOf c Is CheckBox Then
-					CType(c, CheckBox).Checked = drow(c.Name)
-				ElseIf TypeOf c Is RadioButton Then
-					CType(c, RadioButton).Checked = drow(c.Name)
-				ElseIf TypeOf c Is Button Then
-					CType(c, Button).Visible = drow(c.Name)
 				End If
 			ElseIf TypeOf c Is FlowLayoutPanel Or TypeOf c Is Panel Then
 				'Recursive control loading
@@ -128,12 +130,14 @@
 	End Function
 	Shared Function LoadDataGridView(ByVal visor As DataGridView, ByVal bs As BindingSource, ByVal dtab As DataTable) As DataGridView
 		'Esta rutina importa la datatable seleccionada en un datagridview; es igual para todos los servicios.
+		visor.SuspendLayout()
 		bs.DataSource = dtab
 		visor.DataSource = bs
-		visor.Update()
 		'Con VB .Net sobre la tabla de consulta
 		'Dar formato
 		visor = FormatColumns(visor)
+		visor.ResumeLayout()
+		visor.PerformLayout()
 		Return visor
 	End Function
 
@@ -153,47 +157,125 @@
 
 	'Formatting
 	Shared Function FormatColumns(ByVal visor As DataGridView) As DataGridView
-		With visor.Columns
-			'PERSONAS
-			If .Contains("id") Then
-				visor.Columns("id").Width = 20
-			End If
-			If .Contains("apellido") Then
-				visor.Columns("apellido").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-			End If
-			If .Contains("nombre") Then
-				visor.Columns("nombre").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-			End If
-			If .Contains("direccion") Then
-				visor.Columns("direccion").AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
-			End If
-			If .Contains("telefono") Then
-				visor.Columns("telefono").Width = 110
-			End If
-			If .Contains("email") Then
-				visor.Columns("email").Width = 110
-			End If
 
-			'VENTAS
-			If .Contains("venta_id") Then
-				visor.Columns("venta_id").Width = 30
-			End If
-			If .Contains("transaccion_id") Then
-				visor.Columns("transaccion_id").Width = 30
-			End If
-			If .Contains("aereo") Then
-				visor.Columns("aereo").Width = 55
-			End If
-			If .Contains("contacto") Then
-				visor.Columns("contacto").Width = 55
-			End If
-			If .Contains("monto") Then
-				visor.Columns("monto").AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
-			End If
-			If .Contains("anulada") Then
-				visor.Columns("anulada").Width = 50
-			End If
-		End With
+		For Each c As DataGridViewColumn In visor.Columns
+			With c.HeaderText
+
+				'GENERAL
+				If .Contains("_id") Then
+					c.Width = 5
+
+					'PERSONAS
+				ElseIf .Contains("cuil") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+
+				ElseIf .Contains("razon") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+
+				ElseIf .Contains("calle") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+
+				ElseIf .Contains("altura") Then
+					c.Width = 40
+
+				ElseIf .Contains("piso") Then
+					c.Width = 30
+
+				ElseIf .Contains("dpto") Then
+					c.Width = 30
+
+				ElseIf .Contains("localidad") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+
+				ElseIf .Contains("email") Then
+					c.Width = 50
+
+				ElseIf .Contains("telefono") Then
+					c.Width = 50
+
+				ElseIf .Contains("difunto") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader
+
+				ElseIf .Contains("fisica") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader
+
+					'ACTAS
+				ElseIf .Contains("acta") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+
+				ElseIf .Contains("libro") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+
+				ElseIf .Contains("nota") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+
+					'COMBUSTIBLES
+				ElseIf .Contains("litros") Then
+					c.Width = 70
+
+				ElseIf .Contains("unidades") Then
+					c.Width = 70
+
+				ElseIf .Contains("monto") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+
+					'DOCS
+				ElseIf .Contains("descripcion") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader
+
+				ElseIf .Contains("fecha") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+
+				ElseIf .Contains("ruta") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+
+					'FRENTES
+				ElseIf .Contains("altura") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader
+
+				ElseIf .Contains("metros") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader
+
+					'INMUEBLES
+				ElseIf .Contains("zona") Then
+					c.Width = 40
+
+				ElseIf .Contains("circ") Then
+					c.Width = 40
+
+				ElseIf .Contains("secc") Then
+					c.Width = 40
+
+				ElseIf .Contains("manz") Then
+					c.Width = 40
+
+				ElseIf .Contains("parc") Then
+					c.Width = 40
+
+				ElseIf .Contains("lote") Then
+					c.Width = 40
+
+				ElseIf .Contains("archivado") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+
+					'OPRIVADAS
+				ElseIf .Contains("responsable") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+
+					'ORDENANZAS
+				ElseIf .Contains("concepto") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+
+				ElseIf .Contains("ruta_copia") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+
+					'MOVIMIS
+				ElseIf .Contains("detalle") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+				End If
+			End With
+		Next
+
 		Return visor
 	End Function
 
@@ -201,12 +283,14 @@
 	Public Class Fill
 		Overloads Shared Sub AutoComplete(ByRef bs As BindingSource, ByRef target As ComboBox,
 										  DisplayOption As String, ValueOption As String)
+
 			target.DataSource = Nothing
-			target.DataSource = bs
-			target.DisplayMember = DisplayOption
-			target.ValueMember = ValueOption
-			target.AutoCompleteMode = AutoCompleteMode.Suggest
-			target.AutoCompleteSource = AutoCompleteSource.ListItems
+			If target.Enabled Then
+				target.DataSource = bs
+				target.DisplayMember = DisplayOption
+				target.ValueMember = ValueOption
+				target.AutoCompleteMode = AutoCompleteMode.None
+			End If
 		End Sub
 		Shared Sub States(ByRef StateList As ComboBox, ByRef bs As BindingSource)
 			StateList.BeginUpdate()

@@ -13,55 +13,60 @@ Public Class ModCombustibleReceptor
 		alta.MaxDate = Today
 		baja.Value = Today
 		baja.MaxDate = Today
+		modelo.value = Today.Year
+		modelo.Maximum = Today.Year
 
-		Combustible.FillSeccion(bs_seccion, seccion)
+		Hacienda.FillCuenta(bs_cuenta, cuenta)
 		Combustible.FillCategory(bs_categoria, categoria, vehiculo.Checked)
+		Combustible.FillResponsable(bs_responsable, responsable, 0) 'Formats the bindingsource
 	End Sub
 
 	'LOAD
-	Private Sub LoadReceptor(id As Integer)
-		receptor_id = id
+	Public Sub LoadReceptor(id As Integer)
 		If id > 0 Then
 			Dim dtab As DataTable = DbMan.read(My.Settings.DefaultCon, "SELECT * FROM hac_combustible_receptor WHERE id=" & id)
 			If dtab.Rows.Count > 0 Then
 				CtrlMan.LoadAllControls(dtab(0), Me)
+				Combustible.FillResponsable(bs_responsable, responsable, id)
 			End If
 		End If
 	End Sub
 
-	'SELECTORES
-	Private Sub SelectResponsable_Click(sender As Object, e As EventArgs) Handles SelectResponsable.Click
+	'RESPONSABLE
+	Private Sub AddResponsable_Click(sender As Object, e As EventArgs) Handles AddResponsable.Click
 		Dim SelResp As New ControlBusquedaPersona
 		SelResp.ShowDialog(Me)
 		If SelResp.bs_resultado.Position > -1 Then
-			responsable_id = SelResp.bs_resultado.Current("persona_id")
-			responsable.Text = SelResp.bs_resultado.Current("razon")
-			cuil_responsable.Text = SelResp.bs_resultado.Current("cuil")
-		End If
-	End Sub
-	Private Sub AddSeccion_Click(sender As Object, e As EventArgs) Handles AddSeccion.Click
-		Dim nueva_seccion As String = ""
-		nueva_seccion = InputBox("Ingrese nombre de nueva seccion.")
-		If nueva_seccion <> Nothing Then
-			nueva_seccion = Trim(nueva_seccion)
-			If Len(nueva_seccion) > 2 Then
-				DbMan.edit(My.Settings.DefaultCon, "INSERT INTO seccion(descripcion) VALUES(" & nueva_seccion & ")")
+			Dim pos As Integer = bs_responsable.Find("persona_id", SelResp.bs_resultado.Current("persona_id"))
+			If pos < 0 Then
+				bs_responsable.AddNew()
+				bs_responsable.Current("razon") = SelResp.bs_resultado.Current("razon")
+				bs_responsable.Current("cuil") = SelResp.bs_resultado.Current("cuil")
+				bs_responsable.Current("persona_id") = SelResp.bs_resultado.Current("persona_id")
+				bs_responsable.EndEdit()
+
+				cuil_responsable.Text = bs_responsable.Current("cuil").ToString
+			Else
+				bs_responsable.Position = pos
 			End If
 		End If
 	End Sub
-
-	Private Sub DelSeccion_Click(sender As Object, e As EventArgs) Handles DelSeccion.Click
-		If bs_seccion.Position > -1 Then
-			If seccion.Text <> "OTROS" Then
-				If MsgBoxResult.Yes = MsgBox("Desea eliminar esta seccion? Los receptores incluidos se moveran a la seccion 'OTROS'", MsgBoxStyle.YesNo) Then
-					DbMan.edit(My.Settings.DefaultCon, "UPDATE hac_combustible_receptor SET seccion_id=1 
-														WHERE seccion_id=" & seccion.SelectedValue)
-					DbMan.edit(My.Settings.DefaultCon, "DELETE * FROM seccion WHERE id=" & seccion.SelectedValue)
-				End If
+	Private Sub DelResponsable_Click(sender As Object, e As EventArgs) Handles DelResponsable.Click
+		If bs_responsable.Position > -1 Then
+			If MsgBoxResult.Yes = MsgBox("Desea eliminar el responsable seleccionado?", MsgBoxStyle.YesNo) Then
+				bs_responsable.RemoveCurrent()
 			End If
 		End If
 	End Sub
+	Private Sub bs_responsable_PositionChanged(sender As Object, e As EventArgs) Handles bs_responsable.PositionChanged
+		If bs_responsable.Position > -1 Then
+			cuil_responsable.Text = bs_responsable.Current("cuil").ToString
+		Else
+			cuil_responsable.Text = ""
+		End If
+	End Sub
 
+	'CATEGORIA
 	Private Sub AddCategoria_Click(sender As Object, e As EventArgs) Handles AddCategoria.Click
 		Dim nueva_cat As String = ""
 		Dim vehiculo As Boolean = True
@@ -69,7 +74,7 @@ Public Class ModCombustibleReceptor
 		If nueva_cat <> Nothing Then
 			nueva_cat = Trim(nueva_cat)
 			If Len(nueva_cat) > 2 Then
-				vehiculo = (MsgBoxResult.Yes = MsgBox("Esta categoria engloba vehiculos?", MsgBoxStyle.YesNo))
+				vehiculo = (MsgBoxResult.Yes = MsgBox("Esta categoria incluye vehiculos?", MsgBoxStyle.YesNo))
 				DbMan.edit(My.Settings.DefaultCon, "INSERT INTO hac_combustible_categoria_receptor(detalle, vehiculo) 
 														 VALUES(" & nueva_cat & ", " & vehiculo & ")")
 			End If
@@ -91,7 +96,7 @@ Public Class ModCombustibleReceptor
 															WHERE categoria_id=" & categoria.SelectedValue)
 					End If
 
-					DbMan.edit(My.Settings.DefaultCon, "DELETE * FROM seccion WHERE id=" & categoria.SelectedValue)
+					DbMan.edit(My.Settings.DefaultCon, "DELETE * FROM hac_combustible_categoria_receptor WHERE id=" & categoria.SelectedValue)
 
 				End If
 			End If
@@ -103,7 +108,6 @@ Public Class ModCombustibleReceptor
 		'Solo Access
 		Dim fecha_alta As String = Format(alta.Value, "MM/dd/yyyy") 'Access
 		Dim fecha_baja As String = Format(baja.Value, "MM/dd/yyyy") 'Access
-		Dim monto_autorizado As String = Replace(autorizado.Value, ",", ".")
 		marca.Text = Trim(marca.Text)
 		dominio.Text = Trim(dominio.Text)
 		observaciones.Text = Trim(observaciones.Text)
@@ -112,33 +116,40 @@ Public Class ModCombustibleReceptor
 			If MsgBoxResult.Yes = MsgBox("Desea guardar este receptor?", MsgBoxStyle.YesNo, "Guardar Ticket") Then
 				If receptor_id > 0 Then
 					DbMan.edit(My.Settings.DefaultCon, "UPDATE hac_combustible_receptor
-														   SET seccion_id=" & seccion.SelectedValue & ", categoria_id=" & categoria.SelectedValue & ",
-															   responsable_id=" & responsable_id & ", marca='" & marca.Text & "', 
-															   mercosur=" & mercosur.Checked & ", dominio='" & dominio.Text & "', 
-															   modelo=" & modelo.Text & ", 
+														   SET cuenta_id=" & cuenta.SelectedValue & ", categoria_id=" & categoria.SelectedValue & ",
+															   marca='" & marca.Text & "', mercosur=" & mercosur.Checked & ", 
+															   dominio='" & dominio.Text & "', modelo=" & modelo.Value & ", 
 															   alta=#" & fecha_alta & "#, baja=#" & fecha_baja & "#,
-															   observaciones='" & observaciones.Text & "', 
-															   autorizado=" & monto_autorizado & "")
+															   observaciones='" & observaciones.Text & "'")
 				ElseIf receptor_id = 0 Then
-					DbMan.edit(My.Settings.DefaultCon, "INSERT INTO hac_combustible_receptor(seccion_id, categoria_id,
-																							 responsable_id, marca,
+					DbMan.edit(My.Settings.DefaultCon, "INSERT INTO hac_combustible_receptor(cuenta_id, 
+																							 categoria_id, marca,
 																							 mercosur, dominio,
-																							 modelo, alta, baja,
-																							 observaciones, autorizado)
-																					  VALUES(" & seccion.SelectedValue & ", 
-																							 " & categoria.SelectedValue & ",
-																							 " & responsable_id & ", '" & marca.Text & "',
+																							 modelo, alta,
+																							 observaciones)
+																					  VALUES(" & cuenta.SelectedValue & ", 
+																							 " & categoria.SelectedValue & ", '" & marca.Text & "',	
 																							 " & mercosur.Checked & ", '" & dominio.Text & "', 
-																							 " & modelo.Text & ",
-																							 #" & fecha_alta & "#, #" & fecha_baja & "#,
-																							 '" & observaciones.Text & "', 
-																							 " & monto_autorizado & ")")
+																							 " & modelo.Value & ", #" & fecha_alta & "#,
+																							 '" & observaciones.Text & "')")
+
+					Dim dtab As DataTable = DbMan.read(My.Settings.DefaultCon, "SELECT id FROM hac_combustible_receptor ORDER BY id ASC")
+					receptor_id = dtab(0)("id")
 				End If
+				SaveResponsable()
 			End If
 		End If
 	End Function
+	Private Sub SaveResponsable()
+		DbMan.edit(My.Settings.DefaultCon, "DELETE * FROM hac_combustible_responsable WHERE receptor_id=" & receptor_id)
+		For row As Integer = 0 To bs_responsable.Count - 1
+			DbMan.edit(My.Settings.DefaultCon, "INSERT INTO 
+												hac_combustible_responsable(receptor_id, persona_id)
+																	 VALUES(" & receptor_id & ", " & bs_responsable.Item(row)("persona_id") & ")")
+		Next
+	End Sub
 
-	Private Sub SaveAddTicket_Click(sender As Object, e As EventArgs) Handles SaveAdd.Click
+	Private Sub SaveAdd_Click(sender As Object, e As EventArgs) Handles SaveAdd.Click
 		If SaveReceptor() Then
 			Me.SuspendLayout()
 			Me.Refresh()
@@ -146,7 +157,7 @@ Public Class ModCombustibleReceptor
 		End If
 	End Sub
 
-	Private Sub SaveTicket_Click(sender As Object, e As EventArgs) Handles Save.Click
+	Private Sub Save_Click(sender As Object, e As EventArgs) Handles Save.Click
 		If SaveReceptor() Then
 			Me.Parent.Focus()
 			Me.Close()
@@ -154,7 +165,7 @@ Public Class ModCombustibleReceptor
 	End Sub
 
 	Private Sub cerrar_Click(sender As Object, e As EventArgs) Handles cerrar.Click
-		If MsgBoxResult.Ok = MsgBox("No se guardaran los cambios, desea continuar?", MsgBoxStyle.YesNo) Then
+		If MsgBoxResult.Yes = MsgBox("No se guardaran los cambios, desea continuar?", MsgBoxStyle.YesNo) Then
 			Me.Parent.Focus()
 			Me.Close()
 		End If
@@ -168,4 +179,6 @@ Public Class ModCombustibleReceptor
 			dominio.Mask = "AAA 000"
 		End If
 	End Sub
+
+
 End Class

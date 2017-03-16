@@ -7,13 +7,67 @@
 								" LEFT JOIN localidades ON per_domicilio.localidad_id = localidades.id" &
 								" WHERE per_domicilio.principal=True"
 
-		Overloads Shared Function Buscar(difunto As Boolean, fisica As Boolean) As DataTable
+		Shared Function Consultar(vista As String, filtro As String, keyword As String, difunto As Boolean, fisica As Boolean) As DataTable
+			Dim dtab_result As New DataTable
+
+			If vista.Contains("PERSONA") Then
+				If filtro.Contains("RAZON SOCIAL") Then
+					dtab_result = razon(keyword, difunto, fisica)
+				ElseIf filtro.Contains("CUIL/DNI") Then
+					dtab_result = cuil(Val(keyword), difunto, fisica)
+				ElseIf filtro.Contains("DIRECCION") Then
+					dtab_result = direccion(keyword, Val(keyword), 0, difunto, fisica)
+				ElseIf filtro.Contains("LOCALIDAD") Then
+					dtab_result = direccion("", 0, Val(keyword), difunto, fisica)
+				ElseIf filtro.Contains("ID") Then
+					dtab_result = id(Val(keyword), difunto, fisica)
+				End If
+
+			ElseIf vista.Contains("EMPLEADO") Then
+				If filtro.Contains("RAZON SOCIAL") Then
+					dtab_result = Empleado.BuscarPorPersona(keyword, difunto)
+				ElseIf filtro.Contains("CUIL") Then
+
+				ElseIf filtro.Contains("DIRECCION") Then
+
+				ElseIf filtro.Contains("LOCALIDAD") Then
+
+				End If
+
+			ElseIf vista.Contains("PROFESIONAL") Then
+				If filtro.Contains("RAZON SOCIAL") Then
+					dtab_result = Profesional.BuscarPorPersona(Val(keyword), Val(keyword),
+													  Trim(keyword))
+				ElseIf filtro.Contains("CUIL") Then
+
+				ElseIf filtro.Contains("DIRECCION") Then
+
+				ElseIf filtro.Contains("LOCALIDAD") Then
+
+				End If
+			ElseIf vista.Contains("PROVEEDOR") Then
+				If filtro.Contains("RAZON SOCIAL") Then
+					dtab_result = Proveedor.BuscarPorPersona(keyword, fisica)
+				ElseIf filtro.Contains("CUIL") Then
+
+				ElseIf filtro.Contains("DIRECCION") Then
+
+				ElseIf filtro.Contains("LOCALIDAD") Then
+
+
+
+				End If
+			End If
+			Return dtab_result
+		End Function
+
+		Shared Function all(difunto As Boolean, fisica As Boolean) As DataTable
 			Dim sql As String = SelectSQL
 			sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
 			sql += " ORDER By Persona.razon ASC"
 			Return DbMan.read(My.Settings.DefaultCon, sql)
 		End Function
-		Overloads Shared Function Buscar(persona_id As Integer, difunto As Boolean, fisica As Boolean) As DataTable
+		Shared Function id(persona_id As Integer, difunto As Boolean, fisica As Boolean) As DataTable
 			Dim sql As String = SelectSQL
 			sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
 
@@ -24,31 +78,31 @@
 			sql += " ORDER By Persona.razon ASC"
 			Return DbMan.read(My.Settings.DefaultCon, sql)
 		End Function
-		Overloads Shared Function Buscar(cuil As Double, difunto As Boolean, fisica As Boolean) As DataTable
+		Shared Function cuil(persona_cuil As Double, difunto As Boolean, fisica As Boolean) As DataTable
 			Dim sql As String = SelectSQL
 			sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
 
-			If Len(cuil) = 11 Then
-				sql += " AND Persona.cuil='" & cuil & "'"
+			If Len(persona_cuil) = 11 Then
+				sql += " AND Persona.cuil='" & persona_cuil & "'"
 			End If
 
 			sql += " ORDER By Persona.razon ASC"
 			Return DbMan.read(My.Settings.DefaultCon, sql)
 		End Function
-		Overloads Shared Function Buscar(razon As String, difunto As Boolean, fisica As Boolean) As DataTable
+		Shared Function razon(persona_razon As String, difunto As Boolean, fisica As Boolean) As DataTable
 
 			Dim sql As String = SelectSQL
 			sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
 
-			razon = Trim(razon)
-			If Len(razon) > 2 Then
-				sql += " AND Persona.razon LIKE '%" & razon & "%'"
+			persona_razon = Trim(persona_razon)
+			If Len(persona_razon) > 2 Then
+				sql += " AND Persona.razon LIKE '%" & persona_razon & "%'"
 			End If
 
 			sql += " ORDER By Persona.razon ASC"
 			Return DbMan.read(My.Settings.DefaultCon, sql)
 		End Function
-		Overloads Shared Function Buscar(calle As String, altura As Integer, localidad_id As Integer,
+		Shared Function direccion(calle As String, altura As Integer, localidad_id As Integer,
 										 difunto As Boolean, fisica As Boolean) As DataTable
 			Dim sql As String = SelectSQL
 			sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
@@ -65,8 +119,9 @@
 
 			Return DbMan.read(My.Settings.DefaultCon, sql)
 		End Function
-        'Registro para ModPersona
-        Shared Function Cargar(persona_id As Integer) As DataTable
+
+		'Registro para ModPersona
+		Shared Function Cargar(persona_id As Integer) As DataTable
 			Return DbMan.read(My.Settings.DefaultCon, "SELECT id as persona_id, razon, cuil," &
 								  " telefono, email," &
 								  " difunto, ruta_defuncion, fisica" &

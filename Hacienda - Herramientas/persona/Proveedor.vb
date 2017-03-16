@@ -1,16 +1,18 @@
 ﻿Public Class Proveedor
     Shared SelectSQL As String = "SELECT persona.id, persona.razon, persona.cuil, persona.fisica,
                                   per_domicilio.calle, per_domicilio.altura, localidades.localidad,
-                                  proveedor.id as prov_id, prov_actividad.actividad, proveedor.responsable_iva
-                                  FROM ((prov_actividad INNER JOIN (persona INNER JOIN proveedor
-                                  On persona.id = proveedor.per_id) ON prov_actividad.Id = proveedor.actividad_id)
-                                  INNER JOIN per_domicilio On persona.id = per_domicilio.per_id)
-                                  INNER JOIN localidades On per_domicilio.localidad_id = localidades.id
-                                  WHERE per_domicilio.principal=True"
-    Shared Function BuscarPorPersona(keyword As String, fisica As Boolean) As DataTable
-        Dim sql As String = SelectSQL
-        sql += " And Persona.difunto=False And persona.fisica=" & fisica
-        If keyword.Contains("BUSCAR") = False And Len(keyword) > 0 Then
+                                  proveedor.id as proveedor_id, prov_actividad.actividad, proveedor.responsable_iva                                  "
+
+	Shared TableSQL As String = "FROM ((prov_actividad INNER JOIN (persona INNER JOIN proveedor
+                                 On persona.id = proveedor.per_id) ON prov_actividad.Id = proveedor.actividad_id)
+                                 INNER JOIN per_domicilio On persona.id = per_domicilio.per_id)
+                                 INNER JOIN localidades On per_domicilio.localidad_id = localidades.id
+                                 WHERE per_domicilio.principal=True"
+
+
+	Shared Function BuscarPorPersona(keyword As String, fisica As Boolean) As DataTable
+		Dim sql As String = SelectSQL & TableSQL & " And Persona.difunto=False And persona.fisica=" & fisica
+		If keyword.Contains("BUSCAR") = False And Len(keyword) > 0 Then
             If keyword <> "" Then
                 If Val(keyword) > 0 Then
                     If Len(keyword) = 11 Then
@@ -25,7 +27,7 @@
 		Return DbMan.read(My.Settings.DefaultCon, sql)
 	End Function
 	Shared Function Seleccionar(persona_id As Integer) As DataTable
-		Dim sql As String = SelectSQL & " AND persona.id=" & persona_id
+		Dim sql As String = SelectSQL & TableSQL & " AND persona.id=" & persona_id
 		Return DbMan.read(My.Settings.DefaultCon, sql)
 	End Function
 	Shared Function guardar(ByVal per_id As Integer, proveedor_id As Integer, ByVal responsable As String) As Integer

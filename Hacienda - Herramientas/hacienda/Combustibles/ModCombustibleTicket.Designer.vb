@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class ModCombustibleTicket
 
 
 	'UserControl overrides dispose to clean up the component list.
-	<System.Diagnostics.DebuggerNonUserCode()> _
+	<System.Diagnostics.DebuggerNonUserCode()>
 	Protected Overrides Sub Dispose(ByVal disposing As Boolean)
 		Try
 			If disposing AndAlso components IsNot Nothing Then
@@ -20,60 +20,60 @@ Partial Class ModCombustibleTicket
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
 	Private Sub InitializeComponent()
 		Me.components = New System.ComponentModel.Container()
 		Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
 		Me.SaveAdd = New System.Windows.Forms.Button()
 		Me.Save = New System.Windows.Forms.Button()
-		Me.DelItem = New System.Windows.Forms.Button()
-		Me.ShowAddItem = New System.Windows.Forms.Button()
 		Me.FlowLayoutPanel3 = New System.Windows.Forms.FlowLayoutPanel()
-		Me.Label11 = New System.Windows.Forms.Label()
-		Me.TextBox2 = New System.Windows.Forms.TextBox()
-		Me.Label10 = New System.Windows.Forms.Label()
-		Me.TextBox1 = New System.Windows.Forms.TextBox()
-		Me.Label6 = New System.Windows.Forms.Label()
-		Me.proveedor = New System.Windows.Forms.ComboBox()
-		Me.SelectProveedor = New System.Windows.Forms.Button()
-		Me.Label2 = New System.Windows.Forms.Label()
-		Me.cuil_proveedor = New System.Windows.Forms.MaskedTextBox()
-		Me.Label4 = New System.Windows.Forms.Label()
 		Me.Label7 = New System.Windows.Forms.Label()
 		Me.fecha = New System.Windows.Forms.DateTimePicker()
 		Me.Label8 = New System.Windows.Forms.Label()
 		Me.ticket = New System.Windows.Forms.TextBox()
+		Me.Label11 = New System.Windows.Forms.Label()
+		Me.receptor = New System.Windows.Forms.ComboBox()
+		Me.Label10 = New System.Windows.Forms.Label()
+		Me.responsable = New System.Windows.Forms.ComboBox()
+		Me.Label2 = New System.Windows.Forms.Label()
+		Me.proveedor = New System.Windows.Forms.TextBox()
+		Me.SelectProveedor = New System.Windows.Forms.Button()
 		Me.DetalleTicket = New System.Windows.Forms.DataGridView()
 		Me.Panel4 = New System.Windows.Forms.Panel()
 		Me.Label14 = New System.Windows.Forms.Label()
 		Me.cerrar = New System.Windows.Forms.Button()
-		Me.Panel1 = New System.Windows.Forms.Panel()
-		Me.Label3 = New System.Windows.Forms.Label()
-		Me.Label5 = New System.Windows.Forms.Label()
-		Me.monto_total = New System.Windows.Forms.Label()
 		Me.Panel2 = New System.Windows.Forms.Panel()
 		Me.AddItemPanel1 = New System.Windows.Forms.FlowLayoutPanel()
 		Me.Label12 = New System.Windows.Forms.Label()
-		Me.DescItem = New System.Windows.Forms.ComboBox()
-		Me.NewReceptor = New System.Windows.Forms.Button()
-		Me.DelReceptor = New System.Windows.Forms.Button()
 		Me.Label1 = New System.Windows.Forms.Label()
-		Me.LitrosItem = New System.Windows.Forms.NumericUpDown()
+		Me.et_litros_unidades = New System.Windows.Forms.Label()
 		Me.Label13 = New System.Windows.Forms.Label()
+		Me.TipoItem = New System.Windows.Forms.ComboBox()
+		Me.NewItemType = New System.Windows.Forms.Button()
+		Me.DelItemType = New System.Windows.Forms.Button()
+		Me.LitrosItem = New System.Windows.Forms.NumericUpDown()
 		Me.MontoItem = New System.Windows.Forms.NumericUpDown()
 		Me.AddNewItem = New System.Windows.Forms.Button()
-		Me.bs_proveedor = New System.Windows.Forms.BindingSource(Me.components)
+		Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
+		Me.Label5 = New System.Windows.Forms.Label()
+		Me.monto_total = New System.Windows.Forms.Label()
 		Me.bs_item_ticket = New System.Windows.Forms.BindingSource(Me.components)
+		Me.bs_responsable = New System.Windows.Forms.BindingSource(Me.components)
+		Me.bs_receptor = New System.Windows.Forms.BindingSource(Me.components)
+		Me.bs_tipo_item = New System.Windows.Forms.BindingSource(Me.components)
+		Me.DelItem = New System.Windows.Forms.Button()
 		Me.FlowLayoutPanel3.SuspendLayout()
 		CType(Me.DetalleTicket, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.Panel4.SuspendLayout()
-		Me.Panel1.SuspendLayout()
 		Me.Panel2.SuspendLayout()
 		Me.AddItemPanel1.SuspendLayout()
 		CType(Me.LitrosItem, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.MontoItem, System.ComponentModel.ISupportInitialize).BeginInit()
-		CType(Me.bs_proveedor, System.ComponentModel.ISupportInitialize).BeginInit()
+		Me.FlowLayoutPanel1.SuspendLayout()
 		CType(Me.bs_item_ticket, System.ComponentModel.ISupportInitialize).BeginInit()
+		CType(Me.bs_responsable, System.ComponentModel.ISupportInitialize).BeginInit()
+		CType(Me.bs_receptor, System.ComponentModel.ISupportInitialize).BeginInit()
+		CType(Me.bs_tipo_item, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
 		'
 		'SaveAdd
@@ -83,7 +83,7 @@ Partial Class ModCombustibleTicket
 		Me.SaveAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.SaveAdd.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.SaveAdd.ForeColor = System.Drawing.Color.White
-		Me.SaveAdd.Location = New System.Drawing.Point(300, 0)
+		Me.SaveAdd.Location = New System.Drawing.Point(354, 0)
 		Me.SaveAdd.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
 		Me.SaveAdd.Name = "SaveAdd"
 		Me.SaveAdd.Size = New System.Drawing.Size(50, 27)
@@ -100,7 +100,7 @@ Partial Class ModCombustibleTicket
 		Me.Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.Save.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.Save.ForeColor = System.Drawing.Color.White
-		Me.Save.Location = New System.Drawing.Point(350, 0)
+		Me.Save.Location = New System.Drawing.Point(404, 0)
 		Me.Save.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
 		Me.Save.Name = "Save"
 		Me.Save.Size = New System.Drawing.Size(30, 27)
@@ -109,180 +109,31 @@ Partial Class ModCombustibleTicket
 		Me.ToolTip1.SetToolTip(Me.Save, "Guardar Cambios")
 		Me.Save.UseVisualStyleBackColor = False
 		'
-		'DelItem
-		'
-		Me.DelItem.Dock = System.Windows.Forms.DockStyle.Right
-		Me.DelItem.FlatAppearance.BorderSize = 0
-		Me.DelItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.DelItem.Font = New System.Drawing.Font("Segoe MDL2 Assets", 10.0!)
-		Me.DelItem.ForeColor = System.Drawing.Color.White
-		Me.DelItem.Location = New System.Drawing.Point(387, 0)
-		Me.DelItem.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.DelItem.Name = "DelItem"
-		Me.DelItem.Size = New System.Drawing.Size(25, 22)
-		Me.DelItem.TabIndex = 432
-		Me.DelItem.Text = ""
-		Me.DelItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-		Me.ToolTip1.SetToolTip(Me.DelItem, "Eliminar Item Seleccionado")
-		Me.DelItem.UseVisualStyleBackColor = False
-		'
-		'ShowAddItem
-		'
-		Me.ShowAddItem.Dock = System.Windows.Forms.DockStyle.Right
-		Me.ShowAddItem.FlatAppearance.BorderSize = 0
-		Me.ShowAddItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.ShowAddItem.Font = New System.Drawing.Font("Segoe MDL2 Assets", 10.0!)
-		Me.ShowAddItem.ForeColor = System.Drawing.Color.White
-		Me.ShowAddItem.Location = New System.Drawing.Point(362, 0)
-		Me.ShowAddItem.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.ShowAddItem.Name = "ShowAddItem"
-		Me.ShowAddItem.Size = New System.Drawing.Size(25, 22)
-		Me.ShowAddItem.TabIndex = 436
-		Me.ShowAddItem.Text = ""
-		Me.ShowAddItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-		Me.ToolTip1.SetToolTip(Me.ShowAddItem, "Eliminar Item Seleccionado")
-		Me.ShowAddItem.UseVisualStyleBackColor = False
-		'
 		'FlowLayoutPanel3
 		'
 		Me.FlowLayoutPanel3.BackColor = System.Drawing.Color.LightGray
-		Me.FlowLayoutPanel3.Controls.Add(Me.Label11)
-		Me.FlowLayoutPanel3.Controls.Add(Me.TextBox2)
-		Me.FlowLayoutPanel3.Controls.Add(Me.Label10)
-		Me.FlowLayoutPanel3.Controls.Add(Me.TextBox1)
-		Me.FlowLayoutPanel3.Controls.Add(Me.Label6)
-		Me.FlowLayoutPanel3.Controls.Add(Me.proveedor)
-		Me.FlowLayoutPanel3.Controls.Add(Me.SelectProveedor)
-		Me.FlowLayoutPanel3.Controls.Add(Me.Label2)
-		Me.FlowLayoutPanel3.Controls.Add(Me.cuil_proveedor)
-		Me.FlowLayoutPanel3.Controls.Add(Me.Label4)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label7)
 		Me.FlowLayoutPanel3.Controls.Add(Me.fecha)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label8)
 		Me.FlowLayoutPanel3.Controls.Add(Me.ticket)
+		Me.FlowLayoutPanel3.Controls.Add(Me.Label11)
+		Me.FlowLayoutPanel3.Controls.Add(Me.receptor)
+		Me.FlowLayoutPanel3.Controls.Add(Me.Label10)
+		Me.FlowLayoutPanel3.Controls.Add(Me.responsable)
+		Me.FlowLayoutPanel3.Controls.Add(Me.Label2)
+		Me.FlowLayoutPanel3.Controls.Add(Me.proveedor)
+		Me.FlowLayoutPanel3.Controls.Add(Me.SelectProveedor)
 		Me.FlowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top
 		Me.FlowLayoutPanel3.Location = New System.Drawing.Point(0, 27)
 		Me.FlowLayoutPanel3.Margin = New System.Windows.Forms.Padding(0)
 		Me.FlowLayoutPanel3.Name = "FlowLayoutPanel3"
-		Me.FlowLayoutPanel3.Size = New System.Drawing.Size(412, 152)
+		Me.FlowLayoutPanel3.Size = New System.Drawing.Size(466, 120)
 		Me.FlowLayoutPanel3.TabIndex = 429
-		'
-		'Label11
-		'
-		Me.Label11.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.Label11.Location = New System.Drawing.Point(4, 5)
-		Me.Label11.Margin = New System.Windows.Forms.Padding(4, 5, 0, 0)
-		Me.Label11.Name = "Label11"
-		Me.Label11.Size = New System.Drawing.Size(104, 27)
-		Me.Label11.TabIndex = 441
-		Me.Label11.Text = "Receptor"
-		Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-		'
-		'TextBox2
-		'
-		Me.TextBox2.Enabled = False
-		Me.TextBox2.Location = New System.Drawing.Point(108, 5)
-		Me.TextBox2.Margin = New System.Windows.Forms.Padding(0, 5, 0, 0)
-		Me.TextBox2.MaxLength = 35
-		Me.TextBox2.Name = "TextBox2"
-		Me.TextBox2.ReadOnly = True
-		Me.TextBox2.Size = New System.Drawing.Size(274, 27)
-		Me.TextBox2.TabIndex = 450
-		'
-		'Label10
-		'
-		Me.Label10.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.Label10.Location = New System.Drawing.Point(4, 32)
-		Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
-		Me.Label10.Name = "Label10"
-		Me.Label10.Size = New System.Drawing.Size(104, 29)
-		Me.Label10.TabIndex = 439
-		Me.Label10.Text = "Responsable"
-		Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-		'
-		'TextBox1
-		'
-		Me.TextBox1.Enabled = False
-		Me.TextBox1.Location = New System.Drawing.Point(108, 34)
-		Me.TextBox1.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.TextBox1.MaxLength = 35
-		Me.TextBox1.Name = "TextBox1"
-		Me.TextBox1.ReadOnly = True
-		Me.TextBox1.Size = New System.Drawing.Size(274, 27)
-		Me.TextBox1.TabIndex = 449
-		'
-		'Label6
-		'
-		Me.Label6.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.Label6.Location = New System.Drawing.Point(4, 61)
-		Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
-		Me.Label6.Name = "Label6"
-		Me.Label6.Size = New System.Drawing.Size(104, 29)
-		Me.Label6.TabIndex = 434
-		Me.Label6.Text = "Proveedor"
-		Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-		'
-		'proveedor
-		'
-		Me.proveedor.FormattingEnabled = True
-		Me.proveedor.Location = New System.Drawing.Point(108, 63)
-		Me.proveedor.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.proveedor.Name = "proveedor"
-		Me.proveedor.Size = New System.Drawing.Size(274, 27)
-		Me.proveedor.TabIndex = 437
-		'
-		'SelectProveedor
-		'
-		Me.SelectProveedor.FlatAppearance.BorderSize = 0
-		Me.SelectProveedor.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.SelectProveedor.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.SelectProveedor.ForeColor = System.Drawing.Color.White
-		Me.SelectProveedor.Location = New System.Drawing.Point(382, 63)
-		Me.SelectProveedor.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.SelectProveedor.Name = "SelectProveedor"
-		Me.SelectProveedor.Size = New System.Drawing.Size(27, 26)
-		Me.SelectProveedor.TabIndex = 438
-		Me.SelectProveedor.Text = ""
-		Me.SelectProveedor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-		Me.SelectProveedor.UseVisualStyleBackColor = False
-		'
-		'Label2
-		'
-		Me.Label2.Location = New System.Drawing.Point(4, 92)
-		Me.Label2.Margin = New System.Windows.Forms.Padding(4, 2, 0, 0)
-		Me.Label2.Name = "Label2"
-		Me.Label2.Size = New System.Drawing.Size(104, 27)
-		Me.Label2.TabIndex = 407
-		Me.Label2.Text = "CUIT/CUIL"
-		Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-		'
-		'cuil_proveedor
-		'
-		Me.cuil_proveedor.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.cuil_proveedor.Location = New System.Drawing.Point(108, 92)
-		Me.cuil_proveedor.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.cuil_proveedor.Mask = "99-99999999-9"
-		Me.cuil_proveedor.Name = "cuil_proveedor"
-		Me.cuil_proveedor.ReadOnly = True
-		Me.cuil_proveedor.Size = New System.Drawing.Size(121, 27)
-		Me.cuil_proveedor.TabIndex = 436
-		Me.cuil_proveedor.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-		Me.cuil_proveedor.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals
-		'
-		'Label4
-		'
-		Me.Label4.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.Label4.Location = New System.Drawing.Point(233, 90)
-		Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
-		Me.Label4.Name = "Label4"
-		Me.Label4.Size = New System.Drawing.Size(172, 25)
-		Me.Label4.TabIndex = 451
-		Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
 		'Label7
 		'
 		Me.Label7.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.Label7.Location = New System.Drawing.Point(4, 119)
+		Me.Label7.Location = New System.Drawing.Point(4, 0)
 		Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
 		Me.Label7.Name = "Label7"
 		Me.Label7.Size = New System.Drawing.Size(104, 28)
@@ -293,7 +144,7 @@ Partial Class ModCombustibleTicket
 		'fecha
 		'
 		Me.fecha.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-		Me.fecha.Location = New System.Drawing.Point(108, 121)
+		Me.fecha.Location = New System.Drawing.Point(108, 2)
 		Me.fecha.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
 		Me.fecha.Name = "fecha"
 		Me.fecha.Size = New System.Drawing.Size(121, 27)
@@ -301,39 +152,119 @@ Partial Class ModCombustibleTicket
 		'
 		'Label8
 		'
-		Me.Label8.Location = New System.Drawing.Point(233, 119)
+		Me.Label8.Location = New System.Drawing.Point(233, 0)
 		Me.Label8.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
 		Me.Label8.Name = "Label8"
-		Me.Label8.Size = New System.Drawing.Size(50, 31)
+		Me.Label8.Size = New System.Drawing.Size(50, 29)
 		Me.Label8.TabIndex = 431
 		Me.Label8.Text = "Ticket"
 		Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
 		'ticket
 		'
-		Me.ticket.Location = New System.Drawing.Point(283, 121)
+		Me.ticket.Location = New System.Drawing.Point(283, 2)
 		Me.ticket.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
 		Me.ticket.MaxLength = 35
 		Me.ticket.Name = "ticket"
-		Me.ticket.Size = New System.Drawing.Size(99, 27)
+		Me.ticket.Size = New System.Drawing.Size(151, 27)
 		Me.ticket.TabIndex = 445
+		Me.ticket.Text = "0"
+		'
+		'Label11
+		'
+		Me.Label11.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.Label11.Location = New System.Drawing.Point(4, 31)
+		Me.Label11.Margin = New System.Windows.Forms.Padding(4, 2, 0, 0)
+		Me.Label11.Name = "Label11"
+		Me.Label11.Size = New System.Drawing.Size(104, 27)
+		Me.Label11.TabIndex = 441
+		Me.Label11.Text = "Receptor"
+		Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		'
+		'receptor
+		'
+		Me.receptor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+		Me.receptor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+		Me.receptor.FormattingEnabled = True
+		Me.receptor.Location = New System.Drawing.Point(108, 31)
+		Me.receptor.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.receptor.Name = "receptor"
+		Me.receptor.Size = New System.Drawing.Size(326, 27)
+		Me.receptor.TabIndex = 453
+		'
+		'Label10
+		'
+		Me.Label10.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.Label10.Location = New System.Drawing.Point(4, 58)
+		Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
+		Me.Label10.Name = "Label10"
+		Me.Label10.Size = New System.Drawing.Size(104, 29)
+		Me.Label10.TabIndex = 439
+		Me.Label10.Text = "Responsable"
+		Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		'
+		'responsable
+		'
+		Me.responsable.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+		Me.responsable.FormattingEnabled = True
+		Me.responsable.Location = New System.Drawing.Point(108, 60)
+		Me.responsable.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.responsable.Name = "responsable"
+		Me.responsable.Size = New System.Drawing.Size(326, 27)
+		Me.responsable.TabIndex = 452
+		'
+		'Label2
+		'
+		Me.Label2.Location = New System.Drawing.Point(4, 89)
+		Me.Label2.Margin = New System.Windows.Forms.Padding(4, 2, 0, 0)
+		Me.Label2.Name = "Label2"
+		Me.Label2.Size = New System.Drawing.Size(104, 27)
+		Me.Label2.TabIndex = 407
+		Me.Label2.Text = "Proveedor"
+		Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		'
+		'proveedor
+		'
+		Me.proveedor.Enabled = False
+		Me.proveedor.Location = New System.Drawing.Point(108, 89)
+		Me.proveedor.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.proveedor.MaxLength = 35
+		Me.proveedor.Name = "proveedor"
+		Me.proveedor.ReadOnly = True
+		Me.proveedor.Size = New System.Drawing.Size(326, 27)
+		Me.proveedor.TabIndex = 450
+		'
+		'SelectProveedor
+		'
+		Me.SelectProveedor.FlatAppearance.BorderSize = 0
+		Me.SelectProveedor.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.SelectProveedor.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.SelectProveedor.ForeColor = System.Drawing.Color.White
+		Me.SelectProveedor.Location = New System.Drawing.Point(434, 89)
+		Me.SelectProveedor.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.SelectProveedor.Name = "SelectProveedor"
+		Me.SelectProveedor.Size = New System.Drawing.Size(27, 26)
+		Me.SelectProveedor.TabIndex = 438
+		Me.SelectProveedor.Text = ""
+		Me.SelectProveedor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+		Me.SelectProveedor.UseVisualStyleBackColor = False
 		'
 		'DetalleTicket
 		'
 		Me.DetalleTicket.AllowUserToAddRows = False
 		Me.DetalleTicket.AllowUserToDeleteRows = False
 		Me.DetalleTicket.AllowUserToResizeRows = False
-		Me.DetalleTicket.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
+		Me.DetalleTicket.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
 		Me.DetalleTicket.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
 		Me.DetalleTicket.Dock = System.Windows.Forms.DockStyle.Fill
-		Me.DetalleTicket.Location = New System.Drawing.Point(0, 0)
+		Me.DetalleTicket.Location = New System.Drawing.Point(0, 26)
 		Me.DetalleTicket.Name = "DetalleTicket"
 		Me.DetalleTicket.ReadOnly = True
 		Me.DetalleTicket.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
 		Me.DetalleTicket.RowHeadersVisible = False
 		Me.DetalleTicket.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
 		Me.DetalleTicket.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-		Me.DetalleTicket.Size = New System.Drawing.Size(412, 121)
+		Me.DetalleTicket.Size = New System.Drawing.Size(466, 173)
 		Me.DetalleTicket.TabIndex = 432
 		'
 		'Panel4
@@ -347,7 +278,7 @@ Partial Class ModCombustibleTicket
 		Me.Panel4.Location = New System.Drawing.Point(0, 0)
 		Me.Panel4.Margin = New System.Windows.Forms.Padding(0)
 		Me.Panel4.Name = "Panel4"
-		Me.Panel4.Size = New System.Drawing.Size(412, 27)
+		Me.Panel4.Size = New System.Drawing.Size(466, 27)
 		Me.Panel4.TabIndex = 433
 		'
 		'Label14
@@ -357,7 +288,7 @@ Partial Class ModCombustibleTicket
 		Me.Label14.ForeColor = System.Drawing.Color.White
 		Me.Label14.Location = New System.Drawing.Point(0, 0)
 		Me.Label14.Name = "Label14"
-		Me.Label14.Size = New System.Drawing.Size(300, 27)
+		Me.Label14.Size = New System.Drawing.Size(354, 27)
 		Me.Label14.TabIndex = 438
 		Me.Label14.Text = "NUEVO TICKET"
 		Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -370,7 +301,7 @@ Partial Class ModCombustibleTicket
 		Me.cerrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.cerrar.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.cerrar.ForeColor = System.Drawing.Color.White
-		Me.cerrar.Location = New System.Drawing.Point(380, 0)
+		Me.cerrar.Location = New System.Drawing.Point(434, 0)
 		Me.cerrar.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
 		Me.cerrar.Name = "cerrar"
 		Me.cerrar.Size = New System.Drawing.Size(32, 27)
@@ -379,178 +310,142 @@ Partial Class ModCombustibleTicket
 		Me.cerrar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
 		Me.cerrar.UseVisualStyleBackColor = False
 		'
-		'Panel1
-		'
-		Me.Panel1.BackColor = System.Drawing.Color.DarkGray
-		Me.Panel1.Controls.Add(Me.Label3)
-		Me.Panel1.Controls.Add(Me.Label5)
-		Me.Panel1.Controls.Add(Me.monto_total)
-		Me.Panel1.Controls.Add(Me.ShowAddItem)
-		Me.Panel1.Controls.Add(Me.DelItem)
-		Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
-		Me.Panel1.Location = New System.Drawing.Point(0, 179)
-		Me.Panel1.Margin = New System.Windows.Forms.Padding(0)
-		Me.Panel1.Name = "Panel1"
-		Me.Panel1.Size = New System.Drawing.Size(412, 22)
-		Me.Panel1.TabIndex = 435
-		'
-		'Label3
-		'
-		Me.Label3.Dock = System.Windows.Forms.DockStyle.Fill
-		Me.Label3.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Bold)
-		Me.Label3.ForeColor = System.Drawing.Color.White
-		Me.Label3.Location = New System.Drawing.Point(0, 0)
-		Me.Label3.Name = "Label3"
-		Me.Label3.Size = New System.Drawing.Size(264, 22)
-		Me.Label3.TabIndex = 435
-		Me.Label3.Text = "DETALLE"
-		'
-		'Label5
-		'
-		Me.Label5.AutoSize = True
-		Me.Label5.Dock = System.Windows.Forms.DockStyle.Right
-		Me.Label5.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-		Me.Label5.Location = New System.Drawing.Point(264, 0)
-		Me.Label5.Name = "Label5"
-		Me.Label5.Size = New System.Drawing.Size(42, 19)
-		Me.Label5.TabIndex = 445
-		Me.Label5.Text = "Total"
-		Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-		'
-		'monto_total
-		'
-		Me.monto_total.AutoSize = True
-		Me.monto_total.Dock = System.Windows.Forms.DockStyle.Right
-		Me.monto_total.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.monto_total.Location = New System.Drawing.Point(306, 0)
-		Me.monto_total.Name = "monto_total"
-		Me.monto_total.Padding = New System.Windows.Forms.Padding(0, 0, 8, 0)
-		Me.monto_total.Size = New System.Drawing.Size(56, 19)
-		Me.monto_total.TabIndex = 444
-		Me.monto_total.Text = "$ 0,00"
-		Me.monto_total.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-		'
 		'Panel2
 		'
 		Me.Panel2.Controls.Add(Me.DetalleTicket)
 		Me.Panel2.Controls.Add(Me.AddItemPanel1)
+		Me.Panel2.Controls.Add(Me.FlowLayoutPanel1)
 		Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
-		Me.Panel2.Location = New System.Drawing.Point(0, 201)
+		Me.Panel2.Font = New System.Drawing.Font("PF DinDisplay Pro", 11.0!)
+		Me.Panel2.Location = New System.Drawing.Point(0, 147)
 		Me.Panel2.Name = "Panel2"
-		Me.Panel2.Size = New System.Drawing.Size(412, 187)
+		Me.Panel2.Size = New System.Drawing.Size(466, 241)
 		Me.Panel2.TabIndex = 436
 		'
 		'AddItemPanel1
 		'
 		Me.AddItemPanel1.BackColor = System.Drawing.Color.LightGray
 		Me.AddItemPanel1.Controls.Add(Me.Label12)
-		Me.AddItemPanel1.Controls.Add(Me.DescItem)
-		Me.AddItemPanel1.Controls.Add(Me.NewReceptor)
-		Me.AddItemPanel1.Controls.Add(Me.DelReceptor)
 		Me.AddItemPanel1.Controls.Add(Me.Label1)
-		Me.AddItemPanel1.Controls.Add(Me.LitrosItem)
+		Me.AddItemPanel1.Controls.Add(Me.et_litros_unidades)
 		Me.AddItemPanel1.Controls.Add(Me.Label13)
+		Me.AddItemPanel1.Controls.Add(Me.TipoItem)
+		Me.AddItemPanel1.Controls.Add(Me.NewItemType)
+		Me.AddItemPanel1.Controls.Add(Me.DelItemType)
+		Me.AddItemPanel1.Controls.Add(Me.LitrosItem)
 		Me.AddItemPanel1.Controls.Add(Me.MontoItem)
 		Me.AddItemPanel1.Controls.Add(Me.AddNewItem)
 		Me.AddItemPanel1.Dock = System.Windows.Forms.DockStyle.Bottom
-		Me.AddItemPanel1.Location = New System.Drawing.Point(0, 121)
+		Me.AddItemPanel1.Font = New System.Drawing.Font("PF DinDisplay Pro", 11.0!)
+		Me.AddItemPanel1.Location = New System.Drawing.Point(0, 199)
 		Me.AddItemPanel1.Margin = New System.Windows.Forms.Padding(0)
 		Me.AddItemPanel1.Name = "AddItemPanel1"
-		Me.AddItemPanel1.Size = New System.Drawing.Size(412, 66)
+		Me.AddItemPanel1.Size = New System.Drawing.Size(466, 42)
 		Me.AddItemPanel1.TabIndex = 435
-		Me.AddItemPanel1.Visible = False
 		'
 		'Label12
 		'
-		Me.Label12.Location = New System.Drawing.Point(4, 4)
-		Me.Label12.Margin = New System.Windows.Forms.Padding(4, 4, 0, 0)
+		Me.Label12.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.0!)
+		Me.Label12.Location = New System.Drawing.Point(2, 0)
+		Me.Label12.Margin = New System.Windows.Forms.Padding(2, 0, 0, 0)
 		Me.Label12.Name = "Label12"
-		Me.Label12.Size = New System.Drawing.Size(89, 27)
+		Me.Label12.Size = New System.Drawing.Size(199, 14)
 		Me.Label12.TabIndex = 446
-		Me.Label12.Text = "Descripcion"
-		Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-		'
-		'DescItem
-		'
-		Me.DescItem.FormattingEnabled = True
-		Me.DescItem.Location = New System.Drawing.Point(97, 4)
-		Me.DescItem.Margin = New System.Windows.Forms.Padding(4, 4, 0, 4)
-		Me.DescItem.Name = "DescItem"
-		Me.DescItem.Size = New System.Drawing.Size(227, 27)
-		Me.DescItem.TabIndex = 436
-		'
-		'NewReceptor
-		'
-		Me.NewReceptor.FlatAppearance.BorderSize = 0
-		Me.NewReceptor.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.NewReceptor.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.NewReceptor.ForeColor = System.Drawing.Color.White
-		Me.NewReceptor.Location = New System.Drawing.Point(324, 4)
-		Me.NewReceptor.Margin = New System.Windows.Forms.Padding(0, 4, 0, 0)
-		Me.NewReceptor.Name = "NewReceptor"
-		Me.NewReceptor.Size = New System.Drawing.Size(27, 27)
-		Me.NewReceptor.TabIndex = 459
-		Me.NewReceptor.Text = ""
-		Me.NewReceptor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-		Me.NewReceptor.UseVisualStyleBackColor = False
-		'
-		'DelReceptor
-		'
-		Me.DelReceptor.FlatAppearance.BorderSize = 0
-		Me.DelReceptor.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.DelReceptor.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.DelReceptor.ForeColor = System.Drawing.Color.White
-		Me.DelReceptor.Location = New System.Drawing.Point(351, 4)
-		Me.DelReceptor.Margin = New System.Windows.Forms.Padding(0, 4, 0, 0)
-		Me.DelReceptor.Name = "DelReceptor"
-		Me.DelReceptor.Size = New System.Drawing.Size(27, 27)
-		Me.DelReceptor.TabIndex = 460
-		Me.DelReceptor.Text = ""
-		Me.DelReceptor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-		Me.DelReceptor.UseVisualStyleBackColor = False
+		Me.Label12.Text = "DESCRIPCION"
+		Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
 		'
 		'Label1
 		'
-		Me.Label1.Location = New System.Drawing.Point(4, 35)
-		Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
+		Me.Label1.Location = New System.Drawing.Point(201, 0)
+		Me.Label1.Margin = New System.Windows.Forms.Padding(0)
 		Me.Label1.Name = "Label1"
-		Me.Label1.Size = New System.Drawing.Size(53, 21)
-		Me.Label1.TabIndex = 445
-		Me.Label1.Text = "Litros"
-		Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		Me.Label1.Size = New System.Drawing.Size(48, 10)
+		Me.Label1.TabIndex = 462
+		Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+		'
+		'et_litros_unidades
+		'
+		Me.et_litros_unidades.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.0!)
+		Me.et_litros_unidades.Location = New System.Drawing.Point(249, 0)
+		Me.et_litros_unidades.Margin = New System.Windows.Forms.Padding(0)
+		Me.et_litros_unidades.Name = "et_litros_unidades"
+		Me.et_litros_unidades.Size = New System.Drawing.Size(65, 14)
+		Me.et_litros_unidades.TabIndex = 445
+		Me.et_litros_unidades.Text = "UNIDADES"
+		Me.et_litros_unidades.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+		'
+		'Label13
+		'
+		Me.Label13.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.0!)
+		Me.Label13.Location = New System.Drawing.Point(314, 0)
+		Me.Label13.Margin = New System.Windows.Forms.Padding(0)
+		Me.Label13.Name = "Label13"
+		Me.Label13.Size = New System.Drawing.Size(85, 14)
+		Me.Label13.TabIndex = 443
+		Me.Label13.Text = "MONTO"
+		Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+		'
+		'TipoItem
+		'
+		Me.TipoItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+		Me.TipoItem.FormattingEnabled = True
+		Me.TipoItem.Location = New System.Drawing.Point(2, 14)
+		Me.TipoItem.Margin = New System.Windows.Forms.Padding(2, 0, 0, 0)
+		Me.TipoItem.Name = "TipoItem"
+		Me.TipoItem.Size = New System.Drawing.Size(199, 26)
+		Me.TipoItem.TabIndex = 436
+		'
+		'NewItemType
+		'
+		Me.NewItemType.FlatAppearance.BorderSize = 0
+		Me.NewItemType.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.NewItemType.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.NewItemType.ForeColor = System.Drawing.Color.White
+		Me.NewItemType.Location = New System.Drawing.Point(201, 14)
+		Me.NewItemType.Margin = New System.Windows.Forms.Padding(0)
+		Me.NewItemType.Name = "NewItemType"
+		Me.NewItemType.Size = New System.Drawing.Size(23, 25)
+		Me.NewItemType.TabIndex = 459
+		Me.NewItemType.Text = ""
+		Me.NewItemType.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+		Me.NewItemType.UseVisualStyleBackColor = False
+		'
+		'DelItemType
+		'
+		Me.DelItemType.FlatAppearance.BorderSize = 0
+		Me.DelItemType.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.DelItemType.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.DelItemType.ForeColor = System.Drawing.Color.White
+		Me.DelItemType.Location = New System.Drawing.Point(224, 14)
+		Me.DelItemType.Margin = New System.Windows.Forms.Padding(0)
+		Me.DelItemType.Name = "DelItemType"
+		Me.DelItemType.Size = New System.Drawing.Size(23, 25)
+		Me.DelItemType.TabIndex = 460
+		Me.DelItemType.Text = ""
+		Me.DelItemType.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+		Me.DelItemType.UseVisualStyleBackColor = False
 		'
 		'LitrosItem
 		'
-		Me.LitrosItem.Location = New System.Drawing.Point(61, 35)
-		Me.LitrosItem.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
-		Me.LitrosItem.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
+		Me.LitrosItem.Location = New System.Drawing.Point(247, 14)
+		Me.LitrosItem.Margin = New System.Windows.Forms.Padding(0)
+		Me.LitrosItem.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
 		Me.LitrosItem.Name = "LitrosItem"
-		Me.LitrosItem.Size = New System.Drawing.Size(74, 27)
+		Me.LitrosItem.Size = New System.Drawing.Size(66, 25)
 		Me.LitrosItem.TabIndex = 426
 		Me.LitrosItem.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
 		Me.LitrosItem.ThousandsSeparator = True
 		Me.LitrosItem.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left
 		'
-		'Label13
-		'
-		Me.Label13.Location = New System.Drawing.Point(139, 35)
-		Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
-		Me.Label13.Name = "Label13"
-		Me.Label13.Size = New System.Drawing.Size(72, 21)
-		Me.Label13.TabIndex = 443
-		Me.Label13.Text = "Monto ($)"
-		Me.Label13.TextAlign = System.Drawing.ContentAlignment.BottomLeft
-		'
 		'MontoItem
 		'
 		Me.MontoItem.DecimalPlaces = 2
 		Me.MontoItem.Increment = New Decimal(New Integer() {5, 0, 0, 65536})
-		Me.MontoItem.Location = New System.Drawing.Point(215, 35)
-		Me.MontoItem.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
+		Me.MontoItem.Location = New System.Drawing.Point(313, 14)
+		Me.MontoItem.Margin = New System.Windows.Forms.Padding(0)
 		Me.MontoItem.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
 		Me.MontoItem.Name = "MontoItem"
-		Me.MontoItem.Size = New System.Drawing.Size(109, 27)
+		Me.MontoItem.Size = New System.Drawing.Size(85, 25)
 		Me.MontoItem.TabIndex = 429
 		Me.MontoItem.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
 		Me.MontoItem.ThousandsSeparator = True
@@ -558,40 +453,97 @@ Partial Class ModCombustibleTicket
 		'
 		'AddNewItem
 		'
-		Me.AddNewItem.Location = New System.Drawing.Point(326, 35)
-		Me.AddNewItem.Margin = New System.Windows.Forms.Padding(2, 0, 0, 0)
+		Me.AddNewItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.0!)
+		Me.AddNewItem.Location = New System.Drawing.Point(398, 14)
+		Me.AddNewItem.Margin = New System.Windows.Forms.Padding(0)
 		Me.AddNewItem.Name = "AddNewItem"
-		Me.AddNewItem.Size = New System.Drawing.Size(80, 27)
-		Me.AddNewItem.TabIndex = 444
-		Me.AddNewItem.Text = "Agregar"
+		Me.AddNewItem.Size = New System.Drawing.Size(65, 26)
+		Me.AddNewItem.TabIndex = 461
+		Me.AddNewItem.Text = "AGREGAR"
 		Me.AddNewItem.UseVisualStyleBackColor = True
+		'
+		'FlowLayoutPanel1
+		'
+		Me.FlowLayoutPanel1.BackColor = System.Drawing.Color.LightGray
+		Me.FlowLayoutPanel1.Controls.Add(Me.DelItem)
+		Me.FlowLayoutPanel1.Controls.Add(Me.Label5)
+		Me.FlowLayoutPanel1.Controls.Add(Me.monto_total)
+		Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top
+		Me.FlowLayoutPanel1.Font = New System.Drawing.Font("PF DinDisplay Pro", 11.0!)
+		Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 0)
+		Me.FlowLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
+		Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
+		Me.FlowLayoutPanel1.Size = New System.Drawing.Size(466, 26)
+		Me.FlowLayoutPanel1.TabIndex = 464
+		'
+		'Label5
+		'
+		Me.Label5.AutoSize = True
+		Me.Label5.Font = New System.Drawing.Font("PF DinDisplay Pro", 10.0!)
+		Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+		Me.Label5.Location = New System.Drawing.Point(123, 6)
+		Me.Label5.Margin = New System.Windows.Forms.Padding(3, 6, 3, 0)
+		Me.Label5.Name = "Label5"
+		Me.Label5.Size = New System.Drawing.Size(45, 16)
+		Me.Label5.TabIndex = 447
+		Me.Label5.Text = "TOTAL"
+		Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+		'
+		'monto_total
+		'
+		Me.monto_total.AutoSize = True
+		Me.monto_total.Font = New System.Drawing.Font("PF DinDisplay Pro", 10.0!)
+		Me.monto_total.Location = New System.Drawing.Point(174, 6)
+		Me.monto_total.Margin = New System.Windows.Forms.Padding(3, 6, 3, 0)
+		Me.monto_total.Name = "monto_total"
+		Me.monto_total.Padding = New System.Windows.Forms.Padding(0, 0, 8, 0)
+		Me.monto_total.Size = New System.Drawing.Size(51, 16)
+		Me.monto_total.TabIndex = 446
+		Me.monto_total.Text = "$ 0,00"
+		Me.monto_total.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
 		'
 		'bs_item_ticket
 		'
 		'
+		'bs_tipo_item
+		'
+		'
+		'DelItem
+		'
+		Me.DelItem.Font = New System.Drawing.Font("Segoe MDL2 Assets", 10.0!)
+		Me.DelItem.Location = New System.Drawing.Point(0, 0)
+		Me.DelItem.Margin = New System.Windows.Forms.Padding(0)
+		Me.DelItem.Name = "DelItem"
+		Me.DelItem.Size = New System.Drawing.Size(120, 26)
+		Me.DelItem.TabIndex = 463
+		Me.DelItem.Text = " ELIMINAR ITEM"
+		Me.DelItem.UseVisualStyleBackColor = True
+		'
 		'ModCombustibleTicket
 		'
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
-		Me.ClientSize = New System.Drawing.Size(412, 388)
+		Me.ClientSize = New System.Drawing.Size(466, 388)
 		Me.Controls.Add(Me.Panel2)
-		Me.Controls.Add(Me.Panel1)
 		Me.Controls.Add(Me.FlowLayoutPanel3)
 		Me.Controls.Add(Me.Panel4)
 		Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
 		Me.Name = "ModCombustibleTicket"
+		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
 		Me.FlowLayoutPanel3.ResumeLayout(False)
 		Me.FlowLayoutPanel3.PerformLayout()
 		CType(Me.DetalleTicket, System.ComponentModel.ISupportInitialize).EndInit()
 		Me.Panel4.ResumeLayout(False)
-		Me.Panel1.ResumeLayout(False)
-		Me.Panel1.PerformLayout()
 		Me.Panel2.ResumeLayout(False)
 		Me.AddItemPanel1.ResumeLayout(False)
 		CType(Me.LitrosItem, System.ComponentModel.ISupportInitialize).EndInit()
 		CType(Me.MontoItem, System.ComponentModel.ISupportInitialize).EndInit()
-		CType(Me.bs_proveedor, System.ComponentModel.ISupportInitialize).EndInit()
+		Me.FlowLayoutPanel1.ResumeLayout(False)
+		Me.FlowLayoutPanel1.PerformLayout()
 		CType(Me.bs_item_ticket, System.ComponentModel.ISupportInitialize).EndInit()
+		CType(Me.bs_responsable, System.ComponentModel.ISupportInitialize).EndInit()
+		CType(Me.bs_receptor, System.ComponentModel.ISupportInitialize).EndInit()
+		CType(Me.bs_tipo_item, System.ComponentModel.ISupportInitialize).EndInit()
 		Me.ResumeLayout(False)
 
 	End Sub
@@ -604,36 +556,34 @@ Partial Class ModCombustibleTicket
 	Friend WithEvents Panel4 As Panel
 	Friend WithEvents Save As Button
 	Friend WithEvents cerrar As Button
-	Friend WithEvents Panel1 As Panel
-	Friend WithEvents Label3 As Label
-	Friend WithEvents DelItem As Button
 	Friend WithEvents Panel2 As Panel
 	Friend WithEvents AddItemPanel1 As FlowLayoutPanel
-	Friend WithEvents DescItem As ComboBox
+	Friend WithEvents TipoItem As ComboBox
 	Friend WithEvents LitrosItem As NumericUpDown
 	Friend WithEvents MontoItem As NumericUpDown
-	Friend WithEvents Label6 As Label
-	Friend WithEvents proveedor As ComboBox
 	Friend WithEvents SelectProveedor As Button
 	Friend WithEvents Label7 As Label
-	Friend WithEvents cuil_proveedor As MaskedTextBox
 	Friend WithEvents Label10 As Label
 	Friend WithEvents Label11 As Label
 	Friend WithEvents Label13 As Label
 	Friend WithEvents ticket As TextBox
-	Public WithEvents bs_proveedor As BindingSource
 	Public WithEvents bs_item_ticket As BindingSource
 	Friend WithEvents SaveAdd As Button
-	Friend WithEvents AddNewItem As Button
 	Friend WithEvents Label12 As Label
-	Friend WithEvents Label1 As Label
-	Friend WithEvents ShowAddItem As Button
+	Friend WithEvents et_litros_unidades As Label
+	Friend WithEvents Label14 As Label
+	Friend WithEvents NewItemType As Button
+	Friend WithEvents DelItemType As Button
+	Friend WithEvents responsable As ComboBox
+	Friend WithEvents proveedor As TextBox
+	Public WithEvents bs_responsable As BindingSource
+	Public WithEvents receptor As ComboBox
+	Public WithEvents bs_receptor As BindingSource
+	Public WithEvents bs_tipo_item As BindingSource
+	Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
 	Friend WithEvents Label5 As Label
 	Friend WithEvents monto_total As Label
-	Friend WithEvents TextBox2 As TextBox
-	Friend WithEvents TextBox1 As TextBox
-	Friend WithEvents Label4 As Label
-	Friend WithEvents Label14 As Label
-	Friend WithEvents NewReceptor As Button
-	Friend WithEvents DelReceptor As Button
+	Friend WithEvents Label1 As Label
+	Friend WithEvents AddNewItem As Button
+	Friend WithEvents DelItem As Button
 End Class

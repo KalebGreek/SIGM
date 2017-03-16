@@ -24,9 +24,9 @@ Partial Class ModCombustible
 	Private Sub InitializeComponent()
 		Me.components = New System.ComponentModel.Container()
 		Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-		Me.ShowEditItem = New System.Windows.Forms.Button()
-		Me.DelItem = New System.Windows.Forms.Button()
-		Me.AddItem = New System.Windows.Forms.Button()
+		Me.EditTicket = New System.Windows.Forms.Button()
+		Me.DelTicket = New System.Windows.Forms.Button()
+		Me.AddTicket = New System.Windows.Forms.Button()
 		Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
 		Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
 		Me.info = New System.Windows.Forms.ToolStripStatusLabel()
@@ -36,20 +36,20 @@ Partial Class ModCombustible
 		Me.Label4 = New System.Windows.Forms.Label()
 		Me.Panel4 = New System.Windows.Forms.Panel()
 		Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
-		Me.Label7 = New System.Windows.Forms.Label()
-		Me.seccion = New System.Windows.Forms.ComboBox()
+		Me.FiltroCuenta = New System.Windows.Forms.CheckBox()
+		Me.cuenta = New System.Windows.Forms.ComboBox()
 		Me.Label3 = New System.Windows.Forms.Label()
-		Me.Label1 = New System.Windows.Forms.Label()
+		Me.FiltroCategoria = New System.Windows.Forms.CheckBox()
 		Me.categoria = New System.Windows.Forms.ComboBox()
 		Me.vehiculo = New System.Windows.Forms.CheckBox()
-		Me.Label5 = New System.Windows.Forms.Label()
+		Me.FiltroReceptor = New System.Windows.Forms.CheckBox()
 		Me.receptor = New System.Windows.Forms.ComboBox()
 		Me.NewReceptor = New System.Windows.Forms.Button()
 		Me.EditReceptor = New System.Windows.Forms.Button()
 		Me.DelReceptor = New System.Windows.Forms.Button()
 		Me.bs_receptor = New System.Windows.Forms.BindingSource(Me.components)
 		Me.bs_categoria = New System.Windows.Forms.BindingSource(Me.components)
-		Me.bs_seccion = New System.Windows.Forms.BindingSource(Me.components)
+		Me.bs_cuenta = New System.Windows.Forms.BindingSource(Me.components)
 		Me.bs_historial = New System.Windows.Forms.BindingSource(Me.components)
 		Me.StatusStrip1.SuspendLayout()
 		Me.Panel2.SuspendLayout()
@@ -59,63 +59,63 @@ Partial Class ModCombustible
 		Me.FlowLayoutPanel1.SuspendLayout()
 		CType(Me.bs_receptor, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.bs_categoria, System.ComponentModel.ISupportInitialize).BeginInit()
-		CType(Me.bs_seccion, System.ComponentModel.ISupportInitialize).BeginInit()
+		CType(Me.bs_cuenta, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.bs_historial, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
 		'
-		'ShowEditItem
+		'EditTicket
 		'
-		Me.ShowEditItem.BackColor = System.Drawing.Color.Gray
-		Me.ShowEditItem.Dock = System.Windows.Forms.DockStyle.Right
-		Me.ShowEditItem.FlatAppearance.BorderSize = 0
-		Me.ShowEditItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.ShowEditItem.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.ShowEditItem.ForeColor = System.Drawing.Color.White
-		Me.ShowEditItem.Location = New System.Drawing.Point(528, 0)
-		Me.ShowEditItem.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.ShowEditItem.Name = "ShowEditItem"
-		Me.ShowEditItem.Size = New System.Drawing.Size(36, 24)
-		Me.ShowEditItem.TabIndex = 438
-		Me.ShowEditItem.Text = ""
-		Me.ShowEditItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-		Me.ToolTip1.SetToolTip(Me.ShowEditItem, "Editar Ticket")
-		Me.ShowEditItem.UseVisualStyleBackColor = False
+		Me.EditTicket.BackColor = System.Drawing.Color.Gray
+		Me.EditTicket.Dock = System.Windows.Forms.DockStyle.Right
+		Me.EditTicket.FlatAppearance.BorderSize = 0
+		Me.EditTicket.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.EditTicket.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.EditTicket.ForeColor = System.Drawing.Color.White
+		Me.EditTicket.Location = New System.Drawing.Point(528, 0)
+		Me.EditTicket.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.EditTicket.Name = "EditTicket"
+		Me.EditTicket.Size = New System.Drawing.Size(36, 24)
+		Me.EditTicket.TabIndex = 438
+		Me.EditTicket.Text = ""
+		Me.EditTicket.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+		Me.ToolTip1.SetToolTip(Me.EditTicket, "Editar Ticket")
+		Me.EditTicket.UseVisualStyleBackColor = False
 		'
-		'DelItem
+		'DelTicket
 		'
-		Me.DelItem.BackColor = System.Drawing.Color.Gray
-		Me.DelItem.Dock = System.Windows.Forms.DockStyle.Right
-		Me.DelItem.FlatAppearance.BorderSize = 0
-		Me.DelItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.DelItem.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.DelItem.ForeColor = System.Drawing.Color.White
-		Me.DelItem.Location = New System.Drawing.Point(564, 0)
-		Me.DelItem.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.DelItem.Name = "DelItem"
-		Me.DelItem.Size = New System.Drawing.Size(36, 24)
-		Me.DelItem.TabIndex = 437
-		Me.DelItem.Text = ""
-		Me.DelItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-		Me.ToolTip1.SetToolTip(Me.DelItem, "Eliminar Ticket Seleccionado")
-		Me.DelItem.UseVisualStyleBackColor = False
+		Me.DelTicket.BackColor = System.Drawing.Color.Gray
+		Me.DelTicket.Dock = System.Windows.Forms.DockStyle.Right
+		Me.DelTicket.FlatAppearance.BorderSize = 0
+		Me.DelTicket.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.DelTicket.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.DelTicket.ForeColor = System.Drawing.Color.White
+		Me.DelTicket.Location = New System.Drawing.Point(564, 0)
+		Me.DelTicket.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.DelTicket.Name = "DelTicket"
+		Me.DelTicket.Size = New System.Drawing.Size(36, 24)
+		Me.DelTicket.TabIndex = 437
+		Me.DelTicket.Text = ""
+		Me.DelTicket.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+		Me.ToolTip1.SetToolTip(Me.DelTicket, "Eliminar Ticket Seleccionado")
+		Me.DelTicket.UseVisualStyleBackColor = False
 		'
-		'AddItem
+		'AddTicket
 		'
-		Me.AddItem.BackColor = System.Drawing.Color.Gray
-		Me.AddItem.Dock = System.Windows.Forms.DockStyle.Right
-		Me.AddItem.FlatAppearance.BorderSize = 0
-		Me.AddItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.AddItem.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.AddItem.ForeColor = System.Drawing.Color.White
-		Me.AddItem.Location = New System.Drawing.Point(492, 0)
-		Me.AddItem.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.AddItem.Name = "AddItem"
-		Me.AddItem.Size = New System.Drawing.Size(36, 24)
-		Me.AddItem.TabIndex = 439
-		Me.AddItem.Text = ""
-		Me.AddItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-		Me.ToolTip1.SetToolTip(Me.AddItem, "Nuevo Ticket")
-		Me.AddItem.UseVisualStyleBackColor = False
+		Me.AddTicket.BackColor = System.Drawing.Color.Gray
+		Me.AddTicket.Dock = System.Windows.Forms.DockStyle.Right
+		Me.AddTicket.FlatAppearance.BorderSize = 0
+		Me.AddTicket.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.AddTicket.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.AddTicket.ForeColor = System.Drawing.Color.White
+		Me.AddTicket.Location = New System.Drawing.Point(492, 0)
+		Me.AddTicket.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.AddTicket.Name = "AddTicket"
+		Me.AddTicket.Size = New System.Drawing.Size(36, 24)
+		Me.AddTicket.TabIndex = 439
+		Me.AddTicket.Text = ""
+		Me.AddTicket.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+		Me.ToolTip1.SetToolTip(Me.AddTicket, "Nuevo Ticket")
+		Me.AddTicket.UseVisualStyleBackColor = False
 		'
 		'StatusStrip1
 		'
@@ -147,10 +147,10 @@ Partial Class ModCombustible
 		Me.Panel2.Controls.Add(Me.historial)
 		Me.Panel2.Controls.Add(Me.Panel3)
 		Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
-		Me.Panel2.Location = New System.Drawing.Point(0, 100)
+		Me.Panel2.Location = New System.Drawing.Point(0, 99)
 		Me.Panel2.Margin = New System.Windows.Forms.Padding(0)
 		Me.Panel2.Name = "Panel2"
-		Me.Panel2.Size = New System.Drawing.Size(600, 316)
+		Me.Panel2.Size = New System.Drawing.Size(600, 317)
 		Me.Panel2.TabIndex = 426
 		'
 		'historial
@@ -168,14 +168,14 @@ Partial Class ModCombustible
 		Me.historial.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
 		Me.historial.RowHeadersVisible = False
 		Me.historial.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-		Me.historial.Size = New System.Drawing.Size(600, 292)
+		Me.historial.Size = New System.Drawing.Size(600, 293)
 		Me.historial.TabIndex = 3
 		'
 		'Panel3
 		'
-		Me.Panel3.Controls.Add(Me.AddItem)
-		Me.Panel3.Controls.Add(Me.ShowEditItem)
-		Me.Panel3.Controls.Add(Me.DelItem)
+		Me.Panel3.Controls.Add(Me.AddTicket)
+		Me.Panel3.Controls.Add(Me.EditTicket)
+		Me.Panel3.Controls.Add(Me.DelTicket)
 		Me.Panel3.Controls.Add(Me.Label4)
 		Me.Panel3.Dock = System.Windows.Forms.DockStyle.Top
 		Me.Panel3.Location = New System.Drawing.Point(0, 0)
@@ -202,76 +202,78 @@ Partial Class ModCombustible
 		Me.Panel4.Dock = System.Windows.Forms.DockStyle.Top
 		Me.Panel4.Location = New System.Drawing.Point(0, 0)
 		Me.Panel4.Name = "Panel4"
-		Me.Panel4.Size = New System.Drawing.Size(600, 100)
+		Me.Panel4.Size = New System.Drawing.Size(600, 99)
 		Me.Panel4.TabIndex = 429
 		'
 		'FlowLayoutPanel1
 		'
-		Me.FlowLayoutPanel1.Controls.Add(Me.Label7)
-		Me.FlowLayoutPanel1.Controls.Add(Me.seccion)
+		Me.FlowLayoutPanel1.Controls.Add(Me.FiltroCuenta)
+		Me.FlowLayoutPanel1.Controls.Add(Me.cuenta)
 		Me.FlowLayoutPanel1.Controls.Add(Me.Label3)
-		Me.FlowLayoutPanel1.Controls.Add(Me.Label1)
+		Me.FlowLayoutPanel1.Controls.Add(Me.FiltroCategoria)
 		Me.FlowLayoutPanel1.Controls.Add(Me.categoria)
 		Me.FlowLayoutPanel1.Controls.Add(Me.vehiculo)
-		Me.FlowLayoutPanel1.Controls.Add(Me.Label5)
+		Me.FlowLayoutPanel1.Controls.Add(Me.FiltroReceptor)
 		Me.FlowLayoutPanel1.Controls.Add(Me.receptor)
 		Me.FlowLayoutPanel1.Controls.Add(Me.NewReceptor)
 		Me.FlowLayoutPanel1.Controls.Add(Me.EditReceptor)
 		Me.FlowLayoutPanel1.Controls.Add(Me.DelReceptor)
 		Me.FlowLayoutPanel1.Location = New System.Drawing.Point(5, 5)
 		Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-		Me.FlowLayoutPanel1.Size = New System.Drawing.Size(486, 91)
+		Me.FlowLayoutPanel1.Size = New System.Drawing.Size(495, 92)
 		Me.FlowLayoutPanel1.TabIndex = 429
 		'
-		'Label7
+		'FiltroCuenta
 		'
-		Me.Label7.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.Label7.Location = New System.Drawing.Point(4, 0)
-		Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
-		Me.Label7.Name = "Label7"
-		Me.Label7.Size = New System.Drawing.Size(73, 29)
-		Me.Label7.TabIndex = 431
-		Me.Label7.Text = "Seccion"
-		Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		Me.FiltroCuenta.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+		Me.FiltroCuenta.Location = New System.Drawing.Point(3, 3)
+		Me.FiltroCuenta.Name = "FiltroCuenta"
+		Me.FiltroCuenta.Size = New System.Drawing.Size(99, 23)
+		Me.FiltroCuenta.TabIndex = 447
+		Me.FiltroCuenta.Text = "Cuenta"
+		Me.FiltroCuenta.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		Me.FiltroCuenta.UseVisualStyleBackColor = True
 		'
-		'seccion
+		'cuenta
 		'
-		Me.seccion.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-		Me.seccion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-		Me.seccion.FormattingEnabled = True
-		Me.seccion.Location = New System.Drawing.Point(77, 2)
-		Me.seccion.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.seccion.Name = "seccion"
-		Me.seccion.Size = New System.Drawing.Size(300, 27)
-		Me.seccion.TabIndex = 432
+		Me.cuenta.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+		Me.cuenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+		Me.cuenta.Enabled = False
+		Me.cuenta.FormattingEnabled = True
+		Me.cuenta.Location = New System.Drawing.Point(105, 2)
+		Me.cuenta.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.cuenta.Name = "cuenta"
+		Me.cuenta.Size = New System.Drawing.Size(300, 27)
+		Me.cuenta.TabIndex = 432
 		'
 		'Label3
 		'
 		Me.Label3.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.Label3.Location = New System.Drawing.Point(381, 0)
+		Me.Label3.Location = New System.Drawing.Point(409, 0)
 		Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
 		Me.Label3.Name = "Label3"
-		Me.Label3.Size = New System.Drawing.Size(104, 28)
+		Me.Label3.Size = New System.Drawing.Size(73, 28)
 		Me.Label3.TabIndex = 446
 		Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
-		'Label1
+		'FiltroCategoria
 		'
-		Me.Label1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.Label1.Location = New System.Drawing.Point(4, 29)
-		Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
-		Me.Label1.Name = "Label1"
-		Me.Label1.Size = New System.Drawing.Size(73, 28)
-		Me.Label1.TabIndex = 428
-		Me.Label1.Text = "Categoria"
-		Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		Me.FiltroCategoria.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+		Me.FiltroCategoria.Location = New System.Drawing.Point(3, 32)
+		Me.FiltroCategoria.Name = "FiltroCategoria"
+		Me.FiltroCategoria.Size = New System.Drawing.Size(99, 23)
+		Me.FiltroCategoria.TabIndex = 448
+		Me.FiltroCategoria.Text = "Categoria"
+		Me.FiltroCategoria.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		Me.FiltroCategoria.UseVisualStyleBackColor = True
 		'
 		'categoria
 		'
 		Me.categoria.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
 		Me.categoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+		Me.categoria.Enabled = False
 		Me.categoria.FormattingEnabled = True
-		Me.categoria.Location = New System.Drawing.Point(77, 31)
+		Me.categoria.Location = New System.Drawing.Point(105, 31)
 		Me.categoria.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
 		Me.categoria.Name = "categoria"
 		Me.categoria.Size = New System.Drawing.Size(300, 27)
@@ -282,30 +284,33 @@ Partial Class ModCombustible
 		Me.vehiculo.AutoSize = True
 		Me.vehiculo.Checked = True
 		Me.vehiculo.CheckState = System.Windows.Forms.CheckState.Checked
-		Me.vehiculo.Location = New System.Drawing.Point(380, 32)
+		Me.vehiculo.Enabled = False
+		Me.vehiculo.Location = New System.Drawing.Point(408, 32)
 		Me.vehiculo.Name = "vehiculo"
 		Me.vehiculo.Size = New System.Drawing.Size(84, 23)
 		Me.vehiculo.TabIndex = 444
 		Me.vehiculo.Text = "Vehiculo"
 		Me.vehiculo.UseVisualStyleBackColor = True
 		'
-		'Label5
+		'FiltroReceptor
 		'
-		Me.Label5.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.Label5.Location = New System.Drawing.Point(4, 58)
-		Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
-		Me.Label5.Name = "Label5"
-		Me.Label5.Size = New System.Drawing.Size(73, 29)
-		Me.Label5.TabIndex = 427
-		Me.Label5.Text = "Receptor"
-		Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		Me.FiltroReceptor.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+		Me.FiltroReceptor.Checked = True
+		Me.FiltroReceptor.CheckState = System.Windows.Forms.CheckState.Checked
+		Me.FiltroReceptor.Location = New System.Drawing.Point(3, 61)
+		Me.FiltroReceptor.Name = "FiltroReceptor"
+		Me.FiltroReceptor.Size = New System.Drawing.Size(99, 23)
+		Me.FiltroReceptor.TabIndex = 449
+		Me.FiltroReceptor.Text = "Receptor"
+		Me.FiltroReceptor.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		Me.FiltroReceptor.UseVisualStyleBackColor = True
 		'
 		'receptor
 		'
 		Me.receptor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
 		Me.receptor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
 		Me.receptor.FormattingEnabled = True
-		Me.receptor.Location = New System.Drawing.Point(77, 60)
+		Me.receptor.Location = New System.Drawing.Point(105, 60)
 		Me.receptor.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
 		Me.receptor.Name = "receptor"
 		Me.receptor.Size = New System.Drawing.Size(300, 27)
@@ -317,7 +322,7 @@ Partial Class ModCombustible
 		Me.NewReceptor.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.NewReceptor.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.NewReceptor.ForeColor = System.Drawing.Color.White
-		Me.NewReceptor.Location = New System.Drawing.Point(377, 60)
+		Me.NewReceptor.Location = New System.Drawing.Point(405, 60)
 		Me.NewReceptor.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
 		Me.NewReceptor.Name = "NewReceptor"
 		Me.NewReceptor.Size = New System.Drawing.Size(27, 27)
@@ -332,7 +337,7 @@ Partial Class ModCombustible
 		Me.EditReceptor.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.EditReceptor.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.EditReceptor.ForeColor = System.Drawing.Color.White
-		Me.EditReceptor.Location = New System.Drawing.Point(404, 60)
+		Me.EditReceptor.Location = New System.Drawing.Point(432, 60)
 		Me.EditReceptor.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
 		Me.EditReceptor.Name = "EditReceptor"
 		Me.EditReceptor.Size = New System.Drawing.Size(27, 27)
@@ -347,7 +352,7 @@ Partial Class ModCombustible
 		Me.DelReceptor.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.DelReceptor.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.DelReceptor.ForeColor = System.Drawing.Color.White
-		Me.DelReceptor.Location = New System.Drawing.Point(431, 60)
+		Me.DelReceptor.Location = New System.Drawing.Point(459, 60)
 		Me.DelReceptor.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
 		Me.DelReceptor.Name = "DelReceptor"
 		Me.DelReceptor.Size = New System.Drawing.Size(27, 27)
@@ -362,7 +367,7 @@ Partial Class ModCombustible
 		'bs_categoria
 		'
 		'
-		'bs_seccion
+		'bs_cuenta
 		'
 		'
 		'bs_historial
@@ -394,7 +399,7 @@ Partial Class ModCombustible
 		Me.FlowLayoutPanel1.PerformLayout()
 		CType(Me.bs_receptor, System.ComponentModel.ISupportInitialize).EndInit()
 		CType(Me.bs_categoria, System.ComponentModel.ISupportInitialize).EndInit()
-		CType(Me.bs_seccion, System.ComponentModel.ISupportInitialize).EndInit()
+		CType(Me.bs_cuenta, System.ComponentModel.ISupportInitialize).EndInit()
 		CType(Me.bs_historial, System.ComponentModel.ISupportInitialize).EndInit()
 		Me.ResumeLayout(False)
 		Me.PerformLayout()
@@ -412,24 +417,24 @@ Partial Class ModCombustible
 	Friend WithEvents historial As DataGridView
 	Friend WithEvents Panel3 As Panel
 	Friend WithEvents Label4 As Label
-	Friend WithEvents ShowEditItem As Button
-	Friend WithEvents DelItem As Button
+	Friend WithEvents EditTicket As Button
+	Friend WithEvents DelTicket As Button
 	Friend WithEvents bs_categoria As BindingSource
-	Friend WithEvents bs_seccion As BindingSource
+	Friend WithEvents bs_cuenta As BindingSource
 	Friend WithEvents bs_receptor As BindingSource
-	Friend WithEvents AddItem As Button
+	Friend WithEvents AddTicket As Button
 	Public WithEvents bs_historial As BindingSource
 	Friend WithEvents Panel4 As Panel
 	Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
-	Friend WithEvents Label7 As Label
-	Friend WithEvents seccion As ComboBox
+	Friend WithEvents cuenta As ComboBox
 	Friend WithEvents Label3 As Label
-	Friend WithEvents Label1 As Label
 	Friend WithEvents categoria As ComboBox
 	Friend WithEvents vehiculo As CheckBox
-	Friend WithEvents Label5 As Label
 	Public WithEvents receptor As ComboBox
 	Friend WithEvents NewReceptor As Button
 	Friend WithEvents EditReceptor As Button
 	Friend WithEvents DelReceptor As Button
+	Friend WithEvents FiltroCuenta As CheckBox
+	Friend WithEvents FiltroCategoria As CheckBox
+	Friend WithEvents FiltroReceptor As CheckBox
 End Class

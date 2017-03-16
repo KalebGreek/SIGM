@@ -84,66 +84,10 @@
 
 	'-- RUTINAS
 	Private Sub Consultar()
-		Dim dtab_result As New DataTable
-
-		If Vista.Text.Contains("PERSONA") Then
-			If filtro.Text.Contains("RAZON SOCIAL") Then
-				dtab_result = Persona.sql.Buscar(keyword.Text, difunto.Checked, fisica.Checked)
-			ElseIf filtro.Text.Contains("CUIL/DNI") Then
-				dtab_result = Persona.sql.Buscar(CDbl(keyword.Text), difunto.Checked, fisica.Checked)
-			ElseIf filtro.Text.Contains("DIRECCION") Then
-				dtab_result = Persona.sql.Buscar(keyword.Text, Val(keyword.Text), 0, difunto.Checked, fisica.Checked)
-			ElseIf filtro.Text.Contains("LOCALIDAD") Then
-				dtab_result = Persona.sql.Buscar("", 0, Val(keyword.Text), difunto.Checked, fisica.Checked)
-			ElseIf filtro.Text.Contains("ID") Then
-				dtab_result = Persona.sql.Buscar(CInt(keyword.Text), difunto.Checked, fisica.Checked)
-			End If
-
-		ElseIf Vista.Text.Contains("EMPLEADO") Then
-			If filtro.Text.Contains("RAZON SOCIAL") Then
-				fisica.Enabled = False
-				fisica.Checked = True
-				dtab_result = Empleado.BuscarPorPersona(keyword.Text, difunto.Checked)
-			ElseIf filtro.Text.Contains("CUIL") Then
-
-			ElseIf filtro.Text.Contains("DIRECCION") Then
-
-			ElseIf filtro.Text.Contains("LOCALIDAD") Then
-
-			End If
-
-		ElseIf Vista.Text.Contains("PROFESIONAL") Then
-			If filtro.Text.Contains("RAZON SOCIAL") Then
-				fisica.Enabled = False
-				fisica.Checked = True
-				difunto.Enabled = False
-				difunto.Checked = False
-				dtab_result = Profesional.BuscarPorPersona(Val(keyword.Text), Val(keyword.Text),
-													  Trim(keyword.Text))
-			ElseIf filtro.Text.Contains("CUIL") Then
-
-			ElseIf filtro.Text.Contains("DIRECCION") Then
-
-			ElseIf filtro.Text.Contains("LOCALIDAD") Then
-
-			End If
-		ElseIf Vista.Text.Contains("PROVEEDOR") Then
-			If filtro.Text.Contains("RAZON SOCIAL") Then
-				difunto.Enabled = False
-				difunto.Checked = False
-				dtab_result = Proveedor.BuscarPorPersona(keyword.Text, fisica.Checked)
-			ElseIf filtro.Text.Contains("CUIL") Then
-
-			ElseIf filtro.Text.Contains("DIRECCION") Then
-
-			ElseIf filtro.Text.Contains("LOCALIDAD") Then
-
-
-
-			End If
-		End If
-
-		CtrlMan.LoadDataGridView(DataGridView1, bs_resultado, dtab_result)
+		CtrlMan.LoadDataGridView(DataGridView1, bs_resultado,
+								 Persona.sql.Consultar(Vista.Text, filtro.Text,
+													   keyword.Text, difunto.Checked,
+													   fisica.Checked))
 	End Sub
 
 	Private Overloads Sub resetForm()
@@ -194,33 +138,49 @@
 		Consultar()
 	End Sub
 	Private Sub filtrospersona_CheckedChanged(sender As Object, e As EventArgs) Handles fisica.CheckedChanged, difunto.CheckedChanged
-		difunto.Enabled = fisica.Checked
-		If fisica.Checked = False Then
-			difunto.Checked = False
-		End If
-		Consultar()
-	End Sub
-	Private Sub filtro_SelectedIndexChanged(sender As Object, e As EventArgs) Handles filtro.SelectedIndexChanged
-		If filtro.SelectedIndex > -1 Then
+		If sender.Enabled Then
 			Consultar()
 		End If
+	End Sub
+	Private Sub filtro_SelectedIndexChanged(sender As Object, e As EventArgs) Handles filtro.SelectedIndexChanged
+		Consultar()
 	End Sub
 	Private Sub vista_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Vista.SelectedIndexChanged
 		If Vista.SelectedIndex > -1 Then
 			filtro.Items.Clear()
 			If Vista.Text = "PERSONA" Then
+				fisica.Enabled = True
+				fisica.Checked = True
+				difunto.Enabled = True
+				difunto.Checked = False
+
 				filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIL/DNI", "DIRECCION", "LOCALIDAD", "ID"})
 				filtro.Text = "RAZON SOCIAL"
 
 			ElseIf Vista.Text = "EMPLEADO" Then
+				fisica.Enabled = False
+				fisica.Checked = True
+				difunto.Enabled = True
+				difunto.Checked = False
+
 				filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIL/DNI", "DIRECCION", "LOCALIDAD", "ALTA / BAJA"})
 				filtro.Text = "RAZON SOCIAL"
 
 			ElseIf Vista.Text = "PROFESIONAL" Then
+				fisica.Enabled = True
+				fisica.Checked = True
+				difunto.Enabled = True
+				difunto.Checked = False
+
 				filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIL/DNI", "DIRECCION", "LOCALIDAD", "TITULO"})
 				filtro.Text = "RAZON SOCIAL"
 
 			ElseIf Vista.Text = "PROVEEDOR" Then
+				fisica.Enabled = True
+				fisica.Checked = False
+				difunto.Enabled = False
+				difunto.Checked = False
+
 				filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIT", "DIRECCION", "LOCALIDAD", "ACTIVIDAD"})
 				filtro.Text = "RAZON SOCIAL"
 			End If

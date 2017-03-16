@@ -31,46 +31,45 @@ Partial Class ModCombustibleReceptor
 		Me.alta = New System.Windows.Forms.DateTimePicker()
 		Me.Label5 = New System.Windows.Forms.Label()
 		Me.baja = New System.Windows.Forms.DateTimePicker()
-		Me.Label10 = New System.Windows.Forms.Label()
-		Me.responsable = New System.Windows.Forms.TextBox()
-		Me.SelectResponsable = New System.Windows.Forms.Button()
-		Me.Label2 = New System.Windows.Forms.Label()
-		Me.Label9 = New System.Windows.Forms.Label()
 		Me.Label3 = New System.Windows.Forms.Label()
-		Me.seccion = New System.Windows.Forms.ComboBox()
-		Me.AddSeccion = New System.Windows.Forms.Button()
-		Me.DelSeccion = New System.Windows.Forms.Button()
+		Me.cuenta = New System.Windows.Forms.ComboBox()
+		Me.Label10 = New System.Windows.Forms.Label()
+		Me.responsable = New System.Windows.Forms.ComboBox()
+		Me.AddResponsable = New System.Windows.Forms.Button()
+		Me.DelResponsable = New System.Windows.Forms.Button()
+		Me.Label2 = New System.Windows.Forms.Label()
+		Me.cuil_responsable = New System.Windows.Forms.TextBox()
+		Me.Label9 = New System.Windows.Forms.Label()
 		Me.Label7 = New System.Windows.Forms.Label()
 		Me.categoria = New System.Windows.Forms.ComboBox()
 		Me.AddCategoria = New System.Windows.Forms.Button()
 		Me.DelCategoria = New System.Windows.Forms.Button()
 		Me.Label6 = New System.Windows.Forms.Label()
 		Me.marca = New System.Windows.Forms.TextBox()
+		Me.vehiculo = New System.Windows.Forms.CheckBox()
 		Me.Label4 = New System.Windows.Forms.Label()
 		Me.dominio = New System.Windows.Forms.MaskedTextBox()
 		Me.argentina = New System.Windows.Forms.RadioButton()
 		Me.mercosur = New System.Windows.Forms.RadioButton()
 		Me.Label1 = New System.Windows.Forms.Label()
-		Me.modelo = New System.Windows.Forms.DateTimePicker()
 		Me.Label12 = New System.Windows.Forms.Label()
 		Me.Label11 = New System.Windows.Forms.Label()
 		Me.observaciones = New System.Windows.Forms.TextBox()
-		Me.Label13 = New System.Windows.Forms.Label()
-		Me.autorizado = New System.Windows.Forms.NumericUpDown()
 		Me.Panel4 = New System.Windows.Forms.Panel()
 		Me.Label14 = New System.Windows.Forms.Label()
 		Me.cerrar = New System.Windows.Forms.Button()
 		Me.bs_receptor = New System.Windows.Forms.BindingSource(Me.components)
 		Me.bs_categoria = New System.Windows.Forms.BindingSource(Me.components)
-		Me.bs_seccion = New System.Windows.Forms.BindingSource(Me.components)
-		Me.vehiculo = New System.Windows.Forms.CheckBox()
-		Me.cuil_responsable = New System.Windows.Forms.TextBox()
+		Me.bs_cuenta = New System.Windows.Forms.BindingSource(Me.components)
+		Me.bs_responsable = New System.Windows.Forms.BindingSource(Me.components)
+		Me.modelo = New System.Windows.Forms.NumericUpDown()
 		Me.FlowLayoutPanel3.SuspendLayout()
-		CType(Me.autorizado, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.Panel4.SuspendLayout()
 		CType(Me.bs_receptor, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.bs_categoria, System.ComponentModel.ISupportInitialize).BeginInit()
-		CType(Me.bs_seccion, System.ComponentModel.ISupportInitialize).BeginInit()
+		CType(Me.bs_cuenta, System.ComponentModel.ISupportInitialize).BeginInit()
+		CType(Me.bs_responsable, System.ComponentModel.ISupportInitialize).BeginInit()
+		CType(Me.modelo, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
 		'
 		'SaveAdd
@@ -113,16 +112,15 @@ Partial Class ModCombustibleReceptor
 		Me.FlowLayoutPanel3.Controls.Add(Me.alta)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label5)
 		Me.FlowLayoutPanel3.Controls.Add(Me.baja)
+		Me.FlowLayoutPanel3.Controls.Add(Me.Label3)
+		Me.FlowLayoutPanel3.Controls.Add(Me.cuenta)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label10)
 		Me.FlowLayoutPanel3.Controls.Add(Me.responsable)
-		Me.FlowLayoutPanel3.Controls.Add(Me.SelectResponsable)
+		Me.FlowLayoutPanel3.Controls.Add(Me.AddResponsable)
+		Me.FlowLayoutPanel3.Controls.Add(Me.DelResponsable)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label2)
 		Me.FlowLayoutPanel3.Controls.Add(Me.cuil_responsable)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label9)
-		Me.FlowLayoutPanel3.Controls.Add(Me.Label3)
-		Me.FlowLayoutPanel3.Controls.Add(Me.seccion)
-		Me.FlowLayoutPanel3.Controls.Add(Me.AddSeccion)
-		Me.FlowLayoutPanel3.Controls.Add(Me.DelSeccion)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label7)
 		Me.FlowLayoutPanel3.Controls.Add(Me.categoria)
 		Me.FlowLayoutPanel3.Controls.Add(Me.AddCategoria)
@@ -139,8 +137,6 @@ Partial Class ModCombustibleReceptor
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label12)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label11)
 		Me.FlowLayoutPanel3.Controls.Add(Me.observaciones)
-		Me.FlowLayoutPanel3.Controls.Add(Me.Label13)
-		Me.FlowLayoutPanel3.Controls.Add(Me.autorizado)
 		Me.FlowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
 		Me.FlowLayoutPanel3.Location = New System.Drawing.Point(0, 27)
 		Me.FlowLayoutPanel3.Margin = New System.Windows.Forms.Padding(0)
@@ -186,9 +182,30 @@ Partial Class ModCombustibleReceptor
 		Me.baja.Size = New System.Drawing.Size(98, 27)
 		Me.baja.TabIndex = 471
 		'
+		'Label3
+		'
+		Me.Label3.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.Label3.Location = New System.Drawing.Point(4, 29)
+		Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
+		Me.Label3.Name = "Label3"
+		Me.Label3.Size = New System.Drawing.Size(110, 29)
+		Me.Label3.TabIndex = 454
+		Me.Label3.Text = "Cuenta"
+		Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		'
+		'cuenta
+		'
+		Me.cuenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+		Me.cuenta.FormattingEnabled = True
+		Me.cuenta.Location = New System.Drawing.Point(114, 31)
+		Me.cuenta.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.cuenta.Name = "cuenta"
+		Me.cuenta.Size = New System.Drawing.Size(243, 27)
+		Me.cuenta.TabIndex = 437
+		'
 		'Label10
 		'
-		Me.Label10.Location = New System.Drawing.Point(4, 29)
+		Me.Label10.Location = New System.Drawing.Point(4, 58)
 		Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
 		Me.Label10.Name = "Label10"
 		Me.Label10.Size = New System.Drawing.Size(110, 29)
@@ -198,33 +215,47 @@ Partial Class ModCombustibleReceptor
 		'
 		'responsable
 		'
-		Me.responsable.Enabled = False
-		Me.responsable.Location = New System.Drawing.Point(114, 31)
+		Me.responsable.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+		Me.responsable.FormattingEnabled = True
+		Me.responsable.Location = New System.Drawing.Point(114, 60)
 		Me.responsable.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.responsable.MaxLength = 35
 		Me.responsable.Name = "responsable"
-		Me.responsable.ReadOnly = True
 		Me.responsable.Size = New System.Drawing.Size(243, 27)
-		Me.responsable.TabIndex = 450
+		Me.responsable.TabIndex = 479
 		'
-		'SelectResponsable
+		'AddResponsable
 		'
-		Me.SelectResponsable.FlatAppearance.BorderSize = 0
-		Me.SelectResponsable.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.SelectResponsable.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.SelectResponsable.ForeColor = System.Drawing.Color.White
-		Me.SelectResponsable.Location = New System.Drawing.Point(357, 31)
-		Me.SelectResponsable.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.SelectResponsable.Name = "SelectResponsable"
-		Me.SelectResponsable.Size = New System.Drawing.Size(27, 27)
-		Me.SelectResponsable.TabIndex = 438
-		Me.SelectResponsable.Text = ""
-		Me.SelectResponsable.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-		Me.SelectResponsable.UseVisualStyleBackColor = False
+		Me.AddResponsable.FlatAppearance.BorderSize = 0
+		Me.AddResponsable.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.AddResponsable.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.AddResponsable.ForeColor = System.Drawing.Color.White
+		Me.AddResponsable.Location = New System.Drawing.Point(357, 60)
+		Me.AddResponsable.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.AddResponsable.Name = "AddResponsable"
+		Me.AddResponsable.Size = New System.Drawing.Size(27, 27)
+		Me.AddResponsable.TabIndex = 480
+		Me.AddResponsable.Text = ""
+		Me.AddResponsable.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+		Me.AddResponsable.UseVisualStyleBackColor = False
+		'
+		'DelResponsable
+		'
+		Me.DelResponsable.FlatAppearance.BorderSize = 0
+		Me.DelResponsable.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.DelResponsable.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.DelResponsable.ForeColor = System.Drawing.Color.White
+		Me.DelResponsable.Location = New System.Drawing.Point(384, 60)
+		Me.DelResponsable.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.DelResponsable.Name = "DelResponsable"
+		Me.DelResponsable.Size = New System.Drawing.Size(27, 27)
+		Me.DelResponsable.TabIndex = 481
+		Me.DelResponsable.Text = ""
+		Me.DelResponsable.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+		Me.DelResponsable.UseVisualStyleBackColor = False
 		'
 		'Label2
 		'
-		Me.Label2.Location = New System.Drawing.Point(4, 60)
+		Me.Label2.Location = New System.Drawing.Point(4, 89)
 		Me.Label2.Margin = New System.Windows.Forms.Padding(4, 2, 0, 0)
 		Me.Label2.Name = "Label2"
 		Me.Label2.Size = New System.Drawing.Size(110, 27)
@@ -232,65 +263,26 @@ Partial Class ModCombustibleReceptor
 		Me.Label2.Text = "CUIT/CUIL/DNI"
 		Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
+		'cuil_responsable
+		'
+		Me.cuil_responsable.Enabled = False
+		Me.cuil_responsable.Location = New System.Drawing.Point(114, 89)
+		Me.cuil_responsable.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.cuil_responsable.MaxLength = 60
+		Me.cuil_responsable.Name = "cuil_responsable"
+		Me.cuil_responsable.ReadOnly = True
+		Me.cuil_responsable.Size = New System.Drawing.Size(121, 27)
+		Me.cuil_responsable.TabIndex = 478
+		'
 		'Label9
 		'
 		Me.Label9.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.Label9.Location = New System.Drawing.Point(239, 63)
+		Me.Label9.Location = New System.Drawing.Point(239, 92)
 		Me.Label9.Margin = New System.Windows.Forms.Padding(4, 5, 0, 0)
 		Me.Label9.Name = "Label9"
 		Me.Label9.Size = New System.Drawing.Size(172, 21)
 		Me.Label9.TabIndex = 461
 		Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-		'
-		'Label3
-		'
-		Me.Label3.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.Label3.Location = New System.Drawing.Point(4, 87)
-		Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
-		Me.Label3.Name = "Label3"
-		Me.Label3.Size = New System.Drawing.Size(110, 29)
-		Me.Label3.TabIndex = 454
-		Me.Label3.Text = "Seccion"
-		Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-		'
-		'seccion
-		'
-		Me.seccion.FormattingEnabled = True
-		Me.seccion.Location = New System.Drawing.Point(114, 89)
-		Me.seccion.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.seccion.Name = "seccion"
-		Me.seccion.Size = New System.Drawing.Size(243, 27)
-		Me.seccion.TabIndex = 437
-		'
-		'AddSeccion
-		'
-		Me.AddSeccion.FlatAppearance.BorderSize = 0
-		Me.AddSeccion.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.AddSeccion.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.AddSeccion.ForeColor = System.Drawing.Color.White
-		Me.AddSeccion.Location = New System.Drawing.Point(357, 89)
-		Me.AddSeccion.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.AddSeccion.Name = "AddSeccion"
-		Me.AddSeccion.Size = New System.Drawing.Size(27, 27)
-		Me.AddSeccion.TabIndex = 457
-		Me.AddSeccion.Text = ""
-		Me.AddSeccion.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-		Me.AddSeccion.UseVisualStyleBackColor = False
-		'
-		'DelSeccion
-		'
-		Me.DelSeccion.FlatAppearance.BorderSize = 0
-		Me.DelSeccion.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.DelSeccion.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.DelSeccion.ForeColor = System.Drawing.Color.White
-		Me.DelSeccion.Location = New System.Drawing.Point(384, 89)
-		Me.DelSeccion.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.DelSeccion.Name = "DelSeccion"
-		Me.DelSeccion.Size = New System.Drawing.Size(27, 27)
-		Me.DelSeccion.TabIndex = 458
-		Me.DelSeccion.Text = ""
-		Me.DelSeccion.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-		Me.DelSeccion.UseVisualStyleBackColor = False
 		'
 		'Label7
 		'
@@ -305,6 +297,7 @@ Partial Class ModCombustibleReceptor
 		'
 		'categoria
 		'
+		Me.categoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
 		Me.categoria.FormattingEnabled = True
 		Me.categoria.Location = New System.Drawing.Point(114, 118)
 		Me.categoria.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
@@ -363,6 +356,18 @@ Partial Class ModCombustibleReceptor
 		Me.marca.Size = New System.Drawing.Size(121, 27)
 		Me.marca.TabIndex = 449
 		'
+		'vehiculo
+		'
+		Me.vehiculo.AutoSize = True
+		Me.vehiculo.Checked = True
+		Me.vehiculo.CheckState = System.Windows.Forms.CheckState.Checked
+		Me.vehiculo.Location = New System.Drawing.Point(238, 148)
+		Me.vehiculo.Name = "vehiculo"
+		Me.vehiculo.Size = New System.Drawing.Size(84, 23)
+		Me.vehiculo.TabIndex = 477
+		Me.vehiculo.Text = "Vehiculo"
+		Me.vehiculo.UseVisualStyleBackColor = True
+		'
 		'Label4
 		'
 		Me.Label4.Location = New System.Drawing.Point(4, 174)
@@ -417,21 +422,10 @@ Partial Class ModCombustibleReceptor
 		Me.Label1.Text = "Modelo"
 		Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
-		'modelo
-		'
-		Me.modelo.CustomFormat = "yyyy"
-		Me.modelo.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-		Me.modelo.Location = New System.Drawing.Point(114, 205)
-		Me.modelo.Margin = New System.Windows.Forms.Padding(0, 1, 0, 0)
-		Me.modelo.MinDate = New Date(1900, 1, 1, 0, 0, 0, 0)
-		Me.modelo.Name = "modelo"
-		Me.modelo.Size = New System.Drawing.Size(83, 27)
-		Me.modelo.TabIndex = 469
-		'
 		'Label12
 		'
 		Me.Label12.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.Label12.Location = New System.Drawing.Point(201, 209)
+		Me.Label12.Location = New System.Drawing.Point(198, 209)
 		Me.Label12.Margin = New System.Windows.Forms.Padding(4, 5, 0, 0)
 		Me.Label12.Name = "Label12"
 		Me.Label12.Size = New System.Drawing.Size(172, 21)
@@ -457,30 +451,8 @@ Partial Class ModCombustibleReceptor
 		Me.observaciones.MaxLength = 90
 		Me.observaciones.Multiline = True
 		Me.observaciones.Name = "observaciones"
-		Me.observaciones.Size = New System.Drawing.Size(243, 66)
+		Me.observaciones.Size = New System.Drawing.Size(243, 95)
 		Me.observaciones.TabIndex = 474
-		'
-		'Label13
-		'
-		Me.Label13.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.Label13.Location = New System.Drawing.Point(4, 300)
-		Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 0, 0)
-		Me.Label13.Name = "Label13"
-		Me.Label13.Size = New System.Drawing.Size(110, 28)
-		Me.Label13.TabIndex = 475
-		Me.Label13.Text = "Autorizado ($)"
-		Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-		'
-		'autorizado
-		'
-		Me.autorizado.DecimalPlaces = 2
-		Me.autorizado.Location = New System.Drawing.Point(114, 302)
-		Me.autorizado.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.autorizado.Maximum = New Decimal(New Integer() {9999999, 0, 0, 0})
-		Me.autorizado.Name = "autorizado"
-		Me.autorizado.Size = New System.Drawing.Size(118, 27)
-		Me.autorizado.TabIndex = 476
-		Me.autorizado.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
 		'
 		'Panel4
 		'
@@ -525,28 +497,20 @@ Partial Class ModCombustibleReceptor
 		Me.cerrar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
 		Me.cerrar.UseVisualStyleBackColor = False
 		'
-		'vehiculo
+		'bs_responsable
 		'
-		Me.vehiculo.AutoSize = True
-		Me.vehiculo.Checked = True
-		Me.vehiculo.CheckState = System.Windows.Forms.CheckState.Checked
-		Me.vehiculo.Location = New System.Drawing.Point(238, 148)
-		Me.vehiculo.Name = "vehiculo"
-		Me.vehiculo.Size = New System.Drawing.Size(84, 23)
-		Me.vehiculo.TabIndex = 477
-		Me.vehiculo.Text = "Vehiculo"
-		Me.vehiculo.UseVisualStyleBackColor = True
 		'
-		'cuil_responsable
+		'modelo
 		'
-		Me.cuil_responsable.Enabled = False
-		Me.cuil_responsable.Location = New System.Drawing.Point(114, 60)
-		Me.cuil_responsable.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.cuil_responsable.MaxLength = 60
-		Me.cuil_responsable.Name = "cuil_responsable"
-		Me.cuil_responsable.ReadOnly = True
-		Me.cuil_responsable.Size = New System.Drawing.Size(121, 27)
-		Me.cuil_responsable.TabIndex = 478
+		Me.modelo.Location = New System.Drawing.Point(114, 205)
+		Me.modelo.Margin = New System.Windows.Forms.Padding(0, 1, 0, 0)
+		Me.modelo.Maximum = New Decimal(New Integer() {2100, 0, 0, 0})
+		Me.modelo.Minimum = New Decimal(New Integer() {1900, 0, 0, 0})
+		Me.modelo.Name = "modelo"
+		Me.modelo.Size = New System.Drawing.Size(80, 27)
+		Me.modelo.TabIndex = 482
+		Me.modelo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+		Me.modelo.Value = New Decimal(New Integer() {1900, 0, 0, 0})
 		'
 		'ModCombustibleReceptor
 		'
@@ -560,11 +524,12 @@ Partial Class ModCombustibleReceptor
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
 		Me.FlowLayoutPanel3.ResumeLayout(False)
 		Me.FlowLayoutPanel3.PerformLayout()
-		CType(Me.autorizado, System.ComponentModel.ISupportInitialize).EndInit()
 		Me.Panel4.ResumeLayout(False)
 		CType(Me.bs_receptor, System.ComponentModel.ISupportInitialize).EndInit()
 		CType(Me.bs_categoria, System.ComponentModel.ISupportInitialize).EndInit()
-		CType(Me.bs_seccion, System.ComponentModel.ISupportInitialize).EndInit()
+		CType(Me.bs_cuenta, System.ComponentModel.ISupportInitialize).EndInit()
+		CType(Me.bs_responsable, System.ComponentModel.ISupportInitialize).EndInit()
+		CType(Me.modelo, System.ComponentModel.ISupportInitialize).EndInit()
 		Me.ResumeLayout(False)
 
 	End Sub
@@ -577,8 +542,7 @@ Partial Class ModCombustibleReceptor
 	Friend WithEvents Save As Button
 	Friend WithEvents cerrar As Button
 	Friend WithEvents Label6 As Label
-	Friend WithEvents seccion As ComboBox
-	Friend WithEvents SelectResponsable As Button
+	Friend WithEvents cuenta As ComboBox
 	Friend WithEvents Label10 As Label
 	Public WithEvents bs_receptor As BindingSource
 	Friend WithEvents SaveAdd As Button
@@ -587,8 +551,6 @@ Partial Class ModCombustibleReceptor
 	Friend WithEvents Label7 As Label
 	Friend WithEvents categoria As ComboBox
 	Friend WithEvents Label9 As Label
-	Friend WithEvents AddSeccion As Button
-	Friend WithEvents DelSeccion As Button
 	Friend WithEvents AddCategoria As Button
 	Friend WithEvents DelCategoria As Button
 	Friend WithEvents Label4 As Label
@@ -596,18 +558,19 @@ Partial Class ModCombustibleReceptor
 	Friend WithEvents Label1 As Label
 	Friend WithEvents argentina As RadioButton
 	Friend WithEvents mercosur As RadioButton
-	Friend WithEvents modelo As DateTimePicker
 	Friend WithEvents Label5 As Label
 	Friend WithEvents baja As DateTimePicker
 	Friend WithEvents Label12 As Label
 	Friend WithEvents Label11 As Label
 	Friend WithEvents observaciones As TextBox
-	Friend WithEvents Label13 As Label
-	Friend WithEvents autorizado As NumericUpDown
 	Friend WithEvents Label14 As Label
-	Friend WithEvents responsable As TextBox
 	Public WithEvents bs_categoria As BindingSource
-	Public WithEvents bs_seccion As BindingSource
+	Public WithEvents bs_cuenta As BindingSource
 	Friend WithEvents vehiculo As CheckBox
 	Friend WithEvents cuil_responsable As TextBox
+	Friend WithEvents responsable As ComboBox
+	Friend WithEvents AddResponsable As Button
+	Friend WithEvents DelResponsable As Button
+	Public WithEvents bs_responsable As BindingSource
+	Friend WithEvents modelo As NumericUpDown
 End Class
