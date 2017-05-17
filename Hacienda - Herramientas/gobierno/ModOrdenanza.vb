@@ -59,9 +59,9 @@
         If codigo >= 11899 Or ordenanza_id > 0 Then
 
             If ordenanza_id > 0 Then
-				DbMan.read(My.Settings.DefaultCon, "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id)
+				DbMan.read(  "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id)
 			Else
-				DbMan.read(My.Settings.DefaultCon, "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo)
+				DbMan.read(  "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo)
 			End If
 
             If dtab Is Nothing = False Then
@@ -104,11 +104,11 @@
     '###### GUARDAR ##########################################################################################
     Private Sub guardar()
         If Val(ordenanza_id.text) > -1 Then 'Mod
-            DbMan.edit(My.Settings.DefaultCon,
+            DbMan.edit( 
 					"UPDATE ordenanza SET fecha='" & fecha.Text & "', concepto='" & concepto.Text & "',
                      ruta_copia='" & ruta_doc.Text & "'")
 		Else 'Nueva
-            DbMan.edit(My.Settings.DefaultCon,
+            DbMan.edit( 
 					"INSERT INTO ordenanza(codigo, fecha, concepto, ruta_copia)
                      VALUES(" & Val(codigo.Text) & ", '" & fecha.Text & "',
                     '" & concepto.Text & "', '" & ruta_doc.Text & "')")

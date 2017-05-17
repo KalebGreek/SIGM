@@ -410,7 +410,6 @@ Partial Class ModCombustible
 	Friend WithEvents info As ToolStripStatusLabel
 	Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
 	Friend WithEvents Panel1 As Panel
-	Friend WithEvents CtrlBusquedaCombustiblePorReceptor1 As Sigm.CtrlCombustiblePorReceptor
 	Friend WithEvents Button3 As Button
 	Friend WithEvents Button1 As Button
 	Friend WithEvents Panel2 As Panel

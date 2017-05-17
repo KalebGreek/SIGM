@@ -141,7 +141,7 @@
     Public Sub cargar_tablas_ext()
         Dim dtab_ext As New DataTable
         dtab_ext.Locale = System.Globalization.CultureInfo.CurrentCulture
-		dtab_ext = DbMan.read(My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE personas='aguas'")
+		dtab_ext = DbMan.read(  "SELECT * FROM tablas_externas WHERE personas='aguas'")
 		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS AGUA ##########################################################
             agua_personas.Text = dtab_ext(0)("personas")
@@ -152,7 +152,7 @@
 			agua_zonas.Text = dtab_ext(0)("zona")
         End If
 
-		dtab_ext = DbMan.read(My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE  personas='automovil'")
+		dtab_ext = DbMan.read(  "SELECT * FROM tablas_externas WHERE  personas='automovil'")
 		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS AUTO ##########################################################
             auto_personas.Text = dtab_ext(0)("personas")
@@ -161,7 +161,7 @@
 			auto_tipo.Text = dtab_ext(0)("tipo")
         End If
 
-		dtab_ext = DbMan.read(My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE  personas='catastro'")
+		dtab_ext = DbMan.read(  "SELECT * FROM tablas_externas WHERE  personas='catastro'")
 		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS CATA ##########################################################
             cata_personas.Text = dtab_ext(0)("personas")
@@ -171,7 +171,7 @@
 			cata_zonas.Text = dtab_ext(0)("zona")
         End If
 
-		dtab_ext = DbMan.read(My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE  personas='comercio'")
+		dtab_ext = DbMan.read(  "SELECT * FROM tablas_externas WHERE  personas='comercio'")
 		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS COME ##########################################################
             come_personas.Text = dtab_ext(0)("personas")
@@ -182,7 +182,7 @@
 			come_actividades.Text = dtab_ext(0)("actividad")
         End If
 
-		dtab_ext = DbMan.read(My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE  personas='sepelio'")
+		dtab_ext = DbMan.read(  "SELECT * FROM tablas_externas WHERE  personas='sepelio'")
 		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS SEPE ##########################################################
             sepe_personas.Text = dtab_ext(0)("personas")

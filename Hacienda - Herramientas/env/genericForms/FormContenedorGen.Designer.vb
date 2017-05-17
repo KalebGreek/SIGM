@@ -49,6 +49,8 @@ Partial Class FormContenedorGen
 		Me.CalculoAnualDeImpuestosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.LibreDeudaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.GenerarCertificadoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.CombustibleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.TicketsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.oprivadasMenu = New System.Windows.Forms.ToolStripMenuItem()
 		Me.BuscarExpedienteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.BuscarProfesionalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -56,8 +58,15 @@ Partial Class FormContenedorGen
 		Me.AsistenciaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.BuscarEmpleadoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.ToolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
+		Me.EmpleadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.NuevoContratoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-		Me.BuscarContratoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.NuevoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.BuscarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
+		Me.ProveedoresToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.NotaDePedidoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.NuevaNotaDePedidoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.BuscarNotaDePedidoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.personaMenu = New System.Windows.Forms.ToolStripMenuItem()
 		Me.NuevaPersonaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.BuscarPersonaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -65,8 +74,7 @@ Partial Class FormContenedorGen
 		Me.BuscarActaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.comercioMenu = New System.Windows.Forms.ToolStripMenuItem()
 		Me.SalirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-		Me.CombustibleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-		Me.TicketsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.BuscarProveedorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.StatusStrip1.SuspendLayout()
 		Me.BaseMenu.SuspendLayout()
 		Me.SuspendLayout()
@@ -272,6 +280,20 @@ Partial Class FormContenedorGen
 		Me.GenerarCertificadoToolStripMenuItem.Size = New System.Drawing.Size(202, 24)
 		Me.GenerarCertificadoToolStripMenuItem.Text = "Generar Certificado"
 		'
+		'CombustibleToolStripMenuItem
+		'
+		Me.CombustibleToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TicketsToolStripMenuItem})
+		Me.CombustibleToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.CombustibleToolStripMenuItem.Name = "CombustibleToolStripMenuItem"
+		Me.CombustibleToolStripMenuItem.Size = New System.Drawing.Size(258, 24)
+		Me.CombustibleToolStripMenuItem.Text = "Combustible"
+		'
+		'TicketsToolStripMenuItem
+		'
+		Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
+		Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(126, 24)
+		Me.TicketsToolStripMenuItem.Text = "Tickets"
+		'
 		'oprivadasMenu
 		'
 		Me.oprivadasMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BuscarExpedienteToolStripMenuItem, Me.BuscarProfesionalToolStripMenuItem})
@@ -298,7 +320,7 @@ Partial Class FormContenedorGen
 		'
 		'opublicasMenu
 		'
-		Me.opublicasMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AsistenciaToolStripMenuItem, Me.BuscarEmpleadoToolStripMenuItem, Me.ToolStripSeparator7, Me.NuevoContratoToolStripMenuItem, Me.BuscarContratoToolStripMenuItem})
+		Me.opublicasMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EmpleadosToolStripMenuItem, Me.AsistenciaToolStripMenuItem, Me.BuscarEmpleadoToolStripMenuItem, Me.NuevoContratoToolStripMenuItem, Me.ToolStripSeparator7, Me.ToolStripSeparator4, Me.ProveedoresToolStripMenuItem, Me.BuscarProveedorToolStripMenuItem, Me.NotaDePedidoToolStripMenuItem})
 		Me.opublicasMenu.ForeColor = System.Drawing.Color.White
 		Me.opublicasMenu.Name = "opublicasMenu"
 		Me.opublicasMenu.Padding = New System.Windows.Forms.Padding(0)
@@ -310,34 +332,83 @@ Partial Class FormContenedorGen
 		'
 		Me.AsistenciaToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
 		Me.AsistenciaToolStripMenuItem.Name = "AsistenciaToolStripMenuItem"
-		Me.AsistenciaToolStripMenuItem.Size = New System.Drawing.Size(190, 24)
+		Me.AsistenciaToolStripMenuItem.Size = New System.Drawing.Size(192, 24)
 		Me.AsistenciaToolStripMenuItem.Text = "Asistencia"
 		'
 		'BuscarEmpleadoToolStripMenuItem
 		'
 		Me.BuscarEmpleadoToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
 		Me.BuscarEmpleadoToolStripMenuItem.Name = "BuscarEmpleadoToolStripMenuItem"
-		Me.BuscarEmpleadoToolStripMenuItem.Size = New System.Drawing.Size(190, 24)
+		Me.BuscarEmpleadoToolStripMenuItem.Size = New System.Drawing.Size(192, 24)
 		Me.BuscarEmpleadoToolStripMenuItem.Text = "Buscar Empleado"
 		'
 		'ToolStripSeparator7
 		'
 		Me.ToolStripSeparator7.Name = "ToolStripSeparator7"
-		Me.ToolStripSeparator7.Size = New System.Drawing.Size(187, 6)
+		Me.ToolStripSeparator7.Size = New System.Drawing.Size(189, 6)
+		'
+		'EmpleadosToolStripMenuItem
+		'
+		Me.EmpleadosToolStripMenuItem.Enabled = False
+		Me.EmpleadosToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.EmpleadosToolStripMenuItem.Name = "EmpleadosToolStripMenuItem"
+		Me.EmpleadosToolStripMenuItem.Size = New System.Drawing.Size(192, 24)
+		Me.EmpleadosToolStripMenuItem.Text = "Empleados"
 		'
 		'NuevoContratoToolStripMenuItem
 		'
+		Me.NuevoContratoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NuevoToolStripMenuItem, Me.BuscarToolStripMenuItem})
 		Me.NuevoContratoToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
 		Me.NuevoContratoToolStripMenuItem.Name = "NuevoContratoToolStripMenuItem"
-		Me.NuevoContratoToolStripMenuItem.Size = New System.Drawing.Size(190, 24)
-		Me.NuevoContratoToolStripMenuItem.Text = "Nuevo Contrato"
+		Me.NuevoContratoToolStripMenuItem.Size = New System.Drawing.Size(192, 24)
+		Me.NuevoContratoToolStripMenuItem.Text = "Contrato"
 		'
-		'BuscarContratoToolStripMenuItem
+		'NuevoToolStripMenuItem
 		'
-		Me.BuscarContratoToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.BuscarContratoToolStripMenuItem.Name = "BuscarContratoToolStripMenuItem"
-		Me.BuscarContratoToolStripMenuItem.Size = New System.Drawing.Size(190, 24)
-		Me.BuscarContratoToolStripMenuItem.Text = "Buscar Contrato"
+		Me.NuevoToolStripMenuItem.Name = "NuevoToolStripMenuItem"
+		Me.NuevoToolStripMenuItem.Size = New System.Drawing.Size(152, 24)
+		Me.NuevoToolStripMenuItem.Text = "Nuevo.."
+		'
+		'BuscarToolStripMenuItem
+		'
+		Me.BuscarToolStripMenuItem.Name = "BuscarToolStripMenuItem"
+		Me.BuscarToolStripMenuItem.Size = New System.Drawing.Size(152, 24)
+		Me.BuscarToolStripMenuItem.Text = "Buscar.."
+		'
+		'ToolStripSeparator4
+		'
+		Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+		Me.ToolStripSeparator4.Size = New System.Drawing.Size(189, 6)
+		'
+		'ProveedoresToolStripMenuItem
+		'
+		Me.ProveedoresToolStripMenuItem.Enabled = False
+		Me.ProveedoresToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.ProveedoresToolStripMenuItem.Name = "ProveedoresToolStripMenuItem"
+		Me.ProveedoresToolStripMenuItem.Size = New System.Drawing.Size(192, 24)
+		Me.ProveedoresToolStripMenuItem.Text = "Proveedores"
+		'
+		'NotaDePedidoToolStripMenuItem
+		'
+		Me.NotaDePedidoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NuevaNotaDePedidoToolStripMenuItem, Me.BuscarNotaDePedidoToolStripMenuItem})
+		Me.NotaDePedidoToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.NotaDePedidoToolStripMenuItem.Name = "NotaDePedidoToolStripMenuItem"
+		Me.NotaDePedidoToolStripMenuItem.Size = New System.Drawing.Size(192, 24)
+		Me.NotaDePedidoToolStripMenuItem.Text = "Nota de Pedido"
+		'
+		'NuevaNotaDePedidoToolStripMenuItem
+		'
+		Me.NuevaNotaDePedidoToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.NuevaNotaDePedidoToolStripMenuItem.Name = "NuevaNotaDePedidoToolStripMenuItem"
+		Me.NuevaNotaDePedidoToolStripMenuItem.Size = New System.Drawing.Size(152, 24)
+		Me.NuevaNotaDePedidoToolStripMenuItem.Text = "Nueva.."
+		'
+		'BuscarNotaDePedidoToolStripMenuItem
+		'
+		Me.BuscarNotaDePedidoToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.BuscarNotaDePedidoToolStripMenuItem.Name = "BuscarNotaDePedidoToolStripMenuItem"
+		Me.BuscarNotaDePedidoToolStripMenuItem.Size = New System.Drawing.Size(152, 24)
+		Me.BuscarNotaDePedidoToolStripMenuItem.Text = "Buscar.."
 		'
 		'personaMenu
 		'
@@ -393,19 +464,12 @@ Partial Class FormContenedorGen
 		Me.SalirToolStripMenuItem.Size = New System.Drawing.Size(43, 23)
 		Me.SalirToolStripMenuItem.Text = "Salir"
 		'
-		'CombustibleToolStripMenuItem
+		'BuscarProveedorToolStripMenuItem
 		'
-		Me.CombustibleToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TicketsToolStripMenuItem})
-		Me.CombustibleToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.CombustibleToolStripMenuItem.Name = "CombustibleToolStripMenuItem"
-		Me.CombustibleToolStripMenuItem.Size = New System.Drawing.Size(258, 24)
-		Me.CombustibleToolStripMenuItem.Text = "Combustible"
-		'
-		'TicketsToolStripMenuItem
-		'
-		Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
-		Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(152, 24)
-		Me.TicketsToolStripMenuItem.Text = "Tickets"
+		Me.BuscarProveedorToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.BuscarProveedorToolStripMenuItem.Name = "BuscarProveedorToolStripMenuItem"
+		Me.BuscarProveedorToolStripMenuItem.Size = New System.Drawing.Size(192, 24)
+		Me.BuscarProveedorToolStripMenuItem.Text = "Buscar Proveedor"
 		'
 		'FormContenedorGen
 		'
@@ -448,31 +512,39 @@ Partial Class FormContenedorGen
     Friend WithEvents BuscarEmpleadoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator7 As ToolStripSeparator
     Friend WithEvents NuevoContratoToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents BuscarContratoToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents BuscarExpedienteToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents BuscarProfesionalToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents NuevaOrdenanzaToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents BuscarOrdenanzaToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ConsultarImpuestoToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ConsultarCuentaAgrupadaToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
-    Friend WithEvents CalculoAnualDeImpuestosToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents NuevaPersonaToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents BuscarPersonaToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
-    Friend WithEvents BuscarActaToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents BuscarInmuebleToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ConsultarPagosToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SalirToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents LibreDeudaToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents GenerarCertificadoToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents comercioMenu As ToolStripMenuItem
-    Friend WithEvents ConsultasEspecialesStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ConsultaDeMovimientosToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
+	Friend WithEvents BuscarExpedienteToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents BuscarProfesionalToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents NuevaOrdenanzaToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents BuscarOrdenanzaToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents ConsultarImpuestoToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents ConsultarCuentaAgrupadaToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
+	Friend WithEvents CalculoAnualDeImpuestosToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents NuevaPersonaToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents BuscarPersonaToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+	Friend WithEvents BuscarActaToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents BuscarInmuebleToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents ConsultarPagosToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents SalirToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents LibreDeudaToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents GenerarCertificadoToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents comercioMenu As ToolStripMenuItem
+	Friend WithEvents ConsultasEspecialesStripMenuItem As ToolStripMenuItem
+	Friend WithEvents ConsultaDeMovimientosToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
 	Friend WithEvents asocialMenu As ToolStripMenuItem
 	Friend WithEvents NuevoBeneficiarioToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents BuscarBeneficiarioToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents CombustibleToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents TicketsToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents EmpleadosToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
+	Friend WithEvents NotaDePedidoToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents NuevoToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents BuscarToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents ProveedoresToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents NuevaNotaDePedidoToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents BuscarNotaDePedidoToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents BuscarProveedorToolStripMenuItem As ToolStripMenuItem
 End Class

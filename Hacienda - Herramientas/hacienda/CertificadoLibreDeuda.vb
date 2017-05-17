@@ -3,19 +3,19 @@
     Public DetalleVencimiento As String
     Public Function ConsultarCuenta(tipo As String, cuenta As Integer) As DataTable
         If tipo.Contains("AGUA") Then
-			Return DbMan.read(My.Settings.foxcon, "SELECT * FROM aguas WHERE codigo=" & cuenta)
+			Return DbMan.read("SELECT * FROM aguas WHERE codigo=" & cuenta, My.Settings.foxcon)
 		ElseIf tipo.Contains("AUTO") Then
-			Return DbMan.read(My.Settings.foxcon, "SELECT * FROM automovil INNER JOIN tipauto ON automovil.tipo=tipauto.tipo
-                                    WHERE codigo=" & cuenta)
+			Return DbMan.read("SELECT * FROM automovil INNER JOIN tipauto ON automovil.tipo=tipauto.tipo
+								WHERE codigo=" & cuenta, My.Settings.foxcon)
 		ElseIf tipo.Contains("CATA") Then
-			Return DbMan.read(My.Settings.foxcon, "SELECT * FROM catastro 
-                                    WHERE codigo=" & cuenta)
+			Return DbMan.read("SELECT * FROM catastro 
+                                WHERE codigo=" & cuenta, My.Settings.foxcon)
 		ElseIf tipo.Contains("CEME") Then
-			Return DbMan.read(My.Settings.foxcon, "SELECT * FROM sepelio 
-                                    WHERE codigo=" & cuenta)
+			Return DbMan.read("SELECT * FROM sepelio 
+                                WHERE codigo=" & cuenta, My.Settings.foxcon)
 		ElseIf tipo.Contains("COME") Then
-			Return DbMan.read(My.Settings.foxcon, "SELECT * FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad 
-                                    WHERE codigo=" & cuenta)
+			Return DbMan.read("SELECT * FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad 
+                                WHERE codigo=" & cuenta, My.Settings.foxcon)
 		Else
             Return Nothing
         End If

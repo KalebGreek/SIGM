@@ -75,7 +75,7 @@
             End If
         End If
 
-		Dim dtab As DataTable = DbMan.read(My.Settings.DefaultCon, SQLSelect & SQLTable & SQLCriteria)
+		Dim dtab As DataTable = DbMan.read(  SQLSelect & SQLTable & SQLCriteria)
 		If dtab Is Nothing = False Then
 			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, dtab)
 			If dtab.Rows.Count = 0 Then
@@ -120,7 +120,7 @@
         With bs_consulta
             If .Position > -1 Then
                 If MsgBoxResult.Yes = MsgBox("¿Desea eliminar el registro seleccionado?", MsgBoxStyle.YesNo, "Eliminar registro") Then
-					DbMan.edit(My.Settings.DefaultCon, "DELETE * FROM ordenanza WHERE id=" & .Current("id"))
+					DbMan.edit(  "DELETE * FROM ordenanza WHERE id=" & .Current("id"))
 					buscar.PerformClick()
                 End If
             End If

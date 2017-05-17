@@ -1,45 +1,46 @@
-﻿Public Class acceso
-    Public Sub New()
+﻿Imports Sigm.SecMan
+Public Class acceso
+	Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
         ConfigInit(Me)
 		user.Focus()
-    End Sub
+	End Sub
 
     '###### GUI #################################################################################################
     Private Sub user_GotFocus(sender As Object, e As EventArgs) Handles user.GotFocus
-        user.Clear()
-    End Sub
-    Private Sub user_LostFocus(sender As Object, e As EventArgs) Handles user.LostFocus
-        If Len(user.Text) = 0 Then
-            user.Text = "USUARIO"
-        End If
-    End Sub
-    Private Sub user_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles user.TextChanged
-        sender.BackColor = Color.White
-        If Len(sender.Text) < 5 Then
-            sender.BackColor = Color.FromArgb(255, 195, 185)
-        End If
-    End Sub
+		user.Clear()
+	End Sub
+	Private Sub user_LostFocus(sender As Object, e As EventArgs) Handles user.LostFocus
+		If Len(user.Text) = 0 Then
+			user.Text = "USUARIO"
+		End If
+	End Sub
+	Private Sub user_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles user.TextChanged
+		sender.BackColor = Color.White
+		If Len(sender.Text) < 5 Then
+			sender.BackColor = Color.FromArgb(255, 195, 185)
+		End If
+	End Sub
 
-    Private Sub pass_GotFocus(sender As Object, e As EventArgs) Handles pass.GotFocus
-        pass.Clear()
-        pass.PasswordChar = "*"
-    End Sub
-    Private Sub pass_LostFocus(sender As Object, e As EventArgs) Handles pass.LostFocus
-        If Len(pass.Text) = 0 Then
-            pass.Text = "CONTRASEÑA"
-            pass.PasswordChar = ""
-        End If
-    End Sub
-    Private Sub pass_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles pass.TextChanged
-        sender.BackColor = Color.White
-        If Len(sender.Text) < 5 Then
-            sender.BackColor = Color.FromArgb(255, 195, 185)
-        End If
-    End Sub
+	Private Sub pass_GotFocus(sender As Object, e As EventArgs) Handles pass.GotFocus
+		pass.Clear()
+		pass.PasswordChar = "*"
+	End Sub
+	Private Sub pass_LostFocus(sender As Object, e As EventArgs) Handles pass.LostFocus
+		If Len(pass.Text) = 0 Then
+			pass.Text = "CONTRASEÑA"
+			pass.PasswordChar = ""
+		End If
+	End Sub
+	Private Sub pass_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles pass.TextChanged
+		sender.BackColor = Color.White
+		If Len(sender.Text) < 5 Then
+			sender.BackColor = Color.FromArgb(255, 195, 185)
+		End If
+	End Sub
 
 	Private Sub salir_Click(sender As Object, e As EventArgs) Handles salir.Click
 		Me.Dispose()
@@ -60,11 +61,11 @@
 			info.Text = "Ingrese usuario y contraseña."
 		Else
 			info.Text = "Usuario o contraseña incorrecta."
-            user.Clear()
-            pass.Clear()
-            user.Focus()
-        End If
-    End Sub
+			user.Clear()
+			pass.Clear()
+			user.Focus()
+		End If
+	End Sub
     '###### END VALIDATION ######################################################################################
 
 End Class

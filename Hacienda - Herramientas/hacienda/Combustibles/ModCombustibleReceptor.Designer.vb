@@ -48,13 +48,15 @@ Partial Class ModCombustibleReceptor
 		Me.marca = New System.Windows.Forms.TextBox()
 		Me.vehiculo = New System.Windows.Forms.CheckBox()
 		Me.Label4 = New System.Windows.Forms.Label()
-		Me.dominio = New System.Windows.Forms.MaskedTextBox()
+		Me.dominio = New System.Windows.Forms.TextBox()
 		Me.argentina = New System.Windows.Forms.RadioButton()
 		Me.mercosur = New System.Windows.Forms.RadioButton()
 		Me.Label1 = New System.Windows.Forms.Label()
+		Me.modelo = New System.Windows.Forms.NumericUpDown()
 		Me.Label12 = New System.Windows.Forms.Label()
 		Me.Label11 = New System.Windows.Forms.Label()
 		Me.observaciones = New System.Windows.Forms.TextBox()
+		Me.receptor_id = New System.Windows.Forms.TextBox()
 		Me.Panel4 = New System.Windows.Forms.Panel()
 		Me.Label14 = New System.Windows.Forms.Label()
 		Me.cerrar = New System.Windows.Forms.Button()
@@ -62,14 +64,13 @@ Partial Class ModCombustibleReceptor
 		Me.bs_categoria = New System.Windows.Forms.BindingSource(Me.components)
 		Me.bs_cuenta = New System.Windows.Forms.BindingSource(Me.components)
 		Me.bs_responsable = New System.Windows.Forms.BindingSource(Me.components)
-		Me.modelo = New System.Windows.Forms.NumericUpDown()
 		Me.FlowLayoutPanel3.SuspendLayout()
+		CType(Me.modelo, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.Panel4.SuspendLayout()
 		CType(Me.bs_receptor, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.bs_categoria, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.bs_cuenta, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.bs_responsable, System.ComponentModel.ISupportInitialize).BeginInit()
-		CType(Me.modelo, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
 		'
 		'SaveAdd
@@ -129,14 +130,15 @@ Partial Class ModCombustibleReceptor
 		Me.FlowLayoutPanel3.Controls.Add(Me.marca)
 		Me.FlowLayoutPanel3.Controls.Add(Me.vehiculo)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label4)
-		Me.FlowLayoutPanel3.Controls.Add(Me.dominio)
 		Me.FlowLayoutPanel3.Controls.Add(Me.argentina)
 		Me.FlowLayoutPanel3.Controls.Add(Me.mercosur)
+		Me.FlowLayoutPanel3.Controls.Add(Me.dominio)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label1)
 		Me.FlowLayoutPanel3.Controls.Add(Me.modelo)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label12)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label11)
 		Me.FlowLayoutPanel3.Controls.Add(Me.observaciones)
+		Me.FlowLayoutPanel3.Controls.Add(Me.receptor_id)
 		Me.FlowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
 		Me.FlowLayoutPanel3.Location = New System.Drawing.Point(0, 27)
 		Me.FlowLayoutPanel3.Margin = New System.Windows.Forms.Padding(0)
@@ -353,7 +355,7 @@ Partial Class ModCombustibleReceptor
 		Me.marca.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
 		Me.marca.MaxLength = 60
 		Me.marca.Name = "marca"
-		Me.marca.Size = New System.Drawing.Size(121, 27)
+		Me.marca.Size = New System.Drawing.Size(197, 27)
 		Me.marca.TabIndex = 449
 		'
 		'vehiculo
@@ -361,7 +363,7 @@ Partial Class ModCombustibleReceptor
 		Me.vehiculo.AutoSize = True
 		Me.vehiculo.Checked = True
 		Me.vehiculo.CheckState = System.Windows.Forms.CheckState.Checked
-		Me.vehiculo.Location = New System.Drawing.Point(238, 148)
+		Me.vehiculo.Location = New System.Drawing.Point(314, 148)
 		Me.vehiculo.Name = "vehiculo"
 		Me.vehiculo.Size = New System.Drawing.Size(84, 23)
 		Me.vehiculo.TabIndex = 477
@@ -380,19 +382,18 @@ Partial Class ModCombustibleReceptor
 		'
 		'dominio
 		'
-		Me.dominio.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.dominio.Location = New System.Drawing.Point(114, 176)
+		Me.dominio.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+		Me.dominio.Location = New System.Drawing.Point(311, 176)
 		Me.dominio.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.dominio.Mask = "AAA 000"
+		Me.dominio.MaxLength = 60
 		Me.dominio.Name = "dominio"
-		Me.dominio.Size = New System.Drawing.Size(83, 27)
-		Me.dominio.TabIndex = 464
-		Me.dominio.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+		Me.dominio.Size = New System.Drawing.Size(98, 27)
+		Me.dominio.TabIndex = 485
 		'
 		'argentina
 		'
 		Me.argentina.Checked = True
-		Me.argentina.Location = New System.Drawing.Point(203, 174)
+		Me.argentina.Location = New System.Drawing.Point(120, 174)
 		Me.argentina.Margin = New System.Windows.Forms.Padding(6, 0, 0, 0)
 		Me.argentina.Name = "argentina"
 		Me.argentina.Size = New System.Drawing.Size(92, 30)
@@ -403,10 +404,10 @@ Partial Class ModCombustibleReceptor
 		'
 		'mercosur
 		'
-		Me.mercosur.Location = New System.Drawing.Point(297, 174)
+		Me.mercosur.Location = New System.Drawing.Point(214, 174)
 		Me.mercosur.Margin = New System.Windows.Forms.Padding(2, 0, 0, 0)
 		Me.mercosur.Name = "mercosur"
-		Me.mercosur.Size = New System.Drawing.Size(88, 30)
+		Me.mercosur.Size = New System.Drawing.Size(97, 30)
 		Me.mercosur.TabIndex = 467
 		Me.mercosur.Text = "Mercosur"
 		Me.mercosur.UseVisualStyleBackColor = True
@@ -421,6 +422,18 @@ Partial Class ModCombustibleReceptor
 		Me.Label1.TabIndex = 462
 		Me.Label1.Text = "Modelo"
 		Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		'
+		'modelo
+		'
+		Me.modelo.Location = New System.Drawing.Point(114, 205)
+		Me.modelo.Margin = New System.Windows.Forms.Padding(0, 1, 0, 0)
+		Me.modelo.Maximum = New Decimal(New Integer() {2100, 0, 0, 0})
+		Me.modelo.Minimum = New Decimal(New Integer() {1900, 0, 0, 0})
+		Me.modelo.Name = "modelo"
+		Me.modelo.Size = New System.Drawing.Size(80, 27)
+		Me.modelo.TabIndex = 482
+		Me.modelo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+		Me.modelo.Value = New Decimal(New Integer() {1900, 0, 0, 0})
 		'
 		'Label12
 		'
@@ -454,6 +467,20 @@ Partial Class ModCombustibleReceptor
 		Me.observaciones.Size = New System.Drawing.Size(243, 95)
 		Me.observaciones.TabIndex = 474
 		'
+		'receptor_id
+		'
+		Me.receptor_id.BackColor = System.Drawing.SystemColors.InactiveCaption
+		Me.receptor_id.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+		Me.receptor_id.Location = New System.Drawing.Point(357, 234)
+		Me.receptor_id.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.receptor_id.MaxLength = 60
+		Me.receptor_id.Name = "receptor_id"
+		Me.receptor_id.Size = New System.Drawing.Size(35, 27)
+		Me.receptor_id.TabIndex = 484
+		Me.receptor_id.Text = "0"
+		Me.receptor_id.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+		Me.receptor_id.Visible = False
+		'
 		'Panel4
 		'
 		Me.Panel4.BackColor = System.Drawing.Color.Gray
@@ -482,7 +509,6 @@ Partial Class ModCombustibleReceptor
 		'
 		'cerrar
 		'
-		Me.cerrar.DialogResult = System.Windows.Forms.DialogResult.Cancel
 		Me.cerrar.Dock = System.Windows.Forms.DockStyle.Right
 		Me.cerrar.FlatAppearance.BorderSize = 0
 		Me.cerrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
@@ -500,18 +526,6 @@ Partial Class ModCombustibleReceptor
 		'bs_responsable
 		'
 		'
-		'modelo
-		'
-		Me.modelo.Location = New System.Drawing.Point(114, 205)
-		Me.modelo.Margin = New System.Windows.Forms.Padding(0, 1, 0, 0)
-		Me.modelo.Maximum = New Decimal(New Integer() {2100, 0, 0, 0})
-		Me.modelo.Minimum = New Decimal(New Integer() {1900, 0, 0, 0})
-		Me.modelo.Name = "modelo"
-		Me.modelo.Size = New System.Drawing.Size(80, 27)
-		Me.modelo.TabIndex = 482
-		Me.modelo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-		Me.modelo.Value = New Decimal(New Integer() {1900, 0, 0, 0})
-		'
 		'ModCombustibleReceptor
 		'
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
@@ -524,12 +538,12 @@ Partial Class ModCombustibleReceptor
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
 		Me.FlowLayoutPanel3.ResumeLayout(False)
 		Me.FlowLayoutPanel3.PerformLayout()
+		CType(Me.modelo, System.ComponentModel.ISupportInitialize).EndInit()
 		Me.Panel4.ResumeLayout(False)
 		CType(Me.bs_receptor, System.ComponentModel.ISupportInitialize).EndInit()
 		CType(Me.bs_categoria, System.ComponentModel.ISupportInitialize).EndInit()
 		CType(Me.bs_cuenta, System.ComponentModel.ISupportInitialize).EndInit()
 		CType(Me.bs_responsable, System.ComponentModel.ISupportInitialize).EndInit()
-		CType(Me.modelo, System.ComponentModel.ISupportInitialize).EndInit()
 		Me.ResumeLayout(False)
 
 	End Sub
@@ -554,7 +568,6 @@ Partial Class ModCombustibleReceptor
 	Friend WithEvents AddCategoria As Button
 	Friend WithEvents DelCategoria As Button
 	Friend WithEvents Label4 As Label
-	Friend WithEvents dominio As MaskedTextBox
 	Friend WithEvents Label1 As Label
 	Friend WithEvents argentina As RadioButton
 	Friend WithEvents mercosur As RadioButton
@@ -573,4 +586,6 @@ Partial Class ModCombustibleReceptor
 	Friend WithEvents DelResponsable As Button
 	Public WithEvents bs_responsable As BindingSource
 	Friend WithEvents modelo As NumericUpDown
+	Public WithEvents receptor_id As TextBox
+	Friend WithEvents dominio As TextBox
 End Class

@@ -225,7 +225,7 @@ Public Class ConsultaCuentaAgrupada
         If cuenta_agrupada Then
             sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
         End If
-		consulta = DbMan.read(My.Settings.foxcon, sql)
+		consulta = DbMan.read(sql, My.Settings.foxcon)
 		progreso.Value = 20
         Return consulta
     End Function
@@ -348,12 +348,12 @@ Public Class ConsultaCuentaAgrupada
             If .RowCount > 0 Then
                 Do While fila < .RowCount
                     If .Item(0, fila).Value.ToString = Nothing Then
-						DbMan.edit(My.Settings.DefaultCon, "INSERT INTO contribuyente(razon, cuil, impuesto, codigo, alta)
+						DbMan.edit(  "INSERT INTO contribuyente(razon, cuil, impuesto, codigo, alta)
                                          VALUES ('" & razon.Text & "', " & cuil.Text & ", '" & .Item(1, fila).Value & "'," &
 										" " & .Item(2, fila).Value & ", '" & .Item(3, fila).Value & "')")
 						nins += 1
 					Else
-						DbMan.edit(My.Settings.DefaultCon, "UPDATE contribuyente SET razon='" & razon.Text & "', impuesto='" & .Item(1, fila).Value &
+						DbMan.edit(  "UPDATE contribuyente SET razon='" & razon.Text & "', impuesto='" & .Item(1, fila).Value &
 										"', codigo=" & .Item(2, fila).Value & ", alta='" & .Item(3, fila).Value & "'" &
 										" WHERE id=" & .Item(0, fila).Value)
 						nupd += 1
@@ -363,13 +363,13 @@ Public Class ConsultaCuentaAgrupada
 				ndel = 0
 				If found = True Then
 					Do While ndel < del_rows.Count And del_rows(ndel) <> Nothing
-						DbMan.edit(My.Settings.DefaultCon, "DELETE FROM contribuyente WHERE id=" & del_rows(ndel))
+						DbMan.edit(  "DELETE FROM contribuyente WHERE id=" & del_rows(ndel))
 						ndel += 1
 					Loop
 				End If
 			Else
 				If MsgBoxResult.Ok = MsgBox("Esto eliminará todos los registros de la cuenta agrupada, ¿desea continuar?.", MsgBoxStyle.OkCancel) Then
-					DbMan.edit(My.Settings.DefaultCon, "DELETE FROM contribuyente WHERE cuil=" & cuil.Text & ";")
+					DbMan.edit(  "DELETE FROM contribuyente WHERE cuil=" & cuil.Text & ";")
 				End If
             End If
             info.Text = nins & " nuevos registros, " & nupd & " registros modificados y " & ndel & " registros eliminados."

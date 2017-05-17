@@ -49,7 +49,7 @@
 					answer = MsgBox("¿Desea guardar este expediente temporal bajo el N° " & expediente.Text & "?",
 									MsgBoxStyle.YesNoCancel, "Guardar Expediente")
 					If answer = MsgBoxResult.Yes Then 'Asignar N° de Expediente y quitar temporal
-                        DbMan.edit(My.Settings.DefaultCon, "UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
+                        DbMan.edit(  "UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
                                                         WHERE id=" & opr_id.Text)
 						Me.Close()
                     End If
@@ -133,15 +133,11 @@
         prof_id.Text = registro(0)("profesional_id").ToString
 
 		If prof_id.Text > 0 Then
-			Dim prof As DataTable = Profesional.Seleccionar(prof_id.Text)
+			Dim prof As DataTable = Persona.Profesional.Seleccionar(prof_id.Text, 0)
 
 			If prof.Rows.Count > 0 Then
 				CtrlMan.LoadAllControls(prof(0), Panel3)
-                'razon.Text = prof(0)("razon").ToString
-                'titulo.Text = prof(0)("titulo").ToString
-                'cuil.Text = prof(0)("cuil").ToString
-                'matricula.Text = prof(0)("matricula").ToString
-            Else
+			Else
 				MsgBox("Profesional no válido.", MsgBoxStyle.Exclamation)
 				prof_id.Text = 0
 			End If

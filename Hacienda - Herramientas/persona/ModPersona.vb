@@ -1,76 +1,43 @@
-﻿Imports Sigm.Persona.sql
+﻿Imports Sigm.Persona
 Public Class ModPersona
-    Public Sub New(Optional id As Integer = 0)
+	Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
-        ' Add any initialization after the InitializeComponent() call.
-        'titulo.DataSource = Profesional.ListarTitulos()
-        'titulo.DisplayMember = "titulo"
-        'titulo.ValueMember = "id"
-        persona_id.Text = id
-        If id > 0 Then
-            Me.Text = "MODIFICAR PERSONA"
-            cargar(Persona.sql.Cargar(persona_id.Text))
-        End If
-    End Sub
+		' Add any initialization after the InitializeComponent() call.
+	End Sub
 	'###### GUI ##########################################################################################
-	Private Sub cancel_Click(sender As Object, e As EventArgs) Handles Cancelar.Click
+	Private Sub TabControl1_TabIndexChanged(sender As Object, e As EventArgs) Handles TabControl1.SelectedIndexChanged
+		If Me.Visible Then
+			lastPage.Enabled = TabControl1.SelectedIndex > 0
+			nextPage.Enabled = TabControl1.SelectedIndex < TabControl1.TabCount - 1
+			If TabControl1.SelectedIndex > -1 Then
+				Label1.Text = TabControl1.SelectedTab.Text
+			End If
+		End If
+	End Sub
+	Private Sub lastPage_Click(sender As Object, e As EventArgs) Handles lastPage.Click
+		If TabControl1.SelectedIndex > 0 Then
+			TabControl1.SelectedIndex -= 1
+		End If
+	End Sub
+	Private Sub nextPage_Click(sender As Object, e As EventArgs) Handles nextPage.Click
+		If TabControl1.SelectedIndex < TabControl1.TabCount - 1 Then
+			TabControl1.SelectedIndex += 1
+		End If
+	End Sub
+
+	Private Sub cancel_Click(sender As Object, e As EventArgs)
 		Me.Close()
 	End Sub
 
     '###### CARGAR ##########################################################################################
-    Sub cargar(registro As DataTable)
-
-
-		'If registro(0)("difunto") Is DBNull.Value Then
-		'esDifunto.Checked = False
-		'Else
-		'esDifunto.Checked = registro(0)("difunto")
-		'If esDifunto.Checked Then
-		'	If registro(0)("ruta_defuncion") Is DBNull.Value = False Then
-		'ruta_defuncion.Text = registro(0)("ruta_defuncion")
-		'	End If
-		'		End If
-		'End If
-
-
-		registro = Profesional.BuscarPorPersona(persona_id.Text)
-		'If registro.Rows.Count > 0 Then
-		'If registro(0)("matricula") Is DBNull.Value Then
-		'esProfesional.Checked = False
-		'Else
-		'esProfesional.Checked = True
-		'	prof_id.Text = registro(0)("prof_id")
-		'	titulo.Text = registro(0)("titulo")
-		'	matr.Text = registro(0)("matricula")
-		'	End If
-		'	End If
-
-		'	registro = Proveedor.BuscarPorPersona(persona_id.Text, fisica)
-		'	If registro.Rows.Count > 0 Then
-		'	If registro(0)("responsable_iva") Is DBNull.Value Then
-		'	esProveedor.Checked = False
-		'	Else
-		'	esProveedor.Checked = True
-		'	responsable.Text = registro(0)("responsable_iva")
-		'	End If
-		'	End If
-	End Sub
-
-	Private Sub difunto_CheckedChanged(sender As Object, e As EventArgs)
-		'   et_defu.Visible = esDifunto.Checked
-		'ruta_defuncion.Visible = esDifunto.Checked
-		'cargar_defu.Visible = esDifunto.Checked
-	End Sub
-    Private Sub ruta_defuncion_Click(sender As Object, e As EventArgs)
-		' If Len(ruta_defuncion.Text) > 0 Then
-		'Process.Start(root & My.Settings.DocFolderPersona & ruta_defuncion.Text)
-		'End If
-	End Sub
-    Private Sub cargar_defu_Click(sender As Object, e As EventArgs) 
-		'If Len(cuil.Text) = 11 And Len(razon.Text) > 8 Then
-		'ruta_defuncion.Text = Documento.Persona.CertificadoDefuncion(cuil.Text)
-		'End If
+    Sub cargar(id As Integer)
+		If id > 0 Then
+			Me.Text = "MODIFICAR PERSONA"
+			persona_id.Text = id
+			Persona.Cargar(id, TabPersona1Datos1, TabPersona2Domicilio1,
+						   TabPersona3Contacto1, TabPersona4Adicional1)
+		End If
 	End Sub
 
     '###### MODIFICAR ##########################################################################################
@@ -84,110 +51,12 @@ Public Class ModPersona
 		End If
 	End Sub
 
-	Private Sub GuardarCambios_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles GuardarCambios.Click
-        'Según si se modifica un CUIL de persona o un profesional, hay que actualizar campos de distintas tablas
-        'No correr el update de cuil al pedo si no cambió nada (comparar nuevo y viejo)
-        'No actualizar cuil si no tiene 11 de largo, dejar valor anterior.
-        Dim dtab_con As New DataTable
-        Dim valido As Boolean = True
-        Dim msg As String = ""
-		validar(persona_id.Text, 0)
-	End Sub
-	Sub validar(persona_id As Integer, cuil As Double)
-		Dim dtab_con As New DataTable
-		Dim valido As Boolean = True
-		Dim msg As String = ""
-		'Normalizar cuil 
-		If Val(cuil) < 20000000000 Then
-			msg = "Revise el Nº de CUIL antes de continuar." & Chr(13)
-			valido = False
-		Else
-			dtab_con = DbMan.read(My.Settings.DefaultCon, "SELECT id, cuil FROM persona WHERE cuil=" & cuil)
-			If dtab_con.Rows.Count > 1 Then
-				For fila As Integer = 0 To dtab_con.Rows.Count - 1
-					If dtab_con(fila)("id") <> persona_id Then
-						MsgBox("N° de CUIL duplicado.")
-						valido = False
-					End If
-				Next
-			End If
-		End If
-
-		'Normalizar Profesional
-		'If matr.Text = "" And esProfesional.Checked Then
-		'msg += "No se ingresó N° de Matrícula profesional."
-		'valido = False
-		'End If
-
-		'Normalizar difunto
-		'If ruta_defuncion.Text = "" And esDifunto.Checked Then
-		'msg += "No se ingresó copia del Acta de Defunción."
-		'valido = False
-		'ElseIf esDifunto.Checked = False Then
-		'ruta_defuncion.Clear()
-		'End If
-
-		'Normalizar proveedor
-		'If responsable.SelectedIndex = -1 And esProveedor.Checked Then
-		'msg += "Debe seleccionar responsabilidad de proveedor ante AFIP."
-		'valido = False
-		'End If
-
-		'Guardar
-		If valido Then
-			Dim answer As MsgBoxResult = MsgBox("¿Desea guardar los cambios?", MsgBoxStyle.YesNoCancel, "Guardar cambios")
-			If answer = MsgBoxResult.Yes Or answer = MsgBoxResult.No Then
-				If answer = MsgBoxResult.Yes Then
-					guardar(Val(persona_id), 0, "")
-				End If
-				Me.Close()
-			End If
-		Else
-			MsgBox(msg, MsgBoxStyle.Exclamation, "Errores")
+	Private Sub save_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles save.Click
+		persona_id.Text = TabPersona1Datos1.guardar(persona_id.Text)
+		If persona_id.Text > 0 Then
+			TabPersona2Domicilio1.guardar(persona_id.Text)
+			TabPersona3Contacto1.guardar(persona_id.Text)
+			TabPersona4Adicional1.guardar(persona_id.Text)
 		End If
 	End Sub
-
-	Sub guardar(persona_id As Integer, cuil As Double, razon As String)
-		Dim dtab As DataTable
-		Dim fisica As New Boolean
-
-		If Microsoft.VisualBasic.Left(cuil, 2) > 29 Then
-			fisica = False
-		Else
-			fisica = True
-		End If
-        'CREAR/EDITAR PERSONA
-        If persona_id > 0 Then
-			'dbMan.edit(My.Settings.DefaultCon, Modificar(persona_id, razon, CDbl(cuil), fisica,
-			'email.Text, tele.Text, esDifunto.Checked, ruta_defuncion.Text))
-		Else
-			'dbMan.edit(My.Settings.DefaultCon, Nueva(razon, CDbl(cuil), fisica,
-			'email.Text, tele.Text, esDifunto.Checked, ruta_defuncion.Text))
-
-			dtab = DbMan.read(My.Settings.DefaultCon, "SELECT MAX(id) as persona_id FROM persona WHERE razon='" & razon & "'")
-			persona_id = dtab(0)("persona_id")
-		End If
-        'CREAR DOMICILIO/S
-        DbMan.edit(My.Settings.DefaultCon, Domicilio.sql.Eliminar(persona_id))
-		'For Each tab As Domicilio.Tab In TabControl1.TabPages
-		'With tab
-		'dbMan.edit(My.Settings.DefaultCon, Domicilio.sql.Nuevo(persona_id, .calle.Text, .altura.Value,
-		'.piso.Value, .dpto.Text, .localidad.SelectedValue, TabControl1.SelectedTab Is tab))
-		'End With
-		'Next
-		'CREAR PROF
-		'If esProfesional.Checked Then
-		'prof_id.Text = Profesional.guardar(prof_id.Text, persona_id, titulo.SelectedValue, matr.Text)
-		'Else
-		'prof_id.Text = Profesional.eliminar(persona_id)
-		'End If
-		'CREAR PROV
-		'If esProveedor.Checked Then
-		'proveedor_id.Text = Proveedor.guardar(persona_id, proveedor_id.Text, responsable.Text)
-		'Else
-		'proveedor_id.Text = Proveedor.eliminar(persona_id)
-		'End If
-	End Sub
-
-
 End Class

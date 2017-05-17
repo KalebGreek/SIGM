@@ -180,34 +180,18 @@
     <Compile Include="catastro\AgregarFrente.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="env\manager\CtrlMan.vb" />
-    <Compile Include="env\manager\DbMan.vb" />
+    <Compile Include="env\CtrlMan.vb" />
+    <Compile Include="env\DbMan.vb" />
+    <Compile Include="env\FileMan.vb" />
     <Compile Include="env\genericForms\FormDialogoGen.Designer.vb">
       <DependentUpon>FormDialogoGen.vb</DependentUpon>
     </Compile>
     <Compile Include="env\genericForms\FormDialogoGen.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="env\SecMan.vb" />
     <Compile Include="hacienda\CalculoAnualImpuesto\CalculoAnual.vb" />
     <Compile Include="hacienda\Combustibles\Combustible.vb" />
-    <Compile Include="hacienda\Combustibles\CtrlCombustiblePorProveedor.Designer.vb">
-      <DependentUpon>CtrlCombustiblePorProveedor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="hacienda\Combustibles\CtrlCombustiblePorProveedor.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="hacienda\Combustibles\CtrlCombustiblePorResponsable.Designer.vb">
-      <DependentUpon>CtrlCombustiblePorResponsable.vb</DependentUpon>
-    </Compile>
-    <Compile Include="hacienda\Combustibles\CtrlCombustiblePorResponsable.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="hacienda\Combustibles\CtrlCombustiblePorReceptor.Designer.vb">
-      <DependentUpon>CtrlCombustiblePorReceptor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="hacienda\Combustibles\CtrlCombustiblePorReceptor.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="hacienda\Combustibles\CtrlBusquedaCombustiblePorTicket.Designer.vb">
       <DependentUpon>CtrlBusquedaCombustiblePorTicket.vb</DependentUpon>
     </Compile>
@@ -234,9 +218,8 @@
     </Compile>
     <Compile Include="docs\Documento.vb" />
     <Compile Include="env\genericQueries\ControlBusquedaGen.vb">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="env\SystemAccess.vb" />
     <Compile Include="gobierno\ConsultaOrdenanza.Designer.vb">
       <DependentUpon>ConsultaOrdenanza.vb</DependentUpon>
     </Compile>
@@ -294,7 +277,6 @@
     </Compile>
     <Compile Include="hacienda\Hacienda.vb" />
     <Compile Include="hacienda\CuentaAgrupada\hac_contrib.vb" />
-    <Compile Include="env\Vencimientos.vb" />
     <Compile Include="acceso.designer.vb">
       <DependentUpon>acceso.vb</DependentUpon>
     </Compile>
@@ -344,8 +326,8 @@
     <Compile Include="gobierno\ModEmpleado.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="oprivadas\ControlConsultaExpediente.vb">
-      <SubType>Form</SubType>
+    <Compile Include="oprivadas\ControlBusquedaExpediente.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -362,45 +344,48 @@
     <Compile Include="persona\ControlBusquedaPersona.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="persona\DomicilioPage.Designer.vb">
+      <DependentUpon>DomicilioPage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="persona\DomicilioPage.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="persona\ModActa.Designer.vb">
       <DependentUpon>ModActa.vb</DependentUpon>
     </Compile>
     <Compile Include="persona\ModActa.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="persona\Empleado.vb" />
-    <Compile Include="persona\tabPersonaContacto.Designer.vb">
-      <DependentUpon>tabPersonaContacto.vb</DependentUpon>
+    <Compile Include="persona\tabPersona3Contacto.Designer.vb">
+      <DependentUpon>tabPersona3Contacto.vb</DependentUpon>
     </Compile>
-    <Compile Include="persona\tabPersonaContacto.vb">
+    <Compile Include="persona\tabPersona3Contacto.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="persona\tabPersonaAdicional.Designer.vb">
-      <DependentUpon>tabPersonaAdicional.vb</DependentUpon>
+    <Compile Include="persona\tabPersona4Adicional.Designer.vb">
+      <DependentUpon>tabPersona4Adicional.vb</DependentUpon>
     </Compile>
-    <Compile Include="persona\tabPersonaAdicional.vb">
+    <Compile Include="persona\tabPersona4Adicional.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="persona\tabPersonaDomicilio.Designer.vb">
-      <DependentUpon>tabPersonaDomicilio.vb</DependentUpon>
+    <Compile Include="persona\tabPersona2Domicilio.Designer.vb">
+      <DependentUpon>tabPersona2Domicilio.vb</DependentUpon>
     </Compile>
-    <Compile Include="persona\tabPersonaDomicilio.vb">
+    <Compile Include="persona\tabPersona2Domicilio.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="persona\tabPersonaDatos.Designer.vb">
-      <DependentUpon>tabPersonaDatos.vb</DependentUpon>
+    <Compile Include="persona\tabPersona1Datos.Designer.vb">
+      <DependentUpon>tabPersona1Datos.vb</DependentUpon>
     </Compile>
-    <Compile Include="persona\tabPersonaDatos.vb">
+    <Compile Include="persona\tabPersona1Datos.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="persona\Profesional.vb" />
-    <Compile Include="persona\Proveedor.vb" />
     <Compile Include="persona\Domicilio.vb" />
-    <Compile Include="reportes\ParamReporte.vb" />
-    <Compile Include="reportes\VisorReporte.Designer.vb">
+    <Compile Include="env\reportes\ParamReporte.vb" />
+    <Compile Include="env\reportes\VisorReporte.Designer.vb">
       <DependentUpon>VisorReporte.vb</DependentUpon>
     </Compile>
-    <Compile Include="reportes\VisorReporte.vb">
+    <Compile Include="env\reportes\VisorReporte.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="oprivadas\ModPago.Designer.vb">
@@ -416,7 +401,7 @@
     <Compile Include="oprivadas\ModExpediente.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="env\entorno.vb" />
+    <Compile Include="env\EnvInit.vb" />
     <Compile Include="env\config.Designer.vb">
       <DependentUpon>config.vb</DependentUpon>
     </Compile>
@@ -467,15 +452,6 @@
     <EmbeddedResource Include="env\genericForms\FormDialogoGen.resx">
       <DependentUpon>FormDialogoGen.vb</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\Combustibles\CtrlCombustiblePorProveedor.resx">
-      <DependentUpon>CtrlCombustiblePorProveedor.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\Combustibles\CtrlCombustiblePorResponsable.resx">
-      <DependentUpon>CtrlCombustiblePorResponsable.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\Combustibles\CtrlCombustiblePorReceptor.resx">
-      <DependentUpon>CtrlCombustiblePorReceptor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\Combustibles\CtrlBusquedaCombustiblePorTicket.resx">
       <DependentUpon>CtrlBusquedaCombustiblePorTicket.vb</DependentUpon>
@@ -532,62 +508,66 @@
     <EmbeddedResource Include="gobierno\ModEmpleado.resx">
       <DependentUpon>ModEmpleado.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\ControlConsultaExpediente.resx">
-      <DependentUpon>ControlConsultaExpediente.vb</DependentUpon>
+    <EmbeddedResource Include="oprivadas\ControlBusquedaExpediente.resx">
+      <DependentUpon>ControlBusquedaExpediente.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\Combustibles\ModCombustible.resx">
       <DependentUpon>ModCombustible.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="opublicas\forms\ReciboVenta.rdlc" />
     <EmbeddedResource Include="persona\ControlBusquedaPersona.resx">
       <DependentUpon>ControlBusquedaPersona.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="persona\DomicilioPage.resx">
+      <DependentUpon>DomicilioPage.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="persona\ModActa.resx">
       <DependentUpon>ModActa.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="persona\tabPersonaContacto.resx">
-      <DependentUpon>tabPersonaContacto.vb</DependentUpon>
+    <EmbeddedResource Include="persona\tabPersona3Contacto.resx">
+      <DependentUpon>tabPersona3Contacto.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="persona\tabPersonaAdicional.resx">
-      <DependentUpon>tabPersonaAdicional.vb</DependentUpon>
+    <EmbeddedResource Include="persona\tabPersona4Adicional.resx">
+      <DependentUpon>tabPersona4Adicional.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="persona\tabPersonaDomicilio.resx">
-      <DependentUpon>tabPersonaDomicilio.vb</DependentUpon>
+    <EmbeddedResource Include="persona\tabPersona2Domicilio.resx">
+      <DependentUpon>tabPersona2Domicilio.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="persona\tabPersonaDatos.resx">
-      <DependentUpon>tabPersonaDatos.vb</DependentUpon>
+    <EmbeddedResource Include="persona\tabPersona1Datos.resx">
+      <DependentUpon>tabPersona1Datos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\gob\sid.rdlc">
+    <EmbeddedResource Include="gobierno\forms\sid.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\gob\sia.rdlc">
+    <EmbeddedResource Include="gobierno\forms\sia.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\gob\sic.rdlc">
+    <EmbeddedResource Include="gobierno\forms\sic.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\hac\lco.rdlc">
+    <EmbeddedResource Include="hacienda\forms\lco.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\hac\lce.rdlc">
+    <EmbeddedResource Include="hacienda\forms\lce.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\hac\lca.rdlc">
+    <EmbeddedResource Include="hacienda\forms\lca.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\hac\lau.rdlc">
+    <EmbeddedResource Include="hacienda\forms\lau.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\hac\lag.rdlc">
+    <EmbeddedResource Include="hacienda\forms\lag.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\opr\car.rdlc">
+    <EmbeddedResource Include="oprivadas\forms\car.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\opr\cfo.rdlc">
+    <EmbeddedResource Include="oprivadas\forms\cfo.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\opr\clm.rdlc">
+    <EmbeddedResource Include="oprivadas\forms\clm.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="env\config.resx">
@@ -600,14 +580,14 @@
     <EmbeddedResource Include="env\visor_error.resx">
       <DependentUpon>visor_error.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\opr\exp.rdlc">
+    <EmbeddedResource Include="oprivadas\forms\exp.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\opr\spr.rdlc" />
-    <EmbeddedResource Include="reportes\opu\cdp.rdlc">
+    <EmbeddedResource Include="oprivadas\forms\spr.rdlc" />
+    <EmbeddedResource Include="opublicas\forms\cdp.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\VisorReporte.resx">
+    <EmbeddedResource Include="env\reportes\VisorReporte.resx">
       <DependentUpon>VisorReporte.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -616,28 +596,28 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\opr\ppm.rdlc">
+    <EmbeddedResource Include="oprivadas\forms\ppm.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\opr\ppe.rdlc">
+    <EmbeddedResource Include="oprivadas\forms\ppe.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\opr\sfo.rdlc">
+    <EmbeddedResource Include="oprivadas\forms\sfo.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\opr\sin.rdlc">
+    <EmbeddedResource Include="oprivadas\forms\sin.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\opr\slm.rdlc">
+    <EmbeddedResource Include="oprivadas\forms\slm.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\gob\sug.rdlc">
+    <EmbeddedResource Include="gobierno\forms\sug.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="oprivadas\ModPago.resx">
       <DependentUpon>ModPago.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="reportes\opr\smt.rdlc">
+    <EmbeddedResource Include="oprivadas\forms\smt.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="oprivadas\ModExpediente.resx">
@@ -770,8 +750,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="comercio\" />
+    <Folder Include="env\old\" />
     <Folder Include="My Project\DataSources\" />
-    <Folder Include="opublicas\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

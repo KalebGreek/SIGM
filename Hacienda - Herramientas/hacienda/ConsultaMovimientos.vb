@@ -81,7 +81,7 @@
         End If
         SQLGrouping = ""
 
-		Return DbMan.read(My.Settings.foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
+		Return DbMan.read(SQLSelect & SQLTable & SQLCriteria & SQLGrouping, My.Settings.foxcon)
 	End Function
     Private Function ConsultarMovimientos(ByVal cuenta As Double, ByVal keyword As String,
                                           Filtrado As Boolean, FiltroFecha As Boolean,
@@ -99,12 +99,12 @@
         End If
         SQLGrouping = ""
 
-		Return DbMan.read(My.Settings.foxcon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
+		Return DbMan.read(SQLSelect & SQLTable & SQLCriteria & SQLGrouping, My.Settings.foxcon)
 	End Function
     Private Sub SumarTotales(ingreso As Boolean)
-		Dim dtab As DataTable = DbMan.read(My.Settings.foxcon,
-										"SELECT SUM(pagado) as total_pagado, orden" &
-										SQLTable & SQLCriteria & " GROUP BY orden")
+		Dim dtab As DataTable = DbMan.read("SELECT SUM(pagado) as total_pagado, orden" &
+											SQLTable & SQLCriteria & " GROUP BY orden",
+											My.Settings.foxcon)
 		info2.Text = " - "
         If dtab Is Nothing = False Then
             If dtab.Rows.Count > 0 Then

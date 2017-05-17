@@ -1,5 +1,5 @@
 ﻿Public Class ControlBusquedaPersona
-	Inherits ControlBusquedaGen
+	Inherits Form
 
 	Private components As System.ComponentModel.IContainer
 	Friend WithEvents PanelFiltros As FlowLayoutPanel
@@ -10,28 +10,12 @@
 	Public Sub New()
 		MyBase.New()
 		InitializeComponent()
-		'
-		'Vista
-		'
-		If item_busqueda <> "" Then
-			Vista.Items.AddRange(New Object() {item_busqueda})
-			Vista.Text = item_busqueda
-		Else
-			Vista.Items.AddRange(New Object() {"PERSONA", "EMPLEADO", "PROFESIONAL", "PROVEEDOR"})
-			Vista.Text = "PERSONA"
-		End If
-		'
-		'Color Set
-		'
-		CtrlMan.SetFormColor(Me, ColorPersona)
-
 	End Sub
 
 	Public Overloads Sub InitializeComponent()
 		Me.PanelFiltros = New System.Windows.Forms.FlowLayoutPanel()
 		Me.difunto = New System.Windows.Forms.CheckBox()
 		Me.fisica = New System.Windows.Forms.CheckBox()
-		CType(Me.bs_resultado, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.PanelFiltros.SuspendLayout()
 		Me.SuspendLayout()
 		'
@@ -72,9 +56,7 @@
 		Me.ClientSize = New System.Drawing.Size(570, 337)
 		Me.Controls.Add(Me.PanelFiltros)
 		Me.Name = "ControlBusquedaPersona"
-		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
 		Me.Controls.SetChildIndex(Me.PanelFiltros, 0)
-		CType(Me.bs_resultado, System.ComponentModel.ISupportInitialize).EndInit()
 		Me.PanelFiltros.ResumeLayout(False)
 		Me.PanelFiltros.PerformLayout()
 		Me.ResumeLayout(False)
@@ -85,48 +67,10 @@
 	'-- RUTINAS
 	Private Sub Consultar()
 		CtrlMan.LoadDataGridView(DataGridView1, bs_resultado,
-								 Persona.sql.Consultar(Vista.Text, filtro.Text,
+								 Persona.Consultar(Vista.Text, filtro.Text,
 													   keyword.Text, difunto.Checked,
 													   fisica.Checked))
 	End Sub
-
-	Private Overloads Sub resetForm()
-		difunto.Checked = False
-		fisica.Checked = True
-		keyword.Text = ""
-		bs_resultado.DataSource = Nothing
-	End Sub
-
-	'Private Sub Nueva_Persona_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NuevoToolStripMenuItem.Click
-	'La búsqueda se va a realizar automáticamente, para mostrar personas coincidentes con la razón
-	'social o el cuil ingresado
-	'Dim agregar_per As New ModPersona
-	'With agregar_per
-	'.ShowDialog(Me)
-	'End With
-	'End Sub
-	'Private Sub Modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ModificarToolStripMenuItem.Click
-	'With bs_resultado
-	'If .Position > -1 Then
-	'Dim edit_per As New ModPersona(.Current("persona_id"))
-	'With edit_per
-	'.ShowDialog(Me)
-	'End With
-	'Consultar(keyword.Text)
-	'End If
-	'End With
-	'End Sub
-	'Private Sub Eliminar_Click(sender As Object, e As EventArgs) Handles EliminarToolStripMenuItem.Click
-	'With bs_resultado
-	'If .Position > -1 Then
-	'If Persona.sql.Eliminar(.Current("persona_id")) Then
-	'.RemoveCurrent()
-	'reset.PerformClick()
-	'Consultar(keyword.Text)
-	'End If
-	'End If
-	'End With
-	'End Sub
 
 	'-- EVENTOS UNICOS
 
@@ -189,9 +133,16 @@
 			resetForm()
 		End If
 	End Sub
-	Private Sub keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles keyword.KeyUp
+	Private Sub keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles keyword.KeyUp, DataGridView1.KeyUp 'Key shortcuts
 		If e.KeyValue = Keys.Enter Then
 			Consultar()
+		ElseIf e.KeyValue = Keys.F2 Then
+			If bs_resultado.Position > -1 Then
+				Dim mper As New ModPersona
+				mper.cargar(bs_resultado.Current("persona_id"))
+				mper.ShowDialog()
+				Consultar()
+			End If
 		End If
 	End Sub
 End Class

@@ -161,7 +161,7 @@
         CtrlMan.LoadDataGridView(consulta_frente, bs_frente, Catastro.Frente.Cargar(catastro_id.Text))
 
         'superficies
-        registro = DbMan.read(My.Settings.DefaultCon, "SELECT * FROM cat_superficie WHERE catastro_id=" & catastro_id.Text)
+        registro = DbMan.read(  "SELECT * FROM cat_superficie WHERE catastro_id=" & catastro_id.Text)
 
 		CtrlMan.LoadAllControls(registro(0), tab_sup)
         'If registro.Rows.Count > 0 Then
@@ -173,7 +173,7 @@
 
         'caracteristicas
         CtrlMan.LoadDataGridView(consulta_caract, bs_car,
-								 DbMan.read(My.Settings.DefaultCon,
+								 DbMan.read( 
 											"SELECT descripcion, activo FROM cat_servicio 
 											 WHERE catastro_id=" & catastro_id.Text))
 

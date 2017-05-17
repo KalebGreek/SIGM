@@ -55,13 +55,13 @@ Partial Class ModCombustibleTicket
 		Me.MontoItem = New System.Windows.Forms.NumericUpDown()
 		Me.AddNewItem = New System.Windows.Forms.Button()
 		Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
+		Me.DelItem = New System.Windows.Forms.Button()
 		Me.Label5 = New System.Windows.Forms.Label()
 		Me.monto_total = New System.Windows.Forms.Label()
 		Me.bs_item_ticket = New System.Windows.Forms.BindingSource(Me.components)
 		Me.bs_responsable = New System.Windows.Forms.BindingSource(Me.components)
 		Me.bs_receptor = New System.Windows.Forms.BindingSource(Me.components)
 		Me.bs_tipo_item = New System.Windows.Forms.BindingSource(Me.components)
-		Me.DelItem = New System.Windows.Forms.Button()
 		Me.FlowLayoutPanel3.SuspendLayout()
 		CType(Me.DetalleTicket, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.Panel4.SuspendLayout()
@@ -111,7 +111,7 @@ Partial Class ModCombustibleTicket
 		'
 		'FlowLayoutPanel3
 		'
-		Me.FlowLayoutPanel3.BackColor = System.Drawing.Color.LightGray
+		Me.FlowLayoutPanel3.BackColor = System.Drawing.Color.Silver
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label7)
 		Me.FlowLayoutPanel3.Controls.Add(Me.fecha)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label8)
@@ -324,7 +324,7 @@ Partial Class ModCombustibleTicket
 		'
 		'AddItemPanel1
 		'
-		Me.AddItemPanel1.BackColor = System.Drawing.Color.LightGray
+		Me.AddItemPanel1.BackColor = System.Drawing.Color.Silver
 		Me.AddItemPanel1.Controls.Add(Me.Label12)
 		Me.AddItemPanel1.Controls.Add(Me.Label1)
 		Me.AddItemPanel1.Controls.Add(Me.et_litros_unidades)
@@ -464,7 +464,7 @@ Partial Class ModCombustibleTicket
 		'
 		'FlowLayoutPanel1
 		'
-		Me.FlowLayoutPanel1.BackColor = System.Drawing.Color.LightGray
+		Me.FlowLayoutPanel1.BackColor = System.Drawing.Color.Silver
 		Me.FlowLayoutPanel1.Controls.Add(Me.DelItem)
 		Me.FlowLayoutPanel1.Controls.Add(Me.Label5)
 		Me.FlowLayoutPanel1.Controls.Add(Me.monto_total)
@@ -475,6 +475,17 @@ Partial Class ModCombustibleTicket
 		Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
 		Me.FlowLayoutPanel1.Size = New System.Drawing.Size(466, 26)
 		Me.FlowLayoutPanel1.TabIndex = 464
+		'
+		'DelItem
+		'
+		Me.DelItem.Font = New System.Drawing.Font("Segoe MDL2 Assets", 10.0!)
+		Me.DelItem.Location = New System.Drawing.Point(0, 0)
+		Me.DelItem.Margin = New System.Windows.Forms.Padding(0)
+		Me.DelItem.Name = "DelItem"
+		Me.DelItem.Size = New System.Drawing.Size(120, 26)
+		Me.DelItem.TabIndex = 463
+		Me.DelItem.Text = " ELIMINAR ITEM"
+		Me.DelItem.UseVisualStyleBackColor = True
 		'
 		'Label5
 		'
@@ -507,17 +518,6 @@ Partial Class ModCombustibleTicket
 		'
 		'bs_tipo_item
 		'
-		'
-		'DelItem
-		'
-		Me.DelItem.Font = New System.Drawing.Font("Segoe MDL2 Assets", 10.0!)
-		Me.DelItem.Location = New System.Drawing.Point(0, 0)
-		Me.DelItem.Margin = New System.Windows.Forms.Padding(0)
-		Me.DelItem.Name = "DelItem"
-		Me.DelItem.Size = New System.Drawing.Size(120, 26)
-		Me.DelItem.TabIndex = 463
-		Me.DelItem.Text = " ELIMINAR ITEM"
-		Me.DelItem.UseVisualStyleBackColor = True
 		'
 		'ModCombustibleTicket
 		'

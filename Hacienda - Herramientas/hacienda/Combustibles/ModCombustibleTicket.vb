@@ -14,14 +14,14 @@ Public Class ModCombustibleTicket
 
 		bs_receptor = registro_receptor
 		'Cargar items de ejemplo
-		bs_tipo_item.DataSource = DbMan.read(My.Settings.DefaultCon, "SELECT id as tipo_id, descripcion, por_litro 
+		bs_tipo_item.DataSource = DbMan.read("SELECT id as tipo_id, descripcion, por_litro 
 																		FROM hac_combustible_tipo")
 
 		CtrlMan.Fill.AutoComplete(bs_tipo_item, TipoItem, "descripcion", "tipo_id")
 		'Cargar receptor
 		CtrlMan.Fill.AutoComplete(bs_receptor, receptor, "descripcion", "receptor_id")
 		'Cargar responsable
-		Combustible.FillResponsable(bs_responsable, responsable, bs_receptor.Current("receptor_id"))
+		Combustible.Responsable.Fill(bs_responsable, responsable, bs_receptor.Current("receptor_id"))
 	End Sub
 
 	Private Sub ModCombustibleTicket_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
@@ -50,19 +50,19 @@ Public Class ModCombustibleTicket
 
 	'TICKET
 	Public Sub NewTicket()
-		DbMan.edit(My.Settings.DefaultCon, "INSERT INTO hac_combustible_ticket(proveedor_id, responsable_id, 
-																			   fecha, ticket, total, user_id) 
-																		VALUES(" & bs_receptor.Current("receptor_id") & ", 
-																			   " & bs_responsable.Current("persona_id") & ",
-																			   0, #" & fecha.Value & "#, 0, 0," & My.Settings.UserId & ")")
+		DbMan.edit("INSERT INTO hac_combustible_ticket(proveedor_id, responsable_id, 
+													   fecha, ticket, total, user_id) 
+										    	VALUES(" & bs_receptor.Current("receptor_id") & ", -1,
+													  #" & Date.Today & "#, 0, 0, " & My.Settings.UserId & ")")
 
-		LoadTicket(Combustible.FindTicket(bs_receptor, True)(0)("ticket_id"))
+		Dim dtab As DataTable = Combustible.Ticket.Find(bs_receptor.Current("receptor_id"), True)
+		LoadTicket(dtab(0)("ticket_id"))
 	End Sub
 
 	Public Sub LoadTicket(id As Integer)
 		If id > 0 Then
-			Dim dtab As DataTable = DbMan.read(My.Settings.DefaultCon,
-											  "SELECT hac_combustible_ticket.id,
+			Dim dtab As DataTable = DbMan.read(
+											  "Select hac_combustible_ticket.id,
 													  hac_combustible_ticket.proveedor_id, persona.razon as proveedor,
 													  hac_combustible_ticket.responsable_id, hac_combustible_ticket.fecha, 
 													  hac_combustible_ticket.ticket, hac_combustible_ticket.total, 
@@ -79,7 +79,7 @@ Public Class ModCombustibleTicket
 				ticket_id = dtab(0)("id")
 				proveedor_id = dtab(0)("proveedor_id")
 				CtrlMan.LoadAllControls(dtab(0), Me)
-				Combustible.TicketDetail(DetalleTicket, bs_item_ticket, ticket_id)
+				Combustible.Ticket.Detail(DetalleTicket, bs_item_ticket, ticket_id)
 			End If
 		End If
 	End Sub
@@ -121,7 +121,7 @@ Public Class ModCombustibleTicket
 			Next
 		End If
 
-		DbMan.edit(My.Settings.DefaultCon, "UPDATE hac_combustible_ticket 
+		DbMan.edit("UPDATE hac_combustible_ticket 
 											   SET total=" & Replace(total, ",", "."))
 
 		monto_total.Text = Replace(FormatCurrency(total, 2), ".", ",")
@@ -146,7 +146,7 @@ Public Class ModCombustibleTicket
 			nuevo_tipo = Trim(nuevo_tipo)
 			If Len(nuevo_tipo) > 2 Then
 				por_litro = (MsgBoxResult.Yes = MsgBox("Precio por litro?", MsgBoxStyle.YesNo))
-				DbMan.edit(My.Settings.DefaultCon, "INSERT INTO hac_combustible_tipo(descripcion, por_litro) 
+				DbMan.edit("INSERT INTO hac_combustible_tipo(descripcion, por_litro) 
 														 VALUES(" & nuevo_tipo & ", " & por_litro & ")")
 			End If
 		End If
@@ -160,14 +160,14 @@ Public Class ModCombustibleTicket
 											  MsgBoxStyle.YesNo) Then
 
 					If bs_tipo_item.Current("por_litro") Then
-						DbMan.edit(My.Settings.DefaultCon, "UPDATE hac_combustible_items SET tipo_combustible_id=1 
+						DbMan.edit("UPDATE hac_combustible_items SET tipo_combustible_id=1 
 															WHERE tipo_combustible=" & TipoItem.SelectedValue)
 					Else
-						DbMan.edit(My.Settings.DefaultCon, "UPDATE hac_combustible_items SET tipo_combustible_id=6 
+						DbMan.edit("UPDATE hac_combustible_items SET tipo_combustible_id=6 
 															WHERE tipo_combustible=" & TipoItem.SelectedValue)
 					End If
 
-					DbMan.edit(My.Settings.DefaultCon, "DELETE * FROM hac_combustible_tipo WHERE id=" & TipoItem.SelectedValue)
+					DbMan.edit("DELETE * FROM hac_combustible_tipo WHERE id=" & TipoItem.SelectedValue)
 
 				End If
 			End If
@@ -177,7 +177,7 @@ Public Class ModCombustibleTicket
 	Private Sub AddNewItem_Click(sender As Object, e As EventArgs) Handles AddNewItem.Click
 		Dim litros As Integer = 0
 		Dim unidades As Integer = 0
-		Dim unitario As String = Replace(MontoItem.Value,",",".")
+		Dim unitario As String = Replace(MontoItem.Value, ",", ".")
 
 		If bs_tipo_item.Position > -1 And MontoItem.Value > 0 And LitrosItem.Value > 0 Then
 			If bs_tipo_item.Current("por_litro") Then
@@ -186,7 +186,7 @@ Public Class ModCombustibleTicket
 				unidades = LitrosItem.Value
 			End If
 
-			DbMan.edit(My.Settings.DefaultCon,
+			DbMan.edit(
 					   "INSERT INTO hac_combustible_items(ticket_id, tipo_item_id, litros, unidades, monto, user_id)
 												   VALUES(" & ticket_id & "," & bs_tipo_item.Current("tipo_id") & ",
 														  " & litros & ", " & unidades & ", " & unitario & ",
@@ -195,14 +195,14 @@ Public Class ModCombustibleTicket
 			MontoItem.Value = 0
 			LitrosItem.Value = 0
 		End If
-		Combustible.TicketDetail(DetalleTicket, bs_item_ticket, ticket_id)
+		Combustible.Ticket.Detail(DetalleTicket, bs_item_ticket, ticket_id)
 	End Sub
 
 	Private Sub DelItem_Click(sender As Object, e As EventArgs) Handles DelItem.Click
 		If bs_item_ticket.Position > -1 Then
 			If MsgBoxResult.Yes = MsgBox("Desea eliminar este item?", MsgBoxStyle.YesNo, "Eliminar Item") Then
-				DbMan.edit(My.Settings.DefaultCon, "DELETE * FROM hac_combustible_items WHERE id=" & bs_item_ticket.Current("item_id"))
-				Combustible.TicketDetail(DetalleTicket, bs_item_ticket, ticket_id)
+				DbMan.edit("DELETE * FROM hac_combustible_items WHERE id=" & bs_item_ticket.Current("item_id"))
+				Combustible.Ticket.Detail(DetalleTicket, bs_item_ticket, ticket_id)
 			End If
 		End If
 	End Sub

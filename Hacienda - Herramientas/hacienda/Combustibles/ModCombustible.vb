@@ -27,13 +27,13 @@
 
 			Hacienda.FillCuenta(bs_cuenta, cuenta)
 
-			Combustible.FillCategory(bs_categoria, categoria, vehiculo.Checked)
+			Combustible.Receptor.FillCategory(bs_categoria, categoria, vehiculo.Checked)
 		End If
 	End Sub
 
 	Private Sub vehiculo_CheckedChanged(sender As Object, e As EventArgs) Handles vehiculo.CheckedChanged
 		If Me.Visible And categoria.Enabled Then
-			Combustible.FillCategory(bs_categoria, categoria, vehiculo.Checked)
+			Combustible.Receptor.FillCategory(bs_categoria, categoria, vehiculo.Checked)
 		End If
 	End Sub
 
@@ -46,7 +46,8 @@
 
 	Private Sub bs_receptor_PositionChanged(sender As Object, e As EventArgs) Handles bs_receptor.PositionChanged, bs_receptor.CurrentChanged
 		If Me.Visible Then
-			CtrlMan.LoadDataGridView(historial, bs_historial, Combustible.FindTicket(bs_receptor))
+			CtrlMan.LoadDataGridView(historial, bs_historial,
+									 Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
 		End If
 	End Sub
 
@@ -64,7 +65,7 @@
 			SQLWhere = ""
 		End If
 		'Rellenar lista de receptores
-		Dim dtab As DataTable = DbMan.read(My.Settings.DefaultCon, SQLSelectReceptor & SQLTableReceptor & SQLWhere)
+		Dim dtab As DataTable = DbMan.read(SQLSelectReceptor & SQLTableReceptor & SQLWhere)
 		bs_receptor.DataSource = dtab
 		CtrlMan.Fill.AutoComplete(bs_receptor, receptor, "descripcion", "receptor_id")
 	End Sub
@@ -73,8 +74,8 @@
 		Dim NewRec As New ModCombustibleReceptor
 		NewRec.ShowDialog(Me)
 		FillReceptor()
-		If NewRec.receptor_id > 0 Then
-			receptor.SelectedValue = NewRec.receptor_id
+		If NewRec.receptor_id.Text > 0 Then
+			receptor.SelectedValue = NewRec.receptor_id.Text
 		End If
 		NewRec.Dispose()
 	End Sub
@@ -84,8 +85,8 @@
 			EditRec.LoadReceptor(bs_receptor.Current("receptor_id"))
 			EditRec.ShowDialog(Me)
 			FillReceptor()
-			If EditRec.receptor_id > 0 Then
-				receptor.SelectedValue = EditRec.receptor_id
+			If EditRec.receptor_id.Text > 0 Then
+				receptor.SelectedValue = EditRec.receptor_id.Text
 			End If
 			EditRec.Dispose()
 		End If
@@ -95,7 +96,7 @@
 			If MsgBoxResult.Yes = MsgBox("Desea eliminar este receptor? Se eliminaran todos los tickets relacionados.",
 										 MsgBoxStyle.YesNo) Then
 				'Los tickets se eliminan en cascada
-				DbMan.edit(My.Settings.DefaultCon, "DELETE * FROM hac_combustible_receptor WHERE id=" & receptor.SelectedValue)
+				DbMan.edit("DELETE * FROM hac_combustible_receptor WHERE id=" & receptor.SelectedValue)
 				FillReceptor()
 			End If
 		End If
@@ -113,7 +114,8 @@
 			Dim EditTicket As New ModCombustibleTicket(bs_receptor)
 			EditTicket.NewTicket()
 			EditTicket.ShowDialog(Me)
-			CtrlMan.LoadDataGridView(historial, bs_historial, Combustible.FindTicket(bs_receptor))
+			CtrlMan.LoadDataGridView(historial, bs_historial,
+									 Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
 		End If
 	End Sub
 
@@ -124,7 +126,8 @@
 				Dim EditTicket As New ModCombustibleTicket(bs_receptor)
 				EditTicket.LoadTicket(bs_historial.Current("ticket_id"))
 				EditTicket.ShowDialog(Me)
-				CtrlMan.LoadDataGridView(historial, bs_historial, Combustible.FindTicket(bs_receptor))
+				CtrlMan.LoadDataGridView(historial, bs_historial,
+										 Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
 			End If
 		End With
 	End Sub
@@ -132,9 +135,10 @@
 	Private Sub DelTicket_Click(sender As Object, e As EventArgs) Handles DelTicket.Click
 		If bs_historial.Position > -1 Then
 			If MsgBoxResult.Yes = MsgBox("Desea eliminar el ticket seleccionado? Esta operacion no se puede deshacer.", MsgBoxStyle.YesNo, "Eliminar Ticket") Then
-				DbMan.edit(My.Settings.DefaultCon, "DELETE * FROM hac_combustible_ticket WHERE id=" & bs_historial.Current("ticket_id"))
+				DbMan.edit("DELETE * FROM hac_combustible_ticket WHERE id=" & bs_historial.Current("ticket_id"))
 				bs_historial.RemoveCurrent()
-				CtrlMan.LoadDataGridView(historial, bs_historial, Combustible.FindTicket(bs_receptor))
+				CtrlMan.LoadDataGridView(historial, bs_historial,
+										 Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
 			End If
 		End If
 	End Sub

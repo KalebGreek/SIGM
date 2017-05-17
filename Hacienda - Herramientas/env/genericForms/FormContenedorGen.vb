@@ -43,10 +43,10 @@
 
     'HACIENDA
     Private Sub ConsultarImpuestoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsultarImpuestoToolStripMenuItem.Click
-        If UniqueWindow(Me) Then
-            MsgBox("Debe cerrar el expediente actual antes de continuar.", MsgBoxStyle.Critical, "Expediente Abierto")
-        Else
-            Dim ConsultaImpuesto1 As New ConsultaImpuesto
+		If CtrlMan.UniqueWindow(Me) Then
+			MsgBox("Debe cerrar el expediente actual antes de continuar.", MsgBoxStyle.Critical, "Expediente Abierto")
+		Else
+			Dim ConsultaImpuesto1 As New ConsultaImpuesto
             ConsultaImpuesto1.MdiParent = Me
             ConsultaImpuesto1.Show()
         End If
@@ -101,39 +101,54 @@
         End With
     End Sub
 
-    'OBRAS PUBLICAS
-    Private Sub AsistenciaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AsistenciaToolStripMenuItem.Click
+	'OBRAS PUBLICAS
+	'> empleados
+	Private Sub AsistenciaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AsistenciaToolStripMenuItem.Click
 
     End Sub
-    Private Sub BuscarEmpleadoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarEmpleadoToolStripMenuItem.Click
-		'Dim buscar1 As New CtrlBusqEmpleado("EMPLEADO", Nothing)
-
+	Private Sub BuscarEmpleadoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarEmpleadoToolStripMenuItem.Click
+		Dim buscar1 As New ControlBusquedaPersona()
+		buscar1.MdiParent = Me
+		buscar1.Vista.Text = "EMPLEADO"
+		buscar1.Show()
 	End Sub
-    Private Sub NuevoContratoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevoContratoToolStripMenuItem.Click
-        Dim contrato1 As New ModEmpleado
-        contrato1.ShowDialog(Me)
-        contrato1.Dispose()
-    End Sub
-    Private Sub BuscarContratoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarContratoToolStripMenuItem.Click
+
+	'>> contratos
+	Private Sub NuevoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevoToolStripMenuItem.Click
+		Dim contrato1 As New ModEmpleado
+		contrato1.ShowDialog(Me)
+		contrato1.Dispose()
+	End Sub
+	Private Sub BuscarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarToolStripMenuItem.Click
 		'Dim buscar1 As New FormConsultaGen("CONTRATO", Nothing)
 		'buscar1.MdiParent = Me
 		'buscar1.Show()
 	End Sub
 
-    'OBRAS PRIVADAS
-    Private Sub BuscarExpedienteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarExpedienteToolStripMenuItem.Click
-		'Dim buscar1 As New FormConsultaGen("EXPEDIENTE", Nothing)
-		'buscar1.MdiParent = Me
-		'buscar1.Show()
-	End Sub
-
-	'PERSONA
-	Private Sub BuscarProfesionalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarProfesionalToolStripMenuItem.Click
+	'>Proveedores
+	Private Sub BuscarProveedorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarProveedorToolStripMenuItem.Click
 		Dim buscar1 As New ControlBusquedaPersona()
 		buscar1.MdiParent = Me
+		buscar1.Vista.Text = "PROVEEDOR"
 		buscar1.Show()
 	End Sub
 
+
+
+	'OBRAS PRIVADAS
+	Private Sub BuscarExpedienteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarExpedienteToolStripMenuItem.Click
+		Dim buscar1 As New ControlBusquedaExpediente(Nothing)
+		buscar1.MdiParent = Me
+		buscar1.Show()
+	End Sub
+	Private Sub BuscarProfesionalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarProfesionalToolStripMenuItem.Click
+		Dim buscar1 As New ControlBusquedaPersona()
+		buscar1.MdiParent = Me
+		buscar1.Vista.Text = "PROFESIONAL"
+		buscar1.Show()
+	End Sub
+
+	'PERSONA
 	Private Sub NuevaPersonaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevaPersonaToolStripMenuItem.Click
 		Dim modper1 As New ModPersona()
 		modper1.ShowDialog()

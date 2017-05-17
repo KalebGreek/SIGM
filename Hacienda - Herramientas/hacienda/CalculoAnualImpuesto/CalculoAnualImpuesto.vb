@@ -8,7 +8,7 @@ Public Class CalculoAnualImpuesto
         dtab_cuenta = Nothing
         dtab_zona = Nothing
 
-		Dim dtab As DataTable = DbMan.read(My.Settings.foxcon, "SELECT MAX(codigo) as codigo FROM " & impuesto.Text)
+		Dim dtab As DataTable = DbMan.read("SELECT MAX(codigo) as codigo FROM " & impuesto.Text, My.Settings.foxcon)
 		If dtab.Rows.Count > 0 Then
             If CuentaInicial.Value > dtab(0)("codigo") Then
                 MsgBox("No se encuentra la cuenta inicial.", MsgBoxStyle.OkOnly, Nothing)
@@ -34,14 +34,15 @@ Public Class CalculoAnualImpuesto
 		Dim cuota, cuota_max As New Integer
 
 		'Zonas
-		dtab_zona = DbMan.read(My.Settings.foxcon, "SELECT * FROM aguzona")
+		dtab_zona = DbMan.read("SELECT * FROM aguzona", My.Settings.foxcon)
 		'Vencimientos
-		dtab_vence = DbMan.read(My.Settings.foxcon, "SELECT * FROM aguvence 
-												  WHERE periodo=" & periodo.Value)
+		dtab_vence = DbMan.read("SELECT * FROM aguvence 
+										 WHERE periodo=" & periodo.Value,
+								My.Settings.foxcon)
 		'Cuentas
-		dtab_cuenta = DbMan.read(My.Settings.foxcon,
-							  "SELECT codigo, potable, comercial, industrial FROM aguas
-                               WHERE codigo=>" & CuentaInicial.Value & " ORDER BY codigo")
+		dtab_cuenta = DbMan.read("SELECT codigo, potable, comercial, industrial FROM aguas
+								   WHERE codigo=>" & CuentaInicial.Value & " ORDER BY codigo",
+								 My.Settings.foxcon)
         'Iniciar busqueda y reemplazo
         progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -89,13 +90,14 @@ Public Class CalculoAnualImpuesto
 	End Sub
 	Public Sub auto()
 		'Vencimientos
-		dtab_vence = DbMan.read(My.Settings.foxcon, "SELECT * FROM autovence
-							  WHERE periodo=" & periodo.Value)
+		dtab_vence = DbMan.read("SELECT * FROM autovence
+								  WHERE periodo=" & periodo.Value,
+								My.Settings.foxcon)
 		'Cuentas
-		dtab_cuenta = DbMan.read(My.Settings.foxcon,
-							  "SELECT codigo, razon, marca, modelo, apagar FROM automovil
-                               WHERE apagar>0 And baja={} And codigo=>" & CuentaInicial.Value & "
-                               ORDER BY codigo")
+		dtab_cuenta = DbMan.read("SELECT codigo, razon, marca, modelo, apagar FROM automovil
+								   WHERE apagar>0 AND baja={} 
+									 AND codigo=>" & CuentaInicial.Value & " ORDER BY codigo",
+								 My.Settings.foxcon)
 
 		progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -121,28 +123,29 @@ Public Class CalculoAnualImpuesto
 		Dim cuota, cuota_max As Integer
 
 		'Vencimientos
-		dtab_vence = DbMan.read(My.Settings.foxcon, "SELECT * FROM catvence
-												  WHERE periodo=" & periodo.Value)
+		dtab_vence = DbMan.read("SELECT * FROM catvence
+								  WHERE periodo=" & periodo.Value,
+								My.Settings.foxcon)
 		'Cuentas
-		dtab_cuenta = DbMan.read(My.Settings.foxcon,
-							  "SELECT catastro.codigo As codigo, catastro.jubilado As jubilado, 
-							   catastro.baldio As baldio, catastro.pasillo As pasillo,
-                               catastro.agrario As agrario, catastro.comercial as comercial,
-							   catastro.vereda as vereda, catastro.parque as parque,
-							   catastro.esquino as esquino, catastro.zona1 as zona, 
-							   catastro.frente1 As frente1, catastro.frente2 As frente2,
-							   catastro.frente3 As frente3, catastro.frente4 As frente4,
-							   catzona.minimo As monto_minimo, catzona.unidad As monto_unidad,
-							   catzona.fijo1 as monto_fijo1, catzona.fijo2 as monto_fijo2,
-							   catzona.fijo3 as monto_fijo3, catzona.fijo4 as monto_fijo4,
-                               catzona.jubilado As desc_jubilado, catzona.baldio As rec_baldio,
-							   catzona.pasillo As monto_pasillo, 
-							   catzona.agrario1 As desc_agrario1, catzona.agrario2 As desc_agrario2,
-							   catzona.comercio1 as rec_comercio1, catzona.comercio2 as rec_comercio2,
-							   catzona.comercio3 as rec_comercio3, catzona.comercio4 as rec_comercio4,
-							   catzona.vereda as desc_vereda, catzona.parque as desc_parque
-							   FROM catastro JOIN catzona On catastro.zona1=catzona.zona
-                               WHERE catastro.codigo=>" & CuentaInicial.Value & " ORDER BY catastro.codigo")
+		dtab_cuenta = DbMan.read("SELECT catastro.codigo As codigo, catastro.jubilado As jubilado, 
+										 catastro.baldio As baldio, catastro.pasillo As pasillo,
+										 catastro.agrario As agrario, catastro.comercial as comercial,
+										 catastro.vereda as vereda, catastro.parque as parque,
+										 catastro.esquino as esquino, catastro.zona1 as zona, 
+										 catastro.frente1 As frente1, catastro.frente2 As frente2,
+										 catastro.frente3 As frente3, catastro.frente4 As frente4,
+										 catzona.minimo As monto_minimo, catzona.unidad As monto_unidad,
+										 catzona.fijo1 as monto_fijo1, catzona.fijo2 as monto_fijo2,
+										 catzona.fijo3 as monto_fijo3, catzona.fijo4 as monto_fijo4,
+										 catzona.jubilado As desc_jubilado, catzona.baldio As rec_baldio,
+										 catzona.pasillo As monto_pasillo,
+										 catzona.agrario1 As desc_agrario1, catzona.agrario2 As desc_agrario2,
+										 catzona.comercio1 as rec_comercio1, catzona.comercio2 as rec_comercio2,
+										 catzona.comercio3 as rec_comercio3, catzona.comercio4 as rec_comercio4,
+										 catzona.vereda as desc_vereda, catzona.parque as desc_parque
+									FROM catastro JOIN catzona On catastro.zona1=catzona.zona
+								   WHERE catastro.codigo=>" & CuentaInicial.Value & " ORDER BY catastro.codigo",
+								 My.Settings.foxcon)
 
 		progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -288,14 +291,16 @@ Public Class CalculoAnualImpuesto
 		Dim cuota, cuota_max As Integer
 
 		'Vencimientos
-		dtab_vence = DbMan.read(My.Settings.foxcon, "SELECT * FROM comvence WHERE periodo=" & periodo.Value)
+		dtab_vence = DbMan.read("SELECT * FROM comvence WHERE periodo=" & periodo.Value, My.Settings.foxcon)
 
 		'Cuentas
-		dtab_cuenta = DbMan.read(My.Settings.foxcon,
-							  "SELECT comercio.codigo as codigo, comercio.actividad as actividad, detalle, 
-							   minimo, formapago, cantidad
-                               FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad
-                               WHERE comercio.baja = {} And minimo>0 And codigo=>" & CuentaInicial.Value)
+
+		dtab_cuenta = DbMan.read("SELECT comercio.codigo as codigo, comercio.actividad as actividad, detalle, 
+										 minimo, formapago, cantidad
+									FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad
+								   WHERE comercio.baja = {} And minimo>0 And codigo=>" & CuentaInicial.Value,
+								 My.Settings.foxcon)
+
 		progreso.Maximum = Me.dtab_cuenta.Rows.Count - 1
 
 		For fila As Integer = 1 To progreso.Maximum
@@ -363,13 +368,13 @@ Public Class CalculoAnualImpuesto
 			vence = vence.AddDays(1)
 		Loop
         'Cuentas
-        dtab_cuenta = DbMan.read(My.Settings.foxcon,
-							  "SELECT sepelio.codigo as codigo, sepelio.fila as fila, sepelio.jubilado as jubilado, sepevar.minimo as minimo,
-                               sepevar.jubilado as desc_jubilado, sepevar.fila1 as fila1, sepevar.fila2 as fila2, sepevar.fila3 as fila3,
-                               sepevar.fila4 as fila4, sepevar.fila5 as fila5, sepelio.ubicacion as ubicacion
-                               FROM sepelio JOIN sepevar ON sepelio.ubicacion=sepevar.orden
-                               WHERE sepelio.ubicacion > 0 AND sepelio.codigo =>" & CuentaInicial.Value & "
-                               ORDER BY sepelio.codigo")
+        dtab_cuenta = DbMan.read("SELECT sepelio.codigo as codigo, sepelio.fila as fila, sepelio.jubilado as jubilado, sepevar.minimo as minimo,
+										 sepevar.jubilado as desc_jubilado, sepevar.fila1 as fila1, sepevar.fila2 as fila2, sepevar.fila3 as fila3,
+										 sepevar.fila4 as fila4, sepevar.fila5 as fila5, sepelio.ubicacion as ubicacion
+									FROM sepelio JOIN sepevar ON sepelio.ubicacion=sepevar.orden
+								   WHERE sepelio.ubicacion > 0 AND sepelio.codigo =>" & CuentaInicial.Value & "
+								ORDER BY sepelio.codigo",
+								 My.Settings.foxcon)
 
 		progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -419,7 +424,7 @@ Public Class CalculoAnualImpuesto
         periodo.Minimum = 1990
         periodo.Value = Today.Year
 
-		dtab_var = DbMan.read(My.Settings.foxcon, "SELECT * FROM numeros")
+		dtab_var = DbMan.read("SELECT * FROM numeros", My.Settings.foxcon)
 	End Sub
     Private Sub iniciar_Click(sender As Object, e As EventArgs) Handles iniciar.Click
         validar()

@@ -282,7 +282,7 @@
         End If
 
         'MsgBox(SQLSelect & SQLTable & SQLWhere)
-        consulta = DbMan.read(My.Settings.foxcon, SQLSelect & SQLTable & SQLWhere & SQLGroup & SQLHaving & SQLOrder)
+        consulta = DbMan.read(SQLSelect & SQLTable & SQLWhere & SQLGroup & SQLHaving & SQLOrder, My.Settings.foxcon)
 		progreso.Value = 10
         Return consulta
     End Function
