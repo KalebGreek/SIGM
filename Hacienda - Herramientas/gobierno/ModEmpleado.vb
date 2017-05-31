@@ -34,19 +34,19 @@
         Me.Close()
     End Sub
     Private Sub buscar_click(sender As Object, e As EventArgs) Handles buscar.Click
-		Dim persona1 As New ControlBusquedaPersona()
-		With persona1
-            .ShowDialog(Me)
-			If .bs_resultado.Position > -1 Then
-				cuil.Text = .bs_resultado.Current("cuil").ToString
-				razon.Text = .bs_resultado.Current("razon").ToString
-				persona_id.Text = .bs_resultado.Current("per_id").ToString
+		Dim persona1 As New BusquedaPersona
+		With persona1.resultado.DataSource
+			.ShowDialog(Me)
+			If .Position > -1 Then
+				cuil.Text = .Current("cuil").ToString
+				razon.Text = .Current("razon").ToString
+				persona_id.Text = .Current("per_id").ToString
 				If MsgBoxResult.Yes = MsgBox("Desea seleccionar esta persona?", MsgBoxStyle.YesNo) Then
 					grupo_persona.Enabled = False
 				End If
 			End If
 		End With
-        grupo_datos.Enabled = grupo_persona.Enabled.CompareTo(True)
+		grupo_datos.Enabled = grupo_persona.Enabled.CompareTo(True)
     End Sub
     '###### CARGAR ##########################################################################################
 

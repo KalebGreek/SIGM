@@ -1,10 +1,8 @@
 ﻿Imports System.ComponentModel
 Public Class ModCombustibleTicket
 	Inherits System.Windows.Forms.Form
-	Public ticket_id As Integer = 0
-	Public proveedor_id As Integer = 0
 
-	Public Sub New(registro_receptor As BindingSource)
+	Public Sub New()
 		' This call is required by the designer.
 		InitializeComponent()
 
@@ -12,57 +10,28 @@ Public Class ModCombustibleTicket
 		fecha.Value = Today
 		fecha.MaxDate = Today
 
-		bs_receptor = registro_receptor
 		'Cargar items de ejemplo
-		bs_tipo_item.DataSource = DbMan.read("SELECT id as tipo_id, descripcion, por_litro 
-																		FROM hac_combustible_tipo")
-
-		CtrlMan.Fill.AutoComplete(bs_tipo_item, TipoItem, "descripcion", "tipo_id")
-		'Cargar receptor
-		CtrlMan.Fill.AutoComplete(bs_receptor, receptor, "descripcion", "receptor_id")
-		'Cargar responsable
-		Combustible.Responsable.Fill(bs_responsable, responsable, bs_receptor.Current("receptor_id"))
+		TipoItem = Combustible.Item.FillTypeList(bs_tipo_item, TipoItem, "descripcion", "tipo_id")
 	End Sub
 
-	Private Sub ModCombustibleTicket_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
-		If Me.Visible Then
-
-		End If
-	End Sub
-
-	Private Sub SelectProveedor_Click(sender As Object, e As EventArgs) Handles SelectProveedor.Click
-		Dim SelProveedor As New ControlBusquedaPersona
-		SelProveedor.Vista.Text = "PROVEEDOR"
-		SelProveedor.filtro.Text = "RAZON SOCIAL"
-		SelProveedor.ShowDialog(Me)
-		If SelProveedor.bs_resultado.Position > -1 Then
-			proveedor.Text = SelProveedor.bs_resultado.Current("razon") & " | " & SelProveedor.bs_resultado.Current("cuil")
-			proveedor_id = SelProveedor.bs_resultado.Current("proveedor_id")
-		End If
-	End Sub
-
-	'GUI
-	Private Sub cerrar_Click(sender As Object, e As EventArgs) Handles cerrar.Click
-		If MsgBoxResult.Yes = MsgBox("No se guardaran los cambios, desea continuar?", MsgBoxStyle.YesNo) Then
-			Me.Close()
-		End If
-	End Sub
-
+	'Rutinas
 	'TICKET
-	Public Sub NewTicket()
+	Public Sub NewTicket(ReceptorID As Integer)
+		receptor_id.Text = ReceptorID
+
 		DbMan.edit("INSERT INTO hac_combustible_ticket(proveedor_id, responsable_id, 
 													   fecha, ticket, total, user_id) 
-										    	VALUES(" & bs_receptor.Current("receptor_id") & ", -1,
-													  #" & Date.Today & "#, 0, 0, " & My.Settings.UserId & ")")
+										    	VALUES(-1, " & responsable.SelectedValue & ", #" & Date.Today & "#, 0,
+													   0, " & My.Settings.UserId & ")")
 
-		Dim dtab As DataTable = Combustible.Ticket.Find(bs_receptor.Current("receptor_id"), True)
-		LoadTicket(dtab(0)("ticket_id"))
+		LoadTicket(Combustible.Ticket.ReturnLastTicketID(receptor_id.Text))
 	End Sub
 
 	Public Sub LoadTicket(id As Integer)
 		If id > 0 Then
+			Label14.Text = "MODIFICAR TICKET"
 			Dim dtab As DataTable = DbMan.read(
-											  "Select hac_combustible_ticket.id,
+											  "SELECT hac_combustible_ticket.id as ticket_id,
 													  hac_combustible_ticket.proveedor_id, persona.razon as proveedor,
 													  hac_combustible_ticket.responsable_id, hac_combustible_ticket.fecha, 
 													  hac_combustible_ticket.ticket, hac_combustible_ticket.total, 
@@ -76,10 +45,9 @@ Public Class ModCombustibleTicket
 
 			'Cargar ticket
 			If dtab.Rows.Count > 0 Then
-				ticket_id = dtab(0)("id")
-				proveedor_id = dtab(0)("proveedor_id")
+				ticket_id.Text = dtab(0)("ticket_id")
 				CtrlMan.LoadAllControls(dtab(0), Me)
-				Combustible.Ticket.Detail(DetalleTicket, bs_item_ticket, ticket_id)
+				Combustible.Ticket.Detail(DetalleTicket, bs_item_ticket, ticket_id.Text)
 			End If
 		End If
 	End Sub
@@ -92,10 +60,57 @@ Public Class ModCombustibleTicket
 					'Save ticket
 				Else
 					MsgBox("Ingrese un producto para continuar.", MsgBoxStyle.OkOnly)
+					Return False
 				End If
+			Else
+				Return False
 			End If
+		Else
+			Return False
 		End If
 	End Function
+
+	'Eventos
+	'GUI
+	Private Sub cerrar_Click(sender As Object, e As EventArgs) Handles cerrar.Click
+		If MsgBoxResult.Yes = MsgBox("No se guardaran los cambios, desea continuar?", MsgBoxStyle.YesNo) Then
+			Me.Close()
+		End If
+	End Sub
+	Private Sub receptor_id_TextChanged(sender As Object, e As EventArgs) Handles receptor_id.TextChanged
+		If receptor_id.Text > 0 Then
+			Dim dtab As DataTable = Combustible.Receptor.Seleccionar(receptor_id.Text)
+			receptor_categoria.Text = dtab(0)("detalle")
+			receptor_marca_observaciones.Text = dtab(0)("marca") & " " & dtab(0)("observaciones")
+			receptor_modelo.Text = dtab(0)("modelo").ToString()
+			receptor_dominio.Text = dtab(0)("dominio")
+			'Cargar responsable
+			Combustible.Responsable.Fill(bs_responsable, responsable, receptor_id.Text)
+		Else
+			receptor_marca_observaciones.Text = ""
+			responsable.DataSource = Nothing
+		End If
+	End Sub
+	Private Sub SelectReceptor_Click(sender As Object, e As EventArgs) Handles SelectReceptor.Click
+
+	End Sub
+	Private Sub proveedor_id_TextChanged(sender As Object, e As EventArgs) Handles proveedor_id.TextChanged
+		If proveedor_id.Text > 0 Then
+			Dim dtab As DataTable = Proveedor.Seleccionar(proveedor_id.Text, 0)
+			proveedor_razon.Text = dtab(0)("razon")
+			proveedor_cuil.Text = dtab(0)("cuil")
+		Else
+			proveedor_razon.Clear()
+			proveedor_cuil.Clear()
+		End If
+	End Sub
+	Private Sub SelectProveedor_Click(sender As Object, e As EventArgs) Handles SelectProveedor.Click
+		Dim SelProveedor As New BusquedaPersona
+		SelProveedor.ControlBusqueda1.vista.Text = "PROVEEDOR"
+		SelProveedor.ControlBusqueda1.filtro.Text = "RAZON SOCIAL"
+		SelProveedor.ShowDialog(Me)
+	End Sub
+
 
 	Private Sub SaveAddTicket_Click(sender As Object, e As EventArgs) Handles SaveAdd.Click
 		If SaveTicket() Then
@@ -131,9 +146,9 @@ Public Class ModCombustibleTicket
 																					  bs_tipo_item.PositionChanged
 		If bs_tipo_item.Position > -1 Then
 			If bs_tipo_item.Current("por_litro") Then
-				et_litros_unidades.Text = "Litros"
+				et_litros_unidades.Text = "LITROS"
 			Else
-				et_litros_unidades.Text = "Unidades"
+				et_litros_unidades.Text = "UNIDADES"
 			End If
 		End If
 	End Sub
@@ -150,6 +165,7 @@ Public Class ModCombustibleTicket
 														 VALUES(" & nuevo_tipo & ", " & por_litro & ")")
 			End If
 		End If
+
 	End Sub
 
 	Private Sub DelItemType_Click(sender As Object, e As EventArgs) Handles DelItemType.Click
@@ -188,23 +204,24 @@ Public Class ModCombustibleTicket
 
 			DbMan.edit(
 					   "INSERT INTO hac_combustible_items(ticket_id, tipo_item_id, litros, unidades, monto, user_id)
-												   VALUES(" & ticket_id & "," & bs_tipo_item.Current("tipo_id") & ",
+												   VALUES(" & ticket_id.Text & "," & bs_tipo_item.Current("tipo_id") & ",
 														  " & litros & ", " & unidades & ", " & unitario & ",
 														  " & My.Settings.UserId & ")")
 
 			MontoItem.Value = 0
 			LitrosItem.Value = 0
 		End If
-		Combustible.Ticket.Detail(DetalleTicket, bs_item_ticket, ticket_id)
+		Combustible.Ticket.Detail(DetalleTicket, bs_item_ticket, ticket_id.Text)
 	End Sub
 
 	Private Sub DelItem_Click(sender As Object, e As EventArgs) Handles DelItem.Click
 		If bs_item_ticket.Position > -1 Then
 			If MsgBoxResult.Yes = MsgBox("Desea eliminar este item?", MsgBoxStyle.YesNo, "Eliminar Item") Then
 				DbMan.edit("DELETE * FROM hac_combustible_items WHERE id=" & bs_item_ticket.Current("item_id"))
-				Combustible.Ticket.Detail(DetalleTicket, bs_item_ticket, ticket_id)
+				Combustible.Ticket.Detail(DetalleTicket, bs_item_ticket, ticket_id.Text)
 			End If
 		End If
 	End Sub
+
 
 End Class

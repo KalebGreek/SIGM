@@ -133,7 +133,7 @@
         prof_id.Text = registro(0)("profesional_id").ToString
 
 		If prof_id.Text > 0 Then
-			Dim prof As DataTable = Persona.Profesional.Seleccionar(prof_id.Text, 0)
+			Dim prof As DataTable = Profesional.Seleccionar(prof_id.Text, 0)
 
 			If prof.Rows.Count > 0 Then
 				CtrlMan.LoadAllControls(prof(0), Panel3)
@@ -298,18 +298,18 @@
 
     '# PERSONA 
     Private Sub add_resp_Click(sender As Object, e As EventArgs) Handles add_resp.Click
-		Dim seleccion_persona As New ControlBusquedaPersona()
-		With seleccion_persona
+		Dim seleccion_persona As New BusquedaPersona
+		With seleccion_persona.resultado.DataSource
 			.ShowDialog(Me)
             'Se agrega el registro temporal
-            If .bs_resultado.Position > -1 Then
+            If .Position > -1 Then
 				bs_resp.AddNew()
-				bs_resp.Current("persona_id") = .bs_resultado.Current("persona_id").ToString
-				bs_resp.Current("razon") = .bs_resultado.Current("razon").ToString
-				bs_resp.Current("cuil") = .bs_resultado.Current("cuil").ToString
-				bs_resp.Current("email") = .bs_resultado.Current("email").ToString
-				bs_resp.Current("telefono") = .bs_resultado.Current("telefono").ToString
-				bs_resp.Current("difunto") = .bs_resultado.Current("difunto")
+				bs_resp.Current("persona_id") = .Current("persona_id").ToString
+				bs_resp.Current("razon") = .Current("razon").ToString
+				bs_resp.Current("cuil") = .Current("cuil").ToString
+				bs_resp.Current("email") = .Current("email").ToString
+				bs_resp.Current("telefono") = .Current("telefono").ToString
+				bs_resp.Current("difunto") = .Current("difunto")
 				bs_resp.EndEdit()
 			End If
 			.Dispose()
@@ -322,17 +322,17 @@
 		End If
 	End Sub
 	Private Sub mod_prof_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mod_prof.Click
-		Dim sel_prof As New ControlBusquedaPersona()
+		Dim sel_prof As New BusquedaPersona
 		'sel_prof. = razon.Text
 
-		With sel_prof
+		With sel_prof.resultado.DataSource
 			.ShowDialog(Me)
-			If .bs_resultado.Count > 0 Then
-				prof_id.Text = .bs_resultado.Current("prof_id")
-				razon.Text = .bs_resultado.Current("razon")
-				titulo.Text = .bs_resultado.Current("titulo")
-				cuil.Text = .bs_resultado.Current("cuil")
-				matricula.Text = .bs_resultado.Current("matricula")
+			If .Position > -1 Then
+				prof_id.Text = .Current("prof_id")
+				razon.Text = .Current("razon")
+				titulo.Text = .Current("titulo")
+				cuil.Text = .Current("cuil")
+				matricula.Text = .Current("matricula")
 			End If
 			.Dispose()
 		End With

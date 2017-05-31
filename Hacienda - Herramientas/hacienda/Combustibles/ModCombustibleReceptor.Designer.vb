@@ -48,9 +48,9 @@ Partial Class ModCombustibleReceptor
 		Me.marca = New System.Windows.Forms.TextBox()
 		Me.vehiculo = New System.Windows.Forms.CheckBox()
 		Me.Label4 = New System.Windows.Forms.Label()
-		Me.dominio = New System.Windows.Forms.TextBox()
 		Me.argentina = New System.Windows.Forms.RadioButton()
 		Me.mercosur = New System.Windows.Forms.RadioButton()
+		Me.dominio = New System.Windows.Forms.TextBox()
 		Me.Label1 = New System.Windows.Forms.Label()
 		Me.modelo = New System.Windows.Forms.NumericUpDown()
 		Me.Label12 = New System.Windows.Forms.Label()
@@ -212,7 +212,7 @@ Partial Class ModCombustibleReceptor
 		Me.Label10.Name = "Label10"
 		Me.Label10.Size = New System.Drawing.Size(110, 29)
 		Me.Label10.TabIndex = 439
-		Me.Label10.Text = "Responsable"
+		Me.Label10.Text = "Responsable/s"
 		Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
 		'responsable
@@ -380,16 +380,6 @@ Partial Class ModCombustibleReceptor
 		Me.Label4.Text = "Dominio"
 		Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
-		'dominio
-		'
-		Me.dominio.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-		Me.dominio.Location = New System.Drawing.Point(311, 176)
-		Me.dominio.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
-		Me.dominio.MaxLength = 60
-		Me.dominio.Name = "dominio"
-		Me.dominio.Size = New System.Drawing.Size(98, 27)
-		Me.dominio.TabIndex = 485
-		'
 		'argentina
 		'
 		Me.argentina.Checked = True
@@ -411,6 +401,16 @@ Partial Class ModCombustibleReceptor
 		Me.mercosur.TabIndex = 467
 		Me.mercosur.Text = "Mercosur"
 		Me.mercosur.UseVisualStyleBackColor = True
+		'
+		'dominio
+		'
+		Me.dominio.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+		Me.dominio.Location = New System.Drawing.Point(311, 176)
+		Me.dominio.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.dominio.MaxLength = 60
+		Me.dominio.Name = "dominio"
+		Me.dominio.Size = New System.Drawing.Size(98, 27)
+		Me.dominio.TabIndex = 485
 		'
 		'Label1
 		'

@@ -311,9 +311,9 @@
     End Sub
 
 	Private Sub mod_titular_Click(sender As Object, e As EventArgs)
-		Dim sel_per As New ControlBusquedaPersona()
+		Dim sel_per As New BusquedaPersona
 		sel_per.ShowDialog(Me)
-		With sel_per.bs_resultado
+		With sel_per.resultado
 			If .DataSource.Position > -1 Then
 				titular_id.Text = .DataSource.Current("persona_id").ToString
 				titular.Text = .DataSource.Current("razon").ToString

@@ -183,11 +183,17 @@
     <Compile Include="env\CtrlMan.vb" />
     <Compile Include="env\DbMan.vb" />
     <Compile Include="env\FileMan.vb" />
-    <Compile Include="env\genericForms\FormDialogoGen.Designer.vb">
-      <DependentUpon>FormDialogoGen.vb</DependentUpon>
+    <Compile Include="env\genericForms\ModDialogGen.Designer.vb">
+      <DependentUpon>ModDialogGen.vb</DependentUpon>
     </Compile>
-    <Compile Include="env\genericForms\FormDialogoGen.vb">
+    <Compile Include="env\genericForms\ModDialogGen.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\genericQueries\ControlBusqueda.Designer.vb">
+      <DependentUpon>ControlBusqueda.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\genericQueries\ControlBusqueda.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="env\SecMan.vb" />
     <Compile Include="hacienda\CalculoAnualImpuesto\CalculoAnual.vb" />
@@ -217,9 +223,9 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="docs\Documento.vb" />
-    <Compile Include="env\genericQueries\ControlBusquedaGen.vb">
+    <None Include="env\genericQueries\ControlBusquedaGen.vb.old">
       <SubType>UserControl</SubType>
-    </Compile>
+    </None>
     <Compile Include="gobierno\ConsultaOrdenanza.Designer.vb">
       <DependentUpon>ConsultaOrdenanza.vb</DependentUpon>
     </Compile>
@@ -232,10 +238,10 @@
     <Compile Include="gobierno\ModOrdenanza.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="env\genericForms\FormContenedorGen.Designer.vb">
-      <DependentUpon>FormContenedorGen.vb</DependentUpon>
+    <Compile Include="env\MainForm.Designer.vb">
+      <DependentUpon>MainForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="env\genericForms\FormContenedorGen.vb">
+    <Compile Include="env\MainForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hacienda\CalculoAnualImpuesto\CalculoAnualImpuesto.Designer.vb">
@@ -326,13 +332,16 @@
     <Compile Include="gobierno\ModEmpleado.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="oprivadas\ControlBusquedaExpediente.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="oprivadas\BusquedaExpediente.Designer.vb">
+      <DependentUpon>BusquedaExpediente.vb</DependentUpon>
+    </Compile>
+    <Compile Include="oprivadas\BusquedaExpediente.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="oprivadas\Pagos.vb" />
     <Compile Include="hacienda\Combustibles\ModCombustible.Designer.vb">
@@ -341,7 +350,23 @@
     <Compile Include="hacienda\Combustibles\ModCombustible.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="persona\ControlBusquedaPersona.vb">
+    <Compile Include="opublicas\BusquedaNotaPedido.Designer.vb">
+      <DependentUpon>BusquedaNotaPedido.vb</DependentUpon>
+    </Compile>
+    <Compile Include="opublicas\BusquedaNotaPedido.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="opublicas\ModNotaPedido.Designer.vb">
+      <DependentUpon>ModNotaPedido.vb</DependentUpon>
+    </Compile>
+    <Compile Include="opublicas\ModNotaPedido.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="opublicas\NotaPedido.vb" />
+    <Compile Include="persona\BusquedaPersona.Designer.vb">
+      <DependentUpon>BusquedaPersona.vb</DependentUpon>
+    </Compile>
+    <Compile Include="persona\BusquedaPersona.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="persona\DomicilioPage.Designer.vb">
@@ -350,12 +375,15 @@
     <Compile Include="persona\DomicilioPage.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="persona\Empleado.vb" />
     <Compile Include="persona\ModActa.Designer.vb">
       <DependentUpon>ModActa.vb</DependentUpon>
     </Compile>
     <Compile Include="persona\ModActa.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="persona\Profesional.vb" />
+    <Compile Include="persona\Proveedor.vb" />
     <Compile Include="persona\tabPersona3Contacto.Designer.vb">
       <DependentUpon>tabPersona3Contacto.vb</DependentUpon>
     </Compile>
@@ -443,15 +471,17 @@
     <EmbeddedResource Include="acceso.resx">
       <DependentUpon>acceso.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="env\genericForms\ModDialogGen.resx">
+      <DependentUpon>ModDialogGen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\genericQueries\ControlBusqueda.resx">
+      <DependentUpon>ControlBusqueda.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="env\genericQueries\ControlBusquedaGen.resx">
-      <DependentUpon>ControlBusquedaGen.vb</DependentUpon>
+      <DependentUpon>ControlBusquedaGen.vb.old</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="gobierno\ConsultaOrdenanza.resx">
       <DependentUpon>ConsultaOrdenanza.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="env\genericForms\FormDialogoGen.resx">
-      <DependentUpon>FormDialogoGen.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\Combustibles\CtrlBusquedaCombustiblePorTicket.resx">
       <DependentUpon>CtrlBusquedaCombustiblePorTicket.vb</DependentUpon>
@@ -468,8 +498,8 @@
     <EmbeddedResource Include="gobierno\ModOrdenanza.resx">
       <DependentUpon>ModOrdenanza.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="env\genericForms\FormContenedorGen.resx">
-      <DependentUpon>FormContenedorGen.vb</DependentUpon>
+    <EmbeddedResource Include="env\MainForm.resx">
+      <DependentUpon>MainForm.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\CalculoAnualImpuesto\CalculoAnualImpuesto.resx">
@@ -508,15 +538,21 @@
     <EmbeddedResource Include="gobierno\ModEmpleado.resx">
       <DependentUpon>ModEmpleado.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\ControlBusquedaExpediente.resx">
-      <DependentUpon>ControlBusquedaExpediente.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="hacienda\Combustibles\ModCombustible.resx">
       <DependentUpon>ModCombustible.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="opublicas\forms\ReciboVenta.rdlc" />
-    <EmbeddedResource Include="persona\ControlBusquedaPersona.resx">
-      <DependentUpon>ControlBusquedaPersona.vb</DependentUpon>
+    <EmbeddedResource Include="oprivadas\BusquedaExpediente.resx">
+      <DependentUpon>BusquedaExpediente.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="opublicas\BusquedaNotaPedido.resx">
+      <DependentUpon>BusquedaNotaPedido.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="opublicas\forms\nop.rdlc" />
+    <EmbeddedResource Include="opublicas\ModNotaPedido.resx">
+      <DependentUpon>ModNotaPedido.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="persona\BusquedaPersona.resx">
+      <DependentUpon>BusquedaPersona.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="persona\DomicilioPage.resx">
       <DependentUpon>DomicilioPage.vb</DependentUpon>

@@ -1,58 +1,58 @@
 ﻿Public Class Oprivadas
-    Shared SQLTable _
-           As String = " FROM prof_titulo INNER JOIN ((persona INNER JOIN (profesional INNER JOIN
+	Shared SQLTable _
+		   As String = " FROM profesional_titulo INNER JOIN ((persona INNER JOIN (profesional INNER JOIN
                          (oprivadas INNER JOIN responsable_expediente ON oprivadas.Id = responsable_expediente.opr_id)
                          ON profesional.Id = oprivadas.profesional_id) ON persona.id = responsable_expediente.per_id)
                          INNER JOIN persona AS persona_1 ON profesional.per_id = persona_1.id)
-                         ON prof_titulo.Id = profesional.titulo_id"
+                         ON profesional_titulo.Id = profesional.titulo_id"
 
-    Public Class Expediente
+	Public Class Expediente
         'BUSCAR Y LISTAS
         Shared Function Buscar(Optional expediente As Integer = 0, Optional responsable As String = "",
-                                     Optional profesional As String = "", Optional cuil As Double = 0) As DataTable
+							   Optional profesional As String = "", Optional cuil As Double = 0) As DataTable
 
-            Dim sql As String = ""
-            If expediente > 19000000 Then
-                sql = "SELECT oprivadas.id as expediente_id, oprivadas.expediente,
+			Dim sql As String = ""
+			If expediente > 19000000 Then
+				sql = "SELECT oprivadas.id as expediente_id, oprivadas.expediente,
                    persona.razon as responsable, persona.difunto, persona.fisica,
-                   persona_1.razon as profesional, prof_titulo.titulo, profesional.matricula,
+                   persona_1.razon as profesional, profesional_titulo.titulo, profesional.matricula,
                    oprivadas.recibe, oprivadas.tarea, oprivadas.tarea2,
                    oprivadas.inicio_obra, oprivadas.fin_obra,
                    oprivadas.temporal, oprivadas.visado " &
-                   SQLTable & " WHERE responsable_expediente.principal=True And Oprivadas.expediente = " & expediente
+				   SQLTable & " WHERE responsable_expediente.principal=True And Oprivadas.expediente = " & expediente
 
-            ElseIf Len(responsable) > 3 And responsable.Contains("BUSCAR") = False Then
-                sql = "SELECT oprivadas.id as expediente_id, oprivadas.expediente,
+			ElseIf Len(responsable) > 3 And responsable.Contains("BUSCAR") = False Then
+				sql = "SELECT oprivadas.id as expediente_id, oprivadas.expediente,
                    responsable_expediente.principal,
                    persona.razon as responsable, persona.cuil, persona.telefono, 
                    persona.email, persona.difunto, persona.fisica " &
-                   SQLTable & " WHERE persona.razon LIKE '%" & responsable & "%'"
+				   SQLTable & " WHERE persona.razon LIKE '%" & responsable & "%'"
 
-            ElseIf Len(profesional) > 3 And responsable.Contains("BUSCAR") = False Then
-                sql = "SELECT oprivadas.id as expediente_id, oprivadas.expediente,
+			ElseIf Len(profesional) > 3 And responsable.Contains("BUSCAR") = False Then
+				sql = "SELECT oprivadas.id as expediente_id, oprivadas.expediente,
                    persona_1.razon as profesional, persona_1.cuil, persona_1.email, persona_1.telefono,
-                   profesional.matricula, prof_titulo.titulo,
+                   profesional.matricula, profesional_titulo.titulo,
                    oprivadas.recibe, oprivadas.tarea, oprivadas.tarea2, oprivadas.visado " &
-                   SQLTable & " WHERE persona_1.razon LIKE '%" & profesional & "%'"
+				   SQLTable & " WHERE persona_1.razon LIKE '%" & profesional & "%'"
 
-            ElseIf Len(cuil) = 11 Then
-                sql = "SELECT oprivadas.id as expediente_id, oprivadas.expediente,
+			ElseIf Len(cuil) = 11 Then
+				sql = "SELECT oprivadas.id as expediente_id, oprivadas.expediente,
                    persona.razon as responsable, persona.cuil, persona.telefono,
                    persona.email, persona.difunto, persona.fisica,
                    oprivadas.recibe, oprivadas.tarea, oprivadas.tarea2,
                    oprivadas.inicio_obra, oprivadas.fin_obra, oprivadas.visado " &
-                   SQLTable & " WHERE persona.cuil = '" & cuil & "'"
+				   SQLTable & " WHERE persona.cuil = '" & cuil & "'"
 
-            Else
-                sql = "SELECT oprivadas.id as expediente_id, oprivadas.expediente,
+			Else
+				sql = "SELECT oprivadas.id as expediente_id, oprivadas.expediente,
                    persona.razon as responsable, persona.difunto, persona.fisica,
-                   persona_1.razon as profesional, prof_titulo.titulo, profesional.matricula,
+                   persona_1.razon as profesional, profesional_titulo.titulo, profesional.matricula,
                    oprivadas.recibe, oprivadas.tarea, oprivadas.tarea2,
                    oprivadas.inicio_obra, oprivadas.fin_obra, oprivadas.visado " &
-                   SQLTable & " WHERE responsable_expediente.principal=True"
-            End If
+				   SQLTable & " WHERE responsable_expediente.principal=True"
+			End If
 
-			Return DbMan.read(  sql)
+			Return DbMan.read(sql)
 		End Function
 		Shared Function ListarPorResponsable(persona_id As Integer) As DataTable
 			Return DbMan.read( 

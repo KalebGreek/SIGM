@@ -258,7 +258,8 @@ Partial Class ModPersona
 		Me.ShowInTaskbar = False
 		Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-		Me.Text = "NUEVA PERSONA"
+		Me.Text = "                                                                                 " &
+	"                                                 "
 		Me.grupo_mod.ResumeLayout(False)
 		Me.grupo_mod.PerformLayout()
 		Me.TabControl1.ResumeLayout(False)

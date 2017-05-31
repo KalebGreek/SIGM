@@ -24,10 +24,10 @@
 	End Sub
 	Public Function guardar(persona_id As Integer, principal As Boolean)
 		If domicilio_id.Text > 0 Then
-			Persona.Domicilio.Modificar(domicilio_id.Text, persona_id, calle.Text, altura.Value,
+			Domicilio.Modificar(domicilio_id.Text, persona_id, calle.Text, altura.Value,
 										piso.Value, dpto.Text, localidad.SelectedValue, principal)
 		Else
-			domicilio_id.Text = Persona.Domicilio.Nuevo(persona_id, calle.Text, altura.Value,
+			domicilio_id.Text = Domicilio.Nuevo(persona_id, calle.Text, altura.Value,
 														piso.Value, dpto.Text, localidad.SelectedValue, principal)
 		End If
 		Return True

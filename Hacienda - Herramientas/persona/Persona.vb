@@ -23,38 +23,17 @@
 			End If
 
 		ElseIf vista.Contains("EMPLEADO") Then
-			If filtro.Contains("RAZON SOCIAL") Then
-				dtab_result = Empleado.BuscarPorPersona(keyword, difunto)
-			ElseIf filtro.Contains("CUIL") Then
 
-			ElseIf filtro.Contains("DIRECCION") Then
-
-			ElseIf filtro.Contains("LOCALIDAD") Then
-
-			End If
+			dtab_result = Empleado.BuscarPorPersona(keyword, difunto)
 
 		ElseIf vista.Contains("PROFESIONAL") Then
-			If filtro.Contains("RAZON SOCIAL") Then
-				dtab_result = Profesional.BuscarPorPersona(Val(keyword), Val(keyword),
-													  Trim(keyword))
-			ElseIf filtro.Contains("CUIL") Then
+			dtab_result = Profesional.BuscarPorPersona(Val(keyword), Val(keyword),
+										  Trim(keyword))
 
-			ElseIf filtro.Contains("DIRECCION") Then
-
-			ElseIf filtro.Contains("LOCALIDAD") Then
-
-			End If
 		ElseIf vista.Contains("PROVEEDOR") Then
-			If filtro.Contains("RAZON SOCIAL") Then
-				dtab_result = Proveedor.BuscarPorPersona(keyword, difunto, fisica)
-			ElseIf filtro.Contains("CUIL") Then
-
-			ElseIf filtro.Contains("DIRECCION") Then
-			ElseIf filtro.Contains("LOCALIDAD") Then
-
-			End If
+			dtab_result = Proveedor.BuscarPorPersona(keyword, difunto, fisica)
 		End If
-			Return dtab_result
+		Return dtab_result
 		End Function
 
 	Shared Function all(difunto As Boolean, fisica As Boolean) As DataTable
@@ -236,204 +215,7 @@
 		End If
 	End Function
 
-	Public Class Domicilio
-		Shared Function Listar(persona_id As Integer) As DataTable
-			Return DbMan.read("SELECT per_domicilio.id as domicilio_id, per_domicilio.calle, per_domicilio.altura,
-								      per_domicilio.piso, per_domicilio.dpto, per_domicilio.principal, 
-								      per_domicilio.localidad_id, provincias.id as provincia_id,
-								      localidades.id as localidad_id
-								 FROM provincias INNER JOIN (per_domicilio 
-						   INNER JOIN localidades On per_domicilio.localidad_id = localidades.id)
-								   ON provincias.id = localidades.provincia_id 
-								WHERE per_domicilio.per_id = " & persona_id & " ORDER BY per_domicilio.id")
-		End Function
-		Shared Function Nuevo(persona_id As Integer, calle As String, altura As Integer, piso As Integer,
-							  dpto As String, localidad_id As Integer, principal As Boolean) As Integer
-			DbMan.edit("INSERT INTO per_domicilio(per_id, calle, altura, piso, dpto, localidad_id, principal)
-										   VALUES(" & persona_id & ", '" & calle & "', " & altura & ", " & piso & ",
-												  '" & dpto & "', " & localidad_id & ", " & principal & ")")
-
-			Dim dtab As DataTable = DbMan.read("SELECT MAX(id) as id FROM per_domicilio WHERE per_id=" & persona_id)
-			Return dtab(0)("id")
-		End Function
-		Shared Function Modificar(domicilio_id As Integer, persona_id As Integer, calle As String,
-								  altura As Integer, piso As Integer, dpto As String,
-								  localidad_id As Integer, principal As Boolean) As Boolean
-
-			DbMan.edit("UPDATE per_domicilio SET per_id=" & persona_id & ", calle='" & calle & "', altura=" & altura & ",
-												 piso=" & piso & ", dpto='" & dpto & "', 
-												 localidad_id=" & localidad_id & ", principal=" & principal & "
-										   WHERE per_domicilio.id=" & domicilio_id)
-			Return True
-		End Function
-
-
-		Shared Function Eliminar(persona_id As Integer, Optional domicilio_id As Integer = 0) As Boolean
-			Dim sql As String = "DELETE * FROM per_domicilio WHERE per_id=" & persona_id
-			If domicilio_id > 0 Then
-				sql += " And id=" & domicilio_id
-			End If
-			DbMan.edit(sql)
-			Return True
-		End Function
-	End Class
-	Public Class Profesional
-		Shared SelectSQL As String = "SELECT persona.id as persona_id, Persona.razon, Persona.cuil, Persona.difunto,
-											 per_domicilio.calle, per_domicilio.altura, localidades.nombre as localidad,
-											 profesional.id As profesional_id, profesional.titulo_id,
-											 profesional_titulo.descripcion as titulo, 
-											 profesional.matricula as matricula"
-
-		Shared TableSQL As String = " FROM((Persona INNER JOIN (profesional_titulo
-								INNER JOIN profesional On profesional_titulo.Id = profesional.titulo_id)
-										ON persona.id = profesional.per_id) LEFT JOIN per_domicilio
-										ON persona.id = per_domicilio.per_id) LEFT JOIN localidades
-										ON per_domicilio.localidad_id = localidades.id
-									 WHERE per_domicilio.principal = True"
-
-		Shared Function BuscarPorPersona(Optional id As Integer = 0, Optional cuil As Double = 0, Optional razon_social As String = "") As DataTable
-			Dim sql As String = SelectSQL & TableSQL
-			If id > 0 Then
-				sql += " And Persona.id=" & id
-			ElseIf Len(cuil) = 11 Then
-				sql += " And Persona.cuil='" & cuil & "'"
-
-			ElseIf razon_social.Contains("BUSCAR") = False And Len(razon_social) > 3 Then
-			Sql += " And Persona.razon Like '%" & razon_social & "%'"
-			End If
-
-			Sql += " ORDER By Persona.razon"
-			Return DbMan.read(Sql)
-		End Function
-		Shared Function Seleccionar(profesional_id As Integer, persona_id As Integer) As DataTable
-			Dim sql As String = SelectSQL & TableSQL
-
-			If profesional_id > 0 Then
-				sql += " AND profesional.id=" & profesional_id
-			Else
-				sql += " AND persona.id=" & persona_id
-			End If
-
-			Return DbMan.read(sql)
-		End Function
-		Shared Function ListarTitulos() As BindingSource
-			Dim bs As New BindingSource
-			bs.DataSource = DbMan.read("SELECT * FROM prof_titulo ORDER BY titulo")
-			Return bs
-		End Function
-
-		Shared Function guardar(prof_id As Integer, persona_id As Integer, titulo_id As Integer, ByVal matricula As String) As Integer
-			If prof_id > 0 Then
-				DbMan.edit("UPDATE profesional SET titulo_id=" & titulo_id & ", matricula='" & matricula & "'" &
-						  " WHERE id=" & prof_id)
-			Else
-				DbMan.edit("INSERT INTO profesional(per_id, titulo_id, matricula)" &
-						 " VALUES(" & persona_id & ", " & titulo_id & ", '" & matricula & "')")
-			End If
-
-
-			Dim dtab As New DataTable
-			dtab = DbMan.read("SELECT id FROM profesional WHERE per_id=" & persona_id)
-			Return dtab(0)("id")
-		End Function
-		Shared Function eliminar(ByVal per_id As Integer) As Integer
-			DbMan.edit("DELETE * FROM profesional WHERE per_id=" & per_id)
-			Return 0
-		End Function
-	End Class
-	Public Class Proveedor
-		Shared SelectSQL As String = "SELECT persona.id as persona_id, persona.razon, persona.cuil, persona.fisica, 
-									  per_domicilio.calle, per_domicilio.altura, localidades.nombre, 
-									  proveedor.id AS proveedor_id,
-									  proveedor.actividad_id, prov_actividad.actividad AS actividad, 
-									  proveedor.responsable_iva_id, responsable_iva.descripcion as responsable_iva"
-
-		Shared TableSQL As String = " FROM (responsable_iva INNER JOIN (prov_actividad INNER JOIN (persona 
-								INNER JOIN proveedor ON persona.id = proveedor.per_id) 
-										ON prov_actividad.Id = proveedor.actividad_id) 
-										ON responsable_iva.Id = proveedor.responsable_iva_id) 
-								INNER JOIN (per_domicilio INNER JOIN localidades 
-										ON per_domicilio.localidad_id = localidades.id) 
-										ON persona.id = per_domicilio.per_id
-									 WHERE per_domicilio.principal=True"
-
-
-		Shared Function BuscarPorPersona(keyword As String, difunto As Boolean, fisica As Boolean) As DataTable
-			Dim sql As String = SelectSQL & TableSQL & " And persona.fisica=" & fisica
-			If difunto Then
-				sql += " AND persona.difunto=" & difunto
-			End If
-
-			If keyword.Contains("BUSCAR") = False And Len(keyword) > 0 Then
-				If keyword <> "" Then
-					If Val(keyword) > 0 Then
-						If Len(keyword) = 11 Then
-							sql += " And Persona.cuil=" & CDbl(keyword)
-						End If
-					ElseIf Len(keyword) > 3 Then
-						sql += " And Persona.razon Like '%" & keyword & "%'"
-					End If
-				End If
-			End If
-			sql += " ORDER By Persona.razon"
-			Return DbMan.read(sql)
-		End Function
-		Shared Function Seleccionar(proveedor_id As Integer, persona_id As Integer) As DataTable
-			Dim sql As String = SelectSQL & TableSQL
-			If proveedor_id > 0 Then
-				sql += " AND proveedor.id=" & proveedor_id
-			Else
-				sql += " AND persona.id=" & persona_id
-			End If
-			Return DbMan.read(sql)
-		End Function
-		Shared Function guardar(proveedor_id As Integer, ByVal per_id As Integer, ByVal actividad As Integer, ByVal responsable As Integer) As Integer
-			If proveedor_id > 0 Then
-				DbMan.edit("UPDATE proveedor SET per_id=" & per_id & ", actividad_id=" & actividad & ",
-												 responsable_iva_id=" & responsable & "
-										   WHERE id=" & proveedor_id)
-			Else
-				DbMan.edit("INSERT INTO proveedor(per_id, actividad_id, responsable_iva_id) 
-								 VALUES(" & per_id & ", " & actividad & ", " & responsable & ")")
-
-				Dim dtab As New DataTable
-				dtab = DbMan.read("SELECT MAX(id) as id FROM proveedor WHERE per_id=" & per_id)
-				proveedor_id = dtab(0)("id")
-			End If
-			Return proveedor_id
-		End Function
-		Shared Function eliminar(ByVal proveedor_id As Integer) As Integer
-			DbMan.edit("DELETE * FROM proveedor WHERE id=" & proveedor_id)
-			Return 0
-		End Function
-	End Class
-	Public Class Empleado
-		Shared SelectSQL As String = "SELECT persona.id, persona.razon, persona.cuil, persona.difunto," &
-								" empleado.alta, empleado.baja" &
-								" FROM persona INNER JOIN empleado ON persona.id=empleado.per_id"
-
-		Shared Function BuscarPorPersona(keyword As String, difunto As Boolean) As DataTable
-			Dim sql As String = SelectSQL
-			sql += " AND Persona.difunto=" & difunto & " AND fisica=True"
-			If keyword.Contains("BUSCAR") = False And Len(keyword) > 0 Then
-				If keyword <> "" Then
-					If Val(keyword) > 0 Then
-						If Len(keyword) = 11 Then
-							sql += " AND Persona.cuil=" & CDbl(keyword)
-						Else
-							sql += " AND Persona.id=" & Val(keyword)
-						End If
-					ElseIf Len(keyword) > 3 Then
-						sql += " AND Persona.razon LIKE '%" & keyword & "%'"
-					End If
-				End If
-			End If
-			sql += " ORDER By Persona.razon"
-			Return DbMan.read(sql)
-		End Function
-	End Class
-
-
+	'Varios
 	Shared Function CalcularCuil(dni As String, gen As String)
         'Variables de cálculo de CUIL
         Dim pos, var(10), result As Integer

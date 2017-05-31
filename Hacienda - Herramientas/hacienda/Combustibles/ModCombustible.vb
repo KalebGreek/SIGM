@@ -1,11 +1,6 @@
 ﻿Public Class ModCombustible
 
-	Dim SQLSelectReceptor As String = "SELECT Id as receptor_id,
-									   marca+' | '+dominio+' |'+STR(modelo) AS descripcion"
 
-	Dim SQLTableReceptor As String = " FROM hac_combustible_receptor"
-
-	Dim SQLWhere As String = ""
 
 
 	Private Sub Me_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
@@ -53,20 +48,19 @@
 
 	'###### RECEPTORES ##########################################################################################
 	Private Sub FillReceptor()
+		Dim dtab As New DataTable
 		If categoria.Enabled Or cuenta.Enabled Then
-			If bs_categoria.Position > -1 And bs_cuenta.Position > -1 And categoria.Enabled And cuenta.Enabled Then
-				SQLWhere += "WHERE cuenta_id=" & bs_cuenta.Current("id") & " AND categoria_id=" & bs_categoria.Current("id")
-			ElseIf bs_cuenta.Position > -1 And cuenta.Enabled Then
-				SQLWhere += "WHERE cuenta_id=" & bs_cuenta.Current("id")
-			ElseIf bs_categoria.Position > -1 And categoria.Enabled Then
-				SQLWhere += "WHERE categoria_id=" & bs_categoria.Current("id")
+			If categoria.Enabled And cuenta.Enabled Then
+				bs_receptor = Combustible.Receptor.ListAll(bs_cuenta, bs_categoria, 0)
+			ElseIf categoria.Enabled Then
+				bs_receptor = Combustible.Receptor.ListAll(Nothing, bs_categoria, 0)
+			Else
+				bs_receptor = Combustible.Receptor.ListAll(bs_cuenta, Nothing, 0)
 			End If
 		Else
-			SQLWhere = ""
+			bs_receptor = Combustible.Receptor.ListAll(Nothing, Nothing, 0)
 		End If
 		'Rellenar lista de receptores
-		Dim dtab As DataTable = DbMan.read(SQLSelectReceptor & SQLTableReceptor & SQLWhere)
-		bs_receptor.DataSource = dtab
 		CtrlMan.Fill.AutoComplete(bs_receptor, receptor, "descripcion", "receptor_id")
 	End Sub
 
@@ -109,27 +103,19 @@
 		DelTicket.Enabled = bs_historial.Position > -1
 	End Sub
 
-	Private Sub AddTicket_Click(sender As Object, e As EventArgs) Handles AddTicket.Click
+	Private Sub AddTicket_Click(sender As Object, e As EventArgs) Handles AddTicket.Click, EditTicket.Click
 		If bs_receptor.Position > -1 Then
-			Dim EditTicket As New ModCombustibleTicket(bs_receptor)
-			EditTicket.NewTicket()
-			EditTicket.ShowDialog(Me)
-			CtrlMan.LoadDataGridView(historial, bs_historial,
-									 Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
-		End If
-	End Sub
+			Dim AddModTicket As New ModCombustibleTicket()
 
-
-	Private Sub EditTicket_Click(sender As Object, e As EventArgs) Handles EditTicket.Click
-		With bs_historial
-			If bs_receptor.Position > -1 And .Position > -1 Then
-				Dim EditTicket As New ModCombustibleTicket(bs_receptor)
-				EditTicket.LoadTicket(bs_historial.Current("ticket_id"))
-				EditTicket.ShowDialog(Me)
-				CtrlMan.LoadDataGridView(historial, bs_historial,
-										 Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
+			If sender Is EditTicket And bs_historial.Position > -1 Then
+				AddModTicket.LoadTicket(bs_historial.Current("ticket_id"))
+			Else
+				AddModTicket.NewTicket(bs_receptor.Current("receptor_id"))
 			End If
-		End With
+			AddModTicket.ShowDialog(Me)
+		End If
+		CtrlMan.LoadDataGridView(historial, bs_historial,
+								 Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
 	End Sub
 
 	Private Sub DelTicket_Click(sender As Object, e As EventArgs) Handles DelTicket.Click

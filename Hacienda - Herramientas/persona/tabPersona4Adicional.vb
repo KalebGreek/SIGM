@@ -7,21 +7,21 @@
 		' Add any initialization after the InitializeComponent() call.
 	End Sub
 	'GUI
-	Private Sub esProveedor_CheckedChanged(sender As Object, e As EventArgs) Handles proveedor.CheckedChanged, difunto.CheckedChanged, profesional.CheckedChanged
-		responsable_iva.Visible = proveedor.Checked
-		et_act.Visible = proveedor.Checked
-		actividad.Visible = proveedor.Checked
-		add_actividad.Visible = proveedor.Checked
-		del_actividad.Visible = proveedor.Checked
+	Private Sub esProveedor_CheckedChanged(sender As Object, e As EventArgs) Handles EsProveedor.CheckedChanged, difunto.CheckedChanged, EsProfesional.CheckedChanged
+		responsable_iva.Visible = EsProveedor.Checked
+		et_act.Visible = EsProveedor.Checked
+		actividad.Visible = EsProveedor.Checked
+		add_actividad.Visible = EsProveedor.Checked
+		del_actividad.Visible = EsProveedor.Checked
 
 		ruta_defuncion.Visible = difunto.Checked
 		cargar_defu.Visible = difunto.Checked
 
-		titulo.Visible = profesional.Checked
-		add_titulo.Visible = profesional.Checked
-		del_titulo.Visible = profesional.Checked
-		et_matr.Visible = profesional.Checked
-		matricula.Visible = profesional.Checked
+		titulo.Visible = EsProfesional.Checked
+		add_titulo.Visible = EsProfesional.Checked
+		del_titulo.Visible = EsProfesional.Checked
+		et_matr.Visible = EsProfesional.Checked
+		matricula.Visible = EsProfesional.Checked
 
 	End Sub
 
@@ -114,14 +114,14 @@
 				ruta_defuncion.Text = ""
 			End If
 
-			dtab = Persona.Proveedor.Seleccionar(proveedor_id.Text, id)
-			proveedor.Checked = dtab.Rows.Count > 0
+			dtab = Proveedor.Seleccionar(proveedor_id.Text, id)
+			EsProveedor.Checked = dtab.Rows.Count > 0
 			If dtab.Rows.Count > 0 Then
 				CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel2)
 			End If
 
-			dtab = Persona.Profesional.Seleccionar(profesional_id.Text, id)
-			profesional.Checked = dtab.Rows.Count > 0
+			dtab = Profesional.Seleccionar(profesional_id.Text, id)
+			EsProfesional.Checked = dtab.Rows.Count > 0
 			If dtab.Rows.Count > 0 Then
 				CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel1)
 			End If
@@ -136,16 +136,16 @@
 											   ruta_defuncion='" & ruta_defuncion.Text & "'
 										 WHERE id=" & persona_id)
 			'Proveedor
-			If proveedor.Checked Then
-				proveedor_id.Text = Persona.Proveedor.guardar(proveedor_id.Text, persona_id, actividad.SelectedValue, responsable_iva.SelectedValue)
+			If EsProveedor.Checked Then
+				proveedor_id.Text = Proveedor.guardar(proveedor_id.Text, persona_id, actividad.SelectedValue, responsable_iva.SelectedValue)
 			Else
-				proveedor_id.Text = Persona.Proveedor.eliminar(persona_id)
+				proveedor_id.Text = Proveedor.eliminar(persona_id)
 			End If
 			'Profesional
-			If profesional.Checked Then
-				profesional_id.Text = Persona.Profesional.guardar(profesional_id.Text, persona_id, titulo.SelectedValue, matricula.Text)
+			If EsProfesional.Checked Then
+				profesional_id.Text = Profesional.guardar(profesional_id.Text, persona_id, titulo.SelectedValue, matricula.Text)
 			Else
-				profesional_id.Text = Persona.Profesional.eliminar(persona_id)
+				profesional_id.Text = Profesional.eliminar(persona_id)
 			End If
 		End If
 		Return True

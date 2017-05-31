@@ -6,6 +6,39 @@
     Public olecon As New OleDb.OleDbConnection
 
 	'###### READ: Rutinas de lectura #####################################################################
+	Function KeywordToSQL(sql As String, field As String, keyword As String) As String
+		'Rutina para validar datos de busqueda y armar instruccion WHERE basada en nombres comunes de columna
+		keyword = Trim(keyword)
+		If Len(keyword) > 1 Or Val(keyword) > 0 Then
+			If field.Contains("_id") Or field.Contains("num") Then
+				sql += field & "=" & keyword
+
+			ElseIf field.Contains("razon") Or field.Contains("apellido") Or field.Contains("nombre") Or field.Contains("direccion") _
+			Or field.Contains("ubicacion") Or field.Contains("direccion") Or field.Contains("calle") Or field.Contains("localidad") _
+			Or field.Contains("provincia") Then
+				sql += field & " LIKE '%" & keyword & "%'"
+
+			ElseIf field.Contains("fecha") Or field.Contains("alta") Or field.Contains("baja") Then
+				sql += field & "='" & keyword & "'"
+
+			ElseIf field.Contains("cuil") Or field.Contains("cuit") Then
+				If Len(keyword) = 13 Then
+					keyword = Replace(keyword, "-", "")
+				End If
+				If Len(keyword) = 11 Then
+					sql += field & "='" & keyword & "'"
+				End If
+
+			ElseIf field.Contains("dni") Then
+				If Len(keyword) > 4 And Len(keyword) < 9 Then
+					sql += field & "='" & keyword & "'"
+				End If
+			End If
+		Else
+			sql = ""
+		End If
+		Return sql
+	End Function
 	Function read(ByVal sql As String, Optional constr As String = Nothing,
 				  Optional OleDBProcedure As OleDb.OleDbCommand = Nothing)
 
@@ -99,34 +132,6 @@
 			Return "Datos insuficientes para realizar la operación."
 		End If
 
-	End Function
-	Function InsertSingleItem(InputMessage As String, table As String, field As String)
-		'Adds a single item to a table using InputBox
-		Dim value As String = ""
-		Dim vehiculo As Boolean = True
-		value = InputBox(InputMessage)
-		If value <> Nothing Then
-			value = Trim(value)
-			If Len(value) > 2 Then
-				DbMan.edit("INSERT INTO " & table & "(" & field & ") 
-											   VALUES(" & value & ")")
-			End If
-		End If
-		Return True
-	End Function
-	Function DelSingleItem(DelMessage As String, table As String, field As Integer,
-						   DeleteValue As Integer, Optional ReplaceValue As Integer = Nothing)
-		'Deletes a single value or replaces it with another value if necesary
-		If MsgBoxResult.Yes = MsgBox(DelMessage, MsgBoxStyle.YesNo) Then
-			If ReplaceValue <> Nothing Then
-				DbMan.edit("UPDATE " & table & " 
-							   SET " & field & "=" & ReplaceValue & "
-							 WHERE " & field & "=" & DeleteValue)
-			Else
-				DbMan.edit("DELETE * FROM " & table & " WHERE " & field & "=" & DeleteValue)
-			End If
-		End If
-		Return True
 	End Function
     '###### END SAVE ############################################################################################   
 End Module

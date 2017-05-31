@@ -9,7 +9,7 @@
 
 	Public Sub cargar(persona_id As Integer)
 		'Cargar domicilios
-		Dim dtab As DataTable = Persona.Domicilio.Listar(persona_id)
+		Dim dtab As DataTable = Domicilio.Listar(persona_id)
 		Dim principal As DomicilioPage
 		For Each dr As DataRow In dtab.Rows
 			Dim TabDom As New DomicilioPage _

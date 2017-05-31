@@ -91,7 +91,7 @@
 		End If
         'Agregar usuario a contenedor
         If instancia.IsMdiContainer Then
-			If TypeOf instancia Is FormContenedorGen Then
+			If TypeOf instancia Is MainForm Then
 				'CType(instancia, FormContenedorGen).user_id.Text = user_id
 			End If
 		End If

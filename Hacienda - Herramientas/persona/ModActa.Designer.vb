@@ -63,7 +63,7 @@ Partial Class ModActa
 		Me.subtitulo.Location = New System.Drawing.Point(0, 33)
 		Me.subtitulo.Margin = New System.Windows.Forms.Padding(0)
 		Me.subtitulo.Name = "subtitulo"
-		Me.subtitulo.Size = New System.Drawing.Size(500, 27)
+		Me.subtitulo.Size = New System.Drawing.Size(470, 27)
 		Me.subtitulo.TabIndex = 372
 		Me.subtitulo.Text = " MODIFICAR ACTAS"
 		Me.subtitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -76,7 +76,7 @@ Partial Class ModActa
 		Me.menu1.Location = New System.Drawing.Point(0, 0)
 		Me.menu1.Name = "menu1"
 		Me.menu1.Padding = New System.Windows.Forms.Padding(6, 3, 0, 3)
-		Me.menu1.Size = New System.Drawing.Size(500, 33)
+		Me.menu1.Size = New System.Drawing.Size(470, 33)
 		Me.menu1.TabIndex = 373
 		Me.menu1.Text = "top_menu"
 		'
@@ -198,7 +198,7 @@ Partial Class ModActa
 		Me.consulta_acta.ReadOnly = True
 		Me.consulta_acta.RowHeadersVisible = False
 		Me.consulta_acta.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-		Me.consulta_acta.Size = New System.Drawing.Size(500, 216)
+		Me.consulta_acta.Size = New System.Drawing.Size(470, 216)
 		Me.consulta_acta.TabIndex = 379
 		'
 		'nota
@@ -294,7 +294,7 @@ Partial Class ModActa
 		Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
 		Me.Panel1.Location = New System.Drawing.Point(0, 516)
 		Me.Panel1.Name = "Panel1"
-		Me.Panel1.Size = New System.Drawing.Size(500, 36)
+		Me.Panel1.Size = New System.Drawing.Size(470, 36)
 		Me.Panel1.TabIndex = 391
 		'
 		'del_acta
@@ -331,7 +331,7 @@ Partial Class ModActa
 		'
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
 		Me.BackColor = System.Drawing.Color.Silver
-		Me.ClientSize = New System.Drawing.Size(500, 552)
+		Me.ClientSize = New System.Drawing.Size(470, 552)
 		Me.Controls.Add(Me.consulta_acta)
 		Me.Controls.Add(Me.Panel1)
 		Me.Controls.Add(Me.per_id)
@@ -349,7 +349,7 @@ Partial Class ModActa
 		Me.Controls.Add(Me.libro)
 		Me.Controls.Add(Me.subtitulo)
 		Me.Controls.Add(Me.menu1)
-		Me.Font = New System.Drawing.Font("PF DinText Pro", 14.25!)
+		Me.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
 		Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
 		Me.Name = "ModActa"
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent

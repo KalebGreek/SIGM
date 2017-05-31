@@ -3,7 +3,7 @@
 	'###### VENTANAS
 	'Impedir creación de ventanas que deben abrirse una sola vez en el formulario MDI
 	Shared Function UniqueWindow(instance As Form) As Boolean
-		If TypeOf instance Is FormContenedorGen Then
+		If TypeOf instance Is MainForm Then
 			For Each f As Form In instance.MdiChildren
 				If TypeOf f Is ModInmueble Then
 					Return True
@@ -183,8 +183,7 @@
 		End If
 	End Sub
 
-
-	'Export
+	'Loading controls
 	'LOAD ALL THE CONTROLS!!!!1ONE
 	Shared Function LoadAllControls(drow As DataRow, ByVal target As Object) As Object
 		'Carga los registros de cada columna en los controles con el nombre de la columna correspondiente

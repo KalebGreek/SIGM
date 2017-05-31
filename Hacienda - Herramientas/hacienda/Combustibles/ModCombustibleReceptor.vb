@@ -21,27 +21,29 @@ Public Class ModCombustibleReceptor
 
 	'LOAD
 	Public Sub LoadReceptor(id As Integer)
-		CtrlMan.LoadAllControls(Combustible.Receptor.Load(id)(0), Me)
+		CtrlMan.LoadAllControls(Combustible.Receptor.Seleccionar(id)(0), Me)
 		Combustible.Responsable.Fill(bs_responsable, responsable, receptor_id.Text)
 	End Sub
 
 	'RESPONSABLE
 	Private Sub AddResponsable_Click(sender As Object, e As EventArgs) Handles AddResponsable.Click
-		Dim SelResp As New ControlBusquedaPersona
+		Dim SelResp As New BusquedaPersona
 		SelResp.ShowDialog(Me)
-		If SelResp.bs_resultado.Position > -1 Then
-			Dim pos As Integer = bs_responsable.Find("persona_id", SelResp.bs_resultado.Current("persona_id"))
-			If pos < 0 Then
+		With SelResp.resultado.DataSource
+			If .Position > -1 Then
+				Dim pos As Integer = bs_responsable.Find("persona_id", .Current("persona_id"))
+				If pos < 0 Then
 
-				DbMan.edit("INSERT INTO hac_combustible_responsable(receptor_id, persona_id) 
+					DbMan.edit("INSERT INTO hac_combustible_responsable(receptor_id, persona_id) 
 															 VALUES(" & receptor_id.Text & ", 
-																	" & SelResp.bs_resultado.Current("persona_id") & ")")
+																	" & .Current("persona_id") & ")")
 
-				Combustible.Responsable.Fill(bs_responsable, responsable, receptor_id.Text)
-				pos = bs_responsable.Find("persona_id", SelResp.bs_resultado.Current("persona_id"))
+					Combustible.Responsable.Fill(bs_responsable, responsable, receptor_id.Text)
+					pos = bs_responsable.Find("persona_id", .Current("persona_id"))
+				End If
+				bs_responsable.Position = pos
 			End If
-			bs_responsable.Position = pos
-		End If
+		End With
 	End Sub
 	Private Sub DelResponsable_Click(sender As Object, e As EventArgs) Handles DelResponsable.Click
 		If bs_responsable.Position > -1 And bs_responsable.Count > 1 Then
