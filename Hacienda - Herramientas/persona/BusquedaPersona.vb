@@ -9,15 +9,12 @@
 		ControlBusqueda1.vista.Items.AddRange(New Object() {"PERSONA", "EMPLEADO", "PROFESIONAL", "PROVEEDOR"})
 	End Sub
 	'-- RUTINAS
-	Public Sub Consultar() Handles ControlBusqueda1.CSearch_Click, ControlBusqueda1.CFiltro_IndexTextChanged
+	Public Sub Consultar(vista As String, filtro As String, keyword As String) Handles ControlBusqueda1.CSearch_Click
 		With ControlBusqueda1
 			CtrlMan.LoadDataGridView(resultado, bs_resultado,
-									 Persona.Consultar(Trim(.vista.Text), Trim(.filtro.Text),
-													   Trim(.keyword.Text), difunto.Checked, fisica.Checked))
+									 Persona.Consultar(Trim(vista), Trim(filtro),
+													   Trim(keyword), difunto.Checked, fisica.Checked))
 		End With
-	End Sub
-	Public Sub ResetSearch() Handles ControlBusqueda1.CReset_Click
-		Consultar()
 	End Sub
 
 	'-- EVENTOS UNICOS
@@ -61,22 +58,21 @@
 					.filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIT", "DIRECCION", "LOCALIDAD", "ACTIVIDAD"})
 					.filtro.Text = "RAZON SOCIAL"
 				End If
-				Consultar()
 			Else
-				ResetSearch()
+				ControlBusqueda1.reset.PerformClick()
 			End If
 		End With
 	End Sub
 	Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles ControlBusqueda1.CKeyword_KeyUp, resultado.KeyUp
 		If e.KeyValue = Keys.Enter And sender Is ControlBusqueda1.keyword Then
-			Consultar()
+			ControlBusqueda1.search.PerformClick()
 		ElseIf sender Is resultado Then
 			If e.KeyValue = Keys.F2 Then
 				If resultado.DataSource.Position > -1 Then
 					Dim mper As New ModPersona
 					mper.cargar(resultado.DataSource.Current("persona_id"))
 					mper.ShowDialog()
-					Consultar()
+					ControlBusqueda1.search.PerformClick()
 				End If
 			ElseIf e.KeyValue = Keys.Delete Then
 				If Persona.Eliminar(resultado.DataSource.Current("persona_id")) Then
@@ -88,7 +84,7 @@
 
 	Private Sub filtrospersona_CheckedChanged(sender As Object, e As EventArgs) Handles difunto.CheckedChanged, fisica.CheckedChanged
 		If sender.Enabled Then
-			Consultar()
+			ControlBusqueda1.search.PerformClick()
 		End If
 	End Sub
 End Class

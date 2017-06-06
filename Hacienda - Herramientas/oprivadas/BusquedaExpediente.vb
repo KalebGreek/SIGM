@@ -11,8 +11,7 @@
 	End Sub
 
 	'-- RUTINAS
-	Public Sub Consultar(vista As String, filtro As String, keyword As String, DateValue As String) Handles ControlBusqueda1.CSearch_Click
-		keyword = Trim(keyword)
+	Public Sub Consultar(vista As String, filtro As String, keyword As String) Handles ControlBusqueda1.CSearch_Click
 		If vista = "EXPEDIENTE" Then
 			If filtro = "NRO." Then
 				bs_resultado.DataSource = Oprivadas.Expediente.Buscar(Val(keyword))

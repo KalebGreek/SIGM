@@ -350,19 +350,19 @@
     <Compile Include="hacienda\Combustibles\ModCombustible.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="opublicas\BusquedaNotaPedido.Designer.vb">
+    <Compile Include="opublicas\NotaPedido\BusquedaNotaPedido.Designer.vb">
       <DependentUpon>BusquedaNotaPedido.vb</DependentUpon>
     </Compile>
-    <Compile Include="opublicas\BusquedaNotaPedido.vb">
+    <Compile Include="opublicas\NotaPedido\BusquedaNotaPedido.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="opublicas\ModNotaPedido.Designer.vb">
+    <Compile Include="opublicas\NotaPedido\ModNotaPedido.Designer.vb">
       <DependentUpon>ModNotaPedido.vb</DependentUpon>
     </Compile>
-    <Compile Include="opublicas\ModNotaPedido.vb">
+    <Compile Include="opublicas\NotaPedido\ModNotaPedido.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="opublicas\NotaPedido.vb" />
+    <Compile Include="opublicas\NotaPedido\NotaPedido.vb" />
     <Compile Include="persona\BusquedaPersona.Designer.vb">
       <DependentUpon>BusquedaPersona.vb</DependentUpon>
     </Compile>
@@ -544,11 +544,11 @@
     <EmbeddedResource Include="oprivadas\BusquedaExpediente.resx">
       <DependentUpon>BusquedaExpediente.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="opublicas\BusquedaNotaPedido.resx">
+    <EmbeddedResource Include="opublicas\NotaPedido\BusquedaNotaPedido.resx">
       <DependentUpon>BusquedaNotaPedido.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="opublicas\forms\nop.rdlc" />
-    <EmbeddedResource Include="opublicas\ModNotaPedido.resx">
+    <EmbeddedResource Include="opublicas\NotaPedido\ModNotaPedido.resx">
       <DependentUpon>ModNotaPedido.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="persona\BusquedaPersona.resx">

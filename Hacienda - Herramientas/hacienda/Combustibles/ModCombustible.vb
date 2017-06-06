@@ -1,8 +1,4 @@
 ﻿Public Class ModCombustible
-
-
-
-
 	Private Sub Me_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
 		If Me.Visible Then
 			FillReceptor()
@@ -106,13 +102,15 @@
 	Private Sub AddTicket_Click(sender As Object, e As EventArgs) Handles AddTicket.Click, EditTicket.Click
 		If bs_receptor.Position > -1 Then
 			Dim AddModTicket As New ModCombustibleTicket()
-
 			If sender Is EditTicket And bs_historial.Position > -1 Then
+				AddModTicket.titulo.Text = "MODIFICAR TICKET"
 				AddModTicket.LoadTicket(bs_historial.Current("ticket_id"))
-			Else
+				AddModTicket.ShowDialog(Me)
+			ElseIf sender Is AddTicket Then
 				AddModTicket.NewTicket(bs_receptor.Current("receptor_id"))
+				AddModTicket.ShowDialog(Me)
 			End If
-			AddModTicket.ShowDialog(Me)
+			AddModTicket.Dispose()
 		End If
 		CtrlMan.LoadDataGridView(historial, bs_historial,
 								 Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))

@@ -2,10 +2,10 @@
 	Inherits System.Windows.Forms.UserControl
 
 	'Custom Events
-	Public Event CSearch_Click(vista As String, filtro As String, keyword As String, DateValue As String)
+	Public Event CSearch_Click(vista As String, filtro As String, keyword As String)
 	Public Event CReset_Click()
 	Public Event CVista_IndexTextChanged()
-	Public Event CFiltro_IndexTextChanged()
+	'Public Event CFiltro_IndexTextChanged()
 	Public Event CKeyword_KeyUp(sender As Object, e As KeyEventArgs)
 
 	'Events
@@ -20,8 +20,8 @@
 	End Sub
 
 	Private Sub Vista_indextext(sender As Object, e As EventArgs) Handles vista.SelectedIndexChanged, vista.TextChanged
+		RaiseEvent CVista_IndexTextChanged() 'Load items
 		vista.Visible = vista.Items.Count > 0
-		RaiseEvent CVista_IndexTextChanged()
 	End Sub
 
 	Private Sub filtro_indextext(sender As Object, e As EventArgs) Handles filtro.SelectedIndexChanged, filtro.TextChanged
@@ -34,7 +34,8 @@
 			keyword.Visible = True
 		End If
 		reset.PerformClick()
-		RaiseEvent CFiltro_IndexTextChanged()
+		'RaiseEvent CFiltro_IndexTextChanged()
+		RaiseEvent CSearch_Click(vista.Text, filtro.Text, keyword.Text)
 	End Sub
 
 	Private Sub DateValue_ValueChanged(sender As Object, e As EventArgs) Handles DateValue.ValueChanged, DateValue.TextChanged
@@ -55,7 +56,7 @@
 	End Sub
 
 	Private Sub search_Click(sender As Object, e As EventArgs) Handles search.Click
-		RaiseEvent CSearch_Click(vista.Text, filtro.Text, keyword.Text, DateValue.Text)
+		RaiseEvent CSearch_Click(vista.Text, filtro.Text, keyword.Text)
 	End Sub
 
 	Private Sub reset_Click(sender As Object, e As EventArgs) Handles reset.Click
@@ -63,7 +64,7 @@
 		keyword.Clear()
 		DateValue.Value = Today
 		RaiseEvent CReset_Click()
-		RaiseEvent CSearch_Click(vista.Text, filtro.Text, keyword.Text, DateValue.Text)
+		RaiseEvent CSearch_Click(vista.Text, filtro.Text, keyword.Text)
 	End Sub
 
 	'Routines and functions

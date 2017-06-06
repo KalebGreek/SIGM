@@ -18,8 +18,8 @@ Public Class acceso
 			user.Text = "USUARIO"
 		End If
 	End Sub
-	Private Sub user_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles user.TextChanged
-		sender.BackColor = Color.White
+	Private Sub user_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles user.TextChanged, pass.TextChanged
+		sender.BackColor = Color.WhiteSmoke
 		If Len(sender.Text) < 5 Then
 			sender.BackColor = Color.FromArgb(255, 195, 185)
 		End If
@@ -33,12 +33,6 @@ Public Class acceso
 		If Len(pass.Text) = 0 Then
 			pass.Text = "CONTRASEÑA"
 			pass.PasswordChar = ""
-		End If
-	End Sub
-	Private Sub pass_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles pass.TextChanged
-		sender.BackColor = Color.White
-		If Len(sender.Text) < 5 Then
-			sender.BackColor = Color.FromArgb(255, 195, 185)
 		End If
 	End Sub
 

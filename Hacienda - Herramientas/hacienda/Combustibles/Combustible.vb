@@ -102,6 +102,41 @@
 																	 WHERE hac_combustible_items.ticket_id=" & ticket_id)
 			CtrlMan.LoadDataGridView(visor, bs, dtab)
 		End Sub
+
+		Shared Function SelectTicket(id As Integer) As DataTable
+			Return DbMan.read("SELECT hac_combustible_ticket.id AS ticket_id, hac_combustible_ticket.proveedor_id,
+									  persona.razon AS proveedor_razon, persona.cuil AS proveedor_cuil,
+									  hac_combustible_responsable.receptor_id,
+									  hac_combustible_ticket.responsable_id, hac_combustible_ticket.fecha,
+									  hac_combustible_ticket.ticket, hac_combustible_ticket.total,
+									  hac_combustible_ticket.user_id
+								 FROM (hac_combustible_responsable 
+						   INNER JOIN (persona
+						   INNER JOIN (proveedor
+						   INNER JOIN hac_combustible_ticket
+								   ON proveedor.Id = hac_combustible_ticket.proveedor_id)
+								   ON persona.id = proveedor.per_id)
+								   ON hac_combustible_responsable.Id = hac_combustible_ticket.responsable_id)
+						   INNER JOIN persona AS persona_1 ON hac_combustible_responsable.persona_id = persona_1.id
+								WHERE hac_combustible_ticket.id=" & id)
+		End Function
+
+		Shared Function SaveTicket(id As Integer, proveedor_id As Integer, responsable_id As Integer, fecha As Date, ticket As Integer) As Boolean
+			'SQL
+			If id > 0 Then
+				DbMan.edit("UPDATE hac_combustible_ticket 
+						   SET proveedor_id=" & proveedor_id & ", responsable_id=" & responsable_id & ",
+							   fecha=#" & fecha & "#, ticket=" & ticket & ", 
+							   user_id=" & My.Settings.UserId & "
+						 WHERE hac_combustible_ticket.id=" & id)
+			Else
+				DbMan.edit("INSERT INTO hac_combustible_ticket(proveedor_id, responsable_id, 
+															   fecha, ticket, total, user_id) 
+										    			VALUES(" & proveedor_id & ", " & responsable_id & ", #" & Date.Today & "#, 0,
+															   0, " & My.Settings.UserId & ")")
+			End If
+			Return True
+		End Function
 	End Class
 
 	Public Class Item
