@@ -34,8 +34,6 @@
 			keyword.Visible = True
 		End If
 		reset.PerformClick()
-		'RaiseEvent CFiltro_IndexTextChanged()
-		RaiseEvent CSearch_Click(vista.Text, filtro.Text, keyword.Text)
 	End Sub
 
 	Private Sub DateValue_ValueChanged(sender As Object, e As EventArgs) Handles DateValue.ValueChanged, DateValue.TextChanged
@@ -45,10 +43,9 @@
 	End Sub
 
 	Private Sub keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles keyword.KeyUp, DateValue.KeyUp
-		If e.KeyValue = Keys.Enter Then
-			search.PerformClick()
-		End If
+		search.PerformClick()
 	End Sub
+
 	Private Sub keyword_ClicknFocus(sender As Object, e As EventArgs) Handles keyword.Click, keyword.GotFocus
 		If keyword.Visible Then
 			keyword.SelectAll()

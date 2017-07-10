@@ -11,19 +11,19 @@
 
 			If bs_categoria Is Nothing And bs_cuenta Is Nothing Then
 				If id > 0 Then
-					sql += "WHERE hac_combustible_receptor.id=" & id
+					sql += " WHERE hac_combustible_receptor.id=" & id
 				End If
 			ElseIf bs_categoria Is Nothing Then
 				If bs_cuenta.Position > -1 Then
-					sql += "WHERE cuenta_id=" & bs_cuenta.Current("id")
+					sql += " WHERE cuenta=" & bs_cuenta.Current("orden")
 				End If
 			ElseIf bs_cuenta Is Nothing Then
 				If bs_categoria.Position > -1 Then
-					sql += "WHERE categoria_id=" & bs_categoria.Current("id")
+					sql += " WHERE categoria_id=" & bs_categoria.Current("id")
 				End If
 			Else
 				If bs_categoria.Position > -1 And bs_cuenta.Position > -1 Then
-					sql += "WHERE cuenta_id=" & bs_cuenta.Current("id") & " AND categoria_id=" & bs_categoria.Current("id")
+					sql += " WHERE cuenta=" & bs_cuenta.Current("orden") & " AND categoria_id=" & bs_categoria.Current("id")
 				End If
 			End If
 
@@ -33,7 +33,7 @@
 			Return bs
 		End Function
 		Shared Function Seleccionar(id As Integer) As DataTable
-			Return DbMan.read("SELECT hac_combustible_receptor.id as receptor_id, cuenta_id, categoria_id,
+			Return DbMan.read("SELECT hac_combustible_receptor.id as receptor_id, cuenta, categoria_id,
 									  marca, mercosur, dominio, modelo, alta, baja, observaciones,
 									  detalle, vehiculo
 								 FROM hac_combustible_receptor INNER JOIN hac_combustible_categoria_receptor
@@ -85,21 +85,21 @@
 			Return DbMan.read(SQLSelectTicket & SQLTableTicket & SQLWhere)
 		End Function
 		Shared Function ReturnLastTicketID(receptor_id As Integer) As Integer
-			Dim dtab As DataTable = DbMan.read("SELECT id FROM hac_combustible_ticket ORDER BY id ASC")
+			Dim dtab As DataTable = DbMan.read("SELECT id FROM hac_combustible_ticket ORDER BY id DESC")
 
 			Return dtab(0)("id")
 		End Function
 
 		Shared Sub Detail(ByRef visor As DataGridView, ByRef bs As BindingSource, ticket_id As Integer)
 			Dim dtab As DataTable = DbMan.read("SELECT hac_combustible_items.Id as item_id, 
-																		   hac_combustible_tipo.descripcion,
-																		   hac_combustible_items.litros, 
-																		   hac_combustible_items.unidades, 
-																		   hac_combustible_items.monto
-																	  FROM hac_combustible_tipo 
-																INNER JOIN hac_combustible_items 
-																		ON hac_combustible_tipo.Id = hac_combustible_items.tipo_item_id 
-																	 WHERE hac_combustible_items.ticket_id=" & ticket_id)
+													   hac_combustible_tipo.descripcion,
+													   hac_combustible_items.litros, 
+													   hac_combustible_items.unidades, 
+													   hac_combustible_items.monto
+												  FROM hac_combustible_tipo 
+											INNER JOIN hac_combustible_items 
+													ON hac_combustible_tipo.Id = hac_combustible_items.tipo_item_id 
+												 WHERE hac_combustible_items.ticket_id=" & ticket_id)
 			CtrlMan.LoadDataGridView(visor, bs, dtab)
 		End Sub
 
@@ -125,10 +125,10 @@
 			'SQL
 			If id > 0 Then
 				DbMan.edit("UPDATE hac_combustible_ticket 
-						   SET proveedor_id=" & proveedor_id & ", responsable_id=" & responsable_id & ",
-							   fecha=#" & fecha & "#, ticket=" & ticket & ", 
-							   user_id=" & My.Settings.UserId & "
-						 WHERE hac_combustible_ticket.id=" & id)
+							   SET proveedor_id=" & proveedor_id & ", responsable_id=" & responsable_id & ",
+								   fecha=#" & fecha & "#, ticket=" & ticket & ", 
+								   user_id=" & My.Settings.UserId & "
+							 WHERE hac_combustible_ticket.id=" & id)
 			Else
 				DbMan.edit("INSERT INTO hac_combustible_ticket(proveedor_id, responsable_id, 
 															   fecha, ticket, total, user_id) 
@@ -147,7 +147,7 @@
 
 		Shared Function FillTypeList(bs As BindingSource, target As ComboBox, displayColumn As String, valueColumn As String)
 			bs.DataSource = DbMan.read("SELECT id as tipo_id, descripcion, por_litro 
-																	FROM hac_combustible_tipo")
+										  FROM hac_combustible_tipo")
 
 			CtrlMan.Fill.AutoComplete(bs, target, "descripcion", "tipo_id")
 
@@ -159,9 +159,4 @@
 
 		End Function
 	End Class
-
-
-
-
-
 End Class

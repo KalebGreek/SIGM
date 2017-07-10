@@ -57,7 +57,6 @@ Partial Class ModCombustibleTicket
 		Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
 		Me.monto_total = New System.Windows.Forms.Label()
 		Me.Label5 = New System.Windows.Forms.Label()
-		Me.DelItem = New System.Windows.Forms.Button()
 		Me.AddItemPanel1 = New System.Windows.Forms.FlowLayoutPanel()
 		Me.Label12 = New System.Windows.Forms.Label()
 		Me.Label1 = New System.Windows.Forms.Label()
@@ -65,11 +64,11 @@ Partial Class ModCombustibleTicket
 		Me.NewItemType = New System.Windows.Forms.Button()
 		Me.DelItemType = New System.Windows.Forms.Button()
 		Me.et_litros_unidades = New System.Windows.Forms.Label()
-		Me.Label13 = New System.Windows.Forms.Label()
-		Me.Label6 = New System.Windows.Forms.Label()
 		Me.LitrosItem = New System.Windows.Forms.NumericUpDown()
-		Me.MontoItem = New System.Windows.Forms.NumericUpDown()
 		Me.AddNewItem = New System.Windows.Forms.Button()
+		Me.Label13 = New System.Windows.Forms.Label()
+		Me.MontoItem = New System.Windows.Forms.NumericUpDown()
+		Me.DelItem = New System.Windows.Forms.Button()
 		Me.bs_item_ticket = New System.Windows.Forms.BindingSource(Me.components)
 		Me.bs_responsable = New System.Windows.Forms.BindingSource(Me.components)
 		Me.bs_tipo_item = New System.Windows.Forms.BindingSource(Me.components)
@@ -203,7 +202,6 @@ Partial Class ModCombustibleTicket
 		'ticket_id
 		'
 		Me.ticket_id.BackColor = System.Drawing.Color.LightSalmon
-		Me.ticket_id.Enabled = False
 		Me.ticket_id.Location = New System.Drawing.Point(196, 34)
 		Me.ticket_id.Margin = New System.Windows.Forms.Padding(0)
 		Me.ticket_id.MaxLength = 35
@@ -211,7 +209,6 @@ Partial Class ModCombustibleTicket
 		Me.ticket_id.Size = New System.Drawing.Size(24, 27)
 		Me.ticket_id.TabIndex = 456
 		Me.ticket_id.Text = "0"
-		Me.ticket_id.Visible = False
 		'
 		'Label4
 		'
@@ -290,7 +287,6 @@ Partial Class ModCombustibleTicket
 		'receptor_id
 		'
 		Me.receptor_id.BackColor = System.Drawing.SystemColors.HotTrack
-		Me.receptor_id.Enabled = False
 		Me.receptor_id.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.receptor_id.Location = New System.Drawing.Point(217, 146)
 		Me.receptor_id.Margin = New System.Windows.Forms.Padding(0)
@@ -299,7 +295,6 @@ Partial Class ModCombustibleTicket
 		Me.receptor_id.Size = New System.Drawing.Size(24, 22)
 		Me.receptor_id.TabIndex = 455
 		Me.receptor_id.Text = "0"
-		Me.receptor_id.Visible = False
 		'
 		'Label10
 		'
@@ -369,7 +364,6 @@ Partial Class ModCombustibleTicket
 		'proveedor_id
 		'
 		Me.proveedor_id.BackColor = System.Drawing.Color.YellowGreen
-		Me.proveedor_id.Enabled = False
 		Me.proveedor_id.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.proveedor_id.Location = New System.Drawing.Point(217, 285)
 		Me.proveedor_id.Margin = New System.Windows.Forms.Padding(0)
@@ -378,7 +372,6 @@ Partial Class ModCombustibleTicket
 		Me.proveedor_id.Size = New System.Drawing.Size(24, 22)
 		Me.proveedor_id.TabIndex = 457
 		Me.proveedor_id.Text = "0"
-		Me.proveedor_id.Visible = False
 		'
 		'DetalleTicket
 		'
@@ -388,7 +381,7 @@ Partial Class ModCombustibleTicket
 		Me.DetalleTicket.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
 		Me.DetalleTicket.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
 		Me.DetalleTicket.Dock = System.Windows.Forms.DockStyle.Fill
-		Me.DetalleTicket.Location = New System.Drawing.Point(0, 86)
+		Me.DetalleTicket.Location = New System.Drawing.Point(0, 99)
 		Me.DetalleTicket.Margin = New System.Windows.Forms.Padding(0)
 		Me.DetalleTicket.Name = "DetalleTicket"
 		Me.DetalleTicket.ReadOnly = True
@@ -396,7 +389,7 @@ Partial Class ModCombustibleTicket
 		Me.DetalleTicket.RowHeadersVisible = False
 		Me.DetalleTicket.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
 		Me.DetalleTicket.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-		Me.DetalleTicket.Size = New System.Drawing.Size(290, 249)
+		Me.DetalleTicket.Size = New System.Drawing.Size(290, 236)
 		Me.DetalleTicket.TabIndex = 432
 		'
 		'Panel4
@@ -460,7 +453,6 @@ Partial Class ModCombustibleTicket
 		'
 		Me.Panel1.BackColor = System.Drawing.Color.Transparent
 		Me.Panel1.Controls.Add(Me.FlowLayoutPanel1)
-		Me.Panel1.Controls.Add(Me.DelItem)
 		Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
 		Me.Panel1.Location = New System.Drawing.Point(0, 335)
 		Me.Panel1.Name = "Panel1"
@@ -478,20 +470,20 @@ Partial Class ModCombustibleTicket
 		Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 0)
 		Me.FlowLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
 		Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-		Me.FlowLayoutPanel1.Size = New System.Drawing.Size(196, 26)
+		Me.FlowLayoutPanel1.Size = New System.Drawing.Size(290, 26)
 		Me.FlowLayoutPanel1.TabIndex = 464
 		'
 		'monto_total
 		'
 		Me.monto_total.AutoSize = True
 		Me.monto_total.Font = New System.Drawing.Font("PF DinDisplay Pro", 10.0!)
-		Me.monto_total.Location = New System.Drawing.Point(142, 6)
+		Me.monto_total.Location = New System.Drawing.Point(236, 6)
 		Me.monto_total.Margin = New System.Windows.Forms.Padding(3, 6, 3, 0)
 		Me.monto_total.Name = "monto_total"
 		Me.monto_total.Padding = New System.Windows.Forms.Padding(0, 0, 8, 0)
 		Me.monto_total.Size = New System.Drawing.Size(51, 16)
 		Me.monto_total.TabIndex = 446
-		Me.monto_total.Text = "$ 0,00"
+		Me.monto_total.Text = "$ 0.00"
 		Me.monto_total.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
 		'
 		'Label5
@@ -499,29 +491,13 @@ Partial Class ModCombustibleTicket
 		Me.Label5.AutoSize = True
 		Me.Label5.Font = New System.Drawing.Font("PF DinDisplay Pro", 10.0!)
 		Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-		Me.Label5.Location = New System.Drawing.Point(91, 6)
+		Me.Label5.Location = New System.Drawing.Point(185, 6)
 		Me.Label5.Margin = New System.Windows.Forms.Padding(3, 6, 3, 0)
 		Me.Label5.Name = "Label5"
 		Me.Label5.Size = New System.Drawing.Size(45, 16)
 		Me.Label5.TabIndex = 447
 		Me.Label5.Text = "TOTAL"
 		Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-		'
-		'DelItem
-		'
-		Me.DelItem.BackColor = System.Drawing.Color.Transparent
-		Me.DelItem.Dock = System.Windows.Forms.DockStyle.Right
-		Me.DelItem.FlatAppearance.BorderSize = 0
-		Me.DelItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.DelItem.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!)
-		Me.DelItem.ForeColor = System.Drawing.Color.Black
-		Me.DelItem.Location = New System.Drawing.Point(196, 0)
-		Me.DelItem.Margin = New System.Windows.Forms.Padding(0)
-		Me.DelItem.Name = "DelItem"
-		Me.DelItem.Size = New System.Drawing.Size(94, 26)
-		Me.DelItem.TabIndex = 463
-		Me.DelItem.Text = " ELIMINAR"
-		Me.DelItem.UseVisualStyleBackColor = False
 		'
 		'AddItemPanel1
 		'
@@ -532,18 +508,18 @@ Partial Class ModCombustibleTicket
 		Me.AddItemPanel1.Controls.Add(Me.NewItemType)
 		Me.AddItemPanel1.Controls.Add(Me.DelItemType)
 		Me.AddItemPanel1.Controls.Add(Me.et_litros_unidades)
-		Me.AddItemPanel1.Controls.Add(Me.Label13)
-		Me.AddItemPanel1.Controls.Add(Me.Label6)
 		Me.AddItemPanel1.Controls.Add(Me.LitrosItem)
-		Me.AddItemPanel1.Controls.Add(Me.MontoItem)
 		Me.AddItemPanel1.Controls.Add(Me.AddNewItem)
+		Me.AddItemPanel1.Controls.Add(Me.Label13)
+		Me.AddItemPanel1.Controls.Add(Me.MontoItem)
+		Me.AddItemPanel1.Controls.Add(Me.DelItem)
 		Me.AddItemPanel1.Dock = System.Windows.Forms.DockStyle.Top
 		Me.AddItemPanel1.Font = New System.Drawing.Font("PF DinDisplay Pro", 11.0!)
 		Me.AddItemPanel1.Location = New System.Drawing.Point(0, 0)
 		Me.AddItemPanel1.Margin = New System.Windows.Forms.Padding(0)
 		Me.AddItemPanel1.Name = "AddItemPanel1"
 		Me.AddItemPanel1.Padding = New System.Windows.Forms.Padding(3, 0, 0, 0)
-		Me.AddItemPanel1.Size = New System.Drawing.Size(290, 86)
+		Me.AddItemPanel1.Size = New System.Drawing.Size(290, 99)
 		Me.AddItemPanel1.TabIndex = 435
 		'
 		'Label12
@@ -573,7 +549,7 @@ Partial Class ModCombustibleTicket
 		Me.TipoItem.Location = New System.Drawing.Point(3, 16)
 		Me.TipoItem.Margin = New System.Windows.Forms.Padding(0)
 		Me.TipoItem.Name = "TipoItem"
-		Me.TipoItem.Size = New System.Drawing.Size(191, 26)
+		Me.TipoItem.Size = New System.Drawing.Size(237, 26)
 		Me.TipoItem.TabIndex = 436
 		'
 		'NewItemType
@@ -582,7 +558,7 @@ Partial Class ModCombustibleTicket
 		Me.NewItemType.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.NewItemType.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.NewItemType.ForeColor = System.Drawing.Color.Black
-		Me.NewItemType.Location = New System.Drawing.Point(194, 16)
+		Me.NewItemType.Location = New System.Drawing.Point(240, 16)
 		Me.NewItemType.Margin = New System.Windows.Forms.Padding(0)
 		Me.NewItemType.Name = "NewItemType"
 		Me.NewItemType.Size = New System.Drawing.Size(23, 25)
@@ -597,7 +573,7 @@ Partial Class ModCombustibleTicket
 		Me.DelItemType.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.DelItemType.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.DelItemType.ForeColor = System.Drawing.Color.Black
-		Me.DelItemType.Location = New System.Drawing.Point(217, 16)
+		Me.DelItemType.Location = New System.Drawing.Point(263, 16)
 		Me.DelItemType.Margin = New System.Windows.Forms.Padding(0)
 		Me.DelItemType.Name = "DelItemType"
 		Me.DelItemType.Size = New System.Drawing.Size(23, 25)
@@ -611,54 +587,21 @@ Partial Class ModCombustibleTicket
 		Me.et_litros_unidades.Location = New System.Drawing.Point(3, 42)
 		Me.et_litros_unidades.Margin = New System.Windows.Forms.Padding(0)
 		Me.et_litros_unidades.Name = "et_litros_unidades"
-		Me.et_litros_unidades.Size = New System.Drawing.Size(81, 16)
+		Me.et_litros_unidades.Size = New System.Drawing.Size(65, 27)
 		Me.et_litros_unidades.TabIndex = 445
 		Me.et_litros_unidades.Text = "Unidades"
-		Me.et_litros_unidades.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-		'
-		'Label13
-		'
-		Me.Label13.Location = New System.Drawing.Point(84, 42)
-		Me.Label13.Margin = New System.Windows.Forms.Padding(0)
-		Me.Label13.Name = "Label13"
-		Me.Label13.Size = New System.Drawing.Size(113, 16)
-		Me.Label13.TabIndex = 443
-		Me.Label13.Text = "Monto"
-		Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-		'
-		'Label6
-		'
-		Me.Label6.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.0!)
-		Me.Label6.Location = New System.Drawing.Point(197, 42)
-		Me.Label6.Margin = New System.Windows.Forms.Padding(0)
-		Me.Label6.Name = "Label6"
-		Me.Label6.Size = New System.Drawing.Size(85, 14)
-		Me.Label6.TabIndex = 463
-		Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+		Me.et_litros_unidades.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
 		'LitrosItem
 		'
-		Me.LitrosItem.Location = New System.Drawing.Point(3, 58)
-		Me.LitrosItem.Margin = New System.Windows.Forms.Padding(0)
+		Me.LitrosItem.Location = New System.Drawing.Point(68, 44)
+		Me.LitrosItem.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
 		Me.LitrosItem.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
 		Me.LitrosItem.Name = "LitrosItem"
-		Me.LitrosItem.Size = New System.Drawing.Size(82, 25)
+		Me.LitrosItem.Size = New System.Drawing.Size(121, 25)
 		Me.LitrosItem.TabIndex = 426
 		Me.LitrosItem.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
 		Me.LitrosItem.ThousandsSeparator = True
-		'
-		'MontoItem
-		'
-		Me.MontoItem.DecimalPlaces = 2
-		Me.MontoItem.Increment = New Decimal(New Integer() {5, 0, 0, 65536})
-		Me.MontoItem.Location = New System.Drawing.Point(85, 58)
-		Me.MontoItem.Margin = New System.Windows.Forms.Padding(0)
-		Me.MontoItem.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
-		Me.MontoItem.Name = "MontoItem"
-		Me.MontoItem.Size = New System.Drawing.Size(110, 25)
-		Me.MontoItem.TabIndex = 429
-		Me.MontoItem.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-		Me.MontoItem.ThousandsSeparator = True
 		'
 		'AddNewItem
 		'
@@ -666,13 +609,51 @@ Partial Class ModCombustibleTicket
 		Me.AddNewItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.AddNewItem.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!)
 		Me.AddNewItem.ForeColor = System.Drawing.Color.Black
-		Me.AddNewItem.Location = New System.Drawing.Point(195, 58)
+		Me.AddNewItem.Location = New System.Drawing.Point(189, 42)
 		Me.AddNewItem.Margin = New System.Windows.Forms.Padding(0)
 		Me.AddNewItem.Name = "AddNewItem"
-		Me.AddNewItem.Size = New System.Drawing.Size(94, 25)
+		Me.AddNewItem.Size = New System.Drawing.Size(94, 27)
 		Me.AddNewItem.TabIndex = 461
 		Me.AddNewItem.Text = " AGREGAR"
 		Me.AddNewItem.UseVisualStyleBackColor = False
+		'
+		'Label13
+		'
+		Me.Label13.Location = New System.Drawing.Point(3, 69)
+		Me.Label13.Margin = New System.Windows.Forms.Padding(0)
+		Me.Label13.Name = "Label13"
+		Me.Label13.Size = New System.Drawing.Size(65, 27)
+		Me.Label13.TabIndex = 443
+		Me.Label13.Text = "Monto"
+		Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		'
+		'MontoItem
+		'
+		Me.MontoItem.DecimalPlaces = 2
+		Me.MontoItem.Increment = New Decimal(New Integer() {5, 0, 0, 65536})
+		Me.MontoItem.Location = New System.Drawing.Point(68, 71)
+		Me.MontoItem.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+		Me.MontoItem.Maximum = New Decimal(New Integer() {9999999, 0, 0, 0})
+		Me.MontoItem.Name = "MontoItem"
+		Me.MontoItem.Size = New System.Drawing.Size(121, 25)
+		Me.MontoItem.TabIndex = 429
+		Me.MontoItem.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+		Me.MontoItem.ThousandsSeparator = True
+		'
+		'DelItem
+		'
+		Me.DelItem.BackColor = System.Drawing.Color.Transparent
+		Me.DelItem.FlatAppearance.BorderSize = 0
+		Me.DelItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.DelItem.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!)
+		Me.DelItem.ForeColor = System.Drawing.Color.Black
+		Me.DelItem.Location = New System.Drawing.Point(189, 69)
+		Me.DelItem.Margin = New System.Windows.Forms.Padding(0)
+		Me.DelItem.Name = "DelItem"
+		Me.DelItem.Size = New System.Drawing.Size(94, 27)
+		Me.DelItem.TabIndex = 464
+		Me.DelItem.Text = " ELIMINAR"
+		Me.DelItem.UseVisualStyleBackColor = False
 		'
 		'bs_item_ticket
 		'
@@ -744,7 +725,6 @@ Partial Class ModCombustibleTicket
 	Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
 	Friend WithEvents monto_total As Label
 	Friend WithEvents Label5 As Label
-	Friend WithEvents DelItem As Button
 	Friend WithEvents SelectReceptor As Button
 	Friend WithEvents receptor_id As TextBox
 	Friend WithEvents ticket_id As TextBox
@@ -753,9 +733,9 @@ Partial Class ModCombustibleTicket
 	Friend WithEvents Label4 As Label
 	Friend WithEvents proveedor_razon As TextBox
 	Friend WithEvents SelectProveedor As Button
-	Friend WithEvents Label6 As Label
 	Friend WithEvents proveedor_cuil As TextBox
 	Friend WithEvents receptor_dominio As TextBox
 	Friend WithEvents receptor_modelo As TextBox
 	Friend WithEvents receptor_categoria As TextBox
+	Friend WithEvents DelItem As Button
 End Class

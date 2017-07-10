@@ -236,7 +236,6 @@
 		'Dar formato
 		visor = FormatColumns(visor)
 		visor.ResumeLayout()
-		visor.PerformLayout()
 		Return visor
 	End Function
 
@@ -264,10 +263,10 @@
 
 					'PERSONAS
 				ElseIf .Equals("cuil") Then
-					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
 
 				ElseIf .Equals("razon") Then
-					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
 
 				ElseIf .Equals("direccion") Then
 					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
@@ -285,7 +284,7 @@
 					c.Width = 25
 
 				ElseIf .Equals("localidad") Then
-					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
 
 				ElseIf .Equals("email") Then
 					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells

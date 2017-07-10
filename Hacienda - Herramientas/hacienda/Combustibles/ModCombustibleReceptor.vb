@@ -14,7 +14,7 @@ Public Class ModCombustibleReceptor
 		modelo.value = Today.Year
 		modelo.Maximum = Today.Year
 
-		Hacienda.FillCuenta(bs_cuenta, cuenta)
+		Hacienda.FillCuentasHacienda(bs_cuenta, cuenta, 2, "9", "1", "1", "2", "01")
 		Combustible.Receptor.FillCategory(bs_categoria, categoria, vehiculo.Checked)
 		Combustible.Responsable.Fill(bs_responsable, responsable, 0) 'Formats the bindingsource
 	End Sub
@@ -28,6 +28,7 @@ Public Class ModCombustibleReceptor
 	'RESPONSABLE
 	Private Sub AddResponsable_Click(sender As Object, e As EventArgs) Handles AddResponsable.Click
 		Dim SelResp As New BusquedaPersona
+		SelResp.ControlBusqueda1.vista.Text = "PERSONA"
 		SelResp.ShowDialog(Me)
 		With SelResp.resultado.DataSource
 			If .Position > -1 Then
@@ -128,7 +129,7 @@ Public Class ModCombustibleReceptor
 			If MsgBoxResult.Yes = MsgBox("Desea guardar este receptor?", MsgBoxStyle.YesNo, "Guardar Ticket") Then
 				If receptor_id.Text > 0 Then
 					DbMan.edit("UPDATE hac_combustible_receptor
-								   SET cuenta_id=" & cuenta.SelectedValue & ", categoria_id=" & categoria.SelectedValue & ",
+								   SET cuenta=" & cuenta.SelectedValue & ", categoria_id=" & categoria.SelectedValue & ",
 									   marca='" & marca.Text & "', mercosur=" & mercosur.Checked & ", 
 									   dominio='" & dominio.Text & "', modelo=" & modelo.Value & ", 
 									   alta=#" & fecha_alta & "#, baja=#" & fecha_baja & "#,
@@ -137,7 +138,7 @@ Public Class ModCombustibleReceptor
 
 					saved = True
 				ElseIf receptor_id.Text = 0 Then
-					DbMan.edit("INSERT INTO hac_combustible_receptor(cuenta_id, categoria_id, marca,
+					DbMan.edit("INSERT INTO hac_combustible_receptor(cuenta, categoria_id, marca,
 																				mercosur, dominio,
 																				modelo, alta,
 																				observaciones)
@@ -192,13 +193,10 @@ Public Class ModCombustibleReceptor
 	End Sub
 
 	Private Sub mercosur_CheckedChanged(sender As Object, e As EventArgs) Handles mercosur.CheckedChanged
-		dominio.Clear()
 		If mercosur.Checked Then
 			dominio.MaxLength = 9
 		Else
 			dominio.MaxLength = 7
 		End If
 	End Sub
-
-
 End Class

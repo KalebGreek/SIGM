@@ -39,6 +39,20 @@
 		End If
 		Return sql
 	End Function
+
+
+	Function readTables(Optional constr As String = "") As DataTable
+		If constr = "" Then
+			constr = My.Settings.DefaultCon
+		End If
+
+		olecon.ConnectionString = constr
+		olecon.Open()
+		Dim schemaTable As DataTable
+		schemaTable = olecon.GetOleDbSchemaTable(OleDb.OleDbSchemaGuid.Tables, Nothing)
+		olecon.Close()
+		Return schemaTable
+	End Function
 	Function read(ByVal sql As String, Optional constr As String = Nothing,
 				  Optional OleDBProcedure As OleDb.OleDbCommand = Nothing)
 

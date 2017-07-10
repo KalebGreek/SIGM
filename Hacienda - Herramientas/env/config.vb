@@ -52,36 +52,35 @@
 
     '###### VALIDACION
     Private Sub DetectarCambios() Handles conexion_std.TextChanged, conexion_acc.TextChanged,
-                                          conexion_fox.TextChanged, conexion_pgsql.TextChanged,
-                                          cata_cuentas.TextChanged, cata_historial.TextChanged,
-                                          cata_personas.TextChanged, cata_vencimientos.TextChanged,
-                                          come_actividades.TextChanged, come_cuentas.TextChanged,
-                                          come_historial.TextChanged, come_personas.TextChanged,
-                                          come_variables.TextChanged, come_vencimientos.TextChanged,
-                                          auto_cuentas.TextChanged, auto_personas.TextChanged,
-                                          auto_tipo.TextChanged, auto_vencimientos.TextChanged,
-                                          grupo_auto.TextChanged,
-                                          agua_cuentas.TextChanged, agua_historial.TextChanged,
-                                          agua_personas.TextChanged, agua_variables.TextChanged,
-                                          agua_vencimientos.TextChanged,
-                                          sepe_cuentas.TextChanged, sepe_historial.TextChanged,
-                                          sepe_muertos.TextChanged, sepe_personas.TextChanged,
-                                          sepe_variables.TextChanged
+										  conexion_fox.TextChanged, conexion_pgsql.TextChanged,
+										  cata_cuentas.TextChanged, cata_historial.TextChanged,
+										  cata_personas.TextChanged, cata_vencimientos.TextChanged,
+										  come_actividades.TextChanged, come_cuentas.TextChanged,
+										  come_historial.TextChanged, come_personas.TextChanged,
+										  come_variables.TextChanged, come_vencimientos.TextChanged,
+										  auto_cuentas.TextChanged, auto_personas.TextChanged,
+										  auto_tipo.TextChanged, auto_vencimientos.TextChanged,
+										  agua_cuentas.TextChanged, agua_historial.TextChanged,
+										  agua_personas.TextChanged, agua_variables.TextChanged,
+										  agua_vencimientos.TextChanged,
+										  sepe_cuentas.TextChanged, sepe_historial.TextChanged,
+										  sepe_muertos.TextChanged, sepe_personas.TextChanged,
+										  sepe_variables.TextChanged
 
-        RestablecerToolStripMenuItem.Enabled = True
-    End Sub
+		RestablecerToolStripMenuItem.Enabled = True
+	End Sub
 
     '### RUTINAS
-    Private Sub rutina_fecha_null_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rutina_fecha_null.Click
+    Private Sub rutina_fecha_null_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
-        If MsgBoxResult.Yes = MsgBox("Esto reemplazara las fechas con valor NULL en la base de datos seleccionada." & Chr(13) &
-                                     "ESTA OPERACION NO SE PUEDE DESHACER." & Chr(13) &
-                                     "Desea continuar?", MsgBoxStyle.Critical, "Reparar fechas en tablas Fox") Then
-            RepararFechasNulas()
-        End If
-    End Sub
+		If MsgBoxResult.Yes = MsgBox("Esto reemplazara las fechas con valor NULL en la base de datos seleccionada." & Chr(13) &
+									 "ESTA OPERACION NO SE PUEDE DESHACER." & Chr(13) &
+									 "Desea continuar?", MsgBoxStyle.Critical, "Reparar fechas en tablas Fox") Then
+			RepararFechasNulas()
+		End If
+	End Sub
 
-    Private Sub RepararFechasNulas()
+	Private Sub RepararFechasNulas()
         Dim d, m, y, cuenta, vence, pago, periodo As String
         Dim dtab As New DataTable
         d = Today.Day
@@ -192,4 +191,32 @@
 			sepe_muertos.Text = dtab_ext(0)("muertos")
 		End If
     End Sub
+
+	Private Sub ImportarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportarToolStripMenuItem.Click
+		'>> Ventana de importacion de base de datos
+		'Permite seleccionar bd de origen y de destino
+		'Compara los nombres de las tablas en ambas bd
+		'Crea las tablas que no existen en la bd de destino
+		'Actualiza registros ya existentes (usando el ID unico en la tabla)
+		'Inserta registros no encontrados en la tablas de la bd de destino
+		'No elimina registros
+		'Genera log de acciones sobre bd de destino
+
+		Dim visor As New genVisorDtab
+		visor.LoadDtab(DbMan.readTables())
+		visor.ShowDialog()
+		Dim sourceTables As DataTable = DbMan.readTables()
+		Dim destTables As DataTable = DbMan.readTables()
+		For Each dr As DataRow In destTables.Rows
+			If dr("TABLE_TYPE") = "TABLE" Then
+				destTables.Rows.Find(dr("TABLE_NAME"))
+
+
+			End If
+		Next
+	End Sub
+
+	Private Sub DetectarCambios(sender As Object, e As EventArgs)
+
+	End Sub
 End Class

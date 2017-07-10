@@ -48,9 +48,9 @@ Partial Class ModCombustibleReceptor
 		Me.marca = New System.Windows.Forms.TextBox()
 		Me.vehiculo = New System.Windows.Forms.CheckBox()
 		Me.Label4 = New System.Windows.Forms.Label()
+		Me.dominio = New System.Windows.Forms.TextBox()
 		Me.argentina = New System.Windows.Forms.RadioButton()
 		Me.mercosur = New System.Windows.Forms.RadioButton()
-		Me.dominio = New System.Windows.Forms.TextBox()
 		Me.Label1 = New System.Windows.Forms.Label()
 		Me.modelo = New System.Windows.Forms.NumericUpDown()
 		Me.Label12 = New System.Windows.Forms.Label()
@@ -130,9 +130,9 @@ Partial Class ModCombustibleReceptor
 		Me.FlowLayoutPanel3.Controls.Add(Me.marca)
 		Me.FlowLayoutPanel3.Controls.Add(Me.vehiculo)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label4)
+		Me.FlowLayoutPanel3.Controls.Add(Me.dominio)
 		Me.FlowLayoutPanel3.Controls.Add(Me.argentina)
 		Me.FlowLayoutPanel3.Controls.Add(Me.mercosur)
-		Me.FlowLayoutPanel3.Controls.Add(Me.dominio)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label1)
 		Me.FlowLayoutPanel3.Controls.Add(Me.modelo)
 		Me.FlowLayoutPanel3.Controls.Add(Me.Label12)
@@ -380,37 +380,38 @@ Partial Class ModCombustibleReceptor
 		Me.Label4.Text = "Dominio"
 		Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
-		'argentina
-		'
-		Me.argentina.Checked = True
-		Me.argentina.Location = New System.Drawing.Point(120, 174)
-		Me.argentina.Margin = New System.Windows.Forms.Padding(6, 0, 0, 0)
-		Me.argentina.Name = "argentina"
-		Me.argentina.Size = New System.Drawing.Size(92, 30)
-		Me.argentina.TabIndex = 466
-		Me.argentina.TabStop = True
-		Me.argentina.Text = "Argentina"
-		Me.argentina.UseVisualStyleBackColor = True
-		'
-		'mercosur
-		'
-		Me.mercosur.Location = New System.Drawing.Point(214, 174)
-		Me.mercosur.Margin = New System.Windows.Forms.Padding(2, 0, 0, 0)
-		Me.mercosur.Name = "mercosur"
-		Me.mercosur.Size = New System.Drawing.Size(97, 30)
-		Me.mercosur.TabIndex = 467
-		Me.mercosur.Text = "Mercosur"
-		Me.mercosur.UseVisualStyleBackColor = True
-		'
 		'dominio
 		'
 		Me.dominio.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-		Me.dominio.Location = New System.Drawing.Point(311, 176)
+		Me.dominio.Location = New System.Drawing.Point(114, 176)
 		Me.dominio.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
 		Me.dominio.MaxLength = 60
 		Me.dominio.Name = "dominio"
 		Me.dominio.Size = New System.Drawing.Size(98, 27)
 		Me.dominio.TabIndex = 485
+		Me.dominio.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+		'
+		'argentina
+		'
+		Me.argentina.Location = New System.Drawing.Point(218, 174)
+		Me.argentina.Margin = New System.Windows.Forms.Padding(6, 0, 0, 0)
+		Me.argentina.Name = "argentina"
+		Me.argentina.Size = New System.Drawing.Size(92, 30)
+		Me.argentina.TabIndex = 466
+		Me.argentina.Text = "Argentina"
+		Me.argentina.UseVisualStyleBackColor = True
+		'
+		'mercosur
+		'
+		Me.mercosur.Checked = True
+		Me.mercosur.Location = New System.Drawing.Point(312, 174)
+		Me.mercosur.Margin = New System.Windows.Forms.Padding(2, 0, 0, 0)
+		Me.mercosur.Name = "mercosur"
+		Me.mercosur.Size = New System.Drawing.Size(97, 30)
+		Me.mercosur.TabIndex = 467
+		Me.mercosur.TabStop = True
+		Me.mercosur.Text = "Mercosur"
+		Me.mercosur.UseVisualStyleBackColor = True
 		'
 		'Label1
 		'
@@ -430,7 +431,7 @@ Partial Class ModCombustibleReceptor
 		Me.modelo.Maximum = New Decimal(New Integer() {2100, 0, 0, 0})
 		Me.modelo.Minimum = New Decimal(New Integer() {1900, 0, 0, 0})
 		Me.modelo.Name = "modelo"
-		Me.modelo.Size = New System.Drawing.Size(80, 27)
+		Me.modelo.Size = New System.Drawing.Size(98, 27)
 		Me.modelo.TabIndex = 482
 		Me.modelo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
 		Me.modelo.Value = New Decimal(New Integer() {1900, 0, 0, 0})
@@ -438,7 +439,7 @@ Partial Class ModCombustibleReceptor
 		'Label12
 		'
 		Me.Label12.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.Label12.Location = New System.Drawing.Point(198, 209)
+		Me.Label12.Location = New System.Drawing.Point(216, 209)
 		Me.Label12.Margin = New System.Windows.Forms.Padding(4, 5, 0, 0)
 		Me.Label12.Name = "Label12"
 		Me.Label12.Size = New System.Drawing.Size(172, 21)

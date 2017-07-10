@@ -183,6 +183,12 @@
     <Compile Include="env\CtrlMan.vb" />
     <Compile Include="env\DbMan.vb" />
     <Compile Include="env\FileMan.vb" />
+    <Compile Include="env\genericForms\genVisorDtab.Designer.vb">
+      <DependentUpon>genVisorDtab.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\genericForms\genVisorDtab.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="env\genericForms\ModDialogGen.Designer.vb">
       <DependentUpon>ModDialogGen.vb</DependentUpon>
     </Compile>
@@ -283,10 +289,10 @@
     </Compile>
     <Compile Include="hacienda\Hacienda.vb" />
     <Compile Include="hacienda\CuentaAgrupada\hac_contrib.vb" />
-    <Compile Include="acceso.designer.vb">
+    <Compile Include="env\acceso.designer.vb">
       <DependentUpon>acceso.vb</DependentUpon>
     </Compile>
-    <Compile Include="acceso.vb">
+    <Compile Include="env\acceso.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="catastro\ConsultaCatastro.Designer.vb">
@@ -295,10 +301,10 @@
     <Compile Include="catastro\ConsultaCatastro.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="launcher.designer.vb">
+    <Compile Include="env\launcher.designer.vb">
       <DependentUpon>launcher.vb</DependentUpon>
     </Compile>
-    <Compile Include="launcher.vb">
+    <Compile Include="env\launcher.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="catastro\Catastro.vb" />
@@ -453,7 +459,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="persona\Persona.vb" />
-    <Compile Include="Settings.vb" />
+    <Compile Include="env\Settings.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="asocial\ModBeneficiario.resx">
@@ -468,8 +474,11 @@
     <EmbeddedResource Include="catastro\AgregarFrente.resx">
       <DependentUpon>AgregarFrente.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="acceso.resx">
+    <EmbeddedResource Include="env\acceso.resx">
       <DependentUpon>acceso.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\genericForms\genVisorDtab.resx">
+      <DependentUpon>genVisorDtab.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="env\genericForms\ModDialogGen.resx">
       <DependentUpon>ModDialogGen.vb</DependentUpon>
@@ -610,7 +619,7 @@
       <DependentUpon>config.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="launcher.resx">
+    <EmbeddedResource Include="env\launcher.resx">
       <DependentUpon>launcher.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="env\visor_error.resx">

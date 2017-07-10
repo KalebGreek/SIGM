@@ -6,9 +6,9 @@
 	End Sub
 
 	'###### FILTROS  ##########################################################################################
-	Private Sub FiltroCuenta_CheckedChanged(sender As Object, e As EventArgs) Handles FiltroCuenta.CheckedChanged,
-																					  FiltroCategoria.CheckedChanged,
-																					  FiltroReceptor.CheckedChanged
+	Private Sub Filtros_CheckedChanged(sender As Object, e As EventArgs) Handles FiltroCuenta.CheckedChanged,
+																				  FiltroCategoria.CheckedChanged,
+																				  FiltroReceptor.CheckedChanged
 
 		If Me.Visible Then
 			cuenta.Enabled = FiltroCuenta.Checked
@@ -16,9 +16,11 @@
 			vehiculo.Enabled = FiltroCategoria.Checked
 			receptor.Enabled = FiltroReceptor.Checked
 
-			Hacienda.FillCuenta(bs_cuenta, cuenta)
+			Hacienda.FillCuentasHacienda(bs_cuenta, cuenta, 2, "9", "1", "1", "2", "01")
 
 			Combustible.Receptor.FillCategory(bs_categoria, categoria, vehiculo.Checked)
+
+
 		End If
 	End Sub
 
@@ -28,8 +30,8 @@
 		End If
 	End Sub
 
-	Private Sub bs_categoria_PositionChanged(sender As Object, e As EventArgs) Handles bs_categoria.PositionChanged, bs_cuenta.PositionChanged,
-																					   bs_categoria.CurrentChanged, bs_cuenta.CurrentChanged
+	Private Sub bs_filtro_PositionChanged(sender As Object, e As EventArgs) Handles bs_categoria.PositionChanged, bs_cuenta.PositionChanged,
+																					bs_categoria.CurrentChanged, bs_cuenta.CurrentChanged
 		If Me.Visible Then
 			FillReceptor()
 		End If
