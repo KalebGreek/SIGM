@@ -38,22 +38,25 @@ Partial Class BusquedaExpediente
 		Me.resultado.BorderStyle = System.Windows.Forms.BorderStyle.None
 		Me.resultado.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
 		Me.resultado.Dock = System.Windows.Forms.DockStyle.Fill
-		Me.resultado.Location = New System.Drawing.Point(0, 32)
+		Me.resultado.Location = New System.Drawing.Point(0, 33)
 		Me.resultado.Margin = New System.Windows.Forms.Padding(0)
 		Me.resultado.Name = "resultado"
 		Me.resultado.ReadOnly = True
 		Me.resultado.RowHeadersVisible = False
 		Me.resultado.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-		Me.resultado.Size = New System.Drawing.Size(659, 289)
+		Me.resultado.Size = New System.Drawing.Size(659, 288)
 		Me.resultado.TabIndex = 367
 		'
 		'ControlBusqueda1
 		'
+		Me.ControlBusqueda1.BackColor = System.Drawing.Color.DarkGray
 		Me.ControlBusqueda1.Dock = System.Windows.Forms.DockStyle.Top
+		Me.ControlBusqueda1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.ControlBusqueda1.Location = New System.Drawing.Point(0, 0)
 		Me.ControlBusqueda1.Margin = New System.Windows.Forms.Padding(0)
+		Me.ControlBusqueda1.MinimumSize = New System.Drawing.Size(520, 33)
 		Me.ControlBusqueda1.Name = "ControlBusqueda1"
-		Me.ControlBusqueda1.Size = New System.Drawing.Size(659, 32)
+		Me.ControlBusqueda1.Size = New System.Drawing.Size(659, 33)
 		Me.ControlBusqueda1.TabIndex = 368
 		'
 		'BusquedaExpediente

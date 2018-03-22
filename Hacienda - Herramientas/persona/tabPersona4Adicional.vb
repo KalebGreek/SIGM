@@ -5,8 +5,67 @@
 		InitializeComponent()
 
 		' Add any initialization after the InitializeComponent() call.
+		'Proveedor
+		bs_responsable_iva.DataSource = DbMan.read("SELECT * FROM responsable_iva ORDER BY descripcion")
+		CtrlMan.Fill.AutoComplete(bs_responsable_iva, responsable_iva, "descripcion", "id")
+		bs_actividad.DataSource = DbMan.read("SELECT * FROM prov_actividad ORDER BY actividad")
+		CtrlMan.Fill.AutoComplete(bs_actividad, actividad, "actividad", "id")
+		'Profesional
+		bs_titulo.DataSource = DbMan.read("SELECT * FROM profesional_titulo ORDER BY descripcion")
+		CtrlMan.Fill.AutoComplete(bs_titulo, titulo, "descripcion", "id")
 	End Sub
-	'GUI
+
+	'FUNCIONES
+	Public Function cargar(id As Integer) As Boolean
+		If id > 0 Then
+			Dim dtab As DataTable = DbMan.read("SELECT id as persona_id,
+													   difunto, ruta_defuncion, fisica
+												  FROM persona WHERE id=" & id)
+			CtrlMan.LoadAllControls(dtab(0), Me)
+			difunto.Enabled = dtab(0)("fisica")
+			If difunto.Enabled = False Then
+				difunto.Checked = False
+				ruta_defuncion.Text = ""
+			End If
+
+			dtab = Proveedor.Seleccionar(proveedor_id.Text, id)
+			EsProveedor.Checked = dtab.Rows.Count > 0
+			If dtab.Rows.Count > 0 Then
+				CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel2)
+			End If
+
+			dtab = Profesional.Seleccionar(profesional_id.Text, id)
+			EsProfesional.Checked = dtab.Rows.Count > 0
+			If dtab.Rows.Count > 0 Then
+				CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel1)
+			End If
+		End If
+		Return True
+	End Function
+
+	Public Function guardar(persona_id As Integer) As Boolean
+		If CtrlMan.Validate(Me) Then
+			'Difunto
+			DbMan.edit("UPDATE persona SET difunto=" & difunto.Checked & ", 
+											   ruta_defuncion='" & ruta_defuncion.Text & "'
+										 WHERE id=" & persona_id)
+			'Proveedor
+			If EsProveedor.Checked Then
+				proveedor_id.Text = Proveedor.guardar(proveedor_id.Text, persona_id, actividad.SelectedValue, responsable_iva.SelectedValue)
+			Else
+				proveedor_id.Text = Proveedor.eliminar(persona_id)
+			End If
+			'Profesional
+			If EsProfesional.Checked Then
+				profesional_id.Text = Profesional.guardar(profesional_id.Text, persona_id, titulo.SelectedValue, matricula.Text)
+			Else
+				profesional_id.Text = Profesional.eliminar(persona_id)
+			End If
+		End If
+		Return True
+	End Function
+
+	'Eventos
 	Private Sub esProveedor_CheckedChanged(sender As Object, e As EventArgs) Handles EsProveedor.CheckedChanged, difunto.CheckedChanged, EsProfesional.CheckedChanged
 		responsable_iva.Visible = EsProveedor.Checked
 		et_act.Visible = EsProveedor.Checked
@@ -92,64 +151,6 @@
 
 
 
-	'FUNCIONES
-	Public Function cargar(id As Integer) As Boolean
-		'Proveedor
-		bs_responsable_iva.DataSource = DbMan.read("SELECT * FROM responsable_iva ORDER BY descripcion")
-		CtrlMan.Fill.AutoComplete(bs_responsable_iva, responsable_iva, "descripcion", "id")
-		bs_actividad.DataSource = DbMan.read("SELECT * FROM prov_actividad ORDER BY actividad")
-		CtrlMan.Fill.AutoComplete(bs_actividad, actividad, "actividad", "id")
-		'Profesional
-		bs_titulo.DataSource = DbMan.read("SELECT * FROM profesional_titulo ORDER BY descripcion")
-		CtrlMan.Fill.AutoComplete(bs_titulo, titulo, "descripcion", "id")
-
-		If id > 0 Then
-			Dim dtab As DataTable = DbMan.read("SELECT id as persona_id,
-													   difunto, ruta_defuncion, fisica
-												  FROM persona WHERE id=" & id)
-			CtrlMan.LoadAllControls(dtab(0), Me)
-			difunto.Enabled = dtab(0)("fisica")
-			If difunto.Enabled = False Then
-				difunto.Checked = False
-				ruta_defuncion.Text = ""
-			End If
-
-			dtab = Proveedor.Seleccionar(proveedor_id.Text, id)
-			EsProveedor.Checked = dtab.Rows.Count > 0
-			If dtab.Rows.Count > 0 Then
-				CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel2)
-			End If
-
-			dtab = Profesional.Seleccionar(profesional_id.Text, id)
-			EsProfesional.Checked = dtab.Rows.Count > 0
-			If dtab.Rows.Count > 0 Then
-				CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel1)
-			End If
-		End If
-		Return True
-	End Function
-
-	Public Function guardar(persona_id As Integer) As Boolean
-		If CtrlMan.Validate(Me) Then
-			'Difunto
-			DbMan.edit("UPDATE persona SET difunto=" & difunto.Checked & ", 
-											   ruta_defuncion='" & ruta_defuncion.Text & "'
-										 WHERE id=" & persona_id)
-			'Proveedor
-			If EsProveedor.Checked Then
-				proveedor_id.Text = Proveedor.guardar(proveedor_id.Text, persona_id, actividad.SelectedValue, responsable_iva.SelectedValue)
-			Else
-				proveedor_id.Text = Proveedor.eliminar(persona_id)
-			End If
-			'Profesional
-			If EsProfesional.Checked Then
-				profesional_id.Text = Profesional.guardar(profesional_id.Text, persona_id, titulo.SelectedValue, matricula.Text)
-			Else
-				profesional_id.Text = Profesional.eliminar(persona_id)
-			End If
-		End If
-		Return True
-	End Function
 
 
 End Class

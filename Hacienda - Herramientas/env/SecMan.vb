@@ -1,13 +1,11 @@
 ﻿Imports System.Net.NetworkInformation
-Public Class SecMan
+Public Class SecMan 'Security Manager
 	'###### SEGURIDAD
 	'Funciones de inicio de sesion
 	Shared Function validar_inicio(user As String, pass As String) As Integer
 		If Len(user) >= 5 And Len(pass) >= 5 Then
-			Dim dtab As DataTable = DbMan.read(
-											"SELECT id, usuario, pass FROM usuarios" &
-											" WHERE usuario='" & user & "'" &
-											" AND pass ='" & pass & "'")
+			Dim dtab As DataTable = DbMan.read("SELECT id, usuario, pass FROM usuarios
+												 WHERE usuario='" & user & "' AND pass ='" & pass & "'")
 			If dtab Is Nothing Then
 				Return -1
 			Else
@@ -27,40 +25,45 @@ Public Class SecMan
 		Dim equipo As String = Environment.MachineName
         'Últimos accesos
         Dim dtab As DataTable = DbMan.read("SELECT id, fecha_hora, user_id, token, equipo, sesion 
-                                                                FROM usr_log
-                                                                WHERE user_id=" & user_id & " ORDER BY id DESC")
+                                              FROM usr_log
+                                             WHERE user_id=" & user_id & " ORDER BY id DESC")
 
-		If dtab.Rows.Count > 0 Then
-			If dtab(0)("sesion") Then
-				If dtab(0)("token").ToString = token Then
-					If lock Then 'Actualizar a último accceso 
-                        DbMan.edit("UPDATE usr_log SET fecha_hora='" & fecha_hora & "', sesion=True
-                                                        WHERE id=" & dtab(0)("id"))
-					Else
-						DbMan.edit("UPDATE usr_log SET sesion=False WHERE user_id=" & user_id)
+
+		If lock Then 'Iniciar sesion
+			If dtab.Rows.Count > 0 Then
+				If dtab(0)("token").ToString = token Then 'Sesion iniciada en este equipo
+					If dtab(0)("sesion") Then
+						'Sin cambios
+					ElseIf dtab(0)("sesion") = False Then 'Agregar registro a historial
+						DbMan.edit("INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)
+										 VALUES(" & user_id & ", '" & fecha_hora & "' ,
+												'" & token & "', '" & equipo & "', " & lock & ")")
 					End If
+				ElseIf dtab(0)("token").ToString <> token Then  'Sesión iniciada en otro equipo
+					If MsgBoxResult.Yes = MsgBox("Sesion abierta en " & dtab(0)("equipo") & ". Presione SI para continuar, NO para salir",
+												  MsgBoxStyle.YesNo, "Sesion iniciada en otro equipo") Then
 
-				ElseIf dtab(0)("token").ToString <> token Then
-                    'Sesión iniciada en otro equipo
-                    If MsgBoxResult.Yes = MsgBox("Sesion abierta en " & dtab(0)("equipo") & "." &
-												 " Presione SI para continuar, NO para salir", MsgBoxStyle.YesNo,
-												 " Sesion iniciada en otro equipo") Then
-                        'Sesión iniciada en este equipo, cerrar sesión de accesos anteriores
-                        DbMan.edit("UPDATE usr_log SET sesion=False WHERE user_id=" & user_id)
-					Else
+						'Iniciar sesion en este equipo, cerrar sesión de accesos anteriores
+						DbMan.edit("UPDATE usr_log Set sesion=False WHERE user_id=" & user_id)
+
+						DbMan.edit("INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)
+											     VALUES(" & user_id & ", '" & fecha_hora & "' ,
+														'" & token & "', '" & equipo & "', " & lock & ")")
+
+					Else 'No iniciar sesion en este equipo
 						Return False
 					End If
 				End If
-			ElseIf dtab(0)("sesion") = False Then 'Agregar registro a historial
-                DbMan.edit("INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
-								   " VALUES(" & user_id & ", '" & fecha_hora & "' ," &
-								   " '" & token & "', '" & equipo & "', True)")
-			End If
-		ElseIf dtab.Rows.Count = 0 Then
-			DbMan.edit("INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
+
+			ElseIf dtab.Rows.Count = 0 Then 'No hay registros de inicio de sesion
+				DbMan.edit("INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
 								  " VALUES(" & user_id & ", '" & fecha_hora & "' ," &
 								  " '" & token & "', '" & equipo & "', True)")
+			End If
+		Else 'Cerrar sesion correctamente
+			DbMan.edit("UPDATE usr_log SET sesion=" & lock & " WHERE user_id=" & user_id)
 		End If
+
 		Return True
 	End Function
 	Shared Function permisos(user_id As Integer)

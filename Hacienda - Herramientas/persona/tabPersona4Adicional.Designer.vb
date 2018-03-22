@@ -94,7 +94,6 @@ Partial Class tabPersona4Adicional
 		Me.titulo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
 		Me.titulo.Font = New System.Drawing.Font("PF DinText Pro", 12.0!)
 		Me.titulo.FormattingEnabled = True
-		Me.titulo.Items.AddRange(New Object() {"IVA Responsable Inscripto", "IVA Responsable no Inscripto", "IVA no Responsable", "IVA Sujeto Exento", "Consumidor Final", "Responsable Monotributo", "Sujeto no Categorizado", "Proveedor del Exterior", "Cliente del Exterior", "IVA Liberado, Ley Nº 19.640", "IVA Resp. Insc., Agente de Percepción", "Pequeño Contribuyente Eventual", "Monotributista Social", "Pequeño Contribuyente Eventual Social"})
 		Me.titulo.Location = New System.Drawing.Point(106, 0)
 		Me.titulo.Margin = New System.Windows.Forms.Padding(3, 0, 0, 0)
 		Me.titulo.Name = "titulo"
@@ -254,7 +253,6 @@ Partial Class tabPersona4Adicional
 		Me.actividad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
 		Me.actividad.Font = New System.Drawing.Font("PF DinText Pro", 12.0!)
 		Me.actividad.FormattingEnabled = True
-		Me.actividad.Items.AddRange(New Object() {"IVA Responsable Inscripto", "IVA Responsable no Inscripto", "IVA no Responsable", "IVA Sujeto Exento", "Consumidor Final", "Responsable Monotributo", "Sujeto no Categorizado", "Proveedor del Exterior", "Cliente del Exterior", "IVA Liberado, Ley Nº 19.640", "IVA Resp. Insc., Agente de Percepción", "Pequeño Contribuyente Eventual", "Monotributista Social", "Pequeño Contribuyente Eventual Social"})
 		Me.actividad.Location = New System.Drawing.Point(106, 30)
 		Me.actividad.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
 		Me.actividad.Name = "actividad"

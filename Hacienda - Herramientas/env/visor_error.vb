@@ -6,4 +6,12 @@
         Me.Text = titulo
         visor.DataSource = contenido
     End Sub
+
+	Private Sub cancel_Click(sender As Object, e As EventArgs) Handles cancel.Click
+		Me.DialogResult = DialogResult.Cancel
+	End Sub
+
+	Private Sub continuar_Click(sender As Object, e As EventArgs) Handles continuar.Click
+		Me.DialogResult = DialogResult.Ignore
+	End Sub
 End Class

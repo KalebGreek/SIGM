@@ -415,14 +415,14 @@ Partial Class MainForm
 		'
 		Me.NuevaNotaDePedidoToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
 		Me.NuevaNotaDePedidoToolStripMenuItem.Name = "NuevaNotaDePedidoToolStripMenuItem"
-		Me.NuevaNotaDePedidoToolStripMenuItem.Size = New System.Drawing.Size(152, 24)
+		Me.NuevaNotaDePedidoToolStripMenuItem.Size = New System.Drawing.Size(127, 24)
 		Me.NuevaNotaDePedidoToolStripMenuItem.Text = "Nueva.."
 		'
 		'BuscarNotaDePedidoToolStripMenuItem
 		'
 		Me.BuscarNotaDePedidoToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
 		Me.BuscarNotaDePedidoToolStripMenuItem.Name = "BuscarNotaDePedidoToolStripMenuItem"
-		Me.BuscarNotaDePedidoToolStripMenuItem.Size = New System.Drawing.Size(152, 24)
+		Me.BuscarNotaDePedidoToolStripMenuItem.Size = New System.Drawing.Size(127, 24)
 		Me.BuscarNotaDePedidoToolStripMenuItem.Text = "Buscar.."
 		'
 		'personaMenu
@@ -479,19 +479,18 @@ Partial Class MainForm
 		Me.SalirToolStripMenuItem.Size = New System.Drawing.Size(43, 23)
 		Me.SalirToolStripMenuItem.Text = "Salir"
 		'
-		'MainFormGen
+		'MainForm
 		'
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
 		Me.ClientSize = New System.Drawing.Size(990, 437)
 		Me.Controls.Add(Me.StatusStrip1)
 		Me.Controls.Add(Me.BaseMenu)
 		Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
 		Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
 		Me.IsMdiContainer = True
 		Me.Margin = New System.Windows.Forms.Padding(4)
 		Me.MinimumSize = New System.Drawing.Size(625, 425)
-		Me.Name = "MainFormGen"
+		Me.Name = "MainForm"
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
 		Me.Text = "SIGM"
 		Me.WindowState = System.Windows.Forms.FormWindowState.Maximized

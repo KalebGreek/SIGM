@@ -89,8 +89,8 @@
             With tipo.Text
                 If tipo.Text.Contains("AGUA") Then
 					parametros = ParamReporte.Agua(registro(0), parametros)
-					Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HAC\LAG", parametros, False)
-                    certificado.ShowDialog()
+					Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HACIENDA\FORMS\LAG", parametros, False)
+					certificado.ShowDialog()
                 ElseIf tipo.Text.Contains("AUTO") Then
 					parametros = ParamReporte.Automotor(registro(0), parametros, SinBaja.Checked)
 
@@ -104,20 +104,20 @@
                     End If
 
                     parametros = ParamReporte.LibreDeuda.DetalleAuto(parametros, OpcionBaja, FechaBaja)
-                    Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HAC\LAU", parametros, False)
-                        certificado.ShowDialog()
+					Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HACIENDA\FORMS\LAU", parametros, False)
+					certificado.ShowDialog()
                     ElseIf tipo.Text.Contains("CATA") Then
 					parametros = ParamReporte.Catastro(registro(0), parametros)
-					Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HAC\LCA", parametros, False)
-                        certificado.ShowDialog()
+					Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HACIENDA\FORMS\LCA", parametros, False)
+					certificado.ShowDialog()
                     ElseIf tipo.Text.Contains("CEME") Then
 					parametros = ParamReporte.Cementerio(registro(0), parametros)
-					Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HAC\LCE", parametros, False)
-                        certificado.ShowDialog()
+					Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HACIENDA\FORMS\LCE", parametros, False)
+					certificado.ShowDialog()
                     ElseIf tipo.Text.Contains("COME") Then
 					parametros = ParamReporte.Comercio(registro(0), parametros)
-					Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HAC\LCO", parametros, False)
-                    certificado.ShowDialog()
+					Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HACIENDA\FORMS\LCO", parametros, False)
+					certificado.ShowDialog()
                 End If
             End With
 

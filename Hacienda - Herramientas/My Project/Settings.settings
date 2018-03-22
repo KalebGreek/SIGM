@@ -43,25 +43,25 @@
       <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.12.0;Data Source=vrosas.accdb</Value>
     </Setting>
     <Setting Name="DocFolderHacienda" Type="System.String" Scope="User">
-      <Value Profile="(Default)">HACIENDA\</Value>
+      <Value Profile="(Default)">\HACIENDA\</Value>
     </Setting>
     <Setting Name="DocFolderCatastro" Type="System.String" Scope="User">
-      <Value Profile="(Default)">CATASTRO\</Value>
+      <Value Profile="(Default)">\CATASTRO\</Value>
     </Setting>
     <Setting Name="DocFolderComercio" Type="System.String" Scope="User">
-      <Value Profile="(Default)">COMERCIO\</Value>
+      <Value Profile="(Default)">\COMERCIO\</Value>
     </Setting>
     <Setting Name="DocFolderOprivadas" Type="System.String" Scope="User">
-      <Value Profile="(Default)">OPRIVADAS\</Value>
+      <Value Profile="(Default)">\OPRIVADAS\</Value>
     </Setting>
     <Setting Name="DocFolderGobierno" Type="System.String" Scope="User">
-      <Value Profile="(Default)">GOBIERNO\</Value>
+      <Value Profile="(Default)">\GOBIERNO\</Value>
     </Setting>
     <Setting Name="DocFolderOrdenanza" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ORDENANZAS</Value>
+      <Value Profile="(Default)">\ORDENANZAS\</Value>
     </Setting>
     <Setting Name="DocFolderPersona" Type="System.String" Scope="User">
-      <Value Profile="(Default)">PERSONA\</Value>
+      <Value Profile="(Default)">\PERSONA\</Value>
     </Setting>
     <Setting Name="UserId" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>

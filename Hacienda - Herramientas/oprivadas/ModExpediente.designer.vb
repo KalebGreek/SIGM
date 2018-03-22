@@ -115,9 +115,9 @@ Partial Class ModExpediente
 		Me.temporal = New System.Windows.Forms.ToolStripStatusLabel()
 		Me.espacio = New System.Windows.Forms.ToolStripStatusLabel()
 		Me.opr_id = New System.Windows.Forms.ToolStripStatusLabel()
-		Me.prof_id = New System.Windows.Forms.ToolStripStatusLabel()
-		Me.responsable_id = New System.Windows.Forms.ToolStripStatusLabel()
 		Me.Help = New System.Windows.Forms.ToolTip(Me.components)
+		Me.profesional_id = New System.Windows.Forms.Label()
+		Me.titular_id = New System.Windows.Forms.Label()
 		Me.grupo_exp.SuspendLayout()
 		Me.tab_persona.SuspendLayout()
 		Me.page_pers.SuspendLayout()
@@ -249,6 +249,7 @@ Partial Class ModExpediente
 		'
 		'Panel4
 		'
+		Me.Panel4.Controls.Add(Me.titular_id)
 		Me.Panel4.Controls.Add(Me.del_resp)
 		Me.Panel4.Controls.Add(Me.add_resp)
 		Me.Panel4.Dock = System.Windows.Forms.DockStyle.Right
@@ -300,6 +301,7 @@ Partial Class ModExpediente
 		'
 		'Panel3
 		'
+		Me.Panel3.Controls.Add(Me.profesional_id)
 		Me.Panel3.Controls.Add(Me.titulo)
 		Me.Panel3.Controls.Add(Me.Label4)
 		Me.Panel3.Controls.Add(Me.Panel6)
@@ -1128,7 +1130,7 @@ Partial Class ModExpediente
 		'
 		Me.estado.BackColor = System.Drawing.Color.Silver
 		Me.estado.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.estado.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel4, Me.expediente, Me.temporal, Me.espacio, Me.opr_id, Me.prof_id, Me.responsable_id})
+		Me.estado.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel4, Me.expediente, Me.temporal, Me.espacio, Me.opr_id})
 		Me.estado.Location = New System.Drawing.Point(0, 362)
 		Me.estado.Name = "estado"
 		Me.estado.Size = New System.Drawing.Size(609, 24)
@@ -1177,7 +1179,7 @@ Partial Class ModExpediente
 		'espacio
 		'
 		Me.espacio.Name = "espacio"
-		Me.espacio.Size = New System.Drawing.Size(323, 19)
+		Me.espacio.Size = New System.Drawing.Size(456, 19)
 		Me.espacio.Spring = True
 		Me.espacio.Text = " "
 		'
@@ -1192,27 +1194,27 @@ Partial Class ModExpediente
 		Me.opr_id.Text = "0"
 		Me.opr_id.VisitedLinkColor = System.Drawing.Color.Black
 		'
-		'prof_id
+		'profesional_id
 		'
-		Me.prof_id.ActiveLinkColor = System.Drawing.Color.Black
-		Me.prof_id.BackColor = System.Drawing.Color.Transparent
-		Me.prof_id.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-		Me.prof_id.LinkColor = System.Drawing.Color.Black
-		Me.prof_id.Name = "prof_id"
-		Me.prof_id.Size = New System.Drawing.Size(17, 19)
-		Me.prof_id.Text = "0"
-		Me.prof_id.VisitedLinkColor = System.Drawing.Color.Black
+		Me.profesional_id.AutoSize = True
+		Me.profesional_id.BackColor = System.Drawing.Color.CadetBlue
+		Me.profesional_id.Location = New System.Drawing.Point(3, 79)
+		Me.profesional_id.Name = "profesional_id"
+		Me.profesional_id.Size = New System.Drawing.Size(17, 19)
+		Me.profesional_id.TabIndex = 352
+		Me.profesional_id.Text = "0"
+		Me.profesional_id.Visible = False
 		'
-		'responsable_id
+		'titular_id
 		'
-		Me.responsable_id.ActiveLinkColor = System.Drawing.Color.Black
-		Me.responsable_id.BackColor = System.Drawing.Color.Transparent
-		Me.responsable_id.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-		Me.responsable_id.LinkColor = System.Drawing.Color.Black
-		Me.responsable_id.Name = "responsable_id"
-		Me.responsable_id.Size = New System.Drawing.Size(17, 19)
-		Me.responsable_id.Text = "0"
-		Me.responsable_id.VisitedLinkColor = System.Drawing.Color.Black
+		Me.titular_id.AutoSize = True
+		Me.titular_id.BackColor = System.Drawing.Color.LightSeaGreen
+		Me.titular_id.Location = New System.Drawing.Point(42, 78)
+		Me.titular_id.Name = "titular_id"
+		Me.titular_id.Size = New System.Drawing.Size(17, 19)
+		Me.titular_id.TabIndex = 353
+		Me.titular_id.Text = "0"
+		Me.titular_id.Visible = False
 		'
 		'ModExpediente
 		'
@@ -1235,6 +1237,7 @@ Partial Class ModExpediente
 		Me.page_pers.ResumeLayout(False)
 		CType(Me.consulta_resp, System.ComponentModel.ISupportInitialize).EndInit()
 		Me.Panel4.ResumeLayout(False)
+		Me.Panel4.PerformLayout()
 		Me.Panel3.ResumeLayout(False)
 		Me.Panel3.PerformLayout()
 		Me.Panel6.ResumeLayout(False)
@@ -1344,15 +1347,15 @@ Partial Class ModExpediente
     Friend WithEvents info_ubicacion As System.Windows.Forms.Label
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents Label16 As System.Windows.Forms.Label
-    Friend WithEvents prof_id As System.Windows.Forms.ToolStripStatusLabel
-    Friend WithEvents responsable_id As System.Windows.Forms.ToolStripStatusLabel
-    Friend WithEvents Label29 As System.Windows.Forms.Label
-    Friend WithEvents CaratulaToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents CopiaDeExpedienteToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents del_inmueble As Button
-    Friend WithEvents titulo As TextBox
-    Friend WithEvents Label4 As Label
-    Friend WithEvents observaciones As TextBox
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Help As ToolTip
+	Friend WithEvents Label29 As System.Windows.Forms.Label
+	Friend WithEvents CaratulaToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents CopiaDeExpedienteToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents del_inmueble As Button
+	Friend WithEvents titulo As TextBox
+	Friend WithEvents Label4 As Label
+	Friend WithEvents observaciones As TextBox
+	Friend WithEvents Label1 As Label
+	Friend WithEvents Help As ToolTip
+	Friend WithEvents profesional_id As Label
+	Friend WithEvents titular_id As Label
 End Class

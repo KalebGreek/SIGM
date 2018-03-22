@@ -1,4 +1,4 @@
-﻿Module DbMan
+﻿Module DbMan 'Database Manager
     'Muestra ultimo comando SQL ejecutado
     Public last_sql As String = ""
 
@@ -40,7 +40,6 @@
 		Return sql
 	End Function
 
-
 	Function readTables(Optional constr As String = "") As DataTable
 		If constr = "" Then
 			constr = My.Settings.DefaultCon
@@ -53,20 +52,44 @@
 		olecon.Close()
 		Return schemaTable
 	End Function
-	Function read(ByVal sql As String, Optional constr As String = Nothing,
+	Function read(ByVal sqlSelect As String, Optional constr As String = Nothing,
+				  Optional sqlFrom As String = "", Optional sqlWhere As String = "",
+				  Optional sqlGroupBy As String = "", Optional sqlHaving As String = "",
+				  Optional sqlOrderBy As String = "",
 				  Optional OleDBProcedure As OleDb.OleDbCommand = Nothing)
 
 		Dim dtab As New DataTable
+		Dim errorMsg As String = ""
 
 		'Crear adaptador de datos
 		Dim dada As New OleDb.OleDbDataAdapter
 
-		If sql = "" Then
+		If sqlSelect = "" Then
 			OleDBProcedure.CommandType = CommandType.StoredProcedure
 		Else
 			OleDBProcedure = New OleDb.OleDbCommand
 			OleDBProcedure.CommandType = CommandType.Text
-			OleDBProcedure.CommandText = sql
+			OleDBProcedure.CommandText = sqlSelect
+			'Additional query options
+			If sqlFrom <> "" And sqlFrom.Contains("FROM") Then
+				OleDBProcedure.CommandText &= " " & sqlFrom
+				If sqlWhere <> "" And sqlWhere.Contains("WHERE") Then
+					OleDBProcedure.CommandText &= " " & sqlWhere
+				End If
+				If sqlGroupBy <> "" And sqlGroupBy.Contains("GROUP BY") Then
+					OleDBProcedure.CommandText &= " " & sqlGroupBy
+					If sqlHaving <> "" And sqlHaving.Contains("HAVING") Then
+						OleDBProcedure.CommandText &= " " & sqlHaving
+					End If
+				End If
+				If sqlOrderBy <> "" And sqlOrderBy.Contains("ORDER BY") Then
+					OleDBProcedure.CommandText &= " " & sqlOrderBy
+				End If
+			End If
+				'Close the query properly
+				If Right(OleDBProcedure.CommandText, 1) <> ";" Then
+				OleDBProcedure.CommandText &= ";"
+			End If
 		End If
 		dada.SelectCommand = OleDBProcedure
 
@@ -88,23 +111,34 @@
             'Abrir conexion
             Try
 				olecon.Open()
-			Catch ex As System.Data.OleDb.OleDbException
-				MsgBox("La ruta de acceso a la base de datos es incorrecta.", MsgBoxStyle.Critical)
+			Catch ex As OleDb.OleDbException
+				errorMsg = "La ruta de acceso a la base de datos es incorrecta."
 
 			End Try
             'Comandos
             Try
 				dada.Fill(dtab)
-			Catch ex As System.Data.OleDb.OleDbException
-				MsgBox("No se encuentra la tabla indicada." & Chr(13) & "Detalles:" & ex.Message.ToString & Chr(13) & "Conexion:" & olecon.ToString, MsgBoxStyle.Exclamation)
-				Return Nothing
+
+			Catch ex As OleDb.OleDbException
+				errorMsg = "No se encuentra la tabla indicada." & Chr(13) & "Detalles:" & ex.Message.ToString
+			Catch ex As System.InvalidOperationException
+				errorMsg = "Uno de los campos de la consulta contiene datos invalidos." & Chr(13) & "Detalles:" & ex.Message.ToString
+			Finally
+				olecon.Close()
+				dada.Dispose()
 			End Try
-			olecon.Close()
-			dada.Dispose()
-			last_sql = sql
-			Return dtab
+
+			last_sql = OleDBProcedure.CommandText
+
+			If errorMsg <> "" Then
+				errorMsg &= Chr(13) & "Conexion:" & olecon.ToString
+				MsgBox(errorMsg, MsgBoxStyle.Exclamation)
+				Return Nothing
+			Else
+				Return dtab
+			End If
 		Else
-			MsgBox("Datos insuficientes para realizar la consulta.", MsgBoxStyle.Exclamation)
+				MsgBox("Datos insuficientes para realizar la consulta.", MsgBoxStyle.Exclamation)
 			Return Nothing
 		End If
 

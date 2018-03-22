@@ -147,7 +147,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("HACIENDA\")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("\HACIENDA\")>  _
         Public Property DocFolderHacienda() As String
             Get
                 Return CType(Me("DocFolderHacienda"),String)
@@ -159,7 +159,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("CATASTRO\")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("\CATASTRO\")>  _
         Public Property DocFolderCatastro() As String
             Get
                 Return CType(Me("DocFolderCatastro"),String)
@@ -171,7 +171,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("COMERCIO\")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("\COMERCIO\")>  _
         Public Property DocFolderComercio() As String
             Get
                 Return CType(Me("DocFolderComercio"),String)
@@ -183,7 +183,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("OPRIVADAS\")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("\OPRIVADAS\")>  _
         Public Property DocFolderOprivadas() As String
             Get
                 Return CType(Me("DocFolderOprivadas"),String)
@@ -195,7 +195,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("GOBIERNO\")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("\GOBIERNO\")>  _
         Public Property DocFolderGobierno() As String
             Get
                 Return CType(Me("DocFolderGobierno"),String)
@@ -207,7 +207,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("ORDENANZAS")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("\ORDENANZAS\")>  _
         Public Property DocFolderOrdenanza() As String
             Get
                 Return CType(Me("DocFolderOrdenanza"),String)
@@ -219,7 +219,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("PERSONA\")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("\PERSONA\")>  _
         Public Property DocFolderPersona() As String
             Get
                 Return CType(Me("DocFolderPersona"),String)

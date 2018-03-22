@@ -31,6 +31,7 @@
 			Me.Hide()
 			form1.ShowDialog(Me)
 			form1.Dispose()
+			GC.Collect()
 			Me.Show()
 			Me.Focus()
 		End If

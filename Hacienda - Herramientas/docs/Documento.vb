@@ -7,13 +7,13 @@
 	Shared SQLGrouping As String = " ORDER BY fecha ASC"
 
 	Shared ultima_ubicacion As String = Environment.SpecialFolder.Desktop
-    'Public Shared My.Settings.DocFolderHacienda As String = "HACIENDA\"
-    'Public Shared My.Settings.DocFolderCatastro As String = "CATASTRO\"
-    'Public Shared folder_com As String = "COMERCIO\"
-    'Public Shared My.Settings.DocFolderOprivadas As String = "OPRIVADAS\"
-    'Public Shared folder_gob As String = "GOBIERNO\"
-    'Public Shared My.Settings.DocFolderOrdenanza As String = "ORDENANZAS\"
-    'Public Shared My.Settings.DocFolderPersona As String = "PERSONA\"
+    'My.Settings.DocFolderHacienda As String = "\HACIENDA\"
+    'My.Settings.DocFolderCatastro As String = "\CATASTRO\"
+    'folder_com As String = "\COMERCIO\"
+    'My.Settings.DocFolderOprivadas As String = "\OPRIVADAS\"
+    'folder_gob As String = "\GOBIERNO\"
+    'My.Settings.DocFolderOrdenanza As String = "\ORDENANZAS\"
+    'My.Settings.DocFolderPersona As String = "\PERSONA\"
 
     Public Class Persona
 		Shared Function BuscarDoc(persona_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
@@ -30,7 +30,7 @@
 			titulo = "Buscar Copia de DNI / CUIL | CUIL N° " & cuil
 			destino = "\copia_dni_" & FileMan.DateToFilename(Date.Now) & ".pdf"
             'Muestra diálogo de búsqueda
-            destino = Documento.Cargar(My.Settings.DocFolderPersona & cuil, destino, titulo)
+            destino = Documento.Cargar(My.Settings.DocFolderPersona & cuil, destino, titulo, True)
 			Return cuil & destino
 		End Function
 		Shared Function CopiaActa(ByVal persona_id As Integer, ByVal acta As String, ByVal libro As String) As String
@@ -47,7 +47,7 @@
 					titulo = "Buscar Acta N° " & acta & " del libro N°" & libro & " | CUIL N° " & dtab(0)("cuil")
 					destino = "\acta[" & acta & "]_libro[" & libro & "].pdf"
                     'Muestra diálogo de búsqueda
-                    destino = Cargar(My.Settings.DocFolderPersona & dtab(0)("cuil"), destino, titulo)
+                    destino = Cargar(My.Settings.DocFolderPersona & dtab(0)("cuil"), destino, titulo, True)
 					Return dtab(0)("cuil") & "\ACTAS" & destino
 				Else
 					MsgBox("Debe indicar número de acta y libro antes de continuar.")
@@ -62,7 +62,7 @@
 			titulo = "Buscar Certificado de Defuncion"
 			destino = "\defuncion_" & FileMan.DateToFilename(Date.Now) & ".pdf"
 			'Muestra diálogo de búsqueda
-			destino = Cargar(My.Settings.DocFolderPersona & persona_id, destino, titulo)
+			destino = Cargar(My.Settings.DocFolderPersona & persona_id, destino, titulo, True)
 			Return persona_id & destino
 		End Function
 	End Class
@@ -78,6 +78,7 @@
 			Return ConsultarHistorial(solo_ruta)
 		End Function
 		Shared Function CargarCopia(TipoArchivo As String, cat As String)
+			Dim ruta As String = ""
 			If Len(cat) > 0 Then 'Catastro
                 If TipoArchivo = "DONACION DE CALLE" Then
 					destino = "\donacion_calle"
@@ -104,40 +105,23 @@
 				titulo = "Buscar Copia de Escritura | Partida: " & cat
 
                 'Muestra diálogo de búsqueda
-                Cargar(My.Settings.DocFolderCatastro & cat, destino, titulo)
-
-				Return cat & destino
-			Else
-				Return MsgBox("Nro. de partida invalido")
+                If Cargar(My.Settings.DocFolderCatastro & cat, destino, titulo, False) Then
+					ruta = cat & destino
+				End If
 			End If
+			Return ruta
 		End Function
 	End Class
-	Public Class OPrivadas
-		Shared Function BuscarDoc(opr_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
-			SQLTable = " FROM opr_documento"
+	Public Class Comercio
+		Shared Function BuscarDoc(id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
+			SQLTable = " FROM com_documento"
 
-			SQLCriteria = " WHERE opr_id=" & opr_id
+			SQLCriteria = " WHERE com_id=" & id
 			If tipo_archivo <> "" Then
 				SQLCriteria += " AND descripcion='" & tipo_archivo & "'"
 			End If
 
 			Return ConsultarHistorial(solo_ruta)
-		End Function
-		Shared Function CargarCaratulaExp(exp As String) As String
-			destino = "\Caratula_" & FileMan.DateToFilename(Date.Now) & ".pdf"
-			titulo = "Buscar Caratula de Expediente | Expediente N° " & exp
-
-            'Muestra diálogo de búsqueda
-            destino = Cargar(My.Settings.DocFolderOprivadas & exp, destino, titulo)
-			Return exp & destino
-		End Function
-		Shared Function CargarFinalObra(exp As String) As String
-			destino = "\FinalObra_" & FileMan.DateToFilename(Date.Now) & ".pdf"
-			titulo = "Buscar copia de Final de Obra | Expediente N° " & exp
-
-            'Muestra diálogo de búsqueda
-            destino = Cargar(My.Settings.DocFolderOprivadas & exp, destino, titulo)
-			Return exp & destino
 		End Function
 	End Class
 	Public Class Gobierno
@@ -146,7 +130,7 @@
 				destino = "\CopiaOrdenanza_" & FileMan.DateToFilename(Date.Now) & ".pdf"
 				titulo = "Buscar Copia de Ordenanza N° " & Microsoft.VisualBasic.Left(codigo, Len(codigo.ToString) - 4) & "/" & Microsoft.VisualBasic.Right(codigo, 4)
                 'Muestra diálogo de búsqueda
-                destino = Cargar(My.Settings.DocFolderOrdenanza & codigo, destino, titulo)
+                destino = Cargar(My.Settings.DocFolderOrdenanza & codigo, destino, titulo, True)
 				Return codigo & destino
 			End If
 			Return "No se encuentra el archivo."
@@ -163,18 +147,31 @@
 			Return ConsultarHistorial(solo_ruta)
 		End Function
 	End Class
-	Public Class Comercio
-		Shared Function BuscarDoc(id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
-			SQLTable = " FROM com_documento"
+	Public Class OPrivadas
+		Shared Function BuscarDoc(opr_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
+			SQLTable = " FROM opr_documento"
 
-			SQLCriteria = " WHERE com_id=" & id
+			SQLCriteria = " WHERE opr_id=" & opr_id
 			If tipo_archivo <> "" Then
 				SQLCriteria += " AND descripcion='" & tipo_archivo & "'"
 			End If
 
 			Return ConsultarHistorial(solo_ruta)
 		End Function
+		Shared Function CargarFinalObra(opr_id As Integer, exp As String) As String
+			'Muestra diálogo de búsqueda
+			If Cargar(My.Settings.DocFolderOprivadas & exp, destino, titulo, False) Then
+				destino = "\FinalObra_" & FileMan.DateToFilename(Date.Now) & ".pdf"
+				titulo = "Buscar copia de Final de Obra | Expediente N° " & exp
+
+				Guardar(Date.Today, "FINAL DE OBRA", destino, "opr_documento", "opr_id", opr_id)
+				Return exp & destino
+			End If
+			Return ""
+		End Function
 	End Class
+
+
 
 	Private Shared Function ConsultarHistorial(RutaDoc As Boolean)
 		Dim dtab As DataTable = DbMan.read(SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
@@ -185,7 +182,7 @@
 			Return dtab
 		End If
 	End Function
-	Private Shared Function Cargar(carpeta_raiz As String, destino As String, titulo As String, Optional ventana As Form = Nothing) As String
+	Private Shared Function Cargar(carpeta_raiz As String, destino As String, titulo As String, return_path As Boolean) As Object
 		Dim accion As Integer
 		Dim load_dialog As New OpenFileDialog
 
@@ -196,21 +193,25 @@
 				System.IO.Directory.CreateDirectory(carpeta_raiz)
 			End If
 			If .DirectoryExists(ultima_ubicacion) = False Then
-				ultima_ubicacion = Environment.SpecialFolder.Desktop
+				ultima_ubicacion = Nothing
 			End If
 		End With
 
 		With load_dialog
 			.Title = titulo
 			.Filter = "Documento PDF|*.pdf"
-			.FileName = ""
-			.InitialDirectory = ultima_ubicacion
-			accion = .ShowDialog(ventana) 'Mostramos diálogo de carga de archivo
+			If ultima_ubicacion Is Nothing Then
+				.InitialDirectory = carpeta_raiz
+			Else
+				.InitialDirectory = ultima_ubicacion
+			End If
+			accion = .ShowDialog() 'Mostramos diálogo de carga de archivo
 
-            'Si es mayor a 4 caracteres (1.jpg) es váido
-            'Bajar todo a LCase para evitar problemas
-            'Puede que no sea necesario hacer backups acá con el sistema de versiones
-            If accion = 1 Then
+			'Si es mayor a 4 caracteres (1.jpg) es váido
+			'Bajar todo a LCase para evitar problemas
+			'Puede que no sea necesario hacer backups acá con el sistema de versiones
+
+			If accion = 1 Then
 				ultima_ubicacion = Microsoft.VisualBasic.Left(.FileName, Len(.FileName) - Len(.SafeFileName))
 				.FileName = LCase(load_dialog.FileName)
 				If Len(load_dialog.FileName) > 4 Then
@@ -225,17 +226,41 @@
 				Else
 					destino = ""
 				End If
+			Else
+				destino = ""
 			End If
 		End With
-		Return destino
+
+		If return_path Then
+			Return destino
+		Else
+			Return destino <> ""
+		End If
 	End Function
-	Shared Sub Guardar(registro As BindingSource, descripcion As String, tabla As String, col_id As String, id As Integer) 'Se usa solo al final cuando se guarda el expediente
-        With registro
-			For fila As Integer = 0 To .Count - 1
-				.Position = fila
+
+	Overloads Shared Sub Guardar(fecha As Date, descripcion As String, ruta As String, tabla As String, col_id As String, id As Integer)
+		'Guarda una ruta de documento en una tabla
+		'Todas las tablas de documentos deben contener las mismas columnas:
+		'FOO_ID, FECHA, DESCRIPCION, RUTA
+		Dim dtab As DataTable = DbMan.read("SELECT * FROM " & tabla & " WHERE " & col_id & "=" & id & " AND descripcion='" & descripcion & "'")
+
+		If dtab.Rows.Count > 0 Then
+			For Each dr As DataRow In dtab.Rows
+				DbMan.edit("UPDATE " & tabla & " SET fecha='" & fecha.ToShortDateString & "', ruta='" & ruta & "'
+							 WHERE " & col_id & "=" & id & " AND  descripcion='" & descripcion & "'")
+			Next
+		Else
+			DbMan.edit("INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)
+				VALUES(" & id & ", #" & fecha & "# ,'" & descripcion & "', '" & ruta & "')")
+		End If
+	End Sub
+	Overloads Shared Sub Guardar(lista As BindingSource, tabla As String, col_id As String, id As Integer)
+		'Guarda una lista de rutas de documento a una tabla
+		With lista
+			For Each dr As DataRow In lista.DataSource.Rows
 				DbMan.edit("INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)" &
-						  " VALUES(" & id & ", #" & .Current("fecha") & "# ,'" & descripcion & "'," &
-						  " '" & .Current("ruta") & "')")
+						  " VALUES(" & id & ", #" & dr("fecha") & "# ,'" & dr("descripcion") & "'," &
+						  " '" & dr("ruta") & "')")
 			Next
 		End With
 	End Sub

@@ -27,22 +27,22 @@ Public Class VisorReporte
                        Optional blank As Boolean = True)
         With ReporteActual
             tipo = Trim(tipo)
-            If Len(tipo) = 7 Then 'OPR\PPE
-                .LocalReport.ReportPath = root & "\reportes\" & tipo & ".rdlc"
+			If Len(tipo) >= 7 Then 'OPR\PPE
+                .LocalReport.ReportPath = root & "\" & tipo & ".rdlc"
 
-                .RefreshReport()
-                If blank = False And parametros Is Nothing = False Then
-                    .LocalReport.SetParameters(parametros)
-                End If
+				'.RefreshReport()
+				If blank = False And parametros Is Nothing = False Then
+					.LocalReport.SetParameters(parametros)
+				End If
                 'Resetear config pagina
                 Dim config_pag As PageSettings = .GetPageSettings()
-                config_pag.PaperSize = GetPaperSize(.PrinterSettings, "A4")
-                .SetPageSettings(config_pag)
-                .RefreshReport()
+				config_pag.PaperSize = GetPaperSize(.PrinterSettings, "A4")
+				.SetPageSettings(config_pag)
+				.RefreshReport()
                 'Mostrar
                 .Visible = True
-            End If
-        End With
+			End If
+		End With
     End Sub
     Private Sub CerrarFormularioActualToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CerrarFormularioActualToolStripMenuItem.Click
         ReporteActual.Visible = False

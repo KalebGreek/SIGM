@@ -26,9 +26,12 @@
 	End Sub
 
 	Private Sub ModExpediente_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
-        If Me.Visible And dtab_exp Is Nothing Then
-            Me.Close()
-        End If
+		If Me.Visible And dtab_exp Is Nothing Then
+			Me.Close()
+		Else
+			inicio_obra.MaxDate = Date.Today
+			fin_obra.MaxDate = Date.Today
+		End If
     End Sub
 
     Private Sub ModExpediente_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -40,27 +43,23 @@
     '###### GUI #################################################################################################
     ' > Expediente
     Private Sub save_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles save.Click
-        Dim answer As MsgBoxResult = validar(grupo_exp.SelectedIndex)
-        If answer = MsgBoxResult.Yes Then
-            answer = actualizar(grupo_exp.SelectedIndex)
-            answer = validar()
-            If answer = MsgBoxResult.Yes Then
-                If temporal.Visible Then
-					answer = MsgBox("¿Desea guardar este expediente temporal bajo el N° " & expediente.Text & "?",
-									MsgBoxStyle.YesNoCancel, "Guardar Expediente")
-					If answer = MsgBoxResult.Yes Then 'Asignar N° de Expediente y quitar temporal
-                        DbMan.edit(  "UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
+		Dim answer As MsgBoxResult
+		If actualizar(grupo_exp.SelectedIndex) = MsgBoxResult.Yes Then
+			If temporal.Visible Then
+				answer = MsgBox("¿Desea guardar este expediente temporal bajo el N° " & expediente.Text & "?",
+								MsgBoxStyle.YesNoCancel, "Guardar Expediente")
+				If answer = MsgBoxResult.Yes Then 'Asignar N° de Expediente y quitar temporal
+					DbMan.edit("UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
                                                         WHERE id=" & opr_id.Text)
-						Me.Close()
-                    End If
-                End If
-                dtab_exp = Oprivadas.Expediente.Seleccionar(expediente.Text)
-                cargar(dtab_exp)
-            End If
-        End If
-    End Sub
+					Me.Close()
+				End If
+			End If
+			dtab_exp = Oprivadas.Expediente.Seleccionar(expediente.Text)
+			cargar(dtab_exp)
+		End If
+	End Sub
 
-    Private Sub grupo_exp_TabIndexChanged(sender As Object, e As EventArgs) Handles grupo_exp.TabIndexChanged
+	Private Sub grupo_exp_TabIndexChanged(sender As Object, e As EventArgs) Handles grupo_exp.TabIndexChanged
         If Me.Visible Then
             dtab_exp = Oprivadas.Expediente.Seleccionar(expediente.Text)
             If dtab_exp Is Nothing = False Then
@@ -70,92 +69,72 @@
     End Sub
 
     Private Sub PERSONASToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PERSONASToolStripMenuItem.Click
-        Dim answer As MsgBoxResult = validar(grupo_exp.SelectedIndex)
-        If answer = MsgBoxResult.Yes Then
-            answer = actualizar(grupo_exp.SelectedIndex)
-        End If
-        If answer = MsgBoxResult.Yes Or answer = MsgBoxResult.No Then
-            grupo_exp.SelectTab(0)
-        End If
-    End Sub
+		Dim answer As MsgBoxResult = actualizar(grupo_exp.SelectedIndex)
+		If answer = MsgBoxResult.Yes Or answer = MsgBoxResult.No Then
+			grupo_exp.SelectTab(0)
+		End If
+	End Sub
     Private Sub INMUEBLESToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles INMUEBLESToolStripMenuItem.Click
-        Dim answer As MsgBoxResult = validar(grupo_exp.SelectedIndex)
-        If answer = MsgBoxResult.Yes Then
-            answer = actualizar(grupo_exp.SelectedIndex)
-        End If
-        If answer = MsgBoxResult.Yes Or answer = MsgBoxResult.No Then
-            grupo_exp.SelectTab(1)
-        End If
-    End Sub
+		Dim answer As MsgBoxResult = actualizar(grupo_exp.SelectedIndex)
+		If answer = MsgBoxResult.Yes Or answer = MsgBoxResult.No Then
+			grupo_exp.SelectTab(1)
+		End If
+	End Sub
     Private Sub ARCHIVOToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ARCHIVOToolStripMenuItem.Click
-        Dim answer As MsgBoxResult = validar(grupo_exp.SelectedIndex)
-        If answer = MsgBoxResult.Yes Then
-            answer = actualizar(grupo_exp.SelectedIndex)
-        End If
-        If answer = MsgBoxResult.Yes Or answer = MsgBoxResult.No Then
-            grupo_exp.SelectTab(2)
-        End If
-    End Sub
+		Dim answer As MsgBoxResult = actualizar(grupo_exp.SelectedIndex)
+		If answer = MsgBoxResult.Yes Or answer = MsgBoxResult.No Then
+			grupo_exp.SelectTab(2)
+		End If
+	End Sub
     '###### END GUI #############################################################################################
 
     '###### VALIDATION ##########################################################################################
     Private Sub cargar(registro As DataTable)
-        razon.Clear()
-        cuil.Clear()
-        matricula.Clear()
+		razon.Clear()
+		cuil.Clear()
+		matricula.Clear()
 
-        If registro.Rows.Count > 0 Then
-            'Reset
-            check_fin_obra.Checked = False
-            fin_obra.Value = Date.Today
-            ruta_fin_obra.Text = ""
-            '##### EXPEDIENTE (base)
-            CtrlMan.LoadAllControls(registro(0), grupoExp)
+		If registro.Rows.Count > 0 Then
+			'Reset
+			check_fin_obra.Checked = False
+			fin_obra.Value = fin_obra.MinDate
+			ruta_fin_obra.Text = ""
+
+			'Estos controles estan fuera de GrupoExp
+			opr_id.Text = registro(0)("id")
+			temporal.Visible = registro(0)("temporal")
+			expediente.Text = registro(0)("expediente")
+			'##### EXPEDIENTE (base)
+			CtrlMan.LoadAllControls(registro(0), grupoExp)
             'Tareas se carga al reves por alguna razon, asi que no sirve
             tarea.Text = registro(0)("tarea").ToString
-            tarea2.Text = registro(0)("tarea2").ToString
-            'Estos controles estan fuera de GrupoExp
-            opr_id.Text = registro(0)("id")
-            temporal.Visible = registro(0)("temporal")
-            expediente.Text = registro(0)("expediente")
+			tarea2.Text = registro(0)("tarea2").ToString
+			'Mostrar final de obra
+			check_fin_obra.Checked = fin_obra.Value > fin_obra.MinDate
 
-            'ARCHIVO
-            'inicio_obra.Text = registro(0)("inicio_obra")
-            'recibe.Text = registro(0)("recibe").ToString
-            'observaciones.Text = registro(0)("observaciones").ToString
-            'Copias Digitales (Original y fin de obra)
-        End If
-
-        '##### Cargar personas
-        CtrlMan.LoadDataGridView(consulta_resp, bs_resp, Oprivadas.Expediente.ListarResponsables(expediente.Text))
-
-        'PROFESIONAL
-        prof_id.Text = registro(0)("profesional_id").ToString
-
-		If prof_id.Text > 0 Then
-			Dim prof As DataTable = Profesional.Seleccionar(prof_id.Text, 0)
-
-			If prof.Rows.Count > 0 Then
-				CtrlMan.LoadAllControls(prof(0), Panel3)
-			Else
-				MsgBox("Profesional no válido.", MsgBoxStyle.Exclamation)
-				prof_id.Text = 0
-			End If
-		End If
-
-        'INMUEBLES
-        CtrlMan.LoadDataGridView(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
-
-        'CARGAR COPIAS DIGITALES
-        Dim copias As DataTable = Documento.OPrivadas.BuscarDoc(opr_id.Text)
-		If copias.Rows.Count > 0 Then
-			For fila As Integer = 0 To copias.Rows.Count - 1
-				If copias(fila)("descripcion").ToString = "FIN DE OBRA" Then
-					ruta_fin_obra.Text = copias(fila)("ruta").ToString
-					check_fin_obra.Checked = True
-					fin_obra.Value = registro(0)("fecha")
-				End If
+			'CARGAR COPIAS DIGITALES
+			Dim copias As DataTable = Documento.OPrivadas.BuscarDoc(opr_id.Text, "FINAL DE OBRA")
+			For Each dr As DataRow In copias.Rows
+				ruta_fin_obra.Text = dr("ruta").ToString
 			Next
+
+			'##### Cargar personas
+			CtrlMan.LoadDataGridView(consulta_resp, bs_resp, Oprivadas.Expediente.ListarResponsables(expediente.Text))
+			'INMUEBLES
+			CtrlMan.LoadDataGridView(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
+			'PROFESIONAL
+			profesional_id.Text = registro(0)("profesional_id").ToString
+
+			If profesional_id.Text > 0 Then
+				Dim prof As DataTable = Profesional.Seleccionar(profesional_id.Text, 0)
+
+				If prof.Rows.Count > 0 Then
+					CtrlMan.LoadAllControls(prof(0), Panel3)
+				Else
+					MsgBox("Profesional no válido.", MsgBoxStyle.Exclamation)
+					profesional_id.Text = 0
+				End If
+			End If
 		End If
 	End Sub
 
@@ -172,7 +151,7 @@
 			If bs_resp.Count = 0 Then
 				msg.Add("(×) Debe indicar al menos un responsable.")
 			End If
-			If prof_id.Text = 0 Then
+			If profesional_id.Text = 0 Then
 				msg.Add("(×) Debe indicar un profesional a cargo.")
 			End If
 			msg.Add(" ")
@@ -233,21 +212,25 @@
 	End Function
 
 	Private Function actualizar(pagina As Integer) As MsgBoxResult
-		Dim result As MsgBoxResult = MsgBoxResult.Yes
+		Dim result As MsgBoxResult = validar(pagina)
+		If result = MsgBoxResult.Yes Then
+			If pagina = 0 Then 'Responsables
+				Oprivadas.Expediente.LimpiarResponsable(opr_id.Text)
+				Oprivadas.Expediente.AgregarResponsable(bs_resp, opr_id.Text, bs_resp.Current("persona_id"))
+				Oprivadas.Expediente.ActualizarProfesional(opr_id.Text, profesional_id.Text)
 
-		If pagina = 0 Then 'Responsables
-            Oprivadas.Expediente.LimpiarResponsable(opr_id.Text)
-			Oprivadas.Expediente.AgregarResponsable(bs_resp, opr_id.Text, bs_resp.Current("persona_id"))
-			Oprivadas.Expediente.ActualizarProfesional(opr_id.Text, prof_id.Text)
+			ElseIf pagina = 1 Then 'Inmuebles
+				'Los cambios se producen en el momento, no es necesario guardar
 
-		ElseIf pagina = 1 Then 'Inmuebles
-            'Los cambios se producen en el momento, no es necesario guardar
+			ElseIf pagina = 2 Then 'Expediente
+				Oprivadas.Expediente.ActualizarDetalle(opr_id.Text, inicio_obra.Value, visado.Checked, fin_obra.Value,
+													   recibe.Text, tarea.Text, tarea2.Text, Trim(observaciones.Text))
 
-        ElseIf pagina = 2 Then 'Expediente
-            Oprivadas.Expediente.ActualizarDetalle(opr_id.Text, inicio_obra.Value, check_fin_obra.Checked, fin_obra.Value,
-												   recibe.Text, tarea.Text, tarea2.Text, Trim(observaciones.Text))
+				If (visado.Checked And fin_obra.Value <> fin_obra.MinDate) = False Then
+					Documento.Limpiar("opr_documento", "opr_id", opr_id.Text, "FINAL DE OBRA")
+				End If
+			End If
 		End If
-
 		Return result
 	End Function
 
@@ -270,9 +253,7 @@
 			tarea2.Visible = False
 		End If
 	End Sub
-	Private Sub inicio_obra_ValueChanged(sender As Object, e As EventArgs) Handles inicio_obra.ValueChanged
-		fin_obra.Value = inicio_obra.Value
-	End Sub
+
 	Private Sub visado_CheckedChanged(sender As Object, e As EventArgs) Handles visado.CheckedChanged
 		check_fin_obra.Visible = visado.Checked
 		check_fin_obra.Checked = False
@@ -282,13 +263,16 @@
 			fin_obra.Visible = .Checked
 			et_fin_obra.Visible = .Checked
 			ruta_fin_obra.Visible = .Checked
-			ruta_fin_obra.Text = ""
 			cargar_fin_obra.Visible = .Checked
 			ver_fin_obra.Visible = .Checked
 		End With
 	End Sub
 	Private Sub cargar_fin_obra_Click(sender As Object, e As EventArgs) Handles cargar_fin_obra.Click
-		ruta_fin_obra.Text = Documento.OPrivadas.CargarFinalObra(expediente.Text)
+		'Selecciona y guarda la copia de Final de Obra en PDF
+		Dim ruta As String = Documento.OPrivadas.CargarFinalObra(opr_id.Text, expediente.Text)
+		If ruta <> "" Then
+			ruta_fin_obra.Text = ruta
+		End If
 	End Sub
 	Private Sub ver_fin_obra_Click(sender As Object, e As EventArgs) Handles ver_fin_obra.Click, ruta_fin_obra.DoubleClick
 		If Len(ruta_fin_obra.Text) > 5 Then
@@ -299,10 +283,11 @@
     '# PERSONA 
     Private Sub add_resp_Click(sender As Object, e As EventArgs) Handles add_resp.Click
 		Dim seleccion_persona As New BusquedaPersona
+		seleccion_persona.ControlBusqueda1.vista.Text = "PERSONA"
+		seleccion_persona.ShowDialog(Me)
 		With seleccion_persona.resultado.DataSource
-			.ShowDialog(Me)
-            'Se agrega el registro temporal
-            If .Position > -1 Then
+			'Se agrega el registro temporal
+			If .Position > -1 Then
 				bs_resp.AddNew()
 				bs_resp.Current("persona_id") = .Current("persona_id").ToString
 				bs_resp.Current("razon") = .Current("razon").ToString
@@ -312,8 +297,8 @@
 				bs_resp.Current("difunto") = .Current("difunto")
 				bs_resp.EndEdit()
 			End If
-			.Dispose()
 		End With
+		seleccion_persona.Dispose()
 	End Sub
 	Private Sub del_resp_Click(sender As Object, e As EventArgs) Handles del_resp.Click
 		If bs_resp.Position > -1 _
@@ -323,26 +308,21 @@
 	End Sub
 	Private Sub mod_prof_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mod_prof.Click
 		Dim sel_prof As New BusquedaPersona
-		'sel_prof. = razon.Text
-
+		sel_prof.ControlBusqueda1.vista.Text = "PROFESIONAL"
+		sel_prof.ShowDialog(Me)
 		With sel_prof.resultado.DataSource
-			.ShowDialog(Me)
 			If .Position > -1 Then
-				prof_id.Text = .Current("prof_id")
-				razon.Text = .Current("razon")
-				titulo.Text = .Current("titulo")
-				cuil.Text = .Current("cuil")
-				matricula.Text = .Current("matricula")
+				CtrlMan.LoadAllControls(.Current.Row, Panel3)
 			End If
-			.Dispose()
 		End With
+		sel_prof.Dispose()
 	End Sub
 
     '# INMUEBLE
     Private Sub bs_catastro_PositionChanged(sender As Object, e As EventArgs) Handles bs_catastro.PositionChanged
 		Dim dtab As New DataTable
 		mod_inmueble.Enabled = False
-		responsable_id.Text = "0"
+		titular_id.Text = "0"
 		info_titular.Text = " - "
 		info_cuil.Text = " - "
 		info_ubicacion.Text = " - "
@@ -353,7 +333,7 @@
 		With bs_catastro
 			If .Position > -1 Then
 				mod_inmueble.Enabled = True
-				responsable_id.Text = .Current("titular_id")
+				titular_id.Text = .Current("titular_id")
 				info_titular.Text = .Current("titular").ToString
 				info_cuil.Text = .Current("cuil").ToString
 				info_ubicacion.Text = .Current("calle") & " " & .Current("Altura")
@@ -400,8 +380,8 @@
             If .Position > -1 Then
                 If .Current("archivado") = False _
                 And MsgBoxResult.Yes = MsgBox("¿Desea eliminar el inmueble seleccionado? Esta operación no se puede deshacer.", MsgBoxStyle.YesNo, "Eliminar Inmueble") Then
-                    Catastro.Eliminar(.Current("catastro_id"), .Current("user_id"))
-                    .RemoveCurrent()
+					Catastro.Eliminar.Inmueble(.Current("catastro_id"), .Current("user_id"))
+					.RemoveCurrent()
                 Else
                     MsgBox("Imposible eliminar, este inmueble se encuentra archivado.")
                 End If
@@ -437,39 +417,39 @@
 
     '###### PRINT ###############################################################################################
     Private Sub CaratulaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CaratulaToolStripMenuItem.Click
-        If temporal.Visible Then
-            MsgBox("Debe completar este expediente para imprimir la caratula.")
-        Else
-            Dim parametros As New Generic.List(Of ReportParameter)
+		If temporal.Visible Then
+			MsgBox("Debe completar este expediente para imprimir la caratula.")
+		ElseIf actualizar(grupo_exp.SelectedIndex) = MsgBoxResult.Yes Then
+			Dim parametros As New Generic.List(Of ReportParameter)
             Dim letra As String = ""
             letra = Microsoft.VisualBasic.Left(Trim(bs_resp.Current("razon")), 1)
             parametros.Add(New ReportParameter("Letra", letra))
 
-            parametros = ParamReporte.BaseExpediente(parametros, expediente.Text,
-                                                     inicio_obra.Value,
-                                                     tarea.Text & " " & tarea2.Text)
+			parametros = ParamReporte.BaseExpediente(parametros, expediente.Text,
+													 inicio_obra.Value,
+													 tarea.Text & " " & tarea2.Text)
 
-            parametros = ParamReporte.ListarResponsables(parametros, bs_resp)
+			parametros = ParamReporte.ListarResponsables(parametros, bs_resp)
             parametros = ParamReporte.ListarInmuebles(parametros, bs_catastro)
 
             'Crear informe
-            Dim formEXP As New VisorReporte("Caratula de Expediente", "OPR\CAR", parametros, False)
-            With formEXP
+            Dim formEXP As New VisorReporte("Caratula de Expediente", "OPRIVADAS\FORMS\CAR", parametros, False)
+			With formEXP
                 .ShowDialog()
                 .Dispose()
             End With
         End If
     End Sub
     Private Sub CopiaDeExpedienteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopiaDeExpedienteToolStripMenuItem.Click
-        If temporal.Visible Then
-            MsgBox("Debe completar este expediente para imprimirlo.")
-        Else
-            Dim parametros As New Generic.List(Of ReportParameter)
-            parametros = ParamReporte.BaseExpediente(parametros, expediente.Text,
-                                                     inicio_obra.Value,
-                                                     tarea.Text & " " & tarea2.Text)
+		If temporal.Visible Then
+			MsgBox("Debe completar este expediente para imprimirlo.")
+		ElseIf actualizar(grupo_exp.SelectedIndex) = MsgBoxResult.Yes Then
+			Dim parametros As New Generic.List(Of ReportParameter)
+			parametros = ParamReporte.BaseExpediente(parametros, expediente.Text,
+													 inicio_obra.Value,
+													 tarea.Text & " " & tarea2.Text)
 
-            parametros = ParamReporte.ListarResponsables(parametros, bs_resp)
+			parametros = ParamReporte.ListarResponsables(parametros, bs_resp)
 
             cuil.TextMaskFormat = MaskFormat.IncludePromptAndLiterals
             Dim prof_completo As String = "Razon: " & razon.Text & System.Environment.NewLine &
@@ -484,13 +464,15 @@
             parametros = ParamReporte.ListarInmuebles(parametros, bs_catastro)
 
             'Crear informe
-            Dim formEXP As New VisorReporte("Resumen de Expediente", "OPR\EXP", parametros, False)
-            With formEXP
+            Dim formEXP As New VisorReporte("Resumen de Expediente", "OPRIVADAS\FORMS\EXP", parametros, False)
+			With formEXP
                 .ShowDialog()
                 .Dispose()
             End With
         End If
     End Sub
-    '###### END PRINT ###########################################################################################
+
+
+	'###### END PRINT ###########################################################################################
 End Class
 

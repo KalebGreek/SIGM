@@ -1,4 +1,4 @@
-﻿Public Class CtrlMan
+﻿Public Class CtrlMan 'Control Manager
 
 	'###### VENTANAS
 	'Impedir creación de ventanas que deben abrirse una sola vez en el formulario MDI
@@ -164,21 +164,21 @@
 			End If
 		End If
 	End Sub
-	Shared Sub CustomMaskedTextboxValidation(ByRef c As MaskedTextBox)
-		If c.Name = "cuil" Then
-			If Len(c.Text) <> 11 Then
-				c.Tag = "CUIL invalido."
+	Shared Sub CustomMaskedTextboxValidation(ByRef mtb As MaskedTextBox)
+		If mtb.Name = "cuil" Then
+			If Len(mtb.Text) <> 11 Then
+				mtb.Tag = "CUIL invalido."
 			Else
 				Dim dtab As New DataTable
 				dtab = DbMan.read("SELECT * FROM persona
-									       WHERE cuil=" & c.Text)
+									WHERE cuil=" & mtb.Text)
 				If dtab.Rows.Count > 0 Then
-					c.Tag = "CUIL duplicado. Este CUIL pertenece a " & dtab(0)("razon") & "."
+					mtb.Tag = "CUIL duplicado. Este CUIL pertenece a " & dtab(0)("razon") & "."
 				End If
 			End If
-		ElseIf c.Name = "dni" Then
-			If Len(Val(c.Text)) > 8 Or Len(Val(c.Text)) < 5 Then
-				c.Tag = "Ingrese DNI."
+		ElseIf mtb.Name = "dni" Then
+			If Len(Val(mtb.Text)) > 8 Or Len(Val(mtb.Text)) < 5 Then
+				mtb.Tag = "Ingrese DNI."
 			End If
 		End If
 	End Sub
@@ -227,12 +227,14 @@
 		Next
 		Return target
 	End Function
-	Shared Function LoadDataGridView(ByVal visor As DataGridView, ByVal bs As BindingSource, ByVal dtab As DataTable) As DataGridView
-		'Esta rutina importa la datatable seleccionada en un datagridview; es igual para todos los servicios.
+	'Esta rutina importa datatable o bindingsource seleccionada en un datagridview y formatea las columnas correspondientes
+	Overloads Shared Function LoadDataGridView(ByVal visor As DataGridView, ByVal bs As BindingSource,
+											   Optional ByVal dtab As DataTable = Nothing) As DataGridView
 		visor.SuspendLayout()
-		bs.DataSource = dtab
+		If dtab Is Nothing = False Then
+			bs.DataSource = dtab
+		End If
 		visor.DataSource = bs
-		'Con VB .Net sobre la tabla de consulta
 		'Dar formato
 		visor = FormatColumns(visor)
 		visor.ResumeLayout()
@@ -260,6 +262,12 @@
 				'GENERAL
 				If .Contains("_id") Then
 					c.Width = 5
+
+					'HACIENDA
+				ElseIf .Equals("orden") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+				ElseIf .Equals("nombre") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
 
 					'PERSONAS
 				ElseIf .Equals("cuil") Then

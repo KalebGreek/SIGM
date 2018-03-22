@@ -202,7 +202,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="env\SecMan.vb" />
-    <Compile Include="hacienda\CalculoAnualImpuesto\CalculoAnual.vb" />
+    <Compile Include="hacienda\CalculoAnualImpuesto\CalculoAnualSQL.vb" />
     <Compile Include="hacienda\Combustibles\Combustible.vb" />
     <Compile Include="hacienda\Combustibles\CtrlBusquedaCombustiblePorTicket.Designer.vb">
       <DependentUpon>CtrlBusquedaCombustiblePorTicket.vb</DependentUpon>
@@ -795,7 +795,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="comercio\" />
-    <Folder Include="env\old\" />
     <Folder Include="My Project\DataSources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

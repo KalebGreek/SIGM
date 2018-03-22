@@ -1,33 +1,33 @@
-Imports Sigm.CalculoAnual
+Imports Sigm.CalculoAnualSQL
 Public Class CalculoAnualImpuesto
 	Dim dtab_cuenta, dtab_var, dtab_zona, dtab_vence As DataTable
 	Dim ultimo As Integer
 
     'Rutinas
     Public Function validar() As Boolean
-        dtab_cuenta = Nothing
-        dtab_zona = Nothing
+		dtab_cuenta = Nothing
+		dtab_zona = Nothing
 
 		Dim dtab As DataTable = DbMan.read("SELECT MAX(codigo) as codigo FROM " & impuesto.Text, My.Settings.foxcon)
 		If dtab.Rows.Count > 0 Then
-            If CuentaInicial.Value > dtab(0)("codigo") Then
-                MsgBox("No se encuentra la cuenta inicial.", MsgBoxStyle.OkOnly, Nothing)
-            Else
+			If CuentaInicial.Value > dtab(0)("codigo") Then
+				MsgBox("No se encuentra la cuenta inicial.", MsgBoxStyle.OkOnly, Nothing)
+			Else
 				'Generar cuotas
 				If impuesto.Text = "AGUAS" Then
-                    agua()
-                ElseIf impuesto.Text = "AUTOMOVIL" Then
-                    auto()
-                ElseIf impuesto.Text = "CATASTRO" Then
-                    catastro()
-                ElseIf impuesto.Text = "COMERCIO" Then
-                    comercio()
-                ElseIf impuesto.Text = "SEPELIO" Then
-                    sepelio()
-                End If
-            End If
-        End If
-    End Function
+					agua()
+				ElseIf impuesto.Text = "AUTOMOVIL" Then
+					auto()
+				ElseIf impuesto.Text = "CATASTRO" Then
+					catastro()
+				ElseIf impuesto.Text = "COMERCIO" Then
+					comercio()
+				ElseIf impuesto.Text = "SEPELIO" Then
+					sepelio()
+				End If
+			End If
+		End If
+	End Function
 
 	Public Sub agua()
 		Dim reside, comercio, industria, importe, franqueo As New Decimal
@@ -37,7 +37,7 @@ Public Class CalculoAnualImpuesto
 		dtab_zona = DbMan.read("SELECT * FROM aguzona", My.Settings.foxcon)
 		'Vencimientos
 		dtab_vence = DbMan.read("SELECT * FROM aguvence 
-										 WHERE periodo=" & periodo.Value,
+										 WHERE periodo=" & Val(periodo.Value),
 								My.Settings.foxcon)
 		'Cuentas
 		dtab_cuenta = DbMan.read("SELECT codigo, potable, comercial, industrial FROM aguas
@@ -80,8 +80,8 @@ Public Class CalculoAnualImpuesto
             cuota_max = 6
 			cuota = 1
 			Do While cuota <= cuota_max
-				If CalculoAnual.sql.Agua.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
-					CalculoAnual.sql.Agua.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, importe, dtab_vence(0),
+				If CalculoAnualSQL.sql.Agua.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
+					CalculoAnualSQL.sql.Agua.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, importe, dtab_vence(0),
 					reside, comercio, industria, franqueo)
 				End If
 				cuota += 1
@@ -110,8 +110,8 @@ Public Class CalculoAnualImpuesto
 			cuota = 1
 			cuota_max = 4
 			Do While cuota <= cuota_max
-				If CalculoAnual.sql.Auto.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
-					CalculoAnual.sql.Auto.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, importe, dtab_vence(0))
+				If CalculoAnualSQL.sql.Auto.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
+					CalculoAnualSQL.sql.Auto.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, importe, dtab_vence(0))
 				End If
 				cuota += 1
 			Loop
@@ -149,68 +149,68 @@ Public Class CalculoAnualImpuesto
 
 		progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
-		For fila As Integer = 1 To progreso.Maximum
-			CheckProgress(fila, dtab_cuenta(fila)("codigo"))
+		For Each dr As DataRow In dtab_cuenta.Rows
+			CheckProgress(dtab_cuenta.Rows.IndexOf(dr), dr("codigo"))
 
 			'Calculo de importes
 			basica = 0
 
-			If dtab_cuenta(fila)("frente1") > 0 Then  'ESQUINA
+			If dr("frente1") > 0 Then  'ESQUINA
 				Dim metros As Decimal = 0
 				Dim frentes As Integer = 0
 
-				metros += dtab_cuenta(fila)("frente1")
+				metros += dr("frente1")
 				frentes += 1
 
-				If dtab_cuenta(fila)("zona") < 4 Then
-					If dtab_cuenta(fila)("frente2") > 0 Then
-						metros += dtab_cuenta(fila)("frente2")
+				If dr("zona") < 4 Then
+					If dr("frente2") > 0 Then
+						metros += dr("frente2")
 						frentes += 1
 					End If
-					If dtab_cuenta(fila)("frente3") > 0 Then
-						metros += dtab_cuenta(fila)("frente3")
+					If dr("frente3") > 0 Then
+						metros += dr("frente3")
 						frentes += 1
 					End If
-					If dtab_cuenta(fila)("frente4") > 0 Then
-						metros += dtab_cuenta(fila)("frente4")
+					If dr("frente4") > 0 Then
+						metros += dr("frente4")
 						frentes += 1
 					End If
-					If dtab_cuenta(fila)("esquino") = 1 Then
+					If dr("esquino") = 1 Then
 						metros = metros / frentes
 					End If
 				End If
-				basica = dtab_cuenta(fila)("monto_unidad") * metros
+				basica = dr("monto_unidad") * metros
 			End If
 
-			If dtab_cuenta(fila)("zona") = 6 Then
+			If dr("zona") = 6 Then
 				'LOTEOS Y BARRIOS PRIVADOS
-				If dtab_cuenta(fila)("frente1") > 2500 Then 'M2 
-					basica = dtab_cuenta(fila)("monto_fijo4")
-				ElseIf dtab_cuenta(fila)("frente1") > 1249 Then 'M2 
-					basica = dtab_cuenta(fila)("monto_fijo3")
-				ElseIf dtab_cuenta(fila)("frente1") > 799 Then 'M2 
-					basica = dtab_cuenta(fila)("monto_fijo2")
+				If dr("frente1") > 2500 Then 'M2 
+					basica = dr("monto_fijo4")
+				ElseIf dr("frente1") > 1249 Then 'M2 
+					basica = dr("monto_fijo3")
+				ElseIf dr("frente1") > 799 Then 'M2 
+					basica = dr("monto_fijo2")
 				Else
-					basica = dtab_cuenta(fila)("monto_fijo1")
+					basica = dr("monto_fijo1")
 				End If
-			ElseIf dtab_cuenta(fila)("zona") = 5 Then 'ZONA 5
-				Dim fraccion As Integer = dtab_cuenta(fila)("frente1") / 200
-				If dtab_cuenta(fila)("frente1") Mod 200 > 0 Then
+			ElseIf dr("zona") = 5 Then 'ZONA 5
+				Dim fraccion As Integer = dr("frente1") / 200
+				If dr("frente1") Mod 200 > 0 Then
 					fraccion += 1
 				End If
-				basica = dtab_cuenta(fila)("monto_unidad") * fraccion
+				basica = dr("monto_unidad") * fraccion
 			End If
 
 
 			'Pasillo
 			pasillo = 0
-			If dtab_cuenta(fila)("pasillo") = 1 And dtab_cuenta(fila)("frente1") < 11 Then
-				pasillo = dtab_cuenta(fila)("monto_pasillo")
+			If dr("pasillo") = 1 And dr("frente1") < 11 Then
+				pasillo = dr("monto_pasillo")
 				basica = pasillo
 			End If
 
 			'Minimo
-			minimo = dtab_cuenta(fila)("monto_minimo")
+			minimo = dr("monto_minimo")
 			If basica < minimo Then
 				basica = minimo
 			End If
@@ -224,42 +224,42 @@ Public Class CalculoAnualImpuesto
 			baldio = 0
 			vereda = 0
 			parque = 0
-			If dtab_cuenta(fila)("baldio") = 1 Then
+			If dr("baldio") = 1 Then
 				'Recargo por baldio
-				If dtab_cuenta(fila)("zona") < 4 Then
-					baldio = subtotal * (dtab_cuenta(fila)("rec_baldio") / 100)
+				If dr("zona") < 4 Then
+					baldio = subtotal * (dr("rec_baldio") / 100)
 				End If
 				'Descuento por vereda
-				If dtab_cuenta(fila)("vereda") = 1 Then
-					vereda = subtotal * (dtab_cuenta(fila)("desc_vereda") / 100)
+				If dr("vereda") = 1 Then
+					vereda = subtotal * (dr("desc_vereda") / 100)
 				End If
 				'Descuento por parquizado
-				If dtab_cuenta(fila)("parque") = 1 Then
-					parque = subtotal * (dtab_cuenta(fila)("desc_parque") / 100)
+				If dr("parque") = 1 Then
+					parque = subtotal * (dr("desc_parque") / 100)
 				End If
 			End If
 
 			'Recargo Actividad Comercial
 			comercio = 0
-			If dtab_cuenta(fila)("comercial") > 1 Then
-				Dim tipo_comercio As Integer = dtab_cuenta(fila)("comercial") - 1
-				comercio = subtotal * (dtab_cuenta(fila)("rec_comercio" & tipo_comercio) / 100)
+			If dr("comercial") > 1 Then
+				Dim tipo_comercio As Integer = dr("comercial") - 1
+				comercio = subtotal * (dr("rec_comercio" & tipo_comercio) / 100)
 			End If
 
 			'Descuento por Actividad Agropecuaria (Agrario)
 			agrario = 0
-			If dtab_cuenta(fila)("agrario") = 1 Then
-				If dtab_cuenta(fila)("frente1") > 100 Then
-					agrario = subtotal * (dtab_cuenta(fila)("desc_agrario2") / 100)
-				ElseIf dtab_cuenta(fila)("frente1") > 50 Then
-					agrario = subtotal * (dtab_cuenta(fila)("desc_agrario1") / 100)
+			If dr("agrario") = 1 Then
+				If dr("frente1") > 100 Then
+					agrario = subtotal * (dr("desc_agrario2") / 100)
+				ElseIf dr("frente1") > 50 Then
+					agrario = subtotal * (dr("desc_agrario1") / 100)
 				End If
 			End If
 
 			'Jubilado
 			jubilado = 0
-			If dtab_cuenta(fila)("jubilado") = 1 Then
-				jubilado = subtotal * (dtab_cuenta(fila)("desc_jubilado") / 100)
+			If dr("jubilado") = 1 Then
+				jubilado = subtotal * (dr("desc_jubilado") / 100)
 			End If
 
 			'Calcular recargos
@@ -277,8 +277,8 @@ Public Class CalculoAnualImpuesto
 			cuota = 1
 			cuota_max = 6
 			Do While cuota <= cuota_max
-				If CalculoAnual.sql.Catastro.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
-					CalculoAnual.sql.Catastro.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, importe / 6,
+				If CalculoAnualSQL.sql.Catastro.VerificarCuota(dr, cuota, periodo.Value) Then
+					CalculoAnualSQL.sql.Catastro.InsertarCuota(dr, cuota, periodo.Value, importe / 6,
 											   dtab_vence(0), minimo / 6, basica / 6, baldio / 6, jubilado / 6, pasillo / 6,
 											   agrario / 6, comercio / 6, vereda / 6, parque / 6, franqueo / 6, taecat / 6)
 				End If
@@ -326,8 +326,8 @@ Public Class CalculoAnualImpuesto
 					franqueo = dtab_var(0)("franqueo")
 					importe = minimo + taecom + franqueo
 
-					If CalculoAnual.sql.Comercio.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
-						CalculoAnual.sql.Comercio.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, minimo, taecom,
+					If CalculoAnualSQL.sql.Comercio.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
+						CalculoAnualSQL.sql.Comercio.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, minimo, taecom,
 																		franqueo, importe, dtab_vence(0))
 					End If
 					cuota += 1
@@ -342,8 +342,8 @@ Public Class CalculoAnualImpuesto
 					franqueo = dtab_var(0)("franqueo") 'Mensual
 					importe = minimo + taecom + franqueo
 
-					If CalculoAnual.sql.Comercio.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
-						CalculoAnual.sql.Comercio.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, minimo, taecom,
+					If CalculoAnualSQL.sql.Comercio.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
+						CalculoAnualSQL.sql.Comercio.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, minimo, taecom,
 																		franqueo, importe, dtab_vence(0))
 					End If
 					cuota += 1
@@ -354,8 +354,8 @@ Public Class CalculoAnualImpuesto
 				taecom = importe * (dtab_var(0)("taecom") / 100)
 				franqueo = dtab_var(0)("franqueo") * 6
 				importe = minimo + taecom + franqueo
-				If CalculoAnual.sql.Comercio.VerificarCuota(dtab_cuenta, fila, 1, periodo.Value) Then
-					CalculoAnual.sql.Comercio.InsertarCuota(dtab_cuenta, fila, 1, periodo.Value, minimo, taecom,
+				If CalculoAnualSQL.sql.Comercio.VerificarCuota(dtab_cuenta, fila, 1, periodo.Value) Then
+					CalculoAnualSQL.sql.Comercio.InsertarCuota(dtab_cuenta, fila, 1, periodo.Value, minimo, taecom,
 																		franqueo, importe, dtab_vence(0))
 				End If
 			End If
@@ -397,39 +397,56 @@ Public Class CalculoAnualImpuesto
 				importe = importe - jubilado
 			End If
 
-			If CalculoAnual.sql.Sepelio.VerificarCuota(dtab_cuenta, fila, periodo.Value) Then
-				CalculoAnual.sql.Sepelio.InsertarCuota(dtab_cuenta, fila, periodo.Value, importe, vence)
+			If CalculoAnualSQL.sql.Sepelio.VerificarCuota(dtab_cuenta, fila, periodo.Value) Then
+				CalculoAnualSQL.sql.Sepelio.InsertarCuota(dtab_cuenta, fila, periodo.Value, importe, vence)
 			End If
 		Next
 	End Sub
 
 	Public Sub CheckProgress(fila As Integer, cuenta As Integer)
-        If fila > 0 And cuenta > 0 Then
-            If fila = progreso.Maximum Then
-                progreso.Value = progreso.Minimum
-                info.Text = "Terminado. " & fila & " cuentas procesadas."
-            Else
-                progreso.Value = fila
-                info.Text = "Procesando cuenta Nro. " & cuenta
-            End If
-        Else
-            info.Text = "Esperando datos."
-        End If
-        info.Refresh()
-    End Sub
+		If fila > 0 And cuenta > 0 Then
+			If fila = progreso.Maximum Then
+				progreso.Value = progreso.Minimum
+				info.Text = "Terminado. " & fila & " cuentas procesadas."
+			Else
+				progreso.Value = fila
+				info.Text = "Procesando cuenta Nro. " & cuenta
+			End If
+		Else
+			info.Text = "Esperando datos."
+		End If
+		info.Refresh()
+	End Sub
 
     'Eventos
     Private Sub CalculoAnualImpuesto_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        periodo.Maximum = Today.Year + 5
-        periodo.Minimum = 1990
-        periodo.Value = Today.Year
+		periodo.Maximum = Today.Year + 5
+		periodo.Minimum = 1990
+		periodo.Value = Today.Year
 
 		dtab_var = DbMan.read("SELECT * FROM numeros", My.Settings.foxcon)
 	End Sub
-    Private Sub iniciar_Click(sender As Object, e As EventArgs) Handles iniciar.Click
-        validar()
-    End Sub
-    Private Sub Cancelar_Click(sender As Object, e As EventArgs) Handles Cancelar.Click
-        Me.Close()
-    End Sub
+
+	Private Sub impuesto_SelectedIndexChanged(sender As Object, e As EventArgs) Handles impuesto.SelectedIndexChanged
+		tae.Text = 0
+		If impuesto.Text = "COMERCIO" Then
+			tae.Text = dtab_var(0)("taecom").ToString
+		ElseIf impuesto.Text = "CATASTRO" Then
+			tae.Text = dtab_var(0)("taecat").ToString
+		End If
+		tae.Text += "%"
+	End Sub
+
+
+	Private Sub iniciar_Click(sender As Object, e As EventArgs) Handles iniciar.Click
+		Dim time_start, time_end As DateTime
+		Dim run_time As TimeSpan
+		time_start = Now
+		iniciar.Visible = False
+		validar()
+		iniciar.Visible = True
+		time_end = Now
+		run_time = time_end - time_start
+		info.Text += Chr(13) & "Procesado en " & run_time.Minutes & " minutos, " & run_time.Seconds & " segundos."
+	End Sub
 End Class
