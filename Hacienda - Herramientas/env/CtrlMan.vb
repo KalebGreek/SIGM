@@ -393,14 +393,18 @@
 	'Autofilling
 	Public Class Fill
 		Shared Sub AutoComplete(ByRef bs As BindingSource, ByRef target As ComboBox,
-										  DisplayOption As String, ValueOption As String)
+									Optional DisplayOption As String = "", Optional ValueOption As String = "")
 
 			target.DataSource = Nothing
-			If target.Enabled Then
+			If target Is Nothing = False Then
 				target.DataSource = bs
-				target.DisplayMember = DisplayOption
-				target.ValueMember = ValueOption
 				target.AutoCompleteMode = AutoCompleteMode.None
+				If DisplayOption <> "" Then
+					target.DisplayMember = DisplayOption
+				End If
+				If ValueOption <> "" Then
+					target.ValueMember = ValueOption
+				End If
 			End If
 		End Sub
 		Shared Sub States(ByRef StateList As ComboBox, ByRef bs As BindingSource)

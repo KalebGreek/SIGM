@@ -1,8 +1,6 @@
 ﻿Public Class ConsultasEspeciales
 	Private sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy As String
 	Private titulo As String = "CALCULOS"
-	Private ColumnList_dtab As New DataTable
-	Private ColumnListDataSource As New DataTable
 
 	Public Sub New()
         ' This call is required by the designer.
@@ -12,14 +10,11 @@
 
         yearValue.Value = Today.Year
 		Connection.Text = My.Settings.foxcon
-		'Init column dtab
-		ColumnList_dtab.Columns.Add("colName", GetType(String))
-		ColumnList_dtab.Columns.Add("colType", GetType(String))
+
 	End Sub
 
 	'RUTINAS
-	Private Sub ExecuteQuery(ByVal reset As Boolean, CustomColumnListSourceTable As DataTable,
-							 Optional FilteredQuery As String = "")
+	Private Sub ExecuteQuery(ByVal reset As Boolean, Optional FilteredQuery As String = "")
 		If Connection.Text <> "Seleccione una base de datos antes de continuar." Then
 			DataView.DataSource = Nothing
 			query_bs.DataSource = Nothing
@@ -39,78 +34,70 @@
 			End If
 			CtrlMan.LoadDataGridView(DataView, query_bs, dtab)
 
-
-
 			If reset Then
 				'Only needed the first time we access a new query
 				EnableFilter.Checked = False
 
-				ColumnList.DataSource = Nothing
 				ColumnList_bs.DataSource = Nothing
-				ColumnList_dtab.Rows.Clear()
 
-				'Use default column list
-				If CustomColumnListSourceTable Is Nothing Then
-					CustomColumnListSourceTable = dtab
-				End If
 
-				'Read column names and data types used by filters
-				If CustomColumnListSourceTable.Columns.Count > 0 Then
-					For Each col As DataColumn In CustomColumnListSourceTable.Columns
-						Dim dr As DataRow = ColumnList_dtab.NewRow
-						If col.DataType = GetType(Decimal) Then
-							dr("colType") = "Decimal"
-						ElseIf col.DataType = GetType(Integer) Then
-							dr("colType") = "Integer"
-						ElseIf col.DataType = GetType(Date) Then
-							dr("colType") = "Date"
-						ElseIf col.DataType = GetType(String) Then
-							dr("colType") = "String"
-						Else
-							dr("colType") = ""
-						End If
-						If dr("colType") <> "" Then
-							col.ColumnName = Replace(col.ColumnName, "_", ".")
-							dr("colName") = col.ColumnName.ToString
+				If dtab.Columns.Count > 0 Then
+
+					'Clean columns not usable off the list
+					Dim ColumnList_dtab As New DataTable
+					ColumnList_dtab.Columns.Add("ColumnName", GetType(String))
+					ColumnList_dtab.Columns.Add("DataType", GetType(String))
+
+					For Each dc As DataColumn In dtab.Columns
+						If dc.DataType = GetType(Date) Or dc.DataType = GetType(Decimal) _
+						Or dc.DataType = GetType(Integer) Or dc.DataType = GetType(String) Then
+							Dim dr As DataRow = ColumnList_dtab.NewRow
+							dr("ColumnName") = dc.ColumnName.ToString
+							dr("DataType") = dc.DataType.ToString
 							ColumnList_dtab.Rows.Add(dr)
 						End If
 					Next
 
 					ColumnList_bs.DataSource = ColumnList_dtab
-					CtrlMan.Fill.AutoComplete(ColumnList_bs, ColumnList, "colName", "colType")
+
+					CtrlMan.Fill.AutoComplete(ColumnList_bs, ColumnList, "ColumnName", "DataType")
 
 				End If
-				PanelFiltros.Visible = ColumnList_dtab.Rows.Count > 0
+				PanelFiltros.Visible = dtab.Columns.Count > 0
 			End If
 		Else
 			CustomQuery.Text = ""
 		End If
 	End Sub
 
-	Private Function FilterQuery(sender As Object, ColumnData As BindingSource, reset As Boolean)
+	Private Function FilterQuery(sender As Object, Data_bs As BindingSource, FilterColumn As ComboBox, reset As Boolean)
 		Dim sqlCustomFilter As String = ""
 		If PanelFiltros.Visible And EnableFilter.Checked Then
 			If reset Then
 				IntFilterPanel.Visible = False
 				DateFilterPanel.Visible = False
 				StringFilterPanel.Visible = False
-				If ColumnData.Position > -1 Then
-					If ColumnData.Current("colType") = "String" Then
+				If FilterColumn.SelectedIndex > -1 Then
+
+					If FilterColumn.SelectedValue = "System.String" Then
 						keyword.Text = ""
 						StringFilterPanel.Visible = True
 					Else
 						'Return range of values to use for the specified column
-						Dim dtab_min, dtab_max As New DataTable
-						dtab_min = DbMan.read("SELECT MIN(" & ColumnData.Current("colName") & ") AS " & ColumnData.Current("colName"),
-											  Connection.Text, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving)
+						Dim sorted_bs As New BindingSource
+						sorted_bs = query_bs
+						sorted_bs.Sort = FilterColumn.Text & " ASC"
 
-						dtab_max = DbMan.read("SELECT MAX(" & ColumnData.Current("colName") & ") AS " & ColumnData.Current("colName"),
-											  Connection.Text, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving)
+						'dtab_min = DbMan.read("SELECT MIN(" & FilterColumn.Current("colName") & ") AS " & FilterColumn.Current("colName"),
+						'Connection.Text, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving)
 
-						If ColumnData.Current("colType") = "Decimal" Or ColumnData.Current("colType") = "Integer" Then
+						'dtab_max = DbMan.read("SELECT MAX(" & FilterColumn.Current("colName") & ") AS " & FilterColumn.Current("colName"),
+						'Connection.Text, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving)
+
+						If FilterColumn.SelectedValue = "System.Decimal" Or FilterColumn.SelectedValue = "System.Integer" Then
 							Dim min, max As New Decimal
 
-							If ColumnData.Current("colType") = "Decimal" Then
+							If FilterColumn.SelectedValue = "System.Decimal" Then
 								minNumValue.DecimalPlaces = 2
 								maxNumValue.DecimalPlaces = 2
 							Else
@@ -118,8 +105,10 @@
 								maxNumValue.DecimalPlaces = 0
 							End If
 
-							min = dtab_min(0)(ColumnData.Current("colName"))
-							max = dtab_max(0)(ColumnData.Current("colName"))
+							sorted_bs.MoveFirst()
+							min = sorted_bs.Current(FilterColumn.Text)
+							sorted_bs.MoveLast()
+							max = sorted_bs.Current(FilterColumn.Text)
 
 							minNumValue.Minimum = min
 							minNumValue.Value = min
@@ -131,15 +120,17 @@
 
 							IntFilterPanel.Visible = True
 
-						ElseIf ColumnData.Current("colType") = "Date" Then
+						ElseIf FilterColumn.SelectedValue = "System.Date" Then
 							Dim minD As Date = CDate("1/1/1899")
 							Dim maxD As Date = Today
 
-							If dtab_min(0)(ColumnData.Current("colName")) Is DBNull.Value = False Then
-								minD = dtab_min(0)(ColumnData.Current("colName"))
+							sorted_bs.MoveFirst()
+							If sorted_bs.Current(FilterColumn.Text) Is DBNull.Value = False Then
+								minD = sorted_bs.Current(FilterColumn.Text)
 							End If
-							If dtab_max(0)(ColumnData.Current("colName")) Is DBNull.Value = False Then
-								maxD = dtab_max(0)(ColumnData.Current("colName"))
+							sorted_bs.MoveLast()
+							If sorted_bs.Current(FilterColumn.Text) Is DBNull.Value = False Then
+								maxD = sorted_bs.Current(FilterColumn.Text)
 							End If
 
 							minDateValue.MinDate = minD
@@ -165,30 +156,32 @@
 							End If
 
 							DateFilterPanel.Visible = True
-							End If
 						End If
+					End If
 				End If
-			End If
 
-		End If
-
-		'Filter query
-		If sender Is keyword Then 'String
-			If Len(Trim(keyword.Text)) > 2 Then
-				sqlCustomFilter = ColumnData.Current("colName") & " LIKE '%" & keyword.Text & "%'"
-			End If
-		ElseIf sender Is minNumValue Or sender Is maxNumValue Then 'Dec or Int
-			sqlCustomFilter = IntDecFilter(ColumnData.Current("colName"), minNumValue.Value, maxNumValue.Value, NumFilterSelect.Text)
-
-		ElseIf sender Is minDateValue Or sender Is maxDateValue Or sender Is yearValue Then 'Date
-			sqlCustomFilter = DateFilter(ColumnData.Current("colName"), minDateValue.Value, maxDateValue.Value, PorAño.Checked, yearValue.Value)
-		End If
-
-		If sqlCustomFilter <> "" Then
-			If sqlWhere.Contains("WHERE") Then
-				sqlCustomFilter = sqlWhere & " AND " & sqlCustomFilter
 			Else
-				sqlCustomFilter = "WHERE " & sqlCustomFilter
+				'Filter query
+				'Change this from SQL to BindingSource.Filter
+				If FilterColumn.SelectedValue = "System.String" Then 'String
+					If Len(Trim(keyword.Text)) > 2 Then
+						Data_bs.Filter = ""
+						sqlCustomFilter = FilterColumn.Text & " Like '%" & keyword.Text & "%'"
+					End If
+				ElseIf FilterColumn.SelectedValue = "System.Decimal" Or FilterColumn.SelectedValue = "System.Integer" Then 'Dec or Int
+					sqlCustomFilter = IntDecFilter(FilterColumn.Text, minNumValue.Value, maxNumValue.Value, NumFilterSelect.Text)
+
+				ElseIf FilterColumn.SelectedValue = "System.Date" Then 'Date
+					sqlCustomFilter = DateFilter(FilterColumn.Text, minDateValue.Value, maxDateValue.Value, PorAño.Checked, yearValue.Value)
+				End If
+
+				If sqlCustomFilter <> "" Then
+					If sqlWhere.Contains("WHERE") Then
+						sqlCustomFilter = sqlWhere & " AND " & sqlCustomFilter
+					Else
+						sqlCustomFilter = "WHERE " & sqlCustomFilter
+					End If
+				End If
 			End If
 		End If
 		Return sqlCustomFilter
@@ -242,9 +235,9 @@
 		sqlHaving = ""
 		sqlOrderBy = "ORDER BY orden"
 
-		ColumnListDataSource = DbMan.read("SELECT orden, nombre, gastado, autorizado", Connection.Text, sqlFrom)
+		'ColumnListDataSource = DbMan.read("SELECT orden, nombre, gastado, autorizado", Connection.Text, sqlFrom)
 
-		ExecuteQuery(True, ColumnListDataSource)
+		ExecuteQuery(True)
 	End Sub
 	Private Sub EgresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EgresosToolStripMenuItem.Click
 		Me.Name = titulo & " | " & sender.Text
@@ -256,9 +249,7 @@
 		sqlHaving = ""
 		sqlOrderBy = "ORDER BY orden"
 
-		ColumnListDataSource = DbMan.read("SELECT orden, nombre, gastado, autorizado", Connection.Text, sqlFrom)
-
-		ExecuteQuery(True, ColumnListDataSource)
+		ExecuteQuery(True)
 	End Sub
 
     'BANCOS
@@ -293,7 +284,7 @@
 		sqlHaving = ""
 		sqlOrderBy = ""
 
-		ExecuteQuery(True, DbMan.read("SELECT *", Connection.Text, sqlFrom))
+		ExecuteQuery(True)
 	End Sub
 
 	'CAJA
@@ -307,7 +298,7 @@
 		sqlHaving = ""
 		sqlOrderBy = "ORDER BY fecha"
 
-		ExecuteQuery(True, DbMan.read("SELECT *", Connection.Text, sqlFrom))
+		ExecuteQuery(True)
 	End Sub
 
     'CAJA <> MOVIMIS
@@ -325,10 +316,9 @@
 		sqlHaving = ""
 		sqlOrderBy = "ORDER BY caja.fecha"
 
-		ColumnListDataSource = DbMan.read("SELECT caja.recibo, caja.importe, movimis.documento, movimis.detalle ",
-									 Connection.Text, sqlFrom)
+		'ColumnListDataSource = DbMan.read("SELECT caja.recibo, caja.importe, movimis.documento, movimis.detalle ",Connection.Text, sqlFrom)
 
-		ExecuteQuery(True, ColumnListDataSource)
+		ExecuteQuery(True)
 	End Sub
 	Private Sub CompararEgresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CompararEgresosToolStripMenuItem.Click
 		Me.Name = titulo & " | " & sender.Text
@@ -352,26 +342,24 @@
 
 		sqlOrderBy = "ORDER BY opagos.dia"
 
-		ColumnListDataSource = DbMan.read("SELECT opagos.dia, opagos.orden, opagos.importe, movimis.fecha, movimis.documento, movimis.detalle, movimis.orden",
-									 Connection.Text, sqlFrom)
+		'DbMan.read("SELECT opagos.dia, opagos.orden, opagos.importe, movimis.fecha, movimis.documento, movimis.detalle, movimis.orden",Connection.Text, sqlFrom)
 
-		ExecuteQuery(True, ColumnListDataSource)
+		ExecuteQuery(True)
 
 	End Sub
 
 	'Main filter events
-	Private Sub PanelFiltros_VisibleChanged(sender As Object, e As EventArgs) Handles PanelFiltros.VisibleChanged, IntFilterPanel.VisibleChanged, DateFilterPanel.VisibleChanged, StringFilterPanel.VisibleChanged
-		If sender Is PanelFiltros Then
-			ColumnList_bs.Position = -1
-		End If
+	Private Sub PanelFiltros_VisibleChanged(sender As Object, e As EventArgs) Handles PanelFiltros.VisibleChanged
 		If sender.Visible Then
-			ExecuteQuery(False, ColumnListDataSource, FilterQuery(sender, ColumnList_bs, sender Is PanelFiltros))
+			If sender Is PanelFiltros Then
+				ColumnList.SelectedIndex = -1
+			End If
 		End If
 	End Sub
 
 	Private Sub EnableFilter_CheckedChanged(sender As Object, e As EventArgs) Handles EnableFilter.CheckedChanged
 		ColumnList.Visible = EnableFilter.Checked
-		ColumnList_bs.Position = -1
+		ColumnList.SelectedIndex = -1
 		If EnableFilter.Checked = False Then
 			IntFilterPanel.Visible = False
 			DateFilterPanel.Visible = False
@@ -379,9 +367,9 @@
 		End If
 	End Sub
 
-	Private Sub ColumnList_bs_CurrentChanged(sender As Object, e As EventArgs) Handles ColumnList_bs.CurrentChanged, ColumnList_bs.PositionChanged
+	Private Sub ColumnList_bs_CurrentChanged(sender As Object, e As EventArgs) Handles ColumnList_bs.CurrentChanged, ColumnList_bs.PositionChanged, ColumnList.TextChanged
 		If PanelFiltros.Visible And EnableFilter.Checked Then
-			ExecuteQuery(False, ColumnListDataSource, FilterQuery(sender, ColumnList_bs, True))
+			ExecuteQuery(False, FilterQuery(sender, query_bs, ColumnList, True))
 		End If
 	End Sub
 
@@ -423,35 +411,37 @@
 
 	'DEC INT filter events
 	Private Sub NumFilterSelect_SelectedIndexChanged(sender As Object, e As EventArgs) Handles NumFilterSelect.SelectedIndexChanged, NumFilterSelect.SelectedValueChanged, NumFilterSelect.TextChanged
-		minNumValue.Value = minNumValue.Minimum
-		maxNumValue.Value = maxNumValue.Maximum
-		Label4.Visible = (NumFilterSelect.Text = "RANGO")
-		maxNumValue.Visible = (NumFilterSelect.Text = "RANGO")
+		If IntFilterPanel.Visible Then
+			minNumValue.Value = minNumValue.Minimum
+			maxNumValue.Value = maxNumValue.Maximum
+			Label4.Visible = (NumFilterSelect.Text = "RANGO")
+			maxNumValue.Visible = (NumFilterSelect.Text = "RANGO")
 
-		ExecuteQuery(False, ColumnListDataSource, FilterQuery(sender, ColumnList_bs, False))
+			ExecuteQuery(False, FilterQuery(sender, query_bs, ColumnList, False))
+		End If
 	End Sub
 	Private Sub NumValue_ValueChanged(sender As Object, e As EventArgs) Handles minNumValue.ValueChanged, maxNumValue.ValueChanged
 		If IntFilterPanel.Visible Then
-			ExecuteQuery(False, ColumnListDataSource, FilterQuery(sender, ColumnList_bs, False))
+			ExecuteQuery(False, FilterQuery(sender, query_bs, ColumnList, False))
 		End If
 	End Sub
 
 	'DATE filter events
 	Private Sub PorFecha_CheckedChanged(sender As Object, e As EventArgs) Handles PorFecha.CheckedChanged, PorAño.CheckedChanged
 		If DateFilterPanel.Visible Then
-			ExecuteQuery(False, ColumnListDataSource, FilterQuery(sender, ColumnList_bs, False))
+			ExecuteQuery(False, FilterQuery(sender, query_bs, ColumnList, False))
 		End If
 	End Sub
 	Private Sub minDateValue_ValueChanged(sender As Object, e As EventArgs) Handles minDateValue.ValueChanged, maxDateValue.ValueChanged, yearValue.ValueChanged
 		If DateFilterPanel.Visible Then
-			ExecuteQuery(False, ColumnListDataSource, FilterQuery(sender, ColumnList_bs, False))
+			ExecuteQuery(False, FilterQuery(sender, query_bs, ColumnList, False))
 		End If
 	End Sub
 
 	'STRING filter events
 	Private Sub keyword_TextChanged(sender As Object, e As EventArgs) Handles keyword.TextChanged
 		If StringFilterPanel.Visible Then
-			ExecuteQuery(False, ColumnListDataSource, FilterQuery(sender, ColumnList_bs, False))
+			ExecuteQuery(False, FilterQuery(sender, query_bs, ColumnList, False))
 		End If
 	End Sub
 

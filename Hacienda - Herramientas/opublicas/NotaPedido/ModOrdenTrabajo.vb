@@ -1,4 +1,4 @@
-﻿Public Class ModNotaPedido
+﻿Public Class ModOrdenTrabajo
 	'###### GUI ##########################################################################################
 	Private Sub save_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles save.Click
 		NotaPedido.Guardar(nota_pedido_id.Text)

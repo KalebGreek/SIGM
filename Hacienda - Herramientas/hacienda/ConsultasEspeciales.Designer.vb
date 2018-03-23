@@ -550,7 +550,7 @@ Partial Class ConsultasEspeciales
 		Me.MinimumSize = New System.Drawing.Size(500, 500)
 		Me.Name = "ConsultasEspeciales"
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-		Me.Text = "CALCULOS"
+		Me.Text = "Herramientas de calculo"
 		Me.MenuStrip2.ResumeLayout(False)
 		Me.MenuStrip2.PerformLayout()
 		CType(Me.DataView, System.ComponentModel.ISupportInitialize).EndInit()

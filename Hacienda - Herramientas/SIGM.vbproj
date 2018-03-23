@@ -356,16 +356,16 @@
     <Compile Include="hacienda\Combustibles\ModCombustible.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="opublicas\NotaPedido\BusquedaNotaPedido.Designer.vb">
-      <DependentUpon>BusquedaNotaPedido.vb</DependentUpon>
+    <Compile Include="opublicas\NotaPedido\BusquedaOrdenTrabajo.Designer.vb">
+      <DependentUpon>BusquedaOrdenTrabajo.vb</DependentUpon>
     </Compile>
-    <Compile Include="opublicas\NotaPedido\BusquedaNotaPedido.vb">
+    <Compile Include="opublicas\NotaPedido\BusquedaOrdenTrabajo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="opublicas\NotaPedido\ModNotaPedido.Designer.vb">
-      <DependentUpon>ModNotaPedido.vb</DependentUpon>
+    <Compile Include="opublicas\NotaPedido\ModOrdenTrabajo.Designer.vb">
+      <DependentUpon>ModOrdenTrabajo.vb</DependentUpon>
     </Compile>
-    <Compile Include="opublicas\NotaPedido\ModNotaPedido.vb">
+    <Compile Include="opublicas\NotaPedido\ModOrdenTrabajo.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="opublicas\NotaPedido\NotaPedido.vb" />
@@ -553,12 +553,12 @@
     <EmbeddedResource Include="oprivadas\BusquedaExpediente.resx">
       <DependentUpon>BusquedaExpediente.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="opublicas\NotaPedido\BusquedaNotaPedido.resx">
-      <DependentUpon>BusquedaNotaPedido.vb</DependentUpon>
+    <EmbeddedResource Include="opublicas\NotaPedido\BusquedaOrdenTrabajo.resx">
+      <DependentUpon>BusquedaOrdenTrabajo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="opublicas\forms\nop.rdlc" />
-    <EmbeddedResource Include="opublicas\NotaPedido\ModNotaPedido.resx">
-      <DependentUpon>ModNotaPedido.vb</DependentUpon>
+    <EmbeddedResource Include="opublicas\NotaPedido\ModOrdenTrabajo.resx">
+      <DependentUpon>ModOrdenTrabajo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="persona\BusquedaPersona.resx">
       <DependentUpon>BusquedaPersona.vb</DependentUpon>

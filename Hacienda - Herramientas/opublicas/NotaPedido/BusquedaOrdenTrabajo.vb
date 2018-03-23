@@ -1,4 +1,4 @@
-﻿Public Class BusquedaNotaPedido
+﻿Public Class BusquedaOrdenTrabajo
 	Public Sub New()
 
 		' This call is required by the designer.

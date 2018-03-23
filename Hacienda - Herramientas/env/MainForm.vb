@@ -11,12 +11,6 @@
 		For Each i In BaseMenu.Items
 			i.Visible = (i.Name = MenuName)
 		Next
-		SalirToolStripMenuItem.Visible = True
-	End Sub
-
-    'GENERAL
-    Private Sub SalirToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalirToolStripMenuItem.Click
-		Me.Close()
 	End Sub
 
 	'ACCION SOCIAL
@@ -138,7 +132,7 @@
 
 	End Sub
 	Private Sub BuscarNotaDePedidoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarNotaDePedidoToolStripMenuItem.Click
-		Dim buscarnp As New BusquedaNotaPedido
+		Dim buscarnp As New BusquedaOrdenTrabajo
 		buscarnp.MdiParent = Me
 		buscarnp.ControlBusqueda1.vista.Text = "PEDIDO"
 		buscarnp.Show()

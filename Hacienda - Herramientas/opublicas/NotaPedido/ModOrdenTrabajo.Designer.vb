@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class ModNotaPedido
+Partial Class ModOrdenTrabajo
 	Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -22,12 +22,11 @@ Partial Class ModNotaPedido
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()>
 	Private Sub InitializeComponent()
+		Me.components = New System.ComponentModel.Container()
 		Me.nota_pedido_id = New System.Windows.Forms.TextBox()
 		Me.grupo_mod = New System.Windows.Forms.FlowLayoutPanel()
 		Me.cancel = New System.Windows.Forms.Button()
 		Me.save = New System.Windows.Forms.Button()
-		Me.nextPage = New System.Windows.Forms.Button()
-		Me.lastPage = New System.Windows.Forms.Button()
 		Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
 		Me.Label7 = New System.Windows.Forms.Label()
 		Me.TextBox1 = New System.Windows.Forms.TextBox()
@@ -36,16 +35,18 @@ Partial Class ModNotaPedido
 		Me.Label6 = New System.Windows.Forms.Label()
 		Me.TextBox2 = New System.Windows.Forms.TextBox()
 		Me.buscar_proveedor = New System.Windows.Forms.Button()
+		Me.Label5 = New System.Windows.Forms.Label()
+		Me.TextBox5 = New System.Windows.Forms.TextBox()
 		Me.Label2 = New System.Windows.Forms.Label()
 		Me.TextBox3 = New System.Windows.Forms.TextBox()
 		Me.buscar_empleado = New System.Windows.Forms.Button()
 		Me.Label4 = New System.Windows.Forms.Label()
 		Me.TextBox4 = New System.Windows.Forms.TextBox()
 		Me.buscar_autoridad = New System.Windows.Forms.Button()
-		Me.detalle = New System.Windows.Forms.TextBox()
 		Me.Label3 = New System.Windows.Forms.Label()
-		Me.Label5 = New System.Windows.Forms.Label()
-		Me.TextBox5 = New System.Windows.Forms.TextBox()
+		Me.detalle = New System.Windows.Forms.TextBox()
+		Me.print = New System.Windows.Forms.Button()
+		Me.help = New System.Windows.Forms.ToolTip(Me.components)
 		Me.grupo_mod.SuspendLayout()
 		Me.FlowLayoutPanel1.SuspendLayout()
 		Me.SuspendLayout()
@@ -69,8 +70,7 @@ Partial Class ModNotaPedido
 		Me.grupo_mod.Controls.Add(Me.nota_pedido_id)
 		Me.grupo_mod.Controls.Add(Me.cancel)
 		Me.grupo_mod.Controls.Add(Me.save)
-		Me.grupo_mod.Controls.Add(Me.nextPage)
-		Me.grupo_mod.Controls.Add(Me.lastPage)
+		Me.grupo_mod.Controls.Add(Me.print)
 		Me.grupo_mod.Dock = System.Windows.Forms.DockStyle.Bottom
 		Me.grupo_mod.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
 		Me.grupo_mod.Location = New System.Drawing.Point(0, 347)
@@ -91,6 +91,7 @@ Partial Class ModNotaPedido
 		Me.cancel.Size = New System.Drawing.Size(29, 29)
 		Me.cancel.TabIndex = 398
 		Me.cancel.Text = ""
+		Me.help.SetToolTip(Me.cancel, "Cancelar")
 		Me.cancel.UseVisualStyleBackColor = True
 		'
 		'save
@@ -105,38 +106,8 @@ Partial Class ModNotaPedido
 		Me.save.Size = New System.Drawing.Size(29, 29)
 		Me.save.TabIndex = 397
 		Me.save.Text = ""
+		Me.help.SetToolTip(Me.save, "Guardar")
 		Me.save.UseVisualStyleBackColor = True
-		'
-		'nextPage
-		'
-		Me.nextPage.FlatAppearance.BorderSize = 0
-		Me.nextPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.nextPage.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.nextPage.ForeColor = System.Drawing.Color.WhiteSmoke
-		Me.nextPage.Location = New System.Drawing.Point(208, 0)
-		Me.nextPage.Margin = New System.Windows.Forms.Padding(0)
-		Me.nextPage.Name = "nextPage"
-		Me.nextPage.Size = New System.Drawing.Size(29, 29)
-		Me.nextPage.TabIndex = 399
-		Me.nextPage.Text = ""
-		Me.nextPage.UseVisualStyleBackColor = True
-		Me.nextPage.Visible = False
-		'
-		'lastPage
-		'
-		Me.lastPage.Enabled = False
-		Me.lastPage.FlatAppearance.BorderSize = 0
-		Me.lastPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.lastPage.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.lastPage.ForeColor = System.Drawing.Color.WhiteSmoke
-		Me.lastPage.Location = New System.Drawing.Point(179, 0)
-		Me.lastPage.Margin = New System.Windows.Forms.Padding(0)
-		Me.lastPage.Name = "lastPage"
-		Me.lastPage.Size = New System.Drawing.Size(29, 29)
-		Me.lastPage.TabIndex = 400
-		Me.lastPage.Text = ""
-		Me.lastPage.UseVisualStyleBackColor = True
-		Me.lastPage.Visible = False
 		'
 		'FlowLayoutPanel1
 		'
@@ -236,6 +207,24 @@ Partial Class ModNotaPedido
 		Me.buscar_proveedor.Text = ""
 		Me.buscar_proveedor.UseVisualStyleBackColor = False
 		'
+		'Label5
+		'
+		Me.Label5.Location = New System.Drawing.Point(0, 60)
+		Me.Label5.Margin = New System.Windows.Forms.Padding(0)
+		Me.Label5.Name = "Label5"
+		Me.Label5.Size = New System.Drawing.Size(80, 29)
+		Me.Label5.TabIndex = 407
+		Me.Label5.Text = "Destino"
+		Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		'
+		'TextBox5
+		'
+		Me.TextBox5.Location = New System.Drawing.Point(80, 60)
+		Me.TextBox5.Margin = New System.Windows.Forms.Padding(0)
+		Me.TextBox5.Name = "TextBox5"
+		Me.TextBox5.Size = New System.Drawing.Size(216, 27)
+		Me.TextBox5.TabIndex = 408
+		'
 		'Label2
 		'
 		Me.Label2.Location = New System.Drawing.Point(0, 89)
@@ -306,6 +295,16 @@ Partial Class ModNotaPedido
 		Me.buscar_autoridad.Text = ""
 		Me.buscar_autoridad.UseVisualStyleBackColor = False
 		'
+		'Label3
+		'
+		Me.Label3.Location = New System.Drawing.Point(0, 147)
+		Me.Label3.Margin = New System.Windows.Forms.Padding(0)
+		Me.Label3.Name = "Label3"
+		Me.Label3.Size = New System.Drawing.Size(80, 29)
+		Me.Label3.TabIndex = 406
+		Me.Label3.Text = "Detalle"
+		Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		'
 		'detalle
 		'
 		Me.detalle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
@@ -318,33 +317,21 @@ Partial Class ModNotaPedido
 		Me.detalle.Size = New System.Drawing.Size(240, 194)
 		Me.detalle.TabIndex = 7
 		'
-		'Label3
+		'print
 		'
-		Me.Label3.Location = New System.Drawing.Point(0, 147)
-		Me.Label3.Margin = New System.Windows.Forms.Padding(0)
-		Me.Label3.Name = "Label3"
-		Me.Label3.Size = New System.Drawing.Size(80, 29)
-		Me.Label3.TabIndex = 406
-		Me.Label3.Text = "Detalle"
-		Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-		'
-		'Label5
-		'
-		Me.Label5.Location = New System.Drawing.Point(0, 60)
-		Me.Label5.Margin = New System.Windows.Forms.Padding(0)
-		Me.Label5.Name = "Label5"
-		Me.Label5.Size = New System.Drawing.Size(80, 29)
-		Me.Label5.TabIndex = 407
-		Me.Label5.Text = "Destino"
-		Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-		'
-		'TextBox5
-		'
-		Me.TextBox5.Location = New System.Drawing.Point(80, 60)
-		Me.TextBox5.Margin = New System.Windows.Forms.Padding(0)
-		Me.TextBox5.Name = "TextBox5"
-		Me.TextBox5.Size = New System.Drawing.Size(216, 27)
-		Me.TextBox5.TabIndex = 408
+		Me.print.FlatAppearance.BorderSize = 0
+		Me.print.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.print.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.print.ForeColor = System.Drawing.Color.WhiteSmoke
+		Me.print.Location = New System.Drawing.Point(208, 0)
+		Me.print.Margin = New System.Windows.Forms.Padding(0)
+		Me.print.Name = "print"
+		Me.print.Size = New System.Drawing.Size(29, 29)
+		Me.print.TabIndex = 399
+		Me.print.Text = ""
+		Me.help.SetToolTip(Me.print, "Imprimir")
+		Me.print.UseVisualStyleBackColor = True
+		Me.print.Visible = False
 		'
 		'ModNotaPedido
 		'
@@ -372,8 +359,6 @@ Partial Class ModNotaPedido
 	Friend WithEvents grupo_mod As System.Windows.Forms.FlowLayoutPanel
 	Friend WithEvents cancel As Button
 	Friend WithEvents save As Button
-	Friend WithEvents nextPage As Button
-	Friend WithEvents lastPage As Button
 	Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
 	Friend WithEvents Label1 As Label
 	Friend WithEvents DateTimePicker1 As DateTimePicker
@@ -392,4 +377,6 @@ Partial Class ModNotaPedido
 	Friend WithEvents Label3 As Label
 	Friend WithEvents Label5 As Label
 	Friend WithEvents TextBox5 As TextBox
+	Friend WithEvents print As Button
+	Friend WithEvents help As ToolTip
 End Class

@@ -75,7 +75,6 @@ Partial Class MainForm
 		Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
 		Me.BuscarActaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.comercioMenu = New System.Windows.Forms.ToolStripMenuItem()
-		Me.SalirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.StatusStrip1.SuspendLayout()
 		Me.BaseMenu.SuspendLayout()
 		Me.SuspendLayout()
@@ -117,10 +116,10 @@ Partial Class MainForm
 		'
 		Me.BaseMenu.BackColor = System.Drawing.Color.DimGray
 		Me.BaseMenu.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Bold)
-		Me.BaseMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.catastroMenu, Me.asocialMenu, Me.gobiernoMenu, Me.haciendaMenu, Me.oprivadasMenu, Me.opublicasMenu, Me.personaMenu, Me.comercioMenu, Me.SalirToolStripMenuItem})
+		Me.BaseMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.catastroMenu, Me.asocialMenu, Me.gobiernoMenu, Me.haciendaMenu, Me.oprivadasMenu, Me.opublicasMenu, Me.personaMenu, Me.comercioMenu})
 		Me.BaseMenu.Location = New System.Drawing.Point(0, 0)
 		Me.BaseMenu.Name = "BaseMenu"
-		Me.BaseMenu.Size = New System.Drawing.Size(990, 27)
+		Me.BaseMenu.Size = New System.Drawing.Size(990, 24)
 		Me.BaseMenu.TabIndex = 388
 		Me.BaseMenu.Text = "MenuStrip1"
 		'
@@ -470,15 +469,6 @@ Partial Class MainForm
 		Me.comercioMenu.Text = "COMERCIO"
 		Me.comercioMenu.Visible = False
 		'
-		'SalirToolStripMenuItem
-		'
-		Me.SalirToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.SalirToolStripMenuItem.ForeColor = System.Drawing.Color.White
-		Me.SalirToolStripMenuItem.Name = "SalirToolStripMenuItem"
-		Me.SalirToolStripMenuItem.Padding = New System.Windows.Forms.Padding(0)
-		Me.SalirToolStripMenuItem.Size = New System.Drawing.Size(43, 23)
-		Me.SalirToolStripMenuItem.Text = "Salir"
-		'
 		'MainForm
 		'
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
@@ -533,7 +523,6 @@ Partial Class MainForm
 	Friend WithEvents BuscarActaToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents BuscarInmuebleToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents ConsultarPagosToolStripMenuItem As ToolStripMenuItem
-	Friend WithEvents SalirToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents LibreDeudaToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents GenerarCertificadoToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents comercioMenu As ToolStripMenuItem
