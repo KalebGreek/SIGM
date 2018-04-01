@@ -95,10 +95,15 @@
 				'CType(instancia, FormContenedorGen).user_id.Text = user_id
 			End If
 		End If
-        'Apenas termino de configurar bien postgres esto va a pasar a
-        'cargar la conexión de Access y dejar Postgres como estándar
+		'Apenas termino de configurar bien postgres esto va a pasar a
+		'cargar la conexión de Access y dejar Postgres como estándar
+		If instancia Is acceso Then
+			'Leer carpeta raiz
+			My.Settings.adbcon = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Environment.CurrentDirectory.ToString & "vrosas.accdb"
+			My.Settings.DefaultCon = My.Settings.adbcon
+		End If
 
-        Dim dtab_con As New DataTable
+		Dim dtab_con As New DataTable
         '### CONEXION FOX
         dtab_con = DbMan.read("SELECT * FROM opciones WHERE opcion='conexion_fox'")
 

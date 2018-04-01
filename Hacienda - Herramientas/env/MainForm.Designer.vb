@@ -51,6 +51,7 @@ Partial Class MainForm
 		Me.GenerarCertificadoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.CombustibleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.TicketsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.SIJCORToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.oprivadasMenu = New System.Windows.Forms.ToolStripMenuItem()
 		Me.NuevoExpedienteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.BuscarExpedienteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -202,7 +203,7 @@ Partial Class MainForm
 		'
 		'haciendaMenu
 		'
-		Me.haciendaMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HaciendaToolStripMenuItem, Me.ConsultarImpuestoToolStripMenuItem, Me.ConsultarCuentaAgrupadaToolStripMenuItem, Me.ConsultaDeMovimientosToolStripMenuItem, Me.ConsultasEspecialesStripMenuItem, Me.ToolStripSeparator3, Me.ToolStripMenuItem1, Me.CalculoAnualDeImpuestosToolStripMenuItem, Me.LibreDeudaToolStripMenuItem, Me.CombustibleToolStripMenuItem})
+		Me.haciendaMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HaciendaToolStripMenuItem, Me.ConsultarImpuestoToolStripMenuItem, Me.ConsultarCuentaAgrupadaToolStripMenuItem, Me.ConsultaDeMovimientosToolStripMenuItem, Me.ConsultasEspecialesStripMenuItem, Me.ToolStripSeparator3, Me.ToolStripMenuItem1, Me.CalculoAnualDeImpuestosToolStripMenuItem, Me.LibreDeudaToolStripMenuItem, Me.CombustibleToolStripMenuItem, Me.SIJCORToolStripMenuItem})
 		Me.haciendaMenu.ForeColor = System.Drawing.Color.White
 		Me.haciendaMenu.Name = "haciendaMenu"
 		Me.haciendaMenu.Padding = New System.Windows.Forms.Padding(0)
@@ -293,6 +294,13 @@ Partial Class MainForm
 		Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
 		Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(126, 24)
 		Me.TicketsToolStripMenuItem.Text = "Tickets"
+		'
+		'SIJCORToolStripMenuItem
+		'
+		Me.SIJCORToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.SIJCORToolStripMenuItem.Name = "SIJCORToolStripMenuItem"
+		Me.SIJCORToolStripMenuItem.Size = New System.Drawing.Size(258, 24)
+		Me.SIJCORToolStripMenuItem.Text = "SIJCOR"
 		'
 		'oprivadasMenu
 		'
@@ -544,4 +552,5 @@ Partial Class MainForm
 	Friend WithEvents BuscarProveedorToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents NuevoExpedienteToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents ToolStripSeparator5 As ToolStripSeparator
+	Friend WithEvents SIJCORToolStripMenuItem As ToolStripMenuItem
 End Class

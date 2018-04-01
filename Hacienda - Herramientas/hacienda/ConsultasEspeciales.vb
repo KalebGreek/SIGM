@@ -14,25 +14,10 @@
 	End Sub
 
 	'RUTINAS
-	Private Sub ExecuteQuery(ByVal reset As Boolean, Optional FilteredQuery As String = "")
+	Private Sub ExecuteQuery(ByVal reset As Boolean)
 		If Connection.Text <> "Seleccione una base de datos antes de continuar." Then
-			DataView.DataSource = Nothing
-			query_bs.DataSource = Nothing
-
-			'Load datagridview
 			Dim dtab As New DataTable
-
-			'Check for filters
-			If FilteredQuery <> "" Then
-				dtab = DbMan.read(sqlSelect, Connection.Text, sqlFrom, FilteredQuery, sqlGroupBy, sqlHaving, sqlOrderBy)
-				'Reflect custom query
-				CustomQuery.Text = sqlSelect & " " & sqlFrom & " " & FilteredQuery & " " & sqlGroupBy & " " & sqlHaving & " " & sqlOrderBy
-			Else
-				dtab = DbMan.read(sqlSelect, Connection.Text, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
-				'Reflect custom query
-				CustomQuery.Text = sqlSelect & " " & sqlFrom & " " & sqlWhere & " " & sqlGroupBy & " " & sqlHaving & " " & sqlOrderBy
-			End If
-			CtrlMan.LoadDataGridView(DataView, query_bs, dtab)
+			dtab = DbMan.read(sqlSelect, Connection.Text, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
 
 			If reset Then
 				'Only needed the first time we access a new query
@@ -65,12 +50,28 @@
 				End If
 				PanelFiltros.Visible = dtab.Columns.Count > 0
 			End If
+
+			CustomQuery.Text = sqlSelect & " " & sqlFrom & " " & sqlWhere & " " & sqlGroupBy & " " & sqlHaving & " " & sqlOrderBy
+
+			'Load datagridview
+			CtrlMan.LoadDataGridView(DataView, query_bs, "", dtab)
+
+			'Check for filters
+
+			'If FilteredQuery <> "" Then
+			'dtab = DbMan.read(sqlSelect, Connection.Text, sqlFrom, FilteredQuery, sqlGroupBy, sqlHaving, sqlOrderBy)
+			'CustomQuery.Text = sqlSelect & " " & sqlFrom & " " & FilteredQuery & " " & sqlGroupBy & " " & sqlHaving & " " & sqlOrderBy
+			'Else
+			'dtab = DbMan.read(sqlSelect, Connection.Text, sqlFrom, sqlWHere, sqlGroupBy, sqlHaving, sqlOrderBy)
+			'CustomQuery.Text = sqlSelect & " " & sqlFrom & " " & sqlWhere & " " & sqlGroupBy & " " & sqlHaving & " " & sqlOrderBy
+			'End If
 		Else
 			CustomQuery.Text = ""
 		End If
 	End Sub
 
-	Private Function FilterQuery(sender As Object, Data_bs As BindingSource, FilterColumn As ComboBox, reset As Boolean)
+	Private Function FilterQuery(sender As Object, data_bs As BindingSource, FilterColumn As ComboBox, reset As Boolean)
+		Dim bsCustomFilter As String = ""
 		Dim sqlCustomFilter As String = ""
 		If PanelFiltros.Visible And EnableFilter.Checked Then
 			If reset Then
@@ -85,7 +86,7 @@
 					Else
 						'Return range of values to use for the specified column
 						Dim sorted_bs As New BindingSource
-						sorted_bs = query_bs
+						sorted_bs = data_bs
 						sorted_bs.Sort = FilterColumn.Text & " ASC"
 
 						'dtab_min = DbMan.read("SELECT MIN(" & FilterColumn.Current("colName") & ") AS " & FilterColumn.Current("colName"),
@@ -165,26 +166,28 @@
 				'Change this from SQL to BindingSource.Filter
 				If FilterColumn.SelectedValue = "System.String" Then 'String
 					If Len(Trim(keyword.Text)) > 2 Then
-						Data_bs.Filter = ""
-						sqlCustomFilter = FilterColumn.Text & " Like '%" & keyword.Text & "%'"
+						bsCustomFilter = FilterColumn.Text & " Like '%" & keyword.Text & "%'"
+						'sqlCustomFilter = FilterColumn.Text & " Like '%" & keyword.Text & "%'"
 					End If
 				ElseIf FilterColumn.SelectedValue = "System.Decimal" Or FilterColumn.SelectedValue = "System.Integer" Then 'Dec or Int
-					sqlCustomFilter = IntDecFilter(FilterColumn.Text, minNumValue.Value, maxNumValue.Value, NumFilterSelect.Text)
-
+					bsCustomFilter = IntDecFilter(FilterColumn.Text, minNumValue.Value, maxNumValue.Value, NumFilterSelect.Text)
+					'sqlCustomFilter = IntDecFilter(FilterColumn.Text, minNumValue.Value, maxNumValue.Value, NumFilterSelect.Text)
 				ElseIf FilterColumn.SelectedValue = "System.Date" Then 'Date
-					sqlCustomFilter = DateFilter(FilterColumn.Text, minDateValue.Value, maxDateValue.Value, PorAño.Checked, yearValue.Value)
+					bsCustomFilter = DateFilter(FilterColumn.Text, minDateValue.Value, maxDateValue.Value, PorAño.Checked, yearValue.Value)
+					'sqlCustomFilter = DateFilter(FilterColumn.Text, minDateValue.Value, maxDateValue.Value, PorAño.Checked, yearValue.Value)
 				End If
 
-				If sqlCustomFilter <> "" Then
-					If sqlWhere.Contains("WHERE") Then
-						sqlCustomFilter = sqlWhere & " AND " & sqlCustomFilter
-					Else
-						sqlCustomFilter = "WHERE " & sqlCustomFilter
-					End If
-				End If
+				'If sqlCustomFilter <> "" Then
+				'If sqlWhere.Contains("WHERE") Then
+				'sqlCustomFilter = sqlWhere & " AND " & sqlCustomFilter
+				'Else
+				'sqlCustomFilter = "WHERE " & sqlCustomFilter
+				'End If
+				'End If
 			End If
 		End If
-		Return sqlCustomFilter
+		Return bsCustomFilter
+		'Return sqlCustomFilter
 	End Function
 
 	Private Function IntDecFilter(ColumnName As String, minValue As Long, maxValue As Long, Compare As String)
@@ -368,8 +371,10 @@
 	End Sub
 
 	Private Sub ColumnList_bs_CurrentChanged(sender As Object, e As EventArgs) Handles ColumnList_bs.CurrentChanged, ColumnList_bs.PositionChanged, ColumnList.TextChanged
+		query_bs.Filter = ""
 		If PanelFiltros.Visible And EnableFilter.Checked Then
-			ExecuteQuery(False, FilterQuery(sender, query_bs, ColumnList, True))
+			ExecuteQuery(False)
+			FilterQuery(sender, query_bs, ColumnList, True)
 		End If
 	End Sub
 
@@ -398,7 +403,7 @@
 			sqlGroupBy = ""
 			sqlHaving = ""
 			sqlOrderBy = ""
-			ExecuteQuery(True, DbMan.read("SELECT *", Connection.Text, sqlFrom))
+			ExecuteQuery(True)
 
 			If TableName <> CustomTable.Text Then
 				CustomTable.Text = TableName
@@ -417,38 +422,47 @@
 			Label4.Visible = (NumFilterSelect.Text = "RANGO")
 			maxNumValue.Visible = (NumFilterSelect.Text = "RANGO")
 
-			ExecuteQuery(False, FilterQuery(sender, query_bs, ColumnList, False))
+			ExecuteQuery(False)
+			query_bs.Filter = FilterQuery(sender, query_bs, ColumnList, False)
 		End If
 	End Sub
 	Private Sub NumValue_ValueChanged(sender As Object, e As EventArgs) Handles minNumValue.ValueChanged, maxNumValue.ValueChanged
 		If IntFilterPanel.Visible Then
-			ExecuteQuery(False, FilterQuery(sender, query_bs, ColumnList, False))
+			ExecuteQuery(False)
+			query_bs.Filter = FilterQuery(sender, query_bs, ColumnList, False)
 		End If
 	End Sub
 
 	'DATE filter events
 	Private Sub PorFecha_CheckedChanged(sender As Object, e As EventArgs) Handles PorFecha.CheckedChanged, PorAño.CheckedChanged
 		If DateFilterPanel.Visible Then
-			ExecuteQuery(False, FilterQuery(sender, query_bs, ColumnList, False))
+			ExecuteQuery(False)
+			query_bs.Filter = FilterQuery(sender, query_bs, ColumnList, False)
 		End If
 	End Sub
 	Private Sub minDateValue_ValueChanged(sender As Object, e As EventArgs) Handles minDateValue.ValueChanged, maxDateValue.ValueChanged, yearValue.ValueChanged
 		If DateFilterPanel.Visible Then
-			ExecuteQuery(False, FilterQuery(sender, query_bs, ColumnList, False))
+			ExecuteQuery(False)
+			query_bs.Filter = FilterQuery(sender, query_bs, ColumnList, False)
 		End If
 	End Sub
 
 	'STRING filter events
-	Private Sub keyword_TextChanged(sender As Object, e As EventArgs) Handles keyword.TextChanged
-		If StringFilterPanel.Visible Then
-			ExecuteQuery(False, FilterQuery(sender, query_bs, ColumnList, False))
+	Private Sub keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles keyword.KeyUp
+		If StringFilterPanel.Visible And e.KeyValue = Keys.Enter Then
+			ExecuteQuery(False)
+			If Len(Trim(keyword.Text)) > 2 Then
+				query_bs.Filter = FilterQuery(sender, query_bs, ColumnList, False)
+			Else
+				query_bs.Filter = ""
+			End If
 		End If
 	End Sub
 
 	Private Sub CustomQuery_KeyUp(sender As Object, e As KeyEventArgs) Handles CustomQuery.KeyUp
 		If e.KeyValue = Keys.Enter Then
 			Dim dtab As DataTable = DbMan.read(CustomQuery.Text, Connection.Text)
-			CtrlMan.LoadDataGridView(DataView, query_bs, dtab)
+			CtrlMan.LoadDataGridView(DataView, query_bs, "", dtab)
 		End If
 	End Sub
 
@@ -462,5 +476,6 @@
 	Private Sub DBPostgreSQLToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles DBPostgreSQLToolStripMenuItem.Click
 		Connection.Text = My.Settings.pgsqlcon
 	End Sub
+
 
 End Class

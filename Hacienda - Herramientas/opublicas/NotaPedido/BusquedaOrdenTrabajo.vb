@@ -12,7 +12,7 @@
 	'-- RUTINAS
 	Public Sub Consultar(vista As String, filtro As String, keyword As String) Handles ControlBusqueda1.CSearch_Click
 		With ControlBusqueda1
-			CtrlMan.LoadDataGridView(resultado, bs_resultado,
+			CtrlMan.LoadDataGridView(resultado, bs_resultado, "",
 									 NotaPedido.Buscar(Trim(filtro), Trim(keyword)))
 		End With
 	End Sub

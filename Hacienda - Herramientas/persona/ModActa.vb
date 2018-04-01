@@ -3,7 +3,7 @@
         ' This call is required by the designer.
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
-        CtrlMan.LoadDataGridView(consulta_acta, bs_acta, buscar(persona_id))
+        CtrlMan.LoadDataGridView(consulta_acta, bs_acta, "", buscar(persona_id))
 	End Sub
 
     '###### GUI ##########################################################################################

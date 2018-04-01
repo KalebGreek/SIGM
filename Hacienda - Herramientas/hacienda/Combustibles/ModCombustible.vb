@@ -39,7 +39,7 @@
 
 	Private Sub bs_receptor_PositionChanged(sender As Object, e As EventArgs) Handles bs_receptor.PositionChanged, bs_receptor.CurrentChanged
 		If Me.Visible Then
-			CtrlMan.LoadDataGridView(historial, bs_historial,
+			CtrlMan.LoadDataGridView(historial, bs_historial, "",
 									 Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
 		End If
 	End Sub
@@ -114,7 +114,7 @@
 			End If
 			AddModTicket.Dispose()
 		End If
-		CtrlMan.LoadDataGridView(historial, bs_historial,
+		CtrlMan.LoadDataGridView(historial, bs_historial, "",
 								 Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
 	End Sub
 
@@ -123,7 +123,7 @@
 			If MsgBoxResult.Yes = MsgBox("Desea eliminar el ticket seleccionado? Esta operacion no se puede deshacer.", MsgBoxStyle.YesNo, "Eliminar Ticket") Then
 				DbMan.edit("DELETE * FROM hac_combustible_ticket WHERE id=" & bs_historial.Current("ticket_id"))
 				bs_historial.RemoveCurrent()
-				CtrlMan.LoadDataGridView(historial, bs_historial,
+				CtrlMan.LoadDataGridView(historial, bs_historial, "",
 										 Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
 			End If
 		End If

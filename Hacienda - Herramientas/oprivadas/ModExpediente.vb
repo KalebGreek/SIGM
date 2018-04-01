@@ -119,9 +119,9 @@
 			Next
 
 			'##### Cargar personas
-			CtrlMan.LoadDataGridView(consulta_resp, bs_resp, Oprivadas.Expediente.ListarResponsables(expediente.Text))
+			CtrlMan.LoadDataGridView(consulta_resp, bs_resp, "", Oprivadas.Expediente.ListarResponsables(expediente.Text))
 			'INMUEBLES
-			CtrlMan.LoadDataGridView(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
+			CtrlMan.LoadDataGridView(consulta_inmueble, bs_catastro, "", Catastro.ListarInmueblePorExpediente(expediente.Text))
 			'PROFESIONAL
 			profesional_id.Text = registro(0)("profesional_id").ToString
 
@@ -355,7 +355,7 @@
 			.ShowDialog(Me)
 			.Dispose()
             'Recargar
-            CtrlMan.LoadDataGridView(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
+            CtrlMan.LoadDataGridView(consulta_inmueble, bs_catastro, "", Catastro.ListarInmueblePorExpediente(expediente.Text))
 		End With
 	End Sub
 	Private Sub mod_inmueble_Click(sender As Object, e As EventArgs) Handles mod_inmueble.Click
@@ -371,7 +371,7 @@
 				.ShowDialog(Me)
 				.Dispose()
                 'Recargar
-                CtrlMan.LoadDataGridView(consulta_inmueble, bs_catastro, Catastro.ListarInmueblePorExpediente(expediente.Text))
+                CtrlMan.LoadDataGridView(consulta_inmueble, bs_catastro, "", Catastro.ListarInmueblePorExpediente(expediente.Text))
 			End If
         End With
     End Sub

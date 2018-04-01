@@ -167,7 +167,7 @@
                              Format(fecha.Value.Date, "MM/dd/yyyy"), interes.Value / 100,
                              f1b_importe.Checked, f1b_mora.Checked, f1b_minimo.Value, f1b_maximo.Value,
                              f2_año_minimo.Value, f2_año_maximo.Value) 'Consulta básica de impuesto específico sobre Fox
-            visor = CtrlMan.LoadDataGridView(visor, bs_consulta, dtab_imp)
+            visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", dtab_imp)
 			progreso.Value = 20
         ElseIf sender Is bs_consulta And grupo_imp.Visible Then
             'Filtros automaticos

@@ -100,7 +100,7 @@
 											INNER JOIN hac_combustible_items 
 													ON hac_combustible_tipo.Id = hac_combustible_items.tipo_item_id 
 												 WHERE hac_combustible_items.ticket_id=" & ticket_id)
-			CtrlMan.LoadDataGridView(visor, bs, dtab)
+			CtrlMan.LoadDataGridView(visor, bs, "", dtab)
 		End Sub
 
 		Shared Function SelectTicket(id As Integer) As DataTable

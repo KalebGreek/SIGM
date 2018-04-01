@@ -228,11 +228,15 @@
 		Return target
 	End Function
 	'Esta rutina importa datatable o bindingsource seleccionada en un datagridview y formatea las columnas correspondientes
-	Overloads Shared Function LoadDataGridView(ByVal visor As DataGridView, ByVal bs As BindingSource,
+	Overloads Shared Function LoadDataGridView(ByVal visor As DataGridView,
+											   ByVal bs As BindingSource, Optional bsFilter As String = "",
 											   Optional ByVal dtab As DataTable = Nothing) As DataGridView
 		visor.SuspendLayout()
 		If dtab Is Nothing = False Then
 			bs.DataSource = dtab
+		End If
+		If bsFilter <> "" Then
+			bs.Filter = bsFilter
 		End If
 		visor.DataSource = bs
 		'Dar formato

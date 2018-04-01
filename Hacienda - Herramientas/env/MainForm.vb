@@ -76,7 +76,11 @@
 		mcomb.MdiParent = Me
 		mcomb.Show()
 	End Sub
-
+	Private Sub SIJCORToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SIJCORToolStripMenuItem.Click
+		Dim sijcor As New EditorSijCor
+		sijcor.MdiParent = Me
+		sijcor.Show()
+	End Sub
 
 
 	'GOBIERNO

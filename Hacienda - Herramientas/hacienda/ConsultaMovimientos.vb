@@ -27,8 +27,8 @@
         visor.DataSource = Nothing
         bs_consulta.DataSource = Nothing
         If SeleccionCuenta.SelectedIndex > -1 Then
-			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
-																		fecha.Checked, inicio.Value, final.Value))
+			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+																						  fecha.Checked, inicio.Value, final.Value))
 			SumarTotales(Ingresos.Checked)
 		End If
 
@@ -37,8 +37,8 @@
 	Private Sub ActivarFiltro_CheckedChanged(sender As Object, e As EventArgs) Handles ActivarFiltro.CheckedChanged
 		GrupoFiltro.Visible = ActivarFiltro.Checked
 		If SeleccionCuenta.SelectedIndex > -1 Then
-			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
-																		fecha.Checked, inicio.Value, final.Value))
+			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+																					 	 fecha.Checked, inicio.Value, final.Value))
 			SumarTotales(Ingresos.Checked)
 		End If
 	End Sub
@@ -47,14 +47,14 @@
 		final.Enabled = fecha.Checked
 		Keyword.Enabled = Razon.Checked
 		If SeleccionCuenta.SelectedIndex > -1 Then
-			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
 																		fecha.Checked, inicio.Value, final.Value))
 			SumarTotales(Ingresos.Checked)
 		End If
 	End Sub
 	Private Sub Keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles Keyword.KeyUp
 		If SeleccionCuenta.SelectedIndex > -1 Then
-			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
 																		fecha.Checked, inicio.Value, final.Value))
 			SumarTotales(Ingresos.Checked)
 		End If
@@ -63,7 +63,7 @@
 		inicio.MaxDate = final.Value
 		final.MinDate = inicio.Value
 		If SeleccionCuenta.SelectedIndex > -1 Then
-			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
+			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
 																		fecha.Checked, inicio.Value, final.Value))
 			SumarTotales(Ingresos.Checked)
         End If
