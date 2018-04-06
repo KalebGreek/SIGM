@@ -201,7 +201,7 @@
             'Rodado
             .Add(New ReportParameter("Cuenta", dr("codigo").ToString))
 			.Add(New ReportParameter("Actividad", dr("detalle").ToString))
-			.Add(New ReportParameter("Cuit", dr("cuit").ToString))
+			.Add(New ReportParameter("Cuit", dr("docume").ToString))
 			.Add(New ReportParameter("Brutos", dr("brutos").ToString))
 			Dim alta, baja As Date
 			alta = dr("inscripto")

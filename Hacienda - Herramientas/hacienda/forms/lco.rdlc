@@ -660,7 +660,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Parameters!Baja.Value</Value>
+                <Value>=iif(Year(Parameters!Baja.Value)&lt;1900,"",Parameters!Baja.Value)</Value>
                 <Style>
                   <FontFamily>PF DinText Pro</FontFamily>
                   <FontSize>16pt</FontSize>

@@ -1,6 +1,5 @@
 ﻿Public Class ConsultasEspeciales
 	Private sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy As String
-	Private titulo As String = "CALCULOS"
 
 	Public Sub New()
         ' This call is required by the designer.
@@ -75,9 +74,6 @@
 		Dim sqlCustomFilter As String = ""
 		If PanelFiltros.Visible And EnableFilter.Checked Then
 			If reset Then
-				IntFilterPanel.Visible = False
-				DateFilterPanel.Visible = False
-				StringFilterPanel.Visible = False
 				If FilterColumn.SelectedIndex > -1 Then
 
 					If FilterColumn.SelectedValue = "System.String" Then
@@ -228,7 +224,8 @@
 	'Menu events
 	'HACIENDA
 	Private Sub IngresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IngresosToolStripMenuItem.Click
-		Me.Name = titulo & " | " & sender.Text
+		Me.Text = sender.Text
+		CustomTable.Text = "Click para agregar tabla."
 
 		'No se puede filtrar dinamicamente las columnas con alias (como ingresado)
 		sqlSelect = "SELECT orden, nombre, (autorizado - gastado) as restante, gastado as ingresado, autorizado"
@@ -243,7 +240,8 @@
 		ExecuteQuery(True)
 	End Sub
 	Private Sub EgresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EgresosToolStripMenuItem.Click
-		Me.Name = titulo & " | " & sender.Text
+		Me.Text = sender.Text
+		CustomTable.Text = "Click para agregar tabla."
 
 		sqlSelect = "SELECT orden, nombre, (autorizado - gastado) as restante, gastado, autorizado"
 		sqlFrom = " FROM hacienda"
@@ -257,7 +255,8 @@
 
     'BANCOS
     Private Sub SaldoDeCuentasBancosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaldoDeCuentasBancosToolStripMenuItem.Click
-		Me.Name = titulo & " | " & sender.Text
+		Me.Text = sender.Text
+		CustomTable.Text = "Click para agregar tabla."
 
 		Dim dtab As DataTable = DbMan.read("SELECT MIN(fecha) as fecha FROM bancos", Connection.Text)
 		minDateValue.Value = dtab(0)("fecha")
@@ -292,7 +291,8 @@
 
 	'CAJA
 	Private Sub CierreDiarioDeCajaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CierreDiarioDeCajaToolStripMenuItem.Click
-		Me.Name = titulo & " | " & sender.Text
+		Me.Text = sender.Text
+		CustomTable.Text = "Click para agregar tabla."
 
 		sqlSelect = "SELECT * "
 		sqlFrom = " FROM caja"
@@ -306,7 +306,8 @@
 
     'CAJA <> MOVIMIS
     Private Sub CompararIngresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CompararIngresosToolStripMenuItem.Click
-		Me.Name = titulo & " | " & sender.Text
+		Me.Text = sender.Text
+		CustomTable.Text = "Click para agregar tabla."
 
 		sqlSelect = "SELECT caja.fecha, movimis.documento as movimis_documento,
                             SUM(movimis.pagado) as suma_movimis_pagado, caja.recibo as caja_recibo,
@@ -324,7 +325,8 @@
 		ExecuteQuery(True)
 	End Sub
 	Private Sub CompararEgresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CompararEgresosToolStripMenuItem.Click
-		Me.Name = titulo & " | " & sender.Text
+		Me.Text = sender.Text
+		CustomTable.Text = "Click para agregar tabla."
 
 		'cambiar caja por pagos y corregir tema de documento <> orden
 
@@ -372,6 +374,9 @@
 
 	Private Sub ColumnList_bs_CurrentChanged(sender As Object, e As EventArgs) Handles ColumnList_bs.CurrentChanged, ColumnList_bs.PositionChanged, ColumnList.TextChanged
 		query_bs.Filter = ""
+		IntFilterPanel.Visible = False
+		DateFilterPanel.Visible = False
+		StringFilterPanel.Visible = False
 		If PanelFiltros.Visible And EnableFilter.Checked Then
 			ExecuteQuery(False)
 			FilterQuery(sender, query_bs, ColumnList, True)
@@ -476,6 +481,5 @@
 	Private Sub DBPostgreSQLToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles DBPostgreSQLToolStripMenuItem.Click
 		Connection.Text = My.Settings.pgsqlcon
 	End Sub
-
 
 End Class
