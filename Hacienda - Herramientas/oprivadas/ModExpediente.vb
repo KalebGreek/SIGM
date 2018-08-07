@@ -425,15 +425,15 @@
             letra = Microsoft.VisualBasic.Left(Trim(bs_resp.Current("razon")), 1)
             parametros.Add(New ReportParameter("Letra", letra))
 
-			parametros = ParamReporte.BaseExpediente(parametros, expediente.Text,
+			parametros = ParamReporte.ObrasPrivadas.BaseExpediente(parametros, expediente.Text,
 													 inicio_obra.Value,
 													 tarea.Text & " " & tarea2.Text)
 
-			parametros = ParamReporte.ListarResponsables(parametros, bs_resp)
-            parametros = ParamReporte.ListarInmuebles(parametros, bs_catastro)
+			parametros = ParamReporte.ObrasPrivadas.ListarResponsables(parametros, bs_resp)
+			parametros = ParamReporte.ObrasPrivadas.ListarInmuebles(parametros, bs_catastro)
 
             'Crear informe
-            Dim formEXP As New VisorReporte("Caratula de Expediente", "OPRIVADAS\FORMS\CAR", parametros, False)
+            Dim formEXP As New VisorReporte("Caratula de Expediente", "OPRIVADAS\REPORTES\CAR", parametros, Nothing, False)
 			With formEXP
                 .ShowDialog()
                 .Dispose()
@@ -445,26 +445,26 @@
 			MsgBox("Debe completar este expediente para imprimirlo.")
 		ElseIf actualizar(grupo_exp.SelectedIndex) = MsgBoxResult.Yes Then
 			Dim parametros As New Generic.List(Of ReportParameter)
-			parametros = ParamReporte.BaseExpediente(parametros, expediente.Text,
+			parametros = ParamReporte.ObrasPrivadas.BaseExpediente(parametros, expediente.Text,
 													 inicio_obra.Value,
 													 tarea.Text & " " & tarea2.Text)
 
-			parametros = ParamReporte.ListarResponsables(parametros, bs_resp)
+			parametros = ParamReporte.ObrasPrivadas.ListarResponsables(parametros, bs_resp)
 
-            cuil.TextMaskFormat = MaskFormat.IncludePromptAndLiterals
+			cuil.TextMaskFormat = MaskFormat.IncludePromptAndLiterals
             Dim prof_completo As String = "Razon: " & razon.Text & System.Environment.NewLine &
                                           "CUIL: " & cuil.Text & " | Matricula: " & matricula.Text
             cuil.TextMaskFormat = MaskFormat.ExcludePromptAndLiterals
 
-            parametros = ParamReporte.DetalleExpediente(parametros, prof_completo,
-                                                        recibe.Text, Trim(observaciones.Text),
-                                                        visado.Checked, check_fin_obra.Checked,
-                                                        fin_obra.Value)
+			parametros = ParamReporte.ObrasPrivadas.DetalleExpediente(parametros, prof_completo,
+														recibe.Text, Trim(observaciones.Text),
+														visado.Checked, check_fin_obra.Checked,
+														fin_obra.Value)
 
-            parametros = ParamReporte.ListarInmuebles(parametros, bs_catastro)
+			parametros = ParamReporte.ObrasPrivadas.ListarInmuebles(parametros, bs_catastro)
 
             'Crear informe
-            Dim formEXP As New VisorReporte("Resumen de Expediente", "OPRIVADAS\FORMS\EXP", parametros, False)
+            Dim formEXP As New VisorReporte("Resumen de Expediente", "OPRIVADAS\REPORTES\EXP", parametros, Nothing, False)
 			With formEXP
                 .ShowDialog()
                 .Dispose()

@@ -7,6 +7,8 @@
 	Public Event CVista_IndexTextChanged()
 	Public Event CFiltro_IndexTextChanged()
 	Public Event CKeyword_KeyUp(sender As Object, e As KeyEventArgs)
+	Public Event CSelect(sender As Object)
+	Public Event CCancel(sender As Object)
 
 	'Events
 	Public Sub New()
@@ -69,10 +71,21 @@
 		'RaiseEvent CSearch_Click(vista.Text, filtro.Text, keyword.Text)
 	End Sub
 
+	Private Sub selectRow_Click(sender As Object, e As EventArgs) Handles selectRow.Click
+		RaiseEvent CSelect(sender)
+	End Sub
+
+	Private Sub cancel_Click(sender As Object, e As EventArgs) Handles cancel.Click
+		RaiseEvent CCancel(sender)
+	End Sub
+
+
 	'Routines and functions
 	Private Sub FullReset() 'Dangerous
 		vista.Items.Clear()
 		filtro.Items.Clear()
 		keyword.Clear()
 	End Sub
+
+
 End Class

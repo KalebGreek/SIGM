@@ -26,12 +26,13 @@ Partial Class ControlBusqueda
 		Me.keyword = New System.Windows.Forms.TextBox()
 		Me.search = New System.Windows.Forms.Button()
 		Me.reset = New System.Windows.Forms.Button()
+		Me.selectRow = New System.Windows.Forms.Button()
+		Me.cancel = New System.Windows.Forms.Button()
 		Me.FlowLayoutPanel1.SuspendLayout()
 		Me.SuspendLayout()
 		'
 		'DateValue
 		'
-		Me.DateValue.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
 		Me.DateValue.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
 		Me.DateValue.Location = New System.Drawing.Point(441, 3)
 		Me.DateValue.Name = "DateValue"
@@ -51,15 +52,18 @@ Partial Class ControlBusqueda
 		'
 		'FlowLayoutPanel1
 		'
+		Me.FlowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
 		Me.FlowLayoutPanel1.Controls.Add(Me.vista)
 		Me.FlowLayoutPanel1.Controls.Add(Me.filtro)
 		Me.FlowLayoutPanel1.Controls.Add(Me.keyword)
 		Me.FlowLayoutPanel1.Controls.Add(Me.DateValue)
 		Me.FlowLayoutPanel1.Controls.Add(Me.search)
 		Me.FlowLayoutPanel1.Controls.Add(Me.reset)
+		Me.FlowLayoutPanel1.Controls.Add(Me.selectRow)
+		Me.FlowLayoutPanel1.Controls.Add(Me.cancel)
 		Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 0)
 		Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-		Me.FlowLayoutPanel1.Size = New System.Drawing.Size(718, 33)
+		Me.FlowLayoutPanel1.Size = New System.Drawing.Size(864, 33)
 		Me.FlowLayoutPanel1.TabIndex = 363
 		'
 		'filtro
@@ -108,15 +112,47 @@ Partial Class ControlBusqueda
 		Me.reset.Text = ""
 		Me.reset.UseVisualStyleBackColor = True
 		'
+		'selectRow
+		'
+		Me.selectRow.FlatAppearance.BorderSize = 0
+		Me.selectRow.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.selectRow.Font = New System.Drawing.Font("Segoe MDL2 Assets", 14.25!)
+		Me.selectRow.ForeColor = System.Drawing.Color.Chartreuse
+		Me.selectRow.Location = New System.Drawing.Point(660, 0)
+		Me.selectRow.Margin = New System.Windows.Forms.Padding(0)
+		Me.selectRow.Name = "selectRow"
+		Me.selectRow.Size = New System.Drawing.Size(38, 33)
+		Me.selectRow.TabIndex = 367
+		Me.selectRow.Text = ""
+		Me.selectRow.UseVisualStyleBackColor = True
+		Me.selectRow.Visible = False
+		'
+		'cancel
+		'
+		Me.cancel.FlatAppearance.BorderSize = 0
+		Me.cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.cancel.Font = New System.Drawing.Font("Segoe MDL2 Assets", 14.25!)
+		Me.cancel.ForeColor = System.Drawing.Color.Red
+		Me.cancel.Location = New System.Drawing.Point(698, 0)
+		Me.cancel.Margin = New System.Windows.Forms.Padding(0)
+		Me.cancel.Name = "cancel"
+		Me.cancel.Size = New System.Drawing.Size(38, 33)
+		Me.cancel.TabIndex = 368
+		Me.cancel.Text = ""
+		Me.cancel.UseVisualStyleBackColor = True
+		Me.cancel.Visible = False
+		'
 		'ControlBusqueda
 		'
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
+		Me.AutoSize = True
+		Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
 		Me.BackColor = System.Drawing.Color.DarkGray
 		Me.Controls.Add(Me.FlowLayoutPanel1)
 		Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.MinimumSize = New System.Drawing.Size(520, 33)
 		Me.Name = "ControlBusqueda"
-		Me.Size = New System.Drawing.Size(520, 33)
+		Me.Size = New System.Drawing.Size(867, 36)
 		Me.FlowLayoutPanel1.ResumeLayout(False)
 		Me.FlowLayoutPanel1.PerformLayout()
 		Me.ResumeLayout(False)
@@ -130,4 +166,6 @@ Partial Class ControlBusqueda
 	Friend WithEvents search As Button
 	Friend WithEvents reset As Button
 	Friend WithEvents vista As ComboBox
+	Friend WithEvents selectRow As Button
+	Friend WithEvents cancel As Button
 End Class

@@ -65,4 +65,6 @@
 
 		CtrlMan.Fill.AutoComplete(bs, target, "nombre", "orden")
 	End Sub
+
+
 End Class

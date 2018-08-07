@@ -175,8 +175,6 @@ Partial Class acceso
 		Me.Margin = New System.Windows.Forms.Padding(4)
 		Me.MaximumSize = New System.Drawing.Size(800, 500)
 		Me.Name = "acceso"
-		Me.ShowIcon = False
-		Me.ShowInTaskbar = False
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
 		Me.Text = "SIGM > Acceso"
 		Me.FlowLayoutPanel1.ResumeLayout(False)

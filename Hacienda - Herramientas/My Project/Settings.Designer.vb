@@ -240,6 +240,16 @@ Namespace My
                 Me("UserId") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=VFPOLEDB.1;Data Source=z:\datos")>  _
+        Public ReadOnly Property FoxConnectionString() As String
+            Get
+                Return CType(Me("FoxConnectionString"),String)
+            End Get
+        End Property
     End Class
 End Namespace
 

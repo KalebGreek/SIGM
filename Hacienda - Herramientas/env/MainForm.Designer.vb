@@ -53,10 +53,13 @@ Partial Class MainForm
 		Me.TicketsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.SIJCORToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.oprivadasMenu = New System.Windows.Forms.ToolStripMenuItem()
+		Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
 		Me.NuevoExpedienteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.BuscarExpedienteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
+		Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
 		Me.BuscarProfesionalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.CalculosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.opublicasMenu = New System.Windows.Forms.ToolStripMenuItem()
 		Me.EmpleadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.AsistenciaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -304,13 +307,21 @@ Partial Class MainForm
 		'
 		'oprivadasMenu
 		'
-		Me.oprivadasMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NuevoExpedienteToolStripMenuItem, Me.BuscarExpedienteToolStripMenuItem, Me.ToolStripSeparator5, Me.BuscarProfesionalToolStripMenuItem})
+		Me.oprivadasMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2, Me.NuevoExpedienteToolStripMenuItem, Me.BuscarExpedienteToolStripMenuItem, Me.ToolStripSeparator5, Me.ToolStripMenuItem3, Me.BuscarProfesionalToolStripMenuItem, Me.CalculosToolStripMenuItem})
 		Me.oprivadasMenu.ForeColor = System.Drawing.Color.White
 		Me.oprivadasMenu.Name = "oprivadasMenu"
 		Me.oprivadasMenu.Padding = New System.Windows.Forms.Padding(0)
 		Me.oprivadasMenu.Size = New System.Drawing.Size(142, 23)
 		Me.oprivadasMenu.Text = "OBRAS PRIVADAS"
 		Me.oprivadasMenu.Visible = False
+		'
+		'ToolStripMenuItem2
+		'
+		Me.ToolStripMenuItem2.Enabled = False
+		Me.ToolStripMenuItem2.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+		Me.ToolStripMenuItem2.Size = New System.Drawing.Size(200, 24)
+		Me.ToolStripMenuItem2.Text = "Expedientes"
 		'
 		'NuevoExpedienteToolStripMenuItem
 		'
@@ -331,12 +342,27 @@ Partial Class MainForm
 		Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
 		Me.ToolStripSeparator5.Size = New System.Drawing.Size(197, 6)
 		'
+		'ToolStripMenuItem3
+		'
+		Me.ToolStripMenuItem3.Enabled = False
+		Me.ToolStripMenuItem3.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+		Me.ToolStripMenuItem3.Size = New System.Drawing.Size(200, 24)
+		Me.ToolStripMenuItem3.Text = "Herramientas"
+		'
 		'BuscarProfesionalToolStripMenuItem
 		'
 		Me.BuscarProfesionalToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
 		Me.BuscarProfesionalToolStripMenuItem.Name = "BuscarProfesionalToolStripMenuItem"
 		Me.BuscarProfesionalToolStripMenuItem.Size = New System.Drawing.Size(200, 24)
 		Me.BuscarProfesionalToolStripMenuItem.Text = "Buscar Profesional"
+		'
+		'CalculosToolStripMenuItem
+		'
+		Me.CalculosToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.CalculosToolStripMenuItem.Name = "CalculosToolStripMenuItem"
+		Me.CalculosToolStripMenuItem.Size = New System.Drawing.Size(200, 24)
+		Me.CalculosToolStripMenuItem.Text = "Calculadora"
 		'
 		'opublicasMenu
 		'
@@ -553,4 +579,7 @@ Partial Class MainForm
 	Friend WithEvents NuevoExpedienteToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents ToolStripSeparator5 As ToolStripSeparator
 	Friend WithEvents SIJCORToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents ToolStripMenuItem2 As ToolStripMenuItem
+	Friend WithEvents ToolStripMenuItem3 As ToolStripMenuItem
+	Friend WithEvents CalculosToolStripMenuItem As ToolStripMenuItem
 End Class

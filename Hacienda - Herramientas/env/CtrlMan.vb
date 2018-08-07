@@ -22,20 +22,6 @@
 		Return False
 	End Function
 
-	Shared Function CalcExpirationDate(vencimiento As Date, Optional cuotas As Integer = 1)
-		For c As Integer = 0 To cuotas
-			vencimiento = vencimiento.AddDays(Date.DaysInMonth(vencimiento.Year, vencimiento.Month))
-		Next
-		Do While vencimiento.DayOfWeek = DayOfWeek.Saturday Or vencimiento.DayOfWeek = DayOfWeek.Sunday
-			If vencimiento.DayOfWeek = DayOfWeek.Saturday Then
-				vencimiento = vencimiento.AddDays(-1)
-			Else
-				vencimiento = vencimiento.AddDays(1)
-			End If
-		Loop
-		Return FormatDateTime(vencimiento, DateFormat.ShortDate)
-	End Function
-
 	'Reset // Dangerous! Handle with care!
 	Shared Sub Reset(ByRef container As Object)
 		For Each c As Control In container.Controls
@@ -182,6 +168,19 @@
 			End If
 		End If
 	End Sub
+	Shared Function CalcExpirationDate(vencimiento As Date, Optional cuotas As Integer = 1)
+		For c As Integer = 0 To cuotas
+			vencimiento = vencimiento.AddDays(Date.DaysInMonth(vencimiento.Year, vencimiento.Month))
+		Next
+		Do While vencimiento.DayOfWeek = DayOfWeek.Saturday Or vencimiento.DayOfWeek = DayOfWeek.Sunday
+			If vencimiento.DayOfWeek = DayOfWeek.Saturday Then
+				vencimiento = vencimiento.AddDays(-1)
+			Else
+				vencimiento = vencimiento.AddDays(1)
+			End If
+		Loop
+		Return FormatDateTime(vencimiento, DateFormat.ShortDate)
+	End Function
 
 	'Loading controls
 	'LOAD ALL THE CONTROLS!!!!1ONE
@@ -430,4 +429,29 @@
 			CityList.EndUpdate()
 		End Sub
 	End Class
+
+	'Search or filter using bindingsource
+	Public Class Filter
+		Shared Sub Autocomplete(ByRef bs As BindingSource, ByVal keyword As String)
+			'Filter bindingsource on realtime after the user inputs more than 1 character
+			keyword = Trim(keyword)
+		End Sub
+	End Class
+
+	Overloads Shared Sub Search(ByRef bs As BindingSource, ByVal keyword As String, ByRef target As DataGridView)
+		'Apply the filtered bs to the target control
+		keyword = Trim(keyword)
+	End Sub
+	Overloads Shared Sub Search(ByRef bs As BindingSource, ByVal keyword As String, ByRef target As ComboBox)
+		'Apply the filtered bs to the target control
+		keyword = Trim(keyword)
+	End Sub
+	Overloads Shared Sub Search(ByRef bs As BindingSource, ByVal keyword As String, ByRef target As ListBox)
+		'Apply the filtered bs to the target control
+		keyword = Trim(keyword)
+	End Sub
+	Overloads Shared Sub Search(ByRef bs As BindingSource, ByVal keyword As String, ByRef target As CheckedListBox)
+		'Apply the filtered bs to the target control
+		keyword = Trim(keyword)
+	End Sub
 End Class

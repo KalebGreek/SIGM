@@ -215,9 +215,9 @@
 
 	'Certificado Libre Deuda sobre tablas FOX
 	Public Class LibreDeuda
-		Shared Function DetalleVencimiento(parametros As Generic.List(Of ReportParameter), Creado As DateTimePicker,
+		Shared Function DetalleVencimiento(parametros As List(Of ReportParameter), Creado As DateTimePicker,
 							 Vence As DateTimePicker, Exento As Boolean, OpcionMes As Boolean, Mes As DateTimePicker,
-							 OpcionTrim As Boolean, Trimestre As String)
+							 OpcionTrim As Boolean, Trimestre As String) As List(Of ReportParameter)
 			Dim Detalle As String = ""
 
 			If Exento = False Then
@@ -239,7 +239,7 @@
 			End With
 			Return parametros
 		End Function
-		Shared Function DetalleAuto(parametros As Generic.List(Of ReportParameter), OpcionBaja As Integer, FechaBaja As DateTimePicker)
+		Shared Function DetalleAuto(parametros As Generic.List(Of ReportParameter), OpcionBaja As Integer, FechaBaja As DateTimePicker) As List(Of ReportParameter)
 
 			Dim DetalleBaja As String = ""
 			Dim DetalleVencimiento As String = ""
@@ -262,97 +262,114 @@
 		End Function
 	End Class
 
-	'OPR
-	Shared Function BaseExpediente(parametros As Generic.List(Of ReportParameter),
-                                   expediente As String, fecha As Date, tarea As String)
+	'OPRIVADAS
+	Public Class ObrasPrivadas
+		Shared Function BaseExpediente(parametros As Generic.List(Of ReportParameter),
+								   expediente As String, fecha As Date, tarea As String) As List(Of ReportParameter)
 
-        expediente = Microsoft.VisualBasic.Left(expediente, 4) & " - " & Microsoft.VisualBasic.Right(expediente, 4)
+			expediente = Strings.Left(expediente, 4) & " - " & Strings.Right(expediente, 4)
 
-        With parametros
-            .Add(New ReportParameter("Expediente", expediente))
-            .Add(New ReportParameter("Inicio", fecha.ToShortDateString))
-            .Add(New ReportParameter("Tarea", tarea))
-        End With
+			With parametros
+				.Add(New ReportParameter("Expediente", expediente))
+				.Add(New ReportParameter("Inicio", fecha.ToShortDateString))
+				.Add(New ReportParameter("Tarea", tarea))
+			End With
 
-        Return parametros
-    End Function
-    Shared Function DetalleExpediente(parametros As Generic.List(Of ReportParameter),
-                                      profesional As String, recibido As String,
-                                      observacion As String, visado As Boolean,
-                                      finalizado As Boolean, final As Date)
+			Return parametros
+		End Function
+		Shared Function DetalleExpediente(parametros As Generic.List(Of ReportParameter),
+									  profesional As String, recibido As String,
+									  observacion As String, visado As Boolean,
+									  finalizado As Boolean, final As Date) As List(Of ReportParameter)
 
-        With parametros
-            .Add(New ReportParameter("Profesional", profesional))
-            .Add(New ReportParameter("Recibido", recibido))
-            .Add(New ReportParameter("Observacion", observacion))
+			With parametros
+				.Add(New ReportParameter("Profesional", profesional))
+				.Add(New ReportParameter("Recibido", recibido))
+				.Add(New ReportParameter("Observacion", observacion))
 
-            If visado Then
-                .Add(New ReportParameter("Visado", "SI"))
-            Else
-                .Add(New ReportParameter("Visado", "NO"))
-            End If
+				If visado Then
+					.Add(New ReportParameter("Visado", "SI"))
+				Else
+					.Add(New ReportParameter("Visado", "NO"))
+				End If
 
-            If finalizado Then
-                .Add(New ReportParameter("Final", final.ToShortDateString))
-            Else
-                .Add(New ReportParameter("Final", "NO DECLARADO"))
-            End If
+				If finalizado Then
+					.Add(New ReportParameter("Final", final.ToShortDateString))
+				Else
+					.Add(New ReportParameter("Final", "NO DECLARADO"))
+				End If
 
 
-        End With
+			End With
 
-        Return parametros
-    End Function
+			Return parametros
+		End Function
 
-    'Modulos
-    Shared Function ListarResponsables(parametros As Generic.List(Of ReportParameter),
-                                       registro As BindingSource)
-        Dim responsable As String = ""
-        Dim cuil As String = ""
-        Dim difunto As String = ""
+		'Modulos
+		Shared Function ListarResponsables(parametros As Generic.List(Of ReportParameter),
+									   registro As BindingSource) As List(Of ReportParameter)
+			Dim responsable As String = ""
+			Dim cuil As String = ""
+			Dim difunto As String = ""
 
-        For fila As Integer = 0 To registro.Count - 1
-            registro.Position = fila
+			For fila As Integer = 0 To registro.Count - 1
+				registro.Position = fila
 
-            cuil = Microsoft.VisualBasic.Left(registro.Current("cuil"), 2) &
-                   "-" & Mid(registro.Current("cuil"), 3, 8) & "-" &
-                   Microsoft.VisualBasic.Right(registro.Current("cuil"), 1)
-            If registro.Current("difunto") Then
-                difunto = "SI"
-            Else
-                difunto = "NO"
-            End If
+				cuil = Microsoft.VisualBasic.Left(registro.Current("cuil"), 2) &
+				   "-" & Mid(registro.Current("cuil"), 3, 8) & "-" &
+				   Microsoft.VisualBasic.Right(registro.Current("cuil"), 1)
+				If registro.Current("difunto") Then
+					difunto = "SI"
+				Else
+					difunto = "NO"
+				End If
 
-            responsable += fila + 1 & ") " & registro.Current("razon") & System.Environment.NewLine &
-                           "CUIL: " & cuil & " | Difunto: " & difunto & System.Environment.NewLine
+				responsable += fila + 1 & ") " & registro.Current("razon") & System.Environment.NewLine &
+						   "CUIL: " & cuil & " | Difunto: " & difunto & System.Environment.NewLine
 
-        Next
+			Next
 
-        With parametros
-            .Add(New ReportParameter("Responsable", responsable))
-        End With
+			With parametros
+				.Add(New ReportParameter("Responsable", responsable))
+			End With
 
-        Return parametros
-    End Function
-    Shared Function ListarInmuebles(parametros As Generic.List(Of ReportParameter),
-                                    registro As BindingSource)
-        Dim inmueble As String = ""
-        With registro
-            For fila As Integer = 0 To .Count - 1
-                .Position = fila
-                inmueble += fila + 1 & ") Partida: " &
-                           " Z" & .Current("zona") & " C" & .Current("circ") & " S" & .Current("secc") &
-                           " M" & .Current("manz") & " P" & .Current("parc") & " L" & .Current("lote") &
-                            System.Environment.NewLine &
-                           " Ubicacion: " & .Current("calle") & " " & .Current("altura") & ", " & .Current("barrio") &
-                            System.Environment.NewLine
-            Next
-        End With
+			Return parametros
+		End Function
+		Shared Function ListarInmuebles(parametros As Generic.List(Of ReportParameter),
+									registro As BindingSource) As List(Of ReportParameter)
+			Dim inmueble As String = ""
+			With registro
+				For fila As Integer = 0 To .Count - 1
+					.Position = fila
+					inmueble += fila + 1 & ") Partida: " &
+						   " Z" & .Current("zona") & " C" & .Current("circ") & " S" & .Current("secc") &
+						   " M" & .Current("manz") & " P" & .Current("parc") & " L" & .Current("lote") &
+							System.Environment.NewLine &
+						   " Ubicacion: " & .Current("calle") & " " & .Current("altura") & ", " & .Current("barrio") &
+							System.Environment.NewLine
+				Next
+			End With
 
-        With parametros
-            .Add(New ReportParameter("Inmueble", inmueble))
-        End With
+			With parametros
+				.Add(New ReportParameter("Inmueble", inmueble))
+			End With
 
-        Return parametros
-    End Function
+			Return parametros
+		End Function
+	End Class
+
+	Public Class Hacienda
+		Shared Sub ImprimirDeudaContribuyente(ByVal source As DataTable, agrupada As Boolean)
+			Dim dtab(0) As DataTable
+			dtab(0) = source
+
+			'Ahora hay que crear los datasets en Access para que hagan de plantilla para cada consulta
+			'revisar screenshots de cada impuesto
+			Dim consulta As New VisorReporte("Consulta Deuda Contribuyente",
+												 "HACIENDA\REPORTES\DeudaContribuyente",
+												 Nothing, dtab, False)
+			consulta.ShowDialog()
+		End Sub
+
+	End Class
 End Class

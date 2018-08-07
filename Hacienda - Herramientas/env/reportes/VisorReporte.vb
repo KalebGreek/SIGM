@@ -1,19 +1,29 @@
 ﻿Imports System.Drawing.Printing
 Public Class VisorReporte
-    Public Sub New(titulo As String, Optional tipo As String = "",
-                   Optional parametros As Generic.List(Of ReportParameter) = Nothing,
-                   Optional blank As Boolean = True)
+	Public Sub New(titulo As String, Optional tipo As String = "",
+				   Optional parametros As Generic.List(Of ReportParameter) = Nothing,
+				   Optional DataSource As DataTable() = Nothing, Optional blank As Boolean = True)
         ' This call is required by the designer.
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
         Me.Text = titulo
 
-        'Verificar reporte
-        mostrar(tipo, parametros, blank)
-    End Sub
-    'Rutinas
-    Public Function GetPaperSize(ByVal p As PrinterSettings, ByVal papName As String) As PaperSize
+		If DataSource Is Nothing = False Then
+			ReporteActual.LocalReport.DataSources.Clear()
+			Dim count As Integer = 0
+			For Each dt As DataTable In DataSource
+				Dim rds As New ReportDataSource(dt.TableName, dt)
+				ReporteActual.LocalReport.DataSources.Add(rds)
+			Next
+		End If
+
+		'Verificar reporte
+		mostrar(tipo, parametros, blank)
+	End Sub
+
+	'Rutinas
+	Public Function GetPaperSize(ByVal p As PrinterSettings, ByVal papName As String) As PaperSize
         GetPaperSize = p.DefaultPageSettings.PaperSize
         For Each papSize As PaperSize In p.PaperSizes
             If papSize.PaperName = papName Then
@@ -50,54 +60,54 @@ Public Class VisorReporte
     ' > Formularios
     ' > > Presentación
     Private Sub PlanosDeEdificaciónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PlanosDeEdificaciónToolStripMenuItem.Click
-		mostrar("oprivadas\forms\PPE")
+		mostrar("oprivadas\REPORTES\PPE")
 	End Sub
     Private Sub PlanosDeMensuraToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PlanosDeMensuraToolStripMenuItem.Click
-		mostrar("oprivadas\forms\PPM")
+		mostrar("oprivadas\REPORTES\PPM")
 	End Sub
 
     ' > > Solicitud
     Private Sub FinalDeObraToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FinalDeObraToolStripMenuItem.Click
-		mostrar("oprivadas\forms\SFO")
+		mostrar("oprivadas\REPORTES\SFO")
 	End Sub
     Private Sub InspecciónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InspecciónToolStripMenuItem.Click
-		mostrar("oprivadas\forms\SIN")
+		mostrar("oprivadas\REPORTES\SIN")
 	End Sub
     Private Sub LíneaMunicipalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LíneaMunicipalToolStripMenuItem.Click
-		mostrar("oprivadas\forms\SLM")
+		mostrar("oprivadas\REPORTES\SLM")
 	End Sub
     Private Sub PrórrogaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PrórrogaToolStripMenuItem.Click
-		mostrar("oprivadas\forms\SPR")
+		mostrar("oprivadas\REPORTES\SPR")
 	End Sub
     Private Sub MediciónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MediciónToolStripMenuItem.Click
-		mostrar("oprivadas\forms\SMT")
+		mostrar("oprivadas\REPORTES\SMT")
 	End Sub
     Private Sub ActividadComercialToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ActividadComercialToolStripMenuItem.Click
-		mostrar("gobierno\forms\SIC")
+		mostrar("gobierno\REPORTES\SIC")
 	End Sub
     Private Sub AutomotorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutomotorToolStripMenuItem.Click
-		mostrar("gobierno\forms\SIA")
+		mostrar("gobierno\REPORTES\SIA")
 	End Sub
     Private Sub AutomotorConDDJJToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutomotorConDDJJToolStripMenuItem.Click
-		mostrar("gobierno\forms\SID")
+		mostrar("gobierno\REPORTES\SID")
 	End Sub
     Private Sub UsoGeneralToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UsoGeneralToolStripMenuItem.Click
-		mostrar("gobierno\forms\SUG")
+		mostrar("gobierno\REPORTES\SUG")
 	End Sub
 	Private Sub NotaDePedidoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NotaDePedidoToolStripMenuItem.Click
-		mostrar("opublicas\forms\NOP")
+		mostrar("opublicas\REPORTES\NOP")
 	End Sub
 
     ' > > Constancia
     Private Sub FinalDeObraToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles FinalDeObraToolStripMenuItem1.Click
-		mostrar("oprivadas\forms\CFO")
+		mostrar("oprivadas\REPORTES\CFO")
 	End Sub
     Private Sub LíneaMunicipalToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles LíneaMunicipalToolStripMenuItem1.Click
         Dim param As New Generic.List(Of ReportParameter)
         Dim razon As String = InputBox("Ingresar Razon Social", "Ingresar Razon Social", "APELLIDO, NOMBRE")
         If Len(razon) > 4 Then
             param.Add(New ReportParameter("razon", razon))
-			mostrar("oprivadas\forms\CLM", param, False)
+			mostrar("oprivadas\REPORTES\CLM", param, False)
 		End If
     End Sub
 

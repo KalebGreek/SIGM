@@ -452,6 +452,10 @@
 		End If
 	End Sub
 
+	Private Sub ConsultasEspeciales_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+	End Sub
+
 	'STRING filter events
 	Private Sub keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles keyword.KeyUp
 		If StringFilterPanel.Visible And e.KeyValue = Keys.Enter Then

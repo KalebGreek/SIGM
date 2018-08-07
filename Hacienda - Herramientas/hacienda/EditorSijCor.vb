@@ -16,7 +16,7 @@
 		result = od.ShowDialog()
 		If result = DialogResult.OK Then
 			If od.FileName <> "" And Len(od.FileName) > 4 Then
-				CtrlMan.LoadDataGridView(DataView, bs, , ConvMan.SIJCORToDataTable(od.FileName))
+				CtrlMan.LoadDataGridView(DataView, bs, , ConverterMan.SIJCORToDataTable(od.FileName))
 				path.Text = od.FileName
 			End If
 		End If
@@ -33,7 +33,7 @@
 		result = sd.ShowDialog()
 		If result = DialogResult.OK Then
 			If sd.FileName <> "" And Len(sd.FileName) > 4 Then
-				path.Text = ConvMan.DataTableToSIJCOR(bs.DataSource, sd.FileName)
+				path.Text = ConverterMan.DataTableToSIJCOR(bs.DataSource, sd.FileName)
 			End If
 		End If
 	End Sub

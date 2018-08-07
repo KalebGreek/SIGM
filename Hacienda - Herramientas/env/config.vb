@@ -202,7 +202,7 @@
 		'No elimina registros
 		'Genera log de acciones sobre bd de destino
 
-		Dim visor As New genVisorDtab
+		Dim visor As New genericDataVisor
 		visor.LoadDtab(DbMan.readTables())
 		visor.ShowDialog()
 		Dim sourceTables As DataTable = DbMan.readTables()

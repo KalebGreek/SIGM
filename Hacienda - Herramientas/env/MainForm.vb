@@ -146,6 +146,7 @@
 
 
 	'OBRAS PRIVADAS
+	'Expedientes
 	Private Sub NuevoExpedienteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevoExpedienteToolStripMenuItem.Click
 		Dim NuevoExp As New ModExpediente()
 		If NuevoExp.dtab_exp Is Nothing Then
@@ -159,12 +160,26 @@
 		buscar1.MdiParent = Me
 		buscar1.Show()
 	End Sub
+	'Herramientas
 	Private Sub BuscarProfesionalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarProfesionalToolStripMenuItem.Click
 		Dim buscar1 As New BusquedaPersona
 		buscar1.MdiParent = Me
 		buscar1.ControlBusqueda1.Vista.Text = "PROFESIONAL"
 		buscar1.Show()
 	End Sub
+	Private Sub CalculosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CalculosToolStripMenuItem.Click
+		Dim calcOprivadas As New genericToolContainer
+		calcOprivadas.MdiParent = Me
+		calcOprivadas.Text = "Calculadora"
+
+		Dim calcObras As New toolCalculoPlanos
+		calcObras.Dock = DockStyle.Fill
+		calcOprivadas.Controls.Add(calcObras)
+
+		calcOprivadas.Show()
+	End Sub
+
+
 
 	'PERSONA
 	Private Sub NuevaPersonaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevaPersonaToolStripMenuItem.Click

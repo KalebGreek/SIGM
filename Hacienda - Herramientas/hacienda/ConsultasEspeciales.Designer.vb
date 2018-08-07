@@ -312,7 +312,7 @@ Partial Class ConsultasEspeciales
 		'PanelFiltros
 		'
 		Me.PanelFiltros.AutoSize = True
-		Me.PanelFiltros.BackColor = System.Drawing.Color.Gray
+		Me.PanelFiltros.BackColor = System.Drawing.Color.DarkGray
 		Me.PanelFiltros.Controls.Add(Me.EnableFilter)
 		Me.PanelFiltros.Controls.Add(Me.ColumnList)
 		Me.PanelFiltros.Controls.Add(Me.IntFilterPanel)
@@ -352,7 +352,6 @@ Partial Class ConsultasEspeciales
 		'IntFilterPanel
 		'
 		Me.IntFilterPanel.AutoSize = True
-		Me.IntFilterPanel.BackColor = System.Drawing.Color.Gray
 		Me.IntFilterPanel.Controls.Add(Me.NumFilterSelect)
 		Me.IntFilterPanel.Controls.Add(Me.minNumValue)
 		Me.IntFilterPanel.Controls.Add(Me.Label4)
@@ -387,7 +386,6 @@ Partial Class ConsultasEspeciales
 		'
 		'Label4
 		'
-		Me.Label4.BackColor = System.Drawing.Color.Gray
 		Me.Label4.Font = New System.Drawing.Font("PF DinDisplay Pro", 11.0!, System.Drawing.FontStyle.Bold)
 		Me.Label4.ForeColor = System.Drawing.Color.White
 		Me.Label4.Location = New System.Drawing.Point(249, 3)
@@ -414,7 +412,6 @@ Partial Class ConsultasEspeciales
 		'DateFilterPanel
 		'
 		Me.DateFilterPanel.AutoSize = True
-		Me.DateFilterPanel.BackColor = System.Drawing.Color.Gray
 		Me.DateFilterPanel.Controls.Add(Me.PorFecha)
 		Me.DateFilterPanel.Controls.Add(Me.minDateValue)
 		Me.DateFilterPanel.Controls.Add(Me.Label2)
@@ -431,7 +428,6 @@ Partial Class ConsultasEspeciales
 		'PorFecha
 		'
 		Me.PorFecha.AutoSize = True
-		Me.PorFecha.BackColor = System.Drawing.Color.Gray
 		Me.PorFecha.Checked = True
 		Me.PorFecha.ForeColor = System.Drawing.Color.White
 		Me.PorFecha.Location = New System.Drawing.Point(3, 3)
@@ -454,7 +450,6 @@ Partial Class ConsultasEspeciales
 		'
 		'Label2
 		'
-		Me.Label2.BackColor = System.Drawing.Color.Gray
 		Me.Label2.ForeColor = System.Drawing.Color.White
 		Me.Label2.Location = New System.Drawing.Point(198, 3)
 		Me.Label2.Margin = New System.Windows.Forms.Padding(5, 3, 3, 3)
@@ -476,7 +471,6 @@ Partial Class ConsultasEspeciales
 		'PorAño
 		'
 		Me.PorAño.AutoSize = True
-		Me.PorAño.BackColor = System.Drawing.Color.Gray
 		Me.PorAño.ForeColor = System.Drawing.Color.White
 		Me.PorAño.Location = New System.Drawing.Point(335, 3)
 		Me.PorAño.Margin = New System.Windows.Forms.Padding(5, 3, 3, 3)
@@ -502,7 +496,6 @@ Partial Class ConsultasEspeciales
 		'StringFilterPanel
 		'
 		Me.StringFilterPanel.AutoSize = True
-		Me.StringFilterPanel.BackColor = System.Drawing.Color.Gray
 		Me.StringFilterPanel.Controls.Add(Me.Label6)
 		Me.StringFilterPanel.Controls.Add(Me.keyword)
 		Me.StringFilterPanel.Font = New System.Drawing.Font("PF DinDisplay Pro", 11.0!)
