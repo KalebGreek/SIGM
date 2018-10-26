@@ -9,57 +9,53 @@
 		ControlBusqueda1.vista.Items.AddRange(New Object() {"PERSONA", "EMPLEADO", "PROFESIONAL", "PROVEEDOR"})
 	End Sub
 	'-- RUTINAS
-	Public Sub Consultar(vista As String, filtro As String, keyword As String) Handles ControlBusqueda1.CSearch_Click
-		With ControlBusqueda1
-			CtrlMan.LoadDataGridView(resultado, bs_resultado, "",
-									 Persona.Consultar(Trim(vista), Trim(filtro),
-													   Trim(keyword), difunto.Checked, fisica.Checked))
-		End With
+	Public Sub Consultar() Handles ControlBusqueda1.CSearch_Click
+		bs_resultado.Filter = ControlBusqueda1.bsCustomFilter
 	End Sub
 
 	'-- EVENTOS UNICOS
 	Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVista_IndexTextChanged
 		With ControlBusqueda1
 			If .vista.SelectedIndex > -1 Then
-				.filtro.Items.Clear()
+				.filtro.DataSource = Nothing
 				If .vista.Text = "PERSONA" Then
 					fisica.Enabled = True
 					fisica.Checked = True
 					difunto.Enabled = True
 					difunto.Checked = False
-
-					.filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIL/DNI", "DIRECCION", "LOCALIDAD", "ID"})
-					.filtro.Text = "RAZON SOCIAL"
+					bs_resultado.DataSource = Persona.Buscar(difunto.Checked, fisica.Checked)
 
 				ElseIf .vista.Text = "EMPLEADO" Then
 					fisica.Enabled = False
 					fisica.Checked = True
 					difunto.Enabled = True
 					difunto.Checked = False
-
-					.filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIL/DNI", "DIRECCION", "LOCALIDAD", "ALTA / BAJA"})
-					.filtro.Text = "RAZON SOCIAL"
+					bs_resultado.DataSource = Empleado.BuscarPorPersona("", difunto.Checked)
 
 				ElseIf .vista.Text = "PROFESIONAL" Then
 					fisica.Enabled = True
 					fisica.Checked = True
 					difunto.Enabled = True
 					difunto.Checked = False
-
-					.filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIL/DNI", "DIRECCION", "LOCALIDAD", "TITULO"})
-					.filtro.Text = "RAZON SOCIAL"
+					bs_resultado.DataSource = Profesional.BuscarPorPersona()
 
 				ElseIf .vista.Text = "PROVEEDOR" Then
 					fisica.Enabled = True
 					fisica.Checked = False
 					difunto.Enabled = False
 					difunto.Checked = False
+					Proveedor.BuscarPorPersona("", difunto.Checked, fisica.Checked)
+				End If
 
-					.filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CUIT", "DIRECCION", "LOCALIDAD", "ACTIVIDAD"})
-					.filtro.Text = "RAZON SOCIAL"
+				If bs_resultado.Count > 0 Then
+					Dim bs_ColumnList As New BindingSource
+					bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource)
+					CtrlMan.Fill.SetAutoComplete(ControlBusqueda1.filtro, bs_ColumnList, "ColumnName", "DataType")
+					.filtro.Text = "razon"
+					CtrlMan.LoadDataGridView(resultado, bs_resultado, ControlBusqueda1.bsCustomFilter)
 				End If
 			Else
-				ControlBusqueda1.reset.PerformClick()
+				.reset_search.PerformClick()
 			End If
 		End With
 	End Sub

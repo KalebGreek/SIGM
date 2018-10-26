@@ -43,13 +43,13 @@ Public Class acceso
     '###### END GUI #############################################################################################
     '###### VALIDATION ##########################################################################################
     Private Sub login_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles login.Click
-		My.Settings.UserId = validar_inicio(user.Text, pass.Text)
+		My.Settings.UserId = check_access(user.Text, pass.Text)
 		If My.Settings.UserId > 0 Then 'Iniciar sesión
-            If registrar_user(My.Settings.UserId, True) Then
+            If register_user(My.Settings.UserId, True) Then
 				Me.Hide()
-				permisos(My.Settings.UserId).ShowDialog() 'Mostrar inicio
+				privileges(My.Settings.UserId).ShowDialog() 'Mostrar inicio
 				Me.Show()
-				registrar_user(My.Settings.UserId, False) 'Cerrar Sesión
+				register_user(My.Settings.UserId, False) 'Cerrar Sesión
             End If
 			My.Settings.UserId = -1
 			info.Text = "Ingrese usuario y contraseña."

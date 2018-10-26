@@ -7,14 +7,11 @@
 		' Add any initialization after the InitializeComponent() call.
 		'Setting up views
 
-		ControlBusqueda1.vista.Items.AddRange(New Object() {"RESPONSABLE", "PROVEEDOR", "PEDIDO"})
+		ControlBusqueda1.vista.Items.AddRange(New Object() {"NOTA DE PEDIDO"})
 	End Sub
 	'-- RUTINAS
-	Public Sub Consultar(vista As String, filtro As String, keyword As String) Handles ControlBusqueda1.CSearch_Click
-		With ControlBusqueda1
-			CtrlMan.LoadDataGridView(resultado, bs_resultado, "",
-									 NotaPedido.Buscar(Trim(filtro), Trim(keyword)))
-		End With
+	Public Sub Consultar() Handles ControlBusqueda1.CSearch_Click
+
 	End Sub
 
 	'-- EVENTOS UNICOS
@@ -22,15 +19,18 @@
 		With ControlBusqueda1
 			If .vista.SelectedIndex > -1 Then
 				.filtro.Items.Clear()
-				If .vista.Text = "RESPONSABLE" Then
-					.filtro.Items.AddRange(New Object() {"responsable_razon", "responsable_cuil", "responsable_direccion", "responsable_localidad"})
-				ElseIf .vista.Text = "PROVEEDOR" Then
-					.filtro.Items.AddRange(New Object() {"proveedor_razon", "proveedor_cuil", "proveedor_direccion", "proveedor_localidad", "proveedor_actividad"})
-				ElseIf .vista.Text = "PEDIDO" Then
-					.filtro.Items.AddRange(New Object() {"fecha", "numpedido"})
+				If .vista.Text = "NOTA DE PEDIDO" Then
+					Dim bs_ColumnList As New BindingSource
+					bs_resultado.DataSource = NotaPedido.Buscar()
+					bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource)
+
+					CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
+
+					CtrlMan.LoadDataGridView(resultado, bs_resultado, "",)
+
 				End If
 			Else
-				ControlBusqueda1.reset.PerformClick()
+				ControlBusqueda1.reset_search.PerformClick()
 			End If
 			If .filtro.Items.Count > 0 Then
 				.filtro.SelectedIndex = 0

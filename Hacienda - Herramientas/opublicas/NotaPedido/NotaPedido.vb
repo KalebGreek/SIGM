@@ -5,18 +5,16 @@
 									  opu_nota_pedido.autoriza_id, persona_2.razon as autoriza_razon"
 
 	Shared SQLTable As String = " FROM (((persona 
-						 INNER JOIN proveedor ON persona.id = proveedor.per_id) 
-						 INNER JOIN opu_nota_pedido ON proveedor.Id = opu_nota_pedido.proveedor_id) 
-						 INNER JOIN persona AS persona_1 ON opu_nota_pedido.responsable_id = persona_1.id) 
-						 INNER JOIN persona AS persona_2 ON opu_nota_pedido.autoriza_id = persona_2.id"
+								 INNER JOIN proveedor ON persona.id = proveedor.per_id) 
+								 INNER JOIN opu_nota_pedido ON proveedor.Id = opu_nota_pedido.proveedor_id) 
+								 INNER JOIN persona AS persona_1 ON opu_nota_pedido.responsable_id = persona_1.id) 
+								 INNER JOIN persona AS persona_2 ON opu_nota_pedido.autoriza_id = persona_2.id"
 
 	Shared SQLWhere As String
 	Shared SQLOrder As String
 
-	Shared Function Buscar(filtro As String, keyword As String) As DataTable
-		SQLWhere = KeywordToSQL(" WHERE ", filtro, keyword)
-
-		Return DbMan.read(SQLSelect & SQLTable & SQLWhere)
+	Shared Function Buscar() As DataTable
+		Return DbMan.read(SQLSelect & SQLTable)
 	End Function
 
 	Shared Function Seleccionar(nota_pedido_id As Integer) As DataRow

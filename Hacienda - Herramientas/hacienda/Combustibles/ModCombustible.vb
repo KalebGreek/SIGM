@@ -59,7 +59,7 @@
 			bs_receptor = Combustible.Receptor.ListAll(Nothing, Nothing, 0)
 		End If
 		'Rellenar lista de receptores
-		CtrlMan.Fill.AutoComplete(bs_receptor, receptor, "descripcion", "receptor_id")
+		CtrlMan.Fill.SetAutoComplete(receptor, bs_receptor, "descripcion", "receptor_id")
 	End Sub
 
 	Private Sub NewReceptor_Click(sender As Object, e As EventArgs) Handles NewReceptor.Click

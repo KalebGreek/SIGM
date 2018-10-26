@@ -49,8 +49,8 @@ Partial Class ConsultasEspeciales
 		Me.DBAccessToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.DBPostgreSQLToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.Connection = New System.Windows.Forms.ToolStripLabel()
-		Me.CustomQuery = New System.Windows.Forms.ToolStripTextBox()
 		Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
+		Me.CustomQuery = New System.Windows.Forms.ToolStripComboBox()
 		Me.CustomTable = New System.Windows.Forms.LinkLabel()
 		Me.PanelFiltros = New System.Windows.Forms.FlowLayoutPanel()
 		Me.EnableFilter = New System.Windows.Forms.CheckBox()
@@ -68,8 +68,9 @@ Partial Class ConsultasEspeciales
 		Me.PorAño = New System.Windows.Forms.RadioButton()
 		Me.yearValue = New System.Windows.Forms.NumericUpDown()
 		Me.StringFilterPanel = New System.Windows.Forms.FlowLayoutPanel()
-		Me.Label6 = New System.Windows.Forms.Label()
 		Me.keyword = New System.Windows.Forms.TextBox()
+		Me.search = New System.Windows.Forms.Button()
+		Me.reset = New System.Windows.Forms.Button()
 		Me.query_bs = New System.Windows.Forms.BindingSource(Me.components)
 		Me.ColumnList_bs = New System.Windows.Forms.BindingSource(Me.components)
 		Me.MenuStrip2.SuspendLayout()
@@ -228,7 +229,7 @@ Partial Class ConsultasEspeciales
 		Me.ToolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom
 		Me.ToolStrip1.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 10.0!)
 		Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-		Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripDropDownButton2, Me.Connection, Me.CustomQuery, Me.ToolStripLabel1})
+		Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripDropDownButton2, Me.Connection, Me.ToolStripLabel1, Me.CustomQuery})
 		Me.ToolStrip1.Location = New System.Drawing.Point(0, 435)
 		Me.ToolStrip1.Name = "ToolStrip1"
 		Me.ToolStrip1.Padding = New System.Windows.Forms.Padding(0)
@@ -277,13 +278,6 @@ Partial Class ConsultasEspeciales
 		Me.Connection.Size = New System.Drawing.Size(292, 20)
 		Me.Connection.Text = "Seleccione una base de datos antes de continuar."
 		'
-		'CustomQuery
-		'
-		Me.CustomQuery.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-		Me.CustomQuery.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Italic)
-		Me.CustomQuery.Name = "CustomQuery"
-		Me.CustomQuery.Size = New System.Drawing.Size(200, 25)
-		'
 		'ToolStripLabel1
 		'
 		Me.ToolStripLabel1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
@@ -294,6 +288,15 @@ Partial Class ConsultasEspeciales
 		Me.ToolStripLabel1.Size = New System.Drawing.Size(80, 20)
 		Me.ToolStripLabel1.Text = "Consulta"
 		Me.ToolStripLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		'
+		'CustomQuery
+		'
+		Me.CustomQuery.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+		Me.CustomQuery.AutoSize = False
+		Me.CustomQuery.DropDownWidth = 150
+		Me.CustomQuery.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.749999!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.CustomQuery.Name = "CustomQuery"
+		Me.CustomQuery.Size = New System.Drawing.Size(121, 23)
 		'
 		'CustomTable
 		'
@@ -318,6 +321,8 @@ Partial Class ConsultasEspeciales
 		Me.PanelFiltros.Controls.Add(Me.IntFilterPanel)
 		Me.PanelFiltros.Controls.Add(Me.DateFilterPanel)
 		Me.PanelFiltros.Controls.Add(Me.StringFilterPanel)
+		Me.PanelFiltros.Controls.Add(Me.search)
+		Me.PanelFiltros.Controls.Add(Me.reset)
 		Me.PanelFiltros.Dock = System.Windows.Forms.DockStyle.Top
 		Me.PanelFiltros.Font = New System.Drawing.Font("PF DinDisplay Pro", 11.0!)
 		Me.PanelFiltros.Location = New System.Drawing.Point(0, 29)
@@ -446,7 +451,7 @@ Partial Class ConsultasEspeciales
 		Me.minDateValue.Name = "minDateValue"
 		Me.minDateValue.Size = New System.Drawing.Size(112, 25)
 		Me.minDateValue.TabIndex = 40
-		Me.minDateValue.Value = New Date(2018, 3, 17, 18, 2, 56, 0)
+		Me.minDateValue.Value = New Date(2018, 8, 13, 0, 0, 0, 0)
 		'
 		'Label2
 		'
@@ -492,36 +497,54 @@ Partial Class ConsultasEspeciales
 		Me.yearValue.TabIndex = 44
 		Me.yearValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
 		Me.yearValue.Value = New Decimal(New Integer() {1900, 0, 0, 0})
+		Me.yearValue.Visible = False
 		'
 		'StringFilterPanel
 		'
 		Me.StringFilterPanel.AutoSize = True
-		Me.StringFilterPanel.Controls.Add(Me.Label6)
 		Me.StringFilterPanel.Controls.Add(Me.keyword)
 		Me.StringFilterPanel.Font = New System.Drawing.Font("PF DinDisplay Pro", 11.0!)
 		Me.StringFilterPanel.Location = New System.Drawing.Point(3, 136)
 		Me.StringFilterPanel.Name = "StringFilterPanel"
-		Me.StringFilterPanel.Size = New System.Drawing.Size(432, 31)
+		Me.StringFilterPanel.Size = New System.Drawing.Size(283, 31)
 		Me.StringFilterPanel.TabIndex = 48
 		Me.StringFilterPanel.Visible = False
 		'
-		'Label6
-		'
-		Me.Label6.ForeColor = System.Drawing.Color.White
-		Me.Label6.Location = New System.Drawing.Point(3, 3)
-		Me.Label6.Margin = New System.Windows.Forms.Padding(3)
-		Me.Label6.Name = "Label6"
-		Me.Label6.Size = New System.Drawing.Size(143, 22)
-		Me.Label6.TabIndex = 45
-		Me.Label6.Text = "PALABRA(S) CLAVE"
-		Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-		'
 		'keyword
 		'
-		Me.keyword.Location = New System.Drawing.Point(152, 3)
+		Me.keyword.ForeColor = System.Drawing.SystemColors.WindowText
+		Me.keyword.Location = New System.Drawing.Point(3, 3)
 		Me.keyword.Name = "keyword"
 		Me.keyword.Size = New System.Drawing.Size(277, 25)
 		Me.keyword.TabIndex = 46
+		'
+		'search
+		'
+		Me.search.FlatAppearance.BorderSize = 0
+		Me.search.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.search.Font = New System.Drawing.Font("Segoe MDL2 Assets", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.search.ForeColor = System.Drawing.Color.White
+		Me.search.Location = New System.Drawing.Point(289, 136)
+		Me.search.Margin = New System.Windows.Forms.Padding(0, 3, 0, 0)
+		Me.search.Name = "search"
+		Me.search.Size = New System.Drawing.Size(38, 29)
+		Me.search.TabIndex = 367
+		Me.search.Text = ""
+		Me.search.UseVisualStyleBackColor = True
+		'
+		'reset
+		'
+		Me.reset.FlatAppearance.BorderSize = 0
+		Me.reset.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.reset.Font = New System.Drawing.Font("Segoe MDL2 Assets", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.reset.ForeColor = System.Drawing.Color.White
+		Me.reset.Location = New System.Drawing.Point(327, 136)
+		Me.reset.Margin = New System.Windows.Forms.Padding(0, 3, 0, 0)
+		Me.reset.Name = "reset"
+		Me.reset.Size = New System.Drawing.Size(38, 29)
+		Me.reset.TabIndex = 368
+		Me.reset.Text = ""
+		Me.reset.UseVisualStyleBackColor = True
 		'
 		'ColumnList_bs
 		'
@@ -607,12 +630,13 @@ Partial Class ConsultasEspeciales
 	Friend WithEvents PorAño As RadioButton
 	Friend WithEvents yearValue As NumericUpDown
 	Friend WithEvents StringFilterPanel As FlowLayoutPanel
-	Friend WithEvents Label6 As Label
 	Friend WithEvents keyword As TextBox
 	Friend WithEvents query_bs As BindingSource
 	Friend WithEvents ColumnList_bs As BindingSource
 	Friend WithEvents ToolStripLabel1 As ToolStripLabel
-	Friend WithEvents CustomQuery As ToolStripTextBox
 	Friend WithEvents NumFilterSelect As ComboBox
 	Friend WithEvents EnableFilter As CheckBox
+	Friend WithEvents CustomQuery As ToolStripComboBox
+	Friend WithEvents search As Button
+	Friend WithEvents reset As Button
 End Class

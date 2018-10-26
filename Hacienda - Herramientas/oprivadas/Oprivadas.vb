@@ -35,9 +35,9 @@
 	Public Class Expediente
 		'BUSCAR
 		Public Class Buscar
-			Shared Function Expediente(excluir As Boolean, Optional numero As Integer = 0,
-										Optional ubicacion As String = "",
-										Optional fecha As Date = Nothing) As DataTable
+			Shared Function Expediente(Optional numero As Integer = 0,
+									   Optional ubicacion As String = "",
+									   Optional fecha As Date = Nothing) As DataTable
 
 				Dim sql _
 				As String = "SELECT oprivadas.id as expediente_id, oprivadas.expediente,
@@ -48,41 +48,25 @@
 							oprivadas.inicio_obra, oprivadas.fin_obra
 							" & SQLTable & SQLWhere
 
-				If numero > 19000000 Then
-					sql += " AND Oprivadas.expediente = " & numero
+				'If numero > 19000000 Then
+				'	sql += " AND Oprivadas.expediente = " & numero
 
-				ElseIf Len(ubicacion) > 3 And ubicacion.Contains("BUSCAR") = False Then
-					sql += " AND cat_frente.calle"
-					If excluir Then
-						sql += " NOT"
-					End If
-					sql += " LIKE '%" & ubicacion & "%' OR catastro.barrio"
-					If excluir Then
-						sql += " NOT"
-					End If
-					sql += " LIKE '%" & ubicacion & "%'"
+				'ElseIf Len(ubicacion) > 3 And ubicacion.Contains("BUSCAR") = False Then
+				'	sql += " AND cat_frente.calle"
+				'	sql += " LIKE '%" & ubicacion & "%' OR catastro.barrio"
+				'	sql += " LIKE '%" & ubicacion & "%'"
 
-				ElseIf fecha <> Nothing Then
-					sql += " AND oprivadas.inicio_obra"
-					If excluir Then
-						sql += "<>"
-					Else
-						sql += "="
-					End If
-					sql += "#" & fecha.ToShortDateString & "#
-							OR oprivadas.fin_obra"
-					If excluir Then
-						sql += "<>"
-					Else
-						sql += "="
-					End If
-					sql += "#" & fecha.ToShortDateString & "#"
-				End If
+				'ElseIf fecha <> Nothing Then
+				'	sql += " AND oprivadas.inicio_obra"
+				'	sql += "#" & fecha.ToShortDateString & "#
+				'			OR oprivadas.fin_obra"
+				'	sql += "#" & fecha.ToShortDateString & "#"
+				'End If
 
 				Return DbMan.read(sql)
 			End Function
 
-			Shared Function Responsable(excluir As Boolean, Optional razon As String = "",
+			Shared Function Responsable(Optional razon As String = "",
 										Optional cuil As Double = 0,
 										Optional direccion As String = "",
 										Optional localidad As String = "")
@@ -100,32 +84,23 @@
 							" & SQLTable & SQLWhere
 
 
-				If Len(razon) > 3 And razon.Contains("BUSCAR") = False Then
-					sql += " AND persona.razon"
-					If excluir Then
-						sql += " NOT"
-					End If
-					sql += " LIKE '%" & razon & "%'"
-				ElseIf Len(cuil) = 11 Then
-					sql += " AND persona.cuil = '" & cuil & "'"
-				ElseIf Len(direccion) > 3 And direccion.Contains("BUSCAR") = False Then
-					sql += " AND per_domicilio.calle"
-					If excluir Then
-						sql += " NOT"
-					End If
-					sql += " LIKE '%" & direccion & "%'"
-				ElseIf Len(localidad) > 3 And localidad.Contains("BUSCAR") = False Then
-					sql += " AND localidades.nombre"
-					If excluir Then
-						sql += " NOT"
-					End If
-					sql += " LIKE '%" & localidad & "%'"
-				End If
+				'If Len(razon) > 3 And razon.Contains("BUSCAR") = False Then
+				'	sql += " AND persona.razon"
+				'	sql += " LIKE '%" & razon & "%'"
+				'ElseIf Len(cuil) = 11 Then
+				'	sql += " AND persona.cuil = '" & cuil & "'"
+				'ElseIf Len(direccion) > 3 And direccion.Contains("BUSCAR") = False Then
+				'	sql += " AND per_domicilio.calle"
+				'	sql += " LIKE '%" & direccion & "%'"
+				'ElseIf Len(localidad) > 3 And localidad.Contains("BUSCAR") = False Then
+				'	sql += " AND localidades.nombre"
+				'	sql += " LIKE '%" & localidad & "%'"
+				'End If
 
 				Return DbMan.read(sql)
 			End Function
 
-			Shared Function Profesional(excluir As Boolean, Optional razon As String = "",
+			Shared Function Profesional(Optional razon As String = "",
 										Optional cuil As Double = 0,
 										Optional direccion As String = "",
 										Optional localidad As String = "",
@@ -142,27 +117,18 @@
 							oprivadas.recibe, Oprivadas.visado 
 							" & SQLTable & SQLWhere
 
-				If Len(razon) > 3 And razon.Contains("BUSCAR") = False Then
-					sql += " AND persona_1.razon"
-					If excluir Then
-						sql += " NOT"
-					End If
-					sql += " LIKE '%" & razon & "%'"
-				ElseIf Len(cuil) = 11 Then
-					sql += " AND persona_1.cuil = '" & cuil & "'"
-				ElseIf Len(direccion) > 3 And direccion.Contains("BUSCAR") = False Then
-					sql += " AND per_domicilio_1.calle"
-					If excluir Then
-						sql += " NOT"
-					End If
-					sql += " LIKE '%" & direccion & "%'"
-				ElseIf Len(localidad) > 3 And localidad.Contains("BUSCAR") = False Then
-					sql += " AND localidades_1.nombre"
-					If excluir Then
-						sql += " NOT"
-					End If
-					sql += " LIKE '%" & localidad & "%'"
-				End If
+				'If Len(razon) > 3 And razon.Contains("BUSCAR") = False Then
+				'	sql += " AND persona_1.razon"
+				'	sql += " LIKE '%" & razon & "%'"
+				'ElseIf Len(cuil) = 11 Then
+				'	sql += " AND persona_1.cuil = '" & cuil & "'"
+				'ElseIf Len(direccion) > 3 And direccion.Contains("BUSCAR") = False Then
+				'	sql += " AND per_domicilio_1.calle"
+				'	sql += " LIKE '%" & direccion & "%'"
+				'ElseIf Len(localidad) > 3 And localidad.Contains("BUSCAR") = False Then
+				'	sql += " AND localidades_1.nombre"
+				'	sql += " LIKE '%" & localidad & "%'"
+				'End If
 
 				Return DbMan.read(sql)
 			End Function
@@ -170,7 +136,7 @@
 		'Funciones de listado para evitar borrar expedientes accidentalmente
 		Shared Function ListarPorResponsable(persona_id As Integer) As DataTable
 			Return DbMan.read(
-					   "SELECT responsable_expediente.Id As id, expediente, per_id 
+						   "SELECT responsable_expediente.Id As id, expediente, per_id 
                             FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id) 
                             INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id
                             WHERE responsable_expediente.per_id=" & persona_id)
@@ -200,16 +166,16 @@
 		Shared Function Generar(exp As String) As DataTable
 			Dim dtab As New DataTable
 			Dim InsertExpSQL As String = "INSERT INTO oprivadas(expediente, tarea, tarea2, inicio_obra, " &
-								 " profesional_id, user_id, temporal)" &
-								 " VALUES(" & exp & ", 'MENSURA','SIMPLE', '" & Date.Today.ToShortDateString & "'," &
-								 " 0, " & My.Settings.UserId & ", True)"
+										 " profesional_id, user_id, temporal)" &
+										 " VALUES(" & exp & ", 'MENSURA','SIMPLE', '" & Date.Today.ToShortDateString & "'," &
+										 " 0, " & My.Settings.UserId & ", True)"
 
 			dtab = Seleccionar(exp)
 			If dtab.Rows.Count > 0 Then
 				'Último expediente creado por el usuario
 				If MsgBoxResult.No = MsgBox("¿Desea recuperar datos del último expediente no guardado?" &
-									" Presione Sí para recuperar, No para eliminar.",
-									  MsgBoxStyle.YesNo, "Obras Privadas") Then
+											" Presione Sí para recuperar, No para eliminar.",
+											  MsgBoxStyle.YesNo, "Obras Privadas") Then
 					LimpiarTemporal(dtab(0)("id"), Nothing, True)
 					'Recrear expediente por defecto
 					DbMan.edit(InsertExpSQL)

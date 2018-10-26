@@ -1,7 +1,7 @@
 ﻿Public Class Hacienda
 	Shared Sub FillSeccion(ByRef bs As BindingSource, ByRef target As ComboBox)
 		bs.DataSource = DbMan.read(  "SELECT * FROM seccion ORDER BY descripcion")
-		CtrlMan.Fill.AutoComplete(bs, target, "descripcion", "id")
+		CtrlMan.Fill.SetAutoComplete(target, bs, "descripcion", "id")
 	End Sub
 	Shared Sub FillCuentasHacienda(ByRef bs As BindingSource, ByRef target As ComboBox,
 								   ByVal Optional sumado As Integer = 0,
@@ -63,7 +63,7 @@
 		bs.DataSource = DbMan.read(sqlSelect & sqlWhere & SqlOrder, My.Settings.foxcon)
 
 
-		CtrlMan.Fill.AutoComplete(bs, target, "nombre", "orden")
+		CtrlMan.Fill.SetAutoComplete(target, bs, "nombre", "orden")
 	End Sub
 
 

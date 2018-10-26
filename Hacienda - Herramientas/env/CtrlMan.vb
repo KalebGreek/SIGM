@@ -226,6 +226,7 @@
 		Next
 		Return target
 	End Function
+
 	'Esta rutina importa datatable o bindingsource seleccionada en un datagridview y formatea las columnas correspondientes
 	Overloads Shared Function LoadDataGridView(ByVal visor As DataGridView,
 											   ByVal bs As BindingSource, Optional bsFilter As String = "",
@@ -295,7 +296,7 @@
 					c.Width = 25
 
 				ElseIf .Equals("localidad") Then
-					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
 
 				ElseIf .Equals("email") Then
 					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
@@ -393,24 +394,158 @@
 		Return visor
 	End Function
 
-	'Autofilling
+	'Populate controls with data
 	Public Class Fill
-		Shared Sub AutoComplete(ByRef bs As BindingSource, ByRef target As ComboBox,
-									Optional DisplayOption As String = "", Optional ValueOption As String = "")
+		Overloads Shared Function SetAutoComplete(ByRef target As ComboBox, ByRef bs As BindingSource,
+												  Optional DisplayOption As String = "", Optional ValueOption As String = "") As ComboBox
 
-			target.DataSource = Nothing
-			If target Is Nothing = False Then
-				target.DataSource = bs
-				target.AutoCompleteMode = AutoCompleteMode.None
-				If DisplayOption <> "" Then
-					target.DisplayMember = DisplayOption
-				End If
-				If ValueOption <> "" Then
-					target.ValueMember = ValueOption
-				End If
+			If target Is Nothing Then
+				target = New ComboBox
 			End If
+
+			target.BeginUpdate()
+			target.ResetText()
+			target.AutoCompleteMode = AutoCompleteMode.None
+			target.DataSource = Nothing
+			target.DataSource = bs
+			If DisplayOption <> "" Then
+				target.DisplayMember = DisplayOption
+			End If
+			If ValueOption <> "" Then
+				target.ValueMember = ValueOption
+			End If
+			target.EndUpdate()
+
+			Return target
+		End Function
+
+		'Overloads Shared Function SetAutocomplete(target As ComboBox, bs As BindingSource, FilterColumn As ComboBox) As ComboBox
+		'	'Reset target
+		'	If target Is Nothing Then
+		'		target = New ComboBox
+		'	End If
+
+		'	target.BeginUpdate()
+		'	target.AutoCompleteMode = AutoCompleteMode.None
+		'	If FilterColumn.SelectedIndex > -1 And bs Is Nothing = False Then
+		'		Dim acscollection As New AutoCompleteStringCollection
+		'		'Return and sort range of values to use for the specified column
+		'		bs.Sort = FilterColumn.Text & " ASC"
+		'		acscollection = bs(FilterColumn.Text)
+
+		'		target.AutoCompleteMode = AutoCompleteMode.Append
+		'		target.AutoCompleteCustomSource = acscollection
+		'	End If
+		'	target.EndUpdate()
+
+		'	Return target
+		'End Function
+		'Overloads Shared Function SetAutocomplete(target As NumericUpDown, bs As BindingSource, FilterColumn As ComboBox,
+		'									   Optional DisplayOption As String = "", Optional ValueOption As String = "") As NumericUpDown
+
+
+		'	If target Is Nothing Then
+		'		target = New NumericUpDown
+		'	End If
+
+		'	'Reset target
+		'	target.Minimum = 0
+		'	target.Value = 0
+		'	target.Maximum = 0
+
+		'	If FilterColumn.SelectedIndex > -1 Then
+		'		'Return and sort range of values to use for the specified column
+		'		If FilterColumn.SelectedValue = "System.Decimal" Or FilterColumn.SelectedValue = "System.Integer" Then
+		'			Dim minValue, maxValue As Long
+		'			bs.Sort = FilterColumn.Text & " ASC"
+		'			bs.MoveFirst()
+		'			minValue = bs.Current(FilterColumn.Text)
+		'			bs.MoveLast()
+		'			maxValue = bs.Current(FilterColumn.Text)
+
+		'			target.Minimum = minValue
+		'			target.Maximum = minValue
+		'			target.Value = minValue
+		'		End If
+		'	End If
+		'	target.Update()
+
+		'	Return target
+		'End Function
+		'Overloads Shared Function SetAutocomplete(target As DateTimePicker, bs As BindingSource, FilterColumn As ComboBox,
+		'									   Optional DisplayOption As String = "", Optional ValueOption As String = "") As DateTimePicker
+
+		'	If target Is Nothing Then
+		'		target = New DateTimePicker
+		'	End If
+
+		'	'Reset target
+		'	target.MinDate = CDate("1/1/1899")
+		'	target.Value = target.MinDate
+		'	target.MaxDate = Today
+
+		'	If FilterColumn.SelectedIndex > -1 Then
+		'		'Return and sort range of values to use for the specified column
+		'		If FilterColumn.SelectedValue = "System.Date" Then
+		'			bs.Sort = FilterColumn.Text & " ASC"
+
+		'			bs.MoveFirst()
+		'			If bs.Current(FilterColumn.Text) Is DBNull.Value = False Then
+		'				target.MinDate = bs.Current(FilterColumn.Text)
+		'			End If
+
+		'			bs.MoveLast()
+		'			If bs.Current(FilterColumn.Text) Is DBNull.Value = False Then
+		'				target.MaxDate = bs.Current(FilterColumn.Text)
+		'			End If
+
+		'			If target.MaxDate >= Today Then
+		'				target.Value = Today
+		'			End If
+		'		End If
+		'	End If
+		'	target.Update()
+
+		'	Return target
+		'End Function
+
+		Shared Sub GetCities(ByRef CityList As ComboBox, ByRef bs As BindingSource, State As Integer)
+			CityList.BeginUpdate()
+			bs.DataSource = DbMan.read("SELECT * FROM localidades 
+										WHERE provincia_id=" & State & "
+										ORDER BY nombre")
+			CityList.DataSource = bs
+			CityList.DisplayMember = "nombre"
+			CityList.ValueMember = "id"
+			CityList.EndUpdate()
 		End Sub
-		Shared Sub States(ByRef StateList As ComboBox, ByRef bs As BindingSource)
+		''' <summary>
+		''' Returns the column list of a datatable in DataTable format. Fields: ColumnName(string), DataType(string)
+		''' </summary>
+		''' <param name="source">Source DataTable used to read the column names.</param>
+		Shared Function GetColumnList(source As DataTable) As DataTable
+			Dim ColumnList_dtab As New DataTable
+			If source.Columns.Count > 0 Then
+				'Add only useful columns to the list, to avoid garbage
+				'Useful column types include date, integer, decimal and string
+				'Other types could be added as soon as I figure how to use them :p
+
+				ColumnList_dtab.Columns.Add("ColumnName", GetType(String))
+				ColumnList_dtab.Columns.Add("DataType", GetType(String))
+
+				For Each dc As DataColumn In source.Columns
+					If dc.DataType = GetType(Date) Or dc.DataType = GetType(Decimal) _
+					Or dc.DataType = GetType(Integer) Or dc.DataType = GetType(String) Then
+						Dim dr As DataRow = ColumnList_dtab.NewRow
+						dr("ColumnName") = dc.ColumnName.ToString
+						dr("DataType") = dc.DataType.ToString
+						ColumnList_dtab.Rows.Add(dr)
+					End If
+				Next
+			End If
+			Return ColumnList_dtab
+		End Function
+		Shared Sub GetStates(ByRef StateList As ComboBox, ByRef bs As BindingSource)
 			StateList.BeginUpdate()
 			bs.DataSource = DbMan.read("SELECT * FROM provincias ORDER BY nombre")
 			StateList.DataSource = bs
@@ -418,40 +553,74 @@
 			StateList.ValueMember = "id"
 			StateList.EndUpdate()
 		End Sub
-		Shared Sub Cities(ByRef CityList As ComboBox, ByRef bs As BindingSource, State As Integer)
-			CityList.BeginUpdate()
-			bs.DataSource = DbMan.read("SELECT * FROM localidades 
-												WHERE provincia_id=" & State & "
-											 ORDER BY nombre")
-			CityList.DataSource = bs
-			CityList.DisplayMember = "nombre"
-			CityList.ValueMember = "id"
-			CityList.EndUpdate()
-		End Sub
+
 	End Class
 
 	'Search or filter using bindingsource
 	Public Class Filter
-		Shared Sub Autocomplete(ByRef bs As BindingSource, ByVal keyword As String)
-			'Filter bindingsource on realtime after the user inputs more than 1 character
-			keyword = Trim(keyword)
-		End Sub
-	End Class
+		'Overloads Shared Function BindingSource(ByVal sender As Object, ByVal bs As BindingSource, ByVal FilterColumn As ComboBox,
+		'							 Optional keyword As String = Nothing) As String
 
-	Overloads Shared Sub Search(ByRef bs As BindingSource, ByVal keyword As String, ByRef target As DataGridView)
-		'Apply the filtered bs to the target control
-		keyword = Trim(keyword)
-	End Sub
-	Overloads Shared Sub Search(ByRef bs As BindingSource, ByVal keyword As String, ByRef target As ComboBox)
-		'Apply the filtered bs to the target control
-		keyword = Trim(keyword)
-	End Sub
-	Overloads Shared Sub Search(ByRef bs As BindingSource, ByVal keyword As String, ByRef target As ListBox)
-		'Apply the filtered bs to the target control
-		keyword = Trim(keyword)
-	End Sub
-	Overloads Shared Sub Search(ByRef bs As BindingSource, ByVal keyword As String, ByRef target As CheckedListBox)
-		'Apply the filtered bs to the target control
-		keyword = Trim(keyword)
-	End Sub
+		'	Dim bsCustomFilter As String = ""
+		'	keyword = Trim(keyword)
+		'	If Len(keyword) > 0 Then
+		'		bsCustomFilter = FilterColumn.Text & " LIKE '%" & keyword & "%'"
+		'	End If
+		'	Return bsCustomFilter
+		'End Function
+
+		'Overloads Shared Function BindingSource(ByVal sender As Object, ByVal bs As BindingSource, ByVal FilterColumn As ComboBox,
+		'										 Optional NumValue As Decimal = Nothing, Optional maxNumvalue As Decimal = Nothing,
+		'										 Optional condition As String = "=") As String
+
+		'	Dim bsCustomFilter As String = ""
+
+		'	'Filter query
+		'	'Change this from SQL to BindingSource.Filter
+		'	If FilterColumn.SelectedValue = "System.Decimal" Or FilterColumn.SelectedValue = "System.Integer" Then 'Dec or Int
+		'		If NumValue <> Nothing Then
+		'			Dim NumValueString As String
+		'			NumValueString = Replace(NumValue, ",", ".").ToString()
+
+		'			If condition = "<->" And maxNumvalue <> Nothing Then
+		'				Dim maxValueString As String
+		'				maxValueString = Replace(maxNumvalue, ",", ".").ToString()
+		'				bsCustomFilter = FilterColumn.Text & "=>" & NumValueString & " AND " & FilterColumn.Text & "<=" & maxValueString
+		'			Else
+		'				bsCustomFilter = FilterColumn.Text & condition & NumValueString
+		'			End If
+		'		End If
+		'	End If
+		'	Return bsCustomFilter
+		'End Function
+
+		'Overloads Shared Function BindingSource(ByVal sender As Object, ByVal bs As BindingSource, ByVal FilterColumn As ComboBox,
+		'										 Optional DateValue As Date = Nothing, Optional maxDatevalue As Date = Nothing,
+		'										 Optional condition As String = "=") As String
+
+		'	Dim bsCustomFilter As String = ""
+		'	'Filter query
+		'	'Change this from SQL to BindingSource.Filter
+		'	If FilterColumn.SelectedValue = "System.Date" Then 'Date
+		'		'Filter by full date
+		'		If last_connection = My.Settings.foxcon Then
+		'			If condition = "<->" Then
+		'				bsCustomFilter = FilterColumn.Text & " => {" & DateValue.ToString("MM/dd/yyyy") & "}" &
+		'									 " AND " & FilterColumn.Text & " <= {" & maxDatevalue.ToString("MM/dd/yyyy") & "}"
+		'			Else
+		'				bsCustomFilter = FilterColumn.Text & condition & "{" & DateValue.ToString("MM/dd/yyyy") & "}"
+		'			End If
+		'		Else
+		'			If condition = "<->" Then
+		'				bsCustomFilter = FilterColumn.Text & " => {" & DateValue.ToShortDateString & "}" &
+		'									 " AND " & FilterColumn.Text & " <= {" & maxDatevalue.ToShortDateString & "}"
+		'			Else
+		'				bsCustomFilter = FilterColumn.Text & condition & "{" & DateValue.ToShortDateString & "}"
+		'			End If
+		'		End If
+		'	End If
+
+		'	Return bsCustomFilter
+		'End Function
+	End Class
 End Class

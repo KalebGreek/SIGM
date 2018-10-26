@@ -13,6 +13,7 @@
 	End Sub
 
 	'RUTINAS
+
 	Private Sub ExecuteQuery(ByVal reset As Boolean)
 		If Connection.Text <> "Seleccione una base de datos antes de continuar." Then
 			Dim dtab As New DataTable
@@ -25,28 +26,10 @@
 				ColumnList_bs.DataSource = Nothing
 
 
-				If dtab.Columns.Count > 0 Then
+				ColumnList_bs.DataSource = CtrlMan.Fill.GetColumnList(dtab)
 
-					'Clean columns not usable off the list
-					Dim ColumnList_dtab As New DataTable
-					ColumnList_dtab.Columns.Add("ColumnName", GetType(String))
-					ColumnList_dtab.Columns.Add("DataType", GetType(String))
+				CtrlMan.Fill.SetAutoComplete(ColumnList, ColumnList_bs, "ColumnName", "DataType")
 
-					For Each dc As DataColumn In dtab.Columns
-						If dc.DataType = GetType(Date) Or dc.DataType = GetType(Decimal) _
-						Or dc.DataType = GetType(Integer) Or dc.DataType = GetType(String) Then
-							Dim dr As DataRow = ColumnList_dtab.NewRow
-							dr("ColumnName") = dc.ColumnName.ToString
-							dr("DataType") = dc.DataType.ToString
-							ColumnList_dtab.Rows.Add(dr)
-						End If
-					Next
-
-					ColumnList_bs.DataSource = ColumnList_dtab
-
-					CtrlMan.Fill.AutoComplete(ColumnList_bs, ColumnList, "ColumnName", "DataType")
-
-				End If
 				PanelFiltros.Visible = dtab.Columns.Count > 0
 			End If
 
@@ -54,16 +37,6 @@
 
 			'Load datagridview
 			CtrlMan.LoadDataGridView(DataView, query_bs, "", dtab)
-
-			'Check for filters
-
-			'If FilteredQuery <> "" Then
-			'dtab = DbMan.read(sqlSelect, Connection.Text, sqlFrom, FilteredQuery, sqlGroupBy, sqlHaving, sqlOrderBy)
-			'CustomQuery.Text = sqlSelect & " " & sqlFrom & " " & FilteredQuery & " " & sqlGroupBy & " " & sqlHaving & " " & sqlOrderBy
-			'Else
-			'dtab = DbMan.read(sqlSelect, Connection.Text, sqlFrom, sqlWHere, sqlGroupBy, sqlHaving, sqlOrderBy)
-			'CustomQuery.Text = sqlSelect & " " & sqlFrom & " " & sqlWhere & " " & sqlGroupBy & " " & sqlHaving & " " & sqlOrderBy
-			'End If
 		Else
 			CustomQuery.Text = ""
 		End If
@@ -426,54 +399,75 @@
 			maxNumValue.Value = maxNumValue.Maximum
 			Label4.Visible = (NumFilterSelect.Text = "RANGO")
 			maxNumValue.Visible = (NumFilterSelect.Text = "RANGO")
-
-			ExecuteQuery(False)
-			query_bs.Filter = FilterQuery(sender, query_bs, ColumnList, False)
 		End If
 	End Sub
-	Private Sub NumValue_ValueChanged(sender As Object, e As EventArgs) Handles minNumValue.ValueChanged, maxNumValue.ValueChanged
-		If IntFilterPanel.Visible Then
-			ExecuteQuery(False)
-			query_bs.Filter = FilterQuery(sender, query_bs, ColumnList, False)
+
+	Private Sub minNumValue_KeyUp(sender As Object, e As KeyEventArgs) Handles minNumValue.KeyUp, maxNumValue.KeyUp
+		If e.KeyValue = Keys.Enter Then
+			search.PerformClick()
 		End If
 	End Sub
 
 	'DATE filter events
 	Private Sub PorFecha_CheckedChanged(sender As Object, e As EventArgs) Handles PorFecha.CheckedChanged, PorAño.CheckedChanged
 		If DateFilterPanel.Visible Then
-			ExecuteQuery(False)
-			query_bs.Filter = FilterQuery(sender, query_bs, ColumnList, False)
+			minDateValue.Visible = PorFecha.Checked
+			Label2.Visible = PorFecha.Checked
+			maxDateValue.Visible = PorFecha.Checked
+			yearValue.Visible = PorAño.Checked
 		End If
 	End Sub
-	Private Sub minDateValue_ValueChanged(sender As Object, e As EventArgs) Handles minDateValue.ValueChanged, maxDateValue.ValueChanged, yearValue.ValueChanged
-		If DateFilterPanel.Visible Then
-			ExecuteQuery(False)
-			query_bs.Filter = FilterQuery(sender, query_bs, ColumnList, False)
+	Private Sub minDateValue_KeyUp(sender As Object, e As KeyEventArgs) Handles minDateValue.KeyUp, maxDateValue.KeyUp, yearValue.KeyUp
+		If e.KeyValue = Keys.Enter Then
+			search.PerformClick()
 		End If
-	End Sub
-
-	Private Sub ConsultasEspeciales_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
 	End Sub
 
 	'STRING filter events
 	Private Sub keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles keyword.KeyUp
-		If StringFilterPanel.Visible And e.KeyValue = Keys.Enter Then
+		If e.KeyValue = Keys.Enter Then
+			search.PerformClick()
+		End If
+	End Sub
+
+
+
+	Private Sub search_Click(sender As Object, e As EventArgs) Handles search.Click
+		If StringFilterPanel.Visible Then
+
 			ExecuteQuery(False)
+
 			If Len(Trim(keyword.Text)) > 2 Then
 				query_bs.Filter = FilterQuery(sender, query_bs, ColumnList, False)
 			Else
 				query_bs.Filter = ""
 			End If
+
+			query_bs.Filter = FilterQuery(sender, query_bs, ColumnList, False)
+		ElseIf DateFilterPanel.Visible Then
+			ExecuteQuery(False)
+			query_bs.Filter = FilterQuery(sender, query_bs, ColumnList, False)
+		ElseIf IntFilterPanel.Visible Then
+			ExecuteQuery(False)
+			query_bs.Filter = FilterQuery(sender, query_bs, ColumnList, False)
 		End If
 	End Sub
 
+	Private Sub reset_Click(sender As Object, e As EventArgs) Handles reset.Click
+
+	End Sub
+
+	'CUSTOM QUERY
 	Private Sub CustomQuery_KeyUp(sender As Object, e As KeyEventArgs) Handles CustomQuery.KeyUp
 		If e.KeyValue = Keys.Enter Then
 			Dim dtab As DataTable = DbMan.read(CustomQuery.Text, Connection.Text)
 			CtrlMan.LoadDataGridView(DataView, query_bs, "", dtab)
+			CustomQuery.Items.Insert(0, Trim(CustomQuery.Text))
+			CustomQuery.Text = ""
 		End If
 	End Sub
+
+
 
 	'Connections
 	Private Sub DBFoxMuniciToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DBFoxMuniciToolStripMenuItem.Click
@@ -485,5 +479,6 @@
 	Private Sub DBPostgreSQLToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles DBPostgreSQLToolStripMenuItem.Click
 		Connection.Text = My.Settings.pgsqlcon
 	End Sub
+
 
 End Class

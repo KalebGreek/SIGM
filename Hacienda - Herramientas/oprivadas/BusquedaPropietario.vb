@@ -1,6 +1,6 @@
 ﻿Imports System.ComponentModel
 Public Class BusquedaPropietario
-	Private SelectedRow As Boolean = False
+	Private RowIsSelected As Boolean = False
 	Public Sub New()
 
 		' This call is required by the designer.
@@ -13,29 +13,8 @@ Public Class BusquedaPropietario
 		ControlBusqueda1.cancel.Visible = True
 	End Sub
 	'-- RUTINAS
-	Public Sub Consultar(vista As String, filtro As String, keyword As String) Handles ControlBusqueda1.CSearch_Click
-		With ControlBusqueda1
-			If Len(filtro) > 0 Then
-
-				Dim dtab As New DataTable
-				Dim sql As String = "SELECT * FROM catastro"
-
-				keyword = Trim(UCase(keyword))
-				If Len(keyword) > 0 Then
-					If filtro = "RAZON SOCIAL" Then
-						sql += " WHERE razon LIKE '%" & keyword & "%' ORDER BY razon"
-					ElseIf filtro = "CODIGO" Then
-						sql += " WHERE codigo=" & Val(keyword)
-					ElseIf filtro = "UBICACION" Then
-						sql += " WHERE ubicacion LIKE '%" & keyword & "%' ORDER BY razon"
-					ElseIf filtro = "CATASTRO" Then
-						sql += " WHERE catastro LIKE '" & keyword & "%' ORDER BY catastro"
-					End If
-				End If
-				dtab = DbMan.read(sql, My.Settings.foxcon)
-				CtrlMan.LoadDataGridView(resultado, bs_resultado, "", dtab)
-			End If
-		End With
+	Sub Consultar() Handles ControlBusqueda1.CSearch_Click
+		bs_resultado.Filter = ControlBusqueda1.bsCustomFilter
 	End Sub
 
 	'-- EVENTOS UNICOS
@@ -44,16 +23,21 @@ Public Class BusquedaPropietario
 			If .vista.SelectedIndex > -1 Then
 				.filtro.Items.Clear()
 				If .vista.Text = "PROPIETARIO" Then
+					Dim sql As String = "SELECT * FROM catastro"
+					Dim dtab As New DataTable
+					Dim bs_ColumnList As New BindingSource
 
-					.filtro.Items.AddRange(New Object() {"RAZON SOCIAL", "CODIGO", "UBICACION", "CATASTRO"})
-					.filtro.Text = "RAZON SOCIAL"
-
+					dtab = DbMan.read(sql, My.Settings.foxcon)
+					bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(dtab)
+					.filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
+					.filtro.Text = "razon"
 				End If
 			Else
-				ControlBusqueda1.reset.PerformClick()
+				.reset_search.PerformClick()
 			End If
 		End With
 	End Sub
+
 	Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles ControlBusqueda1.CKeyword_KeyUp, resultado.KeyUp
 		If e.KeyValue = Keys.Enter And sender Is ControlBusqueda1.keyword Then
 			ControlBusqueda1.search.PerformClick()
@@ -67,12 +51,12 @@ Public Class BusquedaPropietario
 	End Sub
 
 	Private Sub SelectResult(sender As Object) Handles ControlBusqueda1.CSelect, ControlBusqueda1.CCancel
-		SelectedRow = (sender Is ControlBusqueda1.selectRow)
+		RowIsSelected = (sender Is ControlBusqueda1.selectRow)
 		Me.Close()
 	End Sub
 
 	Private Sub BusquedaPropietario_Closed(sender As Object, e As EventArgs) Handles Me.Closed
-		If SelectedRow = False Then
+		If RowIsSelected = False Then
 			bs_resultado.DataSource = Nothing
 		End If
 	End Sub

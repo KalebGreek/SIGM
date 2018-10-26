@@ -7,12 +7,12 @@
 		' Add any initialization after the InitializeComponent() call.
 		'Proveedor
 		bs_responsable_iva.DataSource = DbMan.read("SELECT * FROM responsable_iva ORDER BY descripcion")
-		CtrlMan.Fill.AutoComplete(bs_responsable_iva, responsable_iva, "descripcion", "id")
+		CtrlMan.Fill.SetAutoComplete(responsable_iva, bs_responsable_iva, "descripcion", "id")
 		bs_actividad.DataSource = DbMan.read("SELECT * FROM prov_actividad ORDER BY actividad")
-		CtrlMan.Fill.AutoComplete(bs_actividad, actividad, "actividad", "id")
+		CtrlMan.Fill.SetAutoComplete(actividad, bs_actividad, "actividad", "id")
 		'Profesional
 		bs_titulo.DataSource = DbMan.read("SELECT * FROM profesional_titulo ORDER BY descripcion")
-		CtrlMan.Fill.AutoComplete(bs_titulo, titulo, "descripcion", "id")
+		CtrlMan.Fill.SetAutoComplete(titulo, bs_titulo, "descripcion", "id")
 	End Sub
 
 	'FUNCIONES
@@ -105,7 +105,7 @@
 												VALUES('" & value & "')")
 
 				bs_actividad.DataSource = DbMan.read("SELECT * FROM prov_actividad ORDER BY actividad")
-				CtrlMan.Fill.AutoComplete(bs_actividad, actividad, "actividad", "id")
+				CtrlMan.Fill.SetAutoComplete(actividad, bs_actividad, "actividad", "id")
 			End If
 		End If
 	End Sub
@@ -116,7 +116,7 @@
 				DbMan.edit("DELETE * FROM prov_actividad WHERE id=" & bs_actividad.Current("id"))
 
 				bs_actividad.DataSource = DbMan.read("SELECT * FROM prov_actividad ORDER BY actividad")
-				CtrlMan.Fill.AutoComplete(bs_actividad, actividad, "actividad", "id")
+				CtrlMan.Fill.SetAutoComplete(actividad, bs_actividad, "actividad", "id")
 			End If
 		End If
 	End Sub
@@ -134,7 +134,7 @@
 													VALUES('" & value & "')")
 
 				bs_titulo.DataSource = DbMan.read("SELECT * FROM profesional_titulo ORDER BY descripcion")
-				CtrlMan.Fill.AutoComplete(bs_titulo, titulo, "descripcion", "id")
+				CtrlMan.Fill.SetAutoComplete(titulo, bs_titulo, "descripcion", "id")
 			End If
 		End If
 	End Sub
@@ -144,7 +144,7 @@
 				DbMan.edit("DELETE * FROM profesional_titulo WHERE id=" & bs_titulo.Current("id"))
 
 				bs_titulo.DataSource = DbMan.read("SELECT * FROM profesional_titulo ORDER BY descripcion")
-				CtrlMan.Fill.AutoComplete(bs_titulo, titulo, "descripcion", "id")
+				CtrlMan.Fill.SetAutoComplete(titulo, bs_titulo, "descripcion", "id")
 			End If
 		End If
 	End Sub

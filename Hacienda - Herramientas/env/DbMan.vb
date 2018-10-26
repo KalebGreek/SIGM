@@ -1,7 +1,7 @@
 ﻿Module DbMan 'Database Manager
     'Muestra ultimo comando SQL ejecutado
     Public last_sql As String = ""
-
+	Public last_connection As String = ""
     'Conexiones de base de datos
     Public olecon As New OleDb.OleDbConnection
 
@@ -86,8 +86,8 @@
 					OleDBProcedure.CommandText &= " " & sqlOrderBy
 				End If
 			End If
-				'Close the query properly
-				If Right(OleDBProcedure.CommandText, 1) <> ";" Then
+			'Close the query properly
+			If Right(OleDBProcedure.CommandText, 1) <> ";" Then
 				OleDBProcedure.CommandText &= ";"
 			End If
 		End If
@@ -103,8 +103,6 @@
 				olecon.Close()
 				MsgBox("Se cerrará la conexión actual." & Chr(13) & Chr(13) & "Detalles: " & last_sql)
 			End If
-
-
 
 			olecon.ConnectionString = constr
 			OleDBProcedure.Connection = olecon
@@ -122,24 +120,25 @@
 			Catch ex As OleDb.OleDbException
 				errorMsg = "No se encuentra la tabla indicada." & Chr(13) & "Detalles:" & ex.Message.ToString
 			Catch ex As System.InvalidOperationException
-				errorMsg = "Uno de los campos de la consulta contiene datos invalidos." & Chr(13) & "Detalles:" & ex.Message.ToString
+				errorMsg = "Uno de los campos de la consulta contiene datos inválidos." & Chr(13) & "Detalles:" & ex.Message.ToString
 			Finally
 				olecon.Close()
 				dada.Dispose()
 			End Try
 
 			last_sql = OleDBProcedure.CommandText
+			last_connection = constr
 
-			If errorMsg <> "" Then
-				errorMsg &= Chr(13) & "Conexion:" & olecon.ToString
-				MsgBox(errorMsg, MsgBoxStyle.Exclamation)
-				Return Nothing
-			Else
-				Return dtab
-			End If
 		Else
-				MsgBox("Datos insuficientes para realizar la consulta.", MsgBoxStyle.Exclamation)
+			errorMsg = "Datos insuficientes para realizar la consulta."
+		End If
+
+		If errorMsg <> "" Then
+			errorMsg &= Chr(13) & "Conexion:" & olecon.ToString
+			MsgBox(errorMsg, MsgBoxStyle.Exclamation)
 			Return Nothing
+		Else
+			Return dtab
 		End If
 
 	End Function
@@ -174,7 +173,11 @@
 			olecon.Open()
 			OleDBProcedure.ExecuteNonQuery()
 			olecon.Close()
-			sql = ""
+			SecMan.log_write(sql, constr, My.Settings.UserId)
+
+
+
+
 			Return Nothing
 		Else
 			Return "Datos insuficientes para realizar la operación."

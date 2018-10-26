@@ -1,8 +1,8 @@
 ﻿Imports System.Net.NetworkInformation
 Public Class SecMan 'Security Manager
 	'###### SEGURIDAD
-	'Funciones de inicio de sesion
-	Shared Function validar_inicio(user As String, pass As String) As Integer
+	'Login functions
+	Shared Function check_access(user As String, pass As String) As Integer
 		If Len(user) >= 5 And Len(pass) >= 5 Then
 			Dim dtab As DataTable = DbMan.read("SELECT id, usuario, pass FROM usuarios
 												 WHERE usuario='" & user & "' AND pass ='" & pass & "'")
@@ -19,7 +19,7 @@ Public Class SecMan 'Security Manager
 			Return -1
 		End If
 	End Function
-	Shared Function registrar_user(user_id As Integer, lock As Boolean) As Boolean
+	Shared Function register_user(user_id As Integer, lock As Boolean) As Boolean
 		Dim fecha_hora As String = Date.Today.ToShortDateString & " " & TimeOfDay.ToShortTimeString
 		Dim token As String = getCpuId()
 		Dim equipo As String = Environment.MachineName
@@ -66,7 +66,7 @@ Public Class SecMan 'Security Manager
 
 		Return True
 	End Function
-	Shared Function permisos(user_id As Integer)
+	Shared Function privileges(user_id As Integer)
 		Dim inicio As New launcher
         'Leer
         Dim dtab As DataTable = DbMan.read("SELECT * FROM usuarios WHERE id=" & user_id)
@@ -75,7 +75,23 @@ Public Class SecMan 'Security Manager
 		Return inicio
 	End Function
 
-	'Leer MAC o CPU para identificar pc
+	'SQL History
+	Shared Sub log_write(sql As String, connection As String, user_id As Integer)
+		'Hardcoded SQL logging to check changes in DB
+		'Independent from DbMan.edit()
+		sql = Replace(sql, "'", "`") 'To avoid conflict with other hardcoded sql queries
+		Dim LogInsert As New OleDb.OleDbCommand
+		LogInsert.CommandText = "INSERT INTO sql_log(_date, _user_id, _sql, _con) VALUES('" & Date.Now & "', '" & user_id & "', '" & sql & "','" & connection & "');"
+		olecon.ConnectionString = My.Settings.adbcon
+
+		LogInsert.Connection = olecon
+		'Abrir la conexión y ejecutar
+		olecon.Open()
+		LogInsert.ExecuteNonQuery()
+		olecon.Close()
+	End Sub
+
+	'Read MAC or CPU to identify user/computer
 	Shared Function getMacAddress() As String
 		Try
 			Dim adapters As NetworkInterface() = NetworkInterface.GetAllNetworkInterfaces()

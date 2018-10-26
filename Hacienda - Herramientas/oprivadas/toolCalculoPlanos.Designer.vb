@@ -22,6 +22,7 @@ Partial Class toolCalculoPlanos
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
 	Private Sub InitializeComponent()
+		Me.components = New System.ComponentModel.Container()
 		Me.MenuStrip2 = New System.Windows.Forms.MenuStrip()
 		Me.CalculosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.CálculoDeObrasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -33,6 +34,7 @@ Partial Class toolCalculoPlanos
 		Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
 		Me.Label1 = New System.Windows.Forms.Label()
 		Me.obra = New System.Windows.Forms.TextBox()
+		Me.reset = New System.Windows.Forms.Button()
 		Me.Label6 = New System.Windows.Forms.Label()
 		Me.propietario = New System.Windows.Forms.TextBox()
 		Me.search = New System.Windows.Forms.Button()
@@ -48,15 +50,15 @@ Partial Class toolCalculoPlanos
 		Me.Label13 = New System.Windows.Forms.Label()
 		Me.total = New System.Windows.Forms.Label()
 		Me.Label7 = New System.Windows.Forms.Label()
+		Me.Label9 = New System.Windows.Forms.Label()
 		Me.descuento = New System.Windows.Forms.NumericUpDown()
 		Me.montoDescuento = New System.Windows.Forms.Label()
+		Me.Label10 = New System.Windows.Forms.Label()
 		Me.cuotas = New System.Windows.Forms.NumericUpDown()
 		Me.montoCuota = New System.Windows.Forms.Label()
 		Me.TabPage2 = New System.Windows.Forms.TabPage()
 		Me.TabPage3 = New System.Windows.Forms.TabPage()
-		Me.Label9 = New System.Windows.Forms.Label()
-		Me.Label10 = New System.Windows.Forms.Label()
-		Me.reset = New System.Windows.Forms.Button()
+		Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
 		Me.MenuStrip2.SuspendLayout()
 		Me.TabControl1.SuspendLayout()
 		Me.TabPage1.SuspendLayout()
@@ -194,6 +196,21 @@ Partial Class toolCalculoPlanos
 		Me.obra.Size = New System.Drawing.Size(255, 23)
 		Me.obra.TabIndex = 54
 		'
+		'reset
+		'
+		Me.reset.FlatAppearance.BorderSize = 0
+		Me.reset.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.reset.Font = New System.Drawing.Font("Segoe MDL2 Assets", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.reset.ForeColor = System.Drawing.Color.White
+		Me.reset.Location = New System.Drawing.Point(354, 0)
+		Me.reset.Margin = New System.Windows.Forms.Padding(0)
+		Me.reset.Name = "reset"
+		Me.reset.Size = New System.Drawing.Size(26, 28)
+		Me.reset.TabIndex = 375
+		Me.reset.Text = ""
+		Me.ToolTip1.SetToolTip(Me.reset, "Reiniciar")
+		Me.reset.UseVisualStyleBackColor = True
+		'
 		'Label6
 		'
 		Me.Label6.Location = New System.Drawing.Point(0, 28)
@@ -226,6 +243,7 @@ Partial Class toolCalculoPlanos
 		Me.search.Size = New System.Drawing.Size(26, 28)
 		Me.search.TabIndex = 366
 		Me.search.Text = ""
+		Me.ToolTip1.SetToolTip(Me.search, "Buscar propietario")
 		Me.search.UseVisualStyleBackColor = True
 		'
 		'Label8
@@ -362,6 +380,16 @@ Partial Class toolCalculoPlanos
 		Me.Label7.TabIndex = 85
 		Me.Label7.TextAlign = System.Drawing.ContentAlignment.BottomRight
 		'
+		'Label9
+		'
+		Me.Label9.Location = New System.Drawing.Point(0, 199)
+		Me.Label9.Margin = New System.Windows.Forms.Padding(0)
+		Me.Label9.Name = "Label9"
+		Me.Label9.Size = New System.Drawing.Size(172, 20)
+		Me.Label9.TabIndex = 373
+		Me.Label9.Text = "Descuento (%)"
+		Me.Label9.TextAlign = System.Drawing.ContentAlignment.BottomRight
+		'
 		'descuento
 		'
 		Me.descuento.BorderStyle = System.Windows.Forms.BorderStyle.None
@@ -383,6 +411,16 @@ Partial Class toolCalculoPlanos
 		Me.montoDescuento.TabIndex = 369
 		Me.montoDescuento.Text = "$0,00"
 		Me.montoDescuento.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		'
+		'Label10
+		'
+		Me.Label10.Location = New System.Drawing.Point(0, 225)
+		Me.Label10.Margin = New System.Windows.Forms.Padding(0)
+		Me.Label10.Name = "Label10"
+		Me.Label10.Size = New System.Drawing.Size(172, 20)
+		Me.Label10.TabIndex = 374
+		Me.Label10.Text = "Cuotas"
+		Me.Label10.TextAlign = System.Drawing.ContentAlignment.BottomRight
 		'
 		'cuotas
 		'
@@ -428,40 +466,6 @@ Partial Class toolCalculoPlanos
 		Me.TabPage3.TabIndex = 2
 		Me.TabPage3.Text = "Cálculo de Planos de Mensura"
 		Me.TabPage3.UseVisualStyleBackColor = True
-		'
-		'Label9
-		'
-		Me.Label9.Location = New System.Drawing.Point(0, 199)
-		Me.Label9.Margin = New System.Windows.Forms.Padding(0)
-		Me.Label9.Name = "Label9"
-		Me.Label9.Size = New System.Drawing.Size(172, 20)
-		Me.Label9.TabIndex = 373
-		Me.Label9.Text = "Descuento (%)"
-		Me.Label9.TextAlign = System.Drawing.ContentAlignment.BottomRight
-		'
-		'Label10
-		'
-		Me.Label10.Location = New System.Drawing.Point(0, 225)
-		Me.Label10.Margin = New System.Windows.Forms.Padding(0)
-		Me.Label10.Name = "Label10"
-		Me.Label10.Size = New System.Drawing.Size(172, 20)
-		Me.Label10.TabIndex = 374
-		Me.Label10.Text = "Cuotas"
-		Me.Label10.TextAlign = System.Drawing.ContentAlignment.BottomRight
-		'
-		'reset
-		'
-		Me.reset.FlatAppearance.BorderSize = 0
-		Me.reset.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.reset.Font = New System.Drawing.Font("Segoe MDL2 Assets", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.reset.ForeColor = System.Drawing.Color.White
-		Me.reset.Location = New System.Drawing.Point(354, 0)
-		Me.reset.Margin = New System.Windows.Forms.Padding(0)
-		Me.reset.Name = "reset"
-		Me.reset.Size = New System.Drawing.Size(26, 28)
-		Me.reset.TabIndex = 375
-		Me.reset.Text = ""
-		Me.reset.UseVisualStyleBackColor = True
 		'
 		'toolCalculoPlanos
 		'
@@ -523,4 +527,5 @@ Partial Class toolCalculoPlanos
 	Friend WithEvents Label9 As Label
 	Friend WithEvents Label10 As Label
 	Friend WithEvents reset As Button
+	Friend WithEvents ToolTip1 As ToolTip
 End Class

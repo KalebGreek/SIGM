@@ -7,7 +7,7 @@
 		InitializeComponent()
 
 		' Add any initialization after the InitializeComponent() call.
-		CtrlMan.Fill.States(provincia, bs_provincia)
+		CtrlMan.Fill.GetStates(provincia, bs_provincia)
 		bs_provincia.Position = bs_provincia.Find("nombre", "CORDOBA")
 		bs_localidad.Position = bs_localidad.Find("nombre", "VILLA DE LAS ROSAS")
 
@@ -36,7 +36,7 @@
 
 	Private Sub bs_provincia_CurrentChanged(sender As Object, e As EventArgs) Handles bs_provincia.CurrentChanged, bs_provincia.PositionChanged
 		If bs_provincia.Position > -1 And bs_provincia.DataSource Is Nothing = False Then
-			CtrlMan.Fill.Cities(localidad, bs_localidad, bs_provincia.Current("id"))
+			CtrlMan.Fill.GetCities(localidad, bs_localidad, bs_provincia.Current("id"))
 		Else
 			localidad.DataSource = Nothing
 		End If

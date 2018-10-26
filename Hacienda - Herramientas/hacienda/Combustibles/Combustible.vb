@@ -3,7 +3,7 @@
 		Shared Sub FillCategory(ByRef bs As BindingSource, ByRef target As ComboBox, ByRef vehiculo As Boolean)
 			bs.DataSource = DbMan.read("SELECT * FROM hac_combustible_categoria_receptor 
 												WHERE vehiculo=" & vehiculo & " ORDER BY detalle")
-			CtrlMan.Fill.AutoComplete(bs, target, "detalle", "id")
+			CtrlMan.Fill.SetAutoComplete(target, bs, "detalle", "id")
 		End Sub
 		Shared Function ListAll(bs_cuenta As BindingSource, bs_categoria As BindingSource, id As Integer) As BindingSource
 			Dim sql As String = "SELECT Id as receptor_id, marca+' | '+dominio+' |'+STR(modelo) AS descripcion
@@ -50,7 +50,7 @@
 									     WHERE receptor_id=" & receptor_id & "
 									  ORDER BY persona.razon")
 
-			CtrlMan.Fill.AutoComplete(bs, target, "razon", "responsable_id")
+			CtrlMan.Fill.SetAutoComplete(target, bs, "razon", "responsable_id")
 		End Sub
 	End Class
 
@@ -149,7 +149,7 @@
 			bs.DataSource = DbMan.read("SELECT id as tipo_id, descripcion, por_litro 
 										  FROM hac_combustible_tipo")
 
-			CtrlMan.Fill.AutoComplete(bs, target, "descripcion", "tipo_id")
+			CtrlMan.Fill.SetAutoComplete(target, bs, "descripcion", "tipo_id")
 
 			Return target
 		End Function
