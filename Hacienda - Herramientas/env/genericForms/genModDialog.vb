@@ -1,4 +1,4 @@
-﻿Public Class genericModDialog
+﻿Public Class genModDialog
 	Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()

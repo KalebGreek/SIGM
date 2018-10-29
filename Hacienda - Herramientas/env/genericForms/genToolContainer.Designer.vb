@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class genericToolContainer
+Partial Class genToolContainer
 	Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -22,7 +22,7 @@ Partial Class genericToolContainer
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()>
 	Private Sub InitializeComponent()
-		Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(genericToolContainer))
+		Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(genToolContainer))
 		Me.SuspendLayout()
 		'
 		'genericToolContainer

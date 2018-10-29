@@ -404,7 +404,6 @@
 			End If
 
 			target.BeginUpdate()
-			target.ResetText()
 			target.AutoCompleteMode = AutoCompleteMode.None
 			target.DataSource = Nothing
 			target.DataSource = bs
@@ -418,96 +417,72 @@
 
 			Return target
 		End Function
-
-		'Overloads Shared Function SetAutocomplete(target As ComboBox, bs As BindingSource, FilterColumn As ComboBox) As ComboBox
-		'	'Reset target
-		'	If target Is Nothing Then
-		'		target = New ComboBox
-		'	End If
-
-		'	target.BeginUpdate()
-		'	target.AutoCompleteMode = AutoCompleteMode.None
-		'	If FilterColumn.SelectedIndex > -1 And bs Is Nothing = False Then
-		'		Dim acscollection As New AutoCompleteStringCollection
-		'		'Return and sort range of values to use for the specified column
-		'		bs.Sort = FilterColumn.Text & " ASC"
-		'		acscollection = bs(FilterColumn.Text)
-
-		'		target.AutoCompleteMode = AutoCompleteMode.Append
-		'		target.AutoCompleteCustomSource = acscollection
-		'	End If
-		'	target.EndUpdate()
-
-		'	Return target
-		'End Function
-		'Overloads Shared Function SetAutocomplete(target As NumericUpDown, bs As BindingSource, FilterColumn As ComboBox,
-		'									   Optional DisplayOption As String = "", Optional ValueOption As String = "") As NumericUpDown
+		Overloads Shared Function SetAutocomplete(target As NumericUpDown, bs As BindingSource, FilterColumn As ComboBox) As NumericUpDown
 
 
-		'	If target Is Nothing Then
-		'		target = New NumericUpDown
-		'	End If
+			If target Is Nothing Then
+				target = New NumericUpDown
+			End If
 
-		'	'Reset target
-		'	target.Minimum = 0
-		'	target.Value = 0
-		'	target.Maximum = 0
+			'Reset target
+			target.Minimum = 0
+			target.Value = 0
+			target.Maximum = 0
 
-		'	If FilterColumn.SelectedIndex > -1 Then
-		'		'Return and sort range of values to use for the specified column
-		'		If FilterColumn.SelectedValue = "System.Decimal" Or FilterColumn.SelectedValue = "System.Integer" Then
-		'			Dim minValue, maxValue As Long
-		'			bs.Sort = FilterColumn.Text & " ASC"
-		'			bs.MoveFirst()
-		'			minValue = bs.Current(FilterColumn.Text)
-		'			bs.MoveLast()
-		'			maxValue = bs.Current(FilterColumn.Text)
+			If FilterColumn.SelectedIndex > -1 Then
+				'Return and sort range of values to use for the specified column
+				If FilterColumn.SelectedValue = "System.Decimal" Or FilterColumn.SelectedValue = "System.Integer" Then
+					Dim minValue, maxValue As Long
+					bs.Sort = FilterColumn.Text & " ASC"
+					bs.MoveFirst()
+					minValue = bs.Current(FilterColumn.Text)
+					bs.MoveLast()
+					maxValue = bs.Current(FilterColumn.Text)
 
-		'			target.Minimum = minValue
-		'			target.Maximum = minValue
-		'			target.Value = minValue
-		'		End If
-		'	End If
-		'	target.Update()
+					target.Minimum = minValue
+					target.Maximum = minValue
+					target.Value = minValue
+				End If
+			End If
+			target.Update()
 
-		'	Return target
-		'End Function
-		'Overloads Shared Function SetAutocomplete(target As DateTimePicker, bs As BindingSource, FilterColumn As ComboBox,
-		'									   Optional DisplayOption As String = "", Optional ValueOption As String = "") As DateTimePicker
+			Return target
+		End Function
+		Overloads Shared Function SetAutocomplete(target As DateTimePicker, bs As BindingSource, FilterColumn As ComboBox) As DateTimePicker
 
-		'	If target Is Nothing Then
-		'		target = New DateTimePicker
-		'	End If
+			If target Is Nothing Then
+				target = New DateTimePicker
+			End If
 
-		'	'Reset target
-		'	target.MinDate = CDate("1/1/1899")
-		'	target.Value = target.MinDate
-		'	target.MaxDate = Today
+			'Reset target
+			target.MinDate = CDate("1/1/1899")
+			target.Value = target.MinDate
+			target.MaxDate = Today
 
-		'	If FilterColumn.SelectedIndex > -1 Then
-		'		'Return and sort range of values to use for the specified column
-		'		If FilterColumn.SelectedValue = "System.Date" Then
-		'			bs.Sort = FilterColumn.Text & " ASC"
+			If FilterColumn.SelectedIndex > -1 Then
+				'Return and sort range of values to use for the specified column
+				If FilterColumn.SelectedValue = "System.Date" Then
+					bs.Sort = FilterColumn.Text & " ASC"
 
-		'			bs.MoveFirst()
-		'			If bs.Current(FilterColumn.Text) Is DBNull.Value = False Then
-		'				target.MinDate = bs.Current(FilterColumn.Text)
-		'			End If
+					bs.MoveFirst()
+					If bs.Current(FilterColumn.Text) Is DBNull.Value = False Then
+						target.MinDate = bs.Current(FilterColumn.Text)
+					End If
 
-		'			bs.MoveLast()
-		'			If bs.Current(FilterColumn.Text) Is DBNull.Value = False Then
-		'				target.MaxDate = bs.Current(FilterColumn.Text)
-		'			End If
+					bs.MoveLast()
+					If bs.Current(FilterColumn.Text) Is DBNull.Value = False Then
+						target.MaxDate = bs.Current(FilterColumn.Text)
+					End If
 
-		'			If target.MaxDate >= Today Then
-		'				target.Value = Today
-		'			End If
-		'		End If
-		'	End If
-		'	target.Update()
+					If target.MaxDate >= Today Then
+						target.Value = Today
+					End If
+				End If
+			End If
+			target.Update()
 
-		'	Return target
-		'End Function
+			Return target
+		End Function
 
 		Shared Sub GetCities(ByRef CityList As ComboBox, ByRef bs As BindingSource, State As Integer)
 			CityList.BeginUpdate()

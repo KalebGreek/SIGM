@@ -28,7 +28,7 @@ Partial Class BusquedaPersona
 		Me.difunto = New System.Windows.Forms.CheckBox()
 		Me.fisica = New System.Windows.Forms.CheckBox()
 		Me.bs_resultado = New System.Windows.Forms.BindingSource(Me.components)
-		Me.ControlBusqueda1 = New Sigm.ControlBusqueda()
+		Me.SearchControl1 = New Sigm.genSearchControl()
 		CType(Me.resultado, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.PanelFiltros.SuspendLayout()
 		CType(Me.bs_resultado, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -42,13 +42,13 @@ Partial Class BusquedaPersona
 		Me.resultado.BorderStyle = System.Windows.Forms.BorderStyle.None
 		Me.resultado.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
 		Me.resultado.Dock = System.Windows.Forms.DockStyle.Fill
-		Me.resultado.Location = New System.Drawing.Point(0, 32)
+		Me.resultado.Location = New System.Drawing.Point(0, 36)
 		Me.resultado.Margin = New System.Windows.Forms.Padding(0)
 		Me.resultado.Name = "resultado"
 		Me.resultado.ReadOnly = True
 		Me.resultado.RowHeadersVisible = False
 		Me.resultado.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-		Me.resultado.Size = New System.Drawing.Size(659, 263)
+		Me.resultado.Size = New System.Drawing.Size(659, 259)
 		Me.resultado.TabIndex = 367
 		'
 		'PanelFiltros
@@ -83,21 +83,26 @@ Partial Class BusquedaPersona
 		Me.fisica.Text = "Fisica"
 		Me.fisica.UseVisualStyleBackColor = True
 		'
-		'ControlBusqueda1
+		'SearchControl1
 		'
-		Me.ControlBusqueda1.Dock = System.Windows.Forms.DockStyle.Top
-		Me.ControlBusqueda1.Location = New System.Drawing.Point(0, 0)
-		Me.ControlBusqueda1.Margin = New System.Windows.Forms.Padding(0)
-		Me.ControlBusqueda1.Name = "ControlBusqueda1"
-		Me.ControlBusqueda1.Size = New System.Drawing.Size(659, 32)
-		Me.ControlBusqueda1.TabIndex = 368
+		Me.SearchControl1.AutoSize = True
+		Me.SearchControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+		Me.SearchControl1.BackColor = System.Drawing.Color.DarkGray
+		Me.SearchControl1.Dock = System.Windows.Forms.DockStyle.Top
+		Me.SearchControl1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.SearchControl1.Location = New System.Drawing.Point(0, 0)
+		Me.SearchControl1.Margin = New System.Windows.Forms.Padding(0)
+		Me.SearchControl1.MinimumSize = New System.Drawing.Size(520, 33)
+		Me.SearchControl1.Name = "SearchControl1"
+		Me.SearchControl1.Size = New System.Drawing.Size(659, 36)
+		Me.SearchControl1.TabIndex = 368
 		'
 		'BusquedaPersona
 		'
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
 		Me.ClientSize = New System.Drawing.Size(659, 321)
 		Me.Controls.Add(Me.resultado)
-		Me.Controls.Add(Me.ControlBusqueda1)
+		Me.Controls.Add(Me.SearchControl1)
 		Me.Controls.Add(Me.PanelFiltros)
 		Me.Font = New System.Drawing.Font("PF DinText Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.MinimumSize = New System.Drawing.Size(675, 360)
@@ -111,11 +116,12 @@ Partial Class BusquedaPersona
 		Me.PanelFiltros.PerformLayout()
 		CType(Me.bs_resultado, System.ComponentModel.ISupportInitialize).EndInit()
 		Me.ResumeLayout(False)
+		Me.PerformLayout()
 
 	End Sub
 
 	Friend WithEvents resultado As DataGridView
-	Public WithEvents ControlBusqueda1 As ControlBusqueda
+	Public WithEvents SearchControl1 As genSearchControl
 	Friend WithEvents PanelFiltros As FlowLayoutPanel
 	Friend WithEvents difunto As CheckBox
 	Friend WithEvents fisica As CheckBox

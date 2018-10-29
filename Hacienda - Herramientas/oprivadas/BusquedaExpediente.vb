@@ -138,7 +138,7 @@ Public Class BusquedaExpediente
 	Private Sub Consultar()
 		With ControlBusqueda1
 			If .vista.SelectedIndex > -1 Then
-				.filtro.Items.Clear()
+				.filtro.DataSource = Nothing
 				If .vista.Text = "EXPEDIENTE" Then
 					bs_resultado.DataSource = Oprivadas.Expediente.Buscar.Expediente()
 				ElseIf .vista.Text = "RESPONSABLE" Then

@@ -25,7 +25,7 @@ Partial Class BusquedaPropietario
 		Me.components = New System.ComponentModel.Container()
 		Me.resultado = New System.Windows.Forms.DataGridView()
 		Me.bs_resultado = New System.Windows.Forms.BindingSource(Me.components)
-		Me.ControlBusqueda1 = New Sigm.ControlBusqueda()
+		Me.ControlBusqueda1 = New Sigm.genSearchControl()
 		CType(Me.resultado, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.bs_resultado, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
@@ -82,6 +82,6 @@ Partial Class BusquedaPropietario
 	End Sub
 
 	Friend WithEvents resultado As DataGridView
-	Public WithEvents ControlBusqueda1 As ControlBusqueda
+	Public WithEvents ControlBusqueda1 As genSearchControl
 	Friend WithEvents bs_resultado As BindingSource
 End Class

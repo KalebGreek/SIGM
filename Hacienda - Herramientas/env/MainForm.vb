@@ -106,7 +106,7 @@
 	End Sub
 	Private Sub BuscarEmpleadoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarEmpleadoToolStripMenuItem.Click
 		Dim buscar1 As New BusquedaPersona
-		buscar1.ControlBusqueda1.Vista.Text = "EMPLEADO"
+		buscar1.SearchControl1.Vista.Text = "EMPLEADO"
 		buscar1.Show()
 	End Sub
 
@@ -126,7 +126,7 @@
 	Private Sub BuscarProveedorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarProveedorToolStripMenuItem.Click
 		Dim buscar1 As New BusquedaPersona
 		buscar1.MdiParent = Me
-		buscar1.ControlBusqueda1.vista.Text = "PROVEEDOR"
+		buscar1.SearchControl1.vista.Text = "PROVEEDOR"
 		buscar1.Show()
 	End Sub
 
@@ -164,11 +164,11 @@
 	Private Sub BuscarProfesionalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarProfesionalToolStripMenuItem.Click
 		Dim buscar1 As New BusquedaPersona
 		buscar1.MdiParent = Me
-		buscar1.ControlBusqueda1.Vista.Text = "PROFESIONAL"
+		buscar1.SearchControl1.Vista.Text = "PROFESIONAL"
 		buscar1.Show()
 	End Sub
 	Private Sub CalculosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CalculosToolStripMenuItem.Click
-		Dim calcOprivadas As New genericToolContainer
+		Dim calcOprivadas As New genToolContainer
 		calcOprivadas.MdiParent = Me
 		calcOprivadas.Text = "Calculadora"
 

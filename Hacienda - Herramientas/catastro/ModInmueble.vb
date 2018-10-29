@@ -319,7 +319,7 @@
 
 	Private Sub mod_titular_Click(sender As Object, e As EventArgs) Handles mod_titular.Click
 		Dim sel_per As New BusquedaPersona
-		sel_per.ControlBusqueda1.vista.Text = "PERSONA"
+		sel_per.SearchControl1.vista.Text = "PERSONA"
 		sel_per.ShowDialog(Me)
 		With sel_per.resultado
 			If .DataSource.Position > -1 Then

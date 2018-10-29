@@ -77,10 +77,10 @@ Public Class ModCombustibleTicket
 	End Sub
 	Private Sub SelectProveedor_Click(sender As Object, e As EventArgs) Handles SelectProveedor.Click
 		Dim SelProveedor As New BusquedaPersona
-		SelProveedor.ControlBusqueda1.vista.Text = "PROVEEDOR"
-		SelProveedor.ControlBusqueda1.vista.Enabled = False
-		SelProveedor.ControlBusqueda1.filtro.Text = "RAZON SOCIAL"
-		SelProveedor.ControlBusqueda1.filtro.Enabled = False
+		SelProveedor.SearchControl1.vista.Text = "PROVEEDOR"
+		SelProveedor.SearchControl1.vista.Enabled = False
+		SelProveedor.SearchControl1.filtro.Text = "RAZON SOCIAL"
+		SelProveedor.SearchControl1.filtro.Enabled = False
 		SelProveedor.ShowDialog(Me)
 		If SelProveedor.bs_resultado.Position > -1 Then
 			proveedor_razon.Text = SelProveedor.bs_resultado.Current("razon")

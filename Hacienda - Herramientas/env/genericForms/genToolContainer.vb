@@ -1,4 +1,4 @@
-﻿Public Class genericToolContainer
+﻿Public Class genToolContainer
 
 	Public Sub New()
         ' This call is required by the designer.

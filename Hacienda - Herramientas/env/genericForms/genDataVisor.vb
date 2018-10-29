@@ -1,4 +1,4 @@
-﻿Public Class genericDataVisor
+﻿Public Class genDataVisor
 	Public Sub LoadDtab(source As DataTable)
 		CtrlMan.LoadDataGridView(DataGridView1, BindingSource1, "", source)
 	End Sub

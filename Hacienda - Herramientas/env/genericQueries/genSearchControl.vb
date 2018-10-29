@@ -1,4 +1,4 @@
-﻿Public Class ControlBusqueda
+﻿Public Class genSearchControl
 	Inherits System.Windows.Forms.UserControl
 
 	'Custom Events
@@ -25,29 +25,33 @@
 		DateValue.Value = Today
 	End Sub
 
-	Private Sub Vista_Events(sender As Object, e As EventArgs) Handles vista.SelectedIndexChanged, vista.TextChanged
-		RaiseEvent CVista_IndexTextChanged() 'Load items
+	Private Sub Vista_Events(sender As Object, e As EventArgs) Handles vista.SelectedIndexChanged
+		If vista.Visible Then
+			reset_search.PerformClick()
+			RaiseEvent CVista_IndexTextChanged() 'Load items
+		End If
 		vista.Visible = vista.Items.Count > 0
 	End Sub
 
 	'Visibility events
 	Private Sub filtro_condition_SelectedIndexnTextChanged(sender As Object, e As EventArgs) Handles filtro.SelectedIndexChanged, filtro.TextChanged,
 																									Condition.SelectedIndexChanged, Condition.TextChanged
-
 		bsCustomFilter = ""
 		If filtro.Items.Count > 0 And filtro.SelectedIndex > -1 Then
 			filtro.Visible = True
-			keyword.Visible = (filtro.SelectedValue.ToString = "System.String")
+			keyword.Visible = (filtro.SelectedValue.ToString = GetType(String).ToString)
 			Condition.Visible = keyword.Visible.CompareTo(True)
-			Condition.SelectedIndex = 0
-			NumValue.Visible = (filtro.SelectedValue.ToString = "System.Decimal") Or (filtro.SelectedValue.ToString = "System.Int32")
+			If Condition.SelectedIndex < 0 Then
+				Condition.SelectedIndex = 0
+			End If
+			'Int and dec
+			NumValue.Visible = (filtro.SelectedValue.ToString = GetType(Decimal).ToString) Or (filtro.SelectedValue.ToString = GetType(Integer).ToString)
 			MaxNumValue.Visible = (NumValue.Visible) And (Condition.Text = "<->")
-			DateValue.Visible = (filtro.SelectedValue.ToString = "System.DateTime")
+			'Date
+			DateValue.Visible = (filtro.SelectedValue.ToString = GetType(Date).ToString)
 			MaxDateValue.Visible = (DateValue.Visible) And (Condition.Text = "<->")
 
-
-
-			If filtro.SelectedValue.ToString = "System.Decimal" Then
+			If filtro.SelectedValue.ToString = GetType(Decimal).ToString Then
 				NumValue.DecimalPlaces = 2
 				MaxNumValue.DecimalPlaces = 2
 			Else
@@ -162,6 +166,7 @@
 	End Sub
 
 	Private Sub reset_search_Click(sender As Object, e As EventArgs) Handles reset_search.Click
+		filtro.DataSource = Nothing
 		bsCustomFilter = ""
 
 		DateValue.MinDate = "1/1/1899"

@@ -30,7 +30,7 @@ Partial Class BusquedaOrdenTrabajo
 		Me.modificar = New System.Windows.Forms.Button()
 		Me.eliminar = New System.Windows.Forms.Button()
 		Me.imprimir = New System.Windows.Forms.Button()
-		Me.ControlBusqueda1 = New Sigm.ControlBusqueda()
+		Me.ControlBusqueda1 = New Sigm.genSearchControl()
 		CType(Me.resultado, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.bs_resultado, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.FlowLayoutPanel1.SuspendLayout()
@@ -158,7 +158,7 @@ Partial Class BusquedaOrdenTrabajo
 	End Sub
 
 	Friend WithEvents resultado As DataGridView
-	Public WithEvents ControlBusqueda1 As ControlBusqueda
+	Public WithEvents ControlBusqueda1 As genSearchControl
 	Friend WithEvents bs_resultado As BindingSource
 	Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
 	Friend WithEvents nuevo As Button

@@ -28,7 +28,7 @@ Public Class ModCombustibleReceptor
 	'RESPONSABLE
 	Private Sub AddResponsable_Click(sender As Object, e As EventArgs) Handles AddResponsable.Click
 		Dim SelResp As New BusquedaPersona
-		SelResp.ControlBusqueda1.vista.Text = "PERSONA"
+		SelResp.SearchControl1.vista.Text = "PERSONA"
 		SelResp.ShowDialog(Me)
 		With SelResp.resultado.DataSource
 			If .Position > -1 Then

@@ -21,7 +21,7 @@ Public Class BusquedaPropietario
 	Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVista_IndexTextChanged
 		With ControlBusqueda1
 			If .vista.SelectedIndex > -1 Then
-				.filtro.Items.Clear()
+				.filtro.DataSource = Nothing
 				If .vista.Text = "PROPIETARIO" Then
 					Dim sql As String = "SELECT * FROM catastro"
 					Dim dtab As New DataTable

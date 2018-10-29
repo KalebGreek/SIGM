@@ -283,7 +283,7 @@
     '# PERSONA 
     Private Sub add_resp_Click(sender As Object, e As EventArgs) Handles add_resp.Click
 		Dim seleccion_persona As New BusquedaPersona
-		seleccion_persona.ControlBusqueda1.vista.Text = "PERSONA"
+		seleccion_persona.SearchControl1.vista.Text = "PERSONA"
 		seleccion_persona.ShowDialog(Me)
 		With seleccion_persona.resultado.DataSource
 			'Se agrega el registro temporal
@@ -308,7 +308,7 @@
 	End Sub
 	Private Sub mod_prof_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mod_prof.Click
 		Dim sel_prof As New BusquedaPersona
-		sel_prof.ControlBusqueda1.vista.Text = "PROFESIONAL"
+		sel_prof.SearchControl1.vista.Text = "PROFESIONAL"
 		sel_prof.ShowDialog(Me)
 		With sel_prof.resultado.DataSource
 			If .Position > -1 Then

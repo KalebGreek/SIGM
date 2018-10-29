@@ -184,28 +184,28 @@
     <Compile Include="env\CtrlMan.vb" />
     <Compile Include="env\DbMan.vb" />
     <Compile Include="env\FileMan.vb" />
-    <Compile Include="env\genericForms\genericToolContainer.Designer.vb">
-      <DependentUpon>genericToolContainer.vb</DependentUpon>
+    <Compile Include="env\genericForms\genToolContainer.Designer.vb">
+      <DependentUpon>genToolContainer.vb</DependentUpon>
     </Compile>
-    <Compile Include="env\genericForms\genericToolContainer.vb">
+    <Compile Include="env\genericForms\genToolContainer.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="env\genericForms\genericDataVisor.Designer.vb">
-      <DependentUpon>genericDataVisor.vb</DependentUpon>
+    <Compile Include="env\genericForms\genDataVisor.Designer.vb">
+      <DependentUpon>genDataVisor.vb</DependentUpon>
     </Compile>
-    <Compile Include="env\genericForms\genericDataVisor.vb">
+    <Compile Include="env\genericForms\genDataVisor.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="env\genericForms\genericModDialog.Designer.vb">
-      <DependentUpon>genericModDialog.vb</DependentUpon>
+    <Compile Include="env\genericForms\genModDialog.Designer.vb">
+      <DependentUpon>genModDialog.vb</DependentUpon>
     </Compile>
-    <Compile Include="env\genericForms\genericModDialog.vb">
+    <Compile Include="env\genericForms\genModDialog.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="env\genericQueries\ControlBusqueda.Designer.vb">
-      <DependentUpon>ControlBusqueda.vb</DependentUpon>
+    <Compile Include="env\genericQueries\genSearchControl.Designer.vb">
+      <DependentUpon>genSearchControl.vb</DependentUpon>
     </Compile>
-    <Compile Include="env\genericQueries\ControlBusqueda.vb">
+    <Compile Include="env\genericQueries\genSearchControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="env\SecMan.vb" />
@@ -242,9 +242,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="docs\Documento.vb" />
-    <None Include="env\genericQueries\ControlBusquedaGen.vb.old">
-      <SubType>UserControl</SubType>
-    </None>
     <Compile Include="gobierno\ConsultaOrdenanza.Designer.vb">
       <DependentUpon>ConsultaOrdenanza.vb</DependentUpon>
     </Compile>
@@ -503,20 +500,17 @@
     <EmbeddedResource Include="env\acceso.resx">
       <DependentUpon>acceso.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="env\genericForms\genericToolContainer.resx">
-      <DependentUpon>genericToolContainer.vb</DependentUpon>
+    <EmbeddedResource Include="env\genericForms\genToolContainer.resx">
+      <DependentUpon>genToolContainer.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="env\genericForms\genericDataVisor.resx">
-      <DependentUpon>genericDataVisor.vb</DependentUpon>
+    <EmbeddedResource Include="env\genericForms\genDataVisor.resx">
+      <DependentUpon>genDataVisor.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="env\genericForms\genericModDialog.resx">
-      <DependentUpon>genericModDialog.vb</DependentUpon>
+    <EmbeddedResource Include="env\genericForms\genModDialog.resx">
+      <DependentUpon>genModDialog.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="env\genericQueries\ControlBusqueda.resx">
-      <DependentUpon>ControlBusqueda.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="env\genericQueries\ControlBusquedaGen.resx">
-      <DependentUpon>ControlBusquedaGen.vb.old</DependentUpon>
+    <EmbeddedResource Include="env\genericQueries\genSearchControl.resx">
+      <DependentUpon>genSearchControl.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="gobierno\ConsultaOrdenanza.resx">
       <DependentUpon>ConsultaOrdenanza.vb</DependentUpon>

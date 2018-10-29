@@ -64,9 +64,9 @@
 		'Crear adaptador de datos
 		Dim dada As New OleDb.OleDbDataAdapter
 
-		If sqlSelect = "" Then
+		If OleDBProcedure Is Nothing = False Then
 			OleDBProcedure.CommandType = CommandType.StoredProcedure
-		Else
+		ElseIf sqlSelect <> "" Then
 			OleDBProcedure = New OleDb.OleDbCommand
 			OleDBProcedure.CommandType = CommandType.Text
 			OleDBProcedure.CommandText = sqlSelect
@@ -140,7 +140,6 @@
 		Else
 			Return dtab
 		End If
-
 	End Function
 
 	Function GenerateReportDataset(ByVal sql As String, Optional OleDBProcedure As OleDb.OleDbCommand = Nothing) As DataSet
