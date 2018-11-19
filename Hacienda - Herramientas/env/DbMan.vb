@@ -52,7 +52,7 @@
 		olecon.Close()
 		Return schemaTable
 	End Function
-	Function read(ByVal sqlSelect As String, Optional constr As String = Nothing,
+	Function read(ByVal sqlSelect As String, constr As String,
 				  Optional sqlFrom As String = "", Optional sqlWhere As String = "",
 				  Optional sqlGroupBy As String = "", Optional sqlHaving As String = "",
 				  Optional sqlOrderBy As String = "",
@@ -93,10 +93,6 @@
 		End If
 		dada.SelectCommand = OleDBProcedure
 
-		If constr Is Nothing Then
-			constr = My.Settings.DefaultCon
-		End If
-
 		If dada.SelectCommand Is Nothing = False Then
             'Si la conexión estaba abierta, cerrarla y mostrar mensaje
             If olecon.State = ConnectionState.Open Then
@@ -110,8 +106,12 @@
             Try
 				olecon.Open()
 			Catch ex As OleDb.OleDbException
-				errorMsg = "La ruta de acceso a la base de datos es incorrecta."
-
+				Try
+					olecon.ConnectionString = My.Settings.DefaultCon
+					olecon.Open()
+				Catch ex2 As Exception
+					errorMsg = "La ruta de acceso a la base de datos es incorrecta."
+				End Try
 			End Try
             'Comandos
             Try
@@ -144,7 +144,7 @@
 
 	Function GenerateReportDataset(ByVal sql As String, Optional OleDBProcedure As OleDb.OleDbCommand = Nothing) As DataSet
 		Dim ds As New DataSet
-		ds.Tables.Add(DbMan.read(sql))
+		ds.Tables.Add(DbMan.read(sql, My.Settings.DefaultCon))
 		Return ds
 	End Function
 

@@ -28,7 +28,7 @@ Public Class ModCombustibleReceptor
 	'RESPONSABLE
 	Private Sub AddResponsable_Click(sender As Object, e As EventArgs) Handles AddResponsable.Click
 		Dim SelResp As New BusquedaPersona
-		SelResp.SearchControl1.vista.Text = "PERSONA"
+		SelResp.genSearchControl1.vista.Text = "PERSONA"
 		SelResp.ShowDialog(Me)
 		With SelResp.resultado.DataSource
 			If .Position > -1 Then
@@ -148,7 +148,8 @@ Public Class ModCombustibleReceptor
 																	 " & modelo.Value & ", #" & fecha_alta & "#,
 																	  '" & observaciones.Text & "')")
 
-					Dim dtab As DataTable = DbMan.read("SELECT id FROM hac_combustible_receptor ORDER BY id ASC")
+					Dim dtab As DataTable = DbMan.read("SELECT id FROM hac_combustible_receptor ORDER BY id ASC",
+														My.Settings.DefaultCon)
 					receptor_id.Text = dtab(0)("id")
 					saved = True
 				End If

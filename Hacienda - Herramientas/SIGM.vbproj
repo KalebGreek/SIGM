@@ -180,6 +180,12 @@
     <Compile Include="catastro\AgregarFrente.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="comercio\Busquedacomercio.Designer.vb">
+      <DependentUpon>Busquedacomercio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="comercio\Busquedacomercio.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="env\ConverterMan.vb" />
     <Compile Include="env\CtrlMan.vb" />
     <Compile Include="env\DbMan.vb" />
@@ -209,6 +215,18 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="env\SecMan.vb" />
+    <Compile Include="hacienda\Adelanto\adelanto_page1.Designer.vb">
+      <DependentUpon>adelanto_page1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\Adelanto\adelanto_page1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="hacienda\Adelanto\ModAdelanto.Designer.vb">
+      <DependentUpon>ModAdelanto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\Adelanto\ModAdelanto.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="hacienda\CalculoAnualImpuesto\CalculoAnualSQL.vb" />
     <Compile Include="hacienda\Combustibles\Combustible.vb" />
     <Compile Include="hacienda\Combustibles\CtrlBusquedaCombustiblePorTicket.Designer.vb">
@@ -379,6 +397,12 @@
     <Compile Include="oprivadas\toolCalculoPlanos.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="hacienda\Adelanto\BusquedaAdelanto.Designer.vb">
+      <DependentUpon>BusquedaAdelanto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\Adelanto\BusquedaAdelanto.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="opublicas\NotaPedido\BusquedaOrdenTrabajo.Designer.vb">
       <DependentUpon>BusquedaOrdenTrabajo.vb</DependentUpon>
     </Compile>
@@ -497,6 +521,9 @@
     <EmbeddedResource Include="catastro\AgregarFrente.resx">
       <DependentUpon>AgregarFrente.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="comercio\Busquedacomercio.resx">
+      <DependentUpon>Busquedacomercio.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="env\acceso.resx">
       <DependentUpon>acceso.vb</DependentUpon>
     </EmbeddedResource>
@@ -514,6 +541,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="gobierno\ConsultaOrdenanza.resx">
       <DependentUpon>ConsultaOrdenanza.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\Adelanto\adelanto_page1.resx">
+      <DependentUpon>adelanto_page1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\Adelanto\ModAdelanto.resx">
+      <DependentUpon>ModAdelanto.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\reportes\DeudaContribuyente.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -587,6 +620,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="oprivadas\toolCalculoPlanos.resx">
       <DependentUpon>toolCalculoPlanos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\Adelanto\BusquedaAdelanto.resx">
+      <DependentUpon>BusquedaAdelanto.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="opublicas\NotaPedido\BusquedaOrdenTrabajo.resx">
       <DependentUpon>BusquedaOrdenTrabajo.vb</DependentUpon>
@@ -833,7 +869,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="comercio\" />
     <Folder Include="My Project\DataSources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

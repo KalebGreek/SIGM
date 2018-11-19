@@ -32,8 +32,8 @@ Partial Class ConsultasEspeciales
 		Me.DBAccessToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.DBPostgreSQLToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.Connection = New System.Windows.Forms.ToolStripLabel()
-		Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
 		Me.CustomQuery = New System.Windows.Forms.ToolStripComboBox()
+		Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
 		Me.CustomTable = New System.Windows.Forms.LinkLabel()
 		Me.query_bs = New System.Windows.Forms.BindingSource(Me.components)
 		Me.GenSearchControl1 = New Sigm.genSearchControl()
@@ -122,6 +122,15 @@ Partial Class ConsultasEspeciales
 		Me.Connection.Size = New System.Drawing.Size(292, 20)
 		Me.Connection.Text = "Seleccione una base de datos antes de continuar."
 		'
+		'CustomQuery
+		'
+		Me.CustomQuery.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+		Me.CustomQuery.AutoSize = False
+		Me.CustomQuery.DropDownWidth = 150
+		Me.CustomQuery.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.749999!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.CustomQuery.Name = "CustomQuery"
+		Me.CustomQuery.Size = New System.Drawing.Size(121, 23)
+		'
 		'ToolStripLabel1
 		'
 		Me.ToolStripLabel1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
@@ -132,15 +141,6 @@ Partial Class ConsultasEspeciales
 		Me.ToolStripLabel1.Size = New System.Drawing.Size(80, 20)
 		Me.ToolStripLabel1.Text = "Consulta"
 		Me.ToolStripLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-		'
-		'CustomQuery
-		'
-		Me.CustomQuery.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-		Me.CustomQuery.AutoSize = False
-		Me.CustomQuery.DropDownWidth = 150
-		Me.CustomQuery.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.749999!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.CustomQuery.Name = "CustomQuery"
-		Me.CustomQuery.Size = New System.Drawing.Size(121, 23)
 		'
 		'CustomTable
 		'

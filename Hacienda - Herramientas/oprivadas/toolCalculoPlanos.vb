@@ -54,7 +54,9 @@
 
 	Private Sub search_Click(sender As Object, e As EventArgs) Handles search.Click
 		Dim bprop As New BusquedaPropietario
-		bprop.ControlBusqueda1.vista.Text = "PROPIETARIO"
+		bprop.genSearchControl1.vista.Text = "PROPIETARIO"
+		bprop.genSearchControl1.selectRow.Visible = True
+		bprop.genSearchControl1.cancel.Visible = True
 		bprop.ShowDialog(Me)
 		With bprop.bs_resultado
 			If .Position > -1 Then

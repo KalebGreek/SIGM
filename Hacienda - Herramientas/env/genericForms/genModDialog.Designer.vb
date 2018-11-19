@@ -23,18 +23,13 @@ Partial Class genModDialog
     <System.Diagnostics.DebuggerStepThrough()>
 	Private Sub InitializeComponent()
 		Me.persona_id = New System.Windows.Forms.TextBox()
-		Me.grupo_mod = New System.Windows.Forms.FlowLayoutPanel()
+		Me.bottomMenu = New System.Windows.Forms.FlowLayoutPanel()
 		Me.cancel = New System.Windows.Forms.Button()
 		Me.save = New System.Windows.Forms.Button()
 		Me.nextPage = New System.Windows.Forms.Button()
 		Me.lastPage = New System.Windows.Forms.Button()
-		Me.Label1 = New System.Windows.Forms.Label()
-		Me.TabControl1 = New System.Windows.Forms.TabControl()
-		Me.TabPage1 = New System.Windows.Forms.TabPage()
-		Me.TabPage2 = New System.Windows.Forms.TabPage()
-		Me.TabPage3 = New System.Windows.Forms.TabPage()
-		Me.grupo_mod.SuspendLayout()
-		Me.TabControl1.SuspendLayout()
+		Me.wrapper = New System.Windows.Forms.Panel()
+		Me.bottomMenu.SuspendLayout()
 		Me.SuspendLayout()
 		'
 		'persona_id
@@ -50,21 +45,21 @@ Partial Class genModDialog
 		Me.persona_id.Text = "0"
 		Me.persona_id.Visible = False
 		'
-		'grupo_mod
+		'bottomMenu
 		'
-		Me.grupo_mod.BackColor = System.Drawing.Color.DimGray
-		Me.grupo_mod.Controls.Add(Me.persona_id)
-		Me.grupo_mod.Controls.Add(Me.cancel)
-		Me.grupo_mod.Controls.Add(Me.save)
-		Me.grupo_mod.Controls.Add(Me.nextPage)
-		Me.grupo_mod.Controls.Add(Me.lastPage)
-		Me.grupo_mod.Dock = System.Windows.Forms.DockStyle.Bottom
-		Me.grupo_mod.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-		Me.grupo_mod.Location = New System.Drawing.Point(0, 333)
-		Me.grupo_mod.Margin = New System.Windows.Forms.Padding(0)
-		Me.grupo_mod.Name = "grupo_mod"
-		Me.grupo_mod.Size = New System.Drawing.Size(374, 28)
-		Me.grupo_mod.TabIndex = 395
+		Me.bottomMenu.BackColor = System.Drawing.Color.DimGray
+		Me.bottomMenu.Controls.Add(Me.persona_id)
+		Me.bottomMenu.Controls.Add(Me.cancel)
+		Me.bottomMenu.Controls.Add(Me.save)
+		Me.bottomMenu.Controls.Add(Me.nextPage)
+		Me.bottomMenu.Controls.Add(Me.lastPage)
+		Me.bottomMenu.Dock = System.Windows.Forms.DockStyle.Bottom
+		Me.bottomMenu.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
+		Me.bottomMenu.Location = New System.Drawing.Point(0, 333)
+		Me.bottomMenu.Margin = New System.Windows.Forms.Padding(0)
+		Me.bottomMenu.Name = "bottomMenu"
+		Me.bottomMenu.Size = New System.Drawing.Size(374, 28)
+		Me.bottomMenu.TabIndex = 395
 		'
 		'cancel
 		'
@@ -123,92 +118,41 @@ Partial Class genModDialog
 		Me.lastPage.Text = ""
 		Me.lastPage.UseVisualStyleBackColor = True
 		'
-		'Label1
+		'wrapper
 		'
-		Me.Label1.BackColor = System.Drawing.Color.DimGray
-		Me.Label1.Dock = System.Windows.Forms.DockStyle.Top
-		Me.Label1.ForeColor = System.Drawing.Color.White
-		Me.Label1.Location = New System.Drawing.Point(0, 0)
-		Me.Label1.Name = "Label1"
-		Me.Label1.Size = New System.Drawing.Size(374, 27)
-		Me.Label1.TabIndex = 413
-		Me.Label1.Text = "DATOS PERSONALES"
-		Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+		Me.wrapper.BackColor = System.Drawing.SystemColors.AppWorkspace
+		Me.wrapper.Dock = System.Windows.Forms.DockStyle.Fill
+		Me.wrapper.Location = New System.Drawing.Point(0, 0)
+		Me.wrapper.Name = "wrapper"
+		Me.wrapper.Size = New System.Drawing.Size(374, 333)
+		Me.wrapper.TabIndex = 414
 		'
-		'TabControl1
-		'
-		Me.TabControl1.Controls.Add(Me.TabPage1)
-		Me.TabControl1.Controls.Add(Me.TabPage2)
-		Me.TabControl1.Controls.Add(Me.TabPage3)
-		Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
-		Me.TabControl1.Location = New System.Drawing.Point(0, 0)
-		Me.TabControl1.Name = "TabControl1"
-		Me.TabControl1.SelectedIndex = 0
-		Me.TabControl1.Size = New System.Drawing.Size(374, 333)
-		Me.TabControl1.TabIndex = 414
-		'
-		'TabPage1
-		'
-		Me.TabPage1.BackColor = System.Drawing.Color.WhiteSmoke
-		Me.TabPage1.Location = New System.Drawing.Point(4, 28)
-		Me.TabPage1.Name = "TabPage1"
-		Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-		Me.TabPage1.Size = New System.Drawing.Size(366, 301)
-		Me.TabPage1.TabIndex = 0
-		Me.TabPage1.Text = "Datos Personales"
-		'
-		'TabPage2
-		'
-		Me.TabPage2.Location = New System.Drawing.Point(4, 28)
-		Me.TabPage2.Margin = New System.Windows.Forms.Padding(0)
-		Me.TabPage2.Name = "TabPage2"
-		Me.TabPage2.Size = New System.Drawing.Size(366, 301)
-		Me.TabPage2.TabIndex = 1
-		Me.TabPage2.Text = "Domicilio"
-		Me.TabPage2.UseVisualStyleBackColor = True
-		'
-		'TabPage3
-		'
-		Me.TabPage3.BackColor = System.Drawing.Color.WhiteSmoke
-		Me.TabPage3.Location = New System.Drawing.Point(4, 28)
-		Me.TabPage3.Name = "TabPage3"
-		Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-		Me.TabPage3.Size = New System.Drawing.Size(366, 301)
-		Me.TabPage3.TabIndex = 2
-		Me.TabPage3.Text = "Contacto"
-		'
-		'ModNotaPedido
+		'genModDialog
 		'
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
 		Me.ClientSize = New System.Drawing.Size(374, 361)
-		Me.Controls.Add(Me.Label1)
-		Me.Controls.Add(Me.TabControl1)
-		Me.Controls.Add(Me.grupo_mod)
+		Me.Controls.Add(Me.wrapper)
+		Me.Controls.Add(Me.bottomMenu)
 		Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
 		Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
 		Me.MinimumSize = New System.Drawing.Size(250, 250)
-		Me.Name = "ModNotaPedido"
+		Me.Name = "genModDialog"
 		Me.ShowIcon = False
 		Me.ShowInTaskbar = False
 		Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
 		Me.Text = "                                                                                 " &
 	"                                                 "
-		Me.grupo_mod.ResumeLayout(False)
-		Me.grupo_mod.PerformLayout()
-		Me.TabControl1.ResumeLayout(False)
+		Me.bottomMenu.ResumeLayout(False)
+		Me.bottomMenu.PerformLayout()
 		Me.ResumeLayout(False)
 
 	End Sub
 	Friend WithEvents persona_id As System.Windows.Forms.TextBox
-	Friend WithEvents grupo_mod As System.Windows.Forms.FlowLayoutPanel
-	Friend WithEvents Label1 As Label
+	Friend WithEvents bottomMenu As System.Windows.Forms.FlowLayoutPanel
 	Friend WithEvents cancel As Button
 	Friend WithEvents save As Button
 	Friend WithEvents nextPage As Button
 	Friend WithEvents lastPage As Button
-	Friend WithEvents TabControl1 As TabControl
-	Friend WithEvents TabPage1 As TabPage
-	Friend WithEvents TabPage2 As TabPage
-	Friend WithEvents TabPage3 As TabPage
+	Friend WithEvents wrapper As Panel
 End Class

@@ -33,7 +33,7 @@
 			End If
 		End If
 		sql += " ORDER By Persona.razon"
-		Return DbMan.read(sql)
+		Return DbMan.read(sql, My.Settings.DefaultCon)
 	End Function
 	Shared Function Seleccionar(proveedor_id As Integer, persona_id As Integer) As DataTable
 		Dim sql As String = SelectSQL & TableSQL
@@ -42,7 +42,7 @@
 		Else
 			sql += " AND persona.id=" & persona_id
 		End If
-		Return DbMan.read(sql)
+		Return DbMan.read(sql, My.Settings.DefaultCon)
 	End Function
 	Shared Function guardar(proveedor_id As Integer, ByVal per_id As Integer, ByVal actividad As Integer, ByVal responsable As Integer) As Integer
 		If proveedor_id > 0 Then
@@ -54,7 +54,7 @@
 								 VALUES(" & per_id & ", " & actividad & ", " & responsable & ")")
 
 			Dim dtab As New DataTable
-			dtab = DbMan.read("SELECT MAX(id) as id FROM proveedor WHERE per_id=" & per_id)
+			dtab = DbMan.read("SELECT MAX(id) as id FROM proveedor WHERE per_id=" & per_id, My.Settings.DefaultCon)
 			proveedor_id = dtab(0)("id")
 		End If
 		Return proveedor_id

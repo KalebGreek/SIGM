@@ -34,10 +34,12 @@
 			Return cuil & destino
 		End Function
 		Shared Function CopiaActa(ByVal persona_id As Integer, ByVal acta As String, ByVal libro As String) As String
-			Dim dtab As DataTable = DbMan.read("SELECT cuil, razon FROM persona WHERE id=" & persona_id)
+			Dim dtab As DataTable = DbMan.read("SELECT cuil, razon FROM persona WHERE id=" & persona_id,
+												My.Settings.DefaultCon)
 			If dtab.Rows.Count > 0 Then
 				If acta > 0 And libro > 0 Then
-					Dim dtab_acta = DbMan.read("SELECT * FROM actas WHERE acta=" & acta & " AND libro=" & libro)
+					Dim dtab_acta = DbMan.read("SELECT * FROM actas WHERE acta=" & acta & " AND libro=" & libro,
+												My.Settings.DefaultCon)
 					If dtab.Rows.Count > 0 Then
 						If dtab_acta(0)("per_id") <> persona_id Then
 							MsgBox("El acta N." & acta & " del libro N." & libro & " no corresponde a " & dtab(0)("razon"))
@@ -174,7 +176,8 @@
 
 
 	Private Shared Function ConsultarHistorial(RutaDoc As Boolean)
-		Dim dtab As DataTable = DbMan.read(SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
+		Dim dtab As DataTable = DbMan.read(SQLSelect & SQLTable & SQLCriteria & SQLGrouping,
+										   My.Settings.DefaultCon)
 
 		If RutaDoc Then
 			Return dtab(0)("ruta").ToString
@@ -242,7 +245,9 @@
 		'Guarda una ruta de documento en una tabla
 		'Todas las tablas de documentos deben contener las mismas columnas:
 		'FOO_ID, FECHA, DESCRIPCION, RUTA
-		Dim dtab As DataTable = DbMan.read("SELECT * FROM " & tabla & " WHERE " & col_id & "=" & id & " AND descripcion='" & descripcion & "'")
+		Dim dtab As DataTable = DbMan.read("SELECT * FROM " & tabla & " 
+											WHERE " & col_id & "=" & id & " AND descripcion='" & descripcion & "'",
+											My.Settings.DefaultCon)
 
 		If dtab.Rows.Count > 0 Then
 			For Each dr As DataRow In dtab.Rows

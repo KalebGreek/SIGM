@@ -44,7 +44,7 @@ Partial Class genSearchControl
 		Me.DateValue.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
 		Me.DateValue.Location = New System.Drawing.Point(441, 3)
 		Me.DateValue.Name = "DateValue"
-		Me.DateValue.Size = New System.Drawing.Size(112, 27)
+		Me.DateValue.Size = New System.Drawing.Size(123, 27)
 		Me.DateValue.TabIndex = 361
 		Me.DateValue.Visible = False
 		'
@@ -100,7 +100,7 @@ Partial Class genSearchControl
 		'NumValue
 		'
 		Me.NumValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-		Me.NumValue.Location = New System.Drawing.Point(559, 3)
+		Me.NumValue.Location = New System.Drawing.Point(570, 3)
 		Me.NumValue.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
 		Me.NumValue.Name = "NumValue"
 		Me.NumValue.Size = New System.Drawing.Size(77, 27)
@@ -111,9 +111,10 @@ Partial Class genSearchControl
 		'Condition
 		'
 		Me.Condition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+		Me.Condition.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.Condition.FormattingEnabled = True
 		Me.Condition.Items.AddRange(New Object() {" =", " >", " <", "<->"})
-		Me.Condition.Location = New System.Drawing.Point(642, 3)
+		Me.Condition.Location = New System.Drawing.Point(653, 3)
 		Me.Condition.MaxDropDownItems = 4
 		Me.Condition.MaxLength = 3
 		Me.Condition.Name = "Condition"
@@ -124,9 +125,9 @@ Partial Class genSearchControl
 		'MaxDateValue
 		'
 		Me.MaxDateValue.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-		Me.MaxDateValue.Location = New System.Drawing.Point(693, 3)
+		Me.MaxDateValue.Location = New System.Drawing.Point(704, 3)
 		Me.MaxDateValue.Name = "MaxDateValue"
-		Me.MaxDateValue.Size = New System.Drawing.Size(112, 27)
+		Me.MaxDateValue.Size = New System.Drawing.Size(123, 27)
 		Me.MaxDateValue.TabIndex = 372
 		Me.MaxDateValue.Visible = False
 		'
@@ -203,7 +204,7 @@ Partial Class genSearchControl
 		Me.cancel.UseVisualStyleBackColor = True
 		Me.cancel.Visible = False
 		'
-		'ControlBusqueda
+		'genSearchControl
 		'
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
 		Me.AutoSize = True
@@ -212,7 +213,7 @@ Partial Class genSearchControl
 		Me.Controls.Add(Me.wrapper)
 		Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.MinimumSize = New System.Drawing.Size(520, 33)
-		Me.Name = "ControlBusqueda"
+		Me.Name = "genSearchControl"
 		Me.Size = New System.Drawing.Size(867, 36)
 		Me.wrapper.ResumeLayout(False)
 		CType(Me.NumValue, System.ComponentModel.ISupportInitialize).EndInit()

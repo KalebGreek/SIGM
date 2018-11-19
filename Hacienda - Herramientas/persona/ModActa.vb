@@ -105,7 +105,7 @@
 			sql += " libro = " & libro & " AND acta = " & acta
 		End If
 
-		Return DbMan.read(  sql)
+		Return DbMan.read(sql, My.Settings.DefaultCon)
 	End Function
 
 	Private Sub add_acta_Click(sender As Object, e As EventArgs) Handles add_acta.Click

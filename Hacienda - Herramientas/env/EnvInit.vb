@@ -17,7 +17,8 @@
 	Sub tablas_fox(ByVal impuesto As String)
         'Las tablas correspondientes a personas tienen los nombres correctos
         Dim dtab _
-		As DataTable = DbMan.read("SELECT * FROM tablas_externas WHERE personas='" & impuesto & "'")
+		As DataTable = DbMan.read("SELECT * FROM tablas_externas WHERE personas='" & impuesto & "'",
+								   My.Settings.DefaultCon)
 
         'Tablas generales
         ext_persona = dtab(0)("personas").ToString
@@ -105,13 +106,15 @@
 
 		Dim dtab_con As New DataTable
         '### CONEXION FOX
-        dtab_con = DbMan.read("SELECT * FROM opciones WHERE opcion='conexion_fox'")
+        dtab_con = DbMan.read("SELECT * FROM opciones WHERE opcion='conexion_fox'",
+							   My.Settings.DefaultCon)
 
 		If dtab_con.Rows.Count > 0 Then
 			My.Settings.foxcon = dtab_con(0)("valor")
 		End If
         '### CONEXION PSQL
-        dtab_con = DbMan.read("SELECT * FROM opciones WHERE opcion='conexion_sql'")
+        dtab_con = DbMan.read("SELECT * FROM opciones WHERE opcion='conexion_sql'",
+							   My.Settings.DefaultCon)
 		If dtab_con.Rows.Count > 0 Then
 			My.Settings.pgsqlcon = dtab_con(0)("valor")
 		End If

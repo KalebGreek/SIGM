@@ -6,12 +6,12 @@
 
 		' Add any initialization after the InitializeComponent() call.
 		'Proveedor
-		bs_responsable_iva.DataSource = DbMan.read("SELECT * FROM responsable_iva ORDER BY descripcion")
+		bs_responsable_iva.DataSource = DbMan.read("SELECT * FROM responsable_iva ORDER BY descripcion", My.Settings.DefaultCon)
 		CtrlMan.Fill.SetAutoComplete(responsable_iva, bs_responsable_iva, "descripcion", "id")
-		bs_actividad.DataSource = DbMan.read("SELECT * FROM prov_actividad ORDER BY actividad")
+		bs_actividad.DataSource = DbMan.read("SELECT * FROM prov_actividad ORDER BY actividad", My.Settings.DefaultCon)
 		CtrlMan.Fill.SetAutoComplete(actividad, bs_actividad, "actividad", "id")
 		'Profesional
-		bs_titulo.DataSource = DbMan.read("SELECT * FROM profesional_titulo ORDER BY descripcion")
+		bs_titulo.DataSource = DbMan.read("SELECT * FROM profesional_titulo ORDER BY descripcion", My.Settings.DefaultCon)
 		CtrlMan.Fill.SetAutoComplete(titulo, bs_titulo, "descripcion", "id")
 	End Sub
 
@@ -20,7 +20,7 @@
 		If id > 0 Then
 			Dim dtab As DataTable = DbMan.read("SELECT id as persona_id,
 													   difunto, ruta_defuncion, fisica
-												  FROM persona WHERE id=" & id)
+												  FROM persona WHERE id=" & id, My.Settings.DefaultCon)
 			CtrlMan.LoadAllControls(dtab(0), Me)
 			difunto.Enabled = dtab(0)("fisica")
 			If difunto.Enabled = False Then
@@ -104,7 +104,7 @@
 				DbMan.edit("INSERT INTO prov_actividad(actividad) 
 												VALUES('" & value & "')")
 
-				bs_actividad.DataSource = DbMan.read("SELECT * FROM prov_actividad ORDER BY actividad")
+				bs_actividad.DataSource = DbMan.read("SELECT * FROM prov_actividad ORDER BY actividad", My.Settings.DefaultCon)
 				CtrlMan.Fill.SetAutoComplete(actividad, bs_actividad, "actividad", "id")
 			End If
 		End If
@@ -115,7 +115,7 @@
 			If MsgBoxResult.Yes = MsgBox("Desea eliminar esta actividad comercial?", MsgBoxStyle.YesNo) Then
 				DbMan.edit("DELETE * FROM prov_actividad WHERE id=" & bs_actividad.Current("id"))
 
-				bs_actividad.DataSource = DbMan.read("SELECT * FROM prov_actividad ORDER BY actividad")
+				bs_actividad.DataSource = DbMan.read("SELECT * FROM prov_actividad ORDER BY actividad", My.Settings.DefaultCon)
 				CtrlMan.Fill.SetAutoComplete(actividad, bs_actividad, "actividad", "id")
 			End If
 		End If
@@ -133,7 +133,7 @@
 				DbMan.edit("INSERT INTO profesional_titulo(descripcion) 
 													VALUES('" & value & "')")
 
-				bs_titulo.DataSource = DbMan.read("SELECT * FROM profesional_titulo ORDER BY descripcion")
+				bs_titulo.DataSource = DbMan.read("SELECT * FROM profesional_titulo ORDER BY descripcion", My.Settings.DefaultCon)
 				CtrlMan.Fill.SetAutoComplete(titulo, bs_titulo, "descripcion", "id")
 			End If
 		End If
@@ -143,7 +143,7 @@
 			If MsgBoxResult.Yes = MsgBox("Desea eliminar este titulo?", MsgBoxStyle.YesNo) Then
 				DbMan.edit("DELETE * FROM profesional_titulo WHERE id=" & bs_titulo.Current("id"))
 
-				bs_titulo.DataSource = DbMan.read("SELECT * FROM profesional_titulo ORDER BY descripcion")
+				bs_titulo.DataSource = DbMan.read("SELECT * FROM profesional_titulo ORDER BY descripcion", My.Settings.DefaultCon)
 				CtrlMan.Fill.SetAutoComplete(titulo, bs_titulo, "descripcion", "id")
 			End If
 		End If

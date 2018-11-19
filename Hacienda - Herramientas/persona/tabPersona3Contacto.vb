@@ -8,7 +8,7 @@
 	End Sub
 
 	Public Sub cargar(persona_id As Integer)
-		Dim registro As DataTable = DbMan.read("SELECT * FROM persona WHERE id=" & persona_id)
+		Dim registro As DataTable = DbMan.read("SELECT * FROM persona WHERE id=" & persona_id, My.Settings.DefaultCon)
 
 		tele.Text = registro(0)("telefono").ToString
 		email.Text = registro(0)("email").ToString

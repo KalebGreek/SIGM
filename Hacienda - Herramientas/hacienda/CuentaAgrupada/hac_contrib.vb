@@ -4,7 +4,7 @@
         Dim contrib, deuda_total As New DataTable
         adicional = ""
         franqueo = ""
-		contrib = DbMan.read(  "SELECT id, impuesto, codigo, alta FROM contribuyente WHERE cuil=" & cuil)
+		contrib = DbMan.read("SELECT id, impuesto, codigo, alta FROM contribuyente WHERE cuil=" & cuil, My.Settings.DefaultCon)
 		If contrib.Rows.Count > 0 And (sender Is ConsultaCuentaAgrupada.imp_lista_mod Or sender Is ConsultaCuentaAgrupada.con_ca) Then 'Consultas llevan deuda total incluida
             Dim fila As Integer = 0
 			If contrib.Columns.Contains("deuda") Then

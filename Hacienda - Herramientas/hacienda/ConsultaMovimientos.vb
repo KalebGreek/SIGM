@@ -7,26 +7,27 @@
         ' Add any initialization after the InitializeComponent() call.
         bs_cuenta.DataSource = RellenarCuentas(Ingresos.Checked)
         SeleccionCuenta.DataSource = bs_cuenta
-        SeleccionCuenta.DisplayMember = "nombre"
-    End Sub
+		SeleccionCuenta.DisplayMember = "nombre"
+		inicio.Value = "01/01/" & Year(Today)
+	End Sub
     '###### GUI #############################################################################################
 
     '###### FIN GUI #############################################################################################
 
     '### EVENTOS  
-    Private Sub Ingresos_CheckedChanged(sender As Object, e As EventArgs) Handles Ingresos.CheckedChanged, Egresos.CheckedChanged
-        visor.DataSource = Nothing
-        bs_consulta.DataSource = Nothing
-        bs_cuenta.DataSource = RellenarCuentas(Ingresos.Checked)
-        SeleccionCuenta.DataSource = bs_cuenta
-        SeleccionCuenta.DisplayMember = "nombre"
-        bs_cuenta.Position = 1
-    End Sub
-    Private Sub SeleccionCuenta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles SeleccionCuenta.SelectedIndexChanged
-        progreso.Value = 0
-        visor.DataSource = Nothing
-        bs_consulta.DataSource = Nothing
-        If SeleccionCuenta.SelectedIndex > -1 Then
+    Private Sub Ingresos_CheckedChanged(sender As Object, e As EventArgs) Handles Ingresos.CheckedChanged
+		visor.DataSource = Nothing
+		bs_consulta.DataSource = Nothing
+		bs_cuenta.DataSource = RellenarCuentas(Ingresos.Checked)
+		SeleccionCuenta.DataSource = bs_cuenta
+		SeleccionCuenta.DisplayMember = "nombre"
+		bs_cuenta.Position = 1
+	End Sub
+	Private Sub SeleccionCuenta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles SeleccionCuenta.SelectedIndexChanged
+		progreso.Value = 0
+		visor.DataSource = Nothing
+		bs_consulta.DataSource = Nothing
+		If SeleccionCuenta.SelectedIndex > -1 Then
 			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
 																						  fecha.Checked, inicio.Value, final.Value))
 			SumarTotales(Ingresos.Checked)
@@ -42,10 +43,10 @@
 			SumarTotales(Ingresos.Checked)
 		End If
 	End Sub
-	Private Sub fecha_CheckedChanged(sender As Object, e As EventArgs) Handles fecha.CheckedChanged, Razon.CheckedChanged
+	Private Sub fecha_CheckedChanged(sender As Object, e As EventArgs) Handles fecha.CheckedChanged
 		inicio.Enabled = fecha.Checked
 		final.Enabled = fecha.Checked
-		Keyword.Enabled = Razon.Checked
+		Keyword.Enabled = concepto.Checked
 		If SeleccionCuenta.SelectedIndex > -1 Then
 			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
 																		fecha.Checked, inicio.Value, final.Value))
@@ -55,68 +56,77 @@
 	Private Sub Keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles Keyword.KeyUp
 		If SeleccionCuenta.SelectedIndex > -1 Then
 			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
-																		fecha.Checked, inicio.Value, final.Value))
+																							fecha.Checked, inicio.Value, final.Value))
+
+
+
 			SumarTotales(Ingresos.Checked)
 		End If
 	End Sub
-	Private Sub inicio_ValueChanged(sender As Object, e As EventArgs) Handles inicio.ValueChanged, final.ValueChanged
+	Private Sub inicio_ValueChanged(sender As Object, e As EventArgs) Handles inicio.ValueChanged
 		inicio.MaxDate = final.Value
 		final.MinDate = inicio.Value
 		If SeleccionCuenta.SelectedIndex > -1 Then
 			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", ConsultarMovimientos(bs_cuenta.Current("orden"), Keyword.Text, ActivarFiltro.Checked,
 																		fecha.Checked, inicio.Value, final.Value))
 			SumarTotales(Ingresos.Checked)
-        End If
-    End Sub
+		End If
+	End Sub
 
-    '### RUTINAS
-    Private Function RellenarCuentas(ingresos As Boolean) As DataTable
-        Dim dtab As New DataTable
-        SQLSelect = "SELECT nombre, orden"
-        SQLTable = " FROM hacienda"
-        If ingresos Then
-            SQLCriteria = "  WHERE orden<900000000000 AND sumado=2"
-        Else
-            SQLCriteria = "  WHERE orden>899999999999 AND sumado=2"
-        End If
-        SQLGrouping = ""
+	'### RUTINAS
+	Private Function RellenarCuentas(ingresos As Boolean) As DataTable
+		Dim dtab As New DataTable
+		SQLSelect = "SELECT orden, IIF(sumado=1,'=','+') + '|' + anexo + '.' + inciso + '.' + item + '.' + 
+						rubro + '.' + subrubro + '.' + partida + '.' + subpartida + '|' + nombre AS nombre"
+		SQLTable = " FROM hacienda"
+		If ingresos Then
+			SQLCriteria = "  WHERE orden<900000000000"
+		Else
+			SQLCriteria = "  WHERE orden>899999999999"
+		End If
+		SQLGrouping = ""
 
 		Return DbMan.read(SQLSelect & SQLTable & SQLCriteria & SQLGrouping, My.Settings.foxcon)
 	End Function
-    Private Function ConsultarMovimientos(ByVal cuenta As Double, ByVal keyword As String,
+	Private Function ConsultarMovimientos(ByVal cuenta As Double, ByVal keyword As String,
                                           Filtrado As Boolean, FiltroFecha As Boolean,
                                           ByVal FechaInicio As Date, ByVal FechaFinal As Date) As DataTable
-        SQLSelect = "SELECT *"
-        SQLTable = " FROM movimis"
-        SQLCriteria = " WHERE orden=" & cuenta
-        If Filtrado Then
+		SQLSelect = "SELECT movimis.orden, movimis.fecha, movimis.documento, movimis.pagado, movimis.detalle, movimis.emite"
+		SQLTable = " FROM movimis INNER JOIN hacienda ON movimis.orden=hacienda.orden"
+		SQLCriteria = " WHERE movimis.orden=" & cuenta
+		If Filtrado Then
             If FiltroFecha Then
-                SQLCriteria += " AND fecha => {" & FechaInicio.ToString("MM/dd/yyyy") & "}
-                                 AND fecha <= {" & FechaFinal.ToString("MM/dd/yyyy") & "}"
-            ElseIf Len(keyword) > 2 Then
-                SQLCriteria += " AND detalle LIKE '%" & keyword & "%'"
-            End If
+				SQLCriteria += " AND movimis.fecha => {" & FechaInicio.ToString("MM/dd/yyyy") & "}
+                                 AND movimis.fecha <= {" & FechaFinal.ToString("MM/dd/yyyy") & "}"
+			ElseIf Len(keyword) > 2 Then
+				SQLCriteria += " AND movimis.detalle LIKE '%" & keyword & "%'"
+			End If
         End If
         SQLGrouping = ""
 
 		Return DbMan.read(SQLSelect & SQLTable & SQLCriteria & SQLGrouping, My.Settings.foxcon)
 	End Function
     Private Sub SumarTotales(ingreso As Boolean)
-		Dim dtab As DataTable = DbMan.read("SELECT SUM(pagado) as total_pagado, orden" &
-											SQLTable & SQLCriteria & " GROUP BY orden",
+		Dim dtab As DataTable = DbMan.read("SELECT SUM(movimis.pagado) as total_pagado, movimis.orden, hacienda.autorizado" &
+											SQLTable & SQLCriteria & " GROUP BY movimis.orden, hacienda.autorizado",
 											My.Settings.foxcon)
-		info2.Text = " - "
-        If dtab Is Nothing = False Then
-            If dtab.Rows.Count > 0 Then
-                info2.Text = " $ " & dtab(0)("total_pagado").ToString
-            End If
-        End If
 
-        info.Text = "TOTAL EGRESOS:"
-        If ingreso Then
-            info.Text = "TOTAL INGRESOS:"
-        End If
-    End Sub
+		info.Text = " - "
+		info2.Text = " - "
+		If dtab Is Nothing = False Then
+			If dtab.Rows.Count > 0 Then
+				info.Text = "AUTORIZADO:" & dtab(0)("autorizado").ToString
+				If ingreso Then
+					info2.Text = "INGRESADO $ " & dtab(0)("total_pagado").ToString
+				Else
+					info2.Text = "GASTADO $ " & dtab(0)("total_pagado").ToString
+				End If
+			End If
+		End If
+
+
+
+	End Sub
 
 End Class
 

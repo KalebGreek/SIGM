@@ -11,7 +11,7 @@
 		Dim genero As Integer = 0
 
 		Dim dtab As DataTable = DbMan.read("SELECT id as persona_id, razon, cuil 
-									 		  FROM persona WHERE id=" & persona_id)
+									 		  FROM persona WHERE id=" & persona_id, My.Settings.DefaultCon)
 
 		razon.Text = dtab(0)("razon").ToString
 
@@ -44,7 +44,7 @@
 										 VALUES('" & razon.Text & "','" & cuil.Text & "',
 												 " & fisica & ")")
 				'Next query could be replaced by OUTPUT insert.id
-				Dim dtab As DataTable = DbMan.read("SELECT MAX(id) as id FROM persona") 'Last insert
+				Dim dtab As DataTable = DbMan.read("SELECT MAX(id) as id FROM persona", My.Settings.DefaultCon) 'Last insert
 				MsgBox(dtab(0)("id"))
 				persona_id = dtab(0)("id")
 			End If

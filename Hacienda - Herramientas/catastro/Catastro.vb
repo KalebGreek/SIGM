@@ -37,7 +37,7 @@
             sql += " ORDER BY catastro.id ASC"
         End If
 
-		Return DbMan.read(sql)
+		Return DbMan.read(sql, My.Settings.DefaultCon)
 	End Function
     Shared Function BuscarPorPartida(Optional zona As Integer = 0, Optional circ As Integer = 0, Optional secc As Integer = 0,
                                      Optional manz As Integer = 0, Optional parc As Integer = 0, Optional lote As Integer = 0) As DataTable
@@ -63,7 +63,7 @@
         End If
         sql += " ORDER BY catastro.id ASC"
 
-		Return DbMan.read(sql)
+		Return DbMan.read(sql, My.Settings.DefaultCon)
 	End Function
     Shared Function BuscarPorDireccion(Optional calle As String = "", Optional barrio As String = "")
 		Dim sql As String = SQLSelect & SQLTable & SQLWhere
@@ -78,7 +78,7 @@
             sql += " ORDER BY catastro.id ASC"
         End If
 
-		Return DbMan.read(sql)
+		Return DbMan.read(sql, My.Settings.DefaultCon)
 	End Function
     '##### 'READ
     Shared Function ListarInmueblePorTitular(persona_id As Integer) As DataTable
@@ -87,7 +87,7 @@
 		If persona_id > 0 Then
             sql += " AND persona.id=" & persona_id
         End If
-		Return DbMan.read(sql)
+		Return DbMan.read(sql, My.Settings.DefaultCon)
 	End Function
     Shared Function ListarInmueblePorExpediente(expediente As Integer) As DataTable
 		Dim sql As String = SQLSelect & SQLTable & SQLWhere
@@ -95,13 +95,13 @@
 		If expediente > 0 Then
             sql += " AND oprivadas.expediente=" & expediente
         End If
-		Return DbMan.read(sql)
+		Return DbMan.read(sql, My.Settings.DefaultCon)
 	End Function
     Shared Function Seleccionar(cat_id As Integer) As DataTable
 		Dim sql As String = SQLSelect & SQLTable
 		If cat_id > -1 Then
             sql += " WHERE catastro.id=" & cat_id
-			Return DbMan.read(sql)
+			Return DbMan.read(sql, My.Settings.DefaultCon)
 		Else
             Return Nothing
         End If
@@ -113,7 +113,7 @@
 
             sql += " WHERE catastro.zona=" & zona & " AND catastro.circ=" & circ & " AND catastro.secc=" & secc &
                    " AND catastro.manz=" & manz & " AND catastro.parc=" & parc & " AND catastro.lote=" & lote
-			Dim dtab As DataTable = DbMan.read(sql)
+			Dim dtab As DataTable = DbMan.read(sql, My.Settings.DefaultCon)
 			If dtab.Rows.Count > 0 Then
                 Return dtab(0)("catastro_id")
             Else
@@ -126,14 +126,17 @@
 	Shared Function ListarFrente(catastro_id As Integer, Optional ubicacion As Boolean = False) As Object
 		If ubicacion Then
 			Dim dtab As DataTable = DbMan.read("SELECT calle, altura FROM cat_frente" &
-													   " WHERE catastro_id=" & catastro_id & " AND ubicacion=True")
+													   " WHERE catastro_id=" & catastro_id & " AND ubicacion=True",
+													   My.Settings.DefaultCon)
 			If dtab.Rows.Count > 0 Then
 				Return dtab(0)("calle") & " " & dtab(0)("altura")
 			Else
 				Return " S/N "
 			End If
 		Else
-			Return DbMan.read("SELECT id as frente_id, calle, altura, metros, ubicacion FROM cat_frente WHERE catastro_id=" & catastro_id)
+			Return DbMan.read("SELECT id as frente_id, calle, altura, metros, ubicacion 
+							   FROM cat_frente WHERE catastro_id=" & catastro_id,
+							   My.Settings.DefaultCon)
 		End If
 	End Function
 
@@ -227,7 +230,7 @@
 				Dim dtab As New DataTable
 				Dim sql As String = "SELECT * FROM catastro
                                  WHERE id=" & catastro_id & " AND user_id=" & user_id
-				dtab = DbMan.read(sql)
+				dtab = DbMan.read(sql, My.Settings.DefaultCon)
 				If dtab.Rows.Count > 0 Then
 					sql = SQLDelete &
 					" WHERE catastro.id=" & catastro_id & " AND catastro.user_id=" & user_id

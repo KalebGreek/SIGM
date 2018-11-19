@@ -63,7 +63,7 @@
 				'	sql += "#" & fecha.ToShortDateString & "#"
 				'End If
 
-				Return DbMan.read(sql)
+				Return DbMan.read(sql, My.Settings.DefaultCon)
 			End Function
 
 			Shared Function Responsable(Optional razon As String = "",
@@ -97,7 +97,7 @@
 				'	sql += " LIKE '%" & localidad & "%'"
 				'End If
 
-				Return DbMan.read(sql)
+				Return DbMan.read(sql, My.Settings.DefaultCon)
 			End Function
 
 			Shared Function Profesional(Optional razon As String = "",
@@ -130,7 +130,7 @@
 				'	sql += " LIKE '%" & localidad & "%'"
 				'End If
 
-				Return DbMan.read(sql)
+				Return DbMan.read(sql, My.Settings.DefaultCon)
 			End Function
 		End Class
 		'Funciones de listado para evitar borrar expedientes accidentalmente
@@ -139,14 +139,14 @@
 						   "SELECT responsable_expediente.Id As id, expediente, per_id 
                             FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id) 
                             INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id
-                            WHERE responsable_expediente.per_id=" & persona_id)
+                            WHERE responsable_expediente.per_id=" & persona_id, My.Settings.DefaultCon)
 		End Function
 		Shared Function ListarPorProfesional(prof_id As Integer)
 			Return DbMan.read(
 						   "SELECT responsable_expediente.Id As id, expediente, profesional_id
                             FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id)
                             INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id
-                            WHERE oprivadas.profesional_id=" & prof_id)
+                            WHERE oprivadas.profesional_id=" & prof_id, My.Settings.DefaultCon)
 		End Function
 
 		Shared Function ListarResponsables(expediente As Integer) As DataTable
@@ -154,12 +154,12 @@
 					   "SELECT persona.id As persona_id, razon, cuil, email, telefono, difunto
                             FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id)
                             INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id
-                            WHERE oprivadas.expediente=" & expediente)
+                            WHERE oprivadas.expediente=" & expediente, My.Settings.DefaultCon)
 		End Function
 
 		Shared Function Seleccionar(expediente As Integer) As DataTable
 			Return DbMan.read("SELECT * FROM oprivadas 
-													WHERE Oprivadas.expediente= " & expediente)
+								WHERE Oprivadas.expediente= " & expediente, My.Settings.DefaultCon)
 		End Function
 
 		'MODIFICAR
@@ -202,7 +202,7 @@
 			If opr_id > 0 Then
 				sql += " And id=" & opr_id
 			End If
-			dtab = DbMan.read(sql)
+			dtab = DbMan.read(sql, My.Settings.DefaultCon)
 
 			If dtab.Rows.Count > 0 Then
 				LimpiarResponsable(opr_id)

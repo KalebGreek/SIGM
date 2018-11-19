@@ -28,7 +28,7 @@ Partial Class BusquedaPersona
 		Me.difunto = New System.Windows.Forms.CheckBox()
 		Me.fisica = New System.Windows.Forms.CheckBox()
 		Me.bs_resultado = New System.Windows.Forms.BindingSource(Me.components)
-		Me.SearchControl1 = New Sigm.genSearchControl()
+		Me.genSearchControl1 = New Sigm.genSearchControl()
 		CType(Me.resultado, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.PanelFiltros.SuspendLayout()
 		CType(Me.bs_resultado, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -83,26 +83,26 @@ Partial Class BusquedaPersona
 		Me.fisica.Text = "Fisica"
 		Me.fisica.UseVisualStyleBackColor = True
 		'
-		'SearchControl1
+		'genSearchControl1
 		'
-		Me.SearchControl1.AutoSize = True
-		Me.SearchControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-		Me.SearchControl1.BackColor = System.Drawing.Color.DarkGray
-		Me.SearchControl1.Dock = System.Windows.Forms.DockStyle.Top
-		Me.SearchControl1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.SearchControl1.Location = New System.Drawing.Point(0, 0)
-		Me.SearchControl1.Margin = New System.Windows.Forms.Padding(0)
-		Me.SearchControl1.MinimumSize = New System.Drawing.Size(520, 33)
-		Me.SearchControl1.Name = "SearchControl1"
-		Me.SearchControl1.Size = New System.Drawing.Size(659, 36)
-		Me.SearchControl1.TabIndex = 368
+		Me.genSearchControl1.AutoSize = True
+		Me.genSearchControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+		Me.genSearchControl1.BackColor = System.Drawing.Color.DarkGray
+		Me.genSearchControl1.Dock = System.Windows.Forms.DockStyle.Top
+		Me.genSearchControl1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.genSearchControl1.Location = New System.Drawing.Point(0, 0)
+		Me.genSearchControl1.Margin = New System.Windows.Forms.Padding(0)
+		Me.genSearchControl1.MinimumSize = New System.Drawing.Size(520, 33)
+		Me.genSearchControl1.Name = "genSearchControl1"
+		Me.genSearchControl1.Size = New System.Drawing.Size(659, 36)
+		Me.genSearchControl1.TabIndex = 368
 		'
 		'BusquedaPersona
 		'
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
 		Me.ClientSize = New System.Drawing.Size(659, 321)
 		Me.Controls.Add(Me.resultado)
-		Me.Controls.Add(Me.SearchControl1)
+		Me.Controls.Add(Me.genSearchControl1)
 		Me.Controls.Add(Me.PanelFiltros)
 		Me.Font = New System.Drawing.Font("PF DinText Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.MinimumSize = New System.Drawing.Size(675, 360)
@@ -121,7 +121,7 @@ Partial Class BusquedaPersona
 	End Sub
 
 	Friend WithEvents resultado As DataGridView
-	Public WithEvents SearchControl1 As genSearchControl
+	Public WithEvents genSearchControl1 As genSearchControl
 	Friend WithEvents PanelFiltros As FlowLayoutPanel
 	Friend WithEvents difunto As CheckBox
 	Friend WithEvents fisica As CheckBox

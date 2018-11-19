@@ -14,13 +14,13 @@
 	Shared SQLOrder As String
 
 	Shared Function Buscar() As DataTable
-		Return DbMan.read(SQLSelect & SQLTable)
+		Return DbMan.read(SQLSelect & SQLTable, My.Settings.DefaultCon)
 	End Function
 
 	Shared Function Seleccionar(nota_pedido_id As Integer) As DataRow
 		SQLWhere = " WHERE opu_nota_pedido.id=" & nota_pedido_id
 
-		Dim dtab As DataTable = DbMan.read(SQLSelect & SQLTable & SQLWhere)
+		Dim dtab As DataTable = DbMan.read(SQLSelect & SQLTable & SQLWhere, My.Settings.DefaultCon)
 		Return dtab(0)
 	End Function
 
@@ -38,7 +38,7 @@
 	Shared Function LoadReport(nota_pedido_id As Integer) As DataRow
 		SQLWhere = " WHERE opu_nota_pedido.id=" & nota_pedido_id
 
-		Dim dtab As DataTable = DbMan.read(SQLSelect & SQLTable & SQLWhere)
+		Dim dtab As DataTable = DbMan.read(SQLSelect & SQLTable & SQLWhere, My.Settings.DefaultCon)
 		Return dtab(0)
 	End Function
 End Class

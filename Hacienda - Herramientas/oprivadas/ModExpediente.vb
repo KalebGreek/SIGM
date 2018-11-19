@@ -282,10 +282,12 @@
 
     '# PERSONA 
     Private Sub add_resp_Click(sender As Object, e As EventArgs) Handles add_resp.Click
-		Dim seleccion_persona As New BusquedaPersona
-		seleccion_persona.SearchControl1.vista.Text = "PERSONA"
-		seleccion_persona.ShowDialog(Me)
-		With seleccion_persona.resultado.DataSource
+		Dim bper As New BusquedaPersona()
+		bper.genSearchControl1.vista.Text = "PERSONA"
+		bper.genSearchControl1.selectRow.Visible = True
+		bper.genSearchControl1.cancel.Visible = True
+		bper.ShowDialog(Me)
+		With bper.resultado.DataSource
 			'Se agrega el registro temporal
 			If .Position > -1 Then
 				bs_resp.AddNew()
@@ -298,7 +300,7 @@
 				bs_resp.EndEdit()
 			End If
 		End With
-		seleccion_persona.Dispose()
+		bper.Dispose()
 	End Sub
 	Private Sub del_resp_Click(sender As Object, e As EventArgs) Handles del_resp.Click
 		If bs_resp.Position > -1 _
@@ -307,15 +309,17 @@
 		End If
 	End Sub
 	Private Sub mod_prof_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mod_prof.Click
-		Dim sel_prof As New BusquedaPersona
-		sel_prof.SearchControl1.vista.Text = "PROFESIONAL"
-		sel_prof.ShowDialog(Me)
-		With sel_prof.resultado.DataSource
+		Dim bprof As New BusquedaPersona()
+		bprof.genSearchControl1.vista.Text = "PROFESIONAL"
+		bprof.genSearchControl1.selectRow.Visible = True
+		bprof.genSearchControl1.cancel.Visible = True
+		bprof.ShowDialog(Me)
+		With bprof.resultado.DataSource
 			If .Position > -1 Then
 				CtrlMan.LoadAllControls(.Current.Row, Panel3)
 			End If
 		End With
-		sel_prof.Dispose()
+		bprof.Dispose()
 	End Sub
 
     '# INMUEBLE

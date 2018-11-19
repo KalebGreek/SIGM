@@ -1,6 +1,6 @@
 ﻿Public Class Hacienda
 	Shared Sub FillSeccion(ByRef bs As BindingSource, ByRef target As ComboBox)
-		bs.DataSource = DbMan.read(  "SELECT * FROM seccion ORDER BY descripcion")
+		bs.DataSource = DbMan.read("SELECT * FROM seccion ORDER BY descripcion", My.Settings.DefaultCon)
 		CtrlMan.Fill.SetAutoComplete(target, bs, "descripcion", "id")
 	End Sub
 	Shared Sub FillCuentasHacienda(ByRef bs As BindingSource, ByRef target As ComboBox,

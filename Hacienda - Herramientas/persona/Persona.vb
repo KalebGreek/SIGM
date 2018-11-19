@@ -42,7 +42,7 @@
 		Dim sql As String = PersonaSQL
 		sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
 		sql += " ORDER By Persona.razon ASC"
-		Return DbMan.read(sql)
+		Return DbMan.read(sql, My.Settings.DefaultCon)
 	End Function
 
 	'Shared Function id(persona_id As Integer, difunto As Boolean, fisica As Boolean) As DataTable
@@ -54,7 +54,7 @@
 	'	End If
 
 	'	sql += " ORDER By Persona.razon ASC"
-	'	Return DbMan.read(sql)
+	'	Return DbMan.read(sql, My.Settings.DefaultCon)
 	'End Function
 	'Shared Function cuil(persona_cuil As Double, difunto As Boolean, fisica As Boolean) As DataTable
 	'	Dim sql As String = PersonaSQL
@@ -65,7 +65,7 @@
 	'	End If
 
 	'	sql += " ORDER By Persona.razon ASC"
-	'	Return DbMan.read(sql)
+	'	Return DbMan.read(sql, My.Settings.DefaultCon)
 	'End Function
 	'Shared Function razon(persona_razon As String, difunto As Boolean, fisica As Boolean) As DataTable
 
@@ -78,7 +78,7 @@
 	'	End If
 
 	'	sql += " ORDER By Persona.razon ASC"
-	'	Return DbMan.read(sql)
+	'	Return DbMan.read(sql, My.Settings.DefaultCon)
 	'End Function
 	'Shared Function direccion(calle As String, altura As Integer, localidad_id As Integer,
 	'									 difunto As Boolean, fisica As Boolean) As DataTable
@@ -95,7 +95,7 @@
 
 	'	sql += " ORDER By Per_domicilio.calle ASC"
 
-	'	Return DbMan.read(sql)
+	'	Return DbMan.read(sql, My.Settings.DefaultCon)
 	'End Function
 
 	'Registros para ModPersona
@@ -197,7 +197,7 @@
 			Return False
 		Else
 			'documentos
-			dtab_con = DbMan.read("SELECT descripcion, ruta FROM per_documento WHERE per_id=" & persona_id)
+			dtab_con = DbMan.read("SELECT descripcion, ruta FROM per_documento WHERE per_id=" & persona_id, My.Settings.DefaultCon)
 			If dtab_con.Rows.Count > 0 Then
 				msg.Add("Los siguientes documentos seran eliminados del registro junto con la persona seleccionada: ")
 				For fila As Integer = 0 To dtab_con.Rows.Count - 1

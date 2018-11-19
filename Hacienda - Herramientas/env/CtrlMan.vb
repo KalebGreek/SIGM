@@ -157,7 +157,8 @@
 			Else
 				Dim dtab As New DataTable
 				dtab = DbMan.read("SELECT * FROM persona
-									WHERE cuil=" & mtb.Text)
+									WHERE cuil=" & mtb.Text,
+									My.Settings.DefaultCon)
 				If dtab.Rows.Count > 0 Then
 					mtb.Tag = "CUIL duplicado. Este CUIL pertenece a " & dtab(0)("razon") & "."
 				End If
@@ -266,7 +267,8 @@
 				'GENERAL
 				If .Contains("_id") Then
 					c.Width = 5
-
+				ElseIf .Equals("id") Then
+					c.Width = 5
 					'HACIENDA
 				ElseIf .Equals("orden") Then
 					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
@@ -488,7 +490,8 @@
 			CityList.BeginUpdate()
 			bs.DataSource = DbMan.read("SELECT * FROM localidades 
 										WHERE provincia_id=" & State & "
-										ORDER BY nombre")
+										ORDER BY nombre",
+										My.Settings.DefaultCon)
 			CityList.DataSource = bs
 			CityList.DisplayMember = "nombre"
 			CityList.ValueMember = "id"
@@ -522,7 +525,7 @@
 		End Function
 		Shared Sub GetStates(ByRef StateList As ComboBox, ByRef bs As BindingSource)
 			StateList.BeginUpdate()
-			bs.DataSource = DbMan.read("SELECT * FROM provincias ORDER BY nombre")
+			bs.DataSource = DbMan.read("SELECT * FROM provincias ORDER BY nombre", My.Settings.DefaultCon)
 			StateList.DataSource = bs
 			StateList.DisplayMember = "nombre"
 			StateList.ValueMember = "id"

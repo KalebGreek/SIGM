@@ -5,7 +5,8 @@ Public Class SecMan 'Security Manager
 	Shared Function check_access(user As String, pass As String) As Integer
 		If Len(user) >= 5 And Len(pass) >= 5 Then
 			Dim dtab As DataTable = DbMan.read("SELECT id, usuario, pass FROM usuarios
-												 WHERE usuario='" & user & "' AND pass ='" & pass & "'")
+												 WHERE usuario='" & user & "' AND pass ='" & pass & "'",
+												 My.Settings.DefaultCon)
 			If dtab Is Nothing Then
 				Return -1
 			Else
@@ -26,7 +27,8 @@ Public Class SecMan 'Security Manager
         'Últimos accesos
         Dim dtab As DataTable = DbMan.read("SELECT id, fecha_hora, user_id, token, equipo, sesion 
                                               FROM usr_log
-                                             WHERE user_id=" & user_id & " ORDER BY id DESC")
+                                             WHERE user_id=" & user_id & " ORDER BY id DESC",
+											 My.Settings.DefaultCon)
 
 
 		If lock Then 'Iniciar sesion
@@ -69,7 +71,8 @@ Public Class SecMan 'Security Manager
 	Shared Function privileges(user_id As Integer)
 		Dim inicio As New launcher
         'Leer
-        Dim dtab As DataTable = DbMan.read("SELECT * FROM usuarios WHERE id=" & user_id)
+        Dim dtab As DataTable = DbMan.read("SELECT * FROM usuarios WHERE id=" & user_id,
+											My.Settings.DefaultCon)
 		'Cargar
 		CtrlMan.LoadAllControls(dtab(0), inicio)
 		Return inicio

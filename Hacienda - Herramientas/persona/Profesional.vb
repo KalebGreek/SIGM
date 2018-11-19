@@ -24,7 +24,7 @@
 		End If
 
 		sql += " ORDER By Persona.razon"
-		Return DbMan.read(sql)
+		Return DbMan.read(sql, My.Settings.DefaultCon)
 	End Function
 	Shared Function Seleccionar(profesional_id As Integer, persona_id As Integer) As DataTable
 		Dim sql As String = SelectSQL & TableSQL
@@ -35,11 +35,11 @@
 			sql += " AND persona.id=" & persona_id
 		End If
 
-		Return DbMan.read(sql)
+		Return DbMan.read(sql, My.Settings.DefaultCon)
 	End Function
 	Shared Function ListarTitulos() As BindingSource
 		Dim bs As New BindingSource
-		bs.DataSource = DbMan.read("SELECT * FROM prof_titulo ORDER BY titulo")
+		bs.DataSource = DbMan.read("SELECT * FROM prof_titulo ORDER BY titulo", My.Settings.DefaultCon)
 		Return bs
 	End Function
 
@@ -54,7 +54,7 @@
 
 
 		Dim dtab As New DataTable
-		dtab = DbMan.read("SELECT id FROM profesional WHERE per_id=" & persona_id)
+		dtab = DbMan.read("SELECT id FROM profesional WHERE per_id=" & persona_id, My.Settings.DefaultCon)
 		Return dtab(0)("id")
 	End Function
 	Shared Function eliminar(ByVal per_id As Integer) As Integer

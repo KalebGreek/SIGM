@@ -59,9 +59,9 @@
         If codigo >= 11899 Or ordenanza_id > 0 Then
 
             If ordenanza_id > 0 Then
-				DbMan.read(  "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id)
+				DbMan.read("SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id, My.Settings.DefaultCon)
 			Else
-				DbMan.read(  "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo)
+				DbMan.read("SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo, My.Settings.DefaultCon)
 			End If
 
             If dtab Is Nothing = False Then

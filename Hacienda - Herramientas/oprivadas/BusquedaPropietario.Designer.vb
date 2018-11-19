@@ -25,7 +25,7 @@ Partial Class BusquedaPropietario
 		Me.components = New System.ComponentModel.Container()
 		Me.resultado = New System.Windows.Forms.DataGridView()
 		Me.bs_resultado = New System.Windows.Forms.BindingSource(Me.components)
-		Me.ControlBusqueda1 = New Sigm.genSearchControl()
+		Me.genSearchControl1 = New Sigm.genSearchControl()
 		CType(Me.resultado, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.bs_resultado, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
@@ -47,26 +47,26 @@ Partial Class BusquedaPropietario
 		Me.resultado.Size = New System.Drawing.Size(659, 285)
 		Me.resultado.TabIndex = 367
 		'
-		'ControlBusqueda1
+		'genSearchControl1
 		'
-		Me.ControlBusqueda1.AutoSize = True
-		Me.ControlBusqueda1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-		Me.ControlBusqueda1.BackColor = System.Drawing.Color.DarkGray
-		Me.ControlBusqueda1.Dock = System.Windows.Forms.DockStyle.Top
-		Me.ControlBusqueda1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.ControlBusqueda1.Location = New System.Drawing.Point(0, 0)
-		Me.ControlBusqueda1.Margin = New System.Windows.Forms.Padding(0)
-		Me.ControlBusqueda1.MinimumSize = New System.Drawing.Size(520, 33)
-		Me.ControlBusqueda1.Name = "ControlBusqueda1"
-		Me.ControlBusqueda1.Size = New System.Drawing.Size(659, 36)
-		Me.ControlBusqueda1.TabIndex = 368
+		Me.genSearchControl1.AutoSize = True
+		Me.genSearchControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+		Me.genSearchControl1.BackColor = System.Drawing.Color.DarkGray
+		Me.genSearchControl1.Dock = System.Windows.Forms.DockStyle.Top
+		Me.genSearchControl1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.genSearchControl1.Location = New System.Drawing.Point(0, 0)
+		Me.genSearchControl1.Margin = New System.Windows.Forms.Padding(0)
+		Me.genSearchControl1.MinimumSize = New System.Drawing.Size(520, 33)
+		Me.genSearchControl1.Name = "genSearchControl1"
+		Me.genSearchControl1.Size = New System.Drawing.Size(659, 36)
+		Me.genSearchControl1.TabIndex = 368
 		'
 		'BusquedaPropietario
 		'
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
 		Me.ClientSize = New System.Drawing.Size(659, 321)
 		Me.Controls.Add(Me.resultado)
-		Me.Controls.Add(Me.ControlBusqueda1)
+		Me.Controls.Add(Me.genSearchControl1)
 		Me.Font = New System.Drawing.Font("PF DinText Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.MinimumSize = New System.Drawing.Size(675, 360)
 		Me.Name = "BusquedaPropietario"
@@ -82,6 +82,6 @@ Partial Class BusquedaPropietario
 	End Sub
 
 	Friend WithEvents resultado As DataGridView
-	Public WithEvents ControlBusqueda1 As genSearchControl
+	Public WithEvents genSearchControl1 As genSearchControl
 	Friend WithEvents bs_resultado As BindingSource
 End Class

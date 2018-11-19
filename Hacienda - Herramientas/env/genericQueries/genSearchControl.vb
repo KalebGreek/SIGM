@@ -2,17 +2,15 @@
 	Inherits System.Windows.Forms.UserControl
 
 	'Custom Events
+	Public RowSelected As Boolean = False
 	Public bsCustomFilter As String
 	Public Event CSearch_Click()
-	'Public Event CStringSearch_Click(vista As ComboBox, filtro As ComboBox, keyword As ComboBox)
-	'Public Event CDateSearch_Click(vista As ComboBox, filtro As ComboBox, DateValue As DateTimePicker, maxDateValue As DateTimePicker, Condition As ComboBox)
-	'Public Event CNumSearch_Click(vista As ComboBox, filtro As ComboBox, NumValue As NumericUpDown, maxNumvalue As NumericUpDown, Condition As ComboBox)
 	Public Event CReset_Click()
 	Public Event CVista_IndexTextChanged()
 	Public Event CFiltro_IndexTextChanged()
 	Public Event CKeyword_KeyUp(sender As Object, e As KeyEventArgs)
-	Public Event CSelect(sender As Object)
-	Public Event CCancel(sender As Object)
+	Public Event CSelect(sender As Object, e As EventArgs)
+	Public Event CCancel(sender As Object, e As EventArgs)
 
 	'Events
 	Public Sub New()
@@ -37,26 +35,28 @@
 	Private Sub filtro_condition_SelectedIndexnTextChanged(sender As Object, e As EventArgs) Handles filtro.SelectedIndexChanged, filtro.TextChanged,
 																									Condition.SelectedIndexChanged, Condition.TextChanged
 		bsCustomFilter = ""
-		If filtro.Items.Count > 0 And filtro.SelectedIndex > -1 Then
-			filtro.Visible = True
-			keyword.Visible = (filtro.SelectedValue.ToString = GetType(String).ToString)
-			Condition.Visible = keyword.Visible.CompareTo(True)
-			If Condition.SelectedIndex < 0 Then
-				Condition.SelectedIndex = 0
-			End If
-			'Int and dec
-			NumValue.Visible = (filtro.SelectedValue.ToString = GetType(Decimal).ToString) Or (filtro.SelectedValue.ToString = GetType(Integer).ToString)
-			MaxNumValue.Visible = (NumValue.Visible) And (Condition.Text = "<->")
-			'Date
-			DateValue.Visible = (filtro.SelectedValue.ToString = GetType(Date).ToString)
-			MaxDateValue.Visible = (DateValue.Visible) And (Condition.Text = "<->")
+		If filtro.Items.Count > 0 Then
+			If filtro.SelectedIndex > -1 Then
+				filtro.Visible = True
+				keyword.Visible = (filtro.SelectedValue.ToString = GetType(String).ToString)
+				Condition.Visible = keyword.Visible.CompareTo(True)
+				If Condition.SelectedIndex < 0 Then
+					Condition.SelectedIndex = 0
+				End If
+				'Int and dec
+				NumValue.Visible = (filtro.SelectedValue.ToString = GetType(Decimal).ToString) Or (filtro.SelectedValue.ToString = GetType(Integer).ToString)
+				MaxNumValue.Visible = (NumValue.Visible) And (Condition.Text = "<->")
+				'Date
+				DateValue.Visible = (filtro.SelectedValue.ToString = GetType(Date).ToString)
+				MaxDateValue.Visible = (DateValue.Visible) And (Condition.Text = "<->")
 
-			If filtro.SelectedValue.ToString = GetType(Decimal).ToString Then
-				NumValue.DecimalPlaces = 2
-				MaxNumValue.DecimalPlaces = 2
-			Else
-				NumValue.DecimalPlaces = 0
-				NumValue.DecimalPlaces = 0
+				If filtro.SelectedValue.ToString = GetType(Decimal).ToString Then
+					'NumValue.DecimalPlaces = 2
+					'MaxNumValue.DecimalPlaces = 2
+				Else
+					'NumValue.DecimalPlaces = 0
+					'NumValue.DecimalPlaces = 0
+				End If
 			End If
 		Else
 			filtro.Visible = False
@@ -102,7 +102,9 @@
 	End Sub
 
 	Private Sub keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles keyword.KeyUp
-		search.PerformClick()
+		If e.KeyValue = Keys.Enter Or e.KeyValue = Keys.F3 Then
+			search.PerformClick()
+		End If
 	End Sub
 
 	Private Sub keyword_ClicknFocus(sender As Object, e As EventArgs) Handles keyword.Click, keyword.GotFocus
@@ -190,20 +192,21 @@
 	End Sub
 
 	Private Sub selectRow_Click(sender As Object, e As EventArgs) Handles selectRow.Click
-		RaiseEvent CSelect(sender)
+		RowSelected = True
+		RaiseEvent CSelect(sender, e)
 	End Sub
 
 	Private Sub cancel_Click(sender As Object, e As EventArgs) Handles cancel.Click
-		RaiseEvent CCancel(sender)
+		RaiseEvent CCancel(sender, e)
 	End Sub
 
 	'Routines and functions
-	Private Sub FullReset() 'Dangerous
-		vista.Items.Clear()
-		filtro.Items.Clear()
-		keyword.Items.Clear()
-		keyword.ResetText()
-	End Sub
+	'Private Sub FullReset() 'Dangerous
+	'	vista.Items.Clear()
+	'	filtro.Items.Clear()
+	'	keyword.Items.Clear()
+	'	keyword.ResetText()
+	'End Sub
 
 	Private Sub Condition_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Condition.SelectedIndexChanged
 		If Condition.Visible Then

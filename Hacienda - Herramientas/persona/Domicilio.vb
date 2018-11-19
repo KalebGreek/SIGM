@@ -7,7 +7,7 @@
 								 FROM provincias INNER JOIN (per_domicilio 
 						   INNER JOIN localidades On per_domicilio.localidad_id = localidades.id)
 								   ON provincias.id = localidades.provincia_id 
-								WHERE per_domicilio.per_id = " & persona_id & " ORDER BY per_domicilio.id")
+								WHERE per_domicilio.per_id = " & persona_id & " ORDER BY per_domicilio.id", My.Settings.DefaultCon)
 	End Function
 	Shared Function Nuevo(persona_id As Integer, calle As String, altura As Integer, piso As Integer,
 						  dpto As String, localidad_id As Integer, principal As Boolean) As Integer
@@ -15,7 +15,7 @@
 										   VALUES(" & persona_id & ", '" & calle & "', " & altura & ", " & piso & ",
 												  '" & dpto & "', " & localidad_id & ", " & principal & ")")
 
-		Dim dtab As DataTable = DbMan.read("SELECT MAX(id) as id FROM per_domicilio WHERE per_id=" & persona_id)
+		Dim dtab As DataTable = DbMan.read("SELECT MAX(id) as id FROM per_domicilio WHERE per_id=" & persona_id, My.Settings.DefaultCon)
 		Return dtab(0)("id")
 	End Function
 	Shared Function Modificar(domicilio_id As Integer, persona_id As Integer, calle As String,

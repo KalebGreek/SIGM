@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Public Class BusquedaPropietario
-	Private RowIsSelected As Boolean = False
 	Public Sub New()
 
 		' This call is required by the designer.
@@ -8,18 +7,16 @@ Public Class BusquedaPropietario
 
 		' Add any initialization after the InitializeComponent() call.
 		'Setting up views
-		ControlBusqueda1.vista.Items.AddRange(New Object() {"PROPIETARIO"})
-		ControlBusqueda1.selectRow.Visible = True
-		ControlBusqueda1.cancel.Visible = True
+		genSearchControl1.vista.Items.AddRange(New Object() {"PROPIETARIO"})
 	End Sub
 	'-- RUTINAS
-	Sub Consultar() Handles ControlBusqueda1.CSearch_Click
-		bs_resultado.Filter = ControlBusqueda1.bsCustomFilter
+	Sub Consultar() Handles genSearchControl1.CSearch_Click
+		bs_resultado.Filter = genSearchControl1.bsCustomFilter
 	End Sub
 
 	'-- EVENTOS UNICOS
-	Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVista_IndexTextChanged
-		With ControlBusqueda1
+	Private Sub vista_SelectedIndexChanged() Handles genSearchControl1.CVista_IndexTextChanged
+		With genSearchControl1
 			If .vista.SelectedIndex > -1 Then
 				.filtro.DataSource = Nothing
 				If .vista.Text = "PROPIETARIO" Then
@@ -38,9 +35,9 @@ Public Class BusquedaPropietario
 		End With
 	End Sub
 
-	Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles ControlBusqueda1.CKeyword_KeyUp, resultado.KeyUp
-		If e.KeyValue = Keys.Enter And sender Is ControlBusqueda1.keyword Then
-			ControlBusqueda1.search.PerformClick()
+	Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles genSearchControl1.CKeyword_KeyUp, resultado.KeyUp
+		If e.KeyValue = Keys.Enter And sender Is genSearchControl1.keyword Then
+			genSearchControl1.search.PerformClick()
 		ElseIf sender Is resultado Then
 			If e.KeyValue = Keys.F2 Then
 
@@ -50,14 +47,10 @@ Public Class BusquedaPropietario
 		End If
 	End Sub
 
-	Private Sub SelectResult(sender As Object) Handles ControlBusqueda1.CSelect, ControlBusqueda1.CCancel
-		RowIsSelected = (sender Is ControlBusqueda1.selectRow)
-		Me.Close()
-	End Sub
-
-	Private Sub BusquedaPropietario_Closed(sender As Object, e As EventArgs) Handles Me.Closed
-		If RowIsSelected = False Then
+	Private Sub Me_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+		If genSearchControl1.RowSelected = False Then
 			bs_resultado.DataSource = Nothing
 		End If
 	End Sub
+
 End Class

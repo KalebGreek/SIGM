@@ -7,7 +7,7 @@
             sql += " AND opr_pago.fecha_pago is null"
         End If
 
-		Return DbMan.read(  sql)
+		Return DbMan.read(sql, My.Settings.DefaultCon)
 	End Function
 	Shared Sub AgregarDeuda(opr_id As Integer, desc As String, monto As Double, cuotas As Integer, fecha As Date)
 		For cuota As Integer = 1 To cuotas 'Agrega monto dividido por cuotas
