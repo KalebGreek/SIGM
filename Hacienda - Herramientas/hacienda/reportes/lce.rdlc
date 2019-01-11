@@ -274,9 +274,9 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>15.82125cm</Top>
+        <Top>15.6625cm</Top>
         <Left>0.29635cm</Left>
-        <Height>3.60037cm</Height>
+        <Height>3.75912cm</Height>
         <Width>19.31408cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
@@ -300,7 +300,7 @@
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Left</TextAlign>
+              <TextAlign>Right</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
@@ -400,10 +400,10 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>8.19317cm</Top>
-        <Left>2.79705cm</Left>
+        <Top>8.25667cm</Top>
+        <Left>2.9122cm</Left>
         <Height>0.63704cm</Height>
-        <Width>2.61458cm</Width>
+        <Width>2.52639cm</Width>
         <ZIndex>11</ZIndex>
         <Style>
           <Border>
@@ -426,15 +426,15 @@
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Left</TextAlign>
+              <TextAlign>Right</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>8.19317cm</Top>
+        <Top>8.25667cm</Top>
         <Left>0.29635cm</Left>
         <Height>0.63704cm</Height>
-        <Width>2.29306cm</Width>
+        <Width>2.43946cm</Width>
         <ZIndex>12</ZIndex>
         <Style>
           <Border>
@@ -457,15 +457,15 @@
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Left</TextAlign>
+              <TextAlign>Right</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>9.00307cm</Top>
+        <Top>9.09832cm</Top>
         <Left>0.29635cm</Left>
         <Height>0.63704cm</Height>
-        <Width>1.93146cm</Width>
+        <Width>2.43946cm</Width>
         <ZIndex>13</ZIndex>
         <Style>
           <Border>
@@ -493,10 +493,10 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>9.00307cm</Top>
-        <Left>2.45562cm</Left>
+        <Top>9.09832cm</Top>
+        <Left>2.9122cm</Left>
         <Height>0.63704cm</Height>
-        <Width>2.0073cm</Width>
+        <Width>2.52639cm</Width>
         <ZIndex>14</ZIndex>
         <Style>
           <Border>
@@ -581,15 +581,15 @@
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Left</TextAlign>
+              <TextAlign>Right</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>7.37818cm</Top>
+        <Top>7.40993cm</Top>
         <Left>0.29635cm</Left>
         <Height>0.63704cm</Height>
-        <Width>1.97959cm</Width>
+        <Width>2.43946cm</Width>
         <ZIndex>17</ZIndex>
         <Style>
           <Border>
@@ -617,10 +617,10 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>7.37818cm</Top>
-        <Left>2.45233cm</Left>
+        <Top>7.40993cm</Top>
+        <Left>2.9122cm</Left>
         <Height>0.63704cm</Height>
-        <Width>2.9593cm</Width>
+        <Width>2.52639cm</Width>
         <ZIndex>18</ZIndex>
         <Style>
           <Border>
@@ -635,7 +635,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value> Ubicacion Propiedad:</Value>
+                <Value> Ubicación:</Value>
                 <Style>
                   <FontFamily>PF DinText Pro</FontFamily>
                   <FontSize>15pt</FontSize>
@@ -643,15 +643,15 @@
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Left</TextAlign>
+              <TextAlign>Right</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>6.54625cm</Top>
-        <Left>0.30417cm</Left>
+        <Top>6.56593cm</Top>
+        <Left>0.29635cm</Left>
         <Height>0.63704cm</Height>
-        <Width>4.5085cm</Width>
+        <Width>2.43946cm</Width>
         <ZIndex>19</ZIndex>
         <Style>
           <Border>
@@ -679,10 +679,10 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>6.54625cm</Top>
-        <Left>5.01929cm</Left>
+        <Top>6.56593cm</Top>
+        <Left>2.9122cm</Left>
         <Height>0.63704cm</Height>
-        <Width>9.12409cm</Width>
+        <Width>14.70058cm</Width>
         <ZIndex>20</ZIndex>
         <Style>
           <Border>
@@ -767,21 +767,21 @@
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Left</TextAlign>
+              <TextAlign>Right</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>7.37818cm</Top>
+        <Top>7.40993cm</Top>
         <Left>5.84202cm</Left>
         <Height>0.63704cm</Height>
-        <Width>1.02709cm</Width>
+        <Width>3.16971cm</Width>
         <ZIndex>23</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
-          <VerticalAlign>Top</VerticalAlign>
+          <VerticalAlign>Middle</VerticalAlign>
         </Style>
       </Textbox>
       <Textbox Name="ubicacion7">
@@ -803,10 +803,10 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>7.37818cm</Top>
-        <Left>7.0455cm</Left>
+        <Top>7.40993cm</Top>
+        <Left>9.18812cm</Left>
         <Height>0.63704cm</Height>
-        <Width>2.9593cm</Width>
+        <Width>2.52639cm</Width>
         <ZIndex>24</ZIndex>
         <Style>
           <Border>
@@ -834,8 +834,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>7.37818cm</Top>
-        <Left>10.54631cm</Left>
+        <Top>7.40993cm</Top>
+        <Left>12.45131cm</Left>
         <Height>0.63704cm</Height>
         <Width>1.66209cm</Width>
         <ZIndex>25</ZIndex>
@@ -865,10 +865,10 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>7.37818cm</Top>
-        <Left>12.38479cm</Left>
+        <Top>7.40993cm</Top>
+        <Left>14.26618cm</Left>
         <Height>0.63704cm</Height>
-        <Width>2.9593cm</Width>
+        <Width>2.52639cm</Width>
         <ZIndex>26</ZIndex>
         <Style>
           <Border>
@@ -896,10 +896,10 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>8.19317cm</Top>
-        <Left>8.0169cm</Left>
+        <Top>8.25667cm</Top>
+        <Left>9.18812cm</Left>
         <Height>0.63704cm</Height>
-        <Width>1.9879cm</Width>
+        <Width>2.52639cm</Width>
         <ZIndex>27</ZIndex>
         <Style>
           <Border>
@@ -922,21 +922,21 @@
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Left</TextAlign>
+              <TextAlign>Right</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>8.19317cm</Top>
-        <Left>5.8337cm</Left>
+        <Top>8.25667cm</Top>
+        <Left>5.84202cm</Left>
         <Height>0.63704cm</Height>
-        <Width>1.97556cm</Width>
+        <Width>3.16971cm</Width>
         <ZIndex>28</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
-          <VerticalAlign>Top</VerticalAlign>
+          <VerticalAlign>Middle</VerticalAlign>
         </Style>
       </Textbox>
       <Textbox Name="seccion3">
@@ -959,7 +959,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>10.25219cm</Top>
+        <Top>10.12519cm</Top>
         <Left>0.03176cm</Left>
         <Height>0.69525cm</Height>
         <Width>20cm</Width>
@@ -991,7 +991,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>11.21907cm</Top>
+        <Top>11.09207cm</Top>
         <Left>0.29635cm</Left>
         <Height>0.63704cm</Height>
         <Width>9.44336cm</Width>
@@ -1027,7 +1027,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>11.21907cm</Top>
+        <Top>11.09207cm</Top>
         <Left>10.16707cm</Left>
         <Height>0.63704cm</Height>
         <Width>9.44336cm</Width>
@@ -1063,7 +1063,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>12.06425cm</Top>
+        <Top>11.93725cm</Top>
         <Left>0.29635cm</Left>
         <Height>0.63704cm</Height>
         <Width>9.44336cm</Width>
@@ -1099,7 +1099,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>12.06425cm</Top>
+        <Top>11.93725cm</Top>
         <Left>10.16707cm</Left>
         <Height>0.63704cm</Height>
         <Width>9.44336cm</Width>
@@ -1135,7 +1135,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>12.90943cm</Top>
+        <Top>12.78243cm</Top>
         <Left>0.29635cm</Left>
         <Height>0.63704cm</Height>
         <Width>9.44336cm</Width>
@@ -1171,7 +1171,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>12.90943cm</Top>
+        <Top>12.78243cm</Top>
         <Left>10.16707cm</Left>
         <Height>0.63704cm</Height>
         <Width>9.44336cm</Width>
@@ -1207,7 +1207,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>13.75461cm</Top>
+        <Top>13.62761cm</Top>
         <Left>0.29635cm</Left>
         <Height>0.63704cm</Height>
         <Width>9.44336cm</Width>
@@ -1243,7 +1243,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>13.75461cm</Top>
+        <Top>13.62761cm</Top>
         <Left>10.16707cm</Left>
         <Height>0.63704cm</Height>
         <Width>9.44336cm</Width>
@@ -1279,7 +1279,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>14.59626cm</Top>
+        <Top>14.46926cm</Top>
         <Left>0.29635cm</Left>
         <Height>0.63704cm</Height>
         <Width>9.44336cm</Width>
@@ -1315,7 +1315,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>14.59626cm</Top>
+        <Top>14.46926cm</Top>
         <Left>10.16707cm</Left>
         <Height>0.63704cm</Height>
         <Width>9.44336cm</Width>
@@ -1346,7 +1346,7 @@
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Left</TextAlign>
+              <TextAlign>Right</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
@@ -1360,7 +1360,7 @@
           <Border>
             <Style>None</Style>
           </Border>
-          <VerticalAlign>Top</VerticalAlign>
+          <VerticalAlign>Middle</VerticalAlign>
         </Style>
       </Textbox>
       <Textbox Name="cuil3">
@@ -1449,6 +1449,68 @@
         <Height>0.63704cm</Height>
         <Width>15.02076cm</Width>
         <ZIndex>43</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Top</VerticalAlign>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox11">
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Tipo:</Value>
+                <Style>
+                  <FontFamily>PF DinText Pro</FontFamily>
+                  <FontSize>15pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>5.72075cm</Top>
+        <Left>12.45131cm</Left>
+        <Height>0.63704cm</Height>
+        <Width>1.66209cm</Width>
+        <ZIndex>44</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Top</VerticalAlign>
+        </Style>
+      </Textbox>
+      <Textbox Name="cuil4">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Parameters!Tipo.Value</Value>
+                <Style>
+                  <FontFamily>PF DinText Pro</FontFamily>
+                  <FontSize>16pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>5.72718cm</Top>
+        <Left>14.26618cm</Left>
+        <Height>0.63704cm</Height>
+        <Width>3.3466cm</Width>
+        <ZIndex>45</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1813,6 +1875,11 @@
     <ReportParameter Name="Baja">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Tipo">
+      <DataType>String</DataType>
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>

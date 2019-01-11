@@ -53,6 +53,7 @@ Partial Class ConsultaImpuesto
 		Me.et_con_imp = New System.Windows.Forms.Label()
 		Me.Label3 = New System.Windows.Forms.Label()
 		Me.f1_impuesto = New System.Windows.Forms.ComboBox()
+		Me.Label5 = New System.Windows.Forms.Label()
 		Me.f1_Deudor = New System.Windows.Forms.RadioButton()
 		Me.f1_SinDeuda = New System.Windows.Forms.RadioButton()
 		Me.Label4 = New System.Windows.Forms.Label()
@@ -64,9 +65,8 @@ Partial Class ConsultaImpuesto
 		Me.f1b_importe = New System.Windows.Forms.RadioButton()
 		Me.f1b_mora = New System.Windows.Forms.RadioButton()
 		Me.Label1 = New System.Windows.Forms.Label()
-		Me.ImprimirConsulta = New System.Windows.Forms.Button()
-		Me.Label5 = New System.Windows.Forms.Label()
 		Me.CtrlVenc1 = New Sigm.CtrlVenceImpuesto()
+		Me.ImprimirConsulta = New System.Windows.Forms.Button()
 		Me.StatusStrip1.SuspendLayout()
 		CType(Me.bs_consulta, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.bs_historial, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -380,6 +380,15 @@ Partial Class ConsultaImpuesto
 		Me.f1_impuesto.Size = New System.Drawing.Size(206, 27)
 		Me.f1_impuesto.TabIndex = 88
 		'
+		'Label5
+		'
+		Me.Label5.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.Label5.Location = New System.Drawing.Point(3, 59)
+		Me.Label5.Name = "Label5"
+		Me.Label5.Size = New System.Drawing.Size(62, 23)
+		Me.Label5.TabIndex = 164
+		Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+		'
 		'f1_Deudor
 		'
 		Me.f1_Deudor.AutoSize = True
@@ -449,7 +458,7 @@ Partial Class ConsultaImpuesto
 		Me.interes.TabIndex = 159
 		Me.interes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
 		Me.interes.ThousandsSeparator = True
-		Me.interes.Value = New Decimal(New Integer() {135, 0, 0, 262144})
+		Me.interes.Value = New Decimal(New Integer() {1315, 0, 0, 262144})
 		'
 		'grupo_deuda_total
 		'
@@ -517,6 +526,18 @@ Partial Class ConsultaImpuesto
 		Me.Label1.Text = "hasta"
 		Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
 		'
+		'CtrlVenc1
+		'
+		Me.CtrlVenc1.BackColor = System.Drawing.SystemColors.Control
+		Me.CtrlVenc1.Enabled = False
+		Me.CtrlVenc1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.CtrlVenc1.Location = New System.Drawing.Point(0, 247)
+		Me.CtrlVenc1.Margin = New System.Windows.Forms.Padding(0, 0, 0, 5)
+		Me.CtrlVenc1.Name = "CtrlVenc1"
+		Me.CtrlVenc1.Size = New System.Drawing.Size(275, 237)
+		Me.CtrlVenc1.TabIndex = 147
+		Me.CtrlVenc1.Visible = False
+		'
 		'ImprimirConsulta
 		'
 		Me.ImprimirConsulta.BackColor = System.Drawing.SystemColors.Control
@@ -530,27 +551,6 @@ Partial Class ConsultaImpuesto
 		Me.ImprimirConsulta.TabIndex = 163
 		Me.ImprimirConsulta.Text = "Imprimir (F4)"
 		Me.ImprimirConsulta.UseVisualStyleBackColor = False
-		'
-		'Label5
-		'
-		Me.Label5.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.Label5.Location = New System.Drawing.Point(3, 59)
-		Me.Label5.Name = "Label5"
-		Me.Label5.Size = New System.Drawing.Size(62, 23)
-		Me.Label5.TabIndex = 164
-		Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-		'
-		'CtrlVenc1
-		'
-		Me.CtrlVenc1.BackColor = System.Drawing.SystemColors.Control
-		Me.CtrlVenc1.Enabled = False
-		Me.CtrlVenc1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.CtrlVenc1.Location = New System.Drawing.Point(0, 247)
-		Me.CtrlVenc1.Margin = New System.Windows.Forms.Padding(0, 0, 0, 5)
-		Me.CtrlVenc1.Name = "CtrlVenc1"
-		Me.CtrlVenc1.Size = New System.Drawing.Size(275, 237)
-		Me.CtrlVenc1.TabIndex = 147
-		Me.CtrlVenc1.Visible = False
 		'
 		'ConsultaImpuesto
 		'

@@ -180,10 +180,10 @@
     <Compile Include="catastro\AgregarFrente.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="comercio\Busquedacomercio.Designer.vb">
-      <DependentUpon>Busquedacomercio.vb</DependentUpon>
+    <Compile Include="comercio\BusquedaComercio.Designer.vb">
+      <DependentUpon>BusquedaComercio.vb</DependentUpon>
     </Compile>
-    <Compile Include="comercio\Busquedacomercio.vb">
+    <Compile Include="comercio\BusquedaComercio.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="env\ConverterMan.vb" />
@@ -206,6 +206,12 @@
       <DependentUpon>genModDialog.vb</DependentUpon>
     </Compile>
     <Compile Include="env\genericForms\genModDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\genericForms\SQLConsole.Designer.vb">
+      <DependentUpon>SQLConsole.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\genericForms\SQLConsole.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="env\genericQueries\genSearchControl.Designer.vb">
@@ -521,8 +527,8 @@
     <EmbeddedResource Include="catastro\AgregarFrente.resx">
       <DependentUpon>AgregarFrente.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="comercio\Busquedacomercio.resx">
-      <DependentUpon>Busquedacomercio.vb</DependentUpon>
+    <EmbeddedResource Include="comercio\BusquedaComercio.resx">
+      <DependentUpon>BusquedaComercio.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="env\acceso.resx">
       <DependentUpon>acceso.vb</DependentUpon>
@@ -535,6 +541,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="env\genericForms\genModDialog.resx">
       <DependentUpon>genModDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\genericForms\SQLConsole.resx">
+      <DependentUpon>SQLConsole.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="env\genericQueries\genSearchControl.resx">
       <DependentUpon>genSearchControl.vb</DependentUpon>

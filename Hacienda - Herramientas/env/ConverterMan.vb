@@ -46,4 +46,90 @@
 
 		Return path
 	End Function
+	Shared Function NumberToDescString(n As Decimal) As String
+		'Spanish
+		Dim strout As String = ""
+		Dim mill, thou, hundr, dec As Integer
+		Dim dict As New BindingSource
+		dict.DataSource = DbMan.read("SELECT num, str FROM numtostr_dict", My.Settings.DefaultCon)
+		n = n.ToString("d2")
+
+		mill = Val(n) \ Math.Pow(10, 6)
+		If mill > 0 Then
+			strout &= NumToStrDictSearch(dict, mill, True, False, False, False)
+			n -= (mill * Math.Pow(10, 6))
+		End If
+
+		thou = Val(n) \ Math.Pow(10, 3)
+		If thou > 0 Then
+			strout &= NumToStrDictSearch(dict, thou, False, True, False, False)
+			n -= (thou * Math.Pow(10, 3))
+		End If
+		hundr = Val(n)
+		If hundr > 0 Then
+			strout &= NumToStrDictSearch(dict, hundr, False, False, True, False)
+			n -= hundr
+		End If
+
+		If mill = 0 And thou = 0 And hundr = 0 Then
+			strout &= " CERO PESOS CON"
+		ElseIf n = 1 Then
+			strout &= " UN PESO CON"
+		Else
+			strout &= " PESOS CON"
+		End If
+
+		'CENTAVOS
+		dec = Mid(n.ToString, 3, 2)
+		strout &= NumToStrDictSearch(dict, dec, False, False, False, True)
+
+		If dec = 1 Then
+			strout &= " CENTAVO"
+		Else
+			strout &= " CENTAVOS"
+		End If
+		Return strout
+	End Function
+	Shared Function NumToStrDictSearch(dict As BindingSource, n As Integer, mill_pos As Boolean, thou_pos As Boolean, hundr_pos As Boolean, dec_pos As Boolean) As String
+		Dim str As String = ""
+		Dim hundreds, tens, singles As Integer
+		hundreds = (n \ 100) * 100
+		tens = (n \ 10) * 10
+		singles = n - (hundreds + tens)
+
+		If hundreds > 0 Then
+			dict.Position = dict.Find("num", hundreds)
+			str &= dict.Current("str")
+			If hundreds = 1 Then
+				If tens > 0 Or singles > 0 Then
+					str &= "TO " 'CIENTO
+				End If
+			End If
+		End If
+		If tens > 0 Then
+			dict.Position = dict.Find("num", tens)
+			str &= " " & dict.Current("str")
+		End If
+		If singles > 0 Then
+			dict.Position = dict.Find("num", singles)
+			If hundreds = 0 And tens = 0 And singles = 1 Then
+				If mill_pos Then
+					str &= " UN MILLÓN"
+				ElseIf thou_pos Then
+					str = " MIL"
+				ElseIf hundreds Then
+					'UNO
+				ElseIf dec_pos Then
+					str = " UN"
+				End If
+			Else
+				str &= " " & dict.Current("str")
+			End If
+		Else
+			str &= " CERO"
+		End If
+
+		Return str
+	End Function
 End Class
+

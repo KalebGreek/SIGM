@@ -42,9 +42,9 @@ Partial Class genSearchControl
 		'DateValue
 		'
 		Me.DateValue.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-		Me.DateValue.Location = New System.Drawing.Point(441, 3)
+		Me.DateValue.Location = New System.Drawing.Point(431, 3)
 		Me.DateValue.Name = "DateValue"
-		Me.DateValue.Size = New System.Drawing.Size(123, 27)
+		Me.DateValue.Size = New System.Drawing.Size(130, 27)
 		Me.DateValue.TabIndex = 361
 		Me.DateValue.Visible = False
 		'
@@ -94,16 +94,16 @@ Partial Class genSearchControl
 		Me.keyword.Location = New System.Drawing.Point(295, 3)
 		Me.keyword.MaxLength = 32
 		Me.keyword.Name = "keyword"
-		Me.keyword.Size = New System.Drawing.Size(140, 27)
+		Me.keyword.Size = New System.Drawing.Size(130, 27)
 		Me.keyword.TabIndex = 369
 		'
 		'NumValue
 		'
 		Me.NumValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-		Me.NumValue.Location = New System.Drawing.Point(570, 3)
+		Me.NumValue.Location = New System.Drawing.Point(567, 3)
 		Me.NumValue.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
 		Me.NumValue.Name = "NumValue"
-		Me.NumValue.Size = New System.Drawing.Size(77, 27)
+		Me.NumValue.Size = New System.Drawing.Size(130, 27)
 		Me.NumValue.TabIndex = 371
 		Me.NumValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
 		Me.NumValue.Visible = False
@@ -114,7 +114,7 @@ Partial Class genSearchControl
 		Me.Condition.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.Condition.FormattingEnabled = True
 		Me.Condition.Items.AddRange(New Object() {" =", " >", " <", "<->"})
-		Me.Condition.Location = New System.Drawing.Point(653, 3)
+		Me.Condition.Location = New System.Drawing.Point(703, 3)
 		Me.Condition.MaxDropDownItems = 4
 		Me.Condition.MaxLength = 3
 		Me.Condition.Name = "Condition"
@@ -125,7 +125,7 @@ Partial Class genSearchControl
 		'MaxDateValue
 		'
 		Me.MaxDateValue.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-		Me.MaxDateValue.Location = New System.Drawing.Point(704, 3)
+		Me.MaxDateValue.Location = New System.Drawing.Point(3, 36)
 		Me.MaxDateValue.Name = "MaxDateValue"
 		Me.MaxDateValue.Size = New System.Drawing.Size(123, 27)
 		Me.MaxDateValue.TabIndex = 372
@@ -134,7 +134,7 @@ Partial Class genSearchControl
 		'MaxNumValue
 		'
 		Me.MaxNumValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-		Me.MaxNumValue.Location = New System.Drawing.Point(3, 36)
+		Me.MaxNumValue.Location = New System.Drawing.Point(132, 36)
 		Me.MaxNumValue.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
 		Me.MaxNumValue.Name = "MaxNumValue"
 		Me.MaxNumValue.Size = New System.Drawing.Size(77, 27)
@@ -148,7 +148,7 @@ Partial Class genSearchControl
 		Me.search.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.search.Font = New System.Drawing.Font("Segoe MDL2 Assets", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.search.ForeColor = System.Drawing.Color.White
-		Me.search.Location = New System.Drawing.Point(83, 33)
+		Me.search.Location = New System.Drawing.Point(212, 33)
 		Me.search.Margin = New System.Windows.Forms.Padding(0)
 		Me.search.Name = "search"
 		Me.search.Size = New System.Drawing.Size(38, 33)
@@ -163,7 +163,7 @@ Partial Class genSearchControl
 		Me.reset_search.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.reset_search.Font = New System.Drawing.Font("Segoe MDL2 Assets", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.reset_search.ForeColor = System.Drawing.Color.White
-		Me.reset_search.Location = New System.Drawing.Point(121, 33)
+		Me.reset_search.Location = New System.Drawing.Point(250, 33)
 		Me.reset_search.Margin = New System.Windows.Forms.Padding(0)
 		Me.reset_search.Name = "reset_search"
 		Me.reset_search.Size = New System.Drawing.Size(38, 33)
@@ -178,7 +178,7 @@ Partial Class genSearchControl
 		Me.selectRow.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.selectRow.Font = New System.Drawing.Font("Segoe MDL2 Assets", 14.25!)
 		Me.selectRow.ForeColor = System.Drawing.Color.Chartreuse
-		Me.selectRow.Location = New System.Drawing.Point(159, 33)
+		Me.selectRow.Location = New System.Drawing.Point(288, 33)
 		Me.selectRow.Margin = New System.Windows.Forms.Padding(0)
 		Me.selectRow.Name = "selectRow"
 		Me.selectRow.Size = New System.Drawing.Size(38, 33)
@@ -194,7 +194,7 @@ Partial Class genSearchControl
 		Me.cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.cancel.Font = New System.Drawing.Font("Segoe MDL2 Assets", 14.25!)
 		Me.cancel.ForeColor = System.Drawing.Color.Red
-		Me.cancel.Location = New System.Drawing.Point(197, 33)
+		Me.cancel.Location = New System.Drawing.Point(326, 33)
 		Me.cancel.Margin = New System.Windows.Forms.Padding(0)
 		Me.cancel.Name = "cancel"
 		Me.cancel.Size = New System.Drawing.Size(38, 33)

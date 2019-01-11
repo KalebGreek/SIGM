@@ -13,6 +13,15 @@
 		Next
 	End Sub
 
+
+	Private Sub MainForm_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
+		If e.KeyValue = Keys.F10 Then
+			Dim console1 As New SQLConsole
+			console1.MdiParent = Me
+			console1.Show()
+		End If
+	End Sub
+
 	'ACCION SOCIAL
 	Private Sub NuevoBeneficiarioToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevoBeneficiarioToolStripMenuItem.Click
 
@@ -21,7 +30,6 @@
 	Private Sub BuscarBeneficiarioToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarBeneficiarioToolStripMenuItem.Click
 
 	End Sub
-
 
 	'CATASTRO
 	Private Sub BuscarInmuebleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarInmuebleToolStripMenuItem.Click
@@ -34,6 +42,31 @@
 	Private Sub ConsultarPagosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsultarPagosToolStripMenuItem.Click
 
 	End Sub
+
+	'COMERCIO
+	Private Sub BuscarEnPadrónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarEnPadrónToolStripMenuItem.Click
+		Dim buscarcomercio1 As New BusquedaComercio
+		buscarcomercio1.MdiParent = Me
+		buscarcomercio1.Show()
+	End Sub
+
+	'GOBIERNO
+	Private Sub NuevaOrdenanzaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevaOrdenanzaToolStripMenuItem.Click
+		Dim AgregarOrdenanza As New ModOrdenanza
+		With AgregarOrdenanza
+			.ShowDialog(Me)
+			.Dispose()
+		End With
+	End Sub
+	Private Sub BuscarOrdenanzaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarOrdenanzaToolStripMenuItem.Click
+		Dim BuscarOrdenanza As New ConsultaOrdenanza
+		With BuscarOrdenanza
+			.MdiParent = Me
+			.Show()
+		End With
+	End Sub
+
+
 
     'HACIENDA
     Private Sub ConsultarImpuestoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsultarImpuestoToolStripMenuItem.Click
@@ -64,7 +97,8 @@
 
 	Private Sub CalculoAnualDeImpuestosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CalculoAnualDeImpuestosToolStripMenuItem.Click
 		System.Windows.Forms.Application.CurrentCulture = New System.Globalization.CultureInfo("EN-US")
-		CalculoAnualImpuesto.ShowDialog()
+		Dim cai As New CalculoAnualImpuesto
+		cai.ShowDialog()
 		System.Windows.Forms.Application.CurrentCulture = New System.Globalization.CultureInfo("ES-AR")
 	End Sub
 	Private Sub GenerarCertificadoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GenerarCertificadoToolStripMenuItem.Click
@@ -86,24 +120,14 @@
 		buscar1.GenSearchControl1.vista.SelectedIndex = 0
 		buscar1.Show()
 	End Sub
+	Private Sub ConsolidarIngresosYEgresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsolidarIngresosYEgresosToolStripMenuItem.Click
+		Hacienda.ConsolidarCuentas(Today)
+	End Sub
 
-	'GOBIERNO
-	Private Sub NuevaOrdenanzaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevaOrdenanzaToolStripMenuItem.Click
-		Dim AgregarOrdenanza As New ModOrdenanza
-		With AgregarOrdenanza
-			.ShowDialog(Me)
-			.Dispose()
-		End With
-	End Sub
-	Private Sub BuscarOrdenanzaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarOrdenanzaToolStripMenuItem.Click
-		Dim BuscarOrdenanza As New ConsultaOrdenanza
-		With BuscarOrdenanza
-			.MdiParent = Me
-			.Show()
-		End With
-	End Sub
+
 
 	'OBRAS PUBLICAS
+
 	'> empleados
 	Private Sub AsistenciaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AsistenciaToolStripMenuItem.Click
 
@@ -149,6 +173,7 @@
 
 
 	'OBRAS PRIVADAS
+
 	'Expedientes
 	Private Sub NuevoExpedienteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevoExpedienteToolStripMenuItem.Click
 		Dim NuevoExp As New ModExpediente()
@@ -196,12 +221,6 @@
 	End Sub
 	Private Sub BuscarActaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarActaToolStripMenuItem.Click
 
-	End Sub
-
-	Private Sub BúsquedaDePadrónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BúsquedaDePadrónToolStripMenuItem.Click
-		Dim buscarcomercio1 As New Busquedacomercio
-		buscarcomercio1.MdiParent = Me
-		buscarcomercio1.Show()
 	End Sub
 
 

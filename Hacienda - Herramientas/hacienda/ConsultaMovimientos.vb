@@ -1,7 +1,7 @@
 ﻿Public Class ConsultaMovimientos
-    Private SQLSelect, SQLTable, SQLCriteria, SQLGrouping As String
+	Private SQLSelect, SQLTable, SQLCriteria, SQLGrouping, SQLOrder As String
 
-    Public Sub New()
+	Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
@@ -76,17 +76,18 @@
 	'### RUTINAS
 	Private Function RellenarCuentas(ingresos As Boolean) As DataTable
 		Dim dtab As New DataTable
-		SQLSelect = "SELECT orden, IIF(sumado=1,'=','+') + '|' + anexo + '.' + inciso + '.' + item + '.' + 
-						rubro + '.' + subrubro + '.' + partida + '.' + subpartida + '|' + nombre AS nombre"
+		SQLSelect = "SELECT orden, IIF(sumado=1,'* ','- ') + nombre AS nombre"
 		SQLTable = " FROM hacienda"
+
 		If ingresos Then
 			SQLCriteria = "  WHERE orden<900000000000"
 		Else
 			SQLCriteria = "  WHERE orden>899999999999"
 		End If
 		SQLGrouping = ""
+		SQLOrder = " ORDER BY orden"
 
-		Return DbMan.read(SQLSelect & SQLTable & SQLCriteria & SQLGrouping, My.Settings.foxcon)
+		Return DbMan.read(SQLSelect & SQLTable & SQLCriteria & SQLGrouping & SQLOrder, My.Settings.foxcon)
 	End Function
 	Private Function ConsultarMovimientos(ByVal cuenta As Double, ByVal keyword As String,
                                           Filtrado As Boolean, FiltroFecha As Boolean,
@@ -115,11 +116,11 @@
 		info2.Text = " - "
 		If dtab Is Nothing = False Then
 			If dtab.Rows.Count > 0 Then
-				info.Text = "AUTORIZADO:" & dtab(0)("autorizado").ToString
+				info.Text = "AUTORIZADO: " & FormatCurrency(dtab(0)("autorizado"), 2)
 				If ingreso Then
-					info2.Text = "INGRESADO $ " & dtab(0)("total_pagado").ToString
+					info2.Text = "INGRESADO: " & FormatCurrency(dtab(0)("total_pagado"), 2)
 				Else
-					info2.Text = "GASTADO $ " & dtab(0)("total_pagado").ToString
+					info2.Text = "GASTADO: " & FormatCurrency(dtab(0)("total_pagado"), 2)
 				End If
 			End If
 		End If

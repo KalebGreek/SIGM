@@ -32,39 +32,34 @@
 	End Sub
 
 	'Visibility events
-	Private Sub filtro_condition_SelectedIndexnTextChanged(sender As Object, e As EventArgs) Handles filtro.SelectedIndexChanged, filtro.TextChanged,
-																									Condition.SelectedIndexChanged, Condition.TextChanged
+	Private Sub filtro_SelectedIndexnTextChanged(sender As Object, e As EventArgs) Handles filtro.SelectedIndexChanged, filtro.TextChanged
 		bsCustomFilter = ""
-		If filtro.Items.Count > 0 Then
-			If filtro.SelectedIndex > -1 Then
-				filtro.Visible = True
-				keyword.Visible = (filtro.SelectedValue.ToString = GetType(String).ToString)
-				Condition.Visible = keyword.Visible.CompareTo(True)
-				If Condition.SelectedIndex < 0 Then
-					Condition.SelectedIndex = 0
-				End If
-				'Int and dec
-				NumValue.Visible = (filtro.SelectedValue.ToString = GetType(Decimal).ToString) Or (filtro.SelectedValue.ToString = GetType(Integer).ToString)
-				MaxNumValue.Visible = (NumValue.Visible) And (Condition.Text = "<->")
-				'Date
-				DateValue.Visible = (filtro.SelectedValue.ToString = GetType(Date).ToString)
-				MaxDateValue.Visible = (DateValue.Visible) And (Condition.Text = "<->")
 
-				If filtro.SelectedValue.ToString = GetType(Decimal).ToString Then
-					'NumValue.DecimalPlaces = 2
-					'MaxNumValue.DecimalPlaces = 2
-				Else
-					'NumValue.DecimalPlaces = 0
-					'NumValue.DecimalPlaces = 0
-				End If
+		If filtro.Visible And filtro.SelectedIndex > -1 Then
+			'String
+			keyword.Visible = (filtro.SelectedValue.ToString = GetType(String).ToString)
+
+			'Int and dec
+			NumValue.Visible = (filtro.SelectedValue.ToString = GetType(Decimal).ToString) Or (filtro.SelectedValue.ToString = GetType(Integer).ToString)
+			MaxNumValue.Visible = (NumValue.Visible) And (Condition.Text = "<->")
+
+			'Date
+			DateValue.Visible = (filtro.SelectedValue.ToString = GetType(Date).ToString)
+			MaxDateValue.Visible = (DateValue.Visible) And (Condition.Text = "<->")
+
+			If filtro.SelectedValue.ToString = GetType(Decimal).ToString Then
+				NumValue.DecimalPlaces = 2
+				MaxNumValue.DecimalPlaces = 2
+			Else
+				NumValue.DecimalPlaces = 0
+				NumValue.DecimalPlaces = 0
 			End If
+			RaiseEvent CFiltro_IndexTextChanged()
 		Else
-			filtro.Visible = False
-			keyword.Visible = True
 			reset_search.PerformClick()
 		End If
+		filtro.Visible = filtro.Items.Count > 0
 
-		RaiseEvent CFiltro_IndexTextChanged()
 	End Sub
 
 	Private Sub NumValue_MaxNumValue_VisibleChanged(sender As Object, e As EventArgs) Handles NumValue.VisibleChanged, MaxNumValue.VisibleChanged
@@ -107,7 +102,7 @@
 		End If
 	End Sub
 
-	Private Sub keyword_ClicknFocus(sender As Object, e As EventArgs) Handles keyword.Click, keyword.GotFocus
+	Private Sub keyword_ClicknFocus(sender As Object, e As EventArgs) Handles keyword.GotFocus, keyword.DoubleClick
 		If keyword.Visible Then
 			keyword.SelectAll()
 		End If
@@ -121,7 +116,7 @@
 			If keyword.Visible Then
 
 				Trim(keyword.Text)
-				If Len(keyword.Text) > 1 Then
+				If Len(keyword.Text) > 0 Then
 					bsCustomFilter = filtro.Text & " LIKE '%" & keyword.Text & "%'"
 				End If
 			ElseIf NumValue.Visible Then
@@ -137,27 +132,29 @@
 							maxValueString = Replace(MaxNumValue.Value, ",", ".").ToString()
 							bsCustomFilter = filtro.Text & "=>" & NumValueString & " AND " & filtro.Text & "<=" & maxValueString
 						Else
-							bsCustomFilter = filtro.Text & Condition.Text & NumValueString
+							'bsCustomFilter = filtro.Text & Condition.Text & NumValueString
+							bsCustomFilter = filtro.Text & "=" & NumValueString
 						End If
 					End If
 				End If
 			ElseIf DateValue.Visible Then
 
-				If filtro.SelectedValue = "System.Date" Then 'Date
+				If filtro.SelectedValue = "System.DateTime" Or filtro.SelectedValue = "System.Date" Then 'Date
 					'Filter by full date
 					If last_connection = My.Settings.foxcon Then 'Foxpro needs the en-US date format
 						If Condition.Text = "<->" Then
-							bsCustomFilter = filtro.Text & " => {" & DateValue.ToString("MM/dd/yyyy") & "}" &
-													 " AND " & filtro.Text & " <= {" & MaxDateValue.ToString("MM/dd/yyyy") & "}"
+							bsCustomFilter = filtro.Text & " => '" & DateValue.Value.ToShortDateString & "'
+											 AND " & filtro.Text & " <= '" & MaxDateValue.Value.ToShortDateString & "'"
 						Else
-							bsCustomFilter = filtro.Text & Condition.Text & "{" & DateValue.ToString("MM/dd/yyyy") & "}"
+							bsCustomFilter = filtro.Text & Condition.Text & "'" & DateValue.Value.ToShortDateString & "'"
 						End If
 					Else
 						If Condition.Text = "<->" Then
-							bsCustomFilter = filtro.Text & " => {" & DateValue.Value.ToShortDateString & "}" &
-													 " AND " & filtro.Text & " <= {" & MaxDateValue.Value.ToShortDateString & "}"
+							bsCustomFilter = filtro.Text & " => '" & DateValue.Value.ToShortDateString & "'" &
+													 " AND " & filtro.Text & " <= '" & MaxDateValue.Value.ToShortDateString & "'"
 						Else
-							bsCustomFilter = filtro.Text & Condition.Text & "{" & DateValue.Value.ToShortDateString & "}"
+							'bsCustomFilter = filtro.Text & Condition.Text & "'" & DateValue.Value.ToShortDateString & "'"
+							bsCustomFilter = filtro.Text & "='" & DateValue.Value.ToShortDateString & "'"
 						End If
 					End If
 				End If
@@ -201,18 +198,16 @@
 	End Sub
 
 	'Routines and functions
-	'Private Sub FullReset() 'Dangerous
-	'	vista.Items.Clear()
-	'	filtro.Items.Clear()
-	'	keyword.Items.Clear()
-	'	keyword.ResetText()
-	'End Sub
-
 	Private Sub Condition_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Condition.SelectedIndexChanged
+		Condition.Visible = keyword.Visible.CompareTo(True)
+		If Condition.Visible = False Then
+			Condition.SelectedIndex = 0
+		End If
 		If Condition.Visible Then
 			MaxDateValue.Visible = DateValue.Visible And Condition.Text.Contains("<->")
 			MaxNumValue.Visible = NumValue.Visible And Condition.Text.Contains("<->")
 		End If
+		RaiseEvent CFiltro_IndexTextChanged()
 	End Sub
 
 

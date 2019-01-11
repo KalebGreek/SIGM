@@ -1,18 +1,18 @@
 Imports Sigm.CalculoAnualSQL
 Public Class CalculoAnualImpuesto
-	Dim dtab_cuenta, dtab_var, dtab_zona, dtab_vence As DataTable
+	Dim dtab_var As New DataTable
 	Dim ultimo As Integer
 
     'Rutinas
     Public Function validar() As Boolean
-		dtab_cuenta = Nothing
-		dtab_zona = Nothing
 
 		Dim dtab As DataTable = DbMan.read("SELECT MAX(codigo) as codigo FROM " & impuesto.Text, My.Settings.foxcon)
 		If dtab.Rows.Count > 0 Then
 			If CuentaInicial.Value > dtab(0)("codigo") Then
 				MsgBox("No se encuentra la cuenta inicial.", MsgBoxStyle.OkOnly, Nothing)
 			Else
+				info.Text = "Leyendo datos.."
+				info.Refresh()
 				'Generar cuotas
 				If impuesto.Text = "AGUAS" Then
 					agua()
@@ -30,9 +30,9 @@ Public Class CalculoAnualImpuesto
 	End Function
 
 	Public Sub agua()
+		Dim dtab_cuenta, dtab_zona, dtab_vence, dtab_deuda As DataTable
 		Dim reside, comercio, industria, importe, franqueo As New Decimal
 		Dim cuota, cuota_max As New Integer
-
 		'Zonas
 		dtab_zona = DbMan.read("SELECT * FROM aguzona", My.Settings.foxcon)
 		'Vencimientos
@@ -43,17 +43,21 @@ Public Class CalculoAnualImpuesto
 		dtab_cuenta = DbMan.read("SELECT codigo, potable, comercial, industrial FROM aguas
 								   WHERE codigo=>" & CuentaInicial.Value & " ORDER BY codigo",
 								 My.Settings.foxcon)
+
+		dtab_deuda = DbMan.read("SELECT * FROM agucue", My.Settings.foxcon)
+
         'Iniciar busqueda y reemplazo
         progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
 		For fila As Integer = 0 To progreso.Maximum
+			CheckProgress(fila, dtab_cuenta(fila)("codigo"))
 			reside = 0
 			comercio = 0
 			industria = 0
 			importe = 0
-			CheckProgress(fila, dtab_cuenta(fila)("codigo"))
-            'Residencial
-            If dtab_cuenta(fila)("potable") = 1 Then
+
+			'Residencial
+			If dtab_cuenta(fila)("potable") = 1 Then
 				reside = dtab_zona(0)("resido")
 			End If
             'Comercial
@@ -76,19 +80,22 @@ Public Class CalculoAnualImpuesto
 
 			'Total
 			importe = importe + franqueo
-            'Ingresar cuotas
-            cuota_max = 6
+			'Ingresar cuotas
+			cuota_max = 6
 			cuota = 1
 			Do While cuota <= cuota_max
-				If CalculoAnualSQL.sql.Agua.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
+				If CalculoAnualSQL.sql.Agua.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value, dtab_deuda) Then
+					'No existente
 					CalculoAnualSQL.sql.Agua.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, importe, dtab_vence(0),
 					reside, comercio, industria, franqueo)
 				End If
 				cuota += 1
 			Loop
+
 		Next
 	End Sub
 	Public Sub auto()
+		Dim dtab_cuenta, dtab_vence, dtab_deuda As DataTable
 		'Vencimientos
 		dtab_vence = DbMan.read("SELECT * FROM autovence
 								  WHERE periodo=" & periodo.Value,
@@ -98,6 +105,8 @@ Public Class CalculoAnualImpuesto
 								   WHERE apagar>0 AND baja={} 
 									 AND codigo=>" & CuentaInicial.Value & " ORDER BY codigo",
 								 My.Settings.foxcon)
+
+		dtab_deuda = DbMan.read("SELECT * FROM autocue", My.Settings.foxcon)
 
 		progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -110,7 +119,7 @@ Public Class CalculoAnualImpuesto
 			cuota = 1
 			cuota_max = 4
 			Do While cuota <= cuota_max
-				If CalculoAnualSQL.sql.Auto.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
+				If CalculoAnualSQL.sql.Auto.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value, dtab_deuda) Then
 					CalculoAnualSQL.sql.Auto.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, importe, dtab_vence(0))
 				End If
 				cuota += 1
@@ -118,6 +127,7 @@ Public Class CalculoAnualImpuesto
 		Next
 	End Sub
 	Public Sub catastro()
+		Dim dtab_cuenta, dtab_vence, dtab_deuda As DataTable
 		Dim basica, minimo, baldio, pasillo, agrario, comercio, jubilado,
 			vereda, parque, taecat, franqueo, importe, subtotal As New Decimal
 		Dim cuota, cuota_max As Integer
@@ -146,6 +156,8 @@ Public Class CalculoAnualImpuesto
 									FROM catastro JOIN catzona On catastro.zona1=catzona.zona
 								   WHERE catastro.codigo=>" & CuentaInicial.Value & " ORDER BY catastro.codigo",
 								 My.Settings.foxcon)
+
+		dtab_deuda = DbMan.read("SELECT * FROM catcue", My.Settings.foxcon)
 
 		progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -256,7 +268,7 @@ Public Class CalculoAnualImpuesto
 				End If
 			End If
 
-			'Jubilado
+			'Descuento por Jubilado
 			jubilado = 0
 			If dr("jubilado") = 1 Then
 				jubilado = subtotal * (dr("desc_jubilado") / 100)
@@ -277,7 +289,7 @@ Public Class CalculoAnualImpuesto
 			cuota = 1
 			cuota_max = 6
 			Do While cuota <= cuota_max
-				If CalculoAnualSQL.sql.Catastro.VerificarCuota(dr, cuota, periodo.Value) Then
+				If CalculoAnualSQL.sql.Catastro.VerificarCuota(dr, cuota, periodo.Value, dtab_deuda) Then
 					CalculoAnualSQL.sql.Catastro.InsertarCuota(dr, cuota, periodo.Value, importe / 6,
 											   dtab_vence(0), minimo / 6, basica / 6, baldio / 6, jubilado / 6, pasillo / 6,
 											   agrario / 6, comercio / 6, vereda / 6, parque / 6, franqueo / 6, taecat / 6)
@@ -287,6 +299,7 @@ Public Class CalculoAnualImpuesto
 		Next
 	End Sub
 	Public Sub comercio()
+		Dim dtab_cuenta, dtab_vence, dtab_deuda As DataTable
 		Dim minimo, taecom, importe, franqueo As New Decimal
 		Dim cuota, cuota_max As Integer
 
@@ -301,14 +314,17 @@ Public Class CalculoAnualImpuesto
 								   WHERE comercio.baja = {} And minimo>0 And codigo=>" & CuentaInicial.Value,
 								 My.Settings.foxcon)
 
-		progreso.Maximum = Me.dtab_cuenta.Rows.Count - 1
+		dtab_deuda = DbMan.read("SELECT * FROM comcue", My.Settings.foxcon)
+
+		progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
 		For fila As Integer = 1 To progreso.Maximum
 
 			CheckProgress(fila, dtab_cuenta(fila)("codigo"))
 
-            '2-1-1-1-1-2
-            If dtab_cuenta(fila)("formapago") = 6 Then 'Valores Mensuales
+
+			If dtab_cuenta(fila)("formapago") = 6 Then 'Valores Mensuales
+				'2-1-1-1-1-2
 				cuota = 1
 				cuota_max = 6
 				Do While cuota <= cuota_max
@@ -326,14 +342,15 @@ Public Class CalculoAnualImpuesto
 					franqueo = dtab_var(0)("franqueo")
 					importe = minimo + taecom + franqueo
 
-					If CalculoAnualSQL.sql.Comercio.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
+					If CalculoAnualSQL.sql.Comercio.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value, dtab_deuda) Then
 						CalculoAnualSQL.sql.Comercio.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, minimo, taecom,
 																		franqueo, importe, dtab_vence(0))
 					End If
 					cuota += 1
 				Loop
-                'Normal
-            ElseIf dtab_cuenta(fila)("formapago") = 2 Then 'Valores Anuales
+
+			ElseIf dtab_cuenta(fila)("formapago") = 2 Then 'Valores Anuales
+				'Normal
 				cuota = 1
 				cuota_max = 6
 				Do While cuota <= cuota_max
@@ -342,19 +359,21 @@ Public Class CalculoAnualImpuesto
 					franqueo = dtab_var(0)("franqueo") 'Mensual
 					importe = minimo + taecom + franqueo
 
-					If CalculoAnualSQL.sql.Comercio.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value) Then
+					If CalculoAnualSQL.sql.Comercio.VerificarCuota(dtab_cuenta, fila, cuota, periodo.Value, dtab_deuda) Then
 						CalculoAnualSQL.sql.Comercio.InsertarCuota(dtab_cuenta, fila, cuota, periodo.Value, minimo, taecom,
 																		franqueo, importe, dtab_vence(0))
 					End If
 					cuota += 1
 				Loop
-                'Cuota unica
-            ElseIf dtab_cuenta(fila)("formapago") = 1 Then
+
+			ElseIf dtab_cuenta(fila)("formapago") = 1 Then
+				'Cuota unica
 				minimo = dtab_cuenta(fila)("minimo")
 				taecom = importe * (dtab_var(0)("taecom") / 100)
 				franqueo = dtab_var(0)("franqueo") * 6
 				importe = minimo + taecom + franqueo
-				If CalculoAnualSQL.sql.Comercio.VerificarCuota(dtab_cuenta, fila, 1, periodo.Value) Then
+
+				If CalculoAnualSQL.sql.Comercio.VerificarCuota(dtab_cuenta, fila, 1, periodo.Value, dtab_deuda) Then
 					CalculoAnualSQL.sql.Comercio.InsertarCuota(dtab_cuenta, fila, 1, periodo.Value, minimo, taecom,
 																		franqueo, importe, dtab_vence(0))
 				End If
@@ -362,6 +381,7 @@ Public Class CalculoAnualImpuesto
 		Next
 	End Sub
 	Public Sub sepelio()
+		Dim dtab_cuenta, dtab_deuda As DataTable
 		'Vencimientos
 		Dim vence As New Date(periodo.Value, 1, 1)
 		Do While vence.DayOfWeek <> DayOfWeek.Monday
@@ -370,11 +390,13 @@ Public Class CalculoAnualImpuesto
         'Cuentas
         dtab_cuenta = DbMan.read("SELECT sepelio.codigo as codigo, sepelio.fila as fila, sepelio.jubilado as jubilado, sepevar.minimo as minimo,
 										 sepevar.jubilado as desc_jubilado, sepevar.fila1 as fila1, sepevar.fila2 as fila2, sepevar.fila3 as fila3,
-										 sepevar.fila4 as fila4, sepevar.fila5 as fila5, sepelio.ubicacion as ubicacion
-									FROM sepelio JOIN sepevar ON sepelio.ubicacion=sepevar.orden
-								   WHERE sepelio.ubicacion > 0 AND sepelio.codigo =>" & CuentaInicial.Value & "
+										 sepevar.fila4 as fila4, sepevar.fila5 as fila5, sepelio.ubicacion as ubicacion, sepelio.tipo as tipo
+									FROM sepelio JOIN sepevar ON sepelio.tipo=sepevar.orden
+								   WHERE sepelio.tipo > 0 AND sepelio.codigo =>" & CuentaInicial.Value & "
 								ORDER BY sepelio.codigo",
 								 My.Settings.foxcon)
+
+		dtab_deuda = DbMan.read("SELECT * FROM sepecue", My.Settings.foxcon)
 
 		progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -397,7 +419,7 @@ Public Class CalculoAnualImpuesto
 				importe = importe - jubilado
 			End If
 
-			If CalculoAnualSQL.sql.Sepelio.VerificarCuota(dtab_cuenta, fila, periodo.Value) Then
+			If CalculoAnualSQL.sql.Sepelio.VerificarCuota(dtab_cuenta, fila, periodo.Value, dtab_deuda) Then
 				CalculoAnualSQL.sql.Sepelio.InsertarCuota(dtab_cuenta, fila, periodo.Value, importe, vence)
 			End If
 		Next

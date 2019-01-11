@@ -1,5 +1,12 @@
 ﻿Public Class adelanto_page1
 	Dim persona_id As Integer = 0
+
+	'Routines
+	Public Sub save()
+		DbMan.edit("INSERT INTO hac_adelanto(monto, fecha, persona_id) 
+					VALUES('" & monto.Value & "', '" & fecha.Value & "', " & persona_id & ")")
+	End Sub
+	'Events
 	Private Sub buscarPersona_Click(sender As Object, e As EventArgs) Handles buscarPersona.Click
 		Dim bper As New BusquedaPersona()
 		bper.genSearchControl1.selectRow.Visible = True

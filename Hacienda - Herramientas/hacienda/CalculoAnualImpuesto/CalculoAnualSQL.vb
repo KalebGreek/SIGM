@@ -1,13 +1,19 @@
 ﻿Public Class CalculoAnualSQL
 	Public Class sql
 		Public Class Agua 'Listo
-			Shared Function VerificarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer) As Boolean
-				Dim dtab As DataTable = DbMan.read("SELECT * FROM agucue 
-														    WHERE codigo=" & registro(fila)("codigo") & " 
-															  AND agrupado='' AND mes=" & cuota & " 
-															  AND periodo=" & periodo,
-															  My.Settings.foxcon)
-				Return dtab.Rows.Count = 0
+			Shared Function VerificarCuota(cuentas As DataTable, fila As Integer, cuota As Integer, periodo As Integer,
+											deudas As DataTable) As Boolean
+
+				Dim result As DataRow() = deudas.Select("codigo=" & cuentas(fila)("codigo") & " And agrupado='' AND mes=" & cuota & " 
+															  And periodo=" & periodo)
+
+				Return result.Count = 0
+				'Dim dtab As DataTable = DbMan.read("SELECT * FROM agucue 
+				'WHERE codigo=" & registro(fila)("codigo") & " 
+				'											  And agrupado='' AND mes=" & cuota & " 
+				'											  And periodo=" & periodo,
+				'My.Settings.foxcon)
+				'Return dtab.Rows.Count = 0
 			End Function
 			Shared Sub InsertarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer, importe As Decimal,
 									  vence As DataRow, reside As Decimal, comercio As Decimal, industria As Decimal, franqueo As Decimal)
@@ -21,19 +27,20 @@
 			End Sub
 		End Class
 		Public Class Auto
-			Shared Function VerificarCuota(cuenta As DataTable, fila As Integer, cuota As Integer, periodo As Integer) As Boolean
-				Dim dtab As DataTable = DbMan.read("SELECT * FROM autocue
-															WHERE codigo =" & cuenta(fila)("codigo") & "
-															  AND moratoria='' AND cuota=" & cuota & " 
-															  AND ano=" & periodo & ";",
-															  My.Settings.foxcon)
-				Return dtab.Rows.Count = 0
-			End Function
-			Shared Function CrearRegistro(ByRef registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer,
-										  importe As Decimal, vence As DataRow) As DataTable
+			Shared Function VerificarCuota(cuentas As DataTable, fila As Integer, cuota As Integer, periodo As Integer,
+											deudas As DataTable) As Boolean
 
+				Dim result As DataRow() = deudas.Select("codigo=" & cuentas(fila)("codigo") & " And moratoria='' AND cuota=" & cuota & " 
+															  And ano=" & periodo)
 
-				Return registro
+				Return result.Count = 0
+
+				'Dim dtab As DataTable = DbMan.read("SELECT * FROM autocue
+				'											WHERE codigo =" & cuenta(fila)("codigo") & "
+				'											  AND moratoria='' AND cuota=" & cuota & " 
+				'											  AND ano=" & periodo & ";",
+				'											  My.Settings.foxcon)
+				'Return dtab.Rows.Count = 0
 			End Function
 			Shared Sub InsertarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer,
 									 importe As Decimal, vence As DataRow)
@@ -48,13 +55,20 @@
 			End Sub
 		End Class
 		Public Class Catastro
-			Shared Function VerificarCuota(registro As DataRow, cuota As Integer, periodo As Integer) As Boolean
-				Dim dtab As DataTable = DbMan.read("SELECT * FROM catcue
-														    WHERE codigo=" & registro("codigo") & " 
-															  AND agrupado='' AND mes=" & cuota & "
-															  AND periodo=" & periodo,
-													My.Settings.foxcon)
-				Return dtab.Rows.Count = 0
+			Shared Function VerificarCuota(registro As DataRow, cuota As Integer, periodo As Integer, deudas As DataTable) As Boolean
+
+				Dim result As DataRow() = deudas.Select("codigo=" & registro("codigo") & " And agrupado='' AND mes=" & cuota & " 
+															  AND periodo=" & periodo)
+
+				Return result.Count = 0
+
+
+				'Dim dtab As DataTable = DbMan.read("SELECT * FROM catcue
+				'										    WHERE codigo=" & registro("codigo") & " 
+				'											  AND agrupado='' AND mes=" & cuota & "
+				'											  AND periodo=" & periodo,
+				'									My.Settings.foxcon)
+				'Return dtab.Rows.Count = 0
 			End Function
 			Shared Sub InsertarCuota(registro As DataRow, cuota As Integer, periodo As Integer, importe As Decimal,
 								 vence As DataRow, minimo As Decimal, basica As Decimal, baldio As Decimal, jubilado As Decimal, pasillo As Decimal,
@@ -74,13 +88,20 @@
 			End Sub
 		End Class
 		Public Class Comercio
-			Shared Function VerificarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer) As Boolean
-				Dim dtab As DataTable = DbMan.read("SELECT * FROM comcue 
-														    WHERE codigo=" & registro(fila)("codigo") & " 
-															  AND agrupado='' AND bimestre=" & cuota & " 
-															  AND ano=" & periodo,
-													My.Settings.foxcon)
-				Return dtab.Rows.Count = 0
+			Shared Function VerificarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer, deudas As DataTable) As Boolean
+
+				Dim result As DataRow() = deudas.Select("codigo=" & registro(fila)("codigo") & " And agrupado='' AND bimestre=" & cuota & " 
+															  And ano=" & periodo)
+
+				Return result.Count = 0
+
+
+				'Dim dtab As DataTable = DbMan.read("SELECT * FROM comcue 
+				'										    WHERE codigo=" & registro(fila)("codigo") & " 
+				'											  AND agrupado='' AND bimestre=" & cuota & " 
+				'											  AND ano=" & periodo,
+				'									My.Settings.foxcon)
+				'Return dtab.Rows.Count = 0
 			End Function
 			Shared Sub InsertarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer, minimo As Decimal,
 								  taecom As Decimal, franqueo As Decimal, importe As Decimal, vence As DataRow)
@@ -93,13 +114,19 @@
 			End Sub
 		End Class
 		Public Class Sepelio
-			Shared Function VerificarCuota(registro As DataTable, fila As Integer, periodo As Integer) As Boolean
-				Dim dtab As DataTable = DbMan.read("SELECT * FROM sepecue
-															WHERE codigo=" & registro(fila)("codigo") & " 
-															  AND agrupado='' AND mes=1
-															  AND periodo=" & periodo,
-												   My.Settings.foxcon)
-				Return dtab.Rows.Count = 0
+			Shared Function VerificarCuota(registro As DataTable, fila As Integer, periodo As Integer, deudas As DataTable) As Boolean
+
+				Dim result As DataRow() = deudas.Select("codigo=" & registro(fila)("codigo") & " AND agrupado='' AND mes=1
+														 AND periodo=" & periodo)
+
+				Return result.Count = 0
+
+				'Dim dtab As DataTable = DbMan.read("SELECT * FROM sepecue
+				'											WHERE codigo=" & registro(fila)("codigo") & " 
+				'											  AND agrupado='' AND mes=1
+				'											  AND periodo=" & periodo,
+				'								   My.Settings.foxcon)
+				'Return dtab.Rows.Count = 0
 			End Function
 			Shared Sub InsertarCuota(registro As DataTable, fila As Integer, periodo As Integer, importe As Decimal, vence As Date)
 				DbMan.edit("INSERT INTO sepecue(tipo, mes, agrupado, periodo, codigo, 

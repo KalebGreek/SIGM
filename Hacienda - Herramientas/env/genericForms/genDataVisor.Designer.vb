@@ -38,13 +38,13 @@ Partial Class genDataVisor
 		Me.DataGridView1.Size = New System.Drawing.Size(830, 460)
 		Me.DataGridView1.TabIndex = 0
 		'
-		'genVisorDtab
+		'genDataVisor
 		'
-		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
 		Me.ClientSize = New System.Drawing.Size(830, 460)
 		Me.Controls.Add(Me.DataGridView1)
-		Me.Name = "genVisorDtab"
+		Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
+		Me.Name = "genDataVisor"
 		Me.Text = "genVisorDtab"
 		CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
 		CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).EndInit()

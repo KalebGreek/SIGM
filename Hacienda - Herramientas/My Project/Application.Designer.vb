@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-			Me.MainForm = Global.Sigm.BusquedaAdelanto
-		End Sub
+            Me.MainForm = Global.Sigm.acceso
+        End Sub
     End Class
 End Namespace

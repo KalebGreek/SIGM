@@ -1,21 +1,20 @@
 ﻿Imports System.ComponentModel
-Public Class Busquedacomercio
+Public Class BusquedaComercio
+	Private OleDBCmd As New OleDb.OleDbCommand
 	Private RowIsSelected As Boolean = False
 	Public Sub New()
-
+		OleDBCmd.CommandType = CommandType.Text
 		' This call is required by the designer.
 		InitializeComponent()
 
 		' Add any initialization after the InitializeComponent() call.
 		'Setting up views
-		ControlBusqueda1.vista.Items.AddRange(New Object() {"CONTRIBUYENTE"})
+		ControlBusqueda1.vista.Items.AddRange(New Object() {"COMERCIO SIN BAJA", "COMERCIO CON BAJA", "DEUDORES"})
 	End Sub
 	'-- RUTINAS
-	Sub Consultar() Handles ControlBusqueda1.CSearch_Click
-		bs_resultado.DataSource = DbMan.read("SELECT * FROM comercio", My.Settings.foxcon)
+	Sub Consultar() Handles ControlBusqueda1.CSearch_Click, ControlBusqueda1.CFiltro_IndexTextChanged
 		If bs_resultado.Count > 0 Then
-			CtrlMan.LoadDataGridView(resultado, bs_resultado)
-			bs_resultado.Filter = ControlBusqueda1.bsCustomFilter
+			CtrlMan.LoadDataGridView(resultado, bs_resultado, ControlBusqueda1.bsCustomFilter)
 		Else
 			bs_resultado.DataSource = Nothing
 		End If
@@ -23,18 +22,45 @@ Public Class Busquedacomercio
 
 	'-- EVENTOS UNICOS
 	Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVista_IndexTextChanged
+		OleDBCmd.CommandText = ""
 		With ControlBusqueda1
 			If .vista.SelectedIndex > -1 Then
+				Dim dtab As New DataTable
+				Dim bs_ColumnList As New BindingSource
 				.filtro.DataSource = Nothing
-				If .vista.Text = "CONTRIBUYENTE" Then
-					Dim sql As String = "SELECT * FROM comercio"
-					Dim dtab As New DataTable
-					Dim bs_ColumnList As New BindingSource
 
-					dtab = DbMan.read(sql, My.Settings.foxcon)
+				If .vista.Text = "COMERCIO SIN BAJA" Then
+					OleDBCmd.CommandText = " SELECT codigo, razon, fantasia, domicilio, inscripto,  
+											 comact.actividad as actividad_id, detalle as actividad"
+					OleDBCmd.CommandText += " FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
+					OleDBCmd.CommandText += " WHERE baja={}"
+
+				ElseIf .vista.Text = "COMERCIO CON BAJA" Then
+					OleDBCmd.CommandText = " SELECT codigo, razon, fantasia, domicilio, inscripto, baja, 
+											 comact.actividad as actividad_id, detalle as actividad"
+					OleDBCmd.CommandText += " FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
+					OleDBCmd.CommandText += " WHERE baja<>{}"
+
+				ElseIf .vista.Text = "DEUDORES" Then
+					OleDBCmd.CommandText = " SELECT comercio.codigo, comercio.razon, comercio.fantasia, comercio.domicilio, 
+											 comact.detalle as actividad, SUM(comcue.importe) AS original, 
+											 SUM(ROUND((comcue.importe * ((DATE() - comcue.vence1) * 0.1315)), 2)) AS mora, 
+											 SUM(comcue.importe) + 
+											 SUM(ROUND((comcue.importe * ((DATE() - comcue.vence1) * 0.1315)), 2)) AS deuda"
+					OleDBCmd.CommandText += " FROM comcue INNER JOIN comercio ON comcue.codigo=comercio.codigo 
+														  INNER JOIN comact ON comercio.actividad=comact.actividad"
+					OleDBCmd.CommandText += " GROUP BY comercio.codigo, comercio.razon, comercio.fantasia, comercio.domicilio,
+													   comact.detalle"
+					OleDBCmd.CommandText += " WHERE comcue.pago={}"
+				End If
+
+				dtab = DbMan.read("", My.Settings.foxcon, , , , , , OleDBCmd)
+
+				If dtab.Rows.Count > 0 Then
 					bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(dtab)
 					.filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
-					.filtro.SelectedIndex = -1
+					.filtro.SelectedIndex = 0
+					CtrlMan.LoadDataGridView(resultado, bs_resultado, "", dtab)
 				End If
 			Else
 				.reset_search.PerformClick()
@@ -53,5 +79,6 @@ Public Class Busquedacomercio
 			End If
 		End If
 	End Sub
+
 
 End Class

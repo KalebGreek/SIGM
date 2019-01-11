@@ -40,18 +40,22 @@ Partial Class MainForm
 		Me.BuscarOrdenanzaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.haciendaMenu = New System.Windows.Forms.ToolStripMenuItem()
 		Me.HaciendaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.CalculoAnualDeImpuestosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.ConsultarImpuestoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.ConsultarCuentaAgrupadaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-		Me.ConsultaDeMovimientosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-		Me.ConsultasEspecialesStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-		Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
-		Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-		Me.CalculoAnualDeImpuestosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.LibreDeudaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.GenerarCertificadoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
+		Me.EgresosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.AdelantosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.CombustibleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.TicketsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.SIJCORToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
+		Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+		Me.ConsultaDeMovimientosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.ConsultasEspecialesStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.ConsolidarIngresosYEgresosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.oprivadasMenu = New System.Windows.Forms.ToolStripMenuItem()
 		Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
 		Me.NuevoExpedienteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -79,10 +83,7 @@ Partial Class MainForm
 		Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
 		Me.BuscarActaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.comercioMenu = New System.Windows.Forms.ToolStripMenuItem()
-		Me.BúsquedaDePadrónToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-		Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
-		Me.EgresosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-		Me.AdelantosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.BuscarEnPadrónToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.StatusStrip1.SuspendLayout()
 		Me.BaseMenu.SuspendLayout()
 		Me.SuspendLayout()
@@ -210,7 +211,7 @@ Partial Class MainForm
 		'
 		'haciendaMenu
 		'
-		Me.haciendaMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HaciendaToolStripMenuItem, Me.CalculoAnualDeImpuestosToolStripMenuItem, Me.ConsultarImpuestoToolStripMenuItem, Me.ConsultarCuentaAgrupadaToolStripMenuItem, Me.LibreDeudaToolStripMenuItem, Me.ToolStripSeparator3, Me.EgresosToolStripMenuItem, Me.AdelantosToolStripMenuItem, Me.CombustibleToolStripMenuItem, Me.SIJCORToolStripMenuItem, Me.ToolStripSeparator6, Me.ToolStripMenuItem1, Me.ConsultaDeMovimientosToolStripMenuItem, Me.ConsultasEspecialesStripMenuItem})
+		Me.haciendaMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HaciendaToolStripMenuItem, Me.CalculoAnualDeImpuestosToolStripMenuItem, Me.ConsultarImpuestoToolStripMenuItem, Me.ConsultarCuentaAgrupadaToolStripMenuItem, Me.LibreDeudaToolStripMenuItem, Me.ToolStripSeparator3, Me.EgresosToolStripMenuItem, Me.AdelantosToolStripMenuItem, Me.CombustibleToolStripMenuItem, Me.SIJCORToolStripMenuItem, Me.ToolStripSeparator6, Me.ToolStripMenuItem1, Me.ConsultaDeMovimientosToolStripMenuItem, Me.ConsultasEspecialesStripMenuItem, Me.ConsolidarIngresosYEgresosToolStripMenuItem})
 		Me.haciendaMenu.ForeColor = System.Drawing.Color.White
 		Me.haciendaMenu.Name = "haciendaMenu"
 		Me.haciendaMenu.Padding = New System.Windows.Forms.Padding(0)
@@ -223,63 +224,36 @@ Partial Class MainForm
 		Me.HaciendaToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
 		Me.HaciendaToolStripMenuItem.ForeColor = System.Drawing.Color.DimGray
 		Me.HaciendaToolStripMenuItem.Name = "HaciendaToolStripMenuItem"
-		Me.HaciendaToolStripMenuItem.Size = New System.Drawing.Size(258, 24)
+		Me.HaciendaToolStripMenuItem.Size = New System.Drawing.Size(272, 24)
 		Me.HaciendaToolStripMenuItem.Text = "Ingresos"
+		'
+		'CalculoAnualDeImpuestosToolStripMenuItem
+		'
+		Me.CalculoAnualDeImpuestosToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.CalculoAnualDeImpuestosToolStripMenuItem.Name = "CalculoAnualDeImpuestosToolStripMenuItem"
+		Me.CalculoAnualDeImpuestosToolStripMenuItem.Size = New System.Drawing.Size(272, 24)
+		Me.CalculoAnualDeImpuestosToolStripMenuItem.Text = "Calculo Anual de Impuestos"
 		'
 		'ConsultarImpuestoToolStripMenuItem
 		'
 		Me.ConsultarImpuestoToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
 		Me.ConsultarImpuestoToolStripMenuItem.Name = "ConsultarImpuestoToolStripMenuItem"
-		Me.ConsultarImpuestoToolStripMenuItem.Size = New System.Drawing.Size(258, 24)
+		Me.ConsultarImpuestoToolStripMenuItem.Size = New System.Drawing.Size(272, 24)
 		Me.ConsultarImpuestoToolStripMenuItem.Text = "Impuestos y Deuda Total"
 		'
 		'ConsultarCuentaAgrupadaToolStripMenuItem
 		'
 		Me.ConsultarCuentaAgrupadaToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
 		Me.ConsultarCuentaAgrupadaToolStripMenuItem.Name = "ConsultarCuentaAgrupadaToolStripMenuItem"
-		Me.ConsultarCuentaAgrupadaToolStripMenuItem.Size = New System.Drawing.Size(258, 24)
+		Me.ConsultarCuentaAgrupadaToolStripMenuItem.Size = New System.Drawing.Size(272, 24)
 		Me.ConsultarCuentaAgrupadaToolStripMenuItem.Text = "Cuenta Agrupada"
-		'
-		'ConsultaDeMovimientosToolStripMenuItem
-		'
-		Me.ConsultaDeMovimientosToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.ConsultaDeMovimientosToolStripMenuItem.Name = "ConsultaDeMovimientosToolStripMenuItem"
-		Me.ConsultaDeMovimientosToolStripMenuItem.Size = New System.Drawing.Size(258, 24)
-		Me.ConsultaDeMovimientosToolStripMenuItem.Text = "Movimientos por Cuenta"
-		'
-		'ConsultasEspecialesStripMenuItem
-		'
-		Me.ConsultasEspecialesStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.ConsultasEspecialesStripMenuItem.Name = "ConsultasEspecialesStripMenuItem"
-		Me.ConsultasEspecialesStripMenuItem.Size = New System.Drawing.Size(258, 24)
-		Me.ConsultasEspecialesStripMenuItem.Text = "Consultas Especiales"
-		'
-		'ToolStripSeparator3
-		'
-		Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-		Me.ToolStripSeparator3.Size = New System.Drawing.Size(255, 6)
-		'
-		'ToolStripMenuItem1
-		'
-		Me.ToolStripMenuItem1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.ToolStripMenuItem1.ForeColor = System.Drawing.Color.DimGray
-		Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-		Me.ToolStripMenuItem1.Size = New System.Drawing.Size(258, 24)
-		Me.ToolStripMenuItem1.Text = "Herramientas"
-		'
-		'CalculoAnualDeImpuestosToolStripMenuItem
-		'
-		Me.CalculoAnualDeImpuestosToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.CalculoAnualDeImpuestosToolStripMenuItem.Name = "CalculoAnualDeImpuestosToolStripMenuItem"
-		Me.CalculoAnualDeImpuestosToolStripMenuItem.Size = New System.Drawing.Size(258, 24)
-		Me.CalculoAnualDeImpuestosToolStripMenuItem.Text = "Calculo Anual de Impuestos"
 		'
 		'LibreDeudaToolStripMenuItem
 		'
 		Me.LibreDeudaToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GenerarCertificadoToolStripMenuItem})
 		Me.LibreDeudaToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.LibreDeudaToolStripMenuItem.Name = "LibreDeudaToolStripMenuItem"
-		Me.LibreDeudaToolStripMenuItem.Size = New System.Drawing.Size(258, 24)
+		Me.LibreDeudaToolStripMenuItem.Size = New System.Drawing.Size(272, 24)
 		Me.LibreDeudaToolStripMenuItem.Text = "Libre Deuda"
 		'
 		'GenerarCertificadoToolStripMenuItem
@@ -288,26 +262,80 @@ Partial Class MainForm
 		Me.GenerarCertificadoToolStripMenuItem.Size = New System.Drawing.Size(202, 24)
 		Me.GenerarCertificadoToolStripMenuItem.Text = "Generar Certificado"
 		'
+		'ToolStripSeparator3
+		'
+		Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+		Me.ToolStripSeparator3.Size = New System.Drawing.Size(269, 6)
+		'
+		'EgresosToolStripMenuItem
+		'
+		Me.EgresosToolStripMenuItem.Enabled = False
+		Me.EgresosToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.EgresosToolStripMenuItem.Name = "EgresosToolStripMenuItem"
+		Me.EgresosToolStripMenuItem.Size = New System.Drawing.Size(272, 24)
+		Me.EgresosToolStripMenuItem.Text = "Egresos"
+		'
+		'AdelantosToolStripMenuItem
+		'
+		Me.AdelantosToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.AdelantosToolStripMenuItem.Name = "AdelantosToolStripMenuItem"
+		Me.AdelantosToolStripMenuItem.Size = New System.Drawing.Size(272, 24)
+		Me.AdelantosToolStripMenuItem.Text = "Adelantos"
+		'
 		'CombustibleToolStripMenuItem
 		'
 		Me.CombustibleToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TicketsToolStripMenuItem})
 		Me.CombustibleToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
 		Me.CombustibleToolStripMenuItem.Name = "CombustibleToolStripMenuItem"
-		Me.CombustibleToolStripMenuItem.Size = New System.Drawing.Size(258, 24)
+		Me.CombustibleToolStripMenuItem.Size = New System.Drawing.Size(272, 24)
 		Me.CombustibleToolStripMenuItem.Text = "Combustible"
 		'
 		'TicketsToolStripMenuItem
 		'
 		Me.TicketsToolStripMenuItem.Name = "TicketsToolStripMenuItem"
-		Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(152, 24)
+		Me.TicketsToolStripMenuItem.Size = New System.Drawing.Size(126, 24)
 		Me.TicketsToolStripMenuItem.Text = "Tickets"
 		'
 		'SIJCORToolStripMenuItem
 		'
 		Me.SIJCORToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
 		Me.SIJCORToolStripMenuItem.Name = "SIJCORToolStripMenuItem"
-		Me.SIJCORToolStripMenuItem.Size = New System.Drawing.Size(258, 24)
+		Me.SIJCORToolStripMenuItem.Size = New System.Drawing.Size(272, 24)
 		Me.SIJCORToolStripMenuItem.Text = "SIJCOR"
+		'
+		'ToolStripSeparator6
+		'
+		Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
+		Me.ToolStripSeparator6.Size = New System.Drawing.Size(269, 6)
+		'
+		'ToolStripMenuItem1
+		'
+		Me.ToolStripMenuItem1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.ToolStripMenuItem1.ForeColor = System.Drawing.Color.DimGray
+		Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+		Me.ToolStripMenuItem1.Size = New System.Drawing.Size(272, 24)
+		Me.ToolStripMenuItem1.Text = "Herramientas"
+		'
+		'ConsultaDeMovimientosToolStripMenuItem
+		'
+		Me.ConsultaDeMovimientosToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.ConsultaDeMovimientosToolStripMenuItem.Name = "ConsultaDeMovimientosToolStripMenuItem"
+		Me.ConsultaDeMovimientosToolStripMenuItem.Size = New System.Drawing.Size(272, 24)
+		Me.ConsultaDeMovimientosToolStripMenuItem.Text = "Movimientos por Cuenta"
+		'
+		'ConsultasEspecialesStripMenuItem
+		'
+		Me.ConsultasEspecialesStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.ConsultasEspecialesStripMenuItem.Name = "ConsultasEspecialesStripMenuItem"
+		Me.ConsultasEspecialesStripMenuItem.Size = New System.Drawing.Size(272, 24)
+		Me.ConsultasEspecialesStripMenuItem.Text = "Consultas Especiales"
+		'
+		'ConsolidarIngresosYEgresosToolStripMenuItem
+		'
+		Me.ConsolidarIngresosYEgresosToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.ConsolidarIngresosYEgresosToolStripMenuItem.Name = "ConsolidarIngresosYEgresosToolStripMenuItem"
+		Me.ConsolidarIngresosYEgresosToolStripMenuItem.Size = New System.Drawing.Size(272, 24)
+		Me.ConsolidarIngresosYEgresosToolStripMenuItem.Text = "Consolidar Ingresos y Egresos"
 		'
 		'oprivadasMenu
 		'
@@ -499,7 +527,7 @@ Partial Class MainForm
 		'
 		'comercioMenu
 		'
-		Me.comercioMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BúsquedaDePadrónToolStripMenuItem})
+		Me.comercioMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BuscarEnPadrónToolStripMenuItem})
 		Me.comercioMenu.ForeColor = System.Drawing.Color.White
 		Me.comercioMenu.Name = "comercioMenu"
 		Me.comercioMenu.Padding = New System.Windows.Forms.Padding(0)
@@ -507,32 +535,12 @@ Partial Class MainForm
 		Me.comercioMenu.Text = "COMERCIO"
 		Me.comercioMenu.Visible = False
 		'
-		'BúsquedaDePadrónToolStripMenuItem
+		'BuscarEnPadrónToolStripMenuItem
 		'
-		Me.BúsquedaDePadrónToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.BúsquedaDePadrónToolStripMenuItem.Name = "BúsquedaDePadrónToolStripMenuItem"
-		Me.BúsquedaDePadrónToolStripMenuItem.Size = New System.Drawing.Size(212, 24)
-		Me.BúsquedaDePadrónToolStripMenuItem.Text = "Búsqueda de Padrón"
-		'
-		'ToolStripSeparator6
-		'
-		Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
-		Me.ToolStripSeparator6.Size = New System.Drawing.Size(255, 6)
-		'
-		'EgresosToolStripMenuItem
-		'
-		Me.EgresosToolStripMenuItem.Enabled = False
-		Me.EgresosToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.EgresosToolStripMenuItem.Name = "EgresosToolStripMenuItem"
-		Me.EgresosToolStripMenuItem.Size = New System.Drawing.Size(258, 24)
-		Me.EgresosToolStripMenuItem.Text = "Egresos"
-		'
-		'AdelantosToolStripMenuItem
-		'
-		Me.AdelantosToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.AdelantosToolStripMenuItem.Name = "AdelantosToolStripMenuItem"
-		Me.AdelantosToolStripMenuItem.Size = New System.Drawing.Size(258, 24)
-		Me.AdelantosToolStripMenuItem.Text = "Adelantos"
+		Me.BuscarEnPadrónToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.BuscarEnPadrónToolStripMenuItem.Name = "BuscarEnPadrónToolStripMenuItem"
+		Me.BuscarEnPadrónToolStripMenuItem.Size = New System.Drawing.Size(192, 24)
+		Me.BuscarEnPadrónToolStripMenuItem.Text = "Buscar en Padrón"
 		'
 		'MainForm
 		'
@@ -611,10 +619,11 @@ Partial Class MainForm
 	Friend WithEvents ToolStripMenuItem2 As ToolStripMenuItem
 	Friend WithEvents ToolStripMenuItem3 As ToolStripMenuItem
 	Friend WithEvents CalculosToolStripMenuItem As ToolStripMenuItem
-	Friend WithEvents BúsquedaDePadrónToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents FormulariosToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
 	Friend WithEvents EgresosToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents AdelantosToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents ToolStripSeparator6 As ToolStripSeparator
+	Friend WithEvents ConsolidarIngresosYEgresosToolStripMenuItem As ToolStripMenuItem
+	Friend WithEvents BuscarEnPadrónToolStripMenuItem As ToolStripMenuItem
 End Class

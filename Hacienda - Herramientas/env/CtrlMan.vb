@@ -398,12 +398,11 @@
 
 	'Populate controls with data
 	Public Class Fill
-		Overloads Shared Function SetAutoComplete(ByRef target As ComboBox, ByRef bs As BindingSource,
+		Overloads Shared Function SetAutoComplete(ByVal source As ComboBox, ByVal bs As BindingSource,
 												  Optional DisplayOption As String = "", Optional ValueOption As String = "") As ComboBox
 
-			If target Is Nothing Then
-				target = New ComboBox
-			End If
+			Dim target As New ComboBox
+			target = source
 
 			target.BeginUpdate()
 			target.AutoCompleteMode = AutoCompleteMode.None

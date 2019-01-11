@@ -55,7 +55,7 @@ Partial Class ConsultasEspeciales
 		Me.QueryView.ReadOnly = True
 		Me.QueryView.RowHeadersVisible = False
 		Me.QueryView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-		Me.QueryView.Size = New System.Drawing.Size(484, 399)
+		Me.QueryView.Size = New System.Drawing.Size(484, 378)
 		Me.QueryView.TabIndex = 24
 		'
 		'Panel2
@@ -64,7 +64,7 @@ Partial Class ConsultasEspeciales
 		Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
 		Me.Panel2.Location = New System.Drawing.Point(0, 36)
 		Me.Panel2.Name = "Panel2"
-		Me.Panel2.Size = New System.Drawing.Size(484, 399)
+		Me.Panel2.Size = New System.Drawing.Size(484, 378)
 		Me.Panel2.TabIndex = 30
 		'
 		'ToolStrip1
@@ -153,7 +153,7 @@ Partial Class ConsultasEspeciales
 		Me.CustomTable.Size = New System.Drawing.Size(484, 21)
 		Me.CustomTable.TabIndex = 33
 		Me.CustomTable.TabStop = True
-		Me.CustomTable.Text = "Click para agregar tabla."
+		Me.CustomTable.Text = "Seleccionar tabla.."
 		Me.CustomTable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
 		Me.CustomTable.VisitedLinkColor = System.Drawing.Color.Blue
 		'
@@ -174,9 +174,9 @@ Partial Class ConsultasEspeciales
 		'
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
 		Me.ClientSize = New System.Drawing.Size(484, 461)
-		Me.Controls.Add(Me.CustomTable)
 		Me.Controls.Add(Me.Panel2)
 		Me.Controls.Add(Me.GenSearchControl1)
+		Me.Controls.Add(Me.CustomTable)
 		Me.Controls.Add(Me.ToolStrip1)
 		Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
 		Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow

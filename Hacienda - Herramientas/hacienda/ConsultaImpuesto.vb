@@ -192,7 +192,7 @@
 		visor.Focus()
     End Sub
 
-	Private Sub search_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles imp_search.Click
+	Private Sub imp_search_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles imp_search.Click
 		If f1_impuesto.SelectedIndex > -1 Then
 			leer(f3_clave.Text, sender)
 			'Identificar consulta mediante nombre de tabla

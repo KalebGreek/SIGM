@@ -65,9 +65,11 @@
 		Dim dada As New OleDb.OleDbDataAdapter
 
 		If OleDBProcedure Is Nothing = False Then
-			OleDBProcedure.CommandType = CommandType.StoredProcedure
+			If OleDBProcedure.CommandType <> CommandType.Text Then
+				OleDBProcedure.CommandType = CommandType.StoredProcedure
+			End If
 		ElseIf sqlSelect <> "" Then
-			OleDBProcedure = New OleDb.OleDbCommand
+				OleDBProcedure = New OleDb.OleDbCommand
 			OleDBProcedure.CommandType = CommandType.Text
 			OleDBProcedure.CommandText = sqlSelect
 			'Additional query options
@@ -118,7 +120,13 @@
 				dada.Fill(dtab)
 
 			Catch ex As OleDb.OleDbException
-				errorMsg = "No se encuentra la tabla indicada." & Chr(13) & "Detalles:" & ex.Message.ToString
+				If ex.Message.ToString.Contains("Decimal") Then
+					errorMsg = "Datos inválidos en un campo de la tabla."
+				Else
+					errorMsg = "No se encuentra la tabla indicada."
+				End If
+				errorMsg += Chr(13) & "Detalles:" & ex.Message.ToString
+
 			Catch ex As System.InvalidOperationException
 				errorMsg = "Uno de los campos de la consulta contiene datos inválidos." & Chr(13) & "Detalles:" & ex.Message.ToString
 			Finally
@@ -151,11 +159,13 @@
 	'###### END READ ############################################################################################
 
 	'###### SAVE: Rutinas para grabar registros #################################################################
-	Function edit(ByVal sql As String, Optional ByVal constr As String = Nothing, Optional OleDBProcedure As OleDb.OleDbCommand = Nothing) As String
-        'Para conectarse a la bd en modo de inserción
-        'Se necesita convertir el string a un objeto ConnectionString
-        'antes de aplicarlo al OleDbCommand "Comm"
-        If OleDBProcedure Is Nothing And sql.Contains("INSERT") Or sql.Contains("UPDATE") Or sql.Contains("DELETE") Then
+	Function edit(ByVal sql As String, Optional ByVal constr As String = Nothing,
+				  Optional OleDBProcedure As OleDb.OleDbCommand = Nothing) As String
+		Dim result As String = ""
+		'Para conectarse a la bd en modo de inserción
+		'Se necesita convertir el string a un objeto ConnectionString
+		'antes de aplicarlo al OleDbCommand "Comm"
+		If OleDBProcedure Is Nothing And sql.Contains("INSERT") Or sql.Contains("UPDATE") Or sql.Contains("DELETE") Then
 			Dim SQLCommand As New OleDb.OleDbCommand
 			SQLCommand.CommandText = sql
 			OleDBProcedure = SQLCommand
@@ -170,18 +180,18 @@
 			OleDBProcedure.Connection = olecon
 			'Abrir la conexión y ejecutar
 			olecon.Open()
-			OleDBProcedure.ExecuteNonQuery()
+			Try
+				Dim RowsAffected As Int32 = OleDBProcedure.ExecuteNonQuery()
+				result = RowsAffected & " filas afectadas."
+			Catch e As Exception
+				result = e.ToString
+			End Try
 			olecon.Close()
-			SecMan.log_write(sql, constr, My.Settings.UserId)
-
-
-
-
-			Return Nothing
+			'SecMan.log_write(sql, constr, My.Settings.UserId)
 		Else
-			Return "Datos insuficientes para realizar la operación."
+			result = "Datos insuficientes para realizar la operación."
 		End If
-
+		Return result
 	End Function
     '###### END SAVE ############################################################################################   
 

@@ -55,7 +55,6 @@
 			.Add(New ReportParameter("Catastro", dr("catastro").ToString))
 			.Add(New ReportParameter("UbicacionInmueble", dr("ubicacion").ToString))
 			.Add(New ReportParameter("LocalidadInmueble", dr("reparto").ToString))
-			.Add(New ReportParameter("LocalidadInmueble", dr("reparto").ToString))
 
 			Dim TipoServicio As String
 			If dr("potable") = 1 Then
@@ -149,22 +148,11 @@
 			.Add(New ReportParameter("Localidad", dr("localidad").ToString))
 			.Add(New ReportParameter("Provincia", dr("provincia").ToString))
 			.Add(New ReportParameter("Postal", dr("postal").ToString))
-            'Servicio
-            Dim ubicacion As String
-			If dr("ubicacion").ToString = 1 Then
-				ubicacion = "Nicho"
-			ElseIf dr("ubicacion").ToString = 2 Then
-				ubicacion = "Panteón"
-			ElseIf dr("ubicacion").ToString = 3 Then
-				ubicacion = "Baldio"
-			Else
-				ubicacion = "Alquiler"
-			End If
-
 			.Add(New ReportParameter("Cuenta", dr("codigo").ToString))
 			Dim alta As Date = dr("alta")
 			.Add(New ReportParameter("Alta", alta.ToShortDateString))
-			.Add(New ReportParameter("Ubicacion", ubicacion))
+			.Add(New ReportParameter("Tipo", dr("tipo").ToString))
+			.Add(New ReportParameter("Ubicacion", dr("ubicacion").ToString))
 			.Add(New ReportParameter("Numero", dr("numero").ToString))
 			.Add(New ReportParameter("Fila", dr("fila").ToString))
 			.Add(New ReportParameter("Sector", dr("sector").ToString))
