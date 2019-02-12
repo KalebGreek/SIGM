@@ -3,7 +3,7 @@
 
 	'Routines
 	Public Sub save()
-		DbMan.edit("INSERT INTO hac_adelanto(monto, fecha, persona_id) 
+		DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO hac_adelanto(monto, fecha, persona_id) 
 					VALUES('" & monto.Value & "', '" & fecha.Value & "', " & persona_id & ")")
 	End Sub
 	'Events

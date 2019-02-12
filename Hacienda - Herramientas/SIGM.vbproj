@@ -56,7 +56,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>Sigm.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42032,42036,42353,42354,42355</NoWarn>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -66,7 +66,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>Sigm.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42032,42036,42353,42354,42355</NoWarn>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -76,7 +76,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Debug\</OutputPath>
     <DocumentationFile>Sigm.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42032,42036,42353,42354,42355</NoWarn>
     <DebugType>full</DebugType>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
@@ -87,7 +87,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Release\</OutputPath>
     <DocumentationFile>Sigm.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42032,42036,42353,42354,42355</NoWarn>
     <DebugType>pdbonly</DebugType>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
@@ -117,6 +117,27 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DocumentationFile>Sigm.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42032,42036,42353,42354,42355</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DocumentationFile>Sigm.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42032,42036,42353,42354,42355</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
@@ -162,11 +183,24 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="env\menus\AccionSocialMenu.Designer.vb">
+      <DependentUpon>AccionSocialMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\AccionSocialMenu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="asocial\ModBeneficiario.Designer.vb">
       <DependentUpon>ModBeneficiario.vb</DependentUpon>
     </Compile>
     <Compile Include="asocial\ModBeneficiario.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\menus\CatastroMenu.Designer.vb">
+      <DependentUpon>CatastroMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\CatastroMenu.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="catastro\ModInmueble.Designer.vb">
       <DependentUpon>ModInmueble.vb</DependentUpon>
@@ -185,6 +219,12 @@
     </Compile>
     <Compile Include="comercio\BusquedaComercio.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\menus\ComercioMenu.Designer.vb">
+      <DependentUpon>ComercioMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\ComercioMenu.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="env\ConverterMan.vb" />
     <Compile Include="env\CtrlMan.vb" />
@@ -221,6 +261,12 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="env\SecMan.vb" />
+    <Compile Include="env\menus\GobiernoMenu.Designer.vb">
+      <DependentUpon>GobiernoMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\GobiernoMenu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="hacienda\Adelanto\adelanto_page1.Designer.vb">
       <DependentUpon>adelanto_page1.vb</DependentUpon>
     </Compile>
@@ -360,6 +406,12 @@
     <Compile Include="hacienda\ConsultaEmpleado.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="env\menus\HaciendaMenu.Designer.vb">
+      <DependentUpon>HaciendaMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\HaciendaMenu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="hacienda\ModContrato.Designer.vb">
       <DependentUpon>ModContrato.vb</DependentUpon>
     </Compile>
@@ -390,6 +442,12 @@
     <Compile Include="oprivadas\BusquedaPropietario.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="env\menus\OprivadasMenu.Designer.vb">
+      <DependentUpon>OprivadasMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\OprivadasMenu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="oprivadas\Pagos.vb" />
     <Compile Include="hacienda\Combustibles\ModCombustible.Designer.vb">
       <DependentUpon>ModCombustible.vb</DependentUpon>
@@ -408,6 +466,12 @@
     </Compile>
     <Compile Include="hacienda\Adelanto\BusquedaAdelanto.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\menus\OpublicasMenu.Designer.vb">
+      <DependentUpon>OpublicasMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\OpublicasMenu.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="opublicas\NotaPedido\BusquedaOrdenTrabajo.Designer.vb">
       <DependentUpon>BusquedaOrdenTrabajo.vb</DependentUpon>
@@ -440,6 +504,12 @@
     </Compile>
     <Compile Include="persona\ModActa.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\menus\PersonaMenu.Designer.vb">
+      <DependentUpon>PersonaMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\PersonaMenu.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="persona\Profesional.vb" />
     <Compile Include="persona\Proveedor.vb" />
@@ -513,13 +583,56 @@
     </Compile>
     <Compile Include="persona\Persona.vb" />
     <Compile Include="env\Settings.vb" />
+    <Compile Include="transito\BusquedaMulta.Designer.vb">
+      <DependentUpon>BusquedaMulta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="transito\BusquedaMulta.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="transito\ModMulta.Designer.vb">
+      <DependentUpon>ModMulta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="transito\ModMulta.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="transito\tabMultas3Vehiculo.Designer.vb">
+      <DependentUpon>tabMultas3Vehiculo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="transito\tabMultas3Vehiculo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="transito\tabMultas1Boleta.Designer.vb">
+      <DependentUpon>tabMultas1Boleta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="transito\tabMultas1Boleta.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="transito\tabMultas2Persona.Designer.vb">
+      <DependentUpon>tabMultas2Persona.vb</DependentUpon>
+    </Compile>
+    <Compile Include="transito\tabMultas2Persona.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="transito\Transito.vb" />
+    <Compile Include="env\menus\TransitoMenu.Designer.vb">
+      <DependentUpon>TransitoMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\TransitoMenu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="env\menus\AccionSocialMenu.resx">
+      <DependentUpon>AccionSocialMenu.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="asocial\ModBeneficiario.resx">
       <DependentUpon>ModBeneficiario.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="catastro\ConsultaCatastro.resx">
       <DependentUpon>ConsultaCatastro.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\CatastroMenu.resx">
+      <DependentUpon>CatastroMenu.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="catastro\ModInmueble.resx">
       <DependentUpon>ModInmueble.vb</DependentUpon>
@@ -529,6 +642,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="comercio\BusquedaComercio.resx">
       <DependentUpon>BusquedaComercio.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\ComercioMenu.resx">
+      <DependentUpon>ComercioMenu.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="env\acceso.resx">
       <DependentUpon>acceso.vb</DependentUpon>
@@ -551,11 +667,17 @@
     <EmbeddedResource Include="gobierno\ConsultaOrdenanza.resx">
       <DependentUpon>ConsultaOrdenanza.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\GobiernoMenu.resx">
+      <DependentUpon>GobiernoMenu.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="hacienda\Adelanto\adelanto_page1.resx">
       <DependentUpon>adelanto_page1.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\Adelanto\ModAdelanto.resx">
       <DependentUpon>ModAdelanto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\HaciendaMenu.resx">
+      <DependentUpon>HaciendaMenu.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\reportes\DeudaContribuyente.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -627,11 +749,17 @@
     <EmbeddedResource Include="oprivadas\BusquedaPropietario.resx">
       <DependentUpon>BusquedaPropietario.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\OprivadasMenu.resx">
+      <DependentUpon>OprivadasMenu.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="oprivadas\toolCalculoPlanos.resx">
       <DependentUpon>toolCalculoPlanos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\Adelanto\BusquedaAdelanto.resx">
       <DependentUpon>BusquedaAdelanto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\OpublicasMenu.resx">
+      <DependentUpon>OpublicasMenu.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="opublicas\NotaPedido\BusquedaOrdenTrabajo.resx">
       <DependentUpon>BusquedaOrdenTrabajo.vb</DependentUpon>
@@ -651,6 +779,9 @@
     <EmbeddedResource Include="persona\ModActa.resx">
       <DependentUpon>ModActa.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\PersonaMenu.resx">
+      <DependentUpon>PersonaMenu.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="persona\tabPersona3Contacto.resx">
       <DependentUpon>tabPersona3Contacto.vb</DependentUpon>
@@ -755,6 +886,25 @@
     </EmbeddedResource>
     <EmbeddedResource Include="persona\ModPersona.resx">
       <DependentUpon>ModPersona.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="transito\BusquedaMulta.resx">
+      <DependentUpon>BusquedaMulta.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="transito\ModMulta.resx">
+      <DependentUpon>ModMulta.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="transito\tabMultas3Vehiculo.resx">
+      <DependentUpon>tabMultas3Vehiculo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="transito\tabMultas1Boleta.resx">
+      <DependentUpon>tabMultas1Boleta.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="transito\tabMultas2Persona.resx">
+      <DependentUpon>tabMultas2Persona.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\TransitoMenu.resx">
+      <DependentUpon>TransitoMenu.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

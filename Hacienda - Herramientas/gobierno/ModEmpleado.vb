@@ -55,12 +55,13 @@
         partida.DataSource = Nothing
         bs_partida.DataSource = Nothing
         If bs_rubro.Position > -1 Then
-			Dim dtab As DataTable = DbMan.read("SELECT nombre, partida 
+			Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.foxcon,
+												"SELECT nombre, partida 
 												  FROM hacienda WHERE pertenece='9'
 												   AND anexo='1' AND inciso='1'
 												   AND item='1' AND rubro='" & bs_rubro.Current("rubro") & "'
-												   AND subrubro='01' AND partida>'00' AND subpartida='00'",
-												   My.Settings.foxcon)
+												   AND subrubro='01' AND partida>'00' AND subpartida='00'")
+
 			If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then
                     bs_partida.DataSource = dtab
@@ -76,11 +77,11 @@
         subpartida.DataSource = Nothing
         bs_subpartida.DataSource = Nothing
         If bs_partida.Position > -1 Then
-			Dim dtab As DataTable = DbMan.read("SELECT nombre, subpartida 
+			Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.foxcon, "SELECT nombre, subpartida 
 												  FROM hacienda WHERE pertenece='9' AND anexo='1' AND inciso='1'
 												   AND item ='1' AND rubro='" & bs_rubro.Current("rubro") & "' AND subrubro='01'
-												   AND partida ='" & bs_partida.Current("partida") & "' AND subpartida>'00'",
-												   My.Settings.foxcon)
+												   AND partida ='" & bs_partida.Current("partida") & "' AND subpartida>'00'")
+
 			If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then
                     bs_subpartida.DataSource = dtab
@@ -92,12 +93,12 @@
         End If
     End Sub
     Private Sub cargarJerarquiaPersonal()
-		Dim dtab As DataTable = DbMan.read("SELECT nombre, rubro 
+		Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.foxcon, "SELECT nombre, rubro 
 											  FROM hacienda 
 											 WHERE pertenece='9' AND anexo='1' AND inciso='1' AND item='1'
                                                AND rubro >'00' AND rubro <'03' AND subrubro='00' 
-											   AND partida='00' AND subpartida='00'",
-											   My.Settings.foxcon)
+											   AND partida='00' AND subpartida='00'")
+
 		If dtab Is Nothing = False Then
             If dtab.Rows.Count > 0 Then
                 bs_rubro.DataSource = dtab
@@ -115,9 +116,9 @@
 
         If codigo >= 11899 Or ordenanza_id > 0 Then 'Desde 1-1900
             If ordenanza_id > 0 Then
-				dtab = DbMan.read("SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id, My.Settings.DefaultCon)
+				dtab = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id)
 			Else
-				dtab = DbMan.read("SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo, My.Settings.DefaultCon)
+				dtab = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo)
 			End If
 
             If dtab Is Nothing = False Then

@@ -54,7 +54,7 @@ Public Class BusquedaComercio
 					OleDBCmd.CommandText += " WHERE comcue.pago={}"
 				End If
 
-				dtab = DbMan.read("", My.Settings.foxcon, , , , , , OleDBCmd)
+				dtab = DbMan.read(OleDBCmd, My.Settings.foxcon)
 
 				If dtab.Rows.Count > 0 Then
 					bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(dtab)

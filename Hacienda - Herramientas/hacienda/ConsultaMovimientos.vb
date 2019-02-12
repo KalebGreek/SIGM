@@ -84,10 +84,10 @@
 		Else
 			SQLCriteria = "  WHERE orden>899999999999"
 		End If
-		SQLGrouping = ""
+
 		SQLOrder = " ORDER BY orden"
 
-		Return DbMan.read(SQLSelect & SQLTable & SQLCriteria & SQLGrouping & SQLOrder, My.Settings.foxcon)
+		Return DbMan.read(Nothing, My.Settings.foxcon, SQLSelect, SQLTable, SQLCriteria,,, SQLOrder)
 	End Function
 	Private Function ConsultarMovimientos(ByVal cuenta As Double, ByVal keyword As String,
                                           Filtrado As Boolean, FiltroFecha As Boolean,
@@ -103,14 +103,13 @@
 				SQLCriteria += " AND movimis.detalle LIKE '%" & keyword & "%'"
 			End If
         End If
-        SQLGrouping = ""
 
-		Return DbMan.read(SQLSelect & SQLTable & SQLCriteria & SQLGrouping, My.Settings.foxcon)
+		Return DbMan.read(Nothing, My.Settings.foxcon, SQLSelect, SQLTable, SQLCriteria)
 	End Function
     Private Sub SumarTotales(ingreso As Boolean)
-		Dim dtab As DataTable = DbMan.read("SELECT SUM(movimis.pagado) as total_pagado, movimis.orden, hacienda.autorizado" &
-											SQLTable & SQLCriteria & " GROUP BY movimis.orden, hacienda.autorizado",
-											My.Settings.foxcon)
+		Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.foxcon, "SELECT SUM(movimis.pagado) as total_pagado, movimis.orden, hacienda.autorizado" &
+											SQLTable & SQLCriteria & " GROUP BY movimis.orden, hacienda.autorizado")
+
 
 		info.Text = " - "
 		info2.Text = " - "

@@ -124,14 +124,14 @@
         Next
 
 
-		DbMan.edit(conexion_fox.Text, "UPDATE " & cuenta & " SET " & vence & "=" & pago & " WHERE " & vence & " IS NULL AND " & pago & " IS NOT NULL")
+		DbMan.edit(Nothing, conexion_fox.Text, "UPDATE " & cuenta & " SET " & vence & "=" & pago & " WHERE " & vence & " IS NULL AND " & pago & " IS NOT NULL")
 
         'Si no funciona
 
-        dtab = DbMan.read(conexion_fox.Text, "SELECT codigo, " & periodo & ", " & vence & " WHERE " & vence & " IS NULL FROM " & cuenta)
+        dtab = DbMan.read(Nothing, conexion_fox.Text, "SELECT codigo, " & periodo & ", " & vence & " WHERE " & vence & " IS NULL FROM " & cuenta)
 
 		For Each drow As DataRow In dtab.Rows
-			DbMan.edit(conexion_fox.Text,
+			DbMan.edit(Nothing, conexion_fox.Text,
 					"UPDATE " & cuenta & " SET " & vence & "=#" & Today.Day & "/" & Today.Month & "/" & drow(periodo) & "#
                     WHERE codigo=" & drow("codigo") & " AND " & vence & " IS NULL")
 		Next
@@ -140,8 +140,8 @@
     Public Sub cargar_tablas_ext()
         Dim dtab_ext As New DataTable
         dtab_ext.Locale = System.Globalization.CultureInfo.CurrentCulture
-		dtab_ext = DbMan.read("SELECT * FROM tablas_externas WHERE personas='aguas'",
-							   My.Settings.DefaultCon)
+		dtab_ext = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE personas='aguas'")
+
 		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS AGUA ##########################################################
             agua_personas.Text = dtab_ext(0)("personas")
@@ -152,8 +152,8 @@
 			agua_zonas.Text = dtab_ext(0)("zona")
         End If
 
-		dtab_ext = DbMan.read("SELECT * FROM tablas_externas WHERE  personas='automovil'",
-							   My.Settings.DefaultCon)
+		dtab_ext = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE  personas='automovil'")
+
 		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS AUTO ##########################################################
             auto_personas.Text = dtab_ext(0)("personas")
@@ -162,8 +162,8 @@
 			auto_tipo.Text = dtab_ext(0)("tipo")
         End If
 
-		dtab_ext = DbMan.read("SELECT * FROM tablas_externas WHERE  personas='catastro'",
-							   My.Settings.DefaultCon)
+		dtab_ext = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE  personas='catastro'")
+
 		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS CATA ##########################################################
             cata_personas.Text = dtab_ext(0)("personas")
@@ -173,8 +173,8 @@
 			cata_zonas.Text = dtab_ext(0)("zona")
         End If
 
-		dtab_ext = DbMan.read("SELECT * FROM tablas_externas WHERE  personas='comercio'",
-							   My.Settings.DefaultCon)
+		dtab_ext = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE  personas='comercio'")
+
 		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS COME ##########################################################
             come_personas.Text = dtab_ext(0)("personas")
@@ -185,7 +185,8 @@
 			come_actividades.Text = dtab_ext(0)("actividad")
         End If
 
-		dtab_ext = DbMan.read("SELECT * FROM tablas_externas WHERE  personas='sepelio'", My.Settings.DefaultCon)
+		dtab_ext = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE  personas='sepelio'")
+
 		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS SEPE ##########################################################
             sepe_personas.Text = dtab_ext(0)("personas")
@@ -194,7 +195,7 @@
 			sepe_variables.Text = dtab_ext(0)("variables")
 			sepe_muertos.Text = dtab_ext(0)("muertos")
 		End If
-    End Sub
+	End Sub
 
 	Private Sub ImportarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportarToolStripMenuItem.Click
 		'>> Ventana de importacion de base de datos
@@ -207,10 +208,10 @@
 		'Genera log de acciones sobre bd de destino
 
 		Dim visor As New genDataVisor
-		visor.LoadDtab(DbMan.readTables())
+		visor.LoadDtab(DbMan.readTableSchema())
 		visor.ShowDialog()
-		Dim sourceTables As DataTable = DbMan.readTables()
-		Dim destTables As DataTable = DbMan.readTables()
+		Dim sourceTables As DataTable = DbMan.readTableSchema()
+		Dim destTables As DataTable = DbMan.readTableSchema()
 		For Each dr As DataRow In destTables.Rows
 			If dr("TABLE_TYPE") = "TABLE" Then
 				destTables.Rows.Find(dr("TABLE_NAME"))

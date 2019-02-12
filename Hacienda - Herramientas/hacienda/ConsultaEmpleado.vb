@@ -56,22 +56,8 @@
     End Sub
     Private Sub buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
         grupo_mod.Enabled = False
-        ' If filtro.SelectedIndex > -1 Then
-        ' If KeyCodigo.Visible And Val(Microsoft.VisualBasic.Left(KeyCodigo.Text, 4)) > 0 _
-        ' And Val(Microsoft.VisualBasic.Right(KeyCodigo.Text, 4)) > 1899 Then
-        ' sel_sql = " WHERE codigo=" & Val(KeyCodigo.Text)
-        ' Me.Text = "Buscar Ordenanza | " & _
-        '          Microsoft.VisualBasic.Left(KeyCodigo.Text, Len(KeyCodigo.Text) - 4) & "/" & Microsoft.VisualBasic.Right(KeyCodigo.Text, 4)
-        ' ElseIf KeyFecha.Visible Then
-        '  sel_sql = " WHERE fecha=" & KeyFecha.Text
-        '    Me.Text = "Buscar Ordenanza | " & KeyFecha.Text
-        ' ElseIf KeyRazon.Visible And Len(KeyRazon.Text) > 3 Then
-        '    sel_sql = " WHERE concepto LIKE " & KeyRazon.Text
-        '    Me.Text = "Buscar Ordenanza | " & KeyRazon.Text
-        ' End If
-        'End If
 
-        Dim dtab As DataTable = DbMan.read("SELECT * FROM ordenanza", My.Settings.DefaultCon)
+		Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM ordenanza")
 		If dtab Is Nothing = False Then
 			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", dtab)
 			If dtab.Rows.Count = 0 Then
@@ -116,7 +102,7 @@
         With bs_consulta
             If .Position > -1 Then
                 If MsgBoxResult.Yes = MsgBox("¿Desea eliminar el registro seleccionado?", MsgBoxStyle.YesNo, "Eliminar registro") Then
-					DbMan.edit(  "DELETE * FROM ordenanza WHERE id=" & .Current("id"))
+					DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE * FROM ordenanza WHERE id=" & .Current("id"))
 					buscar.PerformClick()
                 End If
             End If

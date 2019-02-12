@@ -1,7 +1,7 @@
 ﻿Public Class ParamReporte
 
     'Genericos 
-    Shared Function Persona(dr As DataRow, parametros As Generic.List(Of ReportParameter)) As Generic.List(Of ReportParameter)
+    Shared Function Persona(dr As DataRow, parametros As List(Of ReportParameter)) As List(Of ReportParameter)
 		With parametros
 			.Add(New ReportParameter("persona_id", dr("persona_id").ToString))
 			.Add(New ReportParameter("razon", dr("razon").ToString))
@@ -9,7 +9,7 @@
 		End With
 		Return parametros
 	End Function
-	Shared Function Domicilio(dr As DataRow, parametros As Generic.List(Of ReportParameter)) As Generic.List(Of ReportParameter)
+	Shared Function Domicilio(dr As DataRow, parametros As List(Of ReportParameter)) As List(Of ReportParameter)
 		With parametros
 			.Add(New ReportParameter("calle", dr("calle").ToString))
 			.Add(New ReportParameter("altura", dr("altura").ToString))
@@ -21,14 +21,14 @@
 		End With
 		Return parametros
 	End Function
-	Shared Function Contacto(dr As DataRow, parametros As Generic.List(Of ReportParameter))
+	Shared Function Contacto(dr As DataRow, parametros As Generic.List(Of ReportParameter)) As List(Of ReportParameter)
 		With parametros
 			.Add(New ReportParameter("telefono", dr("telefono").ToString))
 			.Add(New ReportParameter("email", dr("email").ToString))
 		End With
 		Return parametros
 	End Function
-	Shared Function Inmueble(dr As DataRow, parametros As Generic.List(Of ReportParameter))
+	Shared Function Inmueble(dr As DataRow, parametros As Generic.List(Of ReportParameter)) As List(Of ReportParameter)
 		With parametros
 			.Add(New ReportParameter("Catastro", dr("catastro").ToString))
 			.Add(New ReportParameter("UbicacionInmueble", dr("ubicacion").ToString))
@@ -39,7 +39,7 @@
 	End Function
 
 	'Exclusivos
-	Shared Function Agua(dr As DataRow, parametros As Generic.List(Of ReportParameter))
+	Shared Function Agua(dr As DataRow, parametros As Generic.List(Of ReportParameter)) As List(Of ReportParameter)
 		With parametros
             'Persona
             .Add(New ReportParameter("Razon", dr("razon").ToString))
@@ -69,7 +69,7 @@
 		End With
 		Return parametros
 	End Function
-	Shared Function Automotor(dr As DataRow, parametros As Generic.List(Of ReportParameter), SinBaja As Boolean)
+	Shared Function Automotor(dr As DataRow, parametros As Generic.List(Of ReportParameter), SinBaja As Boolean) As List(Of ReportParameter)
 		With parametros
 			If SinBaja Then
 				.Add(New ReportParameter("TITULO", "CERTIFICADO DE LIBRE DEUDA DE IMPUESTO AL AUTOMOTOR"))
@@ -102,7 +102,7 @@
 		End With
 		Return parametros
 	End Function
-	Shared Function Catastro(dr As DataRow, parametros As Generic.List(Of ReportParameter))
+	Shared Function Catastro(dr As DataRow, parametros As Generic.List(Of ReportParameter)) As List(Of ReportParameter)
 		With parametros
 			'Persona
 			.Add(New ReportParameter("Razon", dr("razon").ToString))
@@ -139,7 +139,7 @@
 		End With
 		Return parametros
 	End Function
-	Shared Function Cementerio(dr As DataRow, parametros As Generic.List(Of ReportParameter))
+	Shared Function Cementerio(dr As DataRow, parametros As Generic.List(Of ReportParameter)) As List(Of ReportParameter)
 		With parametros
             'Persona
             .Add(New ReportParameter("Razon", dr("razon").ToString))
@@ -180,7 +180,7 @@
 		End With
 		Return parametros
 	End Function
-	Shared Function Comercio(dr As DataRow, parametros As Generic.List(Of ReportParameter))
+	Shared Function Comercio(dr As DataRow, parametros As Generic.List(Of ReportParameter)) As List(Of ReportParameter)
 		With parametros
             'Persona
             .Add(New ReportParameter("Razon", dr("razon").ToString))

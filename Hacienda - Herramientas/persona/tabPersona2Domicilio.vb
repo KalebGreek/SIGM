@@ -10,10 +10,9 @@
 	Public Sub cargar(persona_id As Integer)
 		'Cargar domicilios
 		Dim dtab As DataTable = Domicilio.Listar(persona_id)
-		Dim principal As DomicilioPage
+		Dim principal As New DomicilioPage(0)
 		For Each dr As DataRow In dtab.Rows
-			Dim TabDom As New DomicilioPage _
-						 (TabControl1.TabCount + 1)
+			Dim TabDom As New DomicilioPage(TabControl1.TabCount + 1)
 			TabDom.cargar(dr)
 			TabControl1.TabPages.Add(TabDom)
 			If dr("principal") Then

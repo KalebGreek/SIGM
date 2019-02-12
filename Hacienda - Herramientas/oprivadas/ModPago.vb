@@ -20,7 +20,7 @@
     End Sub
     Private Sub ConsultarDeudas()
         If Me.Visible Then
-			visor = CtrlMan.LoadDataGridView(visor, bs_pago, Pagos.Consultar(opr_id.Text, solo_deuda.Checked))
+			visor = CtrlMan.LoadDataGridView(visor, bs_pago, "", Pagos.Consultar(opr_id.Text, solo_deuda.Checked))
 		End If
     End Sub
 

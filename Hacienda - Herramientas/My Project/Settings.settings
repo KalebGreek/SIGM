@@ -17,7 +17,7 @@
       <Value Profile="(Default)">Provider=PostgreSQL.1;Data Source=\\MALINGUNVILA;Location=sigmDB;User ID=admin;Password=hf32n64;</Value>
     </Setting>
     <Setting Name="adbcon" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.12.0;Data Source=vrosas.accdb</Value>
+      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.16.0;Data Source=vrosas.accdb</Value>
     </Setting>
     <Setting Name="foxcon" Type="System.String" Scope="User">
       <Value Profile="(Default)">Provider=vfpoledb.1;Data Source=z:\datos</Value>
@@ -40,7 +40,7 @@
       <Value Profile="(Default)">Provider=PostgreSQL OLE DB Provider;Data Source=\\malingunvila;Location=vrosas;User ID=sigm;password=sigm2013;</Value>
     </Setting>
     <Setting Name="DefaultCon" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.12.0;Data Source=vrosas.accdb</Value>
+      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.16.0;Data Source=vrosas.accdb</Value>
     </Setting>
     <Setting Name="DocFolderHacienda" Type="System.String" Scope="User">
       <Value Profile="(Default)">\HACIENDA\</Value>
@@ -73,6 +73,9 @@
   &lt;ProviderName&gt;System.Data.OleDb&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Provider=VFPOLEDB.1;Data Source=z:\datos</Value>
+    </Setting>
+    <Setting Name="CurrentMenuColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Color.DimGray</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -6,43 +6,21 @@
 								" LEFT JOIN localidades ON per_domicilio.localidad_id = localidades.id" &
 								" WHERE per_domicilio.principal=True"
 
+	Shared Function Seleccionar(ParentForm As Form) As BindingSource
+		Dim SeleccionarPersona As New BusquedaPersona
+		SeleccionarPersona.genSearchControl1.vista.SelectedIndex = 0
+		SeleccionarPersona.genSearchControl1.selectRow.Visible = True
+		SeleccionarPersona.genSearchControl1.cancel.Visible = True
+		SeleccionarPersona.ShowDialog(ParentForm)
 
-
-	'Shared Function Consultar(vista As String, filtro As String, keyword As String, difunto As Boolean, fisica As Boolean) As DataTable
-	'	Dim dtab_result As New DataTable
-
-	'	If vista.Contains("PERSONA") Then
-	'		If filtro.Contains("RAZON SOCIAL") Then
-	'			dtab_result = razon(keyword, difunto, fisica)
-	'		ElseIf filtro.Contains("CUIL/DNI") Then
-	'			dtab_result = cuil(Val(keyword), difunto, fisica)
-	'		ElseIf filtro.Contains("DIRECCION") Then
-	'			dtab_result = direccion(keyword, Val(keyword), 0, difunto, fisica)
-	'		ElseIf filtro.Contains("LOCALIDAD") Then
-	'			dtab_result = direccion("", 0, Val(keyword), difunto, fisica)
-	'		ElseIf filtro.Contains("ID") Then
-	'			dtab_result = id(Val(keyword), difunto, fisica)
-	'		End If
-
-	'	ElseIf vista.Contains("EMPLEADO") Then
-
-	'		dtab_result = Empleado.BuscarPorPersona(keyword, difunto)
-
-	'	ElseIf vista.Contains("PROFESIONAL") Then
-	'		dtab_result = Profesional.BuscarPorPersona(Val(keyword), Val(keyword),
-	'									  Trim(keyword))
-
-	'	ElseIf vista.Contains("PROVEEDOR") Then
-	'		dtab_result = Proveedor.BuscarPorPersona(keyword, difunto, fisica)
-	'	End If
-	'	Return dtab_result
-	'	End Function
+		Return SeleccionarPersona.bs_resultado
+	End Function
 
 	Shared Function Buscar(difunto As Boolean, fisica As Boolean) As DataTable
 		Dim sql As String = PersonaSQL
 		sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
 		sql += " ORDER By Persona.razon ASC"
-		Return DbMan.read(sql, My.Settings.DefaultCon)
+		Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
 	End Function
 
 	'Shared Function id(persona_id As Integer, difunto As Boolean, fisica As Boolean) As DataTable
@@ -54,7 +32,7 @@
 	'	End If
 
 	'	sql += " ORDER By Persona.razon ASC"
-	'	Return DbMan.read(sql, My.Settings.DefaultCon)
+	'	Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
 	'End Function
 	'Shared Function cuil(persona_cuil As Double, difunto As Boolean, fisica As Boolean) As DataTable
 	'	Dim sql As String = PersonaSQL
@@ -65,7 +43,7 @@
 	'	End If
 
 	'	sql += " ORDER By Persona.razon ASC"
-	'	Return DbMan.read(sql, My.Settings.DefaultCon)
+	'	Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
 	'End Function
 	'Shared Function razon(persona_razon As String, difunto As Boolean, fisica As Boolean) As DataTable
 
@@ -78,7 +56,7 @@
 	'	End If
 
 	'	sql += " ORDER By Persona.razon ASC"
-	'	Return DbMan.read(sql, My.Settings.DefaultCon)
+	'	Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
 	'End Function
 	'Shared Function direccion(calle As String, altura As Integer, localidad_id As Integer,
 	'									 difunto As Boolean, fisica As Boolean) As DataTable
@@ -95,7 +73,7 @@
 
 	'	sql += " ORDER By Per_domicilio.calle ASC"
 
-	'	Return DbMan.read(sql, My.Settings.DefaultCon)
+	'	Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
 	'End Function
 
 	'Registros para ModPersona
@@ -109,7 +87,7 @@
 		TabAdicional.cargar(persona_id)
 	End Sub
 	Shared Function Nueva(razon As String, cuil As Double, fisica As Boolean,
-							  email As String, telefono As String, difunto As Boolean, Optional ruta_defuncion As String = "")
+							  email As String, telefono As String, difunto As Boolean, Optional ruta_defuncion As String = "") As String
 		Dim sql As String
 		sql = "INSERT INTO persona(razon, cuil, email, telefono, 
 									   difunto, ruta_defuncion, fisica)
@@ -119,7 +97,7 @@
 		Return sql
 	End Function
 	Shared Function Modificar(persona_id As Integer, razon As String, cuil As Double, fisica As Boolean,
-								  email As String, telefono As String, difunto As Boolean, Optional ruta_defuncion As String = "")
+								  email As String, telefono As String, difunto As Boolean, Optional ruta_defuncion As String = "") As String
 		Dim sql As String
 		sql = "UPDATE persona Set razon='" & razon & "', email='" & email & "', telefono=" & telefono & "," &
 			  " difunto = " & difunto & ", ruta_defuncion='" & ruta_defuncion & "', cuil='" & cuil & "', fisica=" & fisica
@@ -197,7 +175,8 @@
 			Return False
 		Else
 			'documentos
-			dtab_con = DbMan.read("SELECT descripcion, ruta FROM per_documento WHERE per_id=" & persona_id, My.Settings.DefaultCon)
+			dtab_con = DbMan.read(Nothing, My.Settings.DefaultCon,
+									"SELECT descripcion, ruta FROM per_documento WHERE per_id=" & persona_id)
 			If dtab_con.Rows.Count > 0 Then
 				msg.Add("Los siguientes documentos seran eliminados del registro junto con la persona seleccionada: ")
 				For fila As Integer = 0 To dtab_con.Rows.Count - 1
@@ -210,8 +189,8 @@
 
 			Dim errormsg As New visor_error("Eliminar persona", msg)
 			If errormsg.ShowDialog() = DialogResult.OK Then
-				DbMan.edit("DELETE FROM per_documento WHERE per_id=" & persona_id)
-				DbMan.edit("DELETE FROM persona WHERE id=" & persona_id)
+				DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE FROM per_documento WHERE per_id=" & persona_id)
+				DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE FROM persona WHERE id=" & persona_id)
 				Return True
 			Else
 				Return False
@@ -220,7 +199,7 @@
 	End Function
 
 	'Varios
-	Shared Function CalcularCuil(dni As String, gen As String)
+	Shared Function CalcularCuil(dni As String, gen As String) As Integer
         'Variables de cálculo de CUIL
         Dim pos, var(10), result As Integer
 

@@ -38,9 +38,9 @@
 			sql = ""
 		End If
 		Return sql
-	End Function
+	End Function 'Unused
 
-	Function readTables(Optional constr As String = "") As DataTable
+	Function readTableSchema(Optional constr As String = "") As DataTable
 		If constr = "" Then
 			constr = My.Settings.DefaultCon
 		End If
@@ -52,11 +52,10 @@
 		olecon.Close()
 		Return schemaTable
 	End Function
-	Function read(ByVal sqlSelect As String, constr As String,
-				  Optional sqlFrom As String = "", Optional sqlWhere As String = "",
-				  Optional sqlGroupBy As String = "", Optional sqlHaving As String = "",
-				  Optional sqlOrderBy As String = "",
-				  Optional OleDBProcedure As OleDb.OleDbCommand = Nothing)
+	Function read(OleDBProcedure As OleDb.OleDbCommand, constr As String,
+				  Optional sqlSelect As String = "", Optional sqlFrom As String = "",
+				  Optional sqlWhere As String = "", Optional sqlGroupBy As String = "",
+				  Optional sqlHaving As String = "", Optional sqlOrderBy As String = "") As DataTable
 
 		Dim dtab As New DataTable
 		Dim errorMsg As String = ""
@@ -69,7 +68,7 @@
 				OleDBProcedure.CommandType = CommandType.StoredProcedure
 			End If
 		ElseIf sqlSelect <> "" Then
-				OleDBProcedure = New OleDb.OleDbCommand
+			OleDBProcedure = New OleDb.OleDbCommand
 			OleDBProcedure.CommandType = CommandType.Text
 			OleDBProcedure.CommandText = sqlSelect
 			'Additional query options
@@ -93,6 +92,7 @@
 				OleDBProcedure.CommandText &= ";"
 			End If
 		End If
+
 		dada.SelectCommand = OleDBProcedure
 
 		If dada.SelectCommand Is Nothing = False Then
@@ -142,25 +142,32 @@
 		End If
 
 		If errorMsg <> "" Then
-			errorMsg &= Chr(13) & "Conexion:" & olecon.ToString
-			MsgBox(errorMsg, MsgBoxStyle.Exclamation)
-			Return Nothing
-		Else
-			Return dtab
+			dtab.Columns.Add("[ERROR]")
+			dtab.Rows.Add(errorMsg)
+			dtab.Rows.Add("Conexion:")
+			dtab.Rows.Add(olecon.ConnectionString)
+			If OleDBProcedure.CommandType = CommandType.Text Then
+				dtab.Rows.Add("Consulta:")
+			Else
+				dtab.Rows.Add("Procedimiento:")
+			End If
+			dtab.Rows.Add(OleDBProcedure.CommandText)
 		End If
+		Return dtab
+
 	End Function
 
-	Function GenerateReportDataset(ByVal sql As String, Optional OleDBProcedure As OleDb.OleDbCommand = Nothing) As DataSet
+	Function GenerateReportDataset(OleDBProcedure As OleDb.OleDbCommand) As DataSet
 		Dim ds As New DataSet
-		ds.Tables.Add(DbMan.read(sql, My.Settings.DefaultCon))
+		ds.Tables.Add(DbMan.read(OleDBProcedure, My.Settings.DefaultCon))
 		Return ds
 	End Function
 
 	'###### END READ ############################################################################################
 
 	'###### SAVE: Rutinas para grabar registros #################################################################
-	Function edit(ByVal sql As String, Optional ByVal constr As String = Nothing,
-				  Optional OleDBProcedure As OleDb.OleDbCommand = Nothing) As String
+	Function edit(OleDBProcedure As OleDb.OleDbCommand, Optional ByVal constr As String = Nothing,
+				  Optional sql As String = "") As String
 		Dim result As String = ""
 		'Para conectarse a la bd en modo de inserción
 		'Se necesita convertir el string a un objeto ConnectionString
@@ -182,7 +189,7 @@
 			olecon.Open()
 			Try
 				Dim RowsAffected As Int32 = OleDBProcedure.ExecuteNonQuery()
-				result = RowsAffected & " filas afectadas."
+				result = RowsAffected
 			Catch e As Exception
 				result = e.ToString
 			End Try

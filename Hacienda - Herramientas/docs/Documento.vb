@@ -16,7 +16,7 @@
     'My.Settings.DocFolderPersona As String = "\PERSONA\"
 
     Public Class Persona
-		Shared Function BuscarDoc(persona_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
+		Shared Function BuscarDoc(persona_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
 			SQLTable = " FROM per_documento"
 
 			SQLCriteria = " WHERE persona_id=" & persona_id
@@ -34,12 +34,11 @@
 			Return cuil & destino
 		End Function
 		Shared Function CopiaActa(ByVal persona_id As Integer, ByVal acta As String, ByVal libro As String) As String
-			Dim dtab As DataTable = DbMan.read("SELECT cuil, razon FROM persona WHERE id=" & persona_id,
-												My.Settings.DefaultCon)
+			Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT cuil, razon FROM persona WHERE id=" & persona_id)
 			If dtab.Rows.Count > 0 Then
 				If acta > 0 And libro > 0 Then
-					Dim dtab_acta = DbMan.read("SELECT * FROM actas WHERE acta=" & acta & " AND libro=" & libro,
-												My.Settings.DefaultCon)
+					Dim dtab_acta = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM actas WHERE acta=" & acta & " AND libro=" & libro)
+
 					If dtab.Rows.Count > 0 Then
 						If dtab_acta(0)("per_id") <> persona_id Then
 							MsgBox("El acta N." & acta & " del libro N." & libro & " no corresponde a " & dtab(0)("razon"))
@@ -69,7 +68,7 @@
 		End Function
 	End Class
 	Public Class Catastro
-		Shared Function BuscarDoc(catastro_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
+		Shared Function BuscarDoc(catastro_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
 			SQLTable = " FROM cat_documento"
 
 			SQLCriteria = " WHERE catastro_id=" & catastro_id
@@ -79,7 +78,7 @@
 
 			Return ConsultarHistorial(solo_ruta)
 		End Function
-		Shared Function CargarCopia(TipoArchivo As String, cat As String)
+		Shared Function CargarCopia(TipoArchivo As String, cat As String) As String
 			Dim ruta As String = ""
 			If Len(cat) > 0 Then 'Catastro
                 If TipoArchivo = "DONACION DE CALLE" Then
@@ -115,7 +114,7 @@
 		End Function
 	End Class
 	Public Class Comercio
-		Shared Function BuscarDoc(id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
+		Shared Function BuscarDoc(id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
 			SQLTable = " FROM com_documento"
 
 			SQLCriteria = " WHERE com_id=" & id
@@ -139,7 +138,7 @@
 		End Function
 	End Class
 	Public Class Hacienda
-		Shared Function BuscarDoc(id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
+		Shared Function BuscarDoc(id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
 			SQLTable = " FROM hac_documento"
 			SQLCriteria = " WHERE =" & id
 			If tipo_archivo <> "" Then
@@ -150,7 +149,7 @@
 		End Function
 	End Class
 	Public Class OPrivadas
-		Shared Function BuscarDoc(opr_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False)
+		Shared Function BuscarDoc(opr_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
 			SQLTable = " FROM opr_documento"
 
 			SQLCriteria = " WHERE opr_id=" & opr_id
@@ -160,6 +159,7 @@
 
 			Return ConsultarHistorial(solo_ruta)
 		End Function
+
 		Shared Function CargarFinalObra(opr_id As Integer, exp As String) As String
 			'Muestra diálogo de búsqueda
 			If Cargar(My.Settings.DocFolderOprivadas & exp, destino, titulo, False) Then
@@ -175,9 +175,8 @@
 
 
 
-	Private Shared Function ConsultarHistorial(RutaDoc As Boolean)
-		Dim dtab As DataTable = DbMan.read(SQLSelect & SQLTable & SQLCriteria & SQLGrouping,
-										   My.Settings.DefaultCon)
+	Private Shared Function ConsultarHistorial(RutaDoc As Boolean) As Object
+		Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
 
 		If RutaDoc Then
 			Return dtab(0)("ruta").ToString
@@ -245,25 +244,24 @@
 		'Guarda una ruta de documento en una tabla
 		'Todas las tablas de documentos deben contener las mismas columnas:
 		'FOO_ID, FECHA, DESCRIPCION, RUTA
-		Dim dtab As DataTable = DbMan.read("SELECT * FROM " & tabla & " 
-											WHERE " & col_id & "=" & id & " AND descripcion='" & descripcion & "'",
-											My.Settings.DefaultCon)
+		Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM " & tabla & " 
+																			WHERE " & col_id & "=" & id & " AND descripcion='" & descripcion & "'")
 
 		If dtab.Rows.Count > 0 Then
 			For Each dr As DataRow In dtab.Rows
-				DbMan.edit("UPDATE " & tabla & " SET fecha='" & fecha.ToShortDateString & "', ruta='" & ruta & "'
-							 WHERE " & col_id & "=" & id & " AND  descripcion='" & descripcion & "'")
+				DbMan.edit(Nothing, My.Settings.DefaultCon, "UPDATE " & tabla & " SET fecha='" & fecha.ToShortDateString & "', ruta='" & ruta & "'
+															WHERE " & col_id & "=" & id & " AND  descripcion='" & descripcion & "'")
 			Next
 		Else
-			DbMan.edit("INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)
-				VALUES(" & id & ", #" & fecha & "# ,'" & descripcion & "', '" & ruta & "')")
+			DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)
+														VALUES(" & id & ", #" & fecha & "# ,'" & descripcion & "', '" & ruta & "')")
 		End If
 	End Sub
 	Overloads Shared Sub Guardar(lista As BindingSource, tabla As String, col_id As String, id As Integer)
 		'Guarda una lista de rutas de documento a una tabla
 		With lista
 			For Each dr As DataRow In lista.DataSource.Rows
-				DbMan.edit("INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)" &
+				DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)" &
 						  " VALUES(" & id & ", #" & dr("fecha") & "# ,'" & dr("descripcion") & "'," &
 						  " '" & dr("ruta") & "')")
 			Next
@@ -274,6 +272,6 @@
 		If tipo_archivo <> "" Then
 			sql += " AND descripcion='" & tipo_archivo & "'"
 		End If
-		DbMan.edit(sql)
+		DbMan.edit(Nothing, My.Settings.DefaultCon, sql)
 	End Sub
 End Class

@@ -10,9 +10,10 @@
 		CargarBeneficiario(beneficiario_id.Text)
 	End Sub
 	Private Sub CargarBeneficiario(persona_id As Integer)
-		DbMan.read("SELECT * FROM persona 
+		DbMan.read(Nothing, My.Settings.DefaultCon,
+					"SELECT * FROM persona 
 					INNER JOIN beneficiario ON persona.id=beneficiario.persona_id
-					WHERE beneficiario.id=" & beneficiario_id.Text, My.Settings.DefaultCon)
+					WHERE beneficiario.id=" & beneficiario_id.Text)
 	End Sub
 	Private Sub GuardarBeneficiario()
 		If Me.Visible Then

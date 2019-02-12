@@ -47,7 +47,7 @@
 			sqlFrom = "FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
 			sqlWhere = "WHERE codigo=" & cuenta
 		End If
-		Return DbMan.read(sqlSelect, My.Settings.foxcon, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
+		Return DbMan.read(Nothing, My.Settings.foxcon, sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
 	End Function
 
 	'Events

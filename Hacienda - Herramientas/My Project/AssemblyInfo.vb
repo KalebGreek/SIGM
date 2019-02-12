@@ -14,7 +14,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("")> 
 <Assembly: AssemblyProduct("Sistema Integral de Gestión Municipal")>
-<Assembly: AssemblyCopyright("©  2017")>
+<Assembly: AssemblyCopyright("©  2019")>
 <Assembly: AssemblyTrademark("SIGM")> 
 
 <Assembly: ComVisible(False)> 

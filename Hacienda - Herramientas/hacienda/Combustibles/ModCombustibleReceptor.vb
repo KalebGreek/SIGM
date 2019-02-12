@@ -35,7 +35,7 @@ Public Class ModCombustibleReceptor
 				Dim pos As Integer = bs_responsable.Find("persona_id", .Current("persona_id"))
 				If pos < 0 Then
 
-					DbMan.edit("INSERT INTO hac_combustible_responsable(receptor_id, persona_id) 
+					DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO hac_combustible_responsable(receptor_id, persona_id) 
 															 VALUES(" & receptor_id.Text & ", 
 																	" & .Current("persona_id") & ")")
 
@@ -53,11 +53,12 @@ Public Class ModCombustibleReceptor
 
 				Dim delete_id As Integer = bs_responsable.Current("responsable_id")
 
-				DbMan.edit("DELETE * FROM hac_combustible_responsable WHERE id=" & delete_id)
+				DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE * FROM hac_combustible_responsable WHERE id=" & delete_id)
 
 				Combustible.Responsable.Fill(bs_responsable, responsable, receptor_id.Text)
 
-				DbMan.edit("UPDATE hac_combustible_ticket
+				DbMan.edit(Nothing, My.Settings.DefaultCon,
+						   "UPDATE hac_combustible_ticket
 							   SET responsable_id=" & bs_responsable(0)("responsable_id") &
 						   " WHERE responsable_id=" & delete_id)
 
@@ -82,8 +83,9 @@ Public Class ModCombustibleReceptor
 			nueva_cat = Trim(nueva_cat)
 			If Len(nueva_cat) > 2 Then
 				vehiculo = (MsgBoxResult.Yes = MsgBox("Esta categoria incluye vehiculos?", MsgBoxStyle.YesNo))
-				DbMan.edit("INSERT INTO hac_combustible_categoria_receptor(detalle, vehiculo) 
-														 VALUES(" & nueva_cat & ", " & vehiculo & ")")
+				DbMan.edit(Nothing, My.Settings.DefaultCon,
+				"INSERT INTO hac_combustible_categoria_receptor(detalle, vehiculo) 
+					  VALUES(" & nueva_cat & ", " & vehiculo & ")")
 			End If
 		End If
 	End Sub
@@ -96,14 +98,15 @@ Public Class ModCombustibleReceptor
 											  MsgBoxStyle.YesNo) Then
 
 					If vehiculo.Checked Then
-						DbMan.edit("UPDATE hac_combustible_receptor SET categoria_id=1 
+						DbMan.edit(Nothing, My.Settings.DefaultCon, "UPDATE hac_combustible_receptor SET categoria_id=1 
 															WHERE categoria_id=" & categoria.SelectedValue)
 					Else
-						DbMan.edit("UPDATE hac_combustible_receptor SET categoria_id=9 
+						DbMan.edit(Nothing, My.Settings.DefaultCon, "UPDATE hac_combustible_receptor SET categoria_id=9 
 															WHERE categoria_id=" & categoria.SelectedValue)
 					End If
 
-					DbMan.edit("DELETE * FROM hac_combustible_categoria_receptor WHERE id=" & categoria.SelectedValue)
+					DbMan.edit(Nothing, My.Settings.DefaultCon,
+								"DELETE * FROM hac_combustible_categoria_receptor WHERE id=" & categoria.SelectedValue)
 
 				End If
 			End If
@@ -128,7 +131,8 @@ Public Class ModCombustibleReceptor
 		If CtrlMan.Validate(Me) Then
 			If MsgBoxResult.Yes = MsgBox("Desea guardar este receptor?", MsgBoxStyle.YesNo, "Guardar Ticket") Then
 				If receptor_id.Text > 0 Then
-					DbMan.edit("UPDATE hac_combustible_receptor
+					DbMan.edit(Nothing, My.Settings.DefaultCon,
+							   "UPDATE hac_combustible_receptor
 								   SET cuenta=" & cuenta.SelectedValue & ", categoria_id=" & categoria.SelectedValue & ",
 									   marca='" & marca.Text & "', mercosur=" & mercosur.Checked & ", 
 									   dominio='" & dominio.Text & "', modelo=" & modelo.Value & ", 
@@ -138,18 +142,20 @@ Public Class ModCombustibleReceptor
 
 					saved = True
 				ElseIf receptor_id.Text = 0 Then
-					DbMan.edit("INSERT INTO hac_combustible_receptor(cuenta, categoria_id, marca,
-																				mercosur, dominio,
-																				modelo, alta,
-																				observaciones)
+					DbMan.edit(Nothing, My.Settings.DefaultCon,
+								"INSERT INTO hac_combustible_receptor(cuenta, categoria_id, marca,
+																	  mercosur, dominio,
+																	  modelo, alta,
+																	  observaciones)
 															  VALUES(" & cuenta.SelectedValue & ", 
 																	 " & categoria.SelectedValue & ", '" & marca.Text & "',	
 																	 " & mercosur.Checked & ", '" & dominio.Text & "', 
 																	 " & modelo.Value & ", #" & fecha_alta & "#,
 																	  '" & observaciones.Text & "')")
 
-					Dim dtab As DataTable = DbMan.read("SELECT id FROM hac_combustible_receptor ORDER BY id ASC",
-														My.Settings.DefaultCon)
+					Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon,
+														"SELECT id FROM hac_combustible_receptor ORDER BY id ASC")
+
 					receptor_id.Text = dtab(0)("id")
 					saved = True
 				End If

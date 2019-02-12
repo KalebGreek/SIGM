@@ -17,11 +17,11 @@
 	Sub tablas_fox(ByVal impuesto As String)
         'Las tablas correspondientes a personas tienen los nombres correctos
         Dim dtab _
-		As DataTable = DbMan.read("SELECT * FROM tablas_externas WHERE personas='" & impuesto & "'",
-								   My.Settings.DefaultCon)
+		As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE personas='" & impuesto & "'")
 
-        'Tablas generales
-        ext_persona = dtab(0)("personas").ToString
+
+		'Tablas generales
+		ext_persona = dtab(0)("personas").ToString
 		ext_cuenta = dtab(0)("cuentas").ToString
 
 		If impuesto.Contains("AGUA") Then 'AGUA
@@ -90,12 +90,7 @@
 		Else
 			System.Windows.Forms.Application.CurrentCulture = New System.Globalization.CultureInfo("ES-AR")
 		End If
-        'Agregar usuario a contenedor
-        If instancia.IsMdiContainer Then
-			If TypeOf instancia Is MainForm Then
-				'CType(instancia, FormContenedorGen).user_id.Text = user_id
-			End If
-		End If
+
 		'Apenas termino de configurar bien postgres esto va a pasar a
 		'cargar la conexión de Access y dejar Postgres como estándar
 		If instancia Is acceso Then
@@ -106,15 +101,14 @@
 
 		Dim dtab_con As New DataTable
         '### CONEXION FOX
-        dtab_con = DbMan.read("SELECT * FROM opciones WHERE opcion='conexion_fox'",
-							   My.Settings.DefaultCon)
+        dtab_con = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM opciones WHERE opcion='conexion_fox'")
 
 		If dtab_con.Rows.Count > 0 Then
 			My.Settings.foxcon = dtab_con(0)("valor")
 		End If
         '### CONEXION PSQL
-        dtab_con = DbMan.read("SELECT * FROM opciones WHERE opcion='conexion_sql'",
-							   My.Settings.DefaultCon)
+        dtab_con = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM opciones WHERE opcion='conexion_sql'")
+
 		If dtab_con.Rows.Count > 0 Then
 			My.Settings.pgsqlcon = dtab_con(0)("valor")
 		End If

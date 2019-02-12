@@ -33,7 +33,7 @@
 			End If
 		End If
 		sql += " ORDER By Persona.razon"
-		Return DbMan.read(sql, My.Settings.DefaultCon)
+		Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
 	End Function
 	Shared Function Seleccionar(proveedor_id As Integer, persona_id As Integer) As DataTable
 		Dim sql As String = SelectSQL & TableSQL
@@ -42,25 +42,29 @@
 		Else
 			sql += " AND persona.id=" & persona_id
 		End If
-		Return DbMan.read(sql, My.Settings.DefaultCon)
+		Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
 	End Function
 	Shared Function guardar(proveedor_id As Integer, ByVal per_id As Integer, ByVal actividad As Integer, ByVal responsable As Integer) As Integer
 		If proveedor_id > 0 Then
-			DbMan.edit("UPDATE proveedor SET per_id=" & per_id & ", actividad_id=" & actividad & ",
-												 responsable_iva_id=" & responsable & "
-										   WHERE id=" & proveedor_id)
+			DbMan.edit(Nothing, My.Settings.DefaultCon,
+							"UPDATE proveedor SET per_id=" & per_id & ", actividad_id=" & actividad & ",
+							        responsable_iva_id=" & responsable & "
+							  WHERE id=" & proveedor_id)
 		Else
-			DbMan.edit("INSERT INTO proveedor(per_id, actividad_id, responsable_iva_id) 
+			DbMan.edit(Nothing, My.Settings.DefaultCon,
+							"INSERT INTO proveedor(per_id, actividad_id, responsable_iva_id) 
 								 VALUES(" & per_id & ", " & actividad & ", " & responsable & ")")
 
 			Dim dtab As New DataTable
-			dtab = DbMan.read("SELECT MAX(id) as id FROM proveedor WHERE per_id=" & per_id, My.Settings.DefaultCon)
+			dtab = DbMan.read(Nothing, My.Settings.DefaultCon,
+								"SELECT MAX(id) as id FROM proveedor WHERE per_id=" & per_id)
+
 			proveedor_id = dtab(0)("id")
 		End If
 		Return proveedor_id
 	End Function
 	Shared Function eliminar(ByVal proveedor_id As Integer) As Integer
-		DbMan.edit("DELETE * FROM proveedor WHERE id=" & proveedor_id)
+		DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE * FROM proveedor WHERE id=" & proveedor_id)
 		Return 0
 	End Function
 End Class

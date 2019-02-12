@@ -53,8 +53,8 @@
             ElseIf .Contains("CUIL") Then
                 dtab = Catastro.BuscarPorTitular(, Val(Keyword.Text))
             ElseIf .Contains("EXPEDIENTE") Then
-                dtab = Catastro.ListarInmueblePorExpediente(Val(Keyword.Text))
-            End If
+				dtab = Catastro.ListarInmueblePorExpediente(CInt(Keyword.Text))
+			End If
         End With
 		CtrlMan.LoadDataGridView(tabla_consulta, bs_consulta, "", dtab)
 	End Sub

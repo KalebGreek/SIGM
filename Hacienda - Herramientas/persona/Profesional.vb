@@ -24,7 +24,7 @@
 		End If
 
 		sql += " ORDER By Persona.razon"
-		Return DbMan.read(sql, My.Settings.DefaultCon)
+		Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
 	End Function
 	Shared Function Seleccionar(profesional_id As Integer, persona_id As Integer) As DataTable
 		Dim sql As String = SelectSQL & TableSQL
@@ -35,30 +35,28 @@
 			sql += " AND persona.id=" & persona_id
 		End If
 
-		Return DbMan.read(sql, My.Settings.DefaultCon)
+		Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
 	End Function
 	Shared Function ListarTitulos() As BindingSource
 		Dim bs As New BindingSource
-		bs.DataSource = DbMan.read("SELECT * FROM prof_titulo ORDER BY titulo", My.Settings.DefaultCon)
+		bs.DataSource = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM prof_titulo ORDER BY titulo")
 		Return bs
 	End Function
 
-	Shared Function guardar(prof_id As Integer, persona_id As Integer, titulo_id As Integer, ByVal matricula As String) As Integer
+	Shared Function guardar(prof_id As Integer, persona_id As Integer, titulo_id As Integer, ByVal matricula As String) As DataRow
 		If prof_id > 0 Then
-			DbMan.edit("UPDATE profesional SET titulo_id=" & titulo_id & ", matricula='" & matricula & "'" &
+			DbMan.edit(Nothing, My.Settings.DefaultCon, "UPDATE profesional SET titulo_id=" & titulo_id & ", matricula='" & matricula & "'" &
 					  " WHERE id=" & prof_id)
 		Else
-			DbMan.edit("INSERT INTO profesional(per_id, titulo_id, matricula)" &
-					 " VALUES(" & persona_id & ", " & titulo_id & ", '" & matricula & "')")
+			DbMan.edit(Nothing, My.Settings.DefaultCon,
+						"INSERT INTO profesional(per_id, titulo_id, matricula)
+							  VALUES(" & persona_id & ", " & titulo_id & ", '" & matricula & "')")
 		End If
 
-
-		Dim dtab As New DataTable
-		dtab = DbMan.read("SELECT id FROM profesional WHERE per_id=" & persona_id, My.Settings.DefaultCon)
-		Return dtab(0)("id")
+		Return DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT id FROM profesional WHERE per_id=" & persona_id)(0)
 	End Function
 	Shared Function eliminar(ByVal per_id As Integer) As Integer
-		DbMan.edit("DELETE * FROM profesional WHERE per_id=" & per_id)
+		DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE * FROM profesional WHERE per_id=" & per_id)
 		Return 0
 	End Function
 End Class

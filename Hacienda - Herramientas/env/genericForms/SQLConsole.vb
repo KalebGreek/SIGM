@@ -24,10 +24,10 @@ Public Class SQLConsole
 					query.Items.Insert(0, OleDBCmd.CommandText)
 					QueryLog.Items.Insert(0, OleDBCmd.CommandText)
 					If .CommandText.Contains("INSERT") Or .CommandText.Contains("UPDATE") Or .CommandText.Contains("DELETE") Then
-						QueryLog.Items.Insert(0, DbMan.edit("", connection.Text, OleDBCmd))
+						QueryLog.Items.Insert(0, DbMan.edit(OleDBCmd, connection.Text))
 
 					ElseIf .CommandText.Contains("SELECT") Then
-						CtrlMan.LoadDataGridView(QueryResult, bs_result, "", DbMan.read("", connection.Text, , , , , , OleDBCmd))
+						CtrlMan.LoadDataGridView(QueryResult, bs_result, "", DbMan.read(OleDBCmd, connection.Text))
 					End If
 					query.Text = ""
 				Else
@@ -53,7 +53,7 @@ Public Class SQLConsole
 	Private Sub connection_SelectedIndexChanged(sender As Object, e As EventArgs) Handles connection.SelectedIndexChanged
 		TableList.Items.Clear()
 		If connection.Text <> "" Then
-			Dim TableNames As DataTable = DbMan.readTables(connection.Text)
+			Dim TableNames As DataTable = DbMan.readTableSchema(connection.Text)
 			For Each dr As DataRow In TableNames.Rows
 				TableList.Items.Add(dr("table_name").ToString)
 			Next
@@ -66,5 +66,12 @@ Public Class SQLConsole
 		End If
 	End Sub
 
+	Private Sub QueryLog_DoubleClick(sender As Object, e As EventArgs) Handles QueryLog.DoubleClick
+		If QueryLog.Text.Contains("SELECT") Or QueryLog.Text.Contains("INSERT INTO") _
+		Or QueryLog.Text.Contains("UPDATE") Or QueryLog.Text.Contains("DELETE") Then
+			query.Text = QueryLog.Text
+			ExecuteQuery()
+		End If
 
+	End Sub
 End Class

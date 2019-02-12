@@ -156,9 +156,9 @@
 				mtb.Tag = "CUIL invalido."
 			Else
 				Dim dtab As New DataTable
-				dtab = DbMan.read("SELECT * FROM persona
-									WHERE cuil=" & mtb.Text,
-									My.Settings.DefaultCon)
+				dtab = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM persona
+									WHERE cuil=" & mtb.Text)
+
 				If dtab.Rows.Count > 0 Then
 					mtb.Tag = "CUIL duplicado. Este CUIL pertenece a " & dtab(0)("razon") & "."
 				End If
@@ -169,7 +169,7 @@
 			End If
 		End If
 	End Sub
-	Shared Function CalcExpirationDate(vencimiento As Date, Optional cuotas As Integer = 1)
+	Shared Function CalcExpirationDate(vencimiento As Date, Optional cuotas As Integer = 1) As String
 		For c As Integer = 0 To cuotas
 			vencimiento = vencimiento.AddDays(Date.DaysInMonth(vencimiento.Year, vencimiento.Month))
 		Next
@@ -186,7 +186,8 @@
 	'Loading controls
 	'LOAD ALL THE CONTROLS!!!!1ONE
 	Shared Function LoadAllControls(drow As DataRow, ByVal target As Object) As Object
-		'Carga los registros de cada columna en los controles con el nombre de la columna correspondiente
+		'Loads the values of each column of the DataRow in the controls sharing the column name
+		'Recursive!
 		For Each c As Control In target.Controls
 			If drow.Table.Columns.Contains(c.Name) Then
 				If drow(c.Name) Is DBNull.Value = False Then
@@ -198,6 +199,8 @@
 						If CType(c, ComboBox).DataSource Is Nothing Then
 							c.Text = drow(c.Name).ToString
 						Else
+							'With a datasource, you need to have both the field and the field_id,
+							'to select the id in the datasource linked to the combobox
 							CType(c, ComboBox).DataSource.Position = CType(c, ComboBox).DataSource.Find("id", drow(c.Name & "_id")) 'localidad_id
 						End If
 					ElseIf TypeOf c Is DateTimePicker Then
@@ -214,7 +217,6 @@
 						CType(c, NumericUpDown).Value = drow(c.Name)
 					ElseIf TypeOf c Is RadioButton Then
 						CType(c, RadioButton).Checked = drow(c.Name)
-					Else
 					End If
 				End If
 			ElseIf TypeOf c Is FlowLayoutPanel Or
@@ -233,12 +235,17 @@
 											   ByVal bs As BindingSource, Optional bsFilter As String = "",
 											   Optional ByVal dtab As DataTable = Nothing) As DataGridView
 		visor.SuspendLayout()
+
+		If bsFilter <> "" Then
+			bs.Filter = ""
+		End If
+
 		If dtab Is Nothing = False Then
 			bs.DataSource = dtab
 		End If
-		If bsFilter <> "" Then
-			bs.Filter = bsFilter
-		End If
+
+		bs.Filter = bsFilter
+
 		visor.DataSource = bs
 		'Dar formato
 		visor = FormatColumns(visor)
@@ -389,6 +396,9 @@
 					'PACIENTE
 				ElseIf .Equals("a") Or .Equals("b") Or .Equals("ab") Or .Equals("o") Then
 					c.Width = 25
+					'MENSAJE DE ERROR
+				ElseIf .Equals("[ERROR]") Then
+					c.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
 				End If
 			End With
 		Next
@@ -487,10 +497,11 @@
 
 		Shared Sub GetCities(ByRef CityList As ComboBox, ByRef bs As BindingSource, State As Integer)
 			CityList.BeginUpdate()
-			bs.DataSource = DbMan.read("SELECT * FROM localidades 
+			bs.DataSource = DbMan.read(Nothing, My.Settings.DefaultCon,
+										"SELECT * FROM localidades 
 										WHERE provincia_id=" & State & "
-										ORDER BY nombre",
-										My.Settings.DefaultCon)
+										ORDER BY nombre")
+
 			CityList.DataSource = bs
 			CityList.DisplayMember = "nombre"
 			CityList.ValueMember = "id"
@@ -524,7 +535,7 @@
 		End Function
 		Shared Sub GetStates(ByRef StateList As ComboBox, ByRef bs As BindingSource)
 			StateList.BeginUpdate()
-			bs.DataSource = DbMan.read("SELECT * FROM provincias ORDER BY nombre", My.Settings.DefaultCon)
+			bs.DataSource = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM provincias ORDER BY nombre")
 			StateList.DataSource = bs
 			StateList.DisplayMember = "nombre"
 			StateList.ValueMember = "id"

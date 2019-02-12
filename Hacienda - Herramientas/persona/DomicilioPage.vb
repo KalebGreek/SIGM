@@ -22,7 +22,7 @@
 	Public Sub cargar(drow As DataRow)
 		CtrlMan.LoadAllControls(drow, Me)
 	End Sub
-	Public Function guardar(persona_id As Integer, principal As Boolean)
+	Public Function guardar(persona_id As Integer, principal As Boolean) As Boolean
 		If domicilio_id.Text > 0 Then
 			Domicilio.Modificar(domicilio_id.Text, persona_id, calle.Text, altura.Value,
 										piso.Value, dpto.Text, localidad.SelectedValue, principal)

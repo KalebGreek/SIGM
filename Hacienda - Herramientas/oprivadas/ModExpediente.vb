@@ -49,8 +49,9 @@
 				answer = MsgBox("¿Desea guardar este expediente temporal bajo el N° " & expediente.Text & "?",
 								MsgBoxStyle.YesNoCancel, "Guardar Expediente")
 				If answer = MsgBoxResult.Yes Then 'Asignar N° de Expediente y quitar temporal
-					DbMan.edit("UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
-                                                        WHERE id=" & opr_id.Text)
+					DbMan.edit(Nothing, My.Settings.foxcon,
+								"UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
+                                  WHERE id=" & opr_id.Text)
 					Me.Close()
 				End If
 			End If

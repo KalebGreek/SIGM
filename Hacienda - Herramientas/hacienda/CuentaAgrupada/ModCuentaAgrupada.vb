@@ -55,18 +55,20 @@ Public Class ModCuentaAgrupada
         End With
     End Sub
 
-    Function deuda(ByVal deuda_total As Boolean, ByVal cuenta_agrupada As Boolean, ByVal impuesto As String, ByVal filter As Integer, ByVal keyword As String, ByVal range As Integer, ByVal dmin As Integer, ByVal dmax As Integer)
-        progreso.Value = 5
-        Dim consulta As New DataTable
+	Function deuda(ByVal deuda_total As Boolean, ByVal cuenta_agrupada As Boolean, ByVal impuesto As String,
+				   ByVal filter As Integer, ByVal keyword As String, ByVal range As Integer,
+				   ByVal dmin As Integer, ByVal dmax As Integer) As DataTable
+		progreso.Value = 5
+		Dim consulta As New DataTable
         '### Crear consulta sin filtros
         Dim sql As String = "SELECT " & ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon,"
 
-        If deuda_total Then
-            sql += " SUM(" & col_importe & ") as deuda"
-        Else  'Deuda detallada (Normal)
+		If deuda_total Then
+			sql += " SUM(" & col_importe & ") as deuda"
+		Else  'Deuda detallada (Normal)
             sql += col_importe & " as original, " & col_pagado & " as pagado, " & col_vence & " as vencimiento, " & col_periodo & " as periodo "
-        End If
-        sql += " FROM " & ext_cuenta & " INNER JOIN " & ext_persona & " ON " & ext_cuenta & ".codigo = " & ext_persona & ".codigo"
+		End If
+		sql += " FROM " & ext_cuenta & " INNER JOIN " & ext_persona & " ON " & ext_cuenta & ".codigo = " & ext_persona & ".codigo"
         'Con interés de 1% diario
         'sel_sql += ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon, " & importe & " as original, " & _
         '           "ROUND((" & importe & " + (" & importe & " * ((DATE() - " & vence & ") * 0.01))), 2) as deuda, " & _
@@ -76,9 +78,9 @@ Public Class ModCuentaAgrupada
         '### Hay otros filtros activos?
 
         If cuenta_agrupada Then
-            sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
-        End If
-		consulta = DbMan.read(sql, My.Settings.foxcon)
+			sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
+		End If
+		consulta = DbMan.read(Nothing, My.Settings.foxcon, sql)
 		progreso.Value = 20
 		Return consulta
 	End Function
@@ -115,16 +117,16 @@ Public Class ModCuentaAgrupada
 			If .RowCount > 0 Then
 				Do While fila < .RowCount
 					If .Item(0, fila).Value.ToString = Nothing Then
-                        'mod_sql = "INSERT INTO contribuyente(razon, cuil, impuesto, codigo, alta) VALUES ('" &
-                        'razon.Text & "', " & cuil.Text & ", '" & .Item(1, fila).Value & "', " &
-                        '.Item(2, fila).Value & ", '" & .Item(3, fila).Value & "');"
-                        DbMan.edit(  "")
+						'mod_sql = "INSERT INTO contribuyente(razon, cuil, impuesto, codigo, alta) VALUES ('" &
+						'razon.Text & "', " & cuil.Text & ", '" & .Item(1, fila).Value & "', " &
+						'.Item(2, fila).Value & ", '" & .Item(3, fila).Value & "');"
+						'DbMan.edit()
 						nins += 1
 					Else
-                        'mod_sql = "UPDATE contribuyente SET razon='" & razon.Text & "', impuesto='" & .Item(1, fila).Value &
-                        '   "', codigo=" & .Item(2, fila).Value & ", alta='" & .Item(3, fila).Value & "'" &
-                        '   " WHERE id=" & .Item(0, fila).Value
-                        DbMan.edit(  "")
+						'mod_sql = "UPDATE contribuyente SET razon='" & razon.Text & "', impuesto='" & .Item(1, fila).Value &
+						'   "', codigo=" & .Item(2, fila).Value & ", alta='" & .Item(3, fila).Value & "'" &
+						'   " WHERE id=" & .Item(0, fila).Value
+						'DbMan.edit()
 						nupd += 1
 					End If
 					fila += 1
@@ -132,7 +134,7 @@ Public Class ModCuentaAgrupada
 				ndel = 0
 				If found = True Then
 					Do While ndel < del_rows.Count And del_rows(ndel) <> Nothing
-						DbMan.edit(  "DELETE FROM contribuyente WHERE id=" & del_rows(ndel) & ";")
+						DbMan.edit(Nothing, My.Settings.foxcon, "DELETE FROM contribuyente WHERE id=" & del_rows(ndel) & ";")
 						ndel += 1
 					Loop
 				End If

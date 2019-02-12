@@ -199,21 +199,21 @@ Public Class ConsultaCuentaAgrupada
         visor.Focus()
     End Sub
 
-    Function deuda(ByVal deuda_total As Boolean, ByVal cuenta_agrupada As Boolean,
-                   ByVal impuesto As String, ByVal filter As Integer, ByVal keyword As String,
-                   ByVal range As Integer, ByVal dmin As Integer, ByVal dmax As Integer)
-        progreso.Value = 5
-        Dim consulta As New DataTable
-        Dim sql As String
+	Function deuda(ByVal deuda_total As Boolean, ByVal cuenta_agrupada As Boolean,
+				   ByVal impuesto As String, ByVal filter As Integer, ByVal keyword As String,
+				   ByVal range As Integer, ByVal dmin As Integer, ByVal dmax As Integer) As DataTable
+		progreso.Value = 5
+		Dim consulta As New DataTable
+		Dim sql As String
         '### Crear consulta sin filtros
         sql = "SELECT " & ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon,"
 
-        If deuda_total Then
-            sql += " SUM(" & col_importe & ") as deuda"
-        Else  'Deuda detallada (Normal)
+		If deuda_total Then
+			sql += " SUM(" & col_importe & ") as deuda"
+		Else  'Deuda detallada (Normal)
             sql += col_importe & " as original, " & col_pagado & " as pagado, " & col_vence & " as vencimiento, " & col_periodo & " as periodo "
-        End If
-        sql += " FROM " & ext_cuenta & " INNER JOIN " & ext_persona & " ON " & ext_cuenta & ".codigo = " & ext_persona & ".codigo"
+		End If
+		sql += " FROM " & ext_cuenta & " INNER JOIN " & ext_persona & " ON " & ext_cuenta & ".codigo = " & ext_persona & ".codigo"
         'Con interés de 1% diario
         'sel_sql += ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon, " & importe & " as original, " & _
         '           "ROUND((" & importe & " + (" & importe & " * ((DATE() - " & vence & ") * 0.01))), 2) as deuda, " & _
@@ -223,12 +223,12 @@ Public Class ConsultaCuentaAgrupada
         '### Hay otros filtros activos?
 
         If cuenta_agrupada Then
-            sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
-        End If
-		consulta = DbMan.read(sql, My.Settings.foxcon)
+			sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
+		End If
+		consulta = DbMan.read(Nothing, My.Settings.foxcon, sql)
 		progreso.Value = 20
-        Return consulta
-    End Function
+		Return consulta
+	End Function
 
     '### CUENTA AGRUPADA
     Private Sub razon_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
@@ -348,12 +348,12 @@ Public Class ConsultaCuentaAgrupada
             If .RowCount > 0 Then
                 Do While fila < .RowCount
                     If .Item(0, fila).Value.ToString = Nothing Then
-						DbMan.edit(  "INSERT INTO contribuyente(razon, cuil, impuesto, codigo, alta)
+						DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO contribuyente(razon, cuil, impuesto, codigo, alta)
                                          VALUES ('" & razon.Text & "', " & cuil.Text & ", '" & .Item(1, fila).Value & "'," &
 										" " & .Item(2, fila).Value & ", '" & .Item(3, fila).Value & "')")
 						nins += 1
 					Else
-						DbMan.edit(  "UPDATE contribuyente SET razon='" & razon.Text & "', impuesto='" & .Item(1, fila).Value &
+						DbMan.edit(Nothing, My.Settings.DefaultCon, "UPDATE contribuyente SET razon='" & razon.Text & "', impuesto='" & .Item(1, fila).Value &
 										"', codigo=" & .Item(2, fila).Value & ", alta='" & .Item(3, fila).Value & "'" &
 										" WHERE id=" & .Item(0, fila).Value)
 						nupd += 1
@@ -363,13 +363,13 @@ Public Class ConsultaCuentaAgrupada
 				ndel = 0
 				If found = True Then
 					Do While ndel < del_rows.Count And del_rows(ndel) <> Nothing
-						DbMan.edit(  "DELETE FROM contribuyente WHERE id=" & del_rows(ndel))
+						DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE FROM contribuyente WHERE id=" & del_rows(ndel))
 						ndel += 1
 					Loop
 				End If
 			Else
 				If MsgBoxResult.Ok = MsgBox("Esto eliminará todos los registros de la cuenta agrupada, ¿desea continuar?.", MsgBoxStyle.OkCancel) Then
-					DbMan.edit(  "DELETE FROM contribuyente WHERE cuil=" & cuil.Text & ";")
+					DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE FROM contribuyente WHERE cuil=" & cuil.Text & ";")
 				End If
             End If
             info.Text = nins & " nuevos registros, " & nupd & " registros modificados y " & ndel & " registros eliminados."

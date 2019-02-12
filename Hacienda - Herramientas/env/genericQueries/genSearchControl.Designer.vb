@@ -75,7 +75,7 @@ Partial Class genSearchControl
 		Me.wrapper.Controls.Add(Me.cancel)
 		Me.wrapper.Location = New System.Drawing.Point(0, 0)
 		Me.wrapper.Name = "wrapper"
-		Me.wrapper.Size = New System.Drawing.Size(864, 33)
+		Me.wrapper.Size = New System.Drawing.Size(1120, 33)
 		Me.wrapper.TabIndex = 363
 		'
 		'filtro
@@ -125,7 +125,7 @@ Partial Class genSearchControl
 		'MaxDateValue
 		'
 		Me.MaxDateValue.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-		Me.MaxDateValue.Location = New System.Drawing.Point(3, 36)
+		Me.MaxDateValue.Location = New System.Drawing.Point(754, 3)
 		Me.MaxDateValue.Name = "MaxDateValue"
 		Me.MaxDateValue.Size = New System.Drawing.Size(123, 27)
 		Me.MaxDateValue.TabIndex = 372
@@ -134,7 +134,7 @@ Partial Class genSearchControl
 		'MaxNumValue
 		'
 		Me.MaxNumValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-		Me.MaxNumValue.Location = New System.Drawing.Point(132, 36)
+		Me.MaxNumValue.Location = New System.Drawing.Point(883, 3)
 		Me.MaxNumValue.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
 		Me.MaxNumValue.Name = "MaxNumValue"
 		Me.MaxNumValue.Size = New System.Drawing.Size(77, 27)
@@ -148,7 +148,7 @@ Partial Class genSearchControl
 		Me.search.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.search.Font = New System.Drawing.Font("Segoe MDL2 Assets", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.search.ForeColor = System.Drawing.Color.White
-		Me.search.Location = New System.Drawing.Point(212, 33)
+		Me.search.Location = New System.Drawing.Point(963, 0)
 		Me.search.Margin = New System.Windows.Forms.Padding(0)
 		Me.search.Name = "search"
 		Me.search.Size = New System.Drawing.Size(38, 33)
@@ -163,7 +163,7 @@ Partial Class genSearchControl
 		Me.reset_search.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.reset_search.Font = New System.Drawing.Font("Segoe MDL2 Assets", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.reset_search.ForeColor = System.Drawing.Color.White
-		Me.reset_search.Location = New System.Drawing.Point(250, 33)
+		Me.reset_search.Location = New System.Drawing.Point(1001, 0)
 		Me.reset_search.Margin = New System.Windows.Forms.Padding(0)
 		Me.reset_search.Name = "reset_search"
 		Me.reset_search.Size = New System.Drawing.Size(38, 33)
@@ -178,7 +178,7 @@ Partial Class genSearchControl
 		Me.selectRow.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.selectRow.Font = New System.Drawing.Font("Segoe MDL2 Assets", 14.25!)
 		Me.selectRow.ForeColor = System.Drawing.Color.Chartreuse
-		Me.selectRow.Location = New System.Drawing.Point(288, 33)
+		Me.selectRow.Location = New System.Drawing.Point(1039, 0)
 		Me.selectRow.Margin = New System.Windows.Forms.Padding(0)
 		Me.selectRow.Name = "selectRow"
 		Me.selectRow.Size = New System.Drawing.Size(38, 33)
@@ -194,7 +194,7 @@ Partial Class genSearchControl
 		Me.cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.cancel.Font = New System.Drawing.Font("Segoe MDL2 Assets", 14.25!)
 		Me.cancel.ForeColor = System.Drawing.Color.Red
-		Me.cancel.Location = New System.Drawing.Point(326, 33)
+		Me.cancel.Location = New System.Drawing.Point(1077, 0)
 		Me.cancel.Margin = New System.Windows.Forms.Padding(0)
 		Me.cancel.Name = "cancel"
 		Me.cancel.Size = New System.Drawing.Size(38, 33)
@@ -207,14 +207,12 @@ Partial Class genSearchControl
 		'genSearchControl
 		'
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
-		Me.AutoSize = True
 		Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
 		Me.BackColor = System.Drawing.Color.DarkGray
 		Me.Controls.Add(Me.wrapper)
 		Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.MinimumSize = New System.Drawing.Size(520, 33)
 		Me.Name = "genSearchControl"
-		Me.Size = New System.Drawing.Size(867, 36)
+		Me.Size = New System.Drawing.Size(1119, 33)
 		Me.wrapper.ResumeLayout(False)
 		CType(Me.NumValue, System.ComponentModel.ISupportInitialize).EndInit()
 		CType(Me.MaxNumValue, System.ComponentModel.ISupportInitialize).EndInit()

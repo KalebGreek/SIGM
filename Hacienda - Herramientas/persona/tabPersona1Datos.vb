@@ -10,8 +10,8 @@
 	Public Sub cargar(persona_id As Integer)
 		Dim genero As Integer = 0
 
-		Dim dtab As DataTable = DbMan.read("SELECT id as persona_id, razon, cuil 
-									 		  FROM persona WHERE id=" & persona_id, My.Settings.DefaultCon)
+		Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT id as persona_id, razon, cuil 
+									 		  FROM persona WHERE id=" & persona_id)
 
 		razon.Text = dtab(0)("razon").ToString
 
@@ -36,15 +36,16 @@
 		If CtrlMan.Validate(Me, ErrorInfo) Then
 			Dim fisica As Boolean = gen.Text <> "N/A"
 			If persona_id > 0 Then
-				DbMan.edit("UPDATE persona SET razon='" & razon.Text & "', cuil=" & cuil.Text & ", 
-											   fisica=" & fisica & "
-										 WHERE id=" & persona_id)
+				DbMan.edit(Nothing, My.Settings.DefaultCon,
+							"UPDATE persona SET razon='" & razon.Text & "', cuil=" & cuil.Text & ", 
+									fisica=" & fisica & "
+							  WHERE id=" & persona_id)
 			Else
-				DbMan.edit("INSERT INTO persona(razon, cuil, fisica)
-										 VALUES('" & razon.Text & "','" & cuil.Text & "',
-												 " & fisica & ")")
+				DbMan.edit(Nothing, My.Settings.DefaultCon,
+					   "INSERT INTO persona(razon, cuil, fisica)
+							 VALUES('" & razon.Text & "','" & cuil.Text & "'," & fisica & ")")
 				'Next query could be replaced by OUTPUT insert.id
-				Dim dtab As DataTable = DbMan.read("SELECT MAX(id) as id FROM persona", My.Settings.DefaultCon) 'Last insert
+				Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT MAX(id) as id FROM persona") 'Last insert
 				MsgBox(dtab(0)("id"))
 				persona_id = dtab(0)("id")
 			End If

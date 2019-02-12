@@ -1,8 +1,8 @@
 ﻿Public Class Combustible
 	Public Class Receptor
 		Shared Sub FillCategory(ByRef bs As BindingSource, ByRef target As ComboBox, ByRef vehiculo As Boolean)
-			bs.DataSource = DbMan.read("SELECT * FROM hac_combustible_categoria_receptor 
-												WHERE vehiculo=" & vehiculo & " ORDER BY detalle",My.Settings.DefaultCon)
+			bs.DataSource = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM hac_combustible_categoria_receptor 
+												WHERE vehiculo=" & vehiculo & " ORDER BY detalle")
 			CtrlMan.Fill.SetAutoComplete(target, bs, "detalle", "id")
 		End Sub
 		Shared Function ListAll(bs_cuenta As BindingSource, bs_categoria As BindingSource, id As Integer) As BindingSource
@@ -28,27 +28,29 @@
 			End If
 
 			Dim bs As New BindingSource
-			bs.DataSource = DbMan.read(sql, My.Settings.DefaultCon)
+			bs.DataSource = DbMan.read(Nothing, My.Settings.DefaultCon, sql)
 
 			Return bs
 		End Function
 		Shared Function Seleccionar(id As Integer) As DataTable
-			Return DbMan.read("SELECT hac_combustible_receptor.id as receptor_id, cuenta, categoria_id,
+			Return DbMan.read(Nothing, My.Settings.DefaultCon,
+							  "SELECT hac_combustible_receptor.id as receptor_id, cuenta, categoria_id,
 									  marca, mercosur, dominio, modelo, alta, baja, observaciones,
 									  detalle, vehiculo
 								 FROM hac_combustible_receptor INNER JOIN hac_combustible_categoria_receptor
 								   ON hac_combustible_receptor.categoria_id=hac_combustible_categoria_receptor.id
-								WHERE hac_combustible_receptor.id=" & id, My.Settings.DefaultCon)
+								WHERE hac_combustible_receptor.id=" & id)
 		End Function
 	End Class
 
 	Public Class Responsable
 		Shared Sub Fill(ByRef bs As BindingSource, ByRef target As ComboBox, receptor_id As Integer)
-			bs.DataSource = DbMan.read("SELECT hac_combustible_responsable.id as responsable_id, razon, cuil, persona_id
+			bs.DataSource = DbMan.read(Nothing, My.Settings.DefaultCon,
+									   "SELECT hac_combustible_responsable.id as responsable_id, razon, cuil, persona_id
 										  FROM hac_combustible_responsable INNER JOIN persona 
 											ON hac_combustible_responsable.persona_id=persona.id
 									     WHERE receptor_id=" & receptor_id & "
-									  ORDER BY persona.razon", My.Settings.DefaultCon)
+									  ORDER BY persona.razon")
 
 			CtrlMan.Fill.SetAutoComplete(target, bs, "razon", "responsable_id")
 		End Sub
@@ -78,20 +80,22 @@
 				SQLWhere = " WHERE hac_combustible_receptor.id=" & receptor_id
 			End If
 
+			Dim sqlOrderBy As String = ""
 			If last Then
-				SQLWhere = " ORDER BY hac_combustible_ticket.id ASC"
+				sqlOrderBy = " ORDER BY hac_combustible_ticket.id ASC"
 			End If
 
-			Return DbMan.read(SQLSelectTicket & SQLTableTicket & SQLWhere, My.Settings.DefaultCon)
+			Return DbMan.read(Nothing, My.Settings.DefaultCon, SQLSelectTicket, SQLTableTicket, SQLWhere, , , sqlOrderBy)
 		End Function
 		Shared Function ReturnLastTicketID(receptor_id As Integer) As Integer
-			Dim dtab As DataTable = DbMan.read("SELECT id FROM hac_combustible_ticket ORDER BY id DESC", My.Settings.DefaultCon)
+			Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT id FROM hac_combustible_ticket ORDER BY id DESC")
 
 			Return dtab(0)("id")
 		End Function
 
 		Shared Sub Detail(ByRef visor As DataGridView, ByRef bs As BindingSource, ticket_id As Integer)
-			Dim dtab As DataTable = DbMan.read("SELECT hac_combustible_items.Id as item_id, 
+			Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon,
+											   "SELECT hac_combustible_items.Id as item_id, 
 													   hac_combustible_tipo.descripcion,
 													   hac_combustible_items.litros, 
 													   hac_combustible_items.unidades, 
@@ -99,12 +103,13 @@
 												  FROM hac_combustible_tipo 
 											INNER JOIN hac_combustible_items 
 													ON hac_combustible_tipo.Id = hac_combustible_items.tipo_item_id 
-												 WHERE hac_combustible_items.ticket_id=" & ticket_id, My.Settings.DefaultCon)
+												 WHERE hac_combustible_items.ticket_id=" & ticket_id)
 			CtrlMan.LoadDataGridView(visor, bs, "", dtab)
 		End Sub
 
 		Shared Function SelectTicket(id As Integer) As DataTable
-			Return DbMan.read("SELECT hac_combustible_ticket.id AS ticket_id, hac_combustible_ticket.proveedor_id,
+			Return DbMan.read(Nothing, My.Settings.DefaultCon,
+							  "SELECT hac_combustible_ticket.id AS ticket_id, hac_combustible_ticket.proveedor_id,
 									  persona.razon AS proveedor_razon, persona.cuil AS proveedor_cuil,
 									  hac_combustible_responsable.receptor_id,
 									  hac_combustible_ticket.responsable_id, hac_combustible_ticket.fecha,
@@ -118,19 +123,19 @@
 								   ON persona.id = proveedor.per_id)
 								   ON hac_combustible_responsable.Id = hac_combustible_ticket.responsable_id)
 						   INNER JOIN persona AS persona_1 ON hac_combustible_responsable.persona_id = persona_1.id
-								WHERE hac_combustible_ticket.id=" & id, My.Settings.DefaultCon)
+								WHERE hac_combustible_ticket.id=" & id)
 		End Function
 
 		Shared Function SaveTicket(id As Integer, proveedor_id As Integer, responsable_id As Integer, fecha As Date, ticket As Integer) As Boolean
 			'SQL
 			If id > 0 Then
-				DbMan.edit("UPDATE hac_combustible_ticket 
+				DbMan.edit(Nothing, My.Settings.DefaultCon, "UPDATE hac_combustible_ticket 
 							   SET proveedor_id=" & proveedor_id & ", responsable_id=" & responsable_id & ",
 								   fecha=#" & fecha & "#, ticket=" & ticket & ", 
 								   user_id=" & My.Settings.UserId & "
 							 WHERE hac_combustible_ticket.id=" & id)
 			Else
-				DbMan.edit("INSERT INTO hac_combustible_ticket(proveedor_id, responsable_id, 
+				DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO hac_combustible_ticket(proveedor_id, responsable_id, 
 															   fecha, ticket, total, user_id) 
 										    			VALUES(" & proveedor_id & ", " & responsable_id & ", #" & Date.Today & "#, 0,
 															   0, " & My.Settings.UserId & ")")
@@ -140,23 +145,14 @@
 	End Class
 
 	Public Class Item
-		Shared Function NewType()
-
-
-		End Function
-
-		Shared Function FillTypeList(bs As BindingSource, target As ComboBox, displayColumn As String, valueColumn As String)
-			bs.DataSource = DbMan.read("SELECT id as tipo_id, descripcion, por_litro 
-										  FROM hac_combustible_tipo", My.Settings.DefaultCon)
+		Shared Function FillTypeList(bs As BindingSource, target As ComboBox, displayColumn As String, valueColumn As String) As ComboBox
+			bs.DataSource = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT id as tipo_id, descripcion, por_litro 
+										  FROM hac_combustible_tipo")
 
 			CtrlMan.Fill.SetAutoComplete(target, bs, "descripcion", "tipo_id")
 
 			Return target
 		End Function
 
-		Shared Function DelType()
-
-
-		End Function
 	End Class
 End Class

@@ -4,6 +4,7 @@ Public Class ModPersona
         ' This call is required by the designer.
         InitializeComponent()
 		' Add any initialization after the InitializeComponent() call.
+
 	End Sub
 	'###### GUI ##########################################################################################
 	Private Sub TabControl1_TabIndexChanged(sender As Object, e As EventArgs) Handles TabControl1.SelectedIndexChanged

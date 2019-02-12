@@ -24,25 +24,27 @@ Partial Class CalculoAnualImpuesto
     Private Sub InitializeComponent()
 		Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CalculoAnualImpuesto))
 		Me.iniciar = New System.Windows.Forms.Button()
-		Me.GrupoCuenta = New System.Windows.Forms.Panel()
+		Me.tae = New System.Windows.Forms.TextBox()
+		Me.Label2 = New System.Windows.Forms.Label()
 		Me.Label1 = New System.Windows.Forms.Label()
 		Me.et_cuenta = New System.Windows.Forms.Label()
 		Me.impuesto = New System.Windows.Forms.ComboBox()
 		Me.Label4 = New System.Windows.Forms.Label()
 		Me.CuentaInicial = New System.Windows.Forms.NumericUpDown()
 		Me.periodo = New System.Windows.Forms.NumericUpDown()
-		Me.GrupoBaja = New System.Windows.Forms.Panel()
+		Me.PanelInfo = New System.Windows.Forms.Panel()
+		Me.info = New System.Windows.Forms.Label()
 		Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
 		Me.progreso = New System.Windows.Forms.ToolStripProgressBar()
-		Me.info = New System.Windows.Forms.Label()
-		Me.et_info = New System.Windows.Forms.Label()
-		Me.Label2 = New System.Windows.Forms.Label()
-		Me.tae = New System.Windows.Forms.TextBox()
-		Me.GrupoCuenta.SuspendLayout()
+		Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
+		Me.Label5 = New System.Windows.Forms.Label()
+		Me.Label6 = New System.Windows.Forms.Label()
+		Me.Label3 = New System.Windows.Forms.Label()
 		CType(Me.CuentaInicial, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.periodo, System.ComponentModel.ISupportInitialize).BeginInit()
-		Me.GrupoBaja.SuspendLayout()
+		Me.PanelInfo.SuspendLayout()
 		Me.StatusStrip1.SuspendLayout()
+		Me.FlowLayoutPanel1.SuspendLayout()
 		Me.SuspendLayout()
 		'
 		'iniciar
@@ -52,7 +54,7 @@ Partial Class CalculoAnualImpuesto
 		Me.iniciar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.iniciar.Font = New System.Drawing.Font("PF DinText Pro", 12.0!)
 		Me.iniciar.ForeColor = System.Drawing.Color.WhiteSmoke
-		Me.iniciar.Location = New System.Drawing.Point(261, 102)
+		Me.iniciar.Location = New System.Drawing.Point(224, 105)
 		Me.iniciar.Name = "iniciar"
 		Me.iniciar.Size = New System.Drawing.Size(111, 28)
 		Me.iniciar.TabIndex = 70
@@ -60,72 +62,77 @@ Partial Class CalculoAnualImpuesto
 		Me.iniciar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
 		Me.iniciar.UseVisualStyleBackColor = False
 		'
-		'GrupoCuenta
+		'tae
 		'
-		Me.GrupoCuenta.Controls.Add(Me.tae)
-		Me.GrupoCuenta.Controls.Add(Me.iniciar)
-		Me.GrupoCuenta.Controls.Add(Me.Label2)
-		Me.GrupoCuenta.Controls.Add(Me.Label1)
-		Me.GrupoCuenta.Controls.Add(Me.et_cuenta)
-		Me.GrupoCuenta.Controls.Add(Me.impuesto)
-		Me.GrupoCuenta.Controls.Add(Me.Label4)
-		Me.GrupoCuenta.Controls.Add(Me.CuentaInicial)
-		Me.GrupoCuenta.Controls.Add(Me.periodo)
-		Me.GrupoCuenta.Dock = System.Windows.Forms.DockStyle.Top
-		Me.GrupoCuenta.Location = New System.Drawing.Point(0, 0)
-		Me.GrupoCuenta.Name = "GrupoCuenta"
-		Me.GrupoCuenta.Size = New System.Drawing.Size(384, 136)
-		Me.GrupoCuenta.TabIndex = 389
+		Me.tae.Location = New System.Drawing.Point(135, 105)
+		Me.tae.Name = "tae"
+		Me.tae.ReadOnly = True
+		Me.tae.Size = New System.Drawing.Size(83, 28)
+		Me.tae.TabIndex = 397
+		Me.tae.Text = "0%"
+		Me.tae.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+		'
+		'Label2
+		'
+		Me.Label2.ForeColor = System.Drawing.Color.Black
+		Me.Label2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+		Me.Label2.Location = New System.Drawing.Point(3, 108)
+		Me.Label2.Margin = New System.Windows.Forms.Padding(3, 6, 3, 0)
+		Me.Label2.Name = "Label2"
+		Me.Label2.Size = New System.Drawing.Size(126, 21)
+		Me.Label2.TabIndex = 396
+		Me.Label2.Text = "TAE"
+		Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
 		'Label1
 		'
-		Me.Label1.AutoSize = True
 		Me.Label1.ForeColor = System.Drawing.Color.Black
 		Me.Label1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-		Me.Label1.Location = New System.Drawing.Point(14, 74)
+		Me.Label1.Location = New System.Drawing.Point(3, 74)
+		Me.Label1.Margin = New System.Windows.Forms.Padding(3, 6, 3, 0)
 		Me.Label1.Name = "Label1"
-		Me.Label1.Size = New System.Drawing.Size(65, 21)
+		Me.Label1.Size = New System.Drawing.Size(126, 21)
 		Me.Label1.TabIndex = 394
 		Me.Label1.Text = "Periodo"
-		Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+		Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
 		'et_cuenta
 		'
-		Me.et_cuenta.AutoSize = True
 		Me.et_cuenta.ForeColor = System.Drawing.Color.Black
 		Me.et_cuenta.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-		Me.et_cuenta.Location = New System.Drawing.Point(14, 43)
+		Me.et_cuenta.Location = New System.Drawing.Point(3, 40)
+		Me.et_cuenta.Margin = New System.Windows.Forms.Padding(3, 6, 3, 0)
 		Me.et_cuenta.Name = "et_cuenta"
-		Me.et_cuenta.Size = New System.Drawing.Size(109, 21)
+		Me.et_cuenta.Size = New System.Drawing.Size(126, 21)
 		Me.et_cuenta.TabIndex = 389
 		Me.et_cuenta.Text = "Cuenta Inicial"
-		Me.et_cuenta.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+		Me.et_cuenta.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
 		'impuesto
 		'
 		Me.impuesto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
 		Me.impuesto.FormattingEnabled = True
 		Me.impuesto.Items.AddRange(New Object() {"AGUAS", "AUTOMOVIL", "CATASTRO", "COMERCIO", "SEPELIO"})
-		Me.impuesto.Location = New System.Drawing.Point(172, 9)
+		Me.impuesto.Location = New System.Drawing.Point(135, 3)
 		Me.impuesto.Name = "impuesto"
-		Me.impuesto.Size = New System.Drawing.Size(200, 28)
+		Me.impuesto.Size = New System.Drawing.Size(197, 28)
 		Me.impuesto.TabIndex = 393
 		'
 		'Label4
 		'
-		Me.Label4.AutoSize = True
 		Me.Label4.ForeColor = System.Drawing.Color.Black
-		Me.Label4.Location = New System.Drawing.Point(14, 12)
+		Me.Label4.Location = New System.Drawing.Point(3, 6)
+		Me.Label4.Margin = New System.Windows.Forms.Padding(3, 6, 3, 0)
 		Me.Label4.Name = "Label4"
-		Me.Label4.Size = New System.Drawing.Size(155, 21)
+		Me.Label4.Size = New System.Drawing.Size(126, 21)
 		Me.Label4.TabIndex = 392
-		Me.Label4.Text = "Impuesto a Calcular"
-		Me.Label4.TextAlign = System.Drawing.ContentAlignment.TopRight
+		Me.Label4.Text = "Tasa a calcular"
+		Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
 		'CuentaInicial
 		'
 		Me.CuentaInicial.BackColor = System.Drawing.Color.White
-		Me.CuentaInicial.Location = New System.Drawing.Point(172, 39)
+		Me.CuentaInicial.Location = New System.Drawing.Point(135, 37)
 		Me.CuentaInicial.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
 		Me.CuentaInicial.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
 		Me.CuentaInicial.Name = "CuentaInicial"
@@ -138,7 +145,7 @@ Partial Class CalculoAnualImpuesto
 		'periodo
 		'
 		Me.periodo.BackColor = System.Drawing.Color.White
-		Me.periodo.Location = New System.Drawing.Point(172, 70)
+		Me.periodo.Location = New System.Drawing.Point(135, 71)
 		Me.periodo.Maximum = New Decimal(New Integer() {2100, 0, 0, 0})
 		Me.periodo.Minimum = New Decimal(New Integer() {1900, 0, 0, 0})
 		Me.periodo.Name = "periodo"
@@ -148,27 +155,38 @@ Partial Class CalculoAnualImpuesto
 		Me.periodo.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left
 		Me.periodo.Value = New Decimal(New Integer() {2000, 0, 0, 0})
 		'
-		'GrupoBaja
+		'PanelInfo
 		'
-		Me.GrupoBaja.BackColor = System.Drawing.Color.DimGray
-		Me.GrupoBaja.Controls.Add(Me.StatusStrip1)
-		Me.GrupoBaja.Controls.Add(Me.info)
-		Me.GrupoBaja.Controls.Add(Me.et_info)
-		Me.GrupoBaja.Dock = System.Windows.Forms.DockStyle.Fill
-		Me.GrupoBaja.Location = New System.Drawing.Point(0, 136)
-		Me.GrupoBaja.Name = "GrupoBaja"
-		Me.GrupoBaja.Size = New System.Drawing.Size(384, 97)
-		Me.GrupoBaja.TabIndex = 390
+		Me.PanelInfo.BackColor = System.Drawing.Color.DimGray
+		Me.PanelInfo.Controls.Add(Me.info)
+		Me.PanelInfo.Dock = System.Windows.Forms.DockStyle.Bottom
+		Me.PanelInfo.Location = New System.Drawing.Point(0, 137)
+		Me.PanelInfo.Name = "PanelInfo"
+		Me.PanelInfo.Padding = New System.Windows.Forms.Padding(3)
+		Me.PanelInfo.Size = New System.Drawing.Size(384, 69)
+		Me.PanelInfo.TabIndex = 390
+		'
+		'info
+		'
+		Me.info.Dock = System.Windows.Forms.DockStyle.Fill
+		Me.info.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.info.ForeColor = System.Drawing.Color.White
+		Me.info.Location = New System.Drawing.Point(3, 3)
+		Me.info.Margin = New System.Windows.Forms.Padding(3)
+		Me.info.Name = "info"
+		Me.info.Size = New System.Drawing.Size(378, 63)
+		Me.info.TabIndex = 2
+		Me.info.Text = "Pulse Calcular"
 		'
 		'StatusStrip1
 		'
 		Me.StatusStrip1.Font = New System.Drawing.Font("PF DinDisplay Pro", 13.0!)
 		Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.progreso})
-		Me.StatusStrip1.Location = New System.Drawing.Point(0, 75)
+		Me.StatusStrip1.Location = New System.Drawing.Point(0, 206)
 		Me.StatusStrip1.Name = "StatusStrip1"
 		Me.StatusStrip1.Size = New System.Drawing.Size(384, 22)
 		Me.StatusStrip1.SizingGrip = False
-		Me.StatusStrip1.TabIndex = 81
+		Me.StatusStrip1.TabIndex = 391
 		Me.StatusStrip1.Text = "Estado"
 		'
 		'progreso
@@ -179,56 +197,67 @@ Partial Class CalculoAnualImpuesto
 		Me.progreso.Size = New System.Drawing.Size(370, 16)
 		Me.progreso.Step = 1
 		'
-		'info
+		'FlowLayoutPanel1
 		'
-		Me.info.AutoSize = True
-		Me.info.ForeColor = System.Drawing.Color.White
-		Me.info.Location = New System.Drawing.Point(70, 5)
-		Me.info.Name = "info"
-		Me.info.Size = New System.Drawing.Size(114, 21)
-		Me.info.TabIndex = 2
-		Me.info.Text = "Pulse Calcular"
+		Me.FlowLayoutPanel1.Controls.Add(Me.Label4)
+		Me.FlowLayoutPanel1.Controls.Add(Me.impuesto)
+		Me.FlowLayoutPanel1.Controls.Add(Me.Label3)
+		Me.FlowLayoutPanel1.Controls.Add(Me.et_cuenta)
+		Me.FlowLayoutPanel1.Controls.Add(Me.CuentaInicial)
+		Me.FlowLayoutPanel1.Controls.Add(Me.Label5)
+		Me.FlowLayoutPanel1.Controls.Add(Me.Label1)
+		Me.FlowLayoutPanel1.Controls.Add(Me.periodo)
+		Me.FlowLayoutPanel1.Controls.Add(Me.Label6)
+		Me.FlowLayoutPanel1.Controls.Add(Me.Label2)
+		Me.FlowLayoutPanel1.Controls.Add(Me.tae)
+		Me.FlowLayoutPanel1.Controls.Add(Me.iniciar)
+		Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+		Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 0)
+		Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
+		Me.FlowLayoutPanel1.Size = New System.Drawing.Size(384, 137)
+		Me.FlowLayoutPanel1.TabIndex = 398
 		'
-		'et_info
+		'Label5
 		'
-		Me.et_info.AutoSize = True
-		Me.et_info.Font = New System.Drawing.Font("PF DinDisplay Pro", 13.0!, System.Drawing.FontStyle.Bold)
-		Me.et_info.ForeColor = System.Drawing.Color.White
-		Me.et_info.Location = New System.Drawing.Point(3, 5)
-		Me.et_info.Name = "et_info"
-		Me.et_info.Size = New System.Drawing.Size(69, 21)
-		Me.et_info.TabIndex = 1
-		Me.et_info.Text = "Estado:"
+		Me.Label5.ForeColor = System.Drawing.Color.Black
+		Me.Label5.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+		Me.Label5.Location = New System.Drawing.Point(224, 40)
+		Me.Label5.Margin = New System.Windows.Forms.Padding(3, 6, 3, 0)
+		Me.Label5.Name = "Label5"
+		Me.Label5.Size = New System.Drawing.Size(154, 21)
+		Me.Label5.TabIndex = 399
+		Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
 		'
-		'Label2
+		'Label6
 		'
-		Me.Label2.AutoSize = True
-		Me.Label2.ForeColor = System.Drawing.Color.Black
-		Me.Label2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-		Me.Label2.Location = New System.Drawing.Point(14, 105)
-		Me.Label2.Name = "Label2"
-		Me.Label2.Size = New System.Drawing.Size(39, 21)
-		Me.Label2.TabIndex = 396
-		Me.Label2.Text = "TAE"
-		Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+		Me.Label6.ForeColor = System.Drawing.Color.Black
+		Me.Label6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+		Me.Label6.Location = New System.Drawing.Point(224, 74)
+		Me.Label6.Margin = New System.Windows.Forms.Padding(3, 6, 3, 0)
+		Me.Label6.Name = "Label6"
+		Me.Label6.Size = New System.Drawing.Size(151, 21)
+		Me.Label6.TabIndex = 400
+		Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
 		'
-		'tae
+		'Label3
 		'
-		Me.tae.Location = New System.Drawing.Point(172, 102)
-		Me.tae.Name = "tae"
-		Me.tae.ReadOnly = True
-		Me.tae.Size = New System.Drawing.Size(83, 28)
-		Me.tae.TabIndex = 397
-		Me.tae.Text = "0%"
-		Me.tae.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+		Me.Label3.ForeColor = System.Drawing.Color.Black
+		Me.Label3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+		Me.Label3.Location = New System.Drawing.Point(338, 6)
+		Me.Label3.Margin = New System.Windows.Forms.Padding(3, 6, 3, 0)
+		Me.Label3.Name = "Label3"
+		Me.Label3.Size = New System.Drawing.Size(30, 21)
+		Me.Label3.TabIndex = 398
+		Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
 		'
 		'CalculoAnualImpuesto
 		'
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
 		Me.BackColor = System.Drawing.Color.Silver
-		Me.ClientSize = New System.Drawing.Size(384, 233)
-		Me.Controls.Add(Me.GrupoBaja)
-		Me.Controls.Add(Me.GrupoCuenta)
+		Me.ClientSize = New System.Drawing.Size(384, 228)
+		Me.Controls.Add(Me.FlowLayoutPanel1)
+		Me.Controls.Add(Me.PanelInfo)
+		Me.Controls.Add(Me.StatusStrip1)
 		Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 13.0!)
 		Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
 		Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -239,30 +268,32 @@ Partial Class CalculoAnualImpuesto
 		Me.Name = "CalculoAnualImpuesto"
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
 		Me.Text = "Calculo Anual de Impuestos"
-		Me.GrupoCuenta.ResumeLayout(False)
-		Me.GrupoCuenta.PerformLayout()
 		CType(Me.CuentaInicial, System.ComponentModel.ISupportInitialize).EndInit()
 		CType(Me.periodo, System.ComponentModel.ISupportInitialize).EndInit()
-		Me.GrupoBaja.ResumeLayout(False)
-		Me.GrupoBaja.PerformLayout()
+		Me.PanelInfo.ResumeLayout(False)
 		Me.StatusStrip1.ResumeLayout(False)
 		Me.StatusStrip1.PerformLayout()
+		Me.FlowLayoutPanel1.ResumeLayout(False)
+		Me.FlowLayoutPanel1.PerformLayout()
 		Me.ResumeLayout(False)
+		Me.PerformLayout()
 
 	End Sub
 	Friend WithEvents iniciar As System.Windows.Forms.Button
-	Friend WithEvents GrupoCuenta As System.Windows.Forms.Panel
-    Friend WithEvents et_cuenta As System.Windows.Forms.Label
-    Friend WithEvents impuesto As System.Windows.Forms.ComboBox
-    Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents CuentaInicial As System.Windows.Forms.NumericUpDown
-    Friend WithEvents GrupoBaja As System.Windows.Forms.Panel
-    Friend WithEvents et_info As System.Windows.Forms.Label
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents periodo As System.Windows.Forms.NumericUpDown
-    Friend WithEvents info As System.Windows.Forms.Label
-    Friend WithEvents StatusStrip1 As System.Windows.Forms.StatusStrip
-    Friend WithEvents progreso As System.Windows.Forms.ToolStripProgressBar
+	Friend WithEvents et_cuenta As System.Windows.Forms.Label
+	Friend WithEvents impuesto As System.Windows.Forms.ComboBox
+	Friend WithEvents Label4 As System.Windows.Forms.Label
+	Friend WithEvents CuentaInicial As System.Windows.Forms.NumericUpDown
+	Friend WithEvents PanelInfo As System.Windows.Forms.Panel
+	Friend WithEvents Label1 As System.Windows.Forms.Label
+	Friend WithEvents periodo As System.Windows.Forms.NumericUpDown
+	Friend WithEvents info As System.Windows.Forms.Label
 	Friend WithEvents tae As TextBox
 	Friend WithEvents Label2 As Label
+	Friend WithEvents StatusStrip1 As StatusStrip
+	Friend WithEvents progreso As ToolStripProgressBar
+	Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
+	Friend WithEvents Label3 As Label
+	Friend WithEvents Label5 As Label
+	Friend WithEvents Label6 As Label
 End Class

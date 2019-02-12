@@ -1,10 +1,10 @@
 ﻿Module hac_contrib
-    Function leer(ByVal sender As System.Object, cuil As Integer)
-        Dim impuesto, importe, franqueo, adicional, pagado, vence As String
-        Dim contrib, deuda_total As New DataTable
-        adicional = ""
-        franqueo = ""
-		contrib = DbMan.read("SELECT id, impuesto, codigo, alta FROM contribuyente WHERE cuil=" & cuil, My.Settings.DefaultCon)
+	Function leer(ByVal sender As System.Object, cuil As Integer) As DataTable
+		Dim impuesto, importe, franqueo, adicional, pagado, vence As String
+		Dim contrib, deuda_total As New DataTable
+		adicional = ""
+		franqueo = ""
+		contrib = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT id, impuesto, codigo, alta FROM contribuyente WHERE cuil=" & cuil, )
 		If contrib.Rows.Count > 0 And (sender Is ConsultaCuentaAgrupada.imp_lista_mod Or sender Is ConsultaCuentaAgrupada.con_ca) Then 'Consultas llevan deuda total incluida
             Dim fila As Integer = 0
 			If contrib.Columns.Contains("deuda") Then
@@ -63,11 +63,11 @@
 
                 'Filtra desde la fecha de hoy hacia atrás
                 sql += " AND " & vence & "<DATE()"
-				deuda_total = DbMan.read(sql, My.Settings.foxcon)
+				deuda_total = DbMan.read(Nothing, My.Settings.foxcon, sql)
 				contrib(fila)("deuda") = deuda_total(0)("deuda")
-                fila += 1
-            Loop
-        End If
-        Return contrib
-    End Function
+				fila += 1
+			Loop
+		End If
+		Return contrib
+	End Function
 End Module

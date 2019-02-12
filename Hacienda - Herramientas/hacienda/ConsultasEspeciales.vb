@@ -68,7 +68,7 @@
 					sqlOrderBy = ""
 
 				ElseIf vista = "BANCOS - SALDO" Then
-					dtab = DbMan.read("SELECT MIN(fecha) as fecha FROM bancos", Connection.Text)
+					dtab = DbMan.read(Nothing, Connection.Text, "SELECT MIN(fecha) as fecha FROM bancos", )
 					Dim minDateValue As Date = dtab(0)("fecha").ToString
 					Dim maxDateValue As Date = Today
 
@@ -139,7 +139,7 @@
 						TableName = InputBox("Ingrese nombre de tabla.", "Ingresar Tabla")
 						If Trim(TableName) <> "" Then
 							TableName = Trim(TableName)
-							dtab = DbMan.read("SELECT * FROM " & TableName, Connection.Text)
+							dtab = DbMan.read(Nothing, Connection.Text, "SELECT * FROM " & TableName)
 						Else
 							TableName = Nothing
 						End If
@@ -170,22 +170,26 @@
 		If ReadTable Then
 			Dim LastQueryView As DataGridView = QueryView
 			Dim LastQueryBS As BindingSource = query_bs
-			query_bs.DataSource = Nothing
-			query_bs.DataSource = DbMan.read(sqlSelect, Connection.Text, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
+
+			query_bs = New BindingSource 'Avoids IBindingList error
+			query_bs.DataSource = DbMan.read(Nothing, Connection.Text, sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
 
 			CustomQuery.Text = sqlSelect & " " & sqlFrom & " " & sqlWhere & " " & sqlGroupBy & " " & sqlHaving & " " & sqlOrderBy
+
 			If query_bs.DataSource Is Nothing = False Then
-				Dim bs As New BindingSource
-				GenSearchControl1.filtro.Visible = False
-				bs.DataSource = CtrlMan.Fill.GetColumnList(query_bs.DataSource)
-				GenSearchControl1.filtro = CtrlMan.Fill.SetAutoComplete(GenSearchControl1.filtro, bs, "ColumnName", "DataType")
+				'Fill with data
 				CtrlMan.LoadDataGridView(QueryView, query_bs)
 			Else
 				'Retrieves last search
 				CtrlMan.LoadDataGridView(LastQueryView, LastQueryBS)
 			End If
-		Else
 
+			'Create filter with columns
+			Dim ColumnList_bs As New BindingSource
+			GenSearchControl1.filtro.Visible = False
+			ColumnList_bs.DataSource = CtrlMan.Fill.GetColumnList(query_bs.DataSource)
+			GenSearchControl1.filtro = CtrlMan.Fill.SetAutoComplete(GenSearchControl1.filtro, ColumnList_bs, "ColumnName", "DataType")
+		Else
 			GenSearchControl1.reset_search.PerformClick()
 		End If
 
@@ -256,7 +260,7 @@
 	'CUSTOM QUERY
 	Private Sub CustomQuery_KeyUp(sender As Object, e As KeyEventArgs) Handles CustomQuery.KeyUp
 		If e.KeyValue = Keys.Enter Then
-			Dim dtab As DataTable = DbMan.read(CustomQuery.Text, Connection.Text)
+			Dim dtab As DataTable = DbMan.read(Nothing, Connection.Text, CustomQuery.Text)
 			CtrlMan.LoadDataGridView(QueryView, query_bs, "", dtab)
 			CustomQuery.Items.Insert(0, Trim(CustomQuery.Text))
 			CustomQuery.Text = ""

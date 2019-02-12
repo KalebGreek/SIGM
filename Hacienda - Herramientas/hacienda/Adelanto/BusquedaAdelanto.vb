@@ -22,7 +22,7 @@
 												hac_adelanto.persona_id, hac_adelanto.fecha, hac_adelanto.monto,
 												persona.email, persona.telefono										 
 										 FROM hac_adelanto INNER JOIN persona ON hac_adelanto.persona_id=persona.id"
-					bs_resultado.DataSource = DbMan.read(sql, My.Settings.DefaultCon)
+					bs_resultado.DataSource = DbMan.read(Nothing, My.Settings.DefaultCon, sql)
 				End If
 
 				If bs_resultado.Count > 0 Then
@@ -48,7 +48,7 @@
 		ElseIf e.KeyValue = Keys.Delete Then
 			If bs_resultado.Count > 0 Then
 				If bs_resultado.Position > -1 Then
-					If DbMan.edit("DELETE * FROM hac_adelanto WHERE id=" & bs_resultado.Current("id")) Then
+					If DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE * FROM hac_adelanto WHERE id=" & bs_resultado.Current("id")) Then
 						bs_resultado.RemoveCurrent()
 					End If
 				End If

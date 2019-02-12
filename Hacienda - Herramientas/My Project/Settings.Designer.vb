@@ -77,7 +77,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=vrosas.accdb")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.16.0;Data Source=vrosas.accdb")>  _
         Public Property adbcon() As String
             Get
                 Return CType(Me("adbcon"),String)
@@ -135,7 +135,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=vrosas.accdb")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.16.0;Data Source=vrosas.accdb")>  _
         Public Property DefaultCon() As String
             Get
                 Return CType(Me("DefaultCon"),String)
@@ -249,6 +249,18 @@ Namespace My
             Get
                 Return CType(Me("FoxConnectionString"),String)
             End Get
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Color.DimGray")>  _
+        Public Property CurrentMenuColor() As String
+            Get
+                Return CType(Me("CurrentMenuColor"),String)
+            End Get
+            Set
+                Me("CurrentMenuColor") = value
+            End Set
         End Property
     End Class
 End Namespace
