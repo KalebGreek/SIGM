@@ -14,13 +14,13 @@
 	Shared SQLOrder As String
 
 	Shared Function Buscar() As DataTable
-		Return DbMan.read(Nothing, My.Settings.DefaultCon, SQLSelect, SQLTable)
+		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, SQLSelect, SQLTable)
 	End Function
 
 	Shared Function Seleccionar(nota_pedido_id As Integer) As DataRow
 		SQLWhere = " WHERE opu_nota_pedido.id=" & nota_pedido_id
 
-		Return DbMan.read(Nothing, My.Settings.DefaultCon, SQLSelect, SQLTable, SQLWhere)(0)
+		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, SQLSelect, SQLTable, SQLWhere)(0)
 	End Function
 
 	Shared Function Guardar(nota_pedido_id As Integer) As Boolean
@@ -37,6 +37,6 @@
 	Shared Function LoadReport(nota_pedido_id As Integer) As DataRow
 		SQLWhere = " WHERE opu_nota_pedido.id=" & nota_pedido_id
 
-		Return DbMan.read(Nothing, My.Settings.DefaultCon, SQLSelect, SQLTable, SQLWhere)(0)
+		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, SQLSelect, SQLTable, SQLWhere)(0)
 	End Function
 End Class

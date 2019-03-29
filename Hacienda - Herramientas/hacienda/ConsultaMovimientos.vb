@@ -87,27 +87,27 @@
 
 		SQLOrder = " ORDER BY orden"
 
-		Return DbMan.read(Nothing, My.Settings.foxcon, SQLSelect, SQLTable, SQLCriteria,,, SQLOrder)
+		Return DbMan.readDB(Nothing, My.Settings.foxConnection, SQLSelect, SQLTable, SQLCriteria,,, SQLOrder)
 	End Function
 	Private Function ConsultarMovimientos(ByVal cuenta As Double, ByVal keyword As String,
-                                          Filtrado As Boolean, FiltroFecha As Boolean,
-                                          ByVal FechaInicio As Date, ByVal FechaFinal As Date) As DataTable
+										  Filtrado As Boolean, FiltroFecha As Boolean,
+										  ByVal FechaInicio As Date, ByVal FechaFinal As Date) As DataTable
 		SQLSelect = "SELECT movimis.orden, movimis.fecha, movimis.documento, movimis.pagado, movimis.detalle, movimis.emite"
 		SQLTable = " FROM movimis INNER JOIN hacienda ON movimis.orden=hacienda.orden"
 		SQLCriteria = " WHERE movimis.orden=" & cuenta
 		If Filtrado Then
-            If FiltroFecha Then
+			If FiltroFecha Then
 				SQLCriteria += " AND movimis.fecha => {" & FechaInicio.ToString("MM/dd/yyyy") & "}
                                  AND movimis.fecha <= {" & FechaFinal.ToString("MM/dd/yyyy") & "}"
 			ElseIf Len(keyword) > 2 Then
 				SQLCriteria += " AND movimis.detalle LIKE '%" & keyword & "%'"
 			End If
-        End If
+		End If
 
-		Return DbMan.read(Nothing, My.Settings.foxcon, SQLSelect, SQLTable, SQLCriteria)
+		Return DbMan.readDB(Nothing, My.Settings.foxConnection, SQLSelect, SQLTable, SQLCriteria)
 	End Function
-    Private Sub SumarTotales(ingreso As Boolean)
-		Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.foxcon, "SELECT SUM(movimis.pagado) as total_pagado, movimis.orden, hacienda.autorizado" &
+	Private Sub SumarTotales(ingreso As Boolean)
+		Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT SUM(movimis.pagado) as total_pagado, movimis.orden, hacienda.autorizado" &
 											SQLTable & SQLCriteria & " GROUP BY movimis.orden, hacienda.autorizado")
 
 

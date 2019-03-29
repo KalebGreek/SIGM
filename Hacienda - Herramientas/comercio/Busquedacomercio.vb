@@ -54,14 +54,13 @@ Public Class BusquedaComercio
 					OleDBCmd.CommandText += " WHERE comcue.pago={}"
 				End If
 
-				dtab = DbMan.read(OleDBCmd, My.Settings.foxcon)
+				dtab = DbMan.readDB(OleDBCmd, My.Settings.foxConnection)
 
 				If dtab.Rows.Count > 0 Then
 					bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(dtab)
 					.filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
-					.filtro.SelectedIndex = 0
-					CtrlMan.LoadDataGridView(resultado, bs_resultado, "", dtab)
-				End If
+                    CtrlMan.LoadDataGridView(resultado, bs_resultado, "", dtab)
+                End If
 			Else
 				.reset_search.PerformClick()
 			End If

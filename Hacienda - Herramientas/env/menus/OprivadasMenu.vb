@@ -24,8 +24,8 @@
 
 	'Herramientas
 	Private Sub BuscarProfesionalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarProfesionalToolStripMenuItem.Click
-		Dim buscar1 As New BusquedaPersona
-		buscar1.MdiParent = Me.Parent
+        Dim buscar1 As New BusquedaPersona
+        buscar1.MdiParent = Me.Parent
 		buscar1.genSearchControl1.vista.Text = "PROFESIONAL"
 		buscar1.Show()
 	End Sub

@@ -51,7 +51,7 @@
 		Dim strout As String = ""
 		Dim mill, thou, hundr, dec As Integer
 		Dim dict As New BindingSource
-		dict.DataSource = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT num, str FROM numtostr_dict")
+		dict.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT num, str FROM numtostr_dict")
 		n = n.ToString("d2")
 
 		mill = Val(n) \ Math.Pow(10, 6)

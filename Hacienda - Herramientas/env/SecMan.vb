@@ -4,7 +4,7 @@ Public Class SecMan 'Security Manager
 	'Login functions
 	Shared Function check_access(user As String, pass As String) As Integer
 		If Len(user) >= 5 And Len(pass) >= 5 Then
-			Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT id, usuario, pass FROM usuarios
+			Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, usuario, pass FROM usuarios
 												 WHERE usuario='" & user & "' AND pass ='" & pass & "'")
 
 			If dtab Is Nothing Then
@@ -25,7 +25,7 @@ Public Class SecMan 'Security Manager
 		Dim token As String = getCpuId()
 		Dim equipo As String = Environment.MachineName
         'Últimos accesos
-        Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT id, fecha_hora, user_id, token, equipo, sesion 
+        Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, fecha_hora, user_id, token, equipo, sesion 
                                               FROM usr_log
                                              WHERE user_id=" & user_id & " ORDER BY id DESC")
 
@@ -36,7 +36,7 @@ Public Class SecMan 'Security Manager
 					If dtab(0)("sesion") Then
 						'Sin cambios
 					ElseIf dtab(0)("sesion") = False Then 'Agregar registro a historial
-						DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)
+						DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)
 										 VALUES(" & user_id & ", '" & fecha_hora & "' ,
 												'" & token & "', '" & equipo & "', " & lock & ")")
 					End If
@@ -45,9 +45,9 @@ Public Class SecMan 'Security Manager
 												  MsgBoxStyle.YesNo, "Sesion iniciada en otro equipo") Then
 
 						'Iniciar sesion en este equipo, cerrar sesión de accesos anteriores
-						DbMan.edit(Nothing, My.Settings.DefaultCon, "UPDATE usr_log Set sesion=False WHERE user_id=" & user_id)
+						DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE usr_log Set sesion=False WHERE user_id=" & user_id)
 
-						DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)
+						DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)
 											     VALUES(" & user_id & ", '" & fecha_hora & "' ,
 														'" & token & "', '" & equipo & "', " & lock & ")")
 
@@ -57,12 +57,12 @@ Public Class SecMan 'Security Manager
 				End If
 
 			ElseIf dtab.Rows.Count = 0 Then 'No hay registros de inicio de sesion
-				DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
+				DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
 								  " VALUES(" & user_id & ", '" & fecha_hora & "' ," &
 								  " '" & token & "', '" & equipo & "', True)")
 			End If
 		Else 'Cerrar sesion correctamente
-			DbMan.edit(Nothing, My.Settings.DefaultCon, "UPDATE usr_log SET sesion=" & lock & " WHERE user_id=" & user_id)
+			DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE usr_log SET sesion=" & lock & " WHERE user_id=" & user_id)
 		End If
 
 		Return True
@@ -70,7 +70,7 @@ Public Class SecMan 'Security Manager
 	Shared Function privileges(user_id As Integer) As launcher
 		Dim inicio As New launcher
         'Leer
-        Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM usuarios WHERE id=" & user_id)
+        Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM usuarios WHERE id=" & user_id)
 		'Cargar
 		CtrlMan.LoadAllControls(dtab(0), inicio)
 		Return inicio
@@ -79,11 +79,11 @@ Public Class SecMan 'Security Manager
 	'SQL History
 	Shared Sub log_write(sql As String, connection As String, user_id As Integer)
 		'Hardcoded SQL logging to check changes in DB
-		'Independent from DbMan.edit()
+		'Independent from DbMan.editDB()
 		sql = Replace(sql, "'", "`") 'To avoid conflict with other hardcoded sql queries
 		Dim LogInsert As New OleDb.OleDbCommand
 		LogInsert.CommandText = "INSERT INTO sql_log(_date, _user_id, _sql, _con) VALUES('" & Date.Now & "', '" & user_id & "', '" & sql & "','" & connection & "');"
-		olecon.ConnectionString = My.Settings.adbcon
+		olecon.ConnectionString = My.Settings.AdbConnection
 
 		LogInsert.Connection = olecon
 		'Abrir la conexión y ejecutar

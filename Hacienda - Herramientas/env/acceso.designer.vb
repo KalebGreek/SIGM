@@ -32,6 +32,8 @@ Partial Class acceso
 		Me.Label2 = New System.Windows.Forms.Label()
 		Me.Label1 = New System.Windows.Forms.Label()
 		Me.info = New System.Windows.Forms.Label()
+		Me.Label4 = New System.Windows.Forms.Label()
+		Me.ServerList = New System.Windows.Forms.ComboBox()
 		Me.Label3 = New System.Windows.Forms.Label()
 		Me.FlowLayoutPanel1.SuspendLayout()
 		Me.SuspendLayout()
@@ -73,7 +75,7 @@ Partial Class acceso
 		Me.login.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.login.ForeColor = System.Drawing.Color.WhiteSmoke
 		Me.login.Location = New System.Drawing.Point(5, 85)
-		Me.login.Margin = New System.Windows.Forms.Padding(5, 5, 3, 8)
+		Me.login.Margin = New System.Windows.Forms.Padding(5, 5, 3, 0)
 		Me.login.Name = "login"
 		Me.login.Size = New System.Drawing.Size(125, 30)
 		Me.login.TabIndex = 1
@@ -89,7 +91,7 @@ Partial Class acceso
 		Me.salir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.salir.ForeColor = System.Drawing.Color.WhiteSmoke
 		Me.salir.Location = New System.Drawing.Point(136, 85)
-		Me.salir.Margin = New System.Windows.Forms.Padding(3, 5, 3, 8)
+		Me.salir.Margin = New System.Windows.Forms.Padding(3, 5, 3, 0)
 		Me.salir.Name = "salir"
 		Me.salir.Size = New System.Drawing.Size(95, 30)
 		Me.salir.TabIndex = 160
@@ -106,10 +108,12 @@ Partial Class acceso
 		Me.FlowLayoutPanel1.Controls.Add(Me.info)
 		Me.FlowLayoutPanel1.Controls.Add(Me.login)
 		Me.FlowLayoutPanel1.Controls.Add(Me.salir)
+		Me.FlowLayoutPanel1.Controls.Add(Me.Label4)
+		Me.FlowLayoutPanel1.Controls.Add(Me.ServerList)
 		Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
 		Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 24)
 		Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-		Me.FlowLayoutPanel1.Size = New System.Drawing.Size(236, 120)
+		Me.FlowLayoutPanel1.Size = New System.Drawing.Size(236, 149)
 		Me.FlowLayoutPanel1.TabIndex = 161
 		'
 		'Label2
@@ -148,6 +152,30 @@ Partial Class acceso
 		Me.info.Text = "Ingrese usuario y contraseña."
 		Me.info.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
 		'
+		'Label4
+		'
+		Me.Label4.BackColor = System.Drawing.Color.Transparent
+		Me.Label4.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!)
+		Me.Label4.Location = New System.Drawing.Point(4, 119)
+		Me.Label4.Margin = New System.Windows.Forms.Padding(4, 4, 0, 0)
+		Me.Label4.Name = "Label4"
+		Me.Label4.Size = New System.Drawing.Size(26, 24)
+		Me.Label4.TabIndex = 165
+		Me.Label4.Text = ""
+		Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		'
+		'ServerList
+		'
+		Me.ServerList.BackColor = System.Drawing.Color.WhiteSmoke
+		Me.ServerList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple
+		Me.ServerList.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.ServerList.FormattingEnabled = True
+		Me.ServerList.Location = New System.Drawing.Point(30, 118)
+		Me.ServerList.Margin = New System.Windows.Forms.Padding(0, 3, 0, 0)
+		Me.ServerList.Name = "ServerList"
+		Me.ServerList.Size = New System.Drawing.Size(200, 27)
+		Me.ServerList.TabIndex = 164
+		'
 		'Label3
 		'
 		Me.Label3.BackColor = System.Drawing.Color.Gray
@@ -165,7 +193,7 @@ Partial Class acceso
 		Me.AcceptButton = Me.login
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
 		Me.CancelButton = Me.salir
-		Me.ClientSize = New System.Drawing.Size(236, 144)
+		Me.ClientSize = New System.Drawing.Size(236, 173)
 		Me.Controls.Add(Me.FlowLayoutPanel1)
 		Me.Controls.Add(Me.Label3)
 		Me.DoubleBuffered = True
@@ -192,4 +220,6 @@ Partial Class acceso
 	Friend WithEvents Label2 As Label
 	Friend WithEvents Label1 As Label
 	Friend WithEvents Label3 As Label
+	Friend WithEvents Label4 As Label
+	Friend WithEvents ServerList As ComboBox
 End Class

@@ -10,7 +10,7 @@
 		CargarBeneficiario(beneficiario_id.Text)
 	End Sub
 	Private Sub CargarBeneficiario(persona_id As Integer)
-		DbMan.read(Nothing, My.Settings.DefaultCon,
+		DbMan.readDB(Nothing, My.Settings.CurrentDB,
 					"SELECT * FROM persona 
 					INNER JOIN beneficiario ON persona.id=beneficiario.persona_id
 					WHERE beneficiario.id=" & beneficiario_id.Text)

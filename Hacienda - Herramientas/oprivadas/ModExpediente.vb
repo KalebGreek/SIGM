@@ -49,7 +49,7 @@
 				answer = MsgBox("¿Desea guardar este expediente temporal bajo el N° " & expediente.Text & "?",
 								MsgBoxStyle.YesNoCancel, "Guardar Expediente")
 				If answer = MsgBoxResult.Yes Then 'Asignar N° de Expediente y quitar temporal
-					DbMan.edit(Nothing, My.Settings.foxcon,
+					DbMan.editDB(Nothing, My.Settings.foxConnection,
 								"UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
                                   WHERE id=" & opr_id.Text)
 					Me.Close()
@@ -283,26 +283,22 @@
 
     '# PERSONA 
     Private Sub add_resp_Click(sender As Object, e As EventArgs) Handles add_resp.Click
-		Dim bper As New BusquedaPersona()
-		bper.genSearchControl1.vista.Text = "PERSONA"
-		bper.genSearchControl1.selectRow.Visible = True
-		bper.genSearchControl1.cancel.Visible = True
-		bper.ShowDialog(Me)
-		With bper.resultado.DataSource
-			'Se agrega el registro temporal
-			If .Position > -1 Then
-				bs_resp.AddNew()
-				bs_resp.Current("persona_id") = .Current("persona_id").ToString
-				bs_resp.Current("razon") = .Current("razon").ToString
-				bs_resp.Current("cuil") = .Current("cuil").ToString
-				bs_resp.Current("email") = .Current("email").ToString
-				bs_resp.Current("telefono") = .Current("telefono").ToString
-				bs_resp.Current("difunto") = .Current("difunto")
-				bs_resp.EndEdit()
-			End If
-		End With
-		bper.Dispose()
-	End Sub
+        Dim bs As BindingSource = Persona.Seleccionar(Me)
+        With bs
+            'Se agrega el registro temporal
+            If .Position > -1 Then
+                bs_resp.AddNew()
+                bs_resp.Current("persona_id") = .Current("persona_id").ToString
+                bs_resp.Current("razon") = .Current("razon").ToString
+                bs_resp.Current("cuil") = .Current("cuil").ToString
+                bs_resp.Current("email") = .Current("email").ToString
+                bs_resp.Current("telefono") = .Current("telefono").ToString
+                bs_resp.Current("difunto") = .Current("difunto")
+                bs_resp.EndEdit()
+            End If
+        End With
+        bs.Dispose()
+    End Sub
 	Private Sub del_resp_Click(sender As Object, e As EventArgs) Handles del_resp.Click
 		If bs_resp.Position > -1 _
 				 And MsgBoxResult.Yes = MsgBox("¿Desea eliminar el responsable seleccionado?", MsgBoxStyle.YesNo, "Eliminar Responsable") Then
@@ -310,18 +306,12 @@
 		End If
 	End Sub
 	Private Sub mod_prof_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mod_prof.Click
-		Dim bprof As New BusquedaPersona()
-		bprof.genSearchControl1.vista.Text = "PROFESIONAL"
-		bprof.genSearchControl1.selectRow.Visible = True
-		bprof.genSearchControl1.cancel.Visible = True
-		bprof.ShowDialog(Me)
-		With bprof.resultado.DataSource
-			If .Position > -1 Then
-				CtrlMan.LoadAllControls(.Current.Row, Panel3)
-			End If
-		End With
-		bprof.Dispose()
-	End Sub
+        Dim bs As BindingSource = Persona.Seleccionar(Me, "PROFESIONAL")
+        If bs.Position > -1 Then
+            CtrlMan.LoadAllControls(bs.Current.Row, Panel3)
+        End If
+        bs.Dispose()
+    End Sub
 
     '# INMUEBLE
     Private Sub bs_catastro_PositionChanged(sender As Object, e As EventArgs) Handles bs_catastro.PositionChanged

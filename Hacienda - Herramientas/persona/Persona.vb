@@ -6,87 +6,29 @@
 								" LEFT JOIN localidades ON per_domicilio.localidad_id = localidades.id" &
 								" WHERE per_domicilio.principal=True"
 
-	Shared Function Seleccionar(ParentForm As Form) As BindingSource
-		Dim SeleccionarPersona As New BusquedaPersona
-		SeleccionarPersona.genSearchControl1.vista.SelectedIndex = 0
-		SeleccionarPersona.genSearchControl1.selectRow.Visible = True
-		SeleccionarPersona.genSearchControl1.cancel.Visible = True
-		SeleccionarPersona.ShowDialog(ParentForm)
+    Shared Function Seleccionar(ParentForm As Form, Optional vista As String = "PERSONA") As BindingSource
+        Dim SeleccionarPersona As New BusquedaPersona(True)
+        SeleccionarPersona.genSearchControl1.vista.Text = vista
+        SeleccionarPersona.ShowDialog(ParentForm)
+        Return SeleccionarPersona.bs_resultado
+    End Function
 
-		Return SeleccionarPersona.bs_resultado
-	End Function
-
-	Shared Function Buscar(difunto As Boolean, fisica As Boolean) As DataTable
+    Shared Function Buscar(difunto As Boolean, fisica As Boolean) As DataTable
 		Dim sql As String = PersonaSQL
 		sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
 		sql += " ORDER By Persona.razon ASC"
-		Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
+		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 	End Function
 
-	'Shared Function id(persona_id As Integer, difunto As Boolean, fisica As Boolean) As DataTable
-	'	Dim sql As String = PersonaSQL
-	'	sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
-
-	'	If persona_id > 0 Then
-	'		sql += " AND Persona.id=" & persona_id
-	'	End If
-
-	'	sql += " ORDER By Persona.razon ASC"
-	'	Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
-	'End Function
-	'Shared Function cuil(persona_cuil As Double, difunto As Boolean, fisica As Boolean) As DataTable
-	'	Dim sql As String = PersonaSQL
-	'	sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
-
-	'	If Len(persona_cuil) = 11 Then
-	'		sql += " AND Persona.cuil='" & persona_cuil & "'"
-	'	End If
-
-	'	sql += " ORDER By Persona.razon ASC"
-	'	Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
-	'End Function
-	'Shared Function razon(persona_razon As String, difunto As Boolean, fisica As Boolean) As DataTable
-
-	'	Dim sql As String = PersonaSQL
-	'	sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
-
-	'	persona_razon = Trim(persona_razon)
-	'	If Len(persona_razon) > 2 Then
-	'		sql += " AND Persona.razon LIKE '%" & persona_razon & "%'"
-	'	End If
-
-	'	sql += " ORDER By Persona.razon ASC"
-	'	Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
-	'End Function
-	'Shared Function direccion(calle As String, altura As Integer, localidad_id As Integer,
-	'									 difunto As Boolean, fisica As Boolean) As DataTable
-	'	Dim sql As String = PersonaSQL
-	'	sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
-	'	If Len(calle) > 2 Then
-	'		sql += " AND per_domicilio.calle LIKE '%" & calle & "%'"
-	'		If altura > 0 Then
-	'			sql += " AND per_domicilio.altura=" & altura
-	'		End If
-	'	ElseIf localidad_id > 0 Then
-	'		sql += " AND localidad.id=" & localidad_id
-	'	End If
-
-	'	sql += " ORDER By Per_domicilio.calle ASC"
-
-	'	Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
-	'End Function
-
-	'Registros para ModPersona
-
-	Shared Sub Cargar(persona_id As Integer,
-						  ByRef TabDPersonal As tabPersona1Datos, ByRef TabDomicilio As tabPersona2Domicilio,
-						  ByRef TabContacto As tabPersona3Contacto, ByRef TabAdicional As tabPersona4Adicional)
-		TabDPersonal.cargar(persona_id)
-		TabDomicilio.cargar(persona_id)
-		TabContacto.cargar(persona_id)
-		TabAdicional.cargar(persona_id)
-	End Sub
-	Shared Function Nueva(razon As String, cuil As Double, fisica As Boolean,
+    Shared Sub Cargar(persona_id As Integer,
+                          ByRef TabDPersonal As tabPersona1Datos, ByRef TabDomicilio As tabPersona2Domicilio,
+                          ByRef TabContacto As tabPersona3Contacto, ByRef TabAdicional As tabPersona4Adicional)
+        TabDPersonal.cargar(persona_id)
+        TabDomicilio.cargar(persona_id)
+        TabContacto.cargar(persona_id)
+        TabAdicional.cargar(persona_id)
+    End Sub
+    Shared Function Nueva(razon As String, cuil As Double, fisica As Boolean,
 							  email As String, telefono As String, difunto As Boolean, Optional ruta_defuncion As String = "") As String
 		Dim sql As String
 		sql = "INSERT INTO persona(razon, cuil, email, telefono, 
@@ -175,7 +117,7 @@
 			Return False
 		Else
 			'documentos
-			dtab_con = DbMan.read(Nothing, My.Settings.DefaultCon,
+			dtab_con = DbMan.readDB(Nothing, My.Settings.CurrentDB,
 									"SELECT descripcion, ruta FROM per_documento WHERE per_id=" & persona_id)
 			If dtab_con.Rows.Count > 0 Then
 				msg.Add("Los siguientes documentos seran eliminados del registro junto con la persona seleccionada: ")
@@ -189,8 +131,8 @@
 
 			Dim errormsg As New visor_error("Eliminar persona", msg)
 			If errormsg.ShowDialog() = DialogResult.OK Then
-				DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE FROM per_documento WHERE per_id=" & persona_id)
-				DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE FROM persona WHERE id=" & persona_id)
+				DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE FROM per_documento WHERE per_id=" & persona_id)
+				DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE FROM persona WHERE id=" & persona_id)
 				Return True
 			Else
 				Return False

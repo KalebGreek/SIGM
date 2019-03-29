@@ -17,7 +17,7 @@
 	Sub tablas_fox(ByVal impuesto As String)
         'Las tablas correspondientes a personas tienen los nombres correctos
         Dim dtab _
-		As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE personas='" & impuesto & "'")
+		As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM tablas_externas WHERE personas='" & impuesto & "'")
 
 
 		'Tablas generales
@@ -90,29 +90,32 @@
 		Else
 			System.Windows.Forms.Application.CurrentCulture = New System.Globalization.CultureInfo("ES-AR")
 		End If
-
+	End Sub
+	Function ListDBConnections() As List(Of String)
+		Dim ConnectionList As New List(Of String)
+		Dim current_con As String = ""
 		'Apenas termino de configurar bien postgres esto va a pasar a
 		'cargar la conexión de Access y dejar Postgres como estándar
-		If instancia Is acceso Then
-			'Leer carpeta raiz
-			My.Settings.adbcon = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & Environment.CurrentDirectory.ToString & "vrosas.accdb"
-			My.Settings.DefaultCon = My.Settings.adbcon
-		End If
 
-		Dim dtab_con As New DataTable
-        '### CONEXION FOX
-        dtab_con = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM opciones WHERE opcion='conexion_fox'")
+		For Each sp As Configuration.SettingsProperty In My.Settings.Properties
+			If sp.Name.Contains("Connection") Then
+				If sp.Name.Contains("Adb") Then
+					'ACCESS
+					'Set up root path
+					sp.DefaultValue = sp.DefaultValue.Replace("Data Source=vrosas.accdb", "Data Source=" & root & "\vrosas.accdb")
+				End If
 
-		If dtab_con.Rows.Count > 0 Then
-			My.Settings.foxcon = dtab_con(0)("valor")
-		End If
-        '### CONEXION PSQL
-        dtab_con = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM opciones WHERE opcion='conexion_sql'")
+				current_con = sp.DefaultValue
+				If DbMan.readTableSchema(current_con) Is Nothing Then
+					current_con = ""
+				Else
+					ConnectionList.Add(current_con)
+				End If
+			End If
+		Next
 
-		If dtab_con.Rows.Count > 0 Then
-			My.Settings.pgsqlcon = dtab_con(0)("valor")
-		End If
+		Return ConnectionList
+	End Function
 
-	End Sub
 
 End Module

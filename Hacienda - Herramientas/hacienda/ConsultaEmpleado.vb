@@ -57,52 +57,52 @@
     Private Sub buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
         grupo_mod.Enabled = False
 
-		Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM ordenanza")
+		Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM ordenanza")
 		If dtab Is Nothing = False Then
 			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", dtab)
 			If dtab.Rows.Count = 0 Then
-                MsgBox("No hay resultados.")
-                Me.Text = "Buscar Ordenanza"
-            Else
-                grupo_mod.Enabled = True
-            End If
-        Else
-            MsgBox("No hay resultados.")
-            Me.Text = "Buscar Ordenanza"
-        End If
-    End Sub
+				MsgBox("No hay resultados.")
+				Me.Text = "Buscar Ordenanza"
+			Else
+				grupo_mod.Enabled = True
+			End If
+		Else
+			MsgBox("No hay resultados.")
+			Me.Text = "Buscar Ordenanza"
+		End If
+	End Sub
 
     '###### OPERACIONES ##########################################################################################
     Private Sub consulta_KeyUp(sender As Object, e As KeyEventArgs) Handles visor.KeyUp
-        If e.KeyValue = Keys.Delete Then
-            eliminar.PerformClick()
-        ElseIf e.KeyValue = Keys.Enter Then
-            ver.PerformClick()
-        ElseIf e.KeyValue = Keys.F2 Then
-            modificar.PerformClick()
-        End If
-    End Sub
-    Private Sub ver_Click(sender As Object, e As EventArgs) Handles ver.Click
-        If bs_consulta.Position > -1 Then
-            Process.Start(root & My.Settings.DocFolderOrdenanza & bs_consulta.Current("ruta_copia").ToString)
-        End If
-    End Sub
-    Private Sub modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles modificar.Click
-        If bs_consulta.Position > -1 Then
-            Dim ModificarOrdenanza As New ModOrdenanza
-            With ModificarOrdenanza
-                .bs_registro = bs_consulta
-                .ShowDialog()
-                .Dispose()
-            End With
-            buscar.PerformClick()
-        End If
-    End Sub
-    Private Sub eliminar_Click(sender As Object, e As EventArgs) Handles eliminar.Click
-        With bs_consulta
-            If .Position > -1 Then
-                If MsgBoxResult.Yes = MsgBox("¿Desea eliminar el registro seleccionado?", MsgBoxStyle.YesNo, "Eliminar registro") Then
-					DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE * FROM ordenanza WHERE id=" & .Current("id"))
+		If e.KeyValue = Keys.Delete Then
+			eliminar.PerformClick()
+		ElseIf e.KeyValue = Keys.Enter Then
+			ver.PerformClick()
+		ElseIf e.KeyValue = Keys.F2 Then
+			modificar.PerformClick()
+		End If
+	End Sub
+	Private Sub ver_Click(sender As Object, e As EventArgs) Handles ver.Click
+		If bs_consulta.Position > -1 Then
+			Process.Start(root & My.Settings.DocFolderOrdenanza & bs_consulta.Current("ruta_copia").ToString)
+		End If
+	End Sub
+	Private Sub modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles modificar.Click
+		If bs_consulta.Position > -1 Then
+			Dim ModificarOrdenanza As New ModOrdenanza
+			With ModificarOrdenanza
+				.bs_registro = bs_consulta
+				.ShowDialog()
+				.Dispose()
+			End With
+			buscar.PerformClick()
+		End If
+	End Sub
+	Private Sub eliminar_Click(sender As Object, e As EventArgs) Handles eliminar.Click
+		With bs_consulta
+			If .Position > -1 Then
+				If MsgBoxResult.Yes = MsgBox("¿Desea eliminar el registro seleccionado?", MsgBoxStyle.YesNo, "Eliminar registro") Then
+					DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM ordenanza WHERE id=" & .Current("id"))
 					buscar.PerformClick()
                 End If
             End If

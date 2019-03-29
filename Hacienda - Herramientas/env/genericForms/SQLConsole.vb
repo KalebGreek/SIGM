@@ -3,33 +3,33 @@
 Public Class SQLConsole
 	Private Sub SQLConsole_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
 		If Me.Visible Then
-			connection.Items.Add(My.Settings.adbcon)
-			connection.Items.Add(My.Settings.foxcon)
-			connection.Items.Add(My.Settings.pgsqlcon)
+			connection.Items.Add(My.Settings.AdbConnection)
+			connection.Items.Add(My.Settings.foxConnection)
+			connection.Items.Add(My.Settings.pgsql_disabled)
 		End If
 	End Sub
 
-	Private Sub ExecuteQuery()
-		query.Text = UCase(Trim(query.Text))
-		If query.Text = "CLS" Then
+	Private Function ExecuteQuery(sql As String) As String
+		sql = UCase(Trim(sql))
+		If sql = "CLS" Then
 			QueryLog.Items.Clear()
-			query.Text = ""
-		ElseIf query.Text <> "" Then
+			sql = ""
+		ElseIf sql <> "" Then
 			Dim dtab As New DataTable
 			Dim OleDBCmd As New OleDb.OleDbCommand
 			With OleDBCmd
 				.CommandType = CommandType.Text
-				.CommandText = query.Text
+				.CommandText = sql
 				If connection.Text <> "" Then
 					query.Items.Insert(0, OleDBCmd.CommandText)
 					QueryLog.Items.Insert(0, OleDBCmd.CommandText)
 					If .CommandText.Contains("INSERT") Or .CommandText.Contains("UPDATE") Or .CommandText.Contains("DELETE") Then
-						QueryLog.Items.Insert(0, DbMan.edit(OleDBCmd, connection.Text))
+						QueryLog.Items.Insert(0, DbMan.editDB(OleDBCmd, connection.Text))
 
 					ElseIf .CommandText.Contains("SELECT") Then
-						CtrlMan.LoadDataGridView(QueryResult, bs_result, "", DbMan.read(OleDBCmd, connection.Text))
+						CtrlMan.LoadDataGridView(QueryResult, bs_result, "", DbMan.readDB(OleDBCmd, connection.Text))
 					End If
-					query.Text = ""
+					sql = ""
 				Else
 					QueryLog.Items.Insert(0, "Ninguna base de datos selecccionada.")
 				End If
@@ -37,12 +37,12 @@ Public Class SQLConsole
 		Else
 			QueryLog.Items.Insert(0, "Datos insuficientes para realizar la consulta.")
 		End If
-
-	End Sub
+		Return sql
+	End Function
 
 	Private Sub query_KeyUp(sender As Object, e As KeyEventArgs) Handles query.KeyUp
 		If e.KeyValue = Keys.Enter Then
-			ExecuteQuery()
+			query.Text = ExecuteQuery(query.Text)
 		End If
 	End Sub
 
@@ -62,7 +62,7 @@ Public Class SQLConsole
 	Private Sub TableList_DoubleClick() Handles TableList.DoubleClick
 		If TableList.SelectedItem <> "" Then
 			query.Text = "SELECT * FROM " & TableList.SelectedItem
-			ExecuteQuery()
+			ExecuteQuery(query.Text)
 		End If
 	End Sub
 
@@ -70,8 +70,22 @@ Public Class SQLConsole
 		If QueryLog.Text.Contains("SELECT") Or QueryLog.Text.Contains("INSERT INTO") _
 		Or QueryLog.Text.Contains("UPDATE") Or QueryLog.Text.Contains("DELETE") Then
 			query.Text = QueryLog.Text
-			ExecuteQuery()
+			query.Text = ExecuteQuery(query.Text)
 		End If
 
+	End Sub
+
+	Private Sub Button1_Click(sender As Object, e As EventArgs) Handles AddScript.Click
+		Dim ruta As String = ""
+		Dim filediag As New OpenFileDialog
+		filediag.ShowDialog()
+		ruta = filediag.FileName
+		If My.Computer.FileSystem.FileExists(ruta) Then
+			Dim parsedScript As String = Trim(My.Computer.FileSystem.ReadAllText(ruta))
+			If MsgBoxResult.Yes = MsgBox(parsedScript, MsgBoxStyle.YesNo) Then
+				Replace(parsedScript, Chr(13), "")
+				ExecuteQuery(parsedScript)
+			End If
+		End If
 	End Sub
 End Class

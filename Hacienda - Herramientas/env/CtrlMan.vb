@@ -156,7 +156,7 @@
 				mtb.Tag = "CUIL invalido."
 			Else
 				Dim dtab As New DataTable
-				dtab = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM persona
+				dtab = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM persona
 									WHERE cuil=" & mtb.Text)
 
 				If dtab.Rows.Count > 0 Then
@@ -186,48 +186,50 @@
 	'Loading controls
 	'LOAD ALL THE CONTROLS!!!!1ONE
 	Shared Function LoadAllControls(drow As DataRow, ByVal target As Object) As Object
-		'Loads the values of each column of the DataRow in the controls sharing the column name
-		'Recursive!
-		For Each c As Control In target.Controls
-			If drow.Table.Columns.Contains(c.Name) Then
-				If drow(c.Name) Is DBNull.Value = False Then
-					If TypeOf c Is Button Then
-						CType(c, Button).Visible = drow(c.Name)
-					ElseIf TypeOf c Is CheckBox Then
-						CType(c, CheckBox).Checked = drow(c.Name)
-					ElseIf TypeOf c Is ComboBox Then
-						If CType(c, ComboBox).DataSource Is Nothing Then
-							c.Text = drow(c.Name).ToString
-						Else
-							'With a datasource, you need to have both the field and the field_id,
-							'to select the id in the datasource linked to the combobox
-							CType(c, ComboBox).DataSource.Position = CType(c, ComboBox).DataSource.Find("id", drow(c.Name & "_id")) 'localidad_id
-						End If
-					ElseIf TypeOf c Is DateTimePicker Then
-						CType(c, DateTimePicker).Value = CDate(drow(c.Name))
-					ElseIf TypeOf c Is Label Then
-						c.Text = drow(c.Name).ToString
-					ElseIf TypeOf c Is LinkLabel Then
-						c.Text = drow(c.Name).ToString
-					ElseIf TypeOf c Is TextBox Then
-						c.Text = drow(c.Name).ToString
-					ElseIf TypeOf c Is MaskedTextBox Then
-						c.Text = drow(c.Name).ToString
-					ElseIf TypeOf c Is NumericUpDown Then
-						CType(c, NumericUpDown).Value = drow(c.Name)
-					ElseIf TypeOf c Is RadioButton Then
-						CType(c, RadioButton).Checked = drow(c.Name)
-					End If
-				End If
-			ElseIf TypeOf c Is FlowLayoutPanel Or
-				   TypeOf c Is Panel Or
-				   TypeOf c Is TabControl Or
-				   TypeOf c Is TabPage Then
-				'Recursive control loading
-				LoadAllControls(drow, c)
-			End If
-		Next
-		Return target
+        'Loads the values of each column of the DataRow in the controls sharing the column name
+        'Recursive!
+        If drow Is Nothing = False Then
+            For Each c As Control In target.Controls
+                If drow.Table.Columns.Contains(c.Name) Then
+                    If drow(c.Name) Is DBNull.Value = False Then
+                        If TypeOf c Is Button Then
+                            CType(c, Button).Visible = drow(c.Name)
+                        ElseIf TypeOf c Is CheckBox Then
+                            CType(c, CheckBox).Checked = drow(c.Name)
+                        ElseIf TypeOf c Is ComboBox Then
+                            If CType(c, ComboBox).DataSource Is Nothing Then
+                                c.Text = drow(c.Name).ToString
+                            Else
+                                'With a datasource, you need to have both the field and the field_id,
+                                'to select the id in the datasource linked to the combobox
+                                CType(c, ComboBox).DataSource.Position = CType(c, ComboBox).DataSource.Find("id", drow(c.Name & "_id")) 'localidad_id
+                            End If
+                        ElseIf TypeOf c Is DateTimePicker Then
+                            CType(c, DateTimePicker).Value = CDate(drow(c.Name))
+                        ElseIf TypeOf c Is Label Then
+                            c.Text = drow(c.Name).ToString
+                        ElseIf TypeOf c Is LinkLabel Then
+                            c.Text = drow(c.Name).ToString
+                        ElseIf TypeOf c Is TextBox Then
+                            c.Text = drow(c.Name).ToString
+                        ElseIf TypeOf c Is MaskedTextBox Then
+                            c.Text = drow(c.Name).ToString
+                        ElseIf TypeOf c Is NumericUpDown Then
+                            CType(c, NumericUpDown).Value = drow(c.Name)
+                        ElseIf TypeOf c Is RadioButton Then
+                            CType(c, RadioButton).Checked = drow(c.Name)
+                        End If
+                    End If
+                ElseIf TypeOf c Is FlowLayoutPanel Or
+                   TypeOf c Is Panel Or
+                   TypeOf c Is TabControl Or
+                   TypeOf c Is TabPage Then
+                    'Recursive control loading
+                    LoadAllControls(drow, c)
+                End If
+            Next
+        End If
+        Return target
 	End Function
 
 	'Esta rutina importa datatable o bindingsource seleccionada en un datagridview y formatea las columnas correspondientes
@@ -242,13 +244,13 @@
 
 		If dtab Is Nothing = False Then
 			bs.DataSource = dtab
+			bs.Filter = bsFilter
+
+			visor.DataSource = bs
+			'Dar formato
+			visor = FormatColumns(visor)
 		End If
 
-		bs.Filter = bsFilter
-
-		visor.DataSource = bs
-		'Dar formato
-		visor = FormatColumns(visor)
 		visor.ResumeLayout()
 		Return visor
 	End Function
@@ -497,7 +499,7 @@
 
 		Shared Sub GetCities(ByRef CityList As ComboBox, ByRef bs As BindingSource, State As Integer)
 			CityList.BeginUpdate()
-			bs.DataSource = DbMan.read(Nothing, My.Settings.DefaultCon,
+			bs.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB,
 										"SELECT * FROM localidades 
 										WHERE provincia_id=" & State & "
 										ORDER BY nombre")
@@ -535,7 +537,7 @@
 		End Function
 		Shared Sub GetStates(ByRef StateList As ComboBox, ByRef bs As BindingSource)
 			StateList.BeginUpdate()
-			bs.DataSource = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM provincias ORDER BY nombre")
+			bs.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM provincias ORDER BY nombre")
 			StateList.DataSource = bs
 			StateList.DisplayMember = "nombre"
 			StateList.ValueMember = "id"

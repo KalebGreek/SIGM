@@ -28,8 +28,8 @@
 				If .filtro.Items.Count > 0 Then
 					.filtro.SelectedIndex = 0
 				End If
-				CtrlMan.LoadDataGridView(resultado, bs_resultado, .bsCustomFilter,)
-			Else
+                CtrlMan.LoadDataGridView(resultado, bs_resultado, .bsCustomFilter)
+            Else
 				ControlBusqueda1.reset_search.PerformClick()
 			End If
 

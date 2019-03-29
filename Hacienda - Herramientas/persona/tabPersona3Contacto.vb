@@ -8,7 +8,7 @@
 	End Sub
 
 	Public Sub cargar(persona_id As Integer)
-		Dim registro As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM persona WHERE id=" & persona_id)
+		Dim registro As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM persona WHERE id=" & persona_id)
 
 		tele.Text = registro(0)("telefono").ToString
 		email.Text = registro(0)("email").ToString
@@ -16,7 +16,7 @@
 
 	Public Sub guardar(persona_id As Integer)
 		If CtrlMan.Validate(Me, ErrorInfo) Then
-			DbMan.edit(Nothing, My.Settings.DefaultCon,
+			DbMan.editDB(Nothing, My.Settings.CurrentDB,
 						"UPDATE persona SET telefono=" & tele.Text & ", email='" & email.Text & "'
 						  WHERE id=" & persona_id)
 		End If

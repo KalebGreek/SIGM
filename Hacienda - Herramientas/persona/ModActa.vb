@@ -105,7 +105,7 @@
 			sql += " libro = " & libro & " AND acta = " & acta
 		End If
 
-		Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
+		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 	End Function
 
 	Private Sub add_acta_Click(sender As Object, e As EventArgs) Handles add_acta.Click
@@ -136,7 +136,7 @@
 		With registro
 			For fila As Integer = 0 To .Count - 1
 				.Position = fila
-				DbMan.edit(Nothing, My.Settings.DefaultCon,
+				DbMan.editDB(Nothing, My.Settings.CurrentDB,
 						   "INSERT INTO actas(per_id, fecha, acta, libro, copia, nota)
                                  VALUES(" & per_id & ", #" & .Current("fecha") & "#,
                                   " & .Current("acta") & ", " & .Current("libro") & ", '" & .Current("copia") & "',
@@ -146,7 +146,7 @@
 	End Sub
 
 	Sub limpiar(ByVal per_id As Integer) 'Temporales
-        DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE * FROM actas WHERE per_id=" & per_id)
+        DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM actas WHERE per_id=" & per_id)
 	End Sub
     '###### MODIFICAR ##########################################################################################
     '# ACTAS

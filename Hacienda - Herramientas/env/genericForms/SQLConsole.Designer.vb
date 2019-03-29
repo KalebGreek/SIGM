@@ -42,6 +42,7 @@ Partial Class SQLConsole
 		Me.query = New System.Windows.Forms.ComboBox()
 		Me.connection = New System.Windows.Forms.ComboBox()
 		Me.Panel1 = New System.Windows.Forms.Panel()
+		Me.AddScript = New System.Windows.Forms.Button()
 		Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
 		CType(Me.QueryResult, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -107,6 +108,7 @@ Partial Class SQLConsole
 		Me.nav_result.Dock = System.Windows.Forms.DockStyle.Bottom
 		Me.nav_result.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.nav_result.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+		Me.nav_result.ImageScalingSize = New System.Drawing.Size(20, 20)
 		Me.nav_result.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BindingNavigatorMoveFirstItem, Me.BindingNavigatorMovePreviousItem, Me.BindingNavigatorSeparator, Me.BindingNavigatorPositionItem, Me.BindingNavigatorCountItem, Me.BindingNavigatorSeparator1, Me.BindingNavigatorMoveNextItem, Me.BindingNavigatorMoveLastItem, Me.BindingNavigatorSeparator2})
 		Me.nav_result.Location = New System.Drawing.Point(0, 206)
 		Me.nav_result.MoveFirstItem = Me.BindingNavigatorMoveFirstItem
@@ -124,7 +126,7 @@ Partial Class SQLConsole
 		'BindingNavigatorCountItem
 		'
 		Me.BindingNavigatorCountItem.Name = "BindingNavigatorCountItem"
-		Me.BindingNavigatorCountItem.Size = New System.Drawing.Size(49, 15)
+		Me.BindingNavigatorCountItem.Size = New System.Drawing.Size(56, 15)
 		Me.BindingNavigatorCountItem.Text = "de {0}"
 		Me.BindingNavigatorCountItem.ToolTipText = "Total number of items"
 		'
@@ -134,7 +136,7 @@ Partial Class SQLConsole
 		Me.BindingNavigatorMoveFirstItem.Image = CType(resources.GetObject("BindingNavigatorMoveFirstItem.Image"), System.Drawing.Image)
 		Me.BindingNavigatorMoveFirstItem.Name = "BindingNavigatorMoveFirstItem"
 		Me.BindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = True
-		Me.BindingNavigatorMoveFirstItem.Size = New System.Drawing.Size(23, 15)
+		Me.BindingNavigatorMoveFirstItem.Size = New System.Drawing.Size(24, 15)
 		Me.BindingNavigatorMoveFirstItem.Text = "Move first"
 		'
 		'BindingNavigatorMovePreviousItem
@@ -143,7 +145,7 @@ Partial Class SQLConsole
 		Me.BindingNavigatorMovePreviousItem.Image = CType(resources.GetObject("BindingNavigatorMovePreviousItem.Image"), System.Drawing.Image)
 		Me.BindingNavigatorMovePreviousItem.Name = "BindingNavigatorMovePreviousItem"
 		Me.BindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = True
-		Me.BindingNavigatorMovePreviousItem.Size = New System.Drawing.Size(23, 15)
+		Me.BindingNavigatorMovePreviousItem.Size = New System.Drawing.Size(24, 15)
 		Me.BindingNavigatorMovePreviousItem.Text = "Move previous"
 		'
 		'BindingNavigatorSeparator
@@ -172,7 +174,7 @@ Partial Class SQLConsole
 		Me.BindingNavigatorMoveNextItem.Image = CType(resources.GetObject("BindingNavigatorMoveNextItem.Image"), System.Drawing.Image)
 		Me.BindingNavigatorMoveNextItem.Name = "BindingNavigatorMoveNextItem"
 		Me.BindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = True
-		Me.BindingNavigatorMoveNextItem.Size = New System.Drawing.Size(23, 15)
+		Me.BindingNavigatorMoveNextItem.Size = New System.Drawing.Size(24, 15)
 		Me.BindingNavigatorMoveNextItem.Text = "Move next"
 		'
 		'BindingNavigatorMoveLastItem
@@ -181,7 +183,7 @@ Partial Class SQLConsole
 		Me.BindingNavigatorMoveLastItem.Image = CType(resources.GetObject("BindingNavigatorMoveLastItem.Image"), System.Drawing.Image)
 		Me.BindingNavigatorMoveLastItem.Name = "BindingNavigatorMoveLastItem"
 		Me.BindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = True
-		Me.BindingNavigatorMoveLastItem.Size = New System.Drawing.Size(23, 15)
+		Me.BindingNavigatorMoveLastItem.Size = New System.Drawing.Size(24, 15)
 		Me.BindingNavigatorMoveLastItem.Text = "Move last"
 		'
 		'BindingNavigatorSeparator2
@@ -194,6 +196,7 @@ Partial Class SQLConsole
 		Me.QueryLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.QueryLog.Dock = System.Windows.Forms.DockStyle.Fill
 		Me.QueryLog.FormattingEnabled = True
+		Me.QueryLog.ItemHeight = 17
 		Me.QueryLog.Location = New System.Drawing.Point(0, 0)
 		Me.QueryLog.Margin = New System.Windows.Forms.Padding(0)
 		Me.QueryLog.Name = "QueryLog"
@@ -207,6 +210,7 @@ Partial Class SQLConsole
 		Me.TableList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.TableList.Dock = System.Windows.Forms.DockStyle.Right
 		Me.TableList.FormattingEnabled = True
+		Me.TableList.ItemHeight = 17
 		Me.TableList.Location = New System.Drawing.Point(456, 0)
 		Me.TableList.Margin = New System.Windows.Forms.Padding(0)
 		Me.TableList.Name = "TableList"
@@ -223,7 +227,7 @@ Partial Class SQLConsole
 		Me.query.Location = New System.Drawing.Point(0, 0)
 		Me.query.Margin = New System.Windows.Forms.Padding(0)
 		Me.query.Name = "query"
-		Me.query.Size = New System.Drawing.Size(456, 23)
+		Me.query.Size = New System.Drawing.Size(456, 27)
 		Me.query.TabIndex = 6
 		'
 		'connection
@@ -235,11 +239,12 @@ Partial Class SQLConsole
 		Me.connection.Location = New System.Drawing.Point(456, 0)
 		Me.connection.Margin = New System.Windows.Forms.Padding(0)
 		Me.connection.Name = "connection"
-		Me.connection.Size = New System.Drawing.Size(160, 23)
+		Me.connection.Size = New System.Drawing.Size(160, 27)
 		Me.connection.TabIndex = 7
 		'
 		'Panel1
 		'
+		Me.Panel1.Controls.Add(Me.AddScript)
 		Me.Panel1.Controls.Add(Me.query)
 		Me.Panel1.Controls.Add(Me.connection)
 		Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -248,6 +253,21 @@ Partial Class SQLConsole
 		Me.Panel1.Name = "Panel1"
 		Me.Panel1.Size = New System.Drawing.Size(616, 24)
 		Me.Panel1.TabIndex = 8
+		'
+		'AddScript
+		'
+		Me.AddScript.Dock = System.Windows.Forms.DockStyle.Right
+		Me.AddScript.FlatAppearance.BorderSize = 0
+		Me.AddScript.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.AddScript.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.AddScript.Location = New System.Drawing.Point(437, 0)
+		Me.AddScript.Margin = New System.Windows.Forms.Padding(0)
+		Me.AddScript.Name = "AddScript"
+		Me.AddScript.Size = New System.Drawing.Size(19, 24)
+		Me.AddScript.TabIndex = 5
+		Me.AddScript.Text = "+"
+		Me.ToolTip1.SetToolTip(Me.AddScript, "Add Script File")
+		Me.AddScript.UseVisualStyleBackColor = True
 		'
 		'ToolTip1
 		'
@@ -260,7 +280,7 @@ Partial Class SQLConsole
 		'
 		'SQLConsole
 		'
-		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+		Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.ClientSize = New System.Drawing.Size(616, 371)
 		Me.Controls.Add(Me.SplitContainer1)
@@ -302,4 +322,5 @@ Partial Class SQLConsole
 	Friend WithEvents QueryLog As ListBox
 	Friend WithEvents ToolTip1 As ToolTip
 	Friend WithEvents TableList As ListBox
+	Friend WithEvents AddScript As Button
 End Class

@@ -57,58 +57,36 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=vrosas.accdb")>  _
-        Public ReadOnly Property DefaultAdbCon() As String
-            Get
-                Return CType(Me("DefaultAdbCon"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Provider=PostgreSQL.1;Data Source=\\MALINGUNVILA;Location=sigmDB;User ID=admin;Pa"& _ 
             "ssword=hf32n64;")>  _
-        Public ReadOnly Property DefaultPgsqlCon() As String
+        Public ReadOnly Property DefaultPgsql_disabled() As String
             Get
-                Return CType(Me("DefaultPgsqlCon"),String)
+                Return CType(Me("DefaultPgsql_disabled"),String)
             End Get
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.16.0;Data Source=vrosas.accdb")>  _
-        Public Property adbcon() As String
+        Public Property AdbConnection() As String
             Get
-                Return CType(Me("adbcon"),String)
+                Return CType(Me("AdbConnection"),String)
             End Get
             Set
-                Me("adbcon") = value
+                Me("AdbConnection") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Provider=vfpoledb.1;Data Source=z:\datos")>  _
-        Public Property foxcon() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=PostgreSQL.1;Data Source=\\malingunvila;Location=vrosas;User ID=sigm_adm"& _ 
+            "in;password=sigm2019.;")>  _
+        Public Property pgsql_disabled() As String
             Get
-                Return CType(Me("foxcon"),String)
+                Return CType(Me("pgsql_disabled"),String)
             End Get
             Set
-                Me("foxcon") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Provider=PostgreSQL.1;Data Source=\\MALINGUNVILA;Location=sigmDB;User ID=admin;Pa"& _ 
-            "ssword=hf32n64;")>  _
-        Public Property pgsqlcon() As String
-            Get
-                Return CType(Me("pgsqlcon"),String)
-            End Get
-            Set
-                Me("pgsqlcon") = value
+                Me("pgsql_disabled") = value
             End Set
         End Property
         
@@ -116,9 +94,9 @@ Namespace My
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Provider=vfpoledb.1;Data Source=z:\datos")>  _
-        Public ReadOnly Property DefaultFoxCon() As String
+        Public ReadOnly Property foxConnection() As String
             Get
-                Return CType(Me("DefaultFoxCon"),String)
+                Return CType(Me("foxConnection"),String)
             End Get
         End Property
         
@@ -127,21 +105,21 @@ Namespace My
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Provider=PostgreSQL OLE DB Provider;Data Source=\\malingunvila;Location=vrosas;Us"& _ 
             "er ID=sigm;password=sigm2013;")>  _
-        Public ReadOnly Property DefaultPgsqlCon2() As String
+        Public ReadOnly Property DefaultPgsql_disabled2() As String
             Get
-                Return CType(Me("DefaultPgsqlCon2"),String)
+                Return CType(Me("DefaultPgsql_disabled2"),String)
             End Get
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.16.0;Data Source=vrosas.accdb")>  _
-        Public Property DefaultCon() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property CurrentDB() As String
             Get
-                Return CType(Me("DefaultCon"),String)
+                Return CType(Me("CurrentDB"),String)
             End Get
             Set
-                Me("DefaultCon") = value
+                Me("CurrentDB") = value
             End Set
         End Property
         
@@ -241,16 +219,6 @@ Namespace My
             End Set
         End Property
         
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Provider=VFPOLEDB.1;Data Source=z:\datos")>  _
-        Public ReadOnly Property FoxConnectionString() As String
-            Get
-                Return CType(Me("FoxConnectionString"),String)
-            End Get
-        End Property
-        
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Color.DimGray")>  _
@@ -261,6 +229,16 @@ Namespace My
             Set
                 Me("CurrentMenuColor") = value
             End Set
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Dsn=PostgreSQL35W;uid=sigm_admin;pwd=sigm2019.")>  _
+        Public ReadOnly Property pgsqlODBC2_disabled() As String
+            Get
+                Return CType(Me("pgsqlODBC2_disabled"),String)
+            End Get
         End Property
     End Class
 End Namespace

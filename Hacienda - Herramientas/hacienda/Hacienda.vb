@@ -1,6 +1,6 @@
 ﻿Public Class Hacienda
 	Shared Sub FillSeccion(ByRef bs As BindingSource, ByRef target As ComboBox)
-		bs.DataSource = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM seccion ORDER BY descripcion")
+		bs.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM seccion ORDER BY descripcion")
 		CtrlMan.Fill.SetAutoComplete(target, bs, "descripcion", "id")
 	End Sub
 	Shared Sub FillCuentasHacienda(ByRef bs As BindingSource, ByRef target As ComboBox,
@@ -61,7 +61,7 @@
 
 		Dim SqlOrder As String = " ORDER BY orden"
 
-		bs.DataSource = DbMan.read(Nothing, My.Settings.foxcon, sqlSelect, sqlFrom, sqlWhere, , , SqlOrder)
+		bs.DataSource = DbMan.readDB(Nothing, My.Settings.foxConnection, sqlSelect, sqlFrom, sqlWhere, , , SqlOrder)
 
 
 		CtrlMan.Fill.SetAutoComplete(target, bs, "nombre", "orden")
@@ -72,15 +72,15 @@
 									 MsgBoxStyle.YesNo, "Calcular ingresos y egresos consolidados") Then
 
 			'Reset
-			DbMan.edit(Nothing, My.Settings.foxcon, "UPDATE hacienda SET MES1=0, MES2=0, MES3=0, MES4=0, MES5=0, 
+			DbMan.editDB(Nothing, My.Settings.foxConnection, "UPDATE hacienda SET MES1=0, MES2=0, MES3=0, MES4=0, MES5=0, 
 						MES6=0, MES7=0, MES8=0, MES9=0, MES10=0, MES11=0, MES12=0, 
 						SUMATODO=0, GASTADO=0, GASTOMES=0")
 
-			DbMan.edit(Nothing, My.Settings.foxcon, "DELETE FROM ingresos") 'Fox no necesita comodín
-			DbMan.edit(Nothing, My.Settings.foxcon, "DELETE FROM egresos")
+			DbMan.editDB(Nothing, My.Settings.foxConnection, "DELETE FROM ingresos") 'Fox no necesita comodín
+			DbMan.editDB(Nothing, My.Settings.foxConnection, "DELETE FROM egresos")
 
 			'Actualizar desde movimis en Hacienda (ingresos)
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 						"UPDATE hacienda SET hacienda.sumatodo=sq.ingreso
 						FROM 
 							(SELECT orden, SUM(pagado) as ingreso 
@@ -88,7 +88,7 @@
 						WHERE hacienda.orden=sq.orden AND hacienda.orden<899999999999")
 
 			'Actualizar desde movimis en Hacienda (egresos)
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 						"UPDATE hacienda SET hacienda.gastado=sq.egreso
 						FROM 
 							(SELECT orden, SUM(pagado) as egreso 
@@ -101,14 +101,14 @@
 			For m = 1 To Month(Date.Today)
 				Dim current_month As String = "mes" & m
 				'Ingresos
-				DbMan.edit(Nothing, My.Settings.foxcon,
+				DbMan.editDB(Nothing, My.Settings.foxConnection,
 						  "UPDATE hacienda SET hacienda." & current_month & "=sq.ingreso_" & current_month & "
 							 FROM (SELECT orden, SUM(pagado) as ingreso_" & current_month & " 
 								 FROM movimis WHERE MONTH(fecha)=" & m & " AND movimis.orden<899999999999
 								 GROUP BY orden) sq 
 							WHERE hacienda.orden=sq.orden")
 				'Egresos
-				DbMan.edit(Nothing, My.Settings.foxcon,
+				DbMan.editDB(Nothing, My.Settings.foxConnection,
 						 "UPDATE hacienda SET hacienda." & current_month & "=sq.egreso_" & current_month & "
 							FROM (SELECT orden, SUM(pagado) as egreso_" & current_month & " 
 								 FROM movimis WHERE MONTH(fecha)=" & m & " AND movimis.orden>899999999999
@@ -117,7 +117,7 @@
 			Next
 
 			'Copiar a ingresos (incluyendo cuentas madre)
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 						"INSERT INTO ingresos(nombre, pertenece, anexo, inciso, item, rubro, subrubro, 
 											 partida, subpartida, autorizado, orden, sumado, 
 											 mes1, mes2, mes3, mes4, mes5, mes6, mes7, mes8, mes9, mes10, mes11, mes12,
@@ -129,7 +129,7 @@
 							FROM hacienda WHERE hacienda.orden<899999999999")
 
 			'Copiar a egresos (incluyendo cuentas madre)
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 						"INSERT INTO egresos(nombre, pertenece, anexo, inciso, item, rubro, subrubro, 
 											 partida, subpartida, autorizado, orden, sumado, 
 											 mes1, mes2, mes3, mes4, mes5, mes6, mes7, mes8, mes9, mes10, mes11, mes12,
@@ -142,7 +142,7 @@
 
 			''Consolidar cuentas Egresos
 			''Subpartida
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 						"UPDATE egresos SET egresos.gastado=sq.total_egreso
 							FROM (SELECT pertenece, anexo, inciso, item, rubro, subrubro, partida, subpartida, SUM(gastado) as total_egreso 
 							FROM egresos GROUP BY pertenece, anexo, inciso, item, rubro, subrubro, partida, subpartida 
@@ -154,7 +154,7 @@
 							AND egresos.subpartida=sq.subpartida")
 
 			''Partida
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 						"UPDATE egresos SET egresos.gastado=sq.total_egreso 
 							FROM (SELECT pertenece, anexo, inciso, item, rubro, subrubro, partida, SUM(gastado) as total_egreso 
 							FROM egresos GROUP BY pertenece, anexo, inciso, item, rubro, subrubro, partida 
@@ -166,7 +166,7 @@
 							AND egresos.subpartida='00'")
 
 			''Subrubro
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 						"UPDATE egresos SET egresos.gastado=sq.total_egreso 
 							FROM (SELECT pertenece, anexo, inciso, item, rubro, subrubro, SUM(gastado) as total_egreso 
 							FROM egresos GROUP BY pertenece, anexo, inciso, item, rubro, subrubro 
@@ -177,7 +177,7 @@
 							AND egresos.subrubro=sq.subrubro AND egresos.partida='00'")
 
 			''Rubro
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 						"UPDATE egresos SET egresos.gastado=sq.total_egreso 
 							FROM (SELECT pertenece, anexo, inciso, item, rubro, SUM(gastado) as total_egreso 
 							FROM egresos GROUP BY pertenece, anexo, inciso, item, rubro 
@@ -188,7 +188,7 @@
 							AND egresos.subrubro='00'")
 
 			''Item
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 						"UPDATE egresos SET egresos.gastado=sq.total_egreso 
 							FROM (SELECT pertenece, anexo, inciso, item, SUM(gastado) as total_egreso 
 							FROM egresos GROUP BY pertenece, anexo, inciso, item 
@@ -198,7 +198,7 @@
 							AND egresos.item=sq.item AND egresos.rubro='00'")
 
 			''Inciso
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 						"UPDATE egresos SET egresos.gastado=sq.total_egreso 
 							FROM (SELECT pertenece, anexo, inciso, SUM(gastado) as total_egreso 
 							FROM egresos GROUP BY pertenece, anexo, inciso 
@@ -208,7 +208,7 @@
 							AND egresos.item='0'")
 
 			''Anexo
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 						"UPDATE egresos SET egresos.gastado=sq.total_egreso 
 							FROM (SELECT pertenece, anexo, SUM(gastado) as total_egreso 
 							FROM egresos GROUP BY pertenece, anexo 
@@ -218,7 +218,7 @@
 
 			''Consolidar cuentas Ingresos
 			''Subpartida
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 						"UPDATE ingresos SET ingresos.sumatodo=sq.total_ingreso 
 							FROM (SELECT pertenece, anexo, inciso, item, rubro, subrubro, partida, subpartida, SUM(sumatodo) as total_ingreso 
 							FROM ingresos GROUP BY pertenece, anexo, inciso, item, rubro, subrubro, partida, subpartida 
@@ -230,7 +230,7 @@
 							AND ingresos.subpartida=sq.subpartida")
 
 			''Partida
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 						"UPDATE ingresos SET ingresos.sumatodo=sq.total_ingreso 
 							FROM (SELECT pertenece, anexo, inciso, item, rubro, subrubro, partida, SUM(sumatodo) as total_ingreso 
 							FROM ingresos GROUP BY pertenece, anexo, inciso, item, rubro, subrubro, partida 
@@ -242,7 +242,7 @@
 							AND ingresos.subpartida='00'")
 
 			''Subrubro
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 						"UPDATE ingresos SET ingresos.sumatodo=sq.total_ingreso 
 							FROM (SELECT pertenece, anexo, inciso, item, rubro, subrubro, SUM(sumatodo) as total_ingreso 
 							FROM ingresos GROUP BY pertenece, anexo, inciso, item, rubro, subrubro 
@@ -253,7 +253,7 @@
 							AND ingresos.subrubro=sq.subrubro AND ingresos.partida='00'")
 
 			''Rubro
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 						"UPDATE ingresos SET ingresos.sumatodo=sq.total_ingreso 
 							FROM (SELECT pertenece, anexo, inciso, item, rubro, SUM(sumatodo) as total_ingreso 
 							FROM ingresos GROUP BY pertenece, anexo, inciso, item, rubro 
@@ -264,7 +264,7 @@
 							AND ingresos.subrubro='00'")
 
 			''Item
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 						"UPDATE ingresos SET ingresos.sumatodo=sq.total_ingreso 
 							FROM (SELECT pertenece, anexo, inciso, item, SUM(sumatodo) as total_ingreso 
 							FROM ingresos GROUP BY pertenece, anexo, inciso, item 
@@ -274,7 +274,7 @@
 						AND ingresos.item=sq.item AND ingresos.rubro='00'")
 
 			''Inciso
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 					"UPDATE ingresos SET ingresos.sumatodo=sq.total_ingreso 
 						FROM (SELECT pertenece, anexo, inciso, SUM(sumatodo) as total_ingreso 
 						FROM ingresos GROUP BY pertenece, anexo, inciso 
@@ -284,7 +284,7 @@
 						AND ingresos.item='0'")
 
 			''Anexo
-			DbMan.edit(Nothing, My.Settings.foxcon,
+			DbMan.editDB(Nothing, My.Settings.foxConnection,
 					"UPDATE ingresos SET ingresos.sumatodo=sq.total_ingreso 
 						FROM (SELECT pertenece, anexo, SUM(sumatodo) as total_ingreso 
 						FROM ingresos GROUP BY pertenece, anexo 

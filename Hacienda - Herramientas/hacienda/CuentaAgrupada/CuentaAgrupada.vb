@@ -10,11 +10,11 @@
 				Else
 					sql += " WHERE razon Like '%" & keyword & "%'"
 				End If
-				consulta = DbMan.read(Nothing, My.Settings.DefaultCon, sql)
+				consulta = DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 			ElseIf sender Is ConsultaCuentaAgrupada.mod_ca_imp_search Then 'Seleccionar impuestos sobre Fox
 				tablas_fox(impuesto)
 				'Cuidado acá, porque comercio no tiene campo "Tenedor"
-				consulta = DbMan.read(Nothing, My.Settings.foxcon, "SELECT " & ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon, " & col_tenedor & " as tenedor FROM " & ext_persona & "
+				consulta = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT " & ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon, " & col_tenedor & " as tenedor FROM " & ext_persona & "
                                    INNER JOIN " & ext_cuenta & " ON " & ext_persona & ".codigo = " & ext_cuenta & ".codigo 
                                         WHERE " & ext_persona & ".razon LIKE '%" & keyword & "%' OR " & col_tenedor & " LIKE '%" & keyword & "%'")
 			End If

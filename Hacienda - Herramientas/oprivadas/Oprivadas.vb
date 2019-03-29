@@ -35,9 +35,7 @@
 	Public Class Expediente
 		'BUSCAR
 		Public Class Buscar
-			Shared Function Expediente(Optional numero As Integer = 0,
-									   Optional ubicacion As String = "",
-									   Optional fecha As Date = Nothing) As DataTable
+			Shared Function Expediente() As DataTable
 
 				Dim sql _
 				As String = "SELECT oprivadas.id as expediente_id, oprivadas.expediente,
@@ -48,13 +46,10 @@
 							oprivadas.inicio_obra, oprivadas.fin_obra
 							" & SQLTable & SQLWhere
 
-				Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
+				Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 			End Function
 
-			Shared Function Responsable(Optional razon As String = "",
-										Optional cuil As Double = 0,
-										Optional direccion As String = "",
-										Optional localidad As String = "") As DataTable
+			Shared Function Responsable() As DataTable
 
 				Dim sql _
 				As String = "SELECT oprivadas.id As expediente_id, oprivadas.expediente,
@@ -68,14 +63,10 @@
 							oprivadas.recibe, Oprivadas.visado  
 							" & SQLTable & SQLWhere
 
-				Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
+				Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 			End Function
 
-			Shared Function Profesional(Optional razon As String = "",
-										Optional cuil As Double = 0,
-										Optional direccion As String = "",
-										Optional localidad As String = "",
-										Optional titulo As String = "") As DataTable
+			Shared Function Profesional() As DataTable
 
 				Dim sql _
 				As String = "SELECT oprivadas.id As expediente_id, oprivadas.expediente,
@@ -88,19 +79,19 @@
 							oprivadas.recibe, Oprivadas.visado 
 							" & SQLTable & SQLWhere
 
-				Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
+				Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 			End Function
 		End Class
 		'Funciones de listado para evitar borrar expedientes accidentalmente
 		Shared Function ListarPorResponsable(persona_id As Integer) As DataTable
-			Return DbMan.read(Nothing, My.Settings.DefaultCon,
+			Return DbMan.readDB(Nothing, My.Settings.CurrentDB,
 						   "SELECT responsable_expediente.Id As id, expediente, per_id 
                             FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id) 
                             INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id
                             WHERE responsable_expediente.per_id=" & persona_id)
 		End Function
 		Shared Function ListarPorProfesional(prof_id As Integer) As DataTable
-			Return DbMan.read(Nothing, My.Settings.DefaultCon,
+			Return DbMan.readDB(Nothing, My.Settings.CurrentDB,
 						   "SELECT responsable_expediente.Id As id, expediente, profesional_id
                             FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id)
                             INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id
@@ -108,7 +99,7 @@
 		End Function
 
 		Shared Function ListarResponsables(expediente As Integer) As DataTable
-			Return DbMan.read(Nothing, My.Settings.DefaultCon,
+			Return DbMan.readDB(Nothing, My.Settings.CurrentDB,
 					   "SELECT persona.id As persona_id, razon, cuil, email, telefono, difunto
                             FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id)
                             INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id
@@ -116,7 +107,7 @@
 		End Function
 
 		Shared Function Seleccionar(expediente As Integer) As DataTable
-			Return DbMan.read(Nothing, My.Settings.DefaultCon,
+			Return DbMan.readDB(Nothing, My.Settings.CurrentDB,
 							"SELECT * FROM oprivadas 
 							  WHERE Oprivadas.expediente= " & expediente)
 		End Function
@@ -137,11 +128,11 @@
 											  MsgBoxStyle.YesNo, "Obras Privadas") Then
 					LimpiarTemporal(dtab(0)("id"), Nothing, True)
 					'Recrear expediente por defecto
-					DbMan.edit(Nothing, My.Settings.DefaultCon, InsertExpSQL)
+					DbMan.editDB(Nothing, My.Settings.CurrentDB, InsertExpSQL)
 				End If
 			Else
 				'Crear expediente por defecto
-				DbMan.edit(Nothing, My.Settings.DefaultCon, InsertExpSQL)
+				DbMan.editDB(Nothing, My.Settings.CurrentDB, InsertExpSQL)
 			End If
 			Return Seleccionar(exp)
 		End Function
@@ -151,7 +142,7 @@
 			If lock And My.Settings.UserId > 0 Then
 				user_id = My.Settings.UserId
 			End If
-			DbMan.edit(Nothing, My.Settings.DefaultCon,
+			DbMan.editDB(Nothing, My.Settings.CurrentDB,
 						"UPDATE oprivadas Set user_id=" & user_id & " 
 						  WHERE id=" & opr_id & " AND user_id=0")
 		End Sub
@@ -162,7 +153,7 @@
 			If opr_id > 0 Then
 				sql += " And id=" & opr_id
 			End If
-			dtab = DbMan.read(Nothing, My.Settings.DefaultCon, sql)
+			dtab = DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 
 			If dtab.Rows.Count > 0 Then
 				LimpiarResponsable(opr_id)
@@ -174,7 +165,7 @@
 			If opr_id > 0 Then
 				sql += " And id=" & opr_id
 			End If
-			DbMan.edit(Nothing, My.Settings.DefaultCon, sql)
+			DbMan.editDB(Nothing, My.Settings.CurrentDB, sql)
 
 		End Sub
 
@@ -184,7 +175,7 @@
 			With registro
 				For fila As Integer = 0 To .Count - 1
 					.Position = fila
-					DbMan.edit(Nothing, My.Settings.DefaultCon,
+					DbMan.editDB(Nothing, My.Settings.CurrentDB,
 					"INSERT INTO responsable_expediente(opr_id, per_id, principal)
 						  VALUES(" & opr_id & ", " & .Current("persona_id") & ",
                                  " & CBool(registro.Current("persona_id") = ResponsablePrincipal) & ")")
@@ -192,10 +183,10 @@
 			End With
 		End Sub
 		Shared Sub LimpiarResponsable(opr_id As Integer)
-			DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE * FROM responsable_expediente WHERE opr_id=" & opr_id)
+			DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM responsable_expediente WHERE opr_id=" & opr_id)
 		End Sub
 		Shared Sub ActualizarProfesional(opr_id As Integer, prof_id As Integer)
-			DbMan.edit(Nothing, My.Settings.DefaultCon,
+			DbMan.editDB(Nothing, My.Settings.CurrentDB,
 						"UPDATE oprivadas SET profesional_id=" & prof_id &
 						" WHERE id=" & opr_id)
 		End Sub
@@ -212,7 +203,7 @@
 			sql += " inicio_obra='" & inicio_obra.ToShortDateString & "',  recibe='" & recibe & "', visado=" & visado & ",
                      tarea='" & tarea & "', tarea2='" & tarea2 & "', observaciones='" & observaciones & "'
                      WHERE id=" & opr_id
-			DbMan.edit(Nothing, My.Settings.DefaultCon, sql)
+			DbMan.editDB(Nothing, My.Settings.CurrentDB, sql)
 		End Sub
 	End Class
 End Class

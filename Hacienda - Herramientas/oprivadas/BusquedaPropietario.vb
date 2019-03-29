@@ -20,11 +20,9 @@ Public Class BusquedaPropietario
 			If .vista.SelectedIndex > -1 Then
 				.filtro.DataSource = Nothing
 				If .vista.Text = "PROPIETARIO" Then
-
-					Dim bs_ColumnList As New BindingSource
-					Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.foxcon, "SELECT * FROM catastro")
-
-					bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(dtab)
+                    Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM catastro")
+                    Dim bs_ColumnList As New BindingSource
+                    bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(dtab)
 					.filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
 					.filtro.Text = "razon"
 				End If

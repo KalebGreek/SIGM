@@ -4,7 +4,6 @@
         ' This call is required by the designer.
         InitializeComponent()
 		' Add any initialization after the InitializeComponent() call.
-		subtitulo.BackColor = Color.FromName(My.Settings.CurrentMenuColor)
 	End Sub
 
 	Private Sub Seleccionar()

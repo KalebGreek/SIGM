@@ -2,45 +2,35 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
   <Profiles />
   <Settings>
-    <Setting Name="DefaultAdbCon" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Provider=Microsoft.ACE.OLEDB.12.0;Data Source=vrosas.accdb&lt;/ConnectionString&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.12.0;Data Source=vrosas.accdb</Value>
-    </Setting>
-    <Setting Name="DefaultPgsqlCon" Type="(Connection string)" Scope="Application">
+    <Setting Name="DefaultPgsql_disabled" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;ConnectionString&gt;Provider=PostgreSQL.1;Data Source=\\MALINGUNVILA;Location=sigmDB;User ID=admin;Password=hf32n64;&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Provider=PostgreSQL.1;Data Source=\\MALINGUNVILA;Location=sigmDB;User ID=admin;Password=hf32n64;</Value>
     </Setting>
-    <Setting Name="adbcon" Type="System.String" Scope="User">
+    <Setting Name="AdbConnection" Type="System.String" Scope="User">
       <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.16.0;Data Source=vrosas.accdb</Value>
     </Setting>
-    <Setting Name="foxcon" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Provider=vfpoledb.1;Data Source=z:\datos</Value>
+    <Setting Name="pgsql_disabled" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Provider=PostgreSQL.1;Data Source=\\malingunvila;Location=vrosas;User ID=sigm_admin;password=sigm2019.;</Value>
     </Setting>
-    <Setting Name="pgsqlcon" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Provider=PostgreSQL.1;Data Source=\\MALINGUNVILA;Location=sigmDB;User ID=admin;Password=hf32n64;</Value>
-    </Setting>
-    <Setting Name="DefaultFoxCon" Type="(Connection string)" Scope="Application">
+    <Setting Name="foxConnection" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;ConnectionString&gt;Provider=vfpoledb.1;Data Source=z:\datos&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Provider=vfpoledb.1;Data Source=z:\datos</Value>
     </Setting>
-    <Setting Name="DefaultPgsqlCon2" Type="(Connection string)" Scope="Application">
+    <Setting Name="DefaultPgsql_disabled2" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;ConnectionString&gt;Provider=PostgreSQL OLE DB Provider;Data Source=\\malingunvila;Location=vrosas;User ID=sigm;password=sigm2013;&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Provider=PostgreSQL OLE DB Provider;Data Source=\\malingunvila;Location=vrosas;User ID=sigm;password=sigm2013;</Value>
     </Setting>
-    <Setting Name="DefaultCon" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.16.0;Data Source=vrosas.accdb</Value>
+    <Setting Name="CurrentDB" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DocFolderHacienda" Type="System.String" Scope="User">
       <Value Profile="(Default)">\HACIENDA\</Value>
@@ -66,16 +56,16 @@
     <Setting Name="UserId" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="FoxConnectionString" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Provider=VFPOLEDB.1;Data Source=z:\datos&lt;/ConnectionString&gt;
-  &lt;ProviderName&gt;System.Data.OleDb&lt;/ProviderName&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Provider=VFPOLEDB.1;Data Source=z:\datos</Value>
-    </Setting>
     <Setting Name="CurrentMenuColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">Color.DimGray</Value>
+    </Setting>
+    <Setting Name="pgsqlODBC2_disabled" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Dsn=PostgreSQL35W;uid=sigm_admin;pwd=sigm2019.&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.Odbc&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Dsn=PostgreSQL35W;uid=sigm_admin;pwd=sigm2019.</Value>
     </Setting>
   </Settings>
 </SettingsFile>

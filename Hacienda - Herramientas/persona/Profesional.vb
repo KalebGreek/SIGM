@@ -24,7 +24,7 @@
 		End If
 
 		sql += " ORDER By Persona.razon"
-		Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
+		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 	End Function
 	Shared Function Seleccionar(profesional_id As Integer, persona_id As Integer) As DataTable
 		Dim sql As String = SelectSQL & TableSQL
@@ -35,28 +35,28 @@
 			sql += " AND persona.id=" & persona_id
 		End If
 
-		Return DbMan.read(Nothing, My.Settings.DefaultCon, sql)
+		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 	End Function
 	Shared Function ListarTitulos() As BindingSource
 		Dim bs As New BindingSource
-		bs.DataSource = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM prof_titulo ORDER BY titulo")
+		bs.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM prof_titulo ORDER BY titulo")
 		Return bs
 	End Function
 
 	Shared Function guardar(prof_id As Integer, persona_id As Integer, titulo_id As Integer, ByVal matricula As String) As DataRow
 		If prof_id > 0 Then
-			DbMan.edit(Nothing, My.Settings.DefaultCon, "UPDATE profesional SET titulo_id=" & titulo_id & ", matricula='" & matricula & "'" &
+			DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE profesional SET titulo_id=" & titulo_id & ", matricula='" & matricula & "'" &
 					  " WHERE id=" & prof_id)
 		Else
-			DbMan.edit(Nothing, My.Settings.DefaultCon,
+			DbMan.editDB(Nothing, My.Settings.CurrentDB,
 						"INSERT INTO profesional(per_id, titulo_id, matricula)
 							  VALUES(" & persona_id & ", " & titulo_id & ", '" & matricula & "')")
 		End If
 
-		Return DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT id FROM profesional WHERE per_id=" & persona_id)(0)
+		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id FROM profesional WHERE per_id=" & persona_id)(0)
 	End Function
 	Shared Function eliminar(ByVal per_id As Integer) As Integer
-		DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE * FROM profesional WHERE per_id=" & per_id)
+		DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM profesional WHERE per_id=" & per_id)
 		Return 0
 	End Function
 End Class

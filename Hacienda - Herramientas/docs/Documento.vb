@@ -34,10 +34,10 @@
 			Return cuil & destino
 		End Function
 		Shared Function CopiaActa(ByVal persona_id As Integer, ByVal acta As String, ByVal libro As String) As String
-			Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT cuil, razon FROM persona WHERE id=" & persona_id)
+			Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT cuil, razon FROM persona WHERE id=" & persona_id)
 			If dtab.Rows.Count > 0 Then
 				If acta > 0 And libro > 0 Then
-					Dim dtab_acta = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM actas WHERE acta=" & acta & " AND libro=" & libro)
+					Dim dtab_acta = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM actas WHERE acta=" & acta & " AND libro=" & libro)
 
 					If dtab.Rows.Count > 0 Then
 						If dtab_acta(0)("per_id") <> persona_id Then
@@ -176,7 +176,7 @@
 
 
 	Private Shared Function ConsultarHistorial(RutaDoc As Boolean) As Object
-		Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
+		Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
 
 		If RutaDoc Then
 			Return dtab(0)("ruta").ToString
@@ -244,16 +244,16 @@
 		'Guarda una ruta de documento en una tabla
 		'Todas las tablas de documentos deben contener las mismas columnas:
 		'FOO_ID, FECHA, DESCRIPCION, RUTA
-		Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM " & tabla & " 
+		Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM " & tabla & " 
 																			WHERE " & col_id & "=" & id & " AND descripcion='" & descripcion & "'")
 
 		If dtab.Rows.Count > 0 Then
 			For Each dr As DataRow In dtab.Rows
-				DbMan.edit(Nothing, My.Settings.DefaultCon, "UPDATE " & tabla & " SET fecha='" & fecha.ToShortDateString & "', ruta='" & ruta & "'
+				DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE " & tabla & " SET fecha='" & fecha.ToShortDateString & "', ruta='" & ruta & "'
 															WHERE " & col_id & "=" & id & " AND  descripcion='" & descripcion & "'")
 			Next
 		Else
-			DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)
+			DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)
 														VALUES(" & id & ", #" & fecha & "# ,'" & descripcion & "', '" & ruta & "')")
 		End If
 	End Sub
@@ -261,7 +261,7 @@
 		'Guarda una lista de rutas de documento a una tabla
 		With lista
 			For Each dr As DataRow In lista.DataSource.Rows
-				DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)" &
+				DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)" &
 						  " VALUES(" & id & ", #" & dr("fecha") & "# ,'" & dr("descripcion") & "'," &
 						  " '" & dr("ruta") & "')")
 			Next
@@ -272,6 +272,6 @@
 		If tipo_archivo <> "" Then
 			sql += " AND descripcion='" & tipo_archivo & "'"
 		End If
-		DbMan.edit(Nothing, My.Settings.DefaultCon, sql)
+		DbMan.editDB(Nothing, My.Settings.CurrentDB, sql)
 	End Sub
 End Class

@@ -8,7 +8,7 @@ Public Class CalculoAnualImpuesto
     'Rutinas
     Public Function validar() As Boolean
 
-		Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.foxcon, "SELECT MAX(codigo) as codigo FROM " & impuesto.Text)
+		Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT MAX(codigo) as codigo FROM " & impuesto.Text)
 		If dtab.Rows.Count > 0 Then
 			If CuentaInicial.Value > dtab(0)("codigo") Then
 				MsgBox("No se encuentra la cuenta inicial.", MsgBoxStyle.OkOnly, Nothing)
@@ -38,15 +38,15 @@ Public Class CalculoAnualImpuesto
 		cuentas_modificadas = 0
 		cuotas_agregadas = 0
 		'Zonas
-		dtab_zona = DbMan.read(Nothing, My.Settings.foxcon, "SELECT * FROM aguzona")
+		dtab_zona = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM aguzona")
 		'Vencimientos
-		dtab_vence = DbMan.read(Nothing, My.Settings.foxcon, "SELECT * FROM aguvence 
+		dtab_vence = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM aguvence 
 										 WHERE periodo=" & Val(periodo.Value))
 		'Cuentas
-		dtab_cuenta = DbMan.read(Nothing, My.Settings.foxcon, "SELECT codigo, potable, comercial, industrial FROM aguas
+		dtab_cuenta = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT codigo, potable, comercial, industrial FROM aguas
 								   WHERE codigo=>" & CuentaInicial.Value & " ORDER BY codigo")
 
-		dtab_deuda = DbMan.read(Nothing, My.Settings.foxcon, "SELECT * FROM agucue")
+		dtab_deuda = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM agucue")
 
         'Iniciar busqueda y reemplazo
         progreso.Maximum = dtab_cuenta.Rows.Count - 1
@@ -107,17 +107,17 @@ Public Class CalculoAnualImpuesto
 		cuentas_modificadas = 0
 		cuotas_agregadas = 0
 		'Vencimientos
-		dtab_vence = DbMan.read(Nothing, My.Settings.foxcon,
+		dtab_vence = DbMan.readDB(Nothing, My.Settings.foxConnection,
 								"SELECT * FROM autovence
 								 WHERE periodo=" & periodo.Value)
 
 		'Cuentas
-		dtab_cuenta = DbMan.read(Nothing, My.Settings.foxcon,
+		dtab_cuenta = DbMan.readDB(Nothing, My.Settings.foxConnection,
 								"SELECT codigo, razon, marca, modelo, apagar FROM automovil
 								 WHERE apagar>0 AND baja={} 
 								 AND codigo=>" & CuentaInicial.Value & " ORDER BY codigo")
 
-		dtab_deuda = DbMan.read(Nothing, My.Settings.foxcon, "SELECT * FROM autocue")
+		dtab_deuda = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM autocue")
 
 		progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -154,11 +154,11 @@ Public Class CalculoAnualImpuesto
 		cuotas_agregadas = 0
 
 		'Vencimientos
-		dtab_vence = DbMan.read(Nothing, My.Settings.foxcon, "SELECT * FROM catvence
+		dtab_vence = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM catvence
 								  WHERE periodo=" & periodo.Value)
 
 		'Cuentas
-		dtab_cuenta = DbMan.read(Nothing, My.Settings.foxcon,
+		dtab_cuenta = DbMan.readDB(Nothing, My.Settings.foxConnection,
 								 "SELECT catastro.codigo As codigo, catastro.jubilado As jubilado, 
 										 catastro.baldio As baldio, catastro.pasillo As pasillo,
 										 catastro.agrario As agrario, catastro.comercial as comercial,
@@ -178,7 +178,7 @@ Public Class CalculoAnualImpuesto
 									FROM catastro JOIN catzona On catastro.zona1=catzona.zona
 								   WHERE catastro.codigo=>" & CuentaInicial.Value & " ORDER BY catastro.codigo")
 
-		dtab_deuda = DbMan.read(Nothing, My.Settings.foxcon, "SELECT * FROM catcue")
+		dtab_deuda = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM catcue")
 
 		progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -332,16 +332,16 @@ Public Class CalculoAnualImpuesto
 		cuentas_modificadas = 0
 		cuotas_agregadas = 0
 		'Vencimientos
-		dtab_vence = DbMan.read(Nothing, My.Settings.foxcon, "SELECT * FROM comvence WHERE periodo=" & periodo.Value)
+		dtab_vence = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM comvence WHERE periodo=" & periodo.Value)
 
 		'Cuentas
 
-		dtab_cuenta = DbMan.read(Nothing, My.Settings.foxcon, "SELECT comercio.codigo as codigo, comercio.actividad as actividad, detalle, 
+		dtab_cuenta = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT comercio.codigo as codigo, comercio.actividad as actividad, detalle, 
 										 minimo, formapago, cantidad
 									FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad
 								   WHERE comercio.baja = {} And minimo>0 And codigo=>" & CuentaInicial.Value)
 
-		dtab_deuda = DbMan.read(Nothing, My.Settings.foxcon, "SELECT * FROM comcue")
+		dtab_deuda = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM comcue")
 
 		progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -421,7 +421,7 @@ Public Class CalculoAnualImpuesto
 			vence = vence.AddDays(1)
 		Loop
         'Cuentas
-        dtab_cuenta = DbMan.read(Nothing, My.Settings.foxcon,
+        dtab_cuenta = DbMan.readDB(Nothing, My.Settings.foxConnection,
 								 "SELECT sepelio.codigo as codigo, sepelio.fila as fila, sepelio.jubilado as jubilado, sepevar.minimo as minimo,
 										 sepevar.jubilado as desc_jubilado, sepevar.fila1 as fila1, sepevar.fila2 as fila2, sepevar.fila3 as fila3,
 										 sepevar.fila4 as fila4, sepevar.fila5 as fila5, sepelio.ubicacion as ubicacion, sepelio.tipo as tipo
@@ -429,7 +429,7 @@ Public Class CalculoAnualImpuesto
 								   WHERE sepelio.tipo > 0 AND sepelio.codigo =>" & CuentaInicial.Value & "
 								ORDER BY sepelio.codigo")
 
-		dtab_deuda = DbMan.read(Nothing, My.Settings.foxcon, "SELECT * FROM sepecue")
+		dtab_deuda = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM sepecue")
 
 		progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -484,7 +484,7 @@ Public Class CalculoAnualImpuesto
 		periodo.Minimum = 1990
 		periodo.Value = Today.Year
 
-		dtab_var = DbMan.read(Nothing, My.Settings.foxcon, "SELECT * FROM numeros")
+		dtab_var = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM numeros")
 	End Sub
 
 	Private Sub impuesto_SelectedIndexChanged(sender As Object, e As EventArgs) Handles impuesto.SelectedIndexChanged

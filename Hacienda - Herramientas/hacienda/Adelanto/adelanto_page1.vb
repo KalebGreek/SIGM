@@ -3,16 +3,14 @@
 
 	'Routines
 	Public Sub save()
-		DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO hac_adelanto(monto, fecha, persona_id) 
+		DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO hac_adelanto(monto, fecha, persona_id) 
 					VALUES('" & monto.Value & "', '" & fecha.Value & "', " & persona_id & ")")
 	End Sub
 	'Events
 	Private Sub buscarPersona_Click(sender As Object, e As EventArgs) Handles buscarPersona.Click
-		Dim bper As New BusquedaPersona()
-		bper.genSearchControl1.selectRow.Visible = True
-		bper.genSearchControl1.cancel.Visible = True
-		bper.ShowDialog(Me)
-		With bper
+        Dim bper As New BusquedaPersona(True)
+        bper.ShowDialog(Me)
+        With bper
 			If .bs_resultado.Position > -1 Then
 				persona_id = .bs_resultado.Current("persona_id").ToString
 				razon.Text = .bs_resultado.Current("razon").ToString

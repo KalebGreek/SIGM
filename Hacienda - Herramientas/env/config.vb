@@ -5,50 +5,42 @@
 
         ' Add any initialization after the InitializeComponent() call.
         '### CONEXION POR DEFECTO
-        If my.settings.DefaultCon <> "" Then
-            conexion_std.Text = my.settings.DefaultCon
-        End If
+        If My.Settings.CurrentDB <> "" Then
+			conexion_std.Text = My.Settings.CurrentDB
+		End If
         '### CONEXION ACCESS
-        If my.settings.adbcon <> "" Then
-            conexion_acc.Text = my.settings.adbcon
-        End If
+        If My.Settings.AdbConnection <> "" Then
+			conexion_acc.Text = My.Settings.AdbConnection
+		End If
         '### CONEXION FOX
-        If my.settings.foxcon <> "" Then
-            conexion_fox.Text = my.settings.foxcon
-        End If
+        If My.Settings.foxConnection <> "" Then
+			conexion_fox.Text = My.Settings.foxConnection
+		End If
         '### CONEXION PSQL
-        If my.settings.pgsqlcon <> "" Then
-            conexion_pgsql.Text = my.settings.pgsqlcon
-        End If
+        If My.Settings.pgsql_disabled <> "" Then
+			conexion_pgsql.Text = My.Settings.pgsql_disabled
+		End If
 
-        cargar_tablas_ext()
-    End Sub
+		cargar_tablas_ext()
+	End Sub
 
     '###### GUI
     Private Sub RestablecerToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RestablecerToolStripMenuItem.Click
-        conexion_std.Text = My.Settings.DefaultAdbCon
-        conexion_acc.Text = My.Settings.DefaultAdbCon
-        conexion_fox.Text = My.Settings.DefaultFoxCon
-        conexion_pgsql.Text = My.Settings.DefaultPgsqlCon
 
-        cargar_tablas_ext()
+		cargar_tablas_ext()
 
-        RestablecerToolStripMenuItem.Enabled = False
-    End Sub
-    Private Sub CerrarToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CerrarSinGuardarToolStripMenuItem.Click
-        Dim dtab_con As New DataTable
-        If MsgBox("¿Desea guardar los cambios?", MsgBoxStyle.YesNo, "Configuración") = MsgBoxResult.Yes Then
-            'Guardar conexiones
-            My.Settings.DefaultCon = conexion_std.Text
-            My.Settings.foxcon = conexion_fox.Text
-            My.Settings.pgsqlcon = conexion_pgsql.Text
-            My.Settings.adbcon = conexion_acc.Text
+		RestablecerToolStripMenuItem.Enabled = False
+	End Sub
+	Private Sub CerrarToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CerrarSinGuardarToolStripMenuItem.Click
+		Dim dtab_con As New DataTable
+		If MsgBox("¿Desea guardar los cambios?", MsgBoxStyle.YesNo, "Configuración") = MsgBoxResult.Yes Then
+			'Guardar conexiones
 
-            RestablecerToolStripMenuItem.Enabled = False
-            MsgBox("Configuración guardada correctamente.")
-        End If
-        Me.Close()
-    End Sub
+			RestablecerToolStripMenuItem.Enabled = False
+			MsgBox("Configuración guardada correctamente.")
+		End If
+		Me.Close()
+	End Sub
 
     '###### VALIDACION
     Private Sub DetectarCambios() Handles conexion_std.TextChanged, conexion_acc.TextChanged,
@@ -81,66 +73,66 @@
 	End Sub
 
 	Private Sub RepararFechasNulas()
-        Dim d, m, y, cuenta, vence, pago, periodo As String
-        Dim dtab As New DataTable
-        d = Today.Day
-        m = Today.Month
-        y = Today.Year
+		Dim d, m, y, cuenta, vence, pago, periodo As String
+		Dim dtab As New DataTable
+		d = Today.Day
+		m = Today.Month
+		y = Today.Year
 
-        cuenta = ""
-        vence = ""
-        pago = ""
-        periodo = ""
+		cuenta = ""
+		vence = ""
+		pago = ""
+		periodo = ""
 
 
 
-        For imp As Integer = 0 To 4 Step 1 '5 impuestos
+		For imp As Integer = 0 To 4 Step 1 '5 impuestos
             If imp = 0 Then 'AGUA
                 cuenta = agua_cuentas.Text
-                vence = "vencio"
-                pago = "pago"
-                periodo = "periodo"
-            ElseIf imp = 1 Then 'AUTO
+				vence = "vencio"
+				pago = "pago"
+				periodo = "periodo"
+			ElseIf imp = 1 Then 'AUTO
                 cuenta = auto_cuentas.Text
-                vence = "vencimi1"
-                pago = "apagado"
-                periodo = "ano"
-            ElseIf imp = 2 Then 'CATA
+				vence = "vencimi1"
+				pago = "apagado"
+				periodo = "ano"
+			ElseIf imp = 2 Then 'CATA
                 cuenta = cata_cuentas.Text
-                vence = "vencio"
-                pago = "pago"
-                periodo = "periodo"
-            ElseIf imp = 3 Then 'COME
+				vence = "vencio"
+				pago = "pago"
+				periodo = "periodo"
+			ElseIf imp = 3 Then 'COME
                 cuenta = come_cuentas.Text
-                vence = "vence1"
-                pago = "pago"
-                periodo = "ano"
-            ElseIf imp = 4 Then 'SEPE
+				vence = "vence1"
+				pago = "pago"
+				periodo = "ano"
+			ElseIf imp = 4 Then 'SEPE
                 cuenta = sepe_cuentas.Text
-                vence = "vencio"
-                pago = "pago"
-                periodo = "periodo"
-            End If
-        Next
+				vence = "vencio"
+				pago = "pago"
+				periodo = "periodo"
+			End If
+		Next
 
 
-		DbMan.edit(Nothing, conexion_fox.Text, "UPDATE " & cuenta & " SET " & vence & "=" & pago & " WHERE " & vence & " IS NULL AND " & pago & " IS NOT NULL")
+		DbMan.editDB(Nothing, conexion_fox.Text, "UPDATE " & cuenta & " SET " & vence & "=" & pago & " WHERE " & vence & " IS NULL AND " & pago & " IS NOT NULL")
 
         'Si no funciona
 
-        dtab = DbMan.read(Nothing, conexion_fox.Text, "SELECT codigo, " & periodo & ", " & vence & " WHERE " & vence & " IS NULL FROM " & cuenta)
+        dtab = DbMan.readDB(Nothing, conexion_fox.Text, "SELECT codigo, " & periodo & ", " & vence & " WHERE " & vence & " IS NULL FROM " & cuenta)
 
 		For Each drow As DataRow In dtab.Rows
-			DbMan.edit(Nothing, conexion_fox.Text,
+			DbMan.editDB(Nothing, conexion_fox.Text,
 					"UPDATE " & cuenta & " SET " & vence & "=#" & Today.Day & "/" & Today.Month & "/" & drow(periodo) & "#
                     WHERE codigo=" & drow("codigo") & " AND " & vence & " IS NULL")
 		Next
-    End Sub
+	End Sub
 
-    Public Sub cargar_tablas_ext()
-        Dim dtab_ext As New DataTable
-        dtab_ext.Locale = System.Globalization.CultureInfo.CurrentCulture
-		dtab_ext = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE personas='aguas'")
+	Public Sub cargar_tablas_ext()
+		Dim dtab_ext As New DataTable
+		dtab_ext.Locale = System.Globalization.CultureInfo.CurrentCulture
+		dtab_ext = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM tablas_externas WHERE personas='aguas'")
 
 		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS AGUA ##########################################################
@@ -150,9 +142,9 @@
 			agua_variables.Text = dtab_ext(0)("variables")
 			agua_vencimientos.Text = dtab_ext(0)("vencimientos")
 			agua_zonas.Text = dtab_ext(0)("zona")
-        End If
+		End If
 
-		dtab_ext = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE  personas='automovil'")
+		dtab_ext = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM tablas_externas WHERE  personas='automovil'")
 
 		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS AUTO ##########################################################
@@ -160,9 +152,9 @@
 			auto_cuentas.Text = dtab_ext(0)("cuentas")
 			auto_vencimientos.Text = dtab_ext(0)("vencimientos")
 			auto_tipo.Text = dtab_ext(0)("tipo")
-        End If
+		End If
 
-		dtab_ext = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE  personas='catastro'")
+		dtab_ext = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM tablas_externas WHERE  personas='catastro'")
 
 		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS CATA ##########################################################
@@ -171,9 +163,9 @@
 			cata_historial.Text = dtab_ext(0)("historial")
 			cata_vencimientos.Text = dtab_ext(0)("vencimientos")
 			cata_zonas.Text = dtab_ext(0)("zona")
-        End If
+		End If
 
-		dtab_ext = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE  personas='comercio'")
+		dtab_ext = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM tablas_externas WHERE  personas='comercio'")
 
 		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS COME ##########################################################
@@ -183,9 +175,9 @@
 			come_variables.Text = dtab_ext(0)("variables")
 			come_vencimientos.Text = dtab_ext(0)("vencimientos")
 			come_actividades.Text = dtab_ext(0)("actividad")
-        End If
+		End If
 
-		dtab_ext = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM tablas_externas WHERE  personas='sepelio'")
+		dtab_ext = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM tablas_externas WHERE  personas='sepelio'")
 
 		If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS SEPE ##########################################################

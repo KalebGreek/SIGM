@@ -32,18 +32,18 @@
 		End If
 	End Sub
 
-	Private Sub sig_Click(sender As Object, e As EventArgs) Handles siguiente.Click
+    Private Sub info_estado_TextChanged(sender As Object, e As EventArgs) Handles info_estado.TextChanged
+        BloquearMod()
+    End Sub
+
+    Private Sub sig_Click(sender As Object, e As EventArgs) Handles siguiente.Click
 		Dim dr As DialogResult = Validar(grupo_mod.SelectedIndex)
 		If dr <> DialogResult.Cancel Then
-			If dr = DialogResult.OK Then
-				GuardarCambios()
-			Else
-				'reload
-			End If
-			If grupo_mod.SelectedIndex < grupo_mod.TabCount - 1 Then
-				grupo_mod.SelectTab(grupo_mod.SelectedIndex + 1)
-			End If
-		End If
+            GuardarCambios()
+            If grupo_mod.SelectedIndex < grupo_mod.TabCount - 1 Then
+                grupo_mod.SelectTab(grupo_mod.SelectedIndex + 1)
+            End If
+        End If
 	End Sub
 	Private Sub back_Click(sender As Object, e As EventArgs) Handles back.Click
 		Dim dr As DialogResult = Validar(grupo_mod.SelectedIndex)
@@ -69,87 +69,87 @@
 	End Sub
 
     '## RUTINAS
+
     '## PARTIDA
-    Private Sub SelectorCatastro(Optional sender As Object = Nothing, Optional e As KeyEventArgs = Nothing) _
-		Handles zona.KeyUp, circ.KeyUp, secc.KeyUp, manz.KeyUp, parc.KeyUp, lote.KeyUp
-		catastro_id.Text = 0
-		catastro_id.Text = Catastro.SeleccionarPartida(zona.Value, circ.Value, secc.Value, manz.Value, parc.Value, lote.Value)
-		dtab_cat = Catastro.Seleccionar(catastro_id.Text)
-		MostrarResumen(dtab_cat)
-	End Sub
-	Private Sub MostrarResumen(registro As DataTable)
-		titular_id.Text = 0
-		titular.Text = " - "
-		cuil.Text = " - "
-		info_ubicacion.Text = " - "
-		info_barrio.Text = " - "
-		info_uso.Text = " - "
-		info_cuenta.Text = " - "
-		info_exp.Text = 0
-		operacion.Text = ""
+    Private Sub SelectorCatastro() _
+        Handles zona.ValueChanged, circ.ValueChanged, secc.ValueChanged, parc.ValueChanged, lote.ValueChanged
+        'Handles zona.KeyUp, circ.KeyUp, secc.KeyUp, manz.KeyUp, parc.KeyUp, lote.KeyUp
+        If Me.Visible And grupo_mod.SelectedTab Is tab_catastro Then
+            MostrarResumen()
+            BloquearMod()
+        End If
+    End Sub
+    Private Sub MostrarResumen()
+        catastro_id.Text = Catastro.SeleccionarPartida(zona.Value, circ.Value, secc.Value, manz.Value, parc.Value, lote.Value)
+        dtab_cat = Catastro.Seleccionar(catastro_id.Text)
 
-		If registro Is Nothing Then
-			info_estado.Text = "SELECCIONAR INMUEBLE"
-		ElseIf registro.Rows.Count = 0 Then 'Inmueble nuevo
+        titular_id.Text = 0
+        titular.Text = " - "
+        cuil.Text = " - "
+        info_ubicacion.Text = " - "
+        info_barrio.Text = " - "
+        info_uso.Text = " - "
+        info_cuenta.Text = " - "
+        info_exp.Text = 0
+        operacion.Text = ""
+
+        If catastro_id.Text = -1 Then
+            info_estado.Text = "SELECCIONAR INMUEBLE"
+        ElseIf catastro_id.Text = 0 Then 'Inmueble nuevo
             info_estado.Text = "NUEVO"
-			operacion.Text = "NEW"
-		ElseIf registro.Rows.Count > 0 Then
-			CtrlMan.LoadAllControls(registro(0), tab_ubicacion)
-            'titular_id.Text = registro(0)("titular_id")
-            'razon.Text = registro(0)("titular")
-            'cuil.Text = registro(0)("cuil")
-            'barrio.Text = registro(0)("barrio").ToString
-            'uso.Text = registro(0)("uso").ToString
-            'cuenta.Text = registro(0)("cuenta").ToString
-            info_ubicacion.Text = registro(0)("calle").ToString & " " & registro(0)("altura").ToString
+            operacion.Text = "NEW"
+        ElseIf dtab_cat.Rows.Count > 0 Then
+            CtrlMan.LoadAllControls(dtab_cat(0), tab_ubicacion)
+            info_ubicacion.Text = dtab_cat(0)("calle").ToString & " " & dtab_cat(0)("altura").ToString
 
-			If registro(0)("expediente") Is DBNull.Value = False Then
-				info_exp.Text = registro(0)("expediente")
-			End If
+            If dtab_cat(0)("expediente") Is DBNull.Value = False Then
+                info_exp.Text = dtab_cat(0)("expediente")
+            End If
 
-			If My.Settings.UserId = registro(0)("user_id") Then
-				If opr_id.Text = registro(0)("opr_id") Then 'Modificar
-                    If registro(0)("archivado") Then 'Solo lectura
+            If My.Settings.UserId = dtab_cat(0)("user_id") Then
+                If opr_id.Text = dtab_cat(0)("opr_id") Then 'Modificar
+                    If dtab_cat(0)("archivado") Then 'Solo lectura
                         info_estado.Text = "CONSULTA"
-					Else
-						info_estado.Text = "ACTIVO"
-						operacion.Text = "MOD"
-					End If
-				ElseIf opr_id.Text <> registro(0)("opr_id") Then
-					If registro(0)("archivado") Then 'Duplicar
+                    Else
+                        info_estado.Text = "ACTIVO"
+                        operacion.Text = "MOD"
+                    End If
+                ElseIf opr_id.Text <> dtab_cat(0)("opr_id") Then
+                    If dtab_cat(0)("archivado") Then 'Duplicar
                         operacion.Text = "DUP"
-						info_estado.Text = "LISTO PARA DUPLICAR"
-					Else
-						info_estado.Text = "CONSULTA"
-					End If
-				Else 'Temporal
+                        info_estado.Text = "LISTO PARA DUPLICAR"
+                    Else
+                        info_estado.Text = "CONSULTA"
+                    End If
+                Else 'Temporal
                     operacion.Text = "MOD"
-					info_estado.Text = "TEMPORAL"
-				End If
-			Else
-				info_estado.Text = "BLOQUEADO"
-			End If
-		End If
+                    info_estado.Text = "TEMPORAL"
+                End If
+            Else
+                info_estado.Text = "BLOQUEADO"
+            End If
+        End If
 
         'Formatear por operación
         If operacion.Text = "" Then
-			siguiente.Text = "CONSULTAR >"
-		ElseIf operacion.Text = "MOD" Then
-			siguiente.Text = "MODIFICAR >"
-		ElseIf operacion.Text = "DUP" Then
-			siguiente.Text = "DUPLICAR >"
-		ElseIf operacion.Text = "NEW" Then
-			siguiente.Text = "NUEVO >"
-		End If
+            siguiente.Text = "CONSULTAR >"
+        ElseIf operacion.Text = "MOD" Then
+            siguiente.Text = "MODIFICAR >"
+        ElseIf operacion.Text = "DUP" Then
+            siguiente.Text = "DUPLICAR >"
+        ElseIf operacion.Text = "NEW" Then
+            siguiente.Text = "NUEVO >"
+        End If
 
         'Mostrar Partida
         Partida.Text = "Partida: Z" & zona.Value & " C" & circ.Value & " S" & secc.Value &
-					  " M" & manz.Value & " P" & parc.Value & " L" & lote.Value
-	End Sub
+                      " M" & manz.Value & " P" & parc.Value & " L" & lote.Value
+    End Sub
 
-	Private Sub Cargar(registro As DataTable)
-		cuenta.Value = 0
-		barrio.SelectedIndex = -1
+    Private Sub Cargar(registro As DataTable)
+
+        cuenta.Value = 0
+        barrio.SelectedIndex = -1
 		uso.SelectedIndex = -1
 		titular_id.Text = 0
 
@@ -162,23 +162,21 @@
 		End If
 
 
-        'frentes
-        CtrlMan.LoadDataGridView(consulta_frente, bs_frente, Catastro.ListarFrente(catastro_id.Text))
+		'frentes
+		CtrlMan.LoadDataGridView(consulta_frente, bs_frente, "", Catastro.ListarFrente(catastro_id.Text))
 
         'superficies
-        registro = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT * FROM cat_superficie WHERE catastro_id=" & catastro_id.Text)
+        CtrlMan.LoadAllControls(DbMan.readDB(Nothing, My.Settings.CurrentDB,
+                                            "SELECT * FROM cat_superficie WHERE catastro_id=" & catastro_id.Text)(0), tab_sup)
 
-		If registro.Rows.Count > 0 Then
-			CtrlMan.LoadAllControls(registro(0), tab_sup)
-		End If
+        'caracteristicas
+        CtrlMan.LoadDataGridView(consulta_caract, bs_car, "",
+						DbMan.readDB(Nothing, My.Settings.CurrentDB,
+									"SELECT descripcion, activo FROM cat_servicio WHERE catastro_id=" & catastro_id.Text))
 
-		'caracteristicas
-		CtrlMan.LoadDataGridView(consulta_caract, bs_car, "",
-								 DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT descripcion, activo FROM cat_servicio 
-																			 WHERE catastro_id=" & catastro_id.Text))
+		'copias
+		CtrlMan.LoadDataGridView(consulta_copia, bs_copia, "", Documento.Catastro.BuscarDoc(catastro_id.Text))
 
-        'copias
-        CtrlMan.LoadDataGridView(consulta_copia, bs_copia, Documento.Catastro.BuscarDoc(catastro_id.Text))
 	End Sub
 
 	Function Validar(pagina As Integer) As DialogResult
@@ -270,34 +268,44 @@
 		Return dr
 	End Function
 
-	Private Sub GuardarCambios()
+    Private Sub BloquearMod()
+        Dim lock As Boolean = (info_estado.Text <> "BLOQUEADO")
+        tab_ubicacion.Enabled = lock
+        tab_frente.Enabled = lock
+        tab_sup.Enabled = lock
+        tab_caracter.Enabled = lock
+        tab_copia.Enabled = lock
+    End Sub
+
+    Private Sub GuardarCambios()
 		With grupo_mod
-			If .SelectedIndex = 0 Then
-				Cargar(dtab_cat)
-			ElseIf .SelectedIndex = 1 Then
-				If operacion.Text = "MOD" Then
-					Catastro.Modificar.Inmueble(opr_id.Text, catastro_id.Text, titular_id.Text,
-												  barrio.Text, uso.Text, cuenta.Value, archivado.Checked,
-												  zona.Value, circ.Value, secc.Value,
-												  manz.Value, parc.Value, lote.Value)
-				ElseIf operacion.Text = "NEW" Or operacion.Text = "DUP" Then
-					Catastro.Agregar.Inmueble(opr_id.Text, catastro_id.Text, titular_id.Text,
-											  barrio.Text, uso.Text, cuenta.Value, archivado.Checked,
-											  zona.Value, circ.Value, secc.Value,
-											  manz.Value, parc.Value, lote.Value)
-					operacion.Text = "MOD"
-				End If
-			ElseIf .SelectedIndex = 2 Then
-				'Se cambia en tiempo real
-			ElseIf .SelectedIndex = 3 Then
-				Catastro.Agregar.Superficie(catastro_id.Text, existente.Value, relevamiento.Value,
-								 proyecto.Value, terreno.Value)
-			ElseIf .SelectedIndex = 4 Then 'caracteristicas
-				Catastro.Agregar.Caracteristica(bs_car, catastro_id.Text)
-			ElseIf .SelectedIndex = 5 Then 'documentos
-				Catastro.Agregar.Documento(bs_copia, catastro_id.Text)
-			End If
-		End With
+            If .SelectedIndex = 1 Then
+                If operacion.Text = "MOD" Then
+                    Catastro.Modificar.Inmueble(opr_id.Text, catastro_id.Text, titular_id.Text,
+                                                  barrio.Text, uso.Text, cuenta.Value, archivado.Checked,
+                                                  zona.Value, circ.Value, secc.Value,
+                                                  manz.Value, parc.Value, lote.Value)
+                ElseIf operacion.Text = "NEW" Or operacion.Text = "DUP" Then
+                    Catastro.Agregar.Inmueble(opr_id.Text, catastro_id.Text, titular_id.Text,
+                                              barrio.Text, uso.Text, cuenta.Value, archivado.Checked,
+                                              zona.Value, circ.Value, secc.Value,
+                                              manz.Value, parc.Value, lote.Value)
+                    operacion.Text = "MOD"
+                End If
+            ElseIf .SelectedIndex = 2 Then
+                'Se cambia en tiempo real
+            ElseIf .SelectedIndex = 3 Then
+                Catastro.Agregar.Superficie(catastro_id.Text, existente.Value, relevamiento.Value,
+                                 proyecto.Value, terreno.Value)
+            ElseIf .SelectedIndex = 4 Then 'caracteristicas
+                Catastro.Agregar.Caracteristica(bs_car, catastro_id.Text)
+            ElseIf .SelectedIndex = 5 Then 'documentos
+                Catastro.Agregar.Documento(bs_copia, catastro_id.Text)
+            End If
+            If dtab_cat Is Nothing = False Then
+                Cargar(dtab_cat)
+            End If
+        End With
 	End Sub
 
     'UBICACIÓN Y TITULAR
@@ -313,23 +321,24 @@
 	End Sub
 
 	Private Sub mod_titular_Click(sender As Object, e As EventArgs) Handles mod_titular.Click
-		Dim sel_per As New BusquedaPersona
-		sel_per.genSearchControl1.vista.Text = "PERSONA"
-		sel_per.ShowDialog(Me)
-		With sel_per.resultado
-			If .DataSource.Position > -1 Then
-				titular_id.Text = .DataSource.Current("persona_id").ToString
-				titular.Text = .DataSource.Current("razon").ToString
-				cuil.Text = .DataSource.Current("cuil").ToString
-				difunto.Checked = .DataSource.Current("difunto")
-			Else
-				titular.Clear()
-				cuil.Clear()
-				difunto.Checked = False
-			End If
-			.Dispose()
-		End With
-	End Sub
+        Dim bs As BindingSource = Persona.Seleccionar(Me)
+        With bs
+            If .DataSource Is Nothing = False Then
+                If .Position > -1 Then
+                    titular_id.Text = .Current("persona_id").ToString
+                    titular.Text = .Current("razon").ToString
+                    cuil.Text = .Current("cuil").ToString
+                    difunto.Checked = .Current("difunto")
+                End If
+            Else
+                titular_id.Text = 0
+                titular.Clear()
+                cuil.Clear()
+                difunto.Checked = False
+            End If
+            .Dispose()
+        End With
+    End Sub
 	Private Sub titular_TextChanged(sender As Object, e As EventArgs) Handles titular.TextChanged
 		info_titular.Text = titular.Text
 	End Sub
@@ -375,8 +384,8 @@
 				Catastro.Eliminar.Frente(bs_frente, catastro_id.Text)
 			End If
 		End If
-		CtrlMan.LoadDataGridView(consulta_frente, bs_frente, Catastro.ListarFrente(catastro_id.Text))
-	End Sub
+        CtrlMan.LoadDataGridView(consulta_frente, bs_frente, "", Catastro.ListarFrente(catastro_id.Text))
+    End Sub
 
 	'## SUPERFICIE
 	Private Sub calcular_superficie(sender As Object, e As EventArgs) Handles existente.ValueChanged, proyecto.ValueChanged,
@@ -443,10 +452,14 @@
 		bs_copia.RemoveCurrent()
 	End Sub
 	Private Sub consulta_copia_CellContentDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles consulta_copia.CellContentDoubleClick
-		If bs_copia.Position > -1 Then
-			Process.Start(root & My.Settings.DocFolderCatastro & bs_copia.Current("ruta"))
-		End If
-	End Sub
+        If bs_copia.Position > -1 Then
+            Try
+                Process.Start(root & My.Settings.DocFolderCatastro & bs_copia.Current("ruta"))
+            Catch ex As Exception
+                MsgBox(ex.GetBaseException.Message, MsgBoxStyle.Exclamation, "Error")
+            End Try
+        End If
+    End Sub
 
 
 End Class

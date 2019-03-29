@@ -34,19 +34,18 @@
         Me.Close()
     End Sub
     Private Sub buscar_click(sender As Object, e As EventArgs) Handles buscar.Click
-		Dim persona1 As New BusquedaPersona
-		With persona1.resultado.DataSource
-			.ShowDialog(Me)
-			If .Position > -1 Then
-				cuil.Text = .Current("cuil").ToString
-				razon.Text = .Current("razon").ToString
-				persona_id.Text = .Current("per_id").ToString
-				If MsgBoxResult.Yes = MsgBox("Desea seleccionar esta persona?", MsgBoxStyle.YesNo) Then
-					grupo_persona.Enabled = False
-				End If
-			End If
-		End With
-		grupo_datos.Enabled = grupo_persona.Enabled.CompareTo(True)
+        Dim bs As BindingSource = Persona.Seleccionar(Me)
+        With bs
+            If .Position > -1 Then
+                cuil.Text = .Current("cuil").ToString
+                razon.Text = .Current("razon").ToString
+                persona_id.Text = .Current("per_id").ToString
+                If MsgBoxResult.Yes = MsgBox("Desea seleccionar esta persona?", MsgBoxStyle.YesNo) Then
+                    grupo_persona.Enabled = False
+                End If
+            End If
+        End With
+        grupo_datos.Enabled = grupo_persona.Enabled.CompareTo(True)
     End Sub
     '###### CARGAR ##########################################################################################
 
@@ -55,7 +54,7 @@
         partida.DataSource = Nothing
         bs_partida.DataSource = Nothing
         If bs_rubro.Position > -1 Then
-			Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.foxcon,
+			Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.foxConnection,
 												"SELECT nombre, partida 
 												  FROM hacienda WHERE pertenece='9'
 												   AND anexo='1' AND inciso='1'
@@ -63,62 +62,62 @@
 												   AND subrubro='01' AND partida>'00' AND subpartida='00'")
 
 			If dtab Is Nothing = False Then
-                If dtab.Rows.Count > 0 Then
-                    bs_partida.DataSource = dtab
-                    partida.DataSource = bs_partida
-                    partida.DisplayMember = "nombre"
-                    partida.Visible = True
-                End If
-            End If
-        End If
-    End Sub
-    Private Sub bs_partida_PositionChanged(sender As Object, e As EventArgs) Handles bs_partida.PositionChanged
-        subpartida.Visible = False
-        subpartida.DataSource = Nothing
-        bs_subpartida.DataSource = Nothing
-        If bs_partida.Position > -1 Then
-			Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.foxcon, "SELECT nombre, subpartida 
+				If dtab.Rows.Count > 0 Then
+					bs_partida.DataSource = dtab
+					partida.DataSource = bs_partida
+					partida.DisplayMember = "nombre"
+					partida.Visible = True
+				End If
+			End If
+		End If
+	End Sub
+	Private Sub bs_partida_PositionChanged(sender As Object, e As EventArgs) Handles bs_partida.PositionChanged
+		subpartida.Visible = False
+		subpartida.DataSource = Nothing
+		bs_subpartida.DataSource = Nothing
+		If bs_partida.Position > -1 Then
+			Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT nombre, subpartida 
 												  FROM hacienda WHERE pertenece='9' AND anexo='1' AND inciso='1'
 												   AND item ='1' AND rubro='" & bs_rubro.Current("rubro") & "' AND subrubro='01'
 												   AND partida ='" & bs_partida.Current("partida") & "' AND subpartida>'00'")
 
 			If dtab Is Nothing = False Then
-                If dtab.Rows.Count > 0 Then
-                    bs_subpartida.DataSource = dtab
-                    subpartida.DataSource = bs_subpartida
-                    subpartida.DisplayMember = "nombre"
-                    subpartida.Visible = True
-                End If
-            End If
-        End If
-    End Sub
-    Private Sub cargarJerarquiaPersonal()
-		Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.foxcon, "SELECT nombre, rubro 
+				If dtab.Rows.Count > 0 Then
+					bs_subpartida.DataSource = dtab
+					subpartida.DataSource = bs_subpartida
+					subpartida.DisplayMember = "nombre"
+					subpartida.Visible = True
+				End If
+			End If
+		End If
+	End Sub
+	Private Sub cargarJerarquiaPersonal()
+		Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT nombre, rubro 
 											  FROM hacienda 
 											 WHERE pertenece='9' AND anexo='1' AND inciso='1' AND item='1'
                                                AND rubro >'00' AND rubro <'03' AND subrubro='00' 
 											   AND partida='00' AND subpartida='00'")
 
 		If dtab Is Nothing = False Then
-            If dtab.Rows.Count > 0 Then
-                bs_rubro.DataSource = dtab
-                rubro.DataSource = bs_rubro
-                rubro.DisplayMember = "nombre"
-            End If
-        End If
-    End Sub
+			If dtab.Rows.Count > 0 Then
+				bs_rubro.DataSource = dtab
+				rubro.DataSource = bs_rubro
+				rubro.DisplayMember = "nombre"
+			End If
+		End If
+	End Sub
 
     '###### VALIDAR ##########################################################################################
     Private Function ValidarCodigo(ordenanza_id As Integer, codigo As Integer) As Boolean
-        Dim valido As Boolean = True
-        Dim msg As String = ""
-        Dim dtab As New DataTable
+		Dim valido As Boolean = True
+		Dim msg As String = ""
+		Dim dtab As New DataTable
 
-        If codigo >= 11899 Or ordenanza_id > 0 Then 'Desde 1-1900
+		If codigo >= 11899 Or ordenanza_id > 0 Then 'Desde 1-1900
             If ordenanza_id > 0 Then
-				dtab = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id)
+				dtab = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id)
 			Else
-				dtab = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo)
+				dtab = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo)
 			End If
 
             If dtab Is Nothing = False Then

@@ -225,135 +225,135 @@ Public Class ConsultaCuentaAgrupada
         If cuenta_agrupada Then
 			sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
 		End If
-		consulta = DbMan.read(Nothing, My.Settings.foxcon, sql)
+		consulta = DbMan.readDB(Nothing, My.Settings.foxConnection, sql)
 		progreso.Value = 20
 		Return consulta
 	End Function
 
     '### CUENTA AGRUPADA
     Private Sub razon_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
-        If e.KeyChar = Chr(13) Then
-            leer(razon.Text, ca_search)
-        End If
-    End Sub
-    Private Sub ca_search_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        leer(razon.Text, sender)
-    End Sub
-    Private Sub mod_per_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        With mod_per
-            If razon.Text <> "" Then
-                .Show()
-                .Focus()
-            End If
-        End With
-    End Sub
-    Private Sub con_ca_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        If Len(razon.Text) > 7 And Len(cuil.Text) = 11 And cuil.Text.Contains(dni.Text) Then
-            grupo_con_ca.Visible = True
-            grupo_buscar_ca.Enabled = False
-            visor.DataSource = Nothing
-            leer(razon.Text, sender)
-        Else
-            info.Text = "Faltan datos."
-        End If
-    End Sub
-    Private Sub mod_ca_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        If Len(razon.Text) > 7 And Len(cuil.Text) = 11 And cuil.Text.Contains(dni.Text) Then
-            grupo_mod_ca.Visible = True
-            grupo_buscar_ca.Enabled = False
-            visor.DataSource = Nothing
-            visor.Update()
-            found = False
-            dtab_mod_contrib = hac_contrib.leer(sender, cuil.Text)
-        Else
-            info.Text = "Faltan datos."
-        End If
-    End Sub
+		If e.KeyChar = Chr(13) Then
+			leer(razon.Text, ca_search)
+		End If
+	End Sub
+	Private Sub ca_search_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+		leer(razon.Text, sender)
+	End Sub
+	Private Sub mod_per_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+		With mod_per
+			If razon.Text <> "" Then
+				.Show()
+				.Focus()
+			End If
+		End With
+	End Sub
+	Private Sub con_ca_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+		If Len(razon.Text) > 7 And Len(cuil.Text) = 11 And cuil.Text.Contains(dni.Text) Then
+			grupo_con_ca.Visible = True
+			grupo_buscar_ca.Enabled = False
+			visor.DataSource = Nothing
+			leer(razon.Text, sender)
+		Else
+			info.Text = "Faltan datos."
+		End If
+	End Sub
+	Private Sub mod_ca_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+		If Len(razon.Text) > 7 And Len(cuil.Text) = 11 And cuil.Text.Contains(dni.Text) Then
+			grupo_mod_ca.Visible = True
+			grupo_buscar_ca.Enabled = False
+			visor.DataSource = Nothing
+			visor.Update()
+			found = False
+			dtab_mod_contrib = hac_contrib.leer(sender, cuil.Text)
+		Else
+			info.Text = "Faltan datos."
+		End If
+	End Sub
     '--------------------------
     Private Sub mod_ca_imp_search_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mod_ca_imp_search.Click
-        leer(imp_razon.Text, sender)
-    End Sub
-    Private Sub imp_agua_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles imp_agua.CheckedChanged
-        reset_ca_imp()
-        impuesto = "AGUA"
-    End Sub
-    Private Sub imp_auto_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles imp_auto.CheckedChanged
-        reset_ca_imp()
-        impuesto = "AUTO"
-    End Sub
-    Private Sub imp_cata_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles imp_cata.CheckedChanged
-        imp_razon.Text = razon.Text
-        reset_ca_imp()
-        impuesto = "CATA"
-    End Sub
-    Private Sub imp_come_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles imp_come.CheckedChanged
-        reset_ca_imp()
-        impuesto = "COME"
-    End Sub
-    Private Sub imp_sepe_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles imp_sepe.CheckedChanged
-        reset_ca_imp()
-        impuesto = "SEPE"
-    End Sub
+		leer(imp_razon.Text, sender)
+	End Sub
+	Private Sub imp_agua_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles imp_agua.CheckedChanged
+		reset_ca_imp()
+		impuesto = "AGUA"
+	End Sub
+	Private Sub imp_auto_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles imp_auto.CheckedChanged
+		reset_ca_imp()
+		impuesto = "AUTO"
+	End Sub
+	Private Sub imp_cata_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles imp_cata.CheckedChanged
+		imp_razon.Text = razon.Text
+		reset_ca_imp()
+		impuesto = "CATA"
+	End Sub
+	Private Sub imp_come_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles imp_come.CheckedChanged
+		reset_ca_imp()
+		impuesto = "COME"
+	End Sub
+	Private Sub imp_sepe_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles imp_sepe.CheckedChanged
+		reset_ca_imp()
+		impuesto = "SEPE"
+	End Sub
     '### EVENTOS DE LISTAS
     Private Sub imp_lista_mod_KeyUp(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
         'Esto guarda los ID de los registros borrados para guardar los 
         'cambios correctamente después.
         If e.KeyCode = Keys.Delete Then
-            save_ca.Enabled = True
-            With bs_mod_contrib
-                If IsDBNull(.Current("id")) = False Then
-                    del_rows(ndel) = .Current("id")
-                    found = True
-                    ndel += 1
-                End If
-            End With
-        End If
-    End Sub
-    Private Sub bs_contrib_CurrentChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles bs_contrib.CurrentChanged
-        If bs_contrib.Position > -1 Then
-            leer(bs_contrib.Current("codigo"), bs_contrib)
-        End If
-    End Sub
-    Private Sub imp_lista_con_CellClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+			save_ca.Enabled = True
+			With bs_mod_contrib
+				If IsDBNull(.Current("id")) = False Then
+					del_rows(ndel) = .Current("id")
+					found = True
+					ndel += 1
+				End If
+			End With
+		End If
+	End Sub
+	Private Sub bs_contrib_CurrentChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles bs_contrib.CurrentChanged
+		If bs_contrib.Position > -1 Then
+			leer(bs_contrib.Current("codigo"), bs_contrib)
+		End If
+	End Sub
+	Private Sub imp_lista_con_CellClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
 
-    End Sub
-    Private Sub imp_add_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles imp_add.Click
-        Dim impuesto As String
+	End Sub
+	Private Sub imp_add_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles imp_add.Click
+		Dim impuesto As String
 
-        If imp_agua.Checked = True Then
-            impuesto = "AGUA"
-        ElseIf imp_auto.Checked = True Then
-            impuesto = "AUTO"
-        ElseIf imp_cata.Checked = True Then
-            impuesto = "CATA"
-        ElseIf imp_come.Checked = True Then
-            impuesto = "COME"
-        Else
-            impuesto = "SEPE"
-        End If
-        With bs_mod_contrib
-            .AddNew()
-            .Current("impuesto") = impuesto
-            .Current("codigo") = bs_consulta.Current("codigo")
-            .Current("alta") = imp_alta.Value 'alta
+		If imp_agua.Checked = True Then
+			impuesto = "AGUA"
+		ElseIf imp_auto.Checked = True Then
+			impuesto = "AUTO"
+		ElseIf imp_cata.Checked = True Then
+			impuesto = "CATA"
+		ElseIf imp_come.Checked = True Then
+			impuesto = "COME"
+		Else
+			impuesto = "SEPE"
+		End If
+		With bs_mod_contrib
+			.AddNew()
+			.Current("impuesto") = impuesto
+			.Current("codigo") = bs_consulta.Current("codigo")
+			.Current("alta") = imp_alta.Value 'alta
             .EndEdit()
-        End With
-        save_ca.Enabled = True
-        visor.Focus()
-    End Sub
-    Private Sub save_ca_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles save_ca.Click
-        Dim nupd, nins As Integer
-        Dim fila As Integer = 0
-        With imp_lista_mod
-            If .RowCount > 0 Then
-                Do While fila < .RowCount
-                    If .Item(0, fila).Value.ToString = Nothing Then
-						DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO contribuyente(razon, cuil, impuesto, codigo, alta)
+		End With
+		save_ca.Enabled = True
+		visor.Focus()
+	End Sub
+	Private Sub save_ca_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles save_ca.Click
+		Dim nupd, nins As Integer
+		Dim fila As Integer = 0
+		With imp_lista_mod
+			If .RowCount > 0 Then
+				Do While fila < .RowCount
+					If .Item(0, fila).Value.ToString = Nothing Then
+						DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO contribuyente(razon, cuil, impuesto, codigo, alta)
                                          VALUES ('" & razon.Text & "', " & cuil.Text & ", '" & .Item(1, fila).Value & "'," &
 										" " & .Item(2, fila).Value & ", '" & .Item(3, fila).Value & "')")
 						nins += 1
 					Else
-						DbMan.edit(Nothing, My.Settings.DefaultCon, "UPDATE contribuyente SET razon='" & razon.Text & "', impuesto='" & .Item(1, fila).Value &
+						DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE contribuyente SET razon='" & razon.Text & "', impuesto='" & .Item(1, fila).Value &
 										"', codigo=" & .Item(2, fila).Value & ", alta='" & .Item(3, fila).Value & "'" &
 										" WHERE id=" & .Item(0, fila).Value)
 						nupd += 1
@@ -363,13 +363,13 @@ Public Class ConsultaCuentaAgrupada
 				ndel = 0
 				If found = True Then
 					Do While ndel < del_rows.Count And del_rows(ndel) <> Nothing
-						DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE FROM contribuyente WHERE id=" & del_rows(ndel))
+						DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE FROM contribuyente WHERE id=" & del_rows(ndel))
 						ndel += 1
 					Loop
 				End If
 			Else
 				If MsgBoxResult.Ok = MsgBox("Esto eliminará todos los registros de la cuenta agrupada, ¿desea continuar?.", MsgBoxStyle.OkCancel) Then
-					DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE FROM contribuyente WHERE cuil=" & cuil.Text & ";")
+					DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE FROM contribuyente WHERE cuil=" & cuil.Text & ";")
 				End If
             End If
             info.Text = nins & " nuevos registros, " & nupd & " registros modificados y " & ndel & " registros eliminados."

@@ -4,7 +4,7 @@
 		Dim contrib, deuda_total As New DataTable
 		adicional = ""
 		franqueo = ""
-		contrib = DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT id, impuesto, codigo, alta FROM contribuyente WHERE cuil=" & cuil, )
+		contrib = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, impuesto, codigo, alta FROM contribuyente WHERE cuil=" & cuil, )
 		If contrib.Rows.Count > 0 And (sender Is ConsultaCuentaAgrupada.imp_lista_mod Or sender Is ConsultaCuentaAgrupada.con_ca) Then 'Consultas llevan deuda total incluida
             Dim fila As Integer = 0
 			If contrib.Columns.Contains("deuda") Then
@@ -63,7 +63,7 @@
 
                 'Filtra desde la fecha de hoy hacia atrás
                 sql += " AND " & vence & "<DATE()"
-				deuda_total = DbMan.read(Nothing, My.Settings.foxcon, sql)
+				deuda_total = DbMan.readDB(Nothing, My.Settings.foxConnection, sql)
 				contrib(fila)("deuda") = deuda_total(0)("deuda")
 				fila += 1
 			Loop

@@ -23,27 +23,29 @@ Public Class BusquedaExpediente
 
 	Private Sub Consultar()
 		With ControlBusqueda1
-			If .vista.SelectedIndex > -1 Then
-				.filtro.DataSource = Nothing
-				If .vista.Text = "EXPEDIENTE" Then
-					bs_resultado.DataSource = Oprivadas.Expediente.Buscar.Expediente()
-				ElseIf .vista.Text = "RESPONSABLE" Then
-					bs_resultado.DataSource = Oprivadas.Expediente.Buscar.Responsable()
-				ElseIf .vista.Text = "PROFESIONAL" Then
-					bs_resultado.DataSource = Oprivadas.Expediente.Buscar.Profesional()
-				End If
-				If bs_resultado.Count > 0 Then
-					.filtro.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource)
-					CtrlMan.LoadDataGridView(resultado, bs_resultado, .bsCustomFilter)
-				End If
-			End If
-		End With
+            If .vista.SelectedIndex > -1 Then
+                Dim dtab As New DataTable
+                .filtro.DataSource = Nothing
+                If .vista.Text = "EXPEDIENTE" Then
+                    dtab = Oprivadas.Expediente.Buscar.Expediente()
+                ElseIf .vista.Text = "RESPONSABLE" Then
+                    dtab = Oprivadas.Expediente.Buscar.Responsable()
+                ElseIf .vista.Text = "PROFESIONAL" Then
+                    dtab = Oprivadas.Expediente.Buscar.Profesional()
+                End If
+                If dtab Is Nothing = False Then
+                    Dim bs As New BindingSource
+                    bs.DataSource = CtrlMan.Fill.GetColumnList(dtab)
+                    CtrlMan.Fill.SetAutoComplete(.filtro, bs, "ColumnName", "DataType")
+                    CtrlMan.LoadDataGridView(resultado, bs_resultado, .bsCustomFilter, dtab)
+                End If
+            End If
+        End With
 	End Sub
 	Private Sub Filtrar() Handles ControlBusqueda1.CSearch_Click
 		bs_resultado.Filter = ControlBusqueda1.bsCustomFilter
 	End Sub
 	Private Sub Reiniciar() Handles ControlBusqueda1.CReset_Click
-		ControlBusqueda1.reset_search.PerformClick()
 	End Sub
 	Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVista_IndexTextChanged
 		Consultar()

@@ -59,56 +59,56 @@
         If codigo >= 11899 Or ordenanza_id > 0 Then
 
             If ordenanza_id > 0 Then
-				DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id)
+				DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id)
 			Else
-				DbMan.read(Nothing, My.Settings.DefaultCon, "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo)
+				DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo)
 			End If
 
-            If dtab Is Nothing = False Then
-                If dtab.Rows.Count > 0 Then
-                    If dtab.Rows.Count = 1 And ordenanza_id > 0 Then
-                        If ordenanza_id = dtab(0)("id") Then
+			If dtab Is Nothing = False Then
+				If dtab.Rows.Count > 0 Then
+					If dtab.Rows.Count = 1 And ordenanza_id > 0 Then
+						If ordenanza_id = dtab(0)("id") Then
                             'Editar
                         Else
                             'Mal cargado
                             MsgBox("Registro invalido.")
-                            Return False
-                        End If
-                    Else
+							Return False
+						End If
+					Else
                         'Codigo duplicado
                         MsgBox("Esta ordenanza ya se encuentra cargada en el sistema.")
-                        Return False
-                    End If
-                End If
-            End If
-        Else
-            MsgBox("Codigo invalido.")
-            Return False
-        End If
-        Return True
-    End Function
-    Private Function ValidarCambios() As Boolean
-        ruta_doc.BackColor = Color.WhiteSmoke
-        If ruta_doc.Text.Contains("ordenanza.pdf") = False Then
-            ruta_doc.BackColor = Color.FromArgb(255, 195, 185)
-            Return False
-        End If
-        concepto.BackColor = Color.White
-        If Len(concepto.Text) < 10 Then
-            concepto.BackColor = Color.FromArgb(255, 195, 185)
-            Return False
-        End If
-        Return True
-    End Function
+						Return False
+					End If
+				End If
+			End If
+		Else
+			MsgBox("Codigo invalido.")
+			Return False
+		End If
+		Return True
+	End Function
+	Private Function ValidarCambios() As Boolean
+		ruta_doc.BackColor = Color.WhiteSmoke
+		If ruta_doc.Text.Contains("ordenanza.pdf") = False Then
+			ruta_doc.BackColor = Color.FromArgb(255, 195, 185)
+			Return False
+		End If
+		concepto.BackColor = Color.White
+		If Len(concepto.Text) < 10 Then
+			concepto.BackColor = Color.FromArgb(255, 195, 185)
+			Return False
+		End If
+		Return True
+	End Function
 
     '###### GUARDAR ##########################################################################################
     Private Sub guardar()
-        If Val(ordenanza_id.text) > -1 Then 'Mod
-            DbMan.edit(Nothing, My.Settings.DefaultCon,
+		If Val(ordenanza_id.Text) > -1 Then 'Mod
+            DbMan.editDB(Nothing, My.Settings.CurrentDB,
 					"UPDATE ordenanza SET fecha='" & fecha.Text & "', concepto='" & concepto.Text & "',
                      ruta_copia='" & ruta_doc.Text & "'")
 		Else 'Nueva
-            DbMan.edit(Nothing, My.Settings.DefaultCon,
+            DbMan.editDB(Nothing, My.Settings.CurrentDB,
 					"INSERT INTO ordenanza(codigo, fecha, concepto, ruta_copia)
                      VALUES(" & Val(codigo.Text) & ", '" & fecha.Text & "',
                     '" & concepto.Text & "', '" & ruta_doc.Text & "')")

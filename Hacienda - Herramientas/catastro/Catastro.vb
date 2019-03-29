@@ -49,7 +49,7 @@
 			sqlOrderBy = " ORDER BY catastro.id ASC"
 		End If
 
-		Return DbMan.read(Nothing, My.Settings.DefaultCon, sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
+		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
 	End Function
 	Shared Function BuscarPorPartida(Optional zona As Integer = 0, Optional circ As Integer = 0, Optional secc As Integer = 0,
 									 Optional manz As Integer = 0, Optional parc As Integer = 0, Optional lote As Integer = 0) As DataTable
@@ -63,26 +63,26 @@
 
 
 		If zona > 0 Then
-			SQLWhere += " AND catastro.zona=" & zona
+			sqlWhere += " AND catastro.zona=" & zona
 			If circ > 0 Then
-				SQLWhere += " AND catastro.circ=" & circ
+				sqlWhere += " AND catastro.circ=" & circ
 				If secc > 0 Then
-					SQLWhere += " AND catastro.secc=" & secc
+					sqlWhere += " AND catastro.secc=" & secc
 					If manz > 0 Then
-						SQLWhere += " AND catastro.manz=" & manz
+						sqlWhere += " AND catastro.manz=" & manz
 					End If
 					If parc > 0 Then
-						SQLWhere += " AND catastro.parc=" & parc
+						sqlWhere += " AND catastro.parc=" & parc
 					End If
 					If lote > 0 Then
-						SQLWhere += " AND catastro.lote=" & lote
+						sqlWhere += " AND catastro.lote=" & lote
 					End If
 				End If
 			End If
 		End If
 		sqlOrderBy = " ORDER BY catastro.id ASC"
 
-		Return DbMan.read(Nothing, My.Settings.DefaultCon, sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
+		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
 	End Function
 	Shared Function BuscarPorDireccion(Optional calle As String = "", Optional barrio As String = "") As DataTable
 		sqlSelect = CatastroSelect
@@ -102,7 +102,7 @@
 			sqlOrderBy = " ORDER BY catastro.id ASC"
 		End If
 
-		Return DbMan.read(Nothing, My.Settings.DefaultCon, sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
+		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
 	End Function
     '##### 'READ
     Shared Function ListarInmueblePorTitular(persona_id As Integer) As DataTable
@@ -113,7 +113,7 @@
 		If persona_id > 0 Then
 			sqlWhere += " AND persona.id=" & persona_id
 		End If
-		Return DbMan.read(Nothing, My.Settings.DefaultCon, sqlSelect, sqlFrom, sqlWhere)
+		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sqlSelect, sqlFrom, sqlWhere)
 	End Function
 	Shared Function ListarInmueblePorExpediente(expediente As Integer) As DataTable
 		sqlSelect = CatastroSelect
@@ -123,52 +123,54 @@
 		If expediente > 0 Then
 			sqlWhere += " AND oprivadas.expediente=" & expediente
 		End If
-		Return DbMan.read(Nothing, My.Settings.DefaultCon, sqlSelect, sqlFrom, sqlWhere)
+		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sqlSelect, sqlFrom, sqlWhere)
 	End Function
 	Shared Function Seleccionar(cat_id As Integer) As DataTable
-		If cat_id > -1 Then
-			Return DbMan.read(Nothing, My.Settings.DefaultCon, CatastroSelect, CatastroFrom, " WHERE catastro.id=" & cat_id)
-		Else
-			Return Nothing
+        If cat_id > 0 Then
+            Return DbMan.readDB(Nothing, My.Settings.CurrentDB, CatastroSelect, CatastroFrom, " WHERE catastro.id=" & cat_id)
+        Else
+            Return Nothing
 		End If
 	End Function
 	Shared Function SeleccionarPartida(zona As Integer, circ As Integer, secc As Integer,
 										  manz As Integer, parc As Integer, lote As Integer) As Integer
 
-		If zona > 0 And circ > 0 And secc > 0 And manz > 0 And parc > 0 Then
-			sqlSelect = "SELECT catastro.id as catastro_id FROM catastro"
-			sqlFrom = "FROM catastro"
-			sqlWhere = " WHERE catastro.zona=" & zona & " AND catastro.circ=" & circ & " AND catastro.secc=" & secc &
-					   " AND catastro.manz=" & manz & " AND catastro.parc=" & parc & " AND catastro.lote=" & lote
+        Dim id As Integer = 0
+        If zona > 0 And circ > 0 And secc > 0 And manz > 0 And parc > 0 Then
+            sqlSelect = "SELECT catastro.id as catastro_id"
+            sqlFrom = "FROM catastro"
+            sqlWhere = "WHERE catastro.zona=" & zona & " AND catastro.circ=" & circ & " AND catastro.secc=" & secc &
+                       " AND catastro.manz=" & manz & " AND catastro.parc=" & parc & " AND catastro.lote=" & lote
 
-			Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, sqlSelect, sqlFrom, sqlWhere)
-			If dtab.Rows.Count > 0 Then
-				Return dtab(0)("catastro_id")
-			Else
-				Return 0
-			End If
-		Else
-			Return -1
-		End If
-	End Function
+            Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, sqlSelect, sqlFrom, sqlWhere)
+            If dtab Is Nothing = False Then
+                If dtab.Rows.Count > 0 Then
+                    id = dtab(0)("catastro_id")
+                End If
+            End If
+        Else
+            id = -1
+        End If
+        Return id
+    End Function
 	Shared Function ListarFrente(catastro_id As Integer, Optional ubicacion As Boolean = False) As Object
 		If ubicacion Then
 			sqlSelect = "SELECT calle, altura"
 			sqlFrom = "FROM cat_frente"
 			sqlWhere = " WHERE catastro_id=" & catastro_id & " AND ubicacion=True"
 
-			Dim dtab As DataTable = DbMan.read(Nothing, My.Settings.DefaultCon, sqlSelect, sqlFrom, sqlWhere)
-			If dtab.Rows.Count > 0 Then
-				Return dtab(0)("calle") & " " & dtab(0)("altura")
-			Else
+			Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, sqlSelect, sqlFrom, sqlWhere)
+			If dtab Is Nothing Then
 				Return " S/N "
+			Else
+				Return dtab(0)("calle") & " " & dtab(0)("altura").ToString
 			End If
 		Else
 			sqlSelect = "SELECT id as frente_id, calle, altura, metros, ubicacion"
 			sqlFrom = "FROM cat_frente"
 			sqlWhere = "WHERE catastro_id=" & catastro_id
 
-			Return DbMan.read(Nothing, My.Settings.DefaultCon, sqlSelect, sqlFrom, sqlWhere)
+			Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sqlSelect, sqlFrom, sqlWhere)
 		End If
 	End Function
 
@@ -180,7 +182,7 @@
 									  manz As Integer, parc As Integer, lote As Integer)
 			'Agregar
 
-			DbMan.edit(Nothing, My.Settings.DefaultCon,
+			DbMan.editDB(Nothing, My.Settings.CurrentDB,
 								"INSERT INTO catastro(user_id, opr_id, zona, circ, secc, manz, parc, lote, barrio, uso, cuenta, archivado) " &
 								" VALUES(" & My.Settings.UserId & "," & opr_id & ", " & zona & ", " & circ & ", " & secc & "," &
 								" " & manz & ", " & parc & ", " & lote & ",'" & barrio & "', '" & uso & "', " & cuenta &
@@ -190,13 +192,13 @@
 
 			If catastro_id > 0 And titular_id > 0 Then
                 'Guardar titular
-                DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE * FROM titular_catastro WHERE cat_id=" & catastro_id)
-				DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO titular_catastro(cat_id, per_id)" &
+                DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM titular_catastro WHERE cat_id=" & catastro_id)
+				DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO titular_catastro(cat_id, per_id)" &
 															" VALUES(" & catastro_id & ", " & titular_id & ")")
 			End If
 		End Sub
 		Shared Sub Frente(catastro_id As Integer, calle As String, altura As Integer, metros As Decimal)
-			DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO cat_frente(catastro_id, calle, altura, metros)" &
+			DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO cat_frente(catastro_id, calle, altura, metros)" &
 				 										" VALUES(" & catastro_id & ",'" & calle & "', " & altura & "," &
 														" '" & metros & "')")
 		End Sub
@@ -204,31 +206,31 @@
 								 existente As Decimal, relevamiento As Decimal,
 								 proyecto As Decimal, terreno As Decimal)
             'cat_superficie
-            DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE * FROM cat_superficie WHERE catastro_id=" & catastro_id)
+            DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM cat_superficie WHERE catastro_id=" & catastro_id)
 
-			DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO cat_superficie(catastro_id, existente, proyecto, relevamiento, terreno)" &
+			DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO cat_superficie(catastro_id, existente, proyecto, relevamiento, terreno)" &
 														" VALUES(" & catastro_id & ", '" & existente & "', '" & proyecto & "'," &
 														" '" & relevamiento & "', '" & terreno & "')")
 
 		End Sub
 		Shared Sub Caracteristica(bs_car As BindingSource, catastro_id As Integer)
             'cat_servicio
-            DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE * FROM cat_servicio WHERE catastro_id=" & catastro_id)
+            DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM cat_servicio WHERE catastro_id=" & catastro_id)
 			With bs_car
 				For fila As Integer = 0 To .Count - 1
 					.Position = fila
-					DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO cat_servicio(catastro_id, descripcion, activo)" &
+					DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO cat_servicio(catastro_id, descripcion, activo)" &
 							  " VALUES(" & catastro_id & ",'" & .Current("descripcion") & "', " & .Current("activo") & ")")
 				Next
 			End With
 		End Sub
 		Shared Sub Documento(bs_copia As BindingSource, catastro_id As Integer)
             'cat_documento
-            DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE * FROM cat_documento WHERE catastro_id=" & catastro_id)
+            DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM cat_documento WHERE catastro_id=" & catastro_id)
 			With bs_copia
 				For fila As Integer = 0 To .Count - 1
 					.Position = fila
-					DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO cat_documento(catastro_id, descripcion, fecha, ruta)" &
+					DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO cat_documento(catastro_id, descripcion, fecha, ruta)" &
 						  " VALUES(" & catastro_id & ",'" & .Current("descripcion") & "'," &
 						  " '" & .Current("fecha") & "', '" & .Current("ruta") & "')")
 				Next
@@ -242,32 +244,32 @@
 										manz As Integer, parc As Integer, lote As Integer)
 
 			'Modificar
-			DbMan.edit(Nothing, My.Settings.DefaultCon, "UPDATE catastro SET user_id=" & My.Settings.UserId & ", opr_id=" & opr_id & ", " &
+			DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE catastro SET user_id=" & My.Settings.UserId & ", opr_id=" & opr_id & ", " &
 					  " barrio='" & barrio & "', uso='" & uso & "', cuenta=" & Val(cuenta) &
 					  " WHERE id=" & catastro_id)
 
 			If catastro_id > 0 And titular_id > 0 Then
                 'Guardar titular
-                DbMan.edit(Nothing, My.Settings.DefaultCon, "DELETE * FROM titular_catastro WHERE cat_id=" & catastro_id)
-				DbMan.edit(Nothing, My.Settings.DefaultCon, "INSERT INTO titular_catastro(cat_id, per_id)" &
+                DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM titular_catastro WHERE cat_id=" & catastro_id)
+				DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO titular_catastro(cat_id, per_id)" &
 							   " VALUES(" & catastro_id & ", " & titular_id & ")")
 			End If
 		End Sub
 		Shared Sub Ubicacion(bs_frente As BindingSource, catastro_id As Integer)
-			DbMan.edit(Nothing, My.Settings.DefaultCon, "UPDATE cat_frente SET ubicacion=False WHERE catastro_id=" & catastro_id)
-			DbMan.edit(Nothing, My.Settings.DefaultCon, "UPDATE cat_frente SET ubicacion=True WHERE id=" & bs_frente.Current.Row("frente_id"))
+			DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE cat_frente SET ubicacion=False WHERE catastro_id=" & catastro_id)
+			DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE cat_frente SET ubicacion=True WHERE id=" & bs_frente.Current.Row("frente_id"))
 		End Sub
 	End Class
 	Public Class Eliminar
 		Shared Sub Inmueble(catastro_id As Integer, user_id As Integer)
 			If user_id > 0 Then 'Solo el usuario que bloqueo el inmueble puede eliminarlo
-				Dim dtab As DataTable = DbMan.read(Nothing,
-												   My.Settings.DefaultCon,
+				Dim dtab As DataTable = DbMan.readDB(Nothing,
+												   My.Settings.CurrentDB,
 												   "SELECT *", "FROM catastro",
 												   "WHERE id=" & catastro_id & " AND user_id=" & user_id)
 				If dtab.Rows.Count > 0 Then
-					DbMan.edit(Nothing,
-							   My.Settings.DefaultCon,
+					DbMan.editDB(Nothing,
+							   My.Settings.CurrentDB,
 							   CatastroDelete & " WHERE catastro.id=" & catastro_id & " AND catastro.user_id=" & user_id)
 				Else
 					MsgBox("Registro bloqueado.")
@@ -276,8 +278,8 @@
 		End Sub
 		Shared Sub Frente(bs_frente As BindingSource, catastro_id As Integer)
 			'Eliminar registro
-			DbMan.edit(Nothing,
-					   My.Settings.DefaultCon,
+			DbMan.editDB(Nothing,
+					   My.Settings.CurrentDB,
 					   "DELETE * FROM cat_frente WHERE id=" & bs_frente.Current.Row("frente_id"))
 		End Sub
 	End Class

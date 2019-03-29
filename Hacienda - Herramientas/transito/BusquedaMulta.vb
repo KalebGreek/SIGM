@@ -12,17 +12,13 @@ Public Class BusquedaMulta
 		GenSearchControl1.vista.Items.AddRange(New Object() {"DETALLE DE MULTA", "TOTAL POR VEHICULO"})
 	End Sub
 
-	'-- RUTINAS
-	Sub Consultar()
-		If bs_resultado.Count > 0 Then
-			CtrlMan.LoadDataGridView(resultado, bs_resultado, GenSearchControl1.bsCustomFilter)
-		Else
-			CtrlMan.LoadDataGridView(resultado, Nothing, "")
-		End If
-	End Sub
+    '-- RUTINAS
+    Sub Consultar()
+        CtrlMan.LoadDataGridView(resultado, bs_resultado, GenSearchControl1.bsCustomFilter)
+    End Sub
 
-	'-- EVENTOS UNICOS
-	Private Sub vista_SelectedIndexChanged() Handles GenSearchControl1.CVista_IndexTextChanged
+    '-- EVENTOS UNICOS
+    Private Sub vista_SelectedIndexChanged() Handles GenSearchControl1.CVista_IndexTextChanged
 		OleDBCmd.CommandText = ""
 
 		With GenSearchControl1
@@ -38,7 +34,7 @@ Public Class BusquedaMulta
 				ElseIf .vista.Text = "TOTAL POR VEHICULO" Then
 					OleDBCmd = Transito.Multas.MultasPorVehiculo(CheckBox1.Checked)
 				End If
-				dtab = DbMan.read(OleDBCmd, My.Settings.DefaultCon)
+				dtab = DbMan.readDB(OleDBCmd, My.Settings.CurrentDB)
 
 				'COLUMN SECTION
 				If dtab.Rows.Count > 0 Then

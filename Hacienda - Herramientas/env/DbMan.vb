@@ -42,20 +42,26 @@
 
 	Function readTableSchema(Optional constr As String = "") As DataTable
 		If constr = "" Then
-			constr = My.Settings.DefaultCon
+			constr = My.Settings.CurrentDB
 		End If
 
 		olecon.ConnectionString = constr
-		olecon.Open()
-		Dim schemaTable As DataTable
-		schemaTable = olecon.GetOleDbSchemaTable(OleDb.OleDbSchemaGuid.Tables, Nothing)
+		Dim schemaTable As New DataTable
+		Try
+			olecon.Open()
+			schemaTable = olecon.GetOleDbSchemaTable(OleDb.OleDbSchemaGuid.Tables, Nothing)
+		Catch ex As Exception
+			MsgBox("No se puede conectar a " & constr & Chr(13) & "Detalles:" & ex.Data.ToString)
+			schemaTable = Nothing
+		End Try
 		olecon.Close()
 		Return schemaTable
 	End Function
-	Function read(OleDBProcedure As OleDb.OleDbCommand, constr As String,
+	Function readDB(OleDBProcedure As OleDb.OleDbCommand, constr As String,
 				  Optional sqlSelect As String = "", Optional sqlFrom As String = "",
 				  Optional sqlWhere As String = "", Optional sqlGroupBy As String = "",
-				  Optional sqlHaving As String = "", Optional sqlOrderBy As String = "") As DataTable
+				  Optional sqlHaving As String = "", Optional sqlOrderBy As String = "",
+				  Optional ReturnError As Boolean = False) As DataTable
 
 		Dim dtab As New DataTable
 		Dim errorMsg As String = ""
@@ -109,7 +115,7 @@
 				olecon.Open()
 			Catch ex As OleDb.OleDbException
 				Try
-					olecon.ConnectionString = My.Settings.DefaultCon
+					olecon.ConnectionString = My.Settings.CurrentDB
 					olecon.Open()
 				Catch ex2 As Exception
 					errorMsg = "La ruta de acceso a la base de datos es incorrecta."
@@ -141,32 +147,33 @@
 			errorMsg = "Datos insuficientes para realizar la consulta."
 		End If
 
-		If errorMsg <> "" Then
-			dtab.Columns.Add("[ERROR]")
-			dtab.Rows.Add(errorMsg)
-			dtab.Rows.Add("Conexion:")
-			dtab.Rows.Add(olecon.ConnectionString)
-			If OleDBProcedure.CommandType = CommandType.Text Then
-				dtab.Rows.Add("Consulta:")
-			Else
-				dtab.Rows.Add("Procedimiento:")
-			End If
-			dtab.Rows.Add(OleDBProcedure.CommandText)
-		End If
-		Return dtab
+        If errorMsg <> "" Then
+            Dim sql As String
+            If OleDBProcedure.CommandType = CommandType.Text Then
+                sql = "Consulta: "
+                sql += Replace(OleDBProcedure.CommandText, "'", "`")
+            Else
+                sql = "Procedimiento: "
+                sql += OleDBProcedure.CommandText
+            End If
+            editDB(Nothing, constr,
+                   "INSERT INTO sql_log(_date, _user_id, _sql, _con) VALUES('" & Date.Now & "', '" & My.Settings.UserId & "', '" & OleDBProcedure.CommandText & "','" & My.Settings.CurrentDB & "');")
+            dtab = Nothing
+        End If
+        Return dtab
 
 	End Function
 
 	Function GenerateReportDataset(OleDBProcedure As OleDb.OleDbCommand) As DataSet
 		Dim ds As New DataSet
-		ds.Tables.Add(DbMan.read(OleDBProcedure, My.Settings.DefaultCon))
+		ds.Tables.Add(DbMan.readDB(OleDBProcedure, My.Settings.CurrentDB))
 		Return ds
 	End Function
 
 	'###### END READ ############################################################################################
 
 	'###### SAVE: Rutinas para grabar registros #################################################################
-	Function edit(OleDBProcedure As OleDb.OleDbCommand, Optional ByVal constr As String = Nothing,
+	Function editDB(OleDBProcedure As OleDb.OleDbCommand, Optional ByVal constr As String = Nothing,
 				  Optional sql As String = "") As String
 		Dim result As String = ""
 		'Para conectarse a la bd en modo de inserción
@@ -179,7 +186,7 @@
 		End If
 
 		If constr Is Nothing Then
-			constr = My.Settings.DefaultCon
+			constr = My.Settings.CurrentDB
 		End If
 
 		If OleDBProcedure Is Nothing = False Then

@@ -6,6 +6,8 @@ Public Class acceso
 
 		' Add any initialization after the InitializeComponent() call.
 		ConfigInit(Me)
+		ServerList.DataSource = ListDBConnections()
+		ServerList.SelectedIndex = 0
 		user.Focus()
 	End Sub
 
@@ -43,6 +45,7 @@ Public Class acceso
     '###### END GUI #############################################################################################
     '###### VALIDATION ##########################################################################################
     Private Sub login_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles login.Click
+		My.Settings.CurrentDB = ServerList.Text
 		My.Settings.UserId = check_access(user.Text, pass.Text)
 		If My.Settings.UserId > 0 Then 'Iniciar sesión
             If register_user(My.Settings.UserId, True) Then

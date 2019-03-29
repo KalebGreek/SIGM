@@ -6,7 +6,7 @@
         InitializeComponent()
 
 		' Add any initialization after the InitializeComponent() call.
-		Connection.Text = My.Settings.foxcon
+		Connection.Text = My.Settings.foxConnection
 
 		GenSearchControl1.vista.Items.AddRange(New Object() {"HACIENDA - INGRESOS", "HACIENDA - EGRESOS",
 															 "INGRESOS CONSOLIDADOS", "EGRESOS CONSOLIDADOS",
@@ -68,7 +68,7 @@
 					sqlOrderBy = ""
 
 				ElseIf vista = "BANCOS - SALDO" Then
-					dtab = DbMan.read(Nothing, Connection.Text, "SELECT MIN(fecha) as fecha FROM bancos", )
+					dtab = DbMan.readDB(Nothing, Connection.Text, "SELECT MIN(fecha) as fecha FROM bancos", )
 					Dim minDateValue As Date = dtab(0)("fecha").ToString
 					Dim maxDateValue As Date = Today
 
@@ -139,7 +139,7 @@
 						TableName = InputBox("Ingrese nombre de tabla.", "Ingresar Tabla")
 						If Trim(TableName) <> "" Then
 							TableName = Trim(TableName)
-							dtab = DbMan.read(Nothing, Connection.Text, "SELECT * FROM " & TableName)
+							dtab = DbMan.readDB(Nothing, Connection.Text, "SELECT * FROM " & TableName)
 						Else
 							TableName = Nothing
 						End If
@@ -172,7 +172,7 @@
 			Dim LastQueryBS As BindingSource = query_bs
 
 			query_bs = New BindingSource 'Avoids IBindingList error
-			query_bs.DataSource = DbMan.read(Nothing, Connection.Text, sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
+			query_bs.DataSource = DbMan.readDB(Nothing, Connection.Text, sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
 
 			CustomQuery.Text = sqlSelect & " " & sqlFrom & " " & sqlWhere & " " & sqlGroupBy & " " & sqlHaving & " " & sqlOrderBy
 
@@ -260,7 +260,7 @@
 	'CUSTOM QUERY
 	Private Sub CustomQuery_KeyUp(sender As Object, e As KeyEventArgs) Handles CustomQuery.KeyUp
 		If e.KeyValue = Keys.Enter Then
-			Dim dtab As DataTable = DbMan.read(Nothing, Connection.Text, CustomQuery.Text)
+			Dim dtab As DataTable = DbMan.readDB(Nothing, Connection.Text, CustomQuery.Text)
 			CtrlMan.LoadDataGridView(QueryView, query_bs, "", dtab)
 			CustomQuery.Items.Insert(0, Trim(CustomQuery.Text))
 			CustomQuery.Text = ""
@@ -269,12 +269,12 @@
 
 	'Connections
 	Private Sub DBFoxMuniciToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DBFoxMuniciToolStripMenuItem.Click
-		Connection.Text = My.Settings.foxcon
+		Connection.Text = My.Settings.foxConnection
 	End Sub
 	Private Sub DBAccessToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DBAccessToolStripMenuItem.Click
-		Connection.Text = My.Settings.adbcon
+		Connection.Text = My.Settings.AdbConnection
 	End Sub
 	Private Sub DBPostgreSQLToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles DBPostgreSQLToolStripMenuItem.Click
-		Connection.Text = My.Settings.pgsqlcon
+		Connection.Text = My.Settings.pgsql_disabled
 	End Sub
 End Class

@@ -4,9 +4,10 @@
 	'Custom Events
 	Public RowSelected As Boolean = False
 	Public bsCustomFilter As String
-	Public Event CSearch_Click()
-	Public Event CReset_Click()
-	Public Event CVista_IndexTextChanged()
+    Public Event CSearch_Click(sender As Object)
+    Public Event CReset_Click(sender As Object)
+    Public Event CFilter()
+    Public Event CVista_IndexTextChanged()
 	Public Event CFiltro_IndexTextChanged()
 	Public Event CKeyword_KeyUp(sender As Object, e As KeyEventArgs)
 	Public Event CSelect(sender As Object, e As EventArgs)
@@ -23,71 +24,71 @@
 		DateValue.Value = Today
 	End Sub
 
-	Private Sub Vista_Events(sender As Object, e As EventArgs) Handles vista.SelectedIndexChanged
-		If vista.Visible Then
-			reset_search.PerformClick()
-			RaiseEvent CVista_IndexTextChanged() 'Load items
-		End If
-		vista.Visible = vista.Items.Count > 0
-	End Sub
+    Private Sub Vista_Events(sender As Object, e As EventArgs) Handles vista.SelectedIndexChanged
+        'Avoid seeing this control if there are no options
+        vista.Visible = vista.Items.Count > 1
+        RaiseEvent CVista_IndexTextChanged() 'Load items
+    End Sub
 
-	'Visibility events
-	Private Sub filtro_SelectedIndexnTextChanged(sender As Object, e As EventArgs) Handles filtro.SelectedIndexChanged, filtro.TextChanged
+    'Visibility events
+    Private Sub filtro_SelectedIndexnTextChanged(sender As Object, e As EventArgs) Handles filtro.SelectedIndexChanged, filtro.TextChanged
 		bsCustomFilter = ""
 
-		If filtro.Visible And filtro.SelectedIndex > -1 Then
-			'String
-			keyword.Visible = (filtro.SelectedValue.ToString = GetType(String).ToString)
+        If filtro.Visible And filtro.SelectedIndex > -1 Then
+            'String
+            keyword.Visible = (filtro.SelectedValue.ToString = GetType(String).ToString)
 
-			'Int and dec
-			NumValue.Visible = (filtro.SelectedValue.ToString = GetType(Decimal).ToString) Or (filtro.SelectedValue.ToString = GetType(Integer).ToString)
-			MaxNumValue.Visible = (NumValue.Visible) And (Condition.Text = "<->")
+            'Int and dec
+            NumValue.Visible = (filtro.SelectedValue.ToString = GetType(Decimal).ToString) Or (filtro.SelectedValue.ToString = GetType(Integer).ToString)
+            MaxNumValue.Visible = (NumValue.Visible) And (Condition.Text = "<->")
 
-			'Date
-			DateValue.Visible = (filtro.SelectedValue.ToString = GetType(Date).ToString)
-			MaxDateValue.Visible = (DateValue.Visible) And (Condition.Text = "<->")
+            'Date
+            DateValue.Visible = (filtro.SelectedValue.ToString = GetType(Date).ToString)
+            MaxDateValue.Visible = (DateValue.Visible) And (Condition.Text = "<->")
 
-			If filtro.SelectedValue.ToString = GetType(Decimal).ToString Then
-				NumValue.DecimalPlaces = 2
-				MaxNumValue.DecimalPlaces = 2
-			Else
-				NumValue.DecimalPlaces = 0
-				NumValue.DecimalPlaces = 0
-			End If
-			RaiseEvent CFiltro_IndexTextChanged()
-		Else
-			reset_search.PerformClick()
-		End If
-		filtro.Visible = filtro.Items.Count > 0
+            If filtro.SelectedValue.ToString = GetType(Decimal).ToString Then
+                NumValue.DecimalPlaces = 2
+                MaxNumValue.DecimalPlaces = 2
+            Else
+                NumValue.DecimalPlaces = 0
+                NumValue.DecimalPlaces = 0
+            End If
+            RaiseEvent CFiltro_IndexTextChanged()
+        End If
+        filtro.Visible = filtro.Items.Count > 0
 
 	End Sub
 
-	Private Sub NumValue_MaxNumValue_VisibleChanged(sender As Object, e As EventArgs) Handles NumValue.VisibleChanged, MaxNumValue.VisibleChanged
-		Condition.SelectedIndex = -1
-		If NumValue.Visible = False Then
-			NumValue.Minimum = 0
-			NumValue.Value = 0
-			NumValue.Maximum = 1
-		End If
-		If MaxNumValue.Visible = False Then
-			MaxNumValue.Minimum = 0
-			MaxNumValue.Value = 0
-			MaxNumValue.Maximum = 1
-		End If
-	End Sub
-	Private Sub DateValue_MaxDateValue_VisibleChanged(sender As Object, e As EventArgs) Handles DateValue.VisibleChanged, MaxDateValue.VisibleChanged
-		Condition.SelectedIndex = -1
-		If DateValue.Visible = False Then
-			DateValue.MinDate = "1/1/1899"
-			DateValue.MaxDate = "1/1/2038"
-			DateValue.Value = Today
-		End If
-		If MaxDateValue.Visible = False Then
-			MaxDateValue.MinDate = "1/1/1899"
-			MaxDateValue.MaxDate = "1/1/2038"
-			MaxDateValue.Value = Today
-		End If
-	End Sub
+    Private Sub NumValue_MaxNumValue_VisibleChanged(sender As Object, e As EventArgs) Handles NumValue.VisibleChanged, MaxNumValue.VisibleChanged
+        If NumValue.Visible = False Or MaxNumValue.Visible = False Then
+            Condition.SelectedIndex = -1
+            If NumValue.Visible = False Then
+                NumValue.Minimum = 0
+                NumValue.Value = 0
+                NumValue.Maximum = 1
+            End If
+            If MaxNumValue.Visible = False Then
+                MaxNumValue.Minimum = 0
+                MaxNumValue.Value = 0
+                MaxNumValue.Maximum = 1
+            End If
+        End If
+    End Sub
+    Private Sub DateValue_MaxDateValue_VisibleChanged(sender As Object, e As EventArgs) Handles DateValue.VisibleChanged, MaxDateValue.VisibleChanged
+        If DateValue.Visible = False Or MaxDateValue.Visible = False Then
+            Condition.SelectedIndex = -1
+            If DateValue.Visible = False Then
+                DateValue.MinDate = "1/1/1899"
+                DateValue.MaxDate = "1/1/2038"
+                DateValue.Value = Today
+            End If
+            If MaxDateValue.Visible = False Then
+                MaxDateValue.MinDate = "1/1/1899"
+                MaxDateValue.MaxDate = "1/1/2038"
+                MaxDateValue.Value = Today
+            End If
+        End If
+    End Sub
 	Private Sub keyword_VisibleChanged(sender As Object, e As EventArgs) Handles keyword.VisibleChanged
 		Condition.SelectedIndex = -1
 		If keyword.Visible = False Then
@@ -108,87 +109,91 @@
 		End If
 	End Sub
 
-	Private Sub search_Click(sender As Object, e As EventArgs) Handles search.Click
-		'O bien se manejan los filtros y tipos de datos directamente acá, o tengo que llamar eventos por separado para 
-		'cada tipo de dato
-		bsCustomFilter = ""
-		If Len(filtro.Text) > 1 Then
-			If keyword.Visible Then
+    Public Sub FilterSearch()
+        'O bien se manejan los filtros y tipos de datos directamente acá, o tengo que llamar eventos por separado para 
+        'cada tipo de dato
+        bsCustomFilter = ""
+        If Len(filtro.Text) > 1 Then
+            If keyword.Visible Then
 
-				Trim(keyword.Text)
-				If Len(keyword.Text) > 0 Then
-					bsCustomFilter = filtro.Text & " LIKE '%" & keyword.Text & "%'"
-				End If
-			ElseIf NumValue.Visible Then
+                Trim(keyword.Text)
+                If Len(keyword.Text) > 0 Then
+                    bsCustomFilter = filtro.Text & " LIKE '%" & keyword.Text & "%'"
+                End If
+            ElseIf NumValue.Visible Then
 
-				If filtro.SelectedValue = "System.Decimal" Or filtro.SelectedValue = "System.Integer" Then 'Dec or Int
-					If NumValue.Value <> Nothing Then
+                If filtro.SelectedValue = "System.Decimal" Or filtro.SelectedValue = "System.Integer" Then 'Dec or Int
+                    If NumValue.Value <> Nothing Then
 
-						Dim NumValueString As String
-						NumValueString = Replace(NumValue.Value, ",", ".").ToString()
-						If Condition.Text = "<->" And MaxNumValue.Value <> Nothing Then
+                        Dim NumValueString As String
+                        NumValueString = Replace(NumValue.Value, ",", ".").ToString()
+                        If Condition.Text = "<->" And MaxNumValue.Value <> Nothing Then
 
-							Dim maxValueString As String
-							maxValueString = Replace(MaxNumValue.Value, ",", ".").ToString()
-							bsCustomFilter = filtro.Text & "=>" & NumValueString & " AND " & filtro.Text & "<=" & maxValueString
-						Else
-							'bsCustomFilter = filtro.Text & Condition.Text & NumValueString
-							bsCustomFilter = filtro.Text & "=" & NumValueString
-						End If
-					End If
-				End If
-			ElseIf DateValue.Visible Then
+                            Dim maxValueString As String
+                            maxValueString = Replace(MaxNumValue.Value, ",", ".").ToString()
+                            bsCustomFilter = filtro.Text & "=>" & NumValueString & " AND " & filtro.Text & "<=" & maxValueString
+                        Else
+                            'bsCustomFilter = filtro.Text & Condition.Text & NumValueString
+                            bsCustomFilter = filtro.Text & "=" & NumValueString
+                        End If
+                    End If
+                End If
+            ElseIf DateValue.Visible Then
 
-				If filtro.SelectedValue = "System.DateTime" Or filtro.SelectedValue = "System.Date" Then 'Date
-					'Filter by full date
-					If last_connection = My.Settings.foxcon Then 'Foxpro needs the en-US date format
-						If Condition.Text = "<->" Then
-							bsCustomFilter = filtro.Text & " => '" & DateValue.Value.ToShortDateString & "'
+                If filtro.SelectedValue = "System.DateTime" Or filtro.SelectedValue = "System.Date" Then 'Date
+                    'Filter by full date
+                    If last_connection = My.Settings.foxConnection Then 'Foxpro needs the en-US date format
+                        If Condition.Text = "<->" Then
+                            bsCustomFilter = filtro.Text & " => '" & DateValue.Value.ToShortDateString & "'
 											 AND " & filtro.Text & " <= '" & MaxDateValue.Value.ToShortDateString & "'"
-						Else
-							bsCustomFilter = filtro.Text & Condition.Text & "'" & DateValue.Value.ToShortDateString & "'"
-						End If
-					Else
-						If Condition.Text = "<->" Then
-							bsCustomFilter = filtro.Text & " => '" & DateValue.Value.ToShortDateString & "'" &
-													 " AND " & filtro.Text & " <= '" & MaxDateValue.Value.ToShortDateString & "'"
-						Else
-							'bsCustomFilter = filtro.Text & Condition.Text & "'" & DateValue.Value.ToShortDateString & "'"
-							bsCustomFilter = filtro.Text & "='" & DateValue.Value.ToShortDateString & "'"
-						End If
-					End If
-				End If
-			End If
-			RaiseEvent CSearch_Click()
-		End If
+                        Else
+                            bsCustomFilter = filtro.Text & Condition.Text & "'" & DateValue.Value.ToShortDateString & "'"
+                        End If
+                    Else
+                        If Condition.Text = "<->" Then
+                            bsCustomFilter = filtro.Text & " => '" & DateValue.Value.ToShortDateString & "'" &
+                                                     " AND " & filtro.Text & " <= '" & MaxDateValue.Value.ToShortDateString & "'"
+                        Else
+                            'bsCustomFilter = filtro.Text & Condition.Text & "'" & DateValue.Value.ToShortDateString & "'"
+                            bsCustomFilter = filtro.Text & "='" & DateValue.Value.ToShortDateString & "'"
+                        End If
+                    End If
+                End If
+            End If
+            RaiseEvent CFilter()
+        End If
+    End Sub
 
-	End Sub
+    Private Sub search_Click(sender As Object, e As EventArgs) Handles search.Click
+        RaiseEvent CSearch_Click(sender)
+    End Sub
 
-	Private Sub reset_search_Click(sender As Object, e As EventArgs) Handles reset_search.Click
-		filtro.DataSource = Nothing
-		bsCustomFilter = ""
+    Private Sub reset_search_Click(sender As Object, e As EventArgs) Handles reset_search.Click
+        bsCustomFilter = ""
+        filtro.SelectedIndex = -1
+        vista.SelectedIndex = -1
 
-		DateValue.MinDate = "1/1/1899"
-		DateValue.MaxDate = "1/1/2038"
-		DateValue.Value = Today
-		MaxDateValue.MinDate = "1/1/1899"
-		MaxDateValue.MaxDate = "1/1/2038"
-		MaxDateValue.Value = Today
+        DateValue.MinDate = "1/1/1899"
+        DateValue.MaxDate = "1/1/2038"
+        DateValue.Value = Today
+        MaxDateValue.MinDate = "1/1/1899"
+        MaxDateValue.MaxDate = "1/1/2038"
+        MaxDateValue.Value = Today
 
-		keyword.Items.Clear()
-		keyword.ResetText()
+        keyword.Items.Clear()
+        keyword.ResetText()
 
-		NumValue.Minimum = 0
-		NumValue.Value = 0
-		NumValue.Maximum = 1
-		MaxNumValue.Minimum = 0
-		MaxNumValue.Value = 0
-		MaxNumValue.Maximum = 1
+        NumValue.Minimum = 0
+        NumValue.Value = 0
+        NumValue.Maximum = 1
+        MaxNumValue.Minimum = 0
+        MaxNumValue.Value = 0
+        MaxNumValue.Maximum = 1
 
-		RaiseEvent CReset_Click()
-	End Sub
+        RaiseEvent CReset_Click(sender)
+    End Sub
 
-	Private Sub selectRow_Click(sender As Object, e As EventArgs) Handles selectRow.Click
+    Private Sub selectRow_Click(sender As Object, e As EventArgs) Handles selectRow.Click
 		RowSelected = True
 		RaiseEvent CSelect(sender, e)
 	End Sub

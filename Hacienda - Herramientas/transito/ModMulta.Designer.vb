@@ -59,7 +59,7 @@ Partial Class ModMulta
 		Me.subtitulo.Location = New System.Drawing.Point(0, 34)
 		Me.subtitulo.Margin = New System.Windows.Forms.Padding(0)
 		Me.subtitulo.Name = "subtitulo"
-		Me.subtitulo.Size = New System.Drawing.Size(364, 27)
+		Me.subtitulo.Size = New System.Drawing.Size(385, 27)
 		Me.subtitulo.TabIndex = 372
 		Me.subtitulo.Text = "BOLETA"
 		Me.subtitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -71,12 +71,11 @@ Partial Class ModMulta
 		Me.TabControl1.Controls.Add(Me.TabPage3)
 		Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
 		Me.TabControl1.Enabled = False
-		Me.TabControl1.Font = New System.Drawing.Font("PF DinText Pro Medium", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.TabControl1.Location = New System.Drawing.Point(0, 34)
 		Me.TabControl1.Margin = New System.Windows.Forms.Padding(0)
 		Me.TabControl1.Name = "TabControl1"
 		Me.TabControl1.SelectedIndex = 0
-		Me.TabControl1.Size = New System.Drawing.Size(364, 362)
+		Me.TabControl1.Size = New System.Drawing.Size(385, 360)
 		Me.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight
 		Me.TabControl1.TabIndex = 374
 		'
@@ -87,27 +86,27 @@ Partial Class ModMulta
 		Me.TabPage1.Location = New System.Drawing.Point(4, 28)
 		Me.TabPage1.Margin = New System.Windows.Forms.Padding(0)
 		Me.TabPage1.Name = "TabPage1"
-		Me.TabPage1.Size = New System.Drawing.Size(356, 330)
+		Me.TabPage1.Size = New System.Drawing.Size(377, 328)
 		Me.TabPage1.TabIndex = 0
 		Me.TabPage1.Text = "BOLETA"
 		'
 		'TabMultas1Boleta1
 		'
-		Me.TabMultas1Boleta1.Font = New System.Drawing.Font("PF DinDisplay Pro", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.TabMultas1Boleta1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.TabMultas1Boleta1.Location = New System.Drawing.Point(0, 0)
 		Me.TabMultas1Boleta1.Margin = New System.Windows.Forms.Padding(0)
 		Me.TabMultas1Boleta1.Name = "TabMultas1Boleta1"
-		Me.TabMultas1Boleta1.Size = New System.Drawing.Size(356, 313)
+		Me.TabMultas1Boleta1.Size = New System.Drawing.Size(362, 315)
 		Me.TabMultas1Boleta1.TabIndex = 0
 		'
 		'TabPage2
 		'
 		Me.TabPage2.BackColor = System.Drawing.SystemColors.Control
 		Me.TabPage2.Controls.Add(Me.TabMultas2Persona1)
-		Me.TabPage2.Location = New System.Drawing.Point(4, 28)
+		Me.TabPage2.Location = New System.Drawing.Point(4, 22)
 		Me.TabPage2.Margin = New System.Windows.Forms.Padding(0)
 		Me.TabPage2.Name = "TabPage2"
-		Me.TabPage2.Size = New System.Drawing.Size(356, 330)
+		Me.TabPage2.Size = New System.Drawing.Size(454, 357)
 		Me.TabPage2.TabIndex = 1
 		Me.TabPage2.Text = "DATOS PERSONALES"
 		'
@@ -124,10 +123,10 @@ Partial Class ModMulta
 		'
 		Me.TabPage3.BackColor = System.Drawing.SystemColors.Control
 		Me.TabPage3.Controls.Add(Me.TabMultas3Vehiculo1)
-		Me.TabPage3.Location = New System.Drawing.Point(4, 28)
+		Me.TabPage3.Location = New System.Drawing.Point(4, 22)
 		Me.TabPage3.Margin = New System.Windows.Forms.Padding(0)
 		Me.TabPage3.Name = "TabPage3"
-		Me.TabPage3.Size = New System.Drawing.Size(356, 330)
+		Me.TabPage3.Size = New System.Drawing.Size(454, 357)
 		Me.TabPage3.TabIndex = 2
 		Me.TabPage3.Text = "VEHICULO"
 		'
@@ -149,18 +148,18 @@ Partial Class ModMulta
 		Me.grupo_mod.Controls.Add(Me.lastPage)
 		Me.grupo_mod.Dock = System.Windows.Forms.DockStyle.Bottom
 		Me.grupo_mod.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-		Me.grupo_mod.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.grupo_mod.Location = New System.Drawing.Point(0, 396)
+		Me.grupo_mod.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+		Me.grupo_mod.Location = New System.Drawing.Point(0, 394)
 		Me.grupo_mod.Margin = New System.Windows.Forms.Padding(0)
 		Me.grupo_mod.Name = "grupo_mod"
-		Me.grupo_mod.Size = New System.Drawing.Size(364, 28)
+		Me.grupo_mod.Size = New System.Drawing.Size(385, 28)
 		Me.grupo_mod.TabIndex = 396
 		'
 		'persona_id
 		'
 		Me.persona_id.BackColor = System.Drawing.Color.FromArgb(CType(CType(122, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(185, Byte), Integer))
 		Me.persona_id.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-		Me.persona_id.Location = New System.Drawing.Point(336, 3)
+		Me.persona_id.Location = New System.Drawing.Point(357, 3)
 		Me.persona_id.MaxLength = 128
 		Me.persona_id.Name = "persona_id"
 		Me.persona_id.ReadOnly = True
@@ -174,10 +173,10 @@ Partial Class ModMulta
 		Me.cancel.FlatAppearance.BorderSize = 0
 		Me.cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.cancel.ForeColor = System.Drawing.Color.WhiteSmoke
-		Me.cancel.Location = New System.Drawing.Point(258, 0)
+		Me.cancel.Location = New System.Drawing.Point(281, 0)
 		Me.cancel.Margin = New System.Windows.Forms.Padding(0)
 		Me.cancel.Name = "cancel"
-		Me.cancel.Size = New System.Drawing.Size(75, 29)
+		Me.cancel.Size = New System.Drawing.Size(73, 28)
 		Me.cancel.TabIndex = 330
 		Me.cancel.Text = "Cancelar"
 		Me.cancel.UseVisualStyleBackColor = True
@@ -187,10 +186,10 @@ Partial Class ModMulta
 		Me.nextPage.FlatAppearance.BorderSize = 0
 		Me.nextPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.nextPage.ForeColor = System.Drawing.Color.WhiteSmoke
-		Me.nextPage.Location = New System.Drawing.Point(163, 0)
+		Me.nextPage.Location = New System.Drawing.Point(187, 0)
 		Me.nextPage.Margin = New System.Windows.Forms.Padding(0)
 		Me.nextPage.Name = "nextPage"
-		Me.nextPage.Size = New System.Drawing.Size(95, 29)
+		Me.nextPage.Size = New System.Drawing.Size(94, 28)
 		Me.nextPage.TabIndex = 310
 		Me.nextPage.Text = "Siguiente >"
 		Me.nextPage.UseVisualStyleBackColor = True
@@ -201,10 +200,10 @@ Partial Class ModMulta
 		Me.lastPage.FlatAppearance.BorderSize = 0
 		Me.lastPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.lastPage.ForeColor = System.Drawing.Color.WhiteSmoke
-		Me.lastPage.Location = New System.Drawing.Point(78, 0)
+		Me.lastPage.Location = New System.Drawing.Point(93, 0)
 		Me.lastPage.Margin = New System.Windows.Forms.Padding(0)
 		Me.lastPage.Name = "lastPage"
-		Me.lastPage.Size = New System.Drawing.Size(85, 29)
+		Me.lastPage.Size = New System.Drawing.Size(94, 28)
 		Me.lastPage.TabIndex = 300
 		Me.lastPage.Text = "< Anterior"
 		Me.lastPage.UseVisualStyleBackColor = True
@@ -218,23 +217,24 @@ Partial Class ModMulta
 		Me.FlowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top
 		Me.FlowLayoutPanel2.Location = New System.Drawing.Point(0, 0)
 		Me.FlowLayoutPanel2.Name = "FlowLayoutPanel2"
-		Me.FlowLayoutPanel2.Size = New System.Drawing.Size(364, 34)
+		Me.FlowLayoutPanel2.Size = New System.Drawing.Size(385, 34)
 		Me.FlowLayoutPanel2.TabIndex = 397
 		'
 		'Label24
 		'
+		Me.Label24.Font = New System.Drawing.Font("PF DinText Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.Label24.ForeColor = System.Drawing.Color.White
 		Me.Label24.Location = New System.Drawing.Point(0, 3)
 		Me.Label24.Margin = New System.Windows.Forms.Padding(0, 3, 0, 0)
 		Me.Label24.Name = "Label24"
-		Me.Label24.Size = New System.Drawing.Size(86, 25)
+		Me.Label24.Size = New System.Drawing.Size(91, 25)
 		Me.Label24.TabIndex = 246
 		Me.Label24.Text = "Nro. Boleta"
 		Me.Label24.TextAlign = System.Drawing.ContentAlignment.MiddleRight
 		'
 		'boleta
 		'
-		Me.boleta.Location = New System.Drawing.Point(89, 3)
+		Me.boleta.Location = New System.Drawing.Point(94, 3)
 		Me.boleta.Mask = "9999 - 999999"
 		Me.boleta.Name = "boleta"
 		Me.boleta.Size = New System.Drawing.Size(117, 27)
@@ -250,7 +250,7 @@ Partial Class ModMulta
 		Me.BuscarMulta.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.BuscarMulta.Font = New System.Drawing.Font("Segoe MDL2 Assets", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.BuscarMulta.ForeColor = System.Drawing.Color.White
-		Me.BuscarMulta.Location = New System.Drawing.Point(212, 4)
+		Me.BuscarMulta.Location = New System.Drawing.Point(217, 4)
 		Me.BuscarMulta.Margin = New System.Windows.Forms.Padding(3, 4, 0, 0)
 		Me.BuscarMulta.Name = "BuscarMulta"
 		Me.BuscarMulta.Size = New System.Drawing.Size(27, 27)
@@ -259,18 +259,17 @@ Partial Class ModMulta
 		Me.BuscarMulta.TextAlign = System.Drawing.ContentAlignment.BottomCenter
 		Me.BuscarMulta.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
 		Me.BuscarMulta.UseVisualStyleBackColor = False
-		Me.BuscarMulta.Visible = False
 		'
 		'ModMulta
 		'
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
 		Me.BackColor = System.Drawing.SystemColors.Control
-		Me.ClientSize = New System.Drawing.Size(364, 424)
+		Me.ClientSize = New System.Drawing.Size(385, 422)
 		Me.Controls.Add(Me.subtitulo)
 		Me.Controls.Add(Me.TabControl1)
 		Me.Controls.Add(Me.grupo_mod)
 		Me.Controls.Add(Me.FlowLayoutPanel2)
-		Me.Font = New System.Drawing.Font("PF DinText Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
 		Me.Name = "ModMulta"
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
