@@ -14,31 +14,34 @@
 
 	'-- EVENTOS UNICOS
 	Private Sub vista_SelectedIndexChanged() Handles GenSearchControl1.CVista_IndexTextChanged
-		With GenSearchControl1
-			If .vista.SelectedIndex > -1 Then
-				.filtro.DataSource = Nothing
-				If .vista.Text = "ADELANTO" Then
-					Dim sql As String = "SELECT hac_adelanto.id as id, persona.razon, persona.cuil, 
-												hac_adelanto.persona_id, hac_adelanto.fecha, hac_adelanto.monto,
-												persona.email, persona.telefono										 
-										 FROM hac_adelanto INNER JOIN persona ON hac_adelanto.persona_id=persona.id"
-					bs_resultado.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
-				End If
 
-				If bs_resultado.Count > 0 Then
-					Dim bs_ColumnList As New BindingSource
-					bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource)
-					CtrlMan.Fill.SetAutoComplete(GenSearchControl1.filtro, bs_ColumnList, "ColumnName", "DataType")
-					CtrlMan.LoadDataGridView(resultado, bs_resultado, GenSearchControl1.bsCustomFilter)
-					GenSearchControl1.filtro.SelectedIndex = -1
-				Else
-					bs_resultado.Add("No hay resultados.")
-				End If
-			Else
-				.reset_search.PerformClick()
-			End If
-		End With
-	End Sub
+        With GenSearchControl1
+            If .vista.SelectedIndex > -1 Then
+                .filtro.DataSource = Nothing
+                If .vista.Text = "ADELANTO" Then
+                    Dim sql(0) As String
+                    sql(0) = "SELECT hac_adelanto.id as id, persona.razon, persona.cuil, 
+								     hac_adelanto.persona_id, hac_adelanto.fecha, hac_adelanto.monto,
+								     persona.email, persona.telefono										 
+							 FROM hac_adelanto INNER JOIN persona ON hac_adelanto.persona_id=persona.id"
+                    bs_resultado.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+                End If
+
+                If bs_resultado.Count > 0 Then
+                    Dim bs_ColumnList As New BindingSource _
+                    With {.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource)}
+
+                    CtrlMan.Fill.SetAutoComplete(GenSearchControl1.filtro, bs_ColumnList, "ColumnName", "DataType")
+                    CtrlMan.LoadDataGridView(resultado, bs_resultado, GenSearchControl1.bsCustomFilter)
+                    GenSearchControl1.filtro.SelectedIndex = -1
+                Else
+                    bs_resultado.Add("No hay resultados.")
+                End If
+            Else
+                .reset_search.PerformClick()
+            End If
+        End With
+    End Sub
 	Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles Me.KeyUp, resultado.KeyUp, GenSearchControl1.KeyUp
 		If e.KeyValue = Keys.Enter And sender Is GenSearchControl1 Then
 			GenSearchControl1.search.PerformClick()

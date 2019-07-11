@@ -321,6 +321,12 @@
     <Compile Include="hacienda\Combustibles\ModCombustibleTicket.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="hacienda\ConvertirSIRO.Designer.vb">
+      <DependentUpon>ConvertirSIRO.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\ConvertirSIRO.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="hacienda\EditorSijCor.Designer.vb">
       <DependentUpon>EditorSijCor.vb</DependentUpon>
     </Compile>
@@ -701,6 +707,9 @@
     <EmbeddedResource Include="env\menus\HaciendaMenu.resx">
       <DependentUpon>HaciendaMenu.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\ConvertirSIRO.resx">
+      <DependentUpon>ConvertirSIRO.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="hacienda\reportes\DeudaContribuyente.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -1052,6 +1061,26 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="My Project\DataSources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Access.Dao">
+      <Guid>{4AC9E1DA-5BAD-4AC7-86E3-24F4CDCECA28}</Guid>
+      <VersionMajor>12</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,43 +4,52 @@
 		' This call is required by the designer.
 		InitializeComponent()
 
-		' Add any initialization after the InitializeComponent() call.
-		'Proveedor
-		bs_responsable_iva.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM responsable_iva ORDER BY descripcion")
-		CtrlMan.Fill.SetAutoComplete(responsable_iva, bs_responsable_iva, "descripcion", "id")
-		bs_actividad.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM prov_actividad ORDER BY actividad")
-		CtrlMan.Fill.SetAutoComplete(actividad, bs_actividad, "actividad", "id")
-		'Profesional
-		bs_titulo.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM profesional_titulo ORDER BY descripcion")
-		CtrlMan.Fill.SetAutoComplete(titulo, bs_titulo, "descripcion", "id")
+        ' Add any initialization after the InitializeComponent() call.
+        Dim sql(0) As String
+
+
+        'Todo esto se puede cargar en una sola consulta
+        'Proveedor
+        sql(0) = "SELECT * FROM responsable_iva ORDER BY descripcion"
+        bs_responsable_iva.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        CtrlMan.Fill.SetAutoComplete(responsable_iva, bs_responsable_iva, "descripcion", "id")
+        sql(0) = "SELECT * FROM prov_actividad ORDER BY actividad"
+        bs_actividad.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        CtrlMan.Fill.SetAutoComplete(actividad, bs_actividad, "actividad", "id")
+        'Profesional
+        sql(0) = "SELECT * FROM profesional_titulo ORDER BY descripcion"
+        bs_titulo.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        CtrlMan.Fill.SetAutoComplete(titulo, bs_titulo, "descripcion", "id")
 	End Sub
 
 	'FUNCIONES
 	Public Function cargar(id As Integer) As Boolean
-		If id > 0 Then
-			Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB,
-												"SELECT id as persona_id, difunto, ruta_defuncion, fisica
-												  FROM persona WHERE id=" & id)
-			CtrlMan.LoadAllControls(dtab(0), Me)
-			difunto.Enabled = dtab(0)("fisica")
-			If difunto.Enabled = False Then
-				difunto.Checked = False
-				ruta_defuncion.Text = ""
-			End If
+        If id > 0 Then
+            Dim sql(0) As String
+            sql(0) = "SELECT id as persona_id, difunto, ruta_defuncion, fisica
+												  FROM persona WHERE id=" & id
+            Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+            CtrlMan.LoadAllControls(dtab(0), Me)
 
-			dtab = Proveedor.Seleccionar(proveedor_id.Text, id)
-			EsProveedor.Checked = dtab.Rows.Count > 0
-			If dtab.Rows.Count > 0 Then
-				CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel2)
-			End If
+            difunto.Enabled = dtab(0)("fisica")
+            If difunto.Enabled = False Then
+                difunto.Checked = False
+                ruta_defuncion.Text = ""
+            End If
 
-			dtab = Profesional.Seleccionar(profesional_id.Text, id)
-			EsProfesional.Checked = dtab.Rows.Count > 0
-			If dtab.Rows.Count > 0 Then
-				CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel1)
-			End If
-		End If
-		Return True
+            dtab = Proveedor.Seleccionar(proveedor_id.Text, id)
+            EsProveedor.Checked = dtab.Rows.Count > 0
+            If dtab.Rows.Count > 0 Then
+                CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel2)
+            End If
+
+            dtab = Profesional.Seleccionar(profesional_id.Text, id)
+            EsProfesional.Checked = dtab.Rows.Count > 0
+            If dtab.Rows.Count > 0 Then
+                CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel1)
+            End If
+        End If
+        Return True
 	End Function
 
 	Public Function guardar(persona_id As Integer) As Boolean
@@ -97,16 +106,18 @@
 
 	Private Sub add_actividad_Click(sender As Object, e As EventArgs) Handles add_actividad.Click
 		Dim value As String = ""
-		Dim vehiculo As Boolean = True
-		value = InputBox("Indique la actividad comercial a continuacion.")
+        Dim vehiculo As Boolean = True
+        Dim sql(0) As String
+        value = InputBox("Indique la actividad comercial a continuacion.")
 		If value <> Nothing Then
 			value = UCase(Trim(value))
 			If Len(value) > 2 Then
 				DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO prov_actividad(actividad) 
 												VALUES('" & value & "')")
 
-				bs_actividad.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM prov_actividad ORDER BY actividad")
-				CtrlMan.Fill.SetAutoComplete(actividad, bs_actividad, "actividad", "id")
+                sql(0) = "SELECT * FROM prov_actividad ORDER BY actividad"
+                bs_actividad.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+                CtrlMan.Fill.SetAutoComplete(actividad, bs_actividad, "actividad", "id")
 			End If
 		End If
 	End Sub
@@ -114,10 +125,12 @@
 	Private Sub del_actividad_Click(sender As Object, e As EventArgs) Handles del_actividad.Click
 		If bs_actividad.Position > -1 Then
 			If MsgBoxResult.Yes = MsgBox("Desea eliminar esta actividad comercial?", MsgBoxStyle.YesNo) Then
-				DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM prov_actividad WHERE id=" & bs_actividad.Current("id"))
+                Dim sql(0) As String
+                DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM prov_actividad WHERE id=" & bs_actividad.Current("id"))
 
-				bs_actividad.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM prov_actividad ORDER BY actividad")
-				CtrlMan.Fill.SetAutoComplete(actividad, bs_actividad, "actividad", "id")
+                sql(0) = "SELECT * FROM prov_actividad ORDER BY actividad"
+                bs_actividad.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+                CtrlMan.Fill.SetAutoComplete(actividad, bs_actividad, "actividad", "id")
 			End If
 		End If
 	End Sub
@@ -126,8 +139,9 @@
 
 	Private Sub add_titulo_Click(sender As Object, e As EventArgs) Handles add_titulo.Click
 		Dim value As String = ""
-		Dim vehiculo As Boolean = True
-		value = InputBox("Indique el titulo a continuacion.")
+        Dim vehiculo As Boolean = True
+        Dim sql(0) As String
+        value = InputBox("Indique el titulo a continuacion.")
 		If value <> Nothing Then
 			value = UCase(Trim(value))
 			If Len(value) > 2 Then
@@ -135,21 +149,24 @@
 							"INSERT INTO profesional_titulo(descripcion) 
 							      VALUES('" & value & "')")
 
-				bs_titulo.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM profesional_titulo ORDER BY descripcion")
-				CtrlMan.Fill.SetAutoComplete(titulo, bs_titulo, "descripcion", "id")
+                sql(0) = "SELECT * FROM profesional_titulo ORDER BY descripcion"
+                bs_titulo.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+                CtrlMan.Fill.SetAutoComplete(titulo, bs_titulo, "descripcion", "id")
 			End If
 		End If
 	End Sub
 	Private Sub del_titulo_Click(sender As Object, e As EventArgs) Handles del_titulo.Click
-		If bs_titulo.Position > -1 Then
-			If MsgBoxResult.Yes = MsgBox("Desea eliminar este titulo?", MsgBoxStyle.YesNo) Then
-				DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM profesional_titulo WHERE id=" & bs_titulo.Current("id"))
+        Dim sql(0) As String
+        If bs_titulo.Position > -1 Then
+            If MsgBoxResult.Yes = MsgBox("Desea eliminar este titulo?", MsgBoxStyle.YesNo) Then
+                DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM profesional_titulo WHERE id=" & bs_titulo.Current("id"))
 
-				bs_titulo.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM profesional_titulo ORDER BY descripcion")
-				CtrlMan.Fill.SetAutoComplete(titulo, bs_titulo, "descripcion", "id")
-			End If
-		End If
-	End Sub
+                sql(0) = "SELECT * FROM profesional_titulo ORDER BY descripcion"
+                bs_titulo.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, )
+                CtrlMan.Fill.SetAutoComplete(titulo, bs_titulo, "descripcion", "id")
+            End If
+        End If
+    End Sub
 
 
 

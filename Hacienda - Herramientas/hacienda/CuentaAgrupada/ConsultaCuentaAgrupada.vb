@@ -128,7 +128,7 @@ Public Class ConsultaCuentaAgrupada
             If .Position >= 0 Then
                 info.Text = "Deuda Total:"
                 'Deuda total desde $1 usando código de la fila seleccionada del impuesto seleccionado
-                dtab_deto = deuda(True, False, impuesto, 0, .Current("codigo"), 0, 1, 0)
+                dtab_deto = deuda(True, False)
                 If dtab_deto.Rows.Count > 0 Then
                     info2.Text = "$ " & dtab_deto(0)("deuda")
                 End If
@@ -190,7 +190,7 @@ Public Class ConsultaCuentaAgrupada
             'desglosadas en el datagridview a la izquierda
         ElseIf sender Is bs_contrib Then 'Esta consulta muestra un id de cuenta desglosado en el datagridview de la izquierda
             tablas_fox(bs_contrib.Current("impuesto"))
-			dtab_imp = deuda(False, True, bs_contrib.Current("impuesto"), 2, keyword, 0, 0, 0) 'filtrado por nombre
+            dtab_imp = deuda(False, True) 'filtrado por nombre
             visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", dtab_imp)
 		ElseIf sender Is mod_ca_imp_search Then
 			dtab_imp = CuentaAgrupada.sql.leer(keyword, Microsoft.VisualBasic.Left(impuesto, 4), sender) 'Búsqueda de id para modificar cuenta agrupada
@@ -199,36 +199,29 @@ Public Class ConsultaCuentaAgrupada
         visor.Focus()
     End Sub
 
-	Function deuda(ByVal deuda_total As Boolean, ByVal cuenta_agrupada As Boolean,
-				   ByVal impuesto As String, ByVal filter As Integer, ByVal keyword As String,
-				   ByVal range As Integer, ByVal dmin As Integer, ByVal dmax As Integer) As DataTable
-		progreso.Value = 5
-		Dim consulta As New DataTable
-		Dim sql As String
+    Function deuda(ByVal deuda_total As Boolean, ByVal cuenta_agrupada As Boolean) As DataTable
+        progreso.Value = 5
+        Dim sql(2) As String
         '### Crear consulta sin filtros
-        sql = "SELECT " & ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon,"
+        sql(0) = "SELECT " & ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon,"
 
-		If deuda_total Then
-			sql += " SUM(" & col_importe & ") as deuda"
-		Else  'Deuda detallada (Normal)
-            sql += col_importe & " as original, " & col_pagado & " as pagado, " & col_vence & " as vencimiento, " & col_periodo & " as periodo "
-		End If
-		sql += " FROM " & ext_cuenta & " INNER JOIN " & ext_persona & " ON " & ext_cuenta & ".codigo = " & ext_persona & ".codigo"
-        'Con interés de 1% diario
-        'sel_sql += ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon, " & importe & " as original, " & _
-        '           "ROUND((" & importe & " + (" & importe & " * ((DATE() - " & vence & ") * 0.01))), 2) as deuda, " & _
-        '         vence & " as vencimiento, " & periodo & " as periodo FROM " & ext_cuenta & _
-        '        " INNER JOIN " & ext_persona & " ON " & ext_cuenta & ".codigo = " & ext_persona & ".codigo"
+        If deuda_total Then
+            sql(0) += " SUM(" & col_importe & ") as deuda"
+        Else  'Deuda detallada (Normal)
+            sql(0) += col_importe & " as original, " & col_pagado & " as pagado, 
+                    " & col_vence & " as vencimiento, " & col_periodo & " as periodo "
+        End If
+        sql(1) += " FROM " & ext_cuenta & " INNER JOIN " & ext_persona & " ON " & ext_cuenta &
+                  ".codigo = " & ext_persona & ".codigo"
 
         '### Hay otros filtros activos?
-
         If cuenta_agrupada Then
-			sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
-		End If
-		consulta = DbMan.readDB(Nothing, My.Settings.foxConnection, sql)
-		progreso.Value = 20
-		Return consulta
-	End Function
+            sql(2) += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
+        End If
+
+        progreso.Value = 20
+        Return DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+    End Function
 
     '### CUENTA AGRUPADA
     Private Sub razon_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)

@@ -34,24 +34,33 @@
 			Return cuil & destino
 		End Function
 		Shared Function CopiaActa(ByVal persona_id As Integer, ByVal acta As String, ByVal libro As String) As String
-			Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT cuil, razon FROM persona WHERE id=" & persona_id)
-			If dtab.Rows.Count > 0 Then
-				If acta > 0 And libro > 0 Then
-					Dim dtab_acta = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM actas WHERE acta=" & acta & " AND libro=" & libro)
+            Dim sql(3) As String
+            sql(0) = "SELECT cuil, razon"
+            sql(1) = "FROM persona"
+            sql(2) = "WHERE id=" & persona_id
 
-					If dtab.Rows.Count > 0 Then
-						If dtab_acta(0)("per_id") <> persona_id Then
-							MsgBox("El acta N." & acta & " del libro N." & libro & " no corresponde a " & dtab(0)("razon"))
-							Return ""
-						End If
-					End If
-					titulo = "Buscar Acta N° " & acta & " del libro N°" & libro & " | CUIL N° " & dtab(0)("cuil")
-					destino = "\acta[" & acta & "]_libro[" & libro & "].pdf"
+            Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
+
+            If dtab.Rows.Count > 0 Then
+                If acta > 0 And libro > 0 Then
+                    sql(0) = "SELECT *"
+                    sql(1) = "FROM actas"
+                    sql(2) = "WHERE acta=" & acta & " And libro=" & libro
+
+                    Dim dtab_acta = DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
+                    If dtab.Rows.Count > 0 Then
+                        If dtab_acta(0)("per_id") <> persona_id Then
+                            MsgBox("El acta N." & acta & " del libro N." & libro & " no corresponde a " & dtab(0)("razon"))
+                            Return ""
+                        End If
+                    End If
+                    titulo = "Buscar Acta N° " & acta & " del libro N°" & libro & " | CUIL N° " & dtab(0)("cuil")
+                    destino = "\acta[" & acta & "]_libro[" & libro & "].pdf"
                     'Muestra diálogo de búsqueda
                     destino = Cargar(My.Settings.DocFolderPersona & dtab(0)("cuil"), destino, titulo, True)
-					Return dtab(0)("cuil") & "\ACTAS" & destino
-				Else
-					MsgBox("Debe indicar número de acta y libro antes de continuar.")
+                    Return dtab(0)("cuil") & "\ACTAS" & destino
+                Else
+                    MsgBox("Debe indicar número de acta y libro antes de continuar.")
 					Return ""
 				End If
 			Else
@@ -73,8 +82,8 @@
 
 			SQLCriteria = " WHERE catastro_id=" & catastro_id
 			If tipo_archivo <> "" Then
-				SQLCriteria += " AND descripcion='" & tipo_archivo & "'"
-			End If
+				SQLCriteria += " And descripcion='" & tipo_archivo & "'"
+            End If
 
 			Return ConsultarHistorial(solo_ruta)
 		End Function
@@ -175,16 +184,22 @@
 
 
 
-	Private Shared Function ConsultarHistorial(RutaDoc As Boolean) As Object
-		Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, SQLSelect & SQLTable & SQLCriteria & SQLGrouping)
+    Private Shared Function ConsultarHistorial(RutaDoc As Boolean) As Object
+        Dim sql(3) As String
+        sql(0) = SQLSelect
+        sql(1) = SQLTable
+        sql(2) = SQLCriteria
+        sql(3) = SQLGrouping
 
-		If RutaDoc Then
-			Return dtab(0)("ruta").ToString
-		Else
-			Return dtab
-		End If
-	End Function
-	Private Shared Function Cargar(carpeta_raiz As String, destino As String, titulo As String, return_path As Boolean) As Object
+        Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
+
+        If RutaDoc Then
+            Return dtab(0)("ruta").ToString
+        Else
+            Return dtab
+        End If
+    End Function
+    Private Shared Function Cargar(carpeta_raiz As String, destino As String, titulo As String, return_path As Boolean) As Object
 		Dim accion As Integer
 		Dim load_dialog As New OpenFileDialog
 
@@ -241,13 +256,17 @@
 	End Function
 
 	Overloads Shared Sub Guardar(fecha As Date, descripcion As String, ruta As String, tabla As String, col_id As String, id As Integer)
-		'Guarda una ruta de documento en una tabla
-		'Todas las tablas de documentos deben contener las mismas columnas:
-		'FOO_ID, FECHA, DESCRIPCION, RUTA
-		Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM " & tabla & " 
-																			WHERE " & col_id & "=" & id & " AND descripcion='" & descripcion & "'")
+        'Guarda una ruta de documento en una tabla
+        'Todas las tablas de documentos deben contener las mismas columnas:
+        'FOO_ID, FECHA, DESCRIPCION, RUTA
+        Dim sql(3) As String
+        sql(0) = "SELECT *"
+        sql(1) = "FROM " & tabla
+        sql(2) = "WHERE " & col_id & "=" & id & " And descripcion='" & descripcion & "'"
 
-		If dtab.Rows.Count > 0 Then
+        Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
+
+        If dtab.Rows.Count > 0 Then
 			For Each dr As DataRow In dtab.Rows
 				DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE " & tabla & " SET fecha='" & fecha.ToShortDateString & "', ruta='" & ruta & "'
 															WHERE " & col_id & "=" & id & " AND  descripcion='" & descripcion & "'")

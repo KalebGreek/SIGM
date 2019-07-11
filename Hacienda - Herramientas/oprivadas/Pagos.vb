@@ -1,11 +1,12 @@
 ﻿Public Class Pagos
 	Shared Function Consultar(opr_id As Integer, deuda As Boolean) As DataTable
-		Dim sql As String = "SELECT opr_pago.id as id, tipo_deuda, cuota, deuda, vence, fecha_pago, pago
+        Dim sql(0) As String
+        sql(0) = "SELECT opr_pago.id as id, tipo_deuda, cuota, deuda, vence, fecha_pago, pago
                              FROM opr_pago
                              WHERE opr_pago.opr_id=" & opr_id
-		If deuda Then
-			sql += " AND opr_pago.fecha_pago is null"
-		End If
+        If deuda Then
+            sql(0) += " AND opr_pago.fecha_pago is null"
+        End If
 
 		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 	End Function

@@ -9,11 +9,11 @@
 
 	Public Sub cargar(persona_id As Integer)
 		Dim genero As Integer = 0
+        Dim sql(0) As String
+        sql(0) = "SELECT id as persona_id, razon, cuil  FROM persona WHERE id=" & persona_id
+        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-		Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id as persona_id, razon, cuil 
-									 		  FROM persona WHERE id=" & persona_id)
-
-		razon.Text = dtab(0)("razon").ToString
+        razon.Text = dtab(0)("razon").ToString
 
 		If dtab(0)("cuil") > 20000000000 Then
 			genero = Val(Microsoft.VisualBasic.Left(dtab(0)("cuil"), 2))
@@ -44,11 +44,11 @@
 				DbMan.editDB(Nothing, My.Settings.CurrentDB,
 					   "INSERT INTO persona(razon, cuil, fisica)
 							 VALUES('" & razon.Text & "','" & cuil.Text & "'," & fisica & ")")
-				'Next query could be replaced by OUTPUT insert.id
-				Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT MAX(id) as id FROM persona") 'Last insert
-				MsgBox(dtab(0)("id"))
-				persona_id = dtab(0)("id")
-			End If
+                'Next query could be replaced by OUTPUT insert.id
+                Dim sql(0) As String
+                sql(0) = "SELECT MAX(id) as id FROM persona"
+                persona_id = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)(0)("id") 'Last insert
+            End If
 		End If
 		Return persona_id
 	End Function

@@ -89,52 +89,60 @@
 		For imp As Integer = 0 To 4 Step 1 '5 impuestos
             If imp = 0 Then 'AGUA
                 cuenta = agua_cuentas.Text
-				vence = "vencio"
-				pago = "pago"
-				periodo = "periodo"
-			ElseIf imp = 1 Then 'AUTO
+                vence = "vencio"
+                pago = "pago"
+                periodo = "periodo"
+            ElseIf imp = 1 Then 'AUTO
                 cuenta = auto_cuentas.Text
-				vence = "vencimi1"
-				pago = "apagado"
-				periodo = "ano"
-			ElseIf imp = 2 Then 'CATA
+                vence = "vencimi1"
+                pago = "apagado"
+                periodo = "ano"
+            ElseIf imp = 2 Then 'CATA
                 cuenta = cata_cuentas.Text
-				vence = "vencio"
-				pago = "pago"
-				periodo = "periodo"
-			ElseIf imp = 3 Then 'COME
+                vence = "vencio"
+                pago = "pago"
+                periodo = "periodo"
+            ElseIf imp = 3 Then 'COME
                 cuenta = come_cuentas.Text
-				vence = "vence1"
-				pago = "pago"
-				periodo = "ano"
-			ElseIf imp = 4 Then 'SEPE
+                vence = "vence1"
+                pago = "pago"
+                periodo = "ano"
+            ElseIf imp = 4 Then 'SEPE
                 cuenta = sepe_cuentas.Text
-				vence = "vencio"
-				pago = "pago"
-				periodo = "periodo"
-			End If
-		Next
+                vence = "vencio"
+                pago = "pago"
+                periodo = "periodo"
+            End If
+            DbMan.editDB(Nothing, conexion_fox.Text,
+                         "UPDATE " & cuenta & " SET " & vence & "=" & pago & " WHERE " & vence & " IS NULL AND " & pago & " IS NOT NULL")
 
+            'Si no funciona
+            Dim sql(5) As String
+            sql(0) = "SELECT codigo, " & periodo & ", " & vence & " WHERE " & vence & " Is NULL FROM " & cuenta
 
-		DbMan.editDB(Nothing, conexion_fox.Text, "UPDATE " & cuenta & " SET " & vence & "=" & pago & " WHERE " & vence & " IS NULL AND " & pago & " IS NOT NULL")
+            dtab = DbMan.ReadDB(Nothing, conexion_fox.Text, sql)
 
-        'Si no funciona
-
-        dtab = DbMan.readDB(Nothing, conexion_fox.Text, "SELECT codigo, " & periodo & ", " & vence & " WHERE " & vence & " IS NULL FROM " & cuenta)
-
-		For Each drow As DataRow In dtab.Rows
-			DbMan.editDB(Nothing, conexion_fox.Text,
-					"UPDATE " & cuenta & " SET " & vence & "=#" & Today.Day & "/" & Today.Month & "/" & drow(periodo) & "#
+            For Each drow As DataRow In dtab.Rows
+                DbMan.editDB(Nothing, conexion_fox.Text,
+                        "UPDATE " & cuenta & " Set " & vence & "=#" & Today.Day & "/" & Today.Month & "/" & drow(periodo) & "#
                     WHERE codigo=" & drow("codigo") & " AND " & vence & " IS NULL")
-		Next
-	End Sub
+            Next
+        Next
+
+
+
+
+
+    End Sub
 
 	Public Sub cargar_tablas_ext()
 		Dim dtab_ext As New DataTable
-		dtab_ext.Locale = System.Globalization.CultureInfo.CurrentCulture
-		dtab_ext = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM tablas_externas WHERE personas='aguas'")
+        dtab_ext.Locale = System.Globalization.CultureInfo.CurrentCulture
+        Dim sql(5) As String
+        sql(0) = "SELECT * FROM tablas_externas WHERE personas='aguas'"
+        dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-		If dtab_ext.Rows.Count > 0 Then
+        If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS AGUA ##########################################################
             agua_personas.Text = dtab_ext(0)("personas")
 			agua_cuentas.Text = dtab_ext(0)("cuentas")
@@ -144,9 +152,10 @@
 			agua_zonas.Text = dtab_ext(0)("zona")
 		End If
 
-		dtab_ext = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM tablas_externas WHERE  personas='automovil'")
+        sql(0) = "SELECT * FROM tablas_externas WHERE  personas='automovil'"
+        dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-		If dtab_ext.Rows.Count > 0 Then
+        If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS AUTO ##########################################################
             auto_personas.Text = dtab_ext(0)("personas")
 			auto_cuentas.Text = dtab_ext(0)("cuentas")
@@ -154,9 +163,10 @@
 			auto_tipo.Text = dtab_ext(0)("tipo")
 		End If
 
-		dtab_ext = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM tablas_externas WHERE  personas='catastro'")
+        sql(0) = "SELECT * FROM tablas_externas WHERE  personas='catastro'"
+        dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-		If dtab_ext.Rows.Count > 0 Then
+        If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS CATA ##########################################################
             cata_personas.Text = dtab_ext(0)("personas")
 			cata_cuentas.Text = dtab_ext(0)("cuentas")
@@ -165,9 +175,10 @@
 			cata_zonas.Text = dtab_ext(0)("zona")
 		End If
 
-		dtab_ext = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM tablas_externas WHERE  personas='comercio'")
+        sql(0) = "SELECT * FROM tablas_externas WHERE  personas='comercio'"
+        dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-		If dtab_ext.Rows.Count > 0 Then
+        If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS COME ##########################################################
             come_personas.Text = dtab_ext(0)("personas")
 			come_cuentas.Text = dtab_ext(0)("cuentas")
@@ -177,9 +188,10 @@
 			come_actividades.Text = dtab_ext(0)("actividad")
 		End If
 
-		dtab_ext = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM tablas_externas WHERE  personas='sepelio'")
+        sql(0) = "SELECT * FROM tablas_externas WHERE  personas='sepelio'"
+        dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-		If dtab_ext.Rows.Count > 0 Then
+        If dtab_ext.Rows.Count > 0 Then
             '#### TABLAS EXTERNAS SEPE ##########################################################
             sepe_personas.Text = dtab_ext(0)("personas")
 			sepe_cuentas.Text = dtab_ext(0)("cuentas")
@@ -207,9 +219,9 @@
 		For Each dr As DataRow In destTables.Rows
 			If dr("TABLE_TYPE") = "TABLE" Then
 				destTables.Rows.Find(dr("TABLE_NAME"))
+                'TODO
 
-
-			End If
+            End If
 		Next
 	End Sub
 

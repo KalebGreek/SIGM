@@ -13,34 +13,40 @@
 									 WHERE per_domicilio.principal = True"
 
 	Shared Function BuscarPorPersona(Optional id As Integer = 0, Optional cuil As Double = 0, Optional razon_social As String = "") As DataTable
-		Dim sql As String = SelectSQL & TableSQL
-		If id > 0 Then
-			sql += " And Persona.id=" & id
-		ElseIf Len(cuil) = 11 Then
-			sql += " And Persona.cuil='" & cuil & "'"
+        Dim sql(2) As String
+        sql(0) = SelectSQL
+        sql(1) = TableSQL
+        If id > 0 Then
+            sql(1) += " And Persona.id=" & id
+        ElseIf Len(cuil) = 11 Then
+            sql(1) += " And Persona.cuil='" & cuil & "'"
 
-		ElseIf razon_social.Contains("BUSCAR") = False And Len(razon_social) > 3 Then
-			sql += " And Persona.razon Like '%" & razon_social & "%'"
-		End If
+        ElseIf razon_social.Contains("BUSCAR") = False And Len(razon_social) > 3 Then
+            sql(1) += " And Persona.razon Like '%" & razon_social & "%'"
+        End If
 
-		sql += " ORDER By Persona.razon"
-		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
+        sql(2) += " ORDER By Persona.razon"
+        Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 	End Function
 	Shared Function Seleccionar(profesional_id As Integer, persona_id As Integer) As DataTable
-		Dim sql As String = SelectSQL & TableSQL
+        Dim sql(1) As String
+        sql(0) = SelectSQL
+        sql(1) = TableSQL
 
-		If profesional_id > 0 Then
-			sql += " AND profesional.id=" & profesional_id
-		Else
-			sql += " AND persona.id=" & persona_id
-		End If
+        If profesional_id > 0 Then
+            sql(1) += " AND profesional.id=" & profesional_id
+        Else
+            sql(1) += " AND persona.id=" & persona_id
+        End If
 
 		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 	End Function
 	Shared Function ListarTitulos() As BindingSource
-		Dim bs As New BindingSource
-		bs.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM prof_titulo ORDER BY titulo")
-		Return bs
+        Dim bs As New BindingSource
+        Dim sql(0) As String
+        sql(0) = "SELECT * FROM prof_titulo ORDER BY titulo"
+        bs.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        Return bs
 	End Function
 
 	Shared Function guardar(prof_id As Integer, persona_id As Integer, titulo_id As Integer, ByVal matricula As String) As DataRow
@@ -53,8 +59,10 @@
 							  VALUES(" & persona_id & ", " & titulo_id & ", '" & matricula & "')")
 		End If
 
-		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id FROM profesional WHERE per_id=" & persona_id)(0)
-	End Function
+        Dim sql(0) As String
+        sql(0) = "SELECT id FROM profesional WHERE per_id=" & persona_id
+        Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)(0)
+    End Function
 	Shared Function eliminar(ByVal per_id As Integer) As Integer
 		DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM profesional WHERE per_id=" & per_id)
 		Return 0

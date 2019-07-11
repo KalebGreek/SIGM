@@ -19,14 +19,16 @@ Public Class BusquedaPropietario
 		With genSearchControl1
 			If .vista.SelectedIndex > -1 Then
 				.filtro.DataSource = Nothing
-				If .vista.Text = "PROPIETARIO" Then
-                    Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM catastro")
+                If .vista.Text = "PROPIETARIO" Then
+                    Dim sql(0) As String
+                    sql(0) = "SELECT * FROM catastro"
+                    Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
                     Dim bs_ColumnList As New BindingSource
                     bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(dtab)
-					.filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
-					.filtro.Text = "razon"
-				End If
-			Else
+                    .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
+                    .filtro.Text = "razon"
+                End If
+            Else
 				.reset_search.PerformClick()
 			End If
 		End With

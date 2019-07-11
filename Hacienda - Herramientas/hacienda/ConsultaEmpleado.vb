@@ -56,9 +56,10 @@
     End Sub
     Private Sub buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
         grupo_mod.Enabled = False
-
-		Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM ordenanza")
-		If dtab Is Nothing = False Then
+        Dim sql(0) As String
+        sql(0) = "SELECT * FROM ordenanza"
+        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        If dtab Is Nothing = False Then
 			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", dtab)
 			If dtab.Rows.Count = 0 Then
 				MsgBox("No hay resultados.")

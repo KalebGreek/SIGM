@@ -1,16 +1,18 @@
 ﻿Module hac_contrib
 	Function leer(ByVal sender As System.Object, cuil As Integer) As DataTable
 		Dim impuesto, importe, franqueo, adicional, pagado, vence As String
-		Dim contrib, deuda_total As New DataTable
-		adicional = ""
-		franqueo = ""
-		contrib = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, impuesto, codigo, alta FROM contribuyente WHERE cuil=" & cuil, )
-		If contrib.Rows.Count > 0 And (sender Is ConsultaCuentaAgrupada.imp_lista_mod Or sender Is ConsultaCuentaAgrupada.con_ca) Then 'Consultas llevan deuda total incluida
+        Dim contrib, deuda_total As New DataTable
+        Dim sql(5) As String
+        adicional = ""
+        franqueo = ""
+        sql(0) = "SELECT id, impuesto, codigo, alta FROM contribuyente WHERE cuil=" & cuil
+        contrib = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        If contrib.Rows.Count > 0 And (sender Is ConsultaCuentaAgrupada.imp_lista_mod Or sender Is ConsultaCuentaAgrupada.con_ca) Then 'Consultas llevan deuda total incluida
             Dim fila As Integer = 0
-			If contrib.Columns.Contains("deuda") Then
-				contrib.Columns.Remove("deuda")
-			End If
-			contrib.Columns.Add("deuda")
+            If contrib.Columns.Contains("deuda") Then
+                contrib.Columns.Remove("deuda")
+            End If
+            contrib.Columns.Add("deuda")
 			Do While fila < contrib.Rows.Count
                 'Detectar impuesto
                 impuesto = contrib(fila)("impuesto")
@@ -46,25 +48,27 @@
 					vence = ext_cuenta & ".vencio"
 				End If
                 'Calcular deuda total del código y agregar
-                Dim sql As String = "SELECT (SUM(" & pagado & ")"
+                sql(0) = "SELECT (SUM(" & pagado & ")"
 
 
                 '## BUSCAR VARIABLES PARA CALCULAR CORRECTAMENTE LOS INTERESES Y RECARGOS
                 '## COMBINAR ESTO CON DETO (básicamente son lo mismo duh)
                 If adicional <> "" And franqueo <> "" Then
-					sql += " -(SUM(" & importe & ") + SUM(" & adicional & ") + SUM(" & franqueo & ")))"
-				ElseIf adicional <> "" Then
-					sql += " -(SUM(" & importe & ") + SUM(" & adicional & ")))"
-				Else
-					sql += " - SUM(" & importe & "))"
-				End If
-				sql += " as deuda FROM " & ext_cuenta & " WHERE codigo=" & contrib(fila)("codigo")
-				sql += " AND " & pagado & " < " & importe
+                    sql(0) += " -(SUM(" & importe & ") + SUM(" & adicional & ") + SUM(" & franqueo & ")))"
+                ElseIf adicional <> "" Then
+                    sql(0) += " -(SUM(" & importe & ") + SUM(" & adicional & ")))"
+                Else
+                    sql(0) += " - SUM(" & importe & "))"
+                End If
+                sql(0) += " as deuda"
+                sql(1) = "FROM " & ext_cuenta
+                sql(2) = "WHERE codigo=" & contrib(fila)("codigo") & " 
+                            AND " & pagado & " < " & importe & "
+                            AND " & vence & "<DATE()"
 
                 'Filtra desde la fecha de hoy hacia atrás
-                sql += " AND " & vence & "<DATE()"
-				deuda_total = DbMan.readDB(Nothing, My.Settings.foxConnection, sql)
-				contrib(fila)("deuda") = deuda_total(0)("deuda")
+                deuda_total = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+                contrib(fila)("deuda") = deuda_total(0)("deuda")
 				fila += 1
 			Loop
 		End If

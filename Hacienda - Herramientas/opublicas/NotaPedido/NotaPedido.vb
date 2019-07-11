@@ -13,15 +13,21 @@
 	Shared SQLWhere As String
 	Shared SQLOrder As String
 
-	Shared Function Buscar() As DataTable
-		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, SQLSelect, SQLTable)
-	End Function
+    Shared Function Buscar() As DataTable
+        Dim sql(1) As String
+        sql(0) = SQLSelect
+        sql(1) = SQLTable
+        Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+    End Function
 
-	Shared Function Seleccionar(nota_pedido_id As Integer) As DataRow
-		SQLWhere = " WHERE opu_nota_pedido.id=" & nota_pedido_id
+    Shared Function Seleccionar(nota_pedido_id As Integer) As DataRow
+        Dim sql(2) As String
+        sql(0) = SQLSelect
+        sql(1) = SQLTable
+        sql(2) = " WHERE opu_nota_pedido.id=" & nota_pedido_id
 
-		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, SQLSelect, SQLTable, SQLWhere)(0)
-	End Function
+        Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)(0)
+    End Function
 
 	Shared Function Guardar(nota_pedido_id As Integer) As Boolean
 
@@ -35,8 +41,11 @@
 
 
 	Shared Function LoadReport(nota_pedido_id As Integer) As DataRow
-		SQLWhere = " WHERE opu_nota_pedido.id=" & nota_pedido_id
+        Dim sql(2) As String
+        sql(0) = SQLSelect
+        sql(1) = SQLTable
+        sql(2) = " WHERE opu_nota_pedido.id=" & nota_pedido_id
 
-		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, SQLSelect, SQLTable, SQLWhere)(0)
-	End Function
+        Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)(0)
+    End Function
 End Class

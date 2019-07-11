@@ -58,38 +58,44 @@
             buscar.PerformClick()
         End If
     End Sub
-    Private Sub buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
+    Private Sub Buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
+        Dim sql(2) As String
+        Dim dtab As New DataTable
+
+        sql(0) = SQLSelect
+        sql(1) = SQLTable
+
         grupo_mod.Enabled = False
         If filtro.SelectedIndex > -1 Then
             If KeyCodigo.Visible And Val(Microsoft.VisualBasic.Left(KeyCodigo.Text, 4)) > 0 _
             And Val(Microsoft.VisualBasic.Right(KeyCodigo.Text, 4)) > 1899 Then
-                SQLCriteria = " WHERE codigo=" & Val(KeyCodigo.Text)
+                sql(2) = " WHERE codigo=" & Val(KeyCodigo.Text)
                 Me.Text = "Buscar Ordenanza | " &
                           Microsoft.VisualBasic.Left(KeyCodigo.Text, Len(KeyCodigo.Text) - 4) & "/" & Microsoft.VisualBasic.Right(KeyCodigo.Text, 4)
             ElseIf KeyFecha.Visible Then
-                SQLCriteria = " WHERE fecha='" & KeyFecha.Text & "'"
+                sql(2) = " WHERE fecha='" & KeyFecha.Text & "'"
                 Me.Text = "Buscar Ordenanza | " & KeyFecha.Text
             ElseIf KeyConcepto.Visible And Len(KeyConcepto.Text) > 3 Then
-                SQLCriteria = " WHERE concepto LIKE '%" & Trim(KeyConcepto.Text) & "%'"
+                sql(2) = " WHERE concepto LIKE '%" & Trim(KeyConcepto.Text) & "%'"
                 Me.Text = "Buscar Ordenanza | " & KeyConcepto.Text
             End If
         End If
 
-		Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, SQLSelect & SQLTable & SQLCriteria)
+        dtab = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-		If dtab Is Nothing = False Then
-			visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", dtab)
-			If dtab.Rows.Count = 0 Then
-				MsgBox("No hay resultados.")
-				Me.Text = "Buscar Ordenanza"
-			Else
-				grupo_mod.Enabled = True
-			End If
-		Else
-			MsgBox("No hay resultados.")
-			Me.Text = "Buscar Ordenanza"
-		End If
-	End Sub
+        If dtab Is Nothing = False Then
+            visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", dtab)
+            If dtab.Rows.Count = 0 Then
+                MsgBox("No hay resultados.")
+                Me.Text = "Buscar Ordenanza"
+            Else
+                grupo_mod.Enabled = True
+            End If
+        Else
+            MsgBox("No hay resultados.")
+            Me.Text = "Buscar Ordenanza"
+        End If
+    End Sub
 
     '###### OPERACIONES ##########################################################################################
     Private Sub consulta_KeyUp(sender As Object, e As KeyEventArgs) Handles visor.KeyUp

@@ -151,10 +151,11 @@ Public Class ModCombustibleReceptor
 																	 " & modelo.Value & ", #" & fecha_alta & "#,
 																	  '" & observaciones.Text & "')")
 
-					Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB,
-														"SELECT id FROM hac_combustible_receptor ORDER BY id ASC")
+                    Dim sql(0) As String
+                    sql(0) = "SELECT id FROM hac_combustible_receptor ORDER BY id ASC"
+                    Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-					receptor_id.Text = dtab(0)("id")
+                    receptor_id.Text = dtab(0)("id")
 					saved = True
 				End If
 			End If

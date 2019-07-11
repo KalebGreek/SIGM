@@ -37,22 +37,23 @@
 		Public Class Buscar
 			Shared Function Expediente() As DataTable
 
-				Dim sql _
-				As String = "SELECT oprivadas.id as expediente_id, oprivadas.expediente,
+                Dim sql(2) As String
+                sql(0) = "SELECT oprivadas.id as expediente_id, oprivadas.expediente,
 							persona.razon as responsable, persona_1.razon as profesional,
 							cat_frente.calle&' '&cat_frente.altura as ubicacion_inmueble, catastro.barrio, 
 							oprivadas.tarea, oprivadas.tarea2,
 							oprivadas.recibe, oprivadas.visado,
-							oprivadas.inicio_obra, oprivadas.fin_obra
-							" & SQLTable & SQLWhere
+							oprivadas.inicio_obra, oprivadas.fin_obra"
+                sql(1) = SQLTable
+                sql(2) = SQLWhere
 
-				Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
-			End Function
+                Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+            End Function
 
 			Shared Function Responsable() As DataTable
 
-				Dim sql _
-				As String = "SELECT oprivadas.id As expediente_id, oprivadas.expediente,
+                Dim sql(2) As String
+                sql(0) = "SELECT oprivadas.id As expediente_id, oprivadas.expediente,
 							Oprivadas.tarea, Oprivadas.tarea2,			
 							responsable_expediente.principal,
 							persona.razon As responsable, persona.cuil, 
@@ -60,57 +61,66 @@
 							localidades.nombre as localidad,
 							persona.telefono, persona.email, 
 							persona.difunto, persona.fisica,
-							oprivadas.recibe, Oprivadas.visado  
-							" & SQLTable & SQLWhere
+							oprivadas.recibe, Oprivadas.visado"
+                sql(1) = SQLTable
+                sql(2) = SQLWhere
 
-				Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
+                Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 			End Function
 
 			Shared Function Profesional() As DataTable
 
-				Dim sql _
-				As String = "SELECT oprivadas.id As expediente_id, oprivadas.expediente,
+                Dim sql(2) As String
+                sql(0) = "SELECT oprivadas.id As expediente_id, oprivadas.expediente,
 							Oprivadas.tarea, Oprivadas.tarea2,
 							persona_1.razon as profesional, persona_1.cuil, 
 							per_domicilio_1.calle&' '&per_domicilio_1.altura as domicilio,
 							localidades_1.nombre as localidad,
 							persona_1.email, persona_1.telefono,
 							profesional_titulo.descripcion As titulo, profesional.matricula, 
-							oprivadas.recibe, Oprivadas.visado 
-							" & SQLTable & SQLWhere
+							oprivadas.recibe, Oprivadas.visado"
+                sql(1) = SQLTable
+                sql(2) = SQLWhere
 
-				Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
-			End Function
+                Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+            End Function
 		End Class
 		'Funciones de listado para evitar borrar expedientes accidentalmente
 		Shared Function ListarPorResponsable(persona_id As Integer) As DataTable
-			Return DbMan.readDB(Nothing, My.Settings.CurrentDB,
-						   "SELECT responsable_expediente.Id As id, expediente, per_id 
-                            FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id) 
-                            INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id
-                            WHERE responsable_expediente.per_id=" & persona_id)
-		End Function
+            Dim sql(2) As String
+            sql(0) = "SELECT responsable_expediente.Id As id, expediente, per_id"
+            sql(1) = "FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id) 
+                            INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id"
+            sql(2) = "WHERE responsable_expediente.per_id=" & persona_id
+
+            Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        End Function
 		Shared Function ListarPorProfesional(prof_id As Integer) As DataTable
-			Return DbMan.readDB(Nothing, My.Settings.CurrentDB,
-						   "SELECT responsable_expediente.Id As id, expediente, profesional_id
-                            FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id)
-                            INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id
-                            WHERE oprivadas.profesional_id=" & prof_id)
-		End Function
+            Dim sql(2) As String
+            sql(0) = "SELECT responsable_expediente.Id As id, expediente, profesional_id"
+            sql(1) = "FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id)
+                            INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id"
+            sql(2) = "WHERE oprivadas.profesional_id=" & prof_id
 
-		Shared Function ListarResponsables(expediente As Integer) As DataTable
-			Return DbMan.readDB(Nothing, My.Settings.CurrentDB,
-					   "SELECT persona.id As persona_id, razon, cuil, email, telefono, difunto
-                            FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id)
-                            INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id
-                            WHERE oprivadas.expediente=" & expediente)
-		End Function
+            Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        End Function
 
-		Shared Function Seleccionar(expediente As Integer) As DataTable
-			Return DbMan.readDB(Nothing, My.Settings.CurrentDB,
-							"SELECT * FROM oprivadas 
-							  WHERE Oprivadas.expediente= " & expediente)
-		End Function
+        Shared Function ListarResponsables(expediente As Integer) As DataTable
+            Dim sql(2) As String
+            sql(0) = "SELECT persona.id As persona_id, razon, cuil, email, telefono, difunto"
+            sql(1) = "        FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id)
+                            INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id"
+            sql(2) ="WHERE oprivadas.expediente=" & expediente
+            Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        End Function
+
+        Shared Function Seleccionar(expediente As Integer) As DataTable
+            Dim sql(0) As String
+            sql(0) = "SELECT * FROM oprivadas 
+							  WHERE Oprivadas.expediente= " & expediente
+
+            Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        End Function
 
 		'MODIFICAR
 		Shared Function Generar(exp As String) As DataTable
@@ -149,10 +159,11 @@
 
 		Shared Sub LimpiarTemporal(opr_id As Integer, inmuebles As BindingSource, Optional temp As Boolean = False)
 			Dim dtab As DataTable
-			Dim sql As String = "Select id FROM oprivadas WHERE user_id=" & My.Settings.UserId & " And temporal=" & temp
-			If opr_id > 0 Then
-				sql += " And id=" & opr_id
-			End If
+            Dim sql(0) As String
+            sql(0) = "SELECT id FROM oprivadas WHERE user_id=" & My.Settings.UserId & " And temporal=" & temp
+            If opr_id > 0 Then
+                sql(0) += " And id=" & opr_id
+            End If
 			dtab = DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 
 			If dtab.Rows.Count > 0 Then
@@ -161,13 +172,13 @@
 				'Catastro.eliminar(opr_id, inmuebles)
 			End If
 
-			sql = "DELETE * FROM oprivadas WHERE user_id=" & My.Settings.UserId & " And temporal=" & temp
-			If opr_id > 0 Then
-				sql += " And id=" & opr_id
-			End If
-			DbMan.editDB(Nothing, My.Settings.CurrentDB, sql)
+            sql(0) = "DELETE * FROM oprivadas WHERE user_id=" & My.Settings.UserId & " And temporal=" & temp
+            If opr_id > 0 Then
+                sql(0) += " And id=" & opr_id
+            End If
+            DbMan.editDB(Nothing, My.Settings.CurrentDB, sql(0))
 
-		End Sub
+        End Sub
 
 		'Seccion Persona
 		Shared Sub AgregarResponsable(registro As BindingSource, opr_id As Integer, ResponsablePrincipal As Integer)

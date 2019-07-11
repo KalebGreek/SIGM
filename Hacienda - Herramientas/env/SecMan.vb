@@ -3,34 +3,37 @@ Public Class SecMan 'Security Manager
 	'###### SEGURIDAD
 	'Login functions
 	Shared Function check_access(user As String, pass As String) As Integer
-		If Len(user) >= 5 And Len(pass) >= 5 Then
-			Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, usuario, pass FROM usuarios
-												 WHERE usuario='" & user & "' AND pass ='" & pass & "'")
+        If Len(user) >= 5 And Len(pass) >= 5 Then
+            Dim sql(5) As String
+            sql(0) = "SELECT id, usuario, pass FROM usuarios WHERE usuario='" & user & "' AND pass ='" & pass & "'"
+            Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-			If dtab Is Nothing Then
-				Return -1
-			Else
-				If dtab.Rows.Count > 0 Then 'Contraseña válida
+            If dtab Is Nothing Then
+                Return -1
+            Else
+                If dtab.Rows.Count > 0 Then 'Contraseña válida
                     Return dtab(0)("id")
-				ElseIf dtab.Rows.Count = 0 Then
-					Return -1
-				End If
-			End If
-		Else
-			Return -1
+                ElseIf dtab.Rows.Count = 0 Then
+                    Return -1
+                End If
+            End If
+        Else
+            Return -1
 		End If
 	End Function
 	Shared Function register_user(user_id As Integer, lock As Boolean) As Boolean
 		Dim fecha_hora As String = Date.Today.ToShortDateString & " " & TimeOfDay.ToShortTimeString
 		Dim token As String = getCpuId()
 		Dim equipo As String = Environment.MachineName
+        Dim sql(5) As String
+        sql(0) = "SELECT id, fecha_hora, user_id, token, equipo, sesion 
+                    FROM usr_log
+                   WHERE user_id=" & user_id & " ORDER BY id DESC"
         'Últimos accesos
-        Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, fecha_hora, user_id, token, equipo, sesion 
-                                              FROM usr_log
-                                             WHERE user_id=" & user_id & " ORDER BY id DESC")
+        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
 
-		If lock Then 'Iniciar sesion
+        If lock Then 'Iniciar sesion
 			If dtab.Rows.Count > 0 Then
 				If dtab(0)("token").ToString = token Then 'Sesion iniciada en este equipo
 					If dtab(0)("sesion") Then
@@ -68,32 +71,34 @@ Public Class SecMan 'Security Manager
 		Return True
 	End Function
 	Shared Function privileges(user_id As Integer) As launcher
-		Dim inicio As New launcher
+        Dim inicio As New launcher
+        Dim sql(0) As String
+        sql(0) = "SELECT * FROM usuarios WHERE id=" & user_id
         'Leer
-        Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM usuarios WHERE id=" & user_id)
-		'Cargar
-		CtrlMan.LoadAllControls(dtab(0), inicio)
+        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        'Cargar
+        CtrlMan.LoadAllControls(dtab(0), inicio)
 		Return inicio
 	End Function
 
-	'SQL History
-	Shared Sub log_write(sql As String, connection As String, user_id As Integer)
-		'Hardcoded SQL logging to check changes in DB
-		'Independent from DbMan.editDB()
-		sql = Replace(sql, "'", "`") 'To avoid conflict with other hardcoded sql queries
-		Dim LogInsert As New OleDb.OleDbCommand
-		LogInsert.CommandText = "INSERT INTO sql_log(_date, _user_id, _sql, _con) VALUES('" & Date.Now & "', '" & user_id & "', '" & sql & "','" & connection & "');"
-		olecon.ConnectionString = My.Settings.AdbConnection
+    'SQL History
+    Shared Sub Log_Write(sql As String, connection As String, user_id As Integer)
+        'Hardcoded SQL logging to check changes in DB
+        'Independent from DbMan.editDB()
+        sql = Replace(sql, "'", "`") 'To avoid conflict with other hardcoded sql queries
+        Dim LogInsert As New OleDb.OleDbCommand
+        LogInsert.CommandText = "INSERT INTO sql_log(_date, _user_id, _sql, _con) VALUES('" & Date.Now & "', '" & user_id & "', '" & sql & "','" & connection & "');"
+        olecon.ConnectionString = My.Settings.AdbConnection
 
-		LogInsert.Connection = olecon
-		'Abrir la conexión y ejecutar
-		olecon.Open()
-		LogInsert.ExecuteNonQuery()
-		olecon.Close()
-	End Sub
+        LogInsert.Connection = olecon
+        'Abrir la conexión y ejecutar
+        olecon.Open()
+        LogInsert.ExecuteNonQuery()
+        olecon.Close()
+    End Sub
 
-	'Read MAC or CPU to identify user/computer
-	Shared Function getMacAddress() As String
+    'Read MAC or CPU to identify user/computer
+    Shared Function getMacAddress() As String
 		Try
 			Dim adapters As NetworkInterface() = NetworkInterface.GetAllNetworkInterfaces()
 			Dim adapter As NetworkInterface

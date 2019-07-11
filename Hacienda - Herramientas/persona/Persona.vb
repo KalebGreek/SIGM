@@ -14,10 +14,11 @@
     End Function
 
     Shared Function Buscar(difunto As Boolean, fisica As Boolean) As DataTable
-		Dim sql As String = PersonaSQL
-		sql += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
-		sql += " ORDER By Persona.razon ASC"
-		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
+        Dim sql(1) As String
+        sql(0) = PersonaSQL
+        sql(0) += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
+        sql(1) = " ORDER By Persona.razon ASC"
+        Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 	End Function
 
     Shared Sub Cargar(persona_id As Integer,
@@ -116,10 +117,12 @@
 			errormsg.ShowDialog()
 			Return False
 		Else
-			'documentos
-			dtab_con = DbMan.readDB(Nothing, My.Settings.CurrentDB,
-									"SELECT descripcion, ruta FROM per_documento WHERE per_id=" & persona_id)
-			If dtab_con.Rows.Count > 0 Then
+            'documentos
+            Dim sql(0) As String
+            sql(0) = "SELECT descripcion, ruta FROM per_documento WHERE per_id=" & persona_id
+            dtab_con = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+
+            If dtab_con.Rows.Count > 0 Then
 				msg.Add("Los siguientes documentos seran eliminados del registro junto con la persona seleccionada: ")
 				For fila As Integer = 0 To dtab_con.Rows.Count - 1
 					msg.Add(dtab_con(fila)("descripcion") & " ubicado en " & dtab_con(fila)("ruta"))

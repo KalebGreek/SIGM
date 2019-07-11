@@ -16,12 +16,12 @@
 
 	Sub tablas_fox(ByVal impuesto As String)
         'Las tablas correspondientes a personas tienen los nombres correctos
-        Dim dtab _
-		As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM tablas_externas WHERE personas='" & impuesto & "'")
+        Dim sql(5) As String
+        sql(0) = "SELECT * FROM tablas_externas WHERE personas='" & impuesto & "'"
+        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-
-		'Tablas generales
-		ext_persona = dtab(0)("personas").ToString
+        'Tablas generales
+        ext_persona = dtab(0)("personas").ToString
 		ext_cuenta = dtab(0)("cuentas").ToString
 
 		If impuesto.Contains("AGUA") Then 'AGUA

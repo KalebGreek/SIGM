@@ -55,16 +55,19 @@
         Dim valido As Boolean = True
         Dim msg As String = ""
         Dim dtab As New DataTable
+        Dim sql(0) As String
 
         If codigo >= 11899 Or ordenanza_id > 0 Then
 
             If ordenanza_id > 0 Then
-				DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id)
-			Else
-				DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo)
-			End If
+                sql(0) = "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id
+            Else
+                sql(0) = "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo
+            End If
 
-			If dtab Is Nothing = False Then
+            dtab = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+
+            If dtab Is Nothing = False Then
 				If dtab.Rows.Count > 0 Then
 					If dtab.Rows.Count = 1 And ordenanza_id > 0 Then
 						If ordenanza_id = dtab(0)("id") Then

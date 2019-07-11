@@ -89,46 +89,61 @@
 			Return sql
 		End Function
 		Shared Function VerificarBoleta(boleta As Double) As Integer
-			Dim dtab As New DataTable
-			dtab = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, boleta FROM multas_historial WHERE boleta=" & boleta)
-			If dtab.Rows.Count > 0 Then
+            Dim dtab As New DataTable
+            Dim sql(0) As String
+            sql(0) = "SELECT id, boleta FROM multas_historial WHERE boleta=" & boleta
+            dtab = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+            If dtab.Rows.Count > 0 Then
 				Return dtab(0)("id")
 			Else
 				Return 0
 			End If
 		End Function
 
-		'AUX TABLES
-		Shared Function FillArticulo() As DataTable
-			Return DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, articulo, descripcion FROM multas_articulo")
-		End Function
-		Shared Function FillInspector() As DataTable
-			Return DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT transito_inspector.id as id, razon FROM transito_inspector 
-																INNER JOIN persona ON transito_inspector.persona_id=persona.id")
-		End Function
-		Shared Function FillTipoVehiculo() As DataTable
-			Return DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, tipo FROM vehiculo_tipo")
-		End Function
-		Shared Function FillMarcaVehiculo() As DataTable
-			Return DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, marca FROM vehiculo_marca ORDER BY marca")
-		End Function
+        'AUX TABLES
+        Shared Function FillArticulo() As DataTable
+            Dim sql(0) As String
+            sql(0) = "SELECT id, articulo, descripcion FROM multas_articulo"
+            Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        End Function
+        Shared Function FillInspector() As DataTable
+            Dim sql(0) As String
+            sql(0) = "SELECT transito_inspector.id as id, razon 
+                        FROM transito_inspector 
+				  INNER JOIN persona ON transito_inspector.persona_id=persona.id"
+            Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        End Function
+        Shared Function FillTipoVehiculo() As DataTable
+            Dim sql(0) As String
+            sql(0) = "SELECT id, tipo FROM vehiculo_tipo"
+            Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        End Function
+        Shared Function FillMarcaVehiculo() As DataTable
+            Dim sql(0) As String
+            sql(0) = "SELECT id, marca FROM vehiculo_marca ORDER BY marca"
+            Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        End Function
 
-		'ABM
-		Shared Function Nueva(boleta As Double) As Integer
-			DbMan.editDB(Nothing, My.Settings.CurrentDB,
-					   "INSERT INTO multas_historial(boleta, user_id) VALUES(" & boleta & ", " & My.Settings.UserId & ")")
-			Return DbMan.readDB(Nothing, My.Settings.CurrentDB,
-							  "SELECT id FROM multas_historial WHERE boleta=" & boleta & "
-							   AND user_id=" & My.Settings.UserId)(0)("id")
-		End Function
+        'ABM
+        Shared Function Nueva(boleta As Double) As Integer
+            Dim sql(0) As String
+            sql(0) = "INSERT INTO multas_historial(boleta, user_id) VALUES(" & boleta & ", " & My.Settings.UserId & ")"
+            DbMan.editDB(Nothing, My.Settings.CurrentDB,sql(0))
+
+            sql(0) = "SELECT id FROM multas_historial WHERE boleta=" & boleta & "
+							   AND user_id=" & My.Settings.UserId
+            Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)(0)("id")
+
+        End Function
 
 		Shared Function Actualizar(ByRef detalle_boleta As tabMultas1Boleta, ByRef persona As tabMultas2Persona,
 									ByRef vehiculo As tabMultas3Vehiculo,
 									multa_id As Integer, boleta As Double, lock As Boolean) As Boolean
 			Dim valid As Boolean = True
 			Dim user_id As Integer = 0
+            Dim sql(0) As String
 
-			If lock Then
+            If lock Then
 				user_id = My.Settings.UserId
 			End If
 
@@ -171,34 +186,37 @@
 					Dim mercosur As Boolean = CBool(.mercosur.Checked)
 					Dim propietario_id As Integer = CInt(persona.propietario_id.Text)
 
-					If vehiculo_id > 0 Then
-						DbMan.editDB(Nothing, My.Settings.CurrentDB,
-								   "UPDATE vehiculo
-									   SET vehiculo_tipo_id=" & vehiculo_tipo_id & ", vehiculo_marca_id=" & vehiculo_marca_id & ", 
-										   patente='" & patente & "', mercosur=" & mercosur & ", 
-										   propietario_id=" & propietario_id & "
-									 WHERE id=" & vehiculo_id)
-					Else
-						DbMan.editDB(Nothing, My.Settings.CurrentDB,
-								   "INSERT INTO vehiculo(vehiculo_tipo_id, vehiculo_marca_id, patente, mercosur, propietario_id)
-										 VALUES(" & vehiculo_tipo_id & ", " & vehiculo_marca_id & ",
-												'" & patente & "', " & mercosur & "," & propietario_id & ")")
 
-						vehiculo_id = DbMan.readDB(Nothing, My.Settings.CurrentDB,
-												 "SELECT MAX(id) as vehiculo_id FROM vehiculo")(0)("vehiculo_id")
+                    If vehiculo_id > 0 Then
+                        sql(0) = "UPDATE vehiculo
+                                     SET vehiculo_tipo_id=" & vehiculo_tipo_id & ", vehiculo_marca_id=" & vehiculo_marca_id & ", 
+								      patente='" & patente & "', mercosur=" & mercosur & ", 
+								      propietario_id=" & propietario_id & "
+                                   WHERE id=" & vehiculo_id
 
-						DbMan.editDB(Nothing, My.Settings.CurrentDB,
-								   "UPDATE multas_historial SET vehiculo_id=" & vehiculo_id & " WHERE id=" & multa_id)
-					End If
-				End With
+                        DbMan.editDB(Nothing, My.Settings.CurrentDB, sql(0))
+                    Else
+                        sql(0) = "INSERT INTO vehiculo(vehiculo_tipo_id, vehiculo_marca_id, patente, mercosur, propietario_id)
+								 	   VALUES(" & vehiculo_tipo_id & ", " & vehiculo_marca_id & ",
+											  '" & patente & "', " & mercosur & "," & propietario_id & ")"
+
+                        DbMan.editDB(Nothing, My.Settings.CurrentDB, sql(0))
+
+                        sql(0) = "SELECT MAX(id) as vehiculo_id FROM vehiculo"
+                        vehiculo_id = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)(0)("vehiculo_id")
+
+                        sql(0) = "UPDATE multas_historial SET vehiculo_id=" & vehiculo_id & " WHERE id=" & multa_id
+                        DbMan.editDB(Nothing, My.Settings.CurrentDB, sql(0))
+
+                    End If
+                End With
 			Else valid = False
 			End If
 
+            sql(0) = "UPDATE multas_historial SET boleta=" & boleta & ",  user_id=" & user_id & " WHERE id=" & multa_id
+            DbMan.editDB(Nothing, My.Settings.CurrentDB, sql(0))
 
-			DbMan.editDB(Nothing, My.Settings.CurrentDB,
-					   "UPDATE multas_historial SET boleta=" & boleta & ",  user_id=" & user_id & " WHERE id=" & multa_id)
-
-			Return valid
+            Return valid
 		End Function
 
 		Shared Function Eliminar(multa_id As Integer, vehiculo_id As Integer) As Boolean

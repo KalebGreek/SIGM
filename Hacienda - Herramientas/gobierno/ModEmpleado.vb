@@ -91,34 +91,38 @@
 			End If
 		End If
 	End Sub
-	Private Sub cargarJerarquiaPersonal()
-		Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT nombre, rubro 
+    Private Sub cargarJerarquiaPersonal()
+        Dim sql(0) As String
+        sql(0) = "SELECT nombre, rubro 
 											  FROM hacienda 
 											 WHERE pertenece='9' AND anexo='1' AND inciso='1' AND item='1'
                                                AND rubro >'00' AND rubro <'03' AND subrubro='00' 
-											   AND partida='00' AND subpartida='00'")
+											   AND partida='00' AND subpartida='00'"
+        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-		If dtab Is Nothing = False Then
-			If dtab.Rows.Count > 0 Then
-				bs_rubro.DataSource = dtab
-				rubro.DataSource = bs_rubro
-				rubro.DisplayMember = "nombre"
-			End If
-		End If
-	End Sub
+        If dtab Is Nothing = False Then
+            If dtab.Rows.Count > 0 Then
+                bs_rubro.DataSource = dtab
+                rubro.DataSource = bs_rubro
+                rubro.DisplayMember = "nombre"
+            End If
+        End If
+    End Sub
 
     '###### VALIDAR ##########################################################################################
     Private Function ValidarCodigo(ordenanza_id As Integer, codigo As Integer) As Boolean
 		Dim valido As Boolean = True
 		Dim msg As String = ""
 		Dim dtab As New DataTable
+        Dim sql(0) As String
 
-		If codigo >= 11899 Or ordenanza_id > 0 Then 'Desde 1-1900
+        If codigo >= 11899 Or ordenanza_id > 0 Then 'Desde 1-1900
             If ordenanza_id > 0 Then
-				dtab = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id)
-			Else
-				dtab = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo)
-			End If
+                sql(0) = "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id
+            Else
+                sql(0) = "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo
+            End If
+            dtab = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
             If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then

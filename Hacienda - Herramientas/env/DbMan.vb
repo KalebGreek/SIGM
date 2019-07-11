@@ -41,111 +41,105 @@
 	End Function 'Unused
 
 	Function readTableSchema(Optional constr As String = "") As DataTable
-		If constr = "" Then
-			constr = My.Settings.CurrentDB
-		End If
-
-		olecon.ConnectionString = constr
-		Dim schemaTable As New DataTable
-		Try
-			olecon.Open()
-			schemaTable = olecon.GetOleDbSchemaTable(OleDb.OleDbSchemaGuid.Tables, Nothing)
-		Catch ex As Exception
-			MsgBox("No se puede conectar a " & constr & Chr(13) & "Detalles:" & ex.Data.ToString)
+        Dim schemaTable As New DataTable
+        If constr = "" Then
+            constr = My.Settings.CurrentDB
+        End If
+        olecon.ConnectionString = constr
+        Try
+            olecon.Open()
+            schemaTable = olecon.GetOleDbSchemaTable(OleDb.OleDbSchemaGuid.Tables, Nothing)
+        Catch ex As Exception
+            MsgBox("No se puede conectar a " & constr & Chr(13) & "Detalles:" & ex.Data.ToString)
 			schemaTable = Nothing
 		End Try
 		olecon.Close()
 		Return schemaTable
 	End Function
-	Function readDB(OleDBProcedure As OleDb.OleDbCommand, constr As String,
-				  Optional sqlSelect As String = "", Optional sqlFrom As String = "",
-				  Optional sqlWhere As String = "", Optional sqlGroupBy As String = "",
-				  Optional sqlHaving As String = "", Optional sqlOrderBy As String = "",
-				  Optional ReturnError As Boolean = False) As DataTable
+    Function ReadDB(OleDBProcedure As OleDb.OleDbCommand, constr As String,
+                    Optional TextQuery As String() = Nothing) As DataTable
 
-		Dim dtab As New DataTable
-		Dim errorMsg As String = ""
+        Dim dtab As New DataTable
+        Dim errorMsg As String = ""
 
-		'Crear adaptador de datos
-		Dim dada As New OleDb.OleDbDataAdapter
+        'Crear adaptador de datos
+        Dim dada As New OleDb.OleDbDataAdapter
 
-		If OleDBProcedure Is Nothing = False Then
-			If OleDBProcedure.CommandType <> CommandType.Text Then
-				OleDBProcedure.CommandType = CommandType.StoredProcedure
-			End If
-		ElseIf sqlSelect <> "" Then
-			OleDBProcedure = New OleDb.OleDbCommand
-			OleDBProcedure.CommandType = CommandType.Text
-			OleDBProcedure.CommandText = sqlSelect
-			'Additional query options
-			If sqlFrom <> "" And sqlFrom.Contains("FROM") Then
-				OleDBProcedure.CommandText &= " " & sqlFrom
-				If sqlWhere <> "" And sqlWhere.Contains("WHERE") Then
-					OleDBProcedure.CommandText &= " " & sqlWhere
-				End If
-				If sqlGroupBy <> "" And sqlGroupBy.Contains("GROUP BY") Then
-					OleDBProcedure.CommandText &= " " & sqlGroupBy
-					If sqlHaving <> "" And sqlHaving.Contains("HAVING") Then
-						OleDBProcedure.CommandText &= " " & sqlHaving
-					End If
-				End If
-				If sqlOrderBy <> "" And sqlOrderBy.Contains("ORDER BY") Then
-					OleDBProcedure.CommandText &= " " & sqlOrderBy
-				End If
-			End If
-			'Close the query properly
-			If Right(OleDBProcedure.CommandText, 1) <> ";" Then
-				OleDBProcedure.CommandText &= ";"
-			End If
-		End If
+        If OleDBProcedure Is Nothing = False Then
+            If OleDBProcedure.CommandType <> CommandType.Text Then
+                OleDBProcedure.CommandType = CommandType.StoredProcedure
+            End If
+        ElseIf TextQuery Is Nothing = False Then
+            OleDBProcedure = New OleDb.OleDbCommand
+            With OleDBProcedure
+                .CommandType = CommandType.Text
+                'TextQuery usage:
+                '0: Select |1: From |2: Where |3: Group By |4: Having |5: Order by
+                For Each sql As String In TextQuery
+                    If sql Is Nothing = False Then
+                        If sql <> "" Then
+                            If sql.Contains("SELECT") Or sql.Contains("FROM") _
+                            Or sql.Contains("WHERE") Or sql.Contains("GROUP BY") _
+                            Or sql.Contains("HAVING") Or sql.Contains("ORDER BY") Then
+                                .CommandText &= " " & sql
+                            End If
+                        End If
+                    End If
+                Next
+                'Close the query properly
+                If Right(.CommandText, 1) <> ";" Then
+                    .CommandText &= ";"
+                End If
+            End With
+        End If
 
-		dada.SelectCommand = OleDBProcedure
+        dada.SelectCommand = OleDBProcedure
 
-		If dada.SelectCommand Is Nothing = False Then
+        If dada.SelectCommand Is Nothing = False Then
             'Si la conexión estaba abierta, cerrarla y mostrar mensaje
             If olecon.State = ConnectionState.Open Then
-				olecon.Close()
-				MsgBox("Se cerrará la conexión actual." & Chr(13) & Chr(13) & "Detalles: " & last_sql)
-			End If
+                olecon.Close()
+                MsgBox("Se cerrará la conexión actual." & Chr(13) & Chr(13) & "Detalles: " & last_sql)
+            End If
 
-			olecon.ConnectionString = constr
-			OleDBProcedure.Connection = olecon
+            olecon.ConnectionString = constr
+            OleDBProcedure.Connection = olecon
             'Abrir conexion
             Try
-				olecon.Open()
-			Catch ex As OleDb.OleDbException
-				Try
-					olecon.ConnectionString = My.Settings.CurrentDB
-					olecon.Open()
-				Catch ex2 As Exception
-					errorMsg = "La ruta de acceso a la base de datos es incorrecta."
-				End Try
-			End Try
+                olecon.Open()
+            Catch ex As OleDb.OleDbException
+                Try
+                    olecon.ConnectionString = My.Settings.CurrentDB
+                    olecon.Open()
+                Catch ex2 As Exception
+                    errorMsg = "La ruta de acceso a la base de datos es incorrecta."
+                End Try
+            End Try
             'Comandos
             Try
-				dada.Fill(dtab)
+                dada.Fill(dtab)
 
-			Catch ex As OleDb.OleDbException
-				If ex.Message.ToString.Contains("Decimal") Then
-					errorMsg = "Datos inválidos en un campo de la tabla."
-				Else
-					errorMsg = "No se encuentra la tabla indicada."
-				End If
-				errorMsg += Chr(13) & "Detalles:" & ex.Message.ToString
+            Catch ex As OleDb.OleDbException
+                If ex.Message.ToString.Contains("Decimal") Then
+                    errorMsg = "Datos inválidos en un campo de la tabla."
+                Else
+                    errorMsg = "No se encuentra la tabla indicada."
+                End If
+                errorMsg += Chr(13) & "Detalles:" & ex.Message.ToString
 
-			Catch ex As System.InvalidOperationException
-				errorMsg = "Uno de los campos de la consulta contiene datos inválidos." & Chr(13) & "Detalles:" & ex.Message.ToString
-			Finally
-				olecon.Close()
-				dada.Dispose()
-			End Try
+            Catch ex As System.InvalidOperationException
+                errorMsg = "Uno de los campos de la consulta contiene datos inválidos." & Chr(13) & "Detalles:" & ex.Message.ToString
+            Finally
+                olecon.Close()
+                dada.Dispose()
+            End Try
 
-			last_sql = OleDBProcedure.CommandText
-			last_connection = constr
+            last_sql = OleDBProcedure.CommandText
+            last_connection = constr
 
-		Else
-			errorMsg = "Datos insuficientes para realizar la consulta."
-		End If
+        Else
+            errorMsg = "Datos insuficientes para realizar la consulta."
+        End If
 
         If errorMsg <> "" Then
             Dim sql As String
@@ -162,9 +156,9 @@
         End If
         Return dtab
 
-	End Function
+    End Function
 
-	Function GenerateReportDataset(OleDBProcedure As OleDb.OleDbCommand) As DataSet
+    Function GenerateReportDataset(OleDBProcedure As OleDb.OleDbCommand) As DataSet
 		Dim ds As New DataSet
 		ds.Tables.Add(DbMan.readDB(OleDBProcedure, My.Settings.CurrentDB))
 		Return ds

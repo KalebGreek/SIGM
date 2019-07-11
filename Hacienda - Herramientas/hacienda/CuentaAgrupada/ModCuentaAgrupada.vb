@@ -61,26 +61,22 @@ Public Class ModCuentaAgrupada
 		progreso.Value = 5
 		Dim consulta As New DataTable
         '### Crear consulta sin filtros
-        Dim sql As String = "SELECT " & ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon,"
+        Dim sql(5) As String
+        sql(0) = "SELECT " & ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon,"
 
-		If deuda_total Then
-			sql += " SUM(" & col_importe & ") as deuda"
-		Else  'Deuda detallada (Normal)
-            sql += col_importe & " as original, " & col_pagado & " as pagado, " & col_vence & " as vencimiento, " & col_periodo & " as periodo "
-		End If
-		sql += " FROM " & ext_cuenta & " INNER JOIN " & ext_persona & " ON " & ext_cuenta & ".codigo = " & ext_persona & ".codigo"
-        'Con interés de 1% diario
-        'sel_sql += ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon, " & importe & " as original, " & _
-        '           "ROUND((" & importe & " + (" & importe & " * ((DATE() - " & vence & ") * 0.01))), 2) as deuda, " & _
-        '         vence & " as vencimiento, " & periodo & " as periodo FROM " & ext_cuenta & _
-        '        " INNER JOIN " & ext_persona & " ON " & ext_cuenta & ".codigo = " & ext_persona & ".codigo"
+        If deuda_total Then
+            sql(0) += " SUM(" & col_importe & ") as deuda"
+        Else  'Deuda detallada (Normal)
+            sql(0) += col_importe & " as original, " & col_pagado & " as pagado, " & col_vence & " as vencimiento, " & col_periodo & " as periodo "
+        End If
+        sql(1) += " FROM " & ext_cuenta & " INNER JOIN " & ext_persona & " 
+                      ON " & ext_cuenta & ".codigo = " & ext_persona & ".codigo"
 
         '### Hay otros filtros activos?
-
         If cuenta_agrupada Then
-			sql += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
-		End If
-		consulta = DbMan.readDB(Nothing, My.Settings.foxConnection, sql)
+            sql(2) += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
+        End If
+        consulta = DbMan.readDB(Nothing, My.Settings.foxConnection, sql)
 		progreso.Value = 20
 		Return consulta
 	End Function

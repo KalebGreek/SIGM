@@ -7,9 +7,10 @@ Public Class CalculoAnualImpuesto
 
     'Rutinas
     Public Function validar() As Boolean
-
-		Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT MAX(codigo) as codigo FROM " & impuesto.Text)
-		If dtab.Rows.Count > 0 Then
+        Dim sql(0) As String
+        sql(0) = "SELECT MAX(codigo) as codigo FROM " & impuesto.Text
+        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        If dtab.Rows.Count > 0 Then
 			If CuentaInicial.Value > dtab(0)("codigo") Then
 				MsgBox("No se encuentra la cuenta inicial.", MsgBoxStyle.OkOnly, Nothing)
 			Else
@@ -34,19 +35,27 @@ Public Class CalculoAnualImpuesto
 	Public Sub agua()
 		Dim dtab_cuenta, dtab_zona, dtab_vence, dtab_deuda As DataTable
 		Dim reside, comercio, industria, importe, franqueo As New Decimal
-		Dim cuota, cuota_max As New Integer
-		cuentas_modificadas = 0
-		cuotas_agregadas = 0
-		'Zonas
-		dtab_zona = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM aguzona")
-		'Vencimientos
-		dtab_vence = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM aguvence 
-										 WHERE periodo=" & Val(periodo.Value))
-		'Cuentas
-		dtab_cuenta = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT codigo, potable, comercial, industrial FROM aguas
-								   WHERE codigo=>" & CuentaInicial.Value & " ORDER BY codigo")
+        Dim cuota, cuota_max As New Integer
+        Dim sql(0) As String
 
-		dtab_deuda = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM agucue")
+        cuentas_modificadas = 0
+        cuotas_agregadas = 0
+        'Zonas
+        sql(0) = "SELECT * FROM aguzona"
+        dtab_zona = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+
+        'Vencimientos
+        sql(0) = "SELECT * FROM aguvence 
+										 WHERE periodo=" & Val(periodo.Value)
+        dtab_vence = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+
+        'Cuentas
+        sql(0) = "SELECT codigo, potable, comercial, industrial FROM aguas
+								   WHERE codigo=>" & CuentaInicial.Value & " ORDER BY codigo"
+        dtab_cuenta = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+
+        sql(0) = "SELECT * FROM agucue"
+        dtab_deuda = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
         'Iniciar busqueda y reemplazo
         progreso.Maximum = dtab_cuenta.Rows.Count - 1
@@ -103,23 +112,26 @@ Public Class CalculoAnualImpuesto
 
 	End Sub
 	Public Sub auto()
-		Dim dtab_cuenta, dtab_vence, dtab_deuda As DataTable
-		cuentas_modificadas = 0
+        Dim dtab_cuenta, dtab_vence, dtab_deuda As DataTable
+        Dim sql(0) As String
+
+        cuentas_modificadas = 0
 		cuotas_agregadas = 0
-		'Vencimientos
-		dtab_vence = DbMan.readDB(Nothing, My.Settings.foxConnection,
-								"SELECT * FROM autovence
-								 WHERE periodo=" & periodo.Value)
+        'Vencimientos
+        sql(0) = "SELECT * FROM autovence
+								 WHERE periodo=" & periodo.Value
+        dtab_vence = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-		'Cuentas
-		dtab_cuenta = DbMan.readDB(Nothing, My.Settings.foxConnection,
-								"SELECT codigo, razon, marca, modelo, apagar FROM automovil
+        'Cuentas
+        sql(0) = "SELECT codigo, razon, marca, modelo, apagar FROM automovil
 								 WHERE apagar>0 AND baja={} 
-								 AND codigo=>" & CuentaInicial.Value & " ORDER BY codigo")
+								 AND codigo=>" & CuentaInicial.Value & " ORDER BY codigo"
+        dtab_cuenta = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-		dtab_deuda = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM autocue")
+        sql(0) = "SELECT * FROM autocue"
+        dtab_deuda = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-		progreso.Maximum = dtab_cuenta.Rows.Count - 1
+        progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
 
 		For fila As Integer = 0 To progreso.Maximum
@@ -149,17 +161,19 @@ Public Class CalculoAnualImpuesto
 		Dim dtab_cuenta, dtab_vence, dtab_deuda As DataTable
 		Dim basica, minimo, baldio, pasillo, agrario, comercio, jubilado,
 			vereda, parque, taecat, franqueo, importe, subtotal As New Decimal
-		Dim cuota, cuota_max As Integer
-		cuentas_modificadas = 0
+        Dim cuota, cuota_max As Integer
+        Dim sql(5) As String
+
+        cuentas_modificadas = 0
 		cuotas_agregadas = 0
 
-		'Vencimientos
-		dtab_vence = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM catvence
-								  WHERE periodo=" & periodo.Value)
+        'Vencimientos
+        sql(0) = "SELECT * FROM catvence
+								  WHERE periodo=" & periodo.Value
+        dtab_vence = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-		'Cuentas
-		dtab_cuenta = DbMan.readDB(Nothing, My.Settings.foxConnection,
-								 "SELECT catastro.codigo As codigo, catastro.jubilado As jubilado, 
+        'Cuentas
+        sql(0) = "SELECT catastro.codigo As codigo, catastro.jubilado As jubilado, 
 										 catastro.baldio As baldio, catastro.pasillo As pasillo,
 										 catastro.agrario As agrario, catastro.comercial as comercial,
 										 catastro.vereda as vereda, catastro.parque as parque,
@@ -174,13 +188,16 @@ Public Class CalculoAnualImpuesto
 										 catzona.agrario1 As desc_agrario1, catzona.agrario2 As desc_agrario2,
 										 catzona.comercio1 as rec_comercio1, catzona.comercio2 as rec_comercio2,
 										 catzona.comercio3 as rec_comercio3, catzona.comercio4 as rec_comercio4,
-										 catzona.vereda as desc_vereda, catzona.parque as desc_parque
-									FROM catastro JOIN catzona On catastro.zona1=catzona.zona
-								   WHERE catastro.codigo=>" & CuentaInicial.Value & " ORDER BY catastro.codigo")
+										 catzona.vereda as desc_vereda, catzona.parque as desc_parque"
+         sql(1) ="FROM catastro JOIN catzona On catastro.zona1=catzona.zona"
+         sql(2) = "WHERE catastro.codigo=>" & CuentaInicial.Value & " ORDER BY catastro.codigo"
 
-		dtab_deuda = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM catcue")
+        dtab_cuenta = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-		progreso.Maximum = dtab_cuenta.Rows.Count - 1
+        sql(0) = "SELECT * FROM catcue"
+        dtab_deuda = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+
+        progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
 		For Each dr As DataRow In dtab_cuenta.Rows
 			Dim cuota_mod As New Integer
@@ -328,22 +345,27 @@ Public Class CalculoAnualImpuesto
 	Public Sub comercio()
 		Dim dtab_cuenta, dtab_vence, dtab_deuda As DataTable
 		Dim minimo, taecom, importe, franqueo As New Decimal
-		Dim cuota, cuota_max As Integer
-		cuentas_modificadas = 0
+        Dim cuota, cuota_max As Integer
+        Dim sql(5) As String
+
+        cuentas_modificadas = 0
 		cuotas_agregadas = 0
-		'Vencimientos
-		dtab_vence = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM comvence WHERE periodo=" & periodo.Value)
+        'Vencimientos
+        sql(0) = "SELECT * FROM comvence WHERE periodo=" & periodo.Value
+        dtab_vence = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-		'Cuentas
+        'Cuentas
+        sql(0) = "SELECT comercio.codigo as codigo, comercio.actividad as actividad, detalle, 
+		    			 minimo, formapago, cantidad"
+        sql(1) = "FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
+        sql(2) ="WHERE comercio.baja = {} And minimo>0 And codigo=>" & CuentaInicial.Value
 
-		dtab_cuenta = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT comercio.codigo as codigo, comercio.actividad as actividad, detalle, 
-										 minimo, formapago, cantidad
-									FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad
-								   WHERE comercio.baja = {} And minimo>0 And codigo=>" & CuentaInicial.Value)
+        dtab_cuenta = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-		dtab_deuda = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM comcue")
+        sql(0) = "SELECT * FROM comcue"
+        dtab_deuda = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-		progreso.Maximum = dtab_cuenta.Rows.Count - 1
+        progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
 		For fila As Integer = 1 To progreso.Maximum
 			Dim cuota_mod As New Integer
@@ -412,26 +434,28 @@ Public Class CalculoAnualImpuesto
 		Next
 	End Sub
 	Public Sub sepelio()
-		Dim dtab_cuenta, dtab_deuda As DataTable
-		'Vencimientos
-		Dim vence As New Date(periodo.Value, 1, 1)
+        Dim dtab_cuenta, dtab_deuda As DataTable
+        Dim sql(5) As String
+        'Vencimientos
+        Dim vence As New Date(periodo.Value, 1, 1)
 		cuentas_modificadas = 0
 		cuotas_agregadas = 0
 		Do While vence.DayOfWeek <> DayOfWeek.Monday
 			vence = vence.AddDays(1)
 		Loop
         'Cuentas
-        dtab_cuenta = DbMan.readDB(Nothing, My.Settings.foxConnection,
-								 "SELECT sepelio.codigo as codigo, sepelio.fila as fila, sepelio.jubilado as jubilado, sepevar.minimo as minimo,
-										 sepevar.jubilado as desc_jubilado, sepevar.fila1 as fila1, sepevar.fila2 as fila2, sepevar.fila3 as fila3,
-										 sepevar.fila4 as fila4, sepevar.fila5 as fila5, sepelio.ubicacion as ubicacion, sepelio.tipo as tipo
-									FROM sepelio JOIN sepevar ON sepelio.tipo=sepevar.orden
-								   WHERE sepelio.tipo > 0 AND sepelio.codigo =>" & CuentaInicial.Value & "
-								ORDER BY sepelio.codigo")
+        sql(0) = "SELECT sepelio.codigo as codigo, sepelio.fila as fila, sepelio.jubilado as jubilado, sepevar.minimo as minimo,
+						 sepevar.jubilado as desc_jubilado, sepevar.fila1 as fila1, sepevar.fila2 as fila2, sepevar.fila3 as fila3,
+		    			 sepevar.fila4 as fila4, sepevar.fila5 as fila5, sepelio.ubicacion as ubicacion, sepelio.tipo as tipo"
+        sql(1) = "FROM sepelio JOIN sepevar ON sepelio.tipo=sepevar.orden"
+        sql(2) = "WHERE sepelio.tipo > 0 AND sepelio.codigo =>" & CuentaInicial.Value 
+        sql(3) = "ORDER BY sepelio.codigo"
+        dtab_cuenta = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-		dtab_deuda = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM sepecue")
+        sql(0) = "SELECT * FROM sepecue"
+        dtab_deuda = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-		progreso.Maximum = dtab_cuenta.Rows.Count - 1
+        progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
 		Dim jubilado, importe As Decimal
 		For fila As Integer = 0 To progreso.Maximum
@@ -480,12 +504,14 @@ Public Class CalculoAnualImpuesto
 
     'Eventos
     Private Sub CalculoAnualImpuesto_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-		periodo.Maximum = Today.Year + 5
-		periodo.Minimum = 1990
+        Dim sql(0) As String
+        periodo.Maximum = Today.Year + 5
+        periodo.Minimum = 1990
 		periodo.Value = Today.Year
 
-		dtab_var = DbMan.readDB(Nothing, My.Settings.foxConnection, "SELECT * FROM numeros")
-	End Sub
+        sql(0) = "SELECT * FROM numeros"
+        dtab_var = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+    End Sub
 
 	Private Sub impuesto_SelectedIndexChanged(sender As Object, e As EventArgs) Handles impuesto.SelectedIndexChanged
 		tae.Text = 0

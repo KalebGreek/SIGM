@@ -1,9 +1,11 @@
 ﻿Public Class Hacienda
-	Shared Sub FillSeccion(ByRef bs As BindingSource, ByRef target As ComboBox)
-		bs.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT * FROM seccion ORDER BY descripcion")
-		CtrlMan.Fill.SetAutoComplete(target, bs, "descripcion", "id")
-	End Sub
-	Shared Sub FillCuentasHacienda(ByRef bs As BindingSource, ByRef target As ComboBox,
+    Shared Sub FillSeccion(ByRef bs As BindingSource, ByRef target As ComboBox)
+        Dim sql(0) As String
+        sql(0) = "SELECT * FROM seccion ORDER BY descripcion"
+        bs.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        CtrlMan.Fill.SetAutoComplete(target, bs, "descripcion", "id")
+    End Sub
+    Shared Sub FillCuentasHacienda(ByRef bs As BindingSource, ByRef target As ComboBox,
 								   ByVal Optional sumado As Integer = 0,
 								   ByVal Optional pertenece As String = "0",
 								   ByVal Optional anexo As String = "0",
@@ -14,43 +16,42 @@
 								   ByVal Optional partida As String = "00",
 								   ByVal Optional subpartida As String = "00")
 
-		Dim sqlSelect As String = "SELECT * "
-		Dim sqlFrom As String = " FROM HACIENDA"
+        Dim sql(5) As String
+        sql(0) = "SELECT * "
+        sql(1) = " FROM HACIENDA"
 
-		Dim sqlWhere As String = ""
+        If sumado > 0 Then
+            sql(2) += " WHERE sumado=" & sumado
+        End If
 
-		If sumado > 0 Then
-			sqlWhere += " WHERE sumado=" & sumado
-		End If
-
-		If pertenece <> "0" Then
-			If sqlWhere.Contains("WHERE") Then
-				sqlWhere += " AND pertenece='" & pertenece & "'"
-			Else
-				sqlWhere += " WHERE pertenece='" & pertenece & "'"
-			End If
+        If pertenece <> "0" Then
+            If sql(2).Contains("WHERE") Then
+                sql(2) += " AND pertenece='" & pertenece & "'"
+            Else
+                sql(2) += " WHERE pertenece='" & pertenece & "'"
+            End If
 
 			If anexo <> "0" Then
-				sqlWhere += " AND anexo='" & anexo & "'"
+                sql(2) += " AND anexo='" & anexo & "'"
 
-				If inciso <> "0" Then
-					sqlWhere += " AND inciso='" & inciso & "'"
+                If inciso <> "0" Then
+                    sql(2) += " AND inciso='" & inciso & "'"
 
-					If item <> "0" Then
-						sqlWhere += " AND item='" & item & "'"
+                    If item <> "0" Then
+                        sql(2) += " AND item='" & item & "'"
 
-						If rubro <> "00" Then
-							sqlWhere += " AND rubro='" & rubro & "'"
+                        If rubro <> "00" Then
+                            sql(2) += " AND rubro='" & rubro & "'"
 
-							If subrubro <> "00" Then
-								sqlWhere += " AND subrubro='" & subrubro & "'"
+                            If subrubro <> "00" Then
+                                sql(2) += " AND subrubro='" & subrubro & "'"
 
-								If partida <> "00" Then
-									sqlWhere += " AND partida='" & partida & "'"
+                                If partida <> "00" Then
+                                    sql(2) += " AND partida='" & partida & "'"
 
-									If subpartida <> "00" Then
-										sqlWhere += " AND subpartida='" & subpartida & "'"
-									End If
+                                    If subpartida <> "00" Then
+                                        sql(2) += " AND subpartida='" & subpartida & "'"
+                                    End If
 								End If
 							End If
 						End If
@@ -59,12 +60,12 @@
 			End If
 		End If
 
-		Dim SqlOrder As String = " ORDER BY orden"
+        sql(3) = " ORDER BY orden"
 
-		bs.DataSource = DbMan.readDB(Nothing, My.Settings.foxConnection, sqlSelect, sqlFrom, sqlWhere, , , SqlOrder)
+        bs.DataSource = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
 
-		CtrlMan.Fill.SetAutoComplete(target, bs, "nombre", "orden")
+        CtrlMan.Fill.SetAutoComplete(target, bs, "nombre", "orden")
 	End Sub
 	Shared Function ConsolidarCuentas(fecha As Date) As Boolean
 

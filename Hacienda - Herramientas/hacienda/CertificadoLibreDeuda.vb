@@ -5,50 +5,45 @@
 
 	'Routines
 	Public Function ConsultarCuenta(tipo As String, cuenta As Integer) As DataTable
-		sqlSelect = ""
-		sqlFrom = ""
-		sqlWhere = ""
-		sqlGroupBy = ""
-		sqlHaving = ""
-		sqlOrderBy = ""
+        Dim sql(5) As String
 
-		If tipo.Contains("AGUA") Then
-			sqlSelect = "SELECT razon, calle, barrio, localidad, provincia, postal,
+        If tipo.Contains("AGUA") Then
+            sql(0) = "SELECT razon, calle, barrio, localidad, provincia, postal,
 						 codigo, alta, catastro, ubicacion, reparto,
 						 potable, comercial"
-			sqlFrom = "FROM aguas"
-			sqlWhere = "WHERE codigo=" & cuenta
+            sql(1) = "FROM aguas"
+            sql(2) = "WHERE codigo=" & cuenta
 
-		ElseIf tipo.Contains("AUTO") Then
-			sqlSelect = "SELECT razon, calle, barrio, localidad, provincia, postal,
+        ElseIf tipo.Contains("AUTO") Then
+            sql(0) = "SELECT razon, calle, barrio, localidad, provincia, postal,
 						 codigo, incorpora, baja, modelo, peso, marca, motor, chassis,
 						 tipauto.describo as describo, anterior, letrahoy, numerohoy"
-			sqlFrom = "FROM automovil INNER JOIN tipauto ON automovil.tipo=tipauto.tipo"
-			sqlWhere = "WHERE codigo=" & cuenta
+            sql(1) = "FROM automovil INNER JOIN tipauto ON automovil.tipo=tipauto.tipo"
+            sql(2) = "WHERE codigo=" & cuenta
 
-		ElseIf tipo.Contains("CATA") Then
-			sqlSelect = "SELECT razon, docume, calle, barrio, localidad, provincia, postal,
+        ElseIf tipo.Contains("CATA") Then
+            sql(0) = "SELECT razon, docume, calle, barrio, localidad, provincia, postal,
 						codigo, alta, catastro, ubicacion, frente1, frente2, frente3, frente4,
 						jubilado, baldio"
-			sqlFrom = "FROM catastro"
-			sqlWhere = "WHERE codigo=" & cuenta
+            sql(1) = "FROM catastro"
+            sql(2) = "WHERE codigo=" & cuenta
 
-		ElseIf tipo.Contains("CEME") Then
-			sqlSelect = "SELECT razon, calle, barrio, localidad, provincia, postal,
+        ElseIf tipo.Contains("CEME") Then
+            sql(0) = "SELECT razon, calle, barrio, localidad, provincia, postal,
 						sepevar.tipo as tipo, codigo, alta, ubicacion, numero, fila, sector, lugares,
 						espacio, difunto1, difunto2, difunto3, difunto4, difunto5,
 						difunto6, difunto7, difunto8, difunto9, difunto10, sepelio.jubilado as jubilado"
-			sqlFrom = "FROM sepelio INNER JOIN sepevar ON sepelio.tipo=sepevar.orden"
-			sqlWhere = "WHERE codigo=" & cuenta
+            sql(1) = "FROM sepelio INNER JOIN sepevar ON sepelio.tipo=sepevar.orden"
+            sql(2) = "WHERE codigo=" & cuenta
 
-		ElseIf tipo.Contains("COME") Then
-			sqlSelect = "SELECT razon, domicilio, localidad, codigo, comact.detalle as detalle, docume,
+        ElseIf tipo.Contains("COME") Then
+            sql(0) = "SELECT razon, domicilio, localidad, codigo, comact.detalle as detalle, docume,
 						brutos, inscripto, baja, acta"
-			sqlFrom = "FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
-			sqlWhere = "WHERE codigo=" & cuenta
-		End If
-		Return DbMan.readDB(Nothing, My.Settings.foxConnection, sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
-	End Function
+            sql(1) = "FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
+            sql(2) = "WHERE codigo=" & cuenta
+        End If
+        Return DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+    End Function
 
 	'Events
 	Private Sub CertificadoLibreDeuda_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged

@@ -96,14 +96,16 @@
 	End Function
 
 	Function buscar(Optional persona_id As Integer = 0, Optional libro As Integer = 0, Optional acta As Integer = 0) As DataTable
-		Dim sql As String = "SELECT actas.id, per_id, cuil, fecha, acta, libro, copia, nota
-                             FROM actas INNER JOIN persona ON persona.id=actas.per_id WHERE"
+        Dim sql(2) As String
+        sql(0) = "SELECT actas.id, per_id, cuil, fecha, acta, libro, copia, nota"
+        sql(1) = "FROM actas INNER JOIN persona ON persona.id=actas.per_id"
+        sql(2) = "WHERE"
 
-		If persona_id > 0 Then
-			sql += " per_id=" & persona_id
-		Else
-			sql += " libro = " & libro & " AND acta = " & acta
-		End If
+        If persona_id > 0 Then
+            sql(2) += " per_id=" & persona_id
+        Else
+            sql(2) += " libro = " & libro & " And acta = " & acta
+        End If
 
 		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 	End Function

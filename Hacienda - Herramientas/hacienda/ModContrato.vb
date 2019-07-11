@@ -45,13 +45,15 @@
     Private Function ValidarCodigo(ordenanza_id As Integer, codigo As Integer) As Boolean
         Dim valido As Boolean = True
         Dim msg As String = ""
-        Dim sql As String = "SELECT id, codigo FROM ordenanza"
+        Dim sql(5) As String
+        sql(0) = "SELECT id, codigo"
+        sql(1) = " FROM ordenanza"
 
         If codigo >= 11899 Or ordenanza_id > 0 Then
             If ordenanza_id > 0 Then
-                sql += " WHERE id=" & ordenanza_id
+                sql(2) += " WHERE id=" & ordenanza_id
             Else
-                sql += " WHERE codigo=" & codigo
+                sql(2) += " WHERE codigo=" & codigo
             End If
 			Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 			If dtab Is Nothing = False Then

@@ -38,9 +38,9 @@
 		End If
 	End Sub
 
-	Private Sub browse_Click(sender As Object, e As EventArgs) Handles browse.Click
-		If path.Text <> "" Then
-			Process.Start(path.Text)
-		End If
-	End Sub
+    Private Sub Browse_Click(sender As Object, e As EventArgs) Handles browse.Click
+        If path.Text <> "" Then
+            Process.Start(path.Text)
+        End If
+    End Sub
 End Class

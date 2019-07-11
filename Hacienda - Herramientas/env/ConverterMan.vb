@@ -50,9 +50,12 @@
 		'Spanish
 		Dim strout As String = ""
 		Dim mill, thou, hundr, dec As Integer
-		Dim dict As New BindingSource
-		dict.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB, "SELECT num, str FROM numtostr_dict")
-		n = n.ToString("d2")
+        Dim dict As New BindingSource
+        Dim sql(5) As String
+
+        sql(0) = "SELECT num, str FROM numtostr_dict"
+        dict.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, )
+        n = n.ToString("d2")
 
 		mill = Val(n) \ Math.Pow(10, 6)
 		If mill > 0 Then

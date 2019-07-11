@@ -32,117 +32,121 @@
 
 	'##### SEARCH
 	Shared Function BuscarPorTitular(Optional razon As String = "", Optional cuil As Double = 0) As DataTable
-		sqlSelect = CatastroSelect
-		sqlFrom = CatastroFrom
-		sqlWhere = CatastroWhere
-		sqlGroupBy = ""
-		sqlHaving = ""
-		sqlOrderBy = ""
+        Dim sql(3) As String
+        sql(0) = CatastroSelect
+        sql(1) = CatastroFrom
+        sql(2) = CatastroWhere
 
-		If Len(cuil) = 11 Then
-			sqlWhere += " And persona.cuil='" & cuil & "'"
-			sqlOrderBy = " ORDER BY catastro.id ASC"
-		ElseIf razon <> "" And Len(razon) > 2 Then
-			sqlWhere += " AND persona.razon LIKE '%" & razon & "%'"
-			sqlOrderBy = " ORDER BY persona.razon"
-		Else
-			sqlOrderBy = " ORDER BY catastro.id ASC"
-		End If
+        If Len(cuil) = 11 Then
+            sql(2) += " And persona.cuil='" & cuil & "'"
+            sql(3) = " ORDER BY catastro.id ASC"
+        ElseIf razon <> "" And Len(razon) > 2 Then
+            sql(2) += " AND persona.razon LIKE '%" & razon & "%'"
+            sql(3) = " ORDER BY persona.razon"
+        Else
+            sql(3) = " ORDER BY catastro.id ASC"
+        End If
 
-		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
-	End Function
+        Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
+    End Function
 	Shared Function BuscarPorPartida(Optional zona As Integer = 0, Optional circ As Integer = 0, Optional secc As Integer = 0,
 									 Optional manz As Integer = 0, Optional parc As Integer = 0, Optional lote As Integer = 0) As DataTable
 
-		sqlSelect = CatastroSelect
-		sqlFrom = CatastroFrom
-		sqlWhere = CatastroWhere
-		sqlGroupBy = ""
-		sqlHaving = ""
-		sqlOrderBy = ""
+        Dim sql(3) As String
+        sql(0) = CatastroSelect
+        sql(1) = CatastroFrom
+        sql(2) = CatastroWhere
 
-
-		If zona > 0 Then
-			sqlWhere += " AND catastro.zona=" & zona
-			If circ > 0 Then
-				sqlWhere += " AND catastro.circ=" & circ
-				If secc > 0 Then
-					sqlWhere += " AND catastro.secc=" & secc
-					If manz > 0 Then
-						sqlWhere += " AND catastro.manz=" & manz
-					End If
+        If zona > 0 Then
+            sql(2) += " AND catastro.zona=" & zona
+            If circ > 0 Then
+                sql(2) += " AND catastro.circ=" & circ
+                If secc > 0 Then
+                    sql(2) += " AND catastro.secc=" & secc
+                    If manz > 0 Then
+                        sql(2) += " AND catastro.manz=" & manz
+                    End If
 					If parc > 0 Then
-						sqlWhere += " AND catastro.parc=" & parc
-					End If
+                        sql(2) += " AND catastro.parc=" & parc
+                    End If
 					If lote > 0 Then
-						sqlWhere += " AND catastro.lote=" & lote
-					End If
+                        sql(2) += " AND catastro.lote=" & lote
+                    End If
 				End If
 			End If
 		End If
-		sqlOrderBy = " ORDER BY catastro.id ASC"
+        sql(3) = " ORDER BY catastro.id ASC"
 
-		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
-	End Function
-	Shared Function BuscarPorDireccion(Optional calle As String = "", Optional barrio As String = "") As DataTable
-		sqlSelect = CatastroSelect
-		sqlFrom = CatastroFrom
-		sqlWhere = CatastroWhere
-		sqlGroupBy = ""
-		sqlHaving = ""
-		sqlOrderBy = ""
+        Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
+    End Function
+    Shared Function BuscarPorDireccion(Optional calle As String = "", Optional barrio As String = "") As DataTable
 
-		If calle <> "" And Len(calle) > 2 Then
-			sqlWhere += " AND cat_frente.calle LIKE '%" & calle & "%'"
-			sqlOrderBy = " ORDER BY cat_frente.calle"
-		ElseIf barrio <> "" And Len(barrio) > 2 Then
-			sqlWhere += " AND catastro.barrio LIKE '%" & barrio & "%'"
-			sqlOrderBy = " ORDER BY catastro.barrio"
-		Else
-			sqlOrderBy = " ORDER BY catastro.id ASC"
-		End If
+        Dim sql(3) As String
+        sql(0) = CatastroSelect
+        sql(1) = CatastroFrom
+        sql(2) = CatastroWhere
 
-		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy)
-	End Function
+        If calle <> "" And Len(calle) > 2 Then
+            sql(2) += " AND cat_frente.calle LIKE '%" & calle & "%'"
+            sql(3) = " ORDER BY cat_frente.calle"
+        ElseIf barrio <> "" And Len(barrio) > 2 Then
+            sql(2) += " AND catastro.barrio LIKE '%" & barrio & "%'"
+            sql(3) = " ORDER BY catastro.barrio"
+        Else
+            sql(3) = " ORDER BY catastro.id ASC"
+        End If
+
+        Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
+    End Function
+
     '##### 'READ
     Shared Function ListarInmueblePorTitular(persona_id As Integer) As DataTable
-		sqlSelect = CatastroSelect
-		sqlFrom = CatastroFrom
-		sqlWhere = CatastroWhere
+        Dim sql(3) As String
+        sql(0) = CatastroSelect
+        sql(1) = CatastroFrom
+        sql(2) = CatastroWhere
 
-		If persona_id > 0 Then
-			sqlWhere += " AND persona.id=" & persona_id
-		End If
-		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sqlSelect, sqlFrom, sqlWhere)
-	End Function
+        If persona_id > 0 Then
+            sql(2) += " AND persona.id=" & persona_id
+        End If
+        Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
+    End Function
 	Shared Function ListarInmueblePorExpediente(expediente As Integer) As DataTable
-		sqlSelect = CatastroSelect
-		sqlFrom = CatastroFrom
-		sqlWhere = CatastroWhere
+        Dim sql(3) As String
+        sql(0) = CatastroSelect
+        sql(1) = CatastroFrom
+        sql(2) = CatastroWhere
 
-		If expediente > 0 Then
-			sqlWhere += " AND oprivadas.expediente=" & expediente
-		End If
-		Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sqlSelect, sqlFrom, sqlWhere)
-	End Function
+        If expediente > 0 Then
+            sql(2) += " AND oprivadas.expediente=" & expediente
+        End If
+        Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
+    End Function
 	Shared Function Seleccionar(cat_id As Integer) As DataTable
         If cat_id > 0 Then
-            Return DbMan.readDB(Nothing, My.Settings.CurrentDB, CatastroSelect, CatastroFrom, " WHERE catastro.id=" & cat_id)
+            Dim sql(3) As String
+            sql(0) = CatastroSelect
+            sql(1) = CatastroFrom
+            sql(2) = " WHERE catastro.id=" & cat_id
+
+            Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
         Else
             Return Nothing
 		End If
 	End Function
 	Shared Function SeleccionarPartida(zona As Integer, circ As Integer, secc As Integer,
 										  manz As Integer, parc As Integer, lote As Integer) As Integer
-
         Dim id As Integer = 0
+
+
         If zona > 0 And circ > 0 And secc > 0 And manz > 0 And parc > 0 Then
-            sqlSelect = "SELECT catastro.id as catastro_id"
-            sqlFrom = "FROM catastro"
-            sqlWhere = "WHERE catastro.zona=" & zona & " AND catastro.circ=" & circ & " AND catastro.secc=" & secc &
+            Dim sql(3) As String
+            sql(0) = "SELECT catastro.id as catastro_id"
+            sql(1) = "FROM catastro"
+            sql(2) = "WHERE catastro.zona=" & zona & " AND catastro.circ=" & circ & " AND catastro.secc=" & secc &
                        " AND catastro.manz=" & manz & " AND catastro.parc=" & parc & " AND catastro.lote=" & lote
 
-            Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, sqlSelect, sqlFrom, sqlWhere)
+            Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
             If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then
                     id = dtab(0)("catastro_id")
@@ -154,24 +158,25 @@
         Return id
     End Function
 	Shared Function ListarFrente(catastro_id As Integer, Optional ubicacion As Boolean = False) As Object
-		If ubicacion Then
-			sqlSelect = "SELECT calle, altura"
-			sqlFrom = "FROM cat_frente"
-			sqlWhere = " WHERE catastro_id=" & catastro_id & " AND ubicacion=True"
+        Dim sql(3) As String
+        If ubicacion Then
+            sql(0) = "SELECT calle, altura"
+            sql(1) = "FROM cat_frente"
+            sql(2) = " WHERE catastro_id=" & catastro_id & " AND ubicacion=True"
 
-			Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, sqlSelect, sqlFrom, sqlWhere)
-			If dtab Is Nothing Then
-				Return " S/N "
-			Else
-				Return dtab(0)("calle") & " " & dtab(0)("altura").ToString
-			End If
-		Else
-			sqlSelect = "SELECT id as frente_id, calle, altura, metros, ubicacion"
-			sqlFrom = "FROM cat_frente"
-			sqlWhere = "WHERE catastro_id=" & catastro_id
+            Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, Sql)
+            If dtab Is Nothing Then
+                Return " S/N "
+            Else
+                Return dtab(0)("calle") & " " & dtab(0)("altura").ToString
+            End If
+        Else
+            sql(0) = "SELECT id as frente_id, calle, altura, metros, ubicacion"
+            sql(1) = "FROM cat_frente"
+            sql(2) = "WHERE catastro_id=" & catastro_id
 
-			Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sqlSelect, sqlFrom, sqlWhere)
-		End If
+            Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
+        End If
 	End Function
 
 	'##### 'MOD
@@ -262,20 +267,21 @@
 	End Class
 	Public Class Eliminar
 		Shared Sub Inmueble(catastro_id As Integer, user_id As Integer)
-			If user_id > 0 Then 'Solo el usuario que bloqueo el inmueble puede eliminarlo
-				Dim dtab As DataTable = DbMan.readDB(Nothing,
-												   My.Settings.CurrentDB,
-												   "SELECT *", "FROM catastro",
-												   "WHERE id=" & catastro_id & " AND user_id=" & user_id)
-				If dtab.Rows.Count > 0 Then
-					DbMan.editDB(Nothing,
-							   My.Settings.CurrentDB,
-							   CatastroDelete & " WHERE catastro.id=" & catastro_id & " AND catastro.user_id=" & user_id)
-				Else
-					MsgBox("Registro bloqueado.")
-				End If
-			End If
-		End Sub
+            If user_id > 0 Then 'Solo el usuario que bloqueo el inmueble puede eliminarlo
+                Dim sql(3) As String
+                sql(0) = "SELECT *"
+                sql(1) = "FROM catastro"
+                sql(2) = "WHERE id=" & catastro_id & " AND user_id=" & user_id
+                Dim dtab As DataTable = DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
+                If dtab.Rows.Count > 0 Then
+                    DbMan.editDB(Nothing,
+                               My.Settings.CurrentDB,
+                               CatastroDelete & " WHERE catastro.id=" & catastro_id & " AND catastro.user_id=" & user_id)
+                Else
+                    MsgBox("Registro bloqueado.")
+                End If
+            End If
+        End Sub
 		Shared Sub Frente(bs_frente As BindingSource, catastro_id As Integer)
 			'Eliminar registro
 			DbMan.editDB(Nothing,

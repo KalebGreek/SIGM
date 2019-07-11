@@ -148,6 +148,8 @@
 
     Private Sub Cargar(registro As DataTable)
 
+        Dim sql(3) As String
+
         cuenta.Value = 0
         barrio.SelectedIndex = -1
 		uso.SelectedIndex = -1
@@ -162,20 +164,26 @@
 		End If
 
 
-		'frentes
-		CtrlMan.LoadDataGridView(consulta_frente, bs_frente, "", Catastro.ListarFrente(catastro_id.Text))
+        'frentes
+        CtrlMan.LoadDataGridView(consulta_frente, bs_frente, "", Catastro.ListarFrente(catastro_id.Text))
 
         'superficies
-        CtrlMan.LoadAllControls(DbMan.readDB(Nothing, My.Settings.CurrentDB,
-                                            "SELECT * FROM cat_superficie WHERE catastro_id=" & catastro_id.Text)(0), tab_sup)
+        sql(0) = "SELECT *"
+        sql(1) = "FROM cat_superficie"
+        sql(2) = "WHERE catastro_id=" & catastro_id.Text
+
+        CtrlMan.LoadAllControls(DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)(0), tab_sup)
 
         'caracteristicas
-        CtrlMan.LoadDataGridView(consulta_caract, bs_car, "",
-						DbMan.readDB(Nothing, My.Settings.CurrentDB,
-									"SELECT descripcion, activo FROM cat_servicio WHERE catastro_id=" & catastro_id.Text))
+        sql(0) = "SELECT descripcion, activo "
+        sql(1) = "FROM cat_servicio"
+        sql(2) = "WHERE catastro_id=" & catastro_id.Text
 
-		'copias
-		CtrlMan.LoadDataGridView(consulta_copia, bs_copia, "", Documento.Catastro.BuscarDoc(catastro_id.Text))
+        CtrlMan.LoadDataGridView(consulta_caract, bs_car, "",
+                                 DbMan.readDB(Nothing, My.Settings.CurrentDB, sql))
+
+        'copias
+        CtrlMan.LoadDataGridView(consulta_copia, bs_copia, "", Documento.Catastro.BuscarDoc(catastro_id.Text))
 
 	End Sub
 
