@@ -5,8 +5,8 @@
 		End If
 	End Sub
 
-	'###### FILTROS  ##########################################################################################
-	Private Sub Filtros_CheckedChanged(sender As Object, e As EventArgs) Handles FiltroCuenta.CheckedChanged,
+    '###### FILTROS  
+    Private Sub Filtros_CheckedChanged(sender As Object, e As EventArgs) Handles FiltroCuenta.CheckedChanged,
 																				  FiltroCategoria.CheckedChanged,
 																				  FiltroReceptor.CheckedChanged
 
@@ -44,8 +44,8 @@
 		End If
 	End Sub
 
-	'###### RECEPTORES ##########################################################################################
-	Private Sub FillReceptor()
+    '###### RECEPTORES 
+    Private Sub FillReceptor()
 		Dim dtab As New DataTable
 		If categoria.Enabled Or cuenta.Enabled Then
 			If categoria.Enabled And cuenta.Enabled Then

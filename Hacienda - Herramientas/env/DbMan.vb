@@ -5,8 +5,8 @@
     'Conexiones de base de datos
     Public olecon As New OleDb.OleDbConnection
 
-	'###### READ: Rutinas de lectura #####################################################################
-	Function KeywordToSQL(sql As String, field As String, keyword As String) As String
+    ' READ: Rutinas de lectura 
+    Function KeywordToSQL(sql As String, field As String, keyword As String) As String
 		'Rutina para validar datos de busqueda y armar instruccion WHERE basada en nombres comunes de columna
 		keyword = Trim(keyword)
 		If Len(keyword) > 1 Or Val(keyword) > 0 Then
@@ -40,7 +40,7 @@
 		Return sql
 	End Function 'Unused
 
-	Function readTableSchema(Optional constr As String = "") As DataTable
+    Function ReadTableSchema(Optional constr As String = "") As DataTable
         Dim schemaTable As New DataTable
         If constr = "" Then
             constr = My.Settings.CurrentDB
@@ -51,11 +51,11 @@
             schemaTable = olecon.GetOleDbSchemaTable(OleDb.OleDbSchemaGuid.Tables, Nothing)
         Catch ex As Exception
             MsgBox("No se puede conectar a " & constr & Chr(13) & "Detalles:" & ex.Data.ToString)
-			schemaTable = Nothing
-		End Try
-		olecon.Close()
-		Return schemaTable
-	End Function
+            schemaTable = Nothing
+        End Try
+        olecon.Close()
+        Return schemaTable
+    End Function
     Function ReadDB(OleDBProcedure As OleDb.OleDbCommand, constr As String,
                     Optional TextQuery As String() = Nothing) As DataTable
 
@@ -141,19 +141,18 @@
             errorMsg = "Datos insuficientes para realizar la consulta."
         End If
 
-        If errorMsg <> "" Then
-            Dim sql As String
-            If OleDBProcedure.CommandType = CommandType.Text Then
-                sql = "Consulta: "
-                sql += Replace(OleDBProcedure.CommandText, "'", "`")
-            Else
-                sql = "Procedimiento: "
-                sql += OleDBProcedure.CommandText
-            End If
-            editDB(Nothing, constr,
-                   "INSERT INTO sql_log(_date, _user_id, _sql, _con) VALUES('" & Date.Now & "', '" & My.Settings.UserId & "', '" & OleDBProcedure.CommandText & "','" & My.Settings.CurrentDB & "');")
-            dtab = Nothing
-        End If
+        'If errorMsg <> "" Then
+        '    Dim sql As String
+        '    If OleDBProcedure.CommandType = CommandType.Text Then
+        '        sql = "Consulta: "
+        '        sql += Replace(OleDBProcedure.CommandText, "'", "`")
+        '    Else
+        '        sql = "Procedimiento: "
+        '        sql += OleDBProcedure.CommandText
+        '    End If
+        '    editDB(Nothing, constr, "INSERT INTO sql_log(_date, _user_id, _sql, _con) VALUES('" & Date.Now & "', '" & My.Settings.UserId & "', '" & OleDBProcedure.CommandText & "','" & My.Settings.CurrentDB & "');")
+        '    dtab = Nothing
+        'End If
         Return dtab
 
     End Function
@@ -164,10 +163,10 @@
 		Return ds
 	End Function
 
-	'###### END READ ############################################################################################
+    ' END READ 
 
-	'###### SAVE: Rutinas para grabar registros #################################################################
-	Function editDB(OleDBProcedure As OleDb.OleDbCommand, Optional ByVal constr As String = Nothing,
+    ' SAVE: Rutinas para grabar registros 
+    Function editDB(OleDBProcedure As OleDb.OleDbCommand, Optional ByVal constr As String = Nothing,
 				  Optional sql As String = "") As String
 		Dim result As String = ""
 		'Para conectarse a la bd en modo de inserción
@@ -201,7 +200,7 @@
 		End If
 		Return result
 	End Function
-    '###### END SAVE ############################################################################################   
+    ' END SAVE    
 
 
 End Module

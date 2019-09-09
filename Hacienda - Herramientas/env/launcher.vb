@@ -3,9 +3,11 @@
         ' This call is required by the designer.
         InitializeComponent()
 
-		' Add any initialization after the InitializeComponent() call.
-	End Sub
-    '###### GUI #################################################################################################
+        ColorHacienda = l_hacienda.BackColor
+
+        ' Add any initialization after the InitializeComponent() call.
+    End Sub
+    ' GUI 
     Private Sub SeleccionForm(sender As Object, e As EventArgs) Handles l_hacienda.Click, l_gobierno.Click, l_catastro.Click, l_opublicas.Click, l_oprivadas.Click,
 																		l_comercio.Click, l_persona.Click, l_accionsocial.Click, l_formularios.Click, l_transito.Click, opcion.Click
 		If sender Is opcion Then
@@ -53,7 +55,7 @@
 	Private Sub salir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles salir.Click
         Me.Close()
     End Sub
-    '###### END GUI #############################################################################################
+    ' END GUI 
 
 
 

@@ -1,5 +1,5 @@
 ﻿Public Class FileMan
-    '####### CARPETAS
+    ' CARPETAS
     Public root As String = Environment.CurrentDirectory
 
 	Shared Function DateToFilename(DateTime As Date) As String

@@ -4,7 +4,7 @@
         fecha.MaxDate = Date.Today
         fecha.Value = Date.Today
     End Sub
-    '###### GUI ##########################################################################################
+    ' GUI 
     Private Sub guardarcambios_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles GuardarCambios.Click
         'Según si se modifica un CUIL de persona o un profesional, hay que actualizar campos de distintas tablas
         'No correr el update de cuil al pedo si no cambió nada (comparar nuevo y viejo)
@@ -31,7 +31,7 @@
         grupo_datos.Enabled = ValidarCodigo(Val(ordenanza_id.Text), Val(codigo.Text))
         grupo_codigo.Enabled = grupo_datos.Enabled.CompareTo(True)
     End Sub
-    '###### CARGAR ##########################################################################################
+    ' CARGAR 
     Private Sub ModOrdenanza_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
         With bs_registro
             If .DataSource Is Nothing = False Then
@@ -50,7 +50,7 @@
     Private Sub cargar_doc_Click(sender As Object, e As EventArgs) Handles cargar_doc.Click
         ruta_doc.Text = Documento.Gobierno.CopiaOrdenanza(Me, Val(codigo.Text))
     End Sub
-    '###### VALIDAR ##########################################################################################
+    ' VALIDAR 
     Private Function ValidarCodigo(ordenanza_id As Integer, codigo As Integer) As Boolean
         Dim valido As Boolean = True
         Dim msg As String = ""
@@ -104,7 +104,7 @@
 		Return True
 	End Function
 
-    '###### GUARDAR ##########################################################################################
+    ' GUARDAR 
     Private Sub guardar()
 		If Val(ordenanza_id.Text) > -1 Then 'Mod
             DbMan.editDB(Nothing, My.Settings.CurrentDB,

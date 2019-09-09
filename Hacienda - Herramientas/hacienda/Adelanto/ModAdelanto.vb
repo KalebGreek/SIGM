@@ -20,8 +20,8 @@
 		Next
 	End Sub
 
-	'###### GUI ##########################################################################################
-	Private Sub newAd_Click(sender As Object, e As EventArgs) Handles newAd.Click
+    ' GUI 
+    Private Sub newAd_Click(sender As Object, e As EventArgs) Handles newAd.Click
 		save()
 		For Each c As Control In wrapper.Controls
 			wrapper.Controls.Remove(c)

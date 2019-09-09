@@ -27,11 +27,11 @@
                                   LEFT JOIN cat_servicio ON catastro.Id = cat_servicio.catastro_id)
                                   LEFT JOIN cat_superficie ON catastro.Id = cat_superficie.catastro_id)
                                   LEFT JOIN titular_catastro ON catastro.Id = titular_catastro.cat_id"
-	'** /READ ONLY **
+    '** /READ ONLY **
 
 
-	'##### SEARCH
-	Shared Function BuscarPorTitular(Optional razon As String = "", Optional cuil As Double = 0) As DataTable
+    ' SEARCH
+    Shared Function BuscarPorTitular(Optional razon As String = "", Optional cuil As Double = 0) As DataTable
         Dim sql(3) As String
         sql(0) = CatastroSelect
         sql(1) = CatastroFrom
@@ -99,7 +99,7 @@
         Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
     End Function
 
-    '##### 'READ
+    ' 'READ
     Shared Function ListarInmueblePorTitular(persona_id As Integer) As DataTable
         Dim sql(3) As String
         sql(0) = CatastroSelect
@@ -179,8 +179,9 @@
         End If
 	End Function
 
-	'##### 'MOD
-	Public Class Agregar
+
+    'MOD
+    Public Class Agregar
 		Shared Sub Inmueble(opr_id As Integer, ByRef catastro_id As Integer, titular_id As Integer,
 									  barrio As String, uso As String, cuenta As Integer, archivado As Boolean,
 									  zona As Integer, circ As Integer, secc As Integer,
@@ -289,8 +290,8 @@
 					   "DELETE * FROM cat_frente WHERE id=" & bs_frente.Current.Row("frente_id"))
 		End Sub
 	End Class
-	'##### ROUTINES
-	Shared Sub CalcularSuperficie(ByRef existente As Decimal, ByRef proyecto As Decimal,
+    ' ROUTINES
+    Shared Sub CalcularSuperficie(ByRef existente As Decimal, ByRef proyecto As Decimal,
 								  ByRef relevamiento As Decimal, ByRef terreno As Decimal,
 								  ByRef libre As Decimal, ByRef cubierto As Decimal)
 

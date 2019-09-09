@@ -143,47 +143,47 @@
 		End If
 	End Function
 
-	'Varios
-	Shared Function CalcularCuil(dni As String, gen As String) As Integer
+    'Varios
+    Shared Function CalcularCuil(dni As String, gen As String) As String
         'Variables de cálculo de CUIL
         Dim pos, var(10), result As Integer
 
         'Normalizar
         If Len(dni) < 8 Then
-			dni = "0" & dni
-		End If
-		var(0) = 2
+            dni = "0" & dni
+        End If
+        var(0) = 2
         'Obtener género
         If gen = "M" Then
-			var(1) = 0
-		Else
-			var(1) = 7
-		End If
+            var(1) = 0
+        Else
+            var(1) = 7
+        End If
         'Obtener cifras por separado
         pos = 1
-		Do While pos < 9
-			var(pos + 1) = Microsoft.VisualBasic.Mid(dni, pos, 1)
-			pos += 1
-		Loop
+        Do While pos < 9
+            var(pos + 1) = Microsoft.VisualBasic.Mid(dni, pos, 1)
+            pos += 1
+        Loop
 
         'Calcular
         result = ((var(0) * 5) + (var(1) * 4) + (var(2) * 3) + (var(3) * 2) + (var(4) * 7) + (var(5) * 6) +
-		(var(6) * 5) + (var(7) * 4) + (var(8) * 3) + (var(9) * 2)) Mod 11
+        (var(6) * 5) + (var(7) * 4) + (var(8) * 3) + (var(9) * 2)) Mod 11
 
-		If result = 0 Then
-			var(10) = 0
-		Else
-			If result = 1 Then
-				If var(1) = 0 Then
-					var(10) = 9
-				Else
-					var(10) = 4
-				End If
-				var(1) = 3
-			Else
-				var(10) = 11 - result
-			End If
-		End If
-		Return var(0) & var(1) & dni & var(10)
-	End Function
+        If result = 0 Then
+            var(10) = 0
+        Else
+            If result = 1 Then
+                If var(1) = 0 Then
+                    var(10) = 9
+                Else
+                    var(10) = 4
+                End If
+                var(1) = 3
+            Else
+                var(10) = 11 - result
+            End If
+        End If
+        Return var(0).ToString & var(1).ToString & dni & var(10).ToString
+    End Function
 End Class

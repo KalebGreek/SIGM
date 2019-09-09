@@ -1,127 +1,168 @@
 ﻿Public Class ConvertirSIRO
-    Dim var_padron_agua(), var_padron_auto(), var_padron_catastro(), var_padron_cementerio(),
-        var_padron_comercio(), var_padron_vivienda() As String
-    Dim var_deuda_agua(), var_deuda_auto(), var_deuda_catastro(), var_deuda_cementerio(),
-        var_deuda_comercio(), var_deuda_vivienda() As String
+    Dim var_PadronAgua(), var_PadronAuto(), var_PadronCatastro(), var_PadronCementerio(),
+        var_PadronComercio(), var_PadronVivienda() As String
+    Dim var_DeudaAgua(), var_DeudaAuto(), var_DeudaCatastro(), var_DeudaCementerio(),
+        var_DeudaComercio(), var_DeudaVivienda() As String
+
+
 
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
 
+        MenuStrip2.BackColor = ColorHacienda
         'Padrón
         'Deuda: tipo, codigo, periodo, cuota, vence1, vence2, vence3, importe1, importe2, importe3
         ' Add any initialization after the InitializeComponent() call.
         'Variables padrón contribuyentes
-        var_padron_agua = {"aguas", "10", "tenedor"}
-        var_padron_auto = {"automovil", "20", "tenedor"}
-        var_padron_catastro = {"catastro", "30", "tenedor"}
-        var_padron_cementerio = {"sepelio", "40", "tenedor"}
-        var_padron_comercio = {"comercio", "50", "fantasia"}
-        var_padron_vivienda = {"barrios", "60", "tenedor"}
+        var_PadronAgua = {"aguas", "10", "aguas.tenedor"}
+        var_PadronAuto = {"automovil", "20", "automovil.tenedor"}
+        var_PadronCatastro = {"catastro", "30", "catastro.tenedor"}
+        var_PadronCementerio = {"sepelio", "40", "sepelio.tenedor"}
+        var_PadronComercio = {"comercio", "50", "comercio.fantasia"}
+        var_PadronVivienda = {"barrios", "60", "barrios.tenedor"}
 
         'Variables deuda contribuyentes
-        var_deuda_agua = {"agucue", "periodo", "mes", "original", "vencio", "11", "12", "13"}
-        var_deuda_auto = {"autocue", "ano", "cuota", "original", "vencio", "21", "22", "23"}
-        var_deuda_catastro = {"catcue", "periodo", "mes", "original", "vencio", "31", "32", "33"}
-        var_deuda_cementerio = {"sepecue", "periodo", "mes", "original", "vencio", "41", "42", "43"}
-        var_deuda_comercio = {"comcue", "ano", "bimestre", "original", "vencio", "51", "52", "53"}
-        var_deuda_vivienda = {"barcue", "periodo", "mes", "original", "vencio", "61", "62", "63"}
+        var_DeudaAgua = {"agucue", "agucue.periodo", "agucue.mes", "agucue.original", "agucue.vencio", "agucue.pagado", "11", "12", "13"}
+        var_DeudaAuto = {"autocue", "autocue.ano", "autocue.cuota", "autocue.total", "autocue.vencimi1", "autocue.apagado", "21", "22", "23"}
+        var_DeudaCatastro = {"catcue", "catcue.periodo", "catcue.mes", "catcue.original", "catcue.vencio", "catcue.pagado", "31", "32", "33"}
+        var_DeudaCementerio = {"sepecue", "sepecue.periodo", "sepecue.mes", "sepecue.original", "sepecue.vencio", "sepecue.pagado", "41", "42", "43"}
+        var_DeudaComercio = {"comcue", "comcue.ano", "comcue.bimestre", "comcue.total", "comcue.vence1", "comcue.pagado", "51", "52", "53"}
+        var_DeudaVivienda = {"barcue", "barcue.periodo", "barcue.mes", "barcue.original", "barcue.vencio", "barcue.pagado", "61", "62", "63"}
 
     End Sub
 
     'RUTINAS
-    Sub SIRO_GenerarID(var_deuda As String())
-        Dim sql(0) As String
-        Dim tabla, periodo, cuota, id_corriente, id_mora, id_plan As String
-        Dim dtab As New DataTable
-        info.Text = "Procesando '" & var_deuda(0) & "'.."
-        StatusStrip1.Update()
-        'reemplazar valores nulos en campo "pago"
-        'Buscar cuotas, generar id único por cuota
-        '1020190100001
-        tabla = var_deuda(0)
-        periodo = var_deuda(1)
-        cuota = var_deuda(2)
-        id_corriente = var_deuda(5)
-        id_mora = var_deuda(6)
-        id_plan = var_deuda(7)
+    Sub CargarPadronMunici(servicio As Object)
+        Dim var_padron As String()
 
-        'Liquidación año corriente (10)
-        sql(0) = "UPDATE " & tabla & "
-                     SET link=(" & id_corriente & "*10^11) + (codigo*10^6) +
-                              (" & periodo & " * 100) + " & cuota & "
-                   WHERE codigo>0 AND " & periodo & "=>" & Today.Year & " 
-                     AND tipo='N'"
-        DbMan.editDB(Nothing, My.Settings.foxConnection, sql(0))
-        progreso.PerformStep()
-        StatusStrip1.Update()
+        If servicio Is PadronAgua Then
+            var_padron = var_PadronAgua
+        ElseIf servicio Is PadronAuto Then
+            var_padron = var_PadronAuto
+        ElseIf servicio Is PadronCatastro Then
+            var_padron = var_PadronCatastro
+        ElseIf servicio Is PadronCementerio Then
+            var_padron = var_PadronCementerio
+        ElseIf servicio Is PadronComercio Then
+            var_padron = var_PadronComercio
+        ElseIf servicio Is PadronVivienda Then
+            var_padron = var_PadronVivienda
+        End If
 
-        'Liquidación años anteriores (11)
-        sql(0) = "UPDATE " & tabla & "
-                     SET link=(" & id_mora & "*10^11) + (codigo*10^6) +
-                              (" & periodo & " * 100) + " & cuota & "
-                   WHERE codigo>0 AND " & periodo & "<" & Today.Year & " 
-                     AND tipo='N'"
-        DbMan.editDB(Nothing, My.Settings.foxConnection, sql(0))
-        progreso.PerformStep()
-        StatusStrip1.Update()
-
-        'Liquidación plan de pagos (12)
-        sql(0) = "UPDATE " & tabla & "
-                     SET link=(" & id_plan & "*(10^11)) + (codigo*10^6) +
-                              (" & periodo & " * 100) + " & cuota & "
-                   WHERE codigo>0 AND " & periodo & ">0
-                     AND tipo<>'N'"
-        DbMan.editDB(Nothing, My.Settings.foxConnection, sql(0))
-        progreso.PerformStep()
-        StatusStrip1.Update()
-    End Sub
-
-    Sub CargarPadronMunici(var_padron As String())
         Dim sql(5) As String
         sql(0) = "SELECT (" & var_padron(1) & "*1000000)+codigo as NroCliente, razon as Descripcion, 
                          " & var_padron(2) & " as Complemento, mail as CorreoElectronico"
         sql(1) = "FROM " & var_padron(0)
-        sql(2) = "WHERE codigo>0"
+        sql(2) = "WHERE codigo>0 AND mail LIKE '%@%'"
 
         Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
         CtrlMan.LoadDataGridView(DataView, bs,, dtab)
 
     End Sub
 
-    Sub CargarDeudaMunici(var_padron As String(), var_deuda As String())
+    Sub CargarDeudaMunici(servicio As ToolStripMenuItem, moroso As Boolean)
         Dim sql(5) As String
-        Dim dtab As DataTable
-        Dim tabla, id_servicio, importe1, vence1, valor_mora As String
-        tabla = var_deuda(0)
-        id_servicio = var_padron(1)
-        importe1 = var_deuda(3)
-        vence1 = var_deuda(4)
+        Dim dtab_numeros As New DataTable
+        Dim dtab_mora As New DataTable
+        Dim dtab_corriente As New DataTable
+        Dim dtab_total As New DataTable
+        Dim var_Padron As String()
+        Dim var_Deuda As String()
+        Dim tabla_padron, tabla_deuda, id_servicio, importe1, vence_original, vence_mora, valor_mora, pagado As String
 
-        'Obtener valor de mora
-        sql(0) ="SELECT mora FROM numeros"
-        dtab =DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
-        valor_mora = Replace((dtab(0)("mora") / 30) / 100, ",", ".")
+        If servicio.Name.Contains("Agua") Then
+            var_Padron = var_PadronAgua
+            var_Deuda = var_DeudaAgua
+        ElseIf servicio.Name.Contains("Auto") Then
+            var_Padron = var_PadronAuto
+            var_Deuda = var_DeudaAuto
+        ElseIf servicio.Name.Contains("Catastro") Then
+            var_Padron = var_PadronCatastro
+            var_Deuda = var_DeudaCatastro
+        ElseIf servicio.Name.Contains("Cementerio") Then
+            var_Padron = var_PadronCementerio
+            var_Deuda = var_DeudaCementerio
+        ElseIf servicio.Name.Contains("Comercio") Then
+            var_Padron = var_PadronComercio
+            var_Deuda = var_DeudaComercio
+        ElseIf servicio.Name.Contains("Vivienda") Then
+            var_Padron = var_PadronVivienda
+            var_Deuda = var_DeudaVivienda
+        End If
 
-        sql(0) = "SELECT " & id_servicio & "*(1000000)+codigo as NroCliente,
-                 link as NroPago, " & vence1 & " as Vto1, " & importe1 & " as Monto1,
-                 " & vence1 & "+30 as Vto2, " & importe1 & "+ FLOOR(" & importe1 & "*30*" & valor_mora & ") as Monto2,
-                 " & vence1 & "+60 as Vto3, " & importe1 & "+ FLOOR(" & importe1 & "*60*" & valor_mora & ") as Monto3"
+        tabla_padron = var_Padron(0)
+        tabla_deuda = var_Deuda(0)
 
-        sql(1) = "FROM " & tabla
-        sql(2) = "WHERE codigo>0 AND " & importe1 & ">0"
+        id_servicio = var_Padron(1)
+        importe1 = var_Deuda(3)
+        vence_original = var_Deuda(4)
+        vence_mora = Today.Month & "/" & Date.DaysInMonth(Today.Year, Today.Month) & "/" & Today.Year
+        pagado = var_Deuda(5)
 
-        dtab = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
-        CtrlMan.LoadDataGridView(DataView, bs,, dtab)
+        If moroso Then
+            'Obtener deuda con mora al día, a 15 días y a 30 días
+            sql(0) = "SELECT mora FROM numeros"
+            dtab_numeros = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+            valor_mora = Replace((dtab_numeros(0)("mora") / 30) / 100, ",", ".")
+
+            sql(0) = "SELECT " & id_servicio & "*1000000+" & tabla_deuda & ".codigo as NroCliente,{" & vence_mora & "} as Vto1, 
+                        SUM(" & importe1 & "+FLOOR(" & importe1 & "*({" & vence_mora & "}-" & vence_original & ")*" & valor_mora & ")) as Monto1"
+            sql(1) = "FROM " & tabla_deuda & " INNER JOIN " & tabla_padron & " 
+                    ON " & tabla_deuda & ".codigo=" & tabla_padron & ".codigo"
+            'No se sobrescribe la fecha de deudas no vencidas
+            sql(2) = "WHERE " & tabla_deuda & ".codigo>0 AND " & importe1 & ">0 AND " & vence_original & "<DATE() 
+                    AND " & pagado & "=0 AND " & tabla_padron & ".mail LIKE '%@%'"
+            sql(3) = "GROUP BY " & tabla_deuda & ".codigo"
+            dtab_mora = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+
+            If dtab_mora Is Nothing = False Then
+                dtab_total = dtab_mora
+            End If
+        Else
+            sql(0) = "SELECT " & id_servicio & "*1000000+" & tabla_deuda & ".codigo as NroCliente, " & vence_original & " as Vto1, 
+                     " & importe1 & " as Monto1"
+            sql(1) = "FROM " & tabla_deuda & " INNER JOIN " & tabla_padron & " 
+                    ON " & tabla_deuda & ".codigo=" & tabla_padron & ".codigo"
+            'No se sobrescribe la fecha de deudas no vencidas
+            sql(2) = "WHERE " & tabla_deuda & ".codigo>0 AND " & importe1 & ">0 AND " & vence_original & "=>DATE() 
+                    AND " & pagado & "=0 AND " & tabla_padron & ".mail LIKE '%@%'"
+            dtab_corriente = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+
+            'sql(0) = "SELECT DEUDA_CORRIENTE.NROCLIENTE, DEUDA_CORRIENTE.VTO1, DEUDA_CORRIENTE.MONTO1 
+            '        FROM(
+            '             SELECT " & tabla_deuda & ".CODIGO AS CODIGO, 
+            '                    10*(1000000)+" & tabla_deuda & ".CODIGO AS NROCLIENTE, 
+            '                    " & vence_original & " AS VTO1, " & importe1 & " AS MONTO1 
+            '               FROM(
+            '                        SELECT " & tabla_deuda & ".CODIGO AS CODIGO 
+            '                          FROM " & tabla_deuda & " 
+            '                         WHERE " & tabla_deuda & ".CODIGO>0 AND " & vence_original & "<DATE() AND " & pagado & "=0 
+            '                      GROUP BY " & tabla_deuda & ".codigo 
+            '                    HAVING SUM(" & importe1 & ")<=0)AS SIN_MORA 
+            '          INNER JOIN " & tabla_deuda & " ON SIN_MORA.CODIGO=" & tabla_deuda & ".CODIGO
+            '               WHERE " & vence_original & "=>DATE() AND " & pagado & "=0) AS DEUDA_CORRIENTE
+            '   INNER JOIN " & tabla_padron & " ON DEUDA_CORRIENTE.CODIGO=" & tabla_padron & ".CODIGO
+            '        WHERE " & tabla_padron & ".MAIL LIKE '%@%'"
+
+            dtab_corriente = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+
+
+            If dtab_corriente Is Nothing = False Then
+                dtab_total = dtab_corriente
+            End If
+        End If
+
+        CtrlMan.LoadDataGridView(DataView, bs,, dtab_total)
     End Sub
 
     Sub CargarNovedadesSIRO()
         Dim result As DialogResult
         Dim od As New OpenFileDialog _
-            With {.CheckFileExists = True,
-                  .Filter = "txt|*.txt",
-                  .DefaultExt = ".txt",
-                  .InitialDirectory = Environment.SpecialFolder.Desktop}
+                 With {.CheckFileExists = True,
+                       .Filter = "txt|*.txt",
+                       .DefaultExt = ".txt",
+                       .InitialDirectory = Environment.SpecialFolder.Desktop}
 
         result = od.ShowDialog()
         If result = DialogResult.OK Then
@@ -130,6 +171,8 @@
             End If
         End If
     End Sub
+
+
 
     Sub Guardar()
         'info.Focus() 'Takes away the focus from the dataview, so it saves itself before writing the file
@@ -148,55 +191,36 @@
     End Sub
 
     'EVENTOS
-    Private Sub GenerarIDÚnicoMuniciToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GenerarIDÚnicoMuniciToolStripMenuItem.Click
-        progreso.Value = 0
-        progreso.Maximum = 18 '(6 servicios * 3 pasos)
-        SIRO_GenerarID(var_deuda_agua)
-        SIRO_GenerarID(var_deuda_auto)
-        SIRO_GenerarID(var_deuda_catastro)
-        SIRO_GenerarID(var_deuda_cementerio)
-        SIRO_GenerarID(var_deuda_comercio)
-        SIRO_GenerarID(var_deuda_vivienda)
-        info.Text = "Terminado."
+
+    Private Sub CopiarToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles CopiarToolStripMenuItem1.Click
+        DataView.SelectAll()
+        Dim dataobj As DataObject = DataView.GetClipboardContent
+        If dataobj Is Nothing = False Then
+            Clipboard.SetDataObject(dataobj)
+        End If
+        DataView.ClearSelection()
     End Sub
 
-    Private Sub PadronAgua_Click(sender As Object, e As EventArgs) Handles PadronAgua.Click
-        CargarPadronMunici(var_padron_agua)
-    End Sub
-    Private Sub PadronAuto_Click(sender As Object, e As EventArgs) Handles PadronAuto.Click
-        CargarPadronMunici(var_padron_auto)
-    End Sub
-    Private Sub PadronCatastro_Click(sender As Object, e As EventArgs) Handles PadronCatastro.Click
-        CargarPadronMunici(var_padron_catastro)
-    End Sub
-    Private Sub PadronCementerio_Click(sender As Object, e As EventArgs) Handles PadronCementerio.Click
-        CargarPadronMunici(var_padron_cementerio)
-    End Sub
-    Private Sub PadronComercio_Click(sender As Object, e As EventArgs) Handles PadronComercio.Click
-        CargarPadronMunici(var_padron_comercio)
-    End Sub
-    Private Sub PadronViviendas_Click(sender As Object, e As EventArgs) Handles PadronViviendas.Click
-        CargarPadronMunici(var_padron_vivienda)
+
+    Private Sub GenerarPadron_Click(sender As Object, e As EventArgs) _
+        Handles PadronAgua.Click, PadronAuto.Click, PadronCatastro.Click,
+                PadronCementerio.Click, PadronComercio.Click, PadronVivienda.Click
+
+        CargarPadronMunici(sender)
     End Sub
 
-    Private Sub AguaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeudaAgua.Click
-        CargarDeudaMunici(var_padron_agua, var_deuda_agua)
-    End Sub
-    Private Sub AutomotorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeudaAuto.Click
-        CargarDeudaMunici(var_padron_auto, var_deuda_auto)
-    End Sub
-    Private Sub CatastroToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeudaCatastro.Click
-        CargarDeudaMunici(var_padron_catastro, var_deuda_catastro)
-    End Sub
-    Private Sub CementerioToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeudaCementerio.Click
-        CargarDeudaMunici(var_padron_cementerio, var_deuda_cementerio)
-    End Sub
-    Private Sub ComercioToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeudaComercio.Click
-        CargarDeudaMunici(var_padron_comercio, var_deuda_comercio)
-    End Sub
-    Private Sub PlanViviendasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeudaViviendas.Click
-        CargarDeudaMunici(var_padron_vivienda, var_deuda_vivienda)
+    Private Sub GenerarMora_Click(sender As Object, e As EventArgs) _
+        Handles MoraAgua.Click, MoraAuto.Click, MoraCatastro.Click,
+                MoraCementerio.Click, MoraComercio.Click, MoraVivienda.Click
+
+        CargarDeudaMunici(sender, True)
     End Sub
 
+    Private Sub GenerarAgendaPagos_Click(sender As Object, e As EventArgs) _
+        Handles DeudaAgua.Click, DeudaAuto.Click, DeudaCatastro.Click,
+                DeudaCementerio.Click, DeudaComercio.Click, DeudaVivienda.Click
+
+        CargarDeudaMunici(sender, False)
+    End Sub
 
 End Class

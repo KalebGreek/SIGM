@@ -35,8 +35,8 @@
 		TabControl1.Enabled = (multa_id > 0)
 	End Sub
 
-	'###### GUI ##########################################################################################
-	Private Sub BuscarMulta_Click(sender As Object, e As EventArgs) Handles BuscarMulta.Click
+    ' GUI 
+    Private Sub BuscarMulta_Click(sender As Object, e As EventArgs) Handles BuscarMulta.Click
 		Seleccionar()
 	End Sub
 	Private Sub boleta_KeyUp(sender As Object, e As KeyEventArgs) Handles boleta.KeyUp

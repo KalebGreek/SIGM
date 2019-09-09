@@ -1,8 +1,8 @@
 ﻿Imports System.Net.NetworkInformation
 Public Class SecMan 'Security Manager
-	'###### SEGURIDAD
-	'Login functions
-	Shared Function check_access(user As String, pass As String) As Integer
+    ' SEGURIDAD
+    'Login functions
+    Shared Function check_access(user As String, pass As String) As Integer
         If Len(user) >= 5 And Len(pass) >= 5 Then
             Dim sql(5) As String
             sql(0) = "SELECT id, usuario, pass FROM usuarios WHERE usuario='" & user & "' AND pass ='" & pass & "'"

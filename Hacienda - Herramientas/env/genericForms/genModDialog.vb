@@ -12,8 +12,8 @@
 		' Add any initialization after the InitializeComponent() call.
 	End Sub
 
-	'###### GUI ##########################################################################################
-	Private Sub lastPage_Click(sender As Object, e As EventArgs) Handles lastPage.Click
+    ' GUI 
+    Private Sub lastPage_Click(sender As Object, e As EventArgs) Handles lastPage.Click
 		RaiseEvent ClastPage()
 	End Sub
 	Private Sub nextPage_Click(sender As Object, e As EventArgs) Handles nextPage.Click

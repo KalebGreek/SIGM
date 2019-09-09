@@ -6,7 +6,7 @@
 		' Add any initialization after the InitializeComponent() call.
 		opr_id.Text = OprId
 	End Sub
-    '## GUI
+    ' GUI
 
     Private Sub grupo_mod_VisibleChanged(sender As Object, e As EventArgs) Handles grupo_mod.VisibleChanged
 		If Me.Visible Then
@@ -68,9 +68,9 @@
 		End If
 	End Sub
 
-    '## RUTINAS
+    ' RUTINAS
 
-    '## PARTIDA
+    ' PARTIDA
     Private Sub SelectorCatastro() _
         Handles zona.ValueChanged, circ.ValueChanged, secc.ValueChanged, parc.ValueChanged, lote.ValueChanged
         'Handles zona.KeyUp, circ.KeyUp, secc.KeyUp, manz.KeyUp, parc.KeyUp, lote.KeyUp
@@ -373,8 +373,8 @@
         End With
 	End Sub
 
-	'## FRENTES
-	Private Sub frente_click_events(sender As Object, e As EventArgs) Handles add_frente.Click, del_frente.Click, ubicacion_principal.Click
+    ' FRENTES
+    Private Sub frente_click_events(sender As Object, e As EventArgs) Handles add_frente.Click, del_frente.Click, ubicacion_principal.Click
 		If sender Is add_frente Then
 			Dim agregar_frente As New AgregarFrente
 			With agregar_frente
@@ -395,8 +395,8 @@
         CtrlMan.LoadDataGridView(consulta_frente, bs_frente, "", Catastro.ListarFrente(catastro_id.Text))
     End Sub
 
-	'## SUPERFICIE
-	Private Sub calcular_superficie(sender As Object, e As EventArgs) Handles existente.ValueChanged, proyecto.ValueChanged,
+    ' SUPERFICIE
+    Private Sub calcular_superficie(sender As Object, e As EventArgs) Handles existente.ValueChanged, proyecto.ValueChanged,
 																				relevamiento.ValueChanged, terreno.ValueChanged,
 																				libre.ValueChanged, cubierto.ValueChanged
 
@@ -404,7 +404,7 @@
 									terreno.Value, libre.Value, cubierto.Value)
 	End Sub
 
-    '## CARACTERISTICAS
+    ' CARACTERISTICAS
     Private Sub lista_car_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lista_car.SelectedIndexChanged
 		add_car.Enabled = True
 		If lista_car.SelectedIndex < 0 Then
@@ -429,7 +429,7 @@
 		bs_car.Position = -1
 	End Sub
 
-    '## COPIAS
+    ' COPIAS
     Private Sub tipo_copia_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tipo_copia.SelectedIndexChanged
 		add_copia.Enabled = True
 		If tipo_copia.SelectedIndex < 0 Then

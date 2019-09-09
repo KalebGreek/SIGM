@@ -11,7 +11,7 @@ Public Class acceso
 		user.Focus()
 	End Sub
 
-    '###### GUI #################################################################################################
+    ' GUI 
     Private Sub user_GotFocus(sender As Object, e As EventArgs) Handles user.GotFocus
 		user.Clear()
 	End Sub
@@ -27,7 +27,7 @@ Public Class acceso
 		End If
 	End Sub
 
-	Private Sub pass_GotFocus(sender As Object, e As EventArgs) Handles pass.GotFocus
+    Private Sub pass_GotFocus(sender As Object, e As EventArgs) Handles pass.GotFocus
 		pass.Clear()
 		pass.PasswordChar = "*"
 	End Sub
@@ -37,33 +37,46 @@ Public Class acceso
 			pass.PasswordChar = ""
 		End If
 	End Sub
-
-	Private Sub salir_Click(sender As Object, e As EventArgs) Handles salir.Click
-		Me.Dispose()
-		End
-	End Sub
-    '###### END GUI #############################################################################################
-    '###### VALIDATION ##########################################################################################
+    Private Sub pass_KeyUp(sender As Object, e As KeyEventArgs) Handles pass.KeyUp
+        If e.KeyValue = Keys.Enter Then
+            log_user()
+        End If
+    End Sub
     Private Sub login_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles login.Click
-		My.Settings.CurrentDB = ServerList.Text
-		My.Settings.UserId = check_access(user.Text, pass.Text)
-		If My.Settings.UserId > 0 Then 'Iniciar sesión
+        log_user()
+    End Sub
+    Private Sub salir_Click(sender As Object, e As EventArgs) Handles salir.Click
+        Me.Dispose()
+        End
+    End Sub
+
+    ' END GUI 
+    ' VALIDATION 
+    Private Sub log_user()
+        My.Settings.CurrentDB = ServerList.Text
+        My.Settings.UserId = check_access(user.Text, pass.Text)
+        If My.Settings.UserId > 0 Then 'Iniciar sesión
             If register_user(My.Settings.UserId, True) Then
-				Me.Hide()
-				privileges(My.Settings.UserId).ShowDialog() 'Mostrar inicio
-				Me.Show()
-				register_user(My.Settings.UserId, False) 'Cerrar Sesión
+                Me.Hide()
+                privileges(My.Settings.UserId).ShowDialog() 'Mostrar inicio
+                Me.Show()
+                register_user(My.Settings.UserId, False) 'Cerrar Sesión
             End If
-			My.Settings.UserId = -1
-			info.Text = "Ingrese usuario y contraseña."
-		Else
-			info.Text = "Usuario o contraseña incorrecta."
-			user.Clear()
-			pass.Clear()
-			user.Focus()
-		End If
-	End Sub
-    '###### END VALIDATION ######################################################################################
+            My.Settings.UserId = -1
+            info.Text = "Ingrese usuario y contraseña."
+        Else
+            info.Text = "Usuario o contraseña incorrecta."
+            user.Clear()
+            pass.Clear()
+            user.Focus()
+        End If
+    End Sub
+
+
+
+
+
+    ' END VALIDATION 
 
 End Class
 

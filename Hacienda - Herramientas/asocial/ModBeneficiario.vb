@@ -1,12 +1,12 @@
 ﻿Public Class ModBeneficiario
-	Public Sub New(MenuColor As System.Drawing.Color)
+    Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
-		' Add any initialization after the InitializeComponent() call.
+        ' Add any initialization after the InitializeComponent() call.
 
 
-	End Sub
-	Private Sub Me_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+    End Sub
+    Private Sub Me_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
 		CargarBeneficiario(beneficiario_id.Text)
 	End Sub
     Private Sub CargarBeneficiario(persona_id As Integer)

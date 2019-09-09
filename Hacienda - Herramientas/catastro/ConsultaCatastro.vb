@@ -6,9 +6,9 @@
         ' Add any initialization after the InitializeComponent() call.
         user_id = user
     End Sub
-    '###### VARIABLES Y RUTINAS #################################################################################
-    '###### FIN VARIABLES Y RUTINAS #############################################################################
-    '###### GUI #################################################################################################
+    ' VARIABLES Y RUTINAS 
+    ' FIN VARIABLES Y RUTINAS 
+    ' GUI 
     'INMUEBLE
     Private Sub Filtro1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Filtro1.SelectedIndexChanged
         zona.Visible = False
@@ -35,9 +35,9 @@
             lote.Visible = .Visible
         End With
     End Sub
-    '###### END GUI #############################################################################################
+    ' END GUI 
 
-    '###### SEARCH / MOD ########################################################################################
+    ' SEARCH / MOD 
 
     Private Sub buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
         Dim dtab As New DataTable
@@ -91,6 +91,6 @@
             End If
     End Sub
 
-    '###### END SEARCH ##########################################################################################
+    ' END SEARCH 
 
 End Class

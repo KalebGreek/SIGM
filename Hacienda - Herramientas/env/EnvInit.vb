@@ -1,5 +1,5 @@
 ﻿Module EnvInit
-    '####### CARPETAS
+    ' CARPETAS
     Public root As String = Environment.CurrentDirectory
 
 	'Variables de datagridview
@@ -83,8 +83,8 @@
 		End If
 	End Sub
 
-	'###### CONFIGURACION
-	Sub ConfigInit(instancia As Form)
+    ' CONFIGURACION
+    Sub ConfigInit(instancia As Form)
 		If instancia Is ConsultaImpuesto Then  'Cambiar decimales y fechas al formato yanqui para compatibilidad con Fox
             System.Windows.Forms.Application.CurrentCulture = New System.Globalization.CultureInfo("EN-US")
 		Else

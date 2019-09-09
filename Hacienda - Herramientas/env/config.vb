@@ -4,19 +4,19 @@
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        '### CONEXION POR DEFECTO
+        ' CONEXION POR DEFECTO
         If My.Settings.CurrentDB <> "" Then
 			conexion_std.Text = My.Settings.CurrentDB
 		End If
-        '### CONEXION ACCESS
+        ' CONEXION ACCESS
         If My.Settings.AdbConnection <> "" Then
 			conexion_acc.Text = My.Settings.AdbConnection
 		End If
-        '### CONEXION FOX
+        ' CONEXION FOX
         If My.Settings.foxConnection <> "" Then
 			conexion_fox.Text = My.Settings.foxConnection
 		End If
-        '### CONEXION PSQL
+        ' CONEXION PSQL
         If My.Settings.pgsql_disabled <> "" Then
 			conexion_pgsql.Text = My.Settings.pgsql_disabled
 		End If
@@ -24,7 +24,7 @@
 		cargar_tablas_ext()
 	End Sub
 
-    '###### GUI
+    ' GUI
     Private Sub RestablecerToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RestablecerToolStripMenuItem.Click
 
 		cargar_tablas_ext()
@@ -42,7 +42,7 @@
 		Me.Close()
 	End Sub
 
-    '###### VALIDACION
+    ' VALIDACION
     Private Sub DetectarCambios() Handles conexion_std.TextChanged, conexion_acc.TextChanged,
 										  conexion_fox.TextChanged, conexion_pgsql.TextChanged,
 										  cata_cuentas.TextChanged, cata_historial.TextChanged,
@@ -62,7 +62,7 @@
 		RestablecerToolStripMenuItem.Enabled = True
 	End Sub
 
-    '### RUTINAS
+    ' RUTINAS
     Private Sub rutina_fecha_null_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
 		If MsgBoxResult.Yes = MsgBox("Esto reemplazara las fechas con valor NULL en la base de datos seleccionada." & Chr(13) &
@@ -136,14 +136,16 @@
     End Sub
 
 	Public Sub cargar_tablas_ext()
-		Dim dtab_ext As New DataTable
-        dtab_ext.Locale = System.Globalization.CultureInfo.CurrentCulture
+        Dim dtab_ext As New DataTable With {
+            .Locale = System.Globalization.CultureInfo.CurrentCulture
+        }
+
         Dim sql(5) As String
         sql(0) = "SELECT * FROM tablas_externas WHERE personas='aguas'"
         dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
         If dtab_ext.Rows.Count > 0 Then
-            '#### TABLAS EXTERNAS AGUA ##########################################################
+            ' TABLAS EXTERNAS AGUA 
             agua_personas.Text = dtab_ext(0)("personas")
 			agua_cuentas.Text = dtab_ext(0)("cuentas")
 			agua_historial.Text = dtab_ext(0)("historial")
@@ -156,7 +158,7 @@
         dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
         If dtab_ext.Rows.Count > 0 Then
-            '#### TABLAS EXTERNAS AUTO ##########################################################
+            ' TABLAS EXTERNAS AUTO 
             auto_personas.Text = dtab_ext(0)("personas")
 			auto_cuentas.Text = dtab_ext(0)("cuentas")
 			auto_vencimientos.Text = dtab_ext(0)("vencimientos")
@@ -167,7 +169,7 @@
         dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
         If dtab_ext.Rows.Count > 0 Then
-            '#### TABLAS EXTERNAS CATA ##########################################################
+            ' TABLAS EXTERNAS CATA 
             cata_personas.Text = dtab_ext(0)("personas")
 			cata_cuentas.Text = dtab_ext(0)("cuentas")
 			cata_historial.Text = dtab_ext(0)("historial")
@@ -179,7 +181,7 @@
         dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
         If dtab_ext.Rows.Count > 0 Then
-            '#### TABLAS EXTERNAS COME ##########################################################
+            ' TABLAS EXTERNAS COME 
             come_personas.Text = dtab_ext(0)("personas")
 			come_cuentas.Text = dtab_ext(0)("cuentas")
 			come_historial.Text = dtab_ext(0)("historial")
@@ -192,7 +194,7 @@
         dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
         If dtab_ext.Rows.Count > 0 Then
-            '#### TABLAS EXTERNAS SEPE ##########################################################
+            ' TABLAS EXTERNAS SEPE 
             sepe_personas.Text = dtab_ext(0)("personas")
 			sepe_cuentas.Text = dtab_ext(0)("cuentas")
 			sepe_historial.Text = dtab_ext(0)("historial")

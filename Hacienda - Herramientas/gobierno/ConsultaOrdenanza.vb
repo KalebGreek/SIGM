@@ -11,13 +11,13 @@
 
     End Sub
 
-    '###### GUI #################################################################################################
+    ' GUI 
     Private Sub cerrar_Click(sender As Object, e As EventArgs)
         Me.Close()
     End Sub
-    '###### END GUI #############################################################################################
+    ' END GUI 
 
-    '###### BUSQUEDA ##########################################################################################
+    ' BUSQUEDA 
     Private Sub reiniciar_Click(sender As Object, e As EventArgs) Handles reiniciar.Click
         visor.DataSource = Nothing
         KeyCodigo.Clear()
@@ -97,7 +97,7 @@
         End If
     End Sub
 
-    '###### OPERACIONES ##########################################################################################
+    ' OPERACIONES 
     Private Sub consulta_KeyUp(sender As Object, e As KeyEventArgs) Handles visor.KeyUp
 		If e.KeyValue = Keys.Delete Then
 			eliminar.PerformClick()
@@ -108,10 +108,14 @@
 		End If
 	End Sub
 	Private Sub ver_Click(sender As Object, e As EventArgs) Handles ver.Click
-		If bs_consulta.Position > -1 Then
-			Process.Start(root & My.Settings.DocFolderOrdenanza & bs_consulta.Current("ruta_copia").ToString)
-		End If
-	End Sub
+        If bs_consulta.Position > -1 Then
+            Try
+                Process.Start(root & My.Settings.DocFolderOrdenanza & bs_consulta.Current("ruta_copia").ToString)
+            Catch ex As Exception
+                MsgBox("No se encuentra el archivo.")
+            End Try
+        End If
+    End Sub
 	Private Sub modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles modificar.Click
 		If bs_consulta.Position > -1 Then
 			Dim ModificarOrdenanza As New ModOrdenanza

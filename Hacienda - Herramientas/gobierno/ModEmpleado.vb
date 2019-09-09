@@ -15,7 +15,7 @@
             End With
         End If
     End Sub
-    '###### GUI ##########################################################################################
+    ' GUI 
     Private Sub guardarcambios_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles GuardarCambios.Click
         'Según si se modifica un CUIL de persona o un profesional, hay que actualizar campos de distintas tablas
         'No correr el update de cuil al pedo si no cambió nada (comparar nuevo y viejo)
@@ -47,7 +47,7 @@
         End With
         grupo_datos.Enabled = grupo_persona.Enabled.CompareTo(True)
     End Sub
-    '###### CARGAR ##########################################################################################
+    ' CARGAR 
 
     Private Sub bs_rubro_PositionChanged(sender As Object, e As EventArgs) Handles bs_rubro.PositionChanged
         partida.Visible = False
@@ -109,7 +109,7 @@
         End If
     End Sub
 
-    '###### VALIDAR ##########################################################################################
+    ' VALIDAR 
     Private Function ValidarCodigo(ordenanza_id As Integer, codigo As Integer) As Boolean
 		Dim valido As Boolean = True
 		Dim msg As String = ""
@@ -152,7 +152,7 @@
         Return True
     End Function
 
-    '###### GUARDAR ##########################################################################################
+    ' GUARDAR 
     Private Sub guardar()
 
     End Sub
