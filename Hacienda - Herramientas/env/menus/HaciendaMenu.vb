@@ -1,28 +1,12 @@
 ﻿Public Class HaciendaMenu
 	Private Sub me_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
-		If e.KeyValue = Keys.F10 Then
+        If e.KeyValue = Keys.F10 Then
             Dim console1 As New SQLConsole _
             With {.MdiParent = Me.Parent}
             console1.Show()
-		End If
-	End Sub
-
-	Private Sub ConsultarImpuestoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsultarImpuestoToolStripMenuItem.Click
-		If CtrlMan.UniqueWindow(Me.Parent) Then
-			MsgBox("Debe cerrar el expediente actual antes de continuar.", MsgBoxStyle.Critical, "Expediente Abierto")
-		Else
-            Dim ConsultaImpuesto1 As New ConsultaImpuesto _
-            With {.MdiParent = Me.Parent}
-            ConsultaImpuesto1.Show()
-		End If
-	End Sub
-    Private Sub ConsultarCuentaAgrupadaToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        Dim ConsultaCuentaAgrupada1 As New ConsultaCuentaAgrupada _
-        With {.MdiParent = Me.Parent}
-        ConsultaCuentaAgrupada1.Show()
+        End If
     End Sub
 
-    'Herramientas
     Private Sub ConsultasEspecialesStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsultasEspecialesStripMenuItem.Click
         Dim arqueo1 As New ConsultasEspeciales _
         With {.MdiParent = Me.Parent}
@@ -40,10 +24,7 @@
         cai.ShowDialog()
         System.Windows.Forms.Application.CurrentCulture = New System.Globalization.CultureInfo("ES-AR")
     End Sub
-    Private Sub GenerarCertificadoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GenerarCertificadoToolStripMenuItem.Click
-        Dim certld As New CertificadoLibreDeuda
-        certld.ShowDialog()
-    End Sub
+
     Private Sub TicketsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TicketsToolStripMenuItem.Click
         Dim mcomb As New ModCombustible _
         With {.MdiParent = Me.Parent}
@@ -67,5 +48,26 @@
         Dim convsiro As New ConvertirSIRO _
         With {.MdiParent = Me.Parent}
         convsiro.Show()
+    End Sub
+
+    Private Sub ConsultarImpuestoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsultarImpuestoToolStripMenuItem.Click
+        If CtrlMan.IsFormOpen(Me.Parent, ConsultaImpuesto) Then
+            MsgBox("Debe cerrar el expediente actual antes de continuar.", MsgBoxStyle.Critical, "Expediente Abierto")
+        Else
+            Dim ConsultaImpuesto1 As New ConsultaImpuesto _
+            With {.MdiParent = Me.Parent}
+            ConsultaImpuesto1.Show()
+        End If
+    End Sub
+
+    Private Sub GenerarCertificadoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GenerarCertificadoToolStripMenuItem.Click
+        Dim certld As New CertificadoLibreDeuda
+        certld.ShowDialog()
+    End Sub
+
+    Private Sub IntimacionesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IntimacionesToolStripMenuItem.Click
+        Dim ConIntimaciones As New ConsultaIntimaciones _
+       With {.MdiParent = Me.Parent}
+        ConIntimaciones.Show()
     End Sub
 End Class

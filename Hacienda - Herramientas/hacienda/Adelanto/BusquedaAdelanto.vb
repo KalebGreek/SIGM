@@ -29,10 +29,10 @@
 
                 If bs_resultado.Count > 0 Then
                     Dim bs_ColumnList As New BindingSource _
-                    With {.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource)}
+                    With {.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)}
 
                     CtrlMan.Fill.SetAutoComplete(GenSearchControl1.filtro, bs_ColumnList, "ColumnName", "DataType")
-                    CtrlMan.LoadDataGridView(resultado, bs_resultado, GenSearchControl1.bsCustomFilter)
+                    CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, GenSearchControl1.bsCustomFilter)
                     GenSearchControl1.filtro.SelectedIndex = -1
                 Else
                     bs_resultado.Add("No hay resultados.")

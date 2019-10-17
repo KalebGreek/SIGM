@@ -204,17 +204,17 @@
 	End Sub
 
 	Private Sub ImportarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportarToolStripMenuItem.Click
-		'>> Ventana de importacion de base de datos
-		'Permite seleccionar bd de origen y de destino
-		'Compara los nombres de las tablas en ambas bd
-		'Crea las tablas que no existen en la bd de destino
-		'Actualiza registros ya existentes (usando el ID unico en la tabla)
-		'Inserta registros no encontrados en la tablas de la bd de destino
-		'No elimina registros
-		'Genera log de acciones sobre bd de destino
+        '>> Ventana de importacion de base de datos
+        'Permite seleccionar bd de origen y de destino
+        'Compara los nombres de las tablas en ambas bd
+        'Crea las tablas que no existen en la bd de destino
+        'Actualiza registros ya existentes (usando el ID unico en la tabla)
+        'Inserta registros no encontrados en la tablas de la bd de destino
+        'No elimina registros
+        'Genera log de acciones sobre bd de destino
 
-		Dim visor As New genDataVisor
-		visor.LoadDtab(DbMan.readTableSchema())
+        Dim visor As New genDataVisor
+        visor.LoadDtab(DbMan.readTableSchema())
 		visor.ShowDialog()
 		Dim sourceTables As DataTable = DbMan.readTableSchema()
 		Dim destTables As DataTable = DbMan.readTableSchema()

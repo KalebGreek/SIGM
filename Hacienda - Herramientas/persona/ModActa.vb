@@ -3,8 +3,8 @@
         ' This call is required by the designer.
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
-        CtrlMan.LoadDataGridView(consulta_acta, bs_acta, "", buscar(persona_id))
-	End Sub
+        CtrlMan.DataGridViewTools.Load(consulta_acta, bs_acta, "", buscar(persona_id))
+    End Sub
 
     '###### GUI ##########################################################################################
     Private Sub save_Click(sender As Object, e As EventArgs) Handles save.Click

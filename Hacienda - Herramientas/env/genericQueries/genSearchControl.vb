@@ -40,6 +40,7 @@
 
             'Int and dec
             NumValue.Visible = (filtro.SelectedValue.ToString = GetType(Decimal).ToString) Or (filtro.SelectedValue.ToString = GetType(Integer).ToString)
+
             MaxNumValue.Visible = (NumValue.Visible) And (Condition.Text = "<->")
 
             'Date

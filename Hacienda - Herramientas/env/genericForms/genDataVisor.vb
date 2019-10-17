@@ -1,5 +1,5 @@
 ﻿Public Class genDataVisor
-	Public Sub LoadDtab(source As DataTable)
-		CtrlMan.LoadDataGridView(DataGridView1, BindingSource1, "", source)
-	End Sub
+    Public Sub LoadDtab(source As DataTable)
+        CtrlMan.DataGridViewTools.Load(dgview, bs, "", source)
+    End Sub
 End Class

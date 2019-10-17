@@ -373,7 +373,7 @@ Partial Class ConsultaImpuesto
         Me.f1_impuesto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.f1_impuesto.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.f1_impuesto.FormattingEnabled = True
-        Me.f1_impuesto.Items.AddRange(New Object() {"AGUAS", "AUTOMOVIL", "CATASTRO", "COMERCIO", "SEPELIO"})
+        Me.f1_impuesto.Items.AddRange(New Object() {"AGUAS", "AUTOMOVIL", "CATASTRO", "COMERCIO", "SEPELIO", "BARRIOS"})
         Me.f1_impuesto.Location = New System.Drawing.Point(67, 30)
         Me.f1_impuesto.Margin = New System.Windows.Forms.Padding(2, 8, 2, 2)
         Me.f1_impuesto.Name = "f1_impuesto"

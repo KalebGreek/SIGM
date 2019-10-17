@@ -160,85 +160,85 @@
 
             If query_bs.DataSource Is Nothing = False Then
                 'Fill with data
-                CtrlMan.LoadDataGridView(QueryView, query_bs)
+                CtrlMan.DataGridViewTools.Load(QueryView, query_bs)
             Else
                 'Retrieves last search
-                CtrlMan.LoadDataGridView(LastQueryView, LastQueryBS)
+                CtrlMan.DataGridViewTools.Load(LastQueryView, LastQueryBS)
             End If
 
             'Create filter with columns
             Dim ColumnList_bs As New BindingSource
             GenSearchControl1.filtro.Visible = False
-            ColumnList_bs.DataSource = CtrlMan.Fill.GetColumnList(query_bs.DataSource)
+            ColumnList_bs.DataSource = CtrlMan.Fill.GetColumnList(query_bs)
             GenSearchControl1.filtro = CtrlMan.Fill.SetAutoComplete(GenSearchControl1.filtro, ColumnList_bs, "ColumnName", "DataType")
         Else
             GenSearchControl1.reset_search.PerformClick()
         End If
     End Sub
 
-	'EVENTOS
-	Private Sub Search() Handles GenSearchControl1.CSearch_Click
-		query_bs.Filter = GenSearchControl1.bsCustomFilter
-	End Sub
+    'EVENTOS
+    Private Sub Search() Handles GenSearchControl1.CSearch_Click
+        query_bs.Filter = GenSearchControl1.bsCustomFilter
+    End Sub
 
-	Private Sub FilterValues() Handles GenSearchControl1.CFiltro_IndexTextChanged
-		If GenSearchControl1.filtro.SelectedIndex > -1 And query_bs.Count > 0 _
-		And GenSearchControl1.filtro.Text <> "System.Data.DataRowView" _
-		And GenSearchControl1.filtro.SelectedValue.ToString <> "System.Data.DataRowView" Then
+    Private Sub FilterValues() Handles GenSearchControl1.CFiltro_IndexTextChanged
+        If GenSearchControl1.filtro.SelectedIndex > -1 And query_bs.Count > 0 _
+        And GenSearchControl1.filtro.Text <> "System.Data.DataRowView" _
+        And GenSearchControl1.filtro.SelectedValue.ToString <> "System.Data.DataRowView" Then
 
-			Dim ordered_bs As BindingSource = query_bs
-			ordered_bs.Sort = GenSearchControl1.filtro.Text
-			ordered_bs.MoveFirst()
+            Dim ordered_bs As BindingSource = query_bs
+            ordered_bs.Sort = GenSearchControl1.filtro.Text
+            ordered_bs.MoveFirst()
 
-			'TODO filtrar valores nulos
-			If GenSearchControl1.filtro.SelectedValue.ToString = "System.Decimal" _
-			Or GenSearchControl1.filtro.SelectedValue.ToString = "System.Integer" Then
-				If ordered_bs.Current(GenSearchControl1.filtro.Text) Is DBNull.Value Then
-					GenSearchControl1.NumValue.Minimum = 0
-					GenSearchControl1.MaxNumValue.Minimum = 0
-				Else
-					GenSearchControl1.NumValue.Minimum = ordered_bs.Current(GenSearchControl1.filtro.Text)
-					GenSearchControl1.MaxNumValue.Minimum = ordered_bs.Current(GenSearchControl1.filtro.Text)
-				End If
-				ordered_bs.MoveLast()
-				If ordered_bs.Current(GenSearchControl1.filtro.Text) Is DBNull.Value Then
-					GenSearchControl1.NumValue.Maximum = 1
-					GenSearchControl1.MaxNumValue.Maximum = 1
-				Else
-					GenSearchControl1.NumValue.Maximum = ordered_bs.Current(GenSearchControl1.filtro.Text)
-					GenSearchControl1.MaxNumValue.Maximum = ordered_bs.Current(GenSearchControl1.filtro.Text)
-				End If
-			ElseIf GenSearchControl1.filtro.SelectedValue.ToString = "System.DateTime" Then
-				If ordered_bs.Current(GenSearchControl1.filtro.Text) Is DBNull.Value Then
-					GenSearchControl1.DateValue.MinDate = "1/1/1900"
-					GenSearchControl1.MaxDateValue.MinDate = "1/1/1900"
-				Else
-					GenSearchControl1.DateValue.MinDate = CDate(ordered_bs.Current(GenSearchControl1.filtro.Text))
-					GenSearchControl1.MaxDateValue.MinDate = CDate(ordered_bs.Current(GenSearchControl1.filtro.Text))
-				End If
-				ordered_bs.MoveLast()
-				If ordered_bs.Current(GenSearchControl1.filtro.Text) Is DBNull.Value Then
-					GenSearchControl1.DateValue.MaxDate = "31/12/2037"
-					GenSearchControl1.MaxDateValue.MaxDate = "31/12/2037"
-				Else
-					GenSearchControl1.DateValue.MaxDate = CDate(ordered_bs.Current(GenSearchControl1.filtro.Text))
-					GenSearchControl1.MaxDateValue.MaxDate = CDate(ordered_bs.Current(GenSearchControl1.filtro.Text))
-				End If
-			End If
-		End If
-	End Sub
+            'TODO filtrar valores nulos
+            If GenSearchControl1.filtro.SelectedValue.ToString = "System.Decimal" _
+            Or GenSearchControl1.filtro.SelectedValue.ToString = "System.Integer" Then
+                If ordered_bs.Current(GenSearchControl1.filtro.Text) Is DBNull.Value Then
+                    GenSearchControl1.NumValue.Minimum = 0
+                    GenSearchControl1.MaxNumValue.Minimum = 0
+                Else
+                    GenSearchControl1.NumValue.Minimum = ordered_bs.Current(GenSearchControl1.filtro.Text)
+                    GenSearchControl1.MaxNumValue.Minimum = ordered_bs.Current(GenSearchControl1.filtro.Text)
+                End If
+                ordered_bs.MoveLast()
+                If ordered_bs.Current(GenSearchControl1.filtro.Text) Is DBNull.Value Then
+                    GenSearchControl1.NumValue.Maximum = 1
+                    GenSearchControl1.MaxNumValue.Maximum = 1
+                Else
+                    GenSearchControl1.NumValue.Maximum = ordered_bs.Current(GenSearchControl1.filtro.Text)
+                    GenSearchControl1.MaxNumValue.Maximum = ordered_bs.Current(GenSearchControl1.filtro.Text)
+                End If
+            ElseIf GenSearchControl1.filtro.SelectedValue.ToString = "System.DateTime" Then
+                If ordered_bs.Current(GenSearchControl1.filtro.Text) Is DBNull.Value Then
+                    GenSearchControl1.DateValue.MinDate = "1/1/1900"
+                    GenSearchControl1.MaxDateValue.MinDate = "1/1/1900"
+                Else
+                    GenSearchControl1.DateValue.MinDate = CDate(ordered_bs.Current(GenSearchControl1.filtro.Text))
+                    GenSearchControl1.MaxDateValue.MinDate = CDate(ordered_bs.Current(GenSearchControl1.filtro.Text))
+                End If
+                ordered_bs.MoveLast()
+                If ordered_bs.Current(GenSearchControl1.filtro.Text) Is DBNull.Value Then
+                    GenSearchControl1.DateValue.MaxDate = "31/12/2037"
+                    GenSearchControl1.MaxDateValue.MaxDate = "31/12/2037"
+                Else
+                    GenSearchControl1.DateValue.MaxDate = CDate(ordered_bs.Current(GenSearchControl1.filtro.Text))
+                    GenSearchControl1.MaxDateValue.MaxDate = CDate(ordered_bs.Current(GenSearchControl1.filtro.Text))
+                End If
+            End If
+        End If
+    End Sub
 
-	Private Sub vista_n_customtable_events() Handles GenSearchControl1.CVista_IndexTextChanged, CustomTable.LinkClicked
-		ExecuteQuery(GenSearchControl1.vista.Text, True)
-	End Sub
+    Private Sub vista_n_customtable_events() Handles GenSearchControl1.CVista_IndexTextChanged, CustomTable.LinkClicked
+        ExecuteQuery(GenSearchControl1.vista.Text, True)
+    End Sub
 
-	'CUSTOM QUERY
-	Private Sub CustomQuery_KeyUp(sender As Object, e As KeyEventArgs) Handles CustomQuery.KeyUp
+    'CUSTOM QUERY
+    Private Sub CustomQuery_KeyUp(sender As Object, e As KeyEventArgs) Handles CustomQuery.KeyUp
         If e.KeyValue = Keys.Enter Then
             Dim sql(0) As String
             sql(0) = CustomQuery.Text
             Dim dtab As DataTable = DbMan.ReadDB(Nothing, Connection.Text, sql)
-            CtrlMan.LoadDataGridView(QueryView, query_bs, "", dtab)
+            CtrlMan.DataGridViewTools.Load(QueryView, query_bs, "", dtab)
             CustomQuery.Items.Insert(0, Trim(CustomQuery.Text))
             CustomQuery.Text = ""
         End If

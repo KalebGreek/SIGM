@@ -1,28 +1,26 @@
-﻿Imports System.ComponentModel
-
-Public Class BusquedaExpediente
-	Private Sub ConsultaPersona_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
-		If Me.Visible Then
-			'Setting up views
-			ControlBusqueda1.vista.Items.AddRange(New Object() {"EXPEDIENTE", "RESPONSABLE", "PROFESIONAL"})
-			'Selecting view
-			If ControlBusqueda1.vista.SelectedIndex = -1 Then
-				ControlBusqueda1.vista.SelectedIndex = 0 'Persona
+﻿Public Class BusquedaExpediente
+    Private Sub ConsultaPersona_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+        If Me.Visible Then
+            'Setting up views
+            ControlBusqueda1.vista.Items.AddRange(New Object() {"EXPEDIENTE", "RESPONSABLE", "PROFESIONAL"})
+            'Selecting view
+            If ControlBusqueda1.vista.SelectedIndex = -1 Then
+                ControlBusqueda1.vista.SelectedIndex = 0 'Persona
             End If
-		End If
-	End Sub
+        End If
+    End Sub
 
-	'-- RUTINAS
+    '-- RUTINAS
 
-	'hay que cambiar la definición del evento search por default para que tome byref combobox y pueda ser usado
-	'para rellenarlo con la lista de columnas
-	'gran parte de esta consulta no sirve porque va a estar incluida en csearch
-	'gran parte de expedientes.buscar no va
+    'hay que cambiar la definición del evento search por default para que tome byref combobox y pueda ser usado
+    'para rellenarlo con la lista de columnas
+    'gran parte de esta consulta no sirve porque va a estar incluida en csearch
+    'gran parte de expedientes.buscar no va
 
-	'-- EVENTOS UNICOS
+    '-- EVENTOS UNICOS
 
-	Private Sub Consultar()
-		With ControlBusqueda1
+    Private Sub Consultar()
+        With ControlBusqueda1
             If .vista.SelectedIndex > -1 Then
                 Dim dtab As New DataTable
                 .filtro.DataSource = Nothing
@@ -34,37 +32,39 @@ Public Class BusquedaExpediente
                     dtab = Oprivadas.Expediente.Buscar.Profesional()
                 End If
                 If dtab Is Nothing = False Then
-                    Dim bs As New BindingSource
-                    bs.DataSource = CtrlMan.Fill.GetColumnList(dtab)
-                    CtrlMan.Fill.SetAutoComplete(.filtro, bs, "ColumnName", "DataType")
-                    CtrlMan.LoadDataGridView(resultado, bs_resultado, .bsCustomFilter, dtab)
+                    CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, .bsCustomFilter, dtab)
+                    Dim bs_ColumnList As New BindingSource
+                    bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)
+                    CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
+                    .FilterSearch()
+                    bs_resultado.Filter = .bsCustomFilter
                 End If
             End If
         End With
-	End Sub
-	Private Sub Filtrar() Handles ControlBusqueda1.CSearch_Click
-		bs_resultado.Filter = ControlBusqueda1.bsCustomFilter
-	End Sub
-	Private Sub Reiniciar() Handles ControlBusqueda1.CReset_Click
-	End Sub
-	Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVista_IndexTextChanged
-		Consultar()
-	End Sub
+    End Sub
+    Private Sub Buscar() Handles ControlBusqueda1.CSearch_Click
+        Consultar()
+    End Sub
+    Private Sub Reiniciar() Handles ControlBusqueda1.CReset_Click
+    End Sub
+    Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVista_IndexTextChanged
+        Consultar()
+    End Sub
 
-	Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles resultado.KeyUp
-		If sender Is resultado Then
-			If e.KeyValue = Keys.F2 Then
-				If resultado.DataSource.Position > -1 Then
-					Dim mexp As New ModExpediente(resultado.DataSource.Current("expediente"))
-					mexp.ShowDialog()
-					ControlBusqueda1.search.PerformClick()
-				End If
-			ElseIf e.KeyValue = Keys.Delete Then 'No implementado
-				'If Oprivadas.Expediente.eliminar(resultado.DataSource.Current("expediente_id")) Then
-				'resultado.DataSource.RemoveCurrent()
-				'End If
-			End If
-		End If
-	End Sub
+    Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles resultado.KeyUp
+        If sender Is resultado Then
+            If e.KeyValue = Keys.F2 Then
+                If resultado.DataSource.Position > -1 Then
+                    Dim mexp As New ModExpediente(resultado.DataSource.Current("expediente"))
+                    mexp.ShowDialog()
+                    ControlBusqueda1.search.PerformClick()
+                End If
+            ElseIf e.KeyValue = Keys.Delete Then 'No implementado
+                'If Oprivadas.Expediente.eliminar(resultado.DataSource.Current("expediente_id")) Then
+                'resultado.DataSource.RemoveCurrent()
+                'End If
+            End If
+        End If
+    End Sub
 
 End Class

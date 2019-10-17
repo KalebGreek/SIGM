@@ -165,7 +165,7 @@
 
 
         'frentes
-        CtrlMan.LoadDataGridView(consulta_frente, bs_frente, "", Catastro.ListarFrente(catastro_id.Text))
+        CtrlMan.DataGridViewTools.Load(consulta_frente, bs_frente, "", Catastro.ListarFrente(catastro_id.Text))
 
         'superficies
         sql(0) = "SELECT *"
@@ -179,102 +179,102 @@
         sql(1) = "FROM cat_servicio"
         sql(2) = "WHERE catastro_id=" & catastro_id.Text
 
-        CtrlMan.LoadDataGridView(consulta_caract, bs_car, "",
-                                 DbMan.readDB(Nothing, My.Settings.CurrentDB, sql))
+        CtrlMan.DataGridViewTools.Load(consulta_caract, bs_car, "",
+                                 DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql))
 
         'copias
-        CtrlMan.LoadDataGridView(consulta_copia, bs_copia, "", Documento.Catastro.BuscarDoc(catastro_id.Text))
+        CtrlMan.DataGridViewTools.Load(consulta_copia, bs_copia, "", Documento.Catastro.BuscarDoc(catastro_id.Text))
 
-	End Sub
+    End Sub
 
-	Function Validar(pagina As Integer) As DialogResult
-		Dim msg As New List(Of String)
-		Dim valido As Boolean = True
-		Dim dr As DialogResult = DialogResult.OK
+    Function Validar(pagina As Integer) As DialogResult
+        Dim msg As New List(Of String)
+        Dim valido As Boolean = True
+        Dim dr As DialogResult = DialogResult.OK
 
-		If pagina = 0 Then 'BÚSQUEDA DE PARTIDA
+        If pagina = 0 Then 'BÚSQUEDA DE PARTIDA
             msg.Add("** PARTIDA **")
-			If catastro_id.Text = -1 Then
-				msg.Add("(×) Seleccione un inmueble para continuar.")
-				valido = False
-			ElseIf catastro_id.Text <> 0 And operacion.Text = "" Then
-				msg.Add("(×) Inmueble no válido.")
-				valido = False
-			End If
+            If catastro_id.Text = -1 Then
+                msg.Add("(×) Seleccione un inmueble para continuar.")
+                valido = False
+            ElseIf catastro_id.Text <> 0 And operacion.Text = "" Then
+                msg.Add("(×) Inmueble no válido.")
+                valido = False
+            End If
 
-		ElseIf pagina = 1 Then 'DETALLES
+        ElseIf pagina = 1 Then 'DETALLES
             msg.Add("** DETALLE DE INMUEBLE **")
-			If Val(cuenta.Text) < 1 Then
-				msg.Add("(×) Ingrese N° de cuenta del inmueble.")
-				valido = False
-			End If
-			If barrio.SelectedIndex = -1 Then
-				msg.Add("(×) Debe seleccionar un barrio antes de continuar.")
-				valido = False
-			End If
-			If uso.SelectedIndex = -1 Then
-				msg.Add("(×) Debe indicar uso del inmueble antes de continuar.")
-				valido = False
-			End If
-			If titular_id.Text < 1 Then
-				msg.Add("(×) No se seleccionó un titular.")
-				valido = False
-			End If
+            If Val(cuenta.Text) < 1 Then
+                msg.Add("(×) Ingrese N° de cuenta del inmueble.")
+                valido = False
+            End If
+            If barrio.SelectedIndex = -1 Then
+                msg.Add("(×) Debe seleccionar un barrio antes de continuar.")
+                valido = False
+            End If
+            If uso.SelectedIndex = -1 Then
+                msg.Add("(×) Debe indicar uso del inmueble antes de continuar.")
+                valido = False
+            End If
+            If titular_id.Text < 1 Then
+                msg.Add("(×) No se seleccionó un titular.")
+                valido = False
+            End If
 
 
-		ElseIf pagina = 2 Then 'FRENTES
+        ElseIf pagina = 2 Then 'FRENTES
             msg.Add("** FRENTES **")
-			If bs_frente.Count = 0 Then
-				msg.Add("(×) No se definió ningún frente de inmueble.")
-				valido = False
-			ElseIf bs_frente.Position = -1 Then
-				msg.Add("(×) Debe seleccionar un frente como ubicación del inmueble.")
-				valido = False
-			End If
+            If bs_frente.Count = 0 Then
+                msg.Add("(×) No se definió ningún frente de inmueble.")
+                valido = False
+            ElseIf bs_frente.Position = -1 Then
+                msg.Add("(×) Debe seleccionar un frente como ubicación del inmueble.")
+                valido = False
+            End If
 
 
-		ElseIf pagina = 3 Then 'SUPERFICIE
+        ElseIf pagina = 3 Then 'SUPERFICIE
             msg.Add("** SUPERFICIE **")
-			If libre.Value = 0 Or cubierto.Value = 0 Then
-				msg.Add("(×) No hay superficie declarada.")
-				valido = False
-			End If
+            If libre.Value = 0 Or cubierto.Value = 0 Then
+                msg.Add("(×) No hay superficie declarada.")
+                valido = False
+            End If
 
 
-		ElseIf pagina = 4 Then 'CARACTERÍSTICAS Y SERVICIOS
+        ElseIf pagina = 4 Then 'CARACTERÍSTICAS Y SERVICIOS
             msg.Add("** CARACTERÍSTICAS **")
-			If bs_car.Count = 0 Then
-				msg.Add("(×) No se definió ningún servicio o característica.")
-				valido = False
-			End If
+            If bs_car.Count = 0 Then
+                msg.Add("(×) No se definió ningún servicio o característica.")
+                valido = False
+            End If
 
 
-		ElseIf pagina = 5 Then 'COPIAS
+        ElseIf pagina = 5 Then 'COPIAS
             msg.Add("** COPIAS DIGITALES **")
-			If bs_copia.Count = 0 Then
-				msg.Add("(×) No existen documentos relacionados con este inmueble.")
-				valido = False
-			Else
-				valido = False
-				For fila As Integer = 0 To bs_copia.Count - 1
-					bs_copia.Position = fila
-					If bs_copia.Current("descripcion") = "ESCRITURA O POSESION" Then
-						valido = True
-					End If
-				Next
-				If valido = False Then
-					msg.Add("(×) Es obligatorio cargar una copia de la Escritura o Posesión del inmueble para continuar.")
-				End If
-			End If
-		End If
+            If bs_copia.Count = 0 Then
+                msg.Add("(×) No existen documentos relacionados con este inmueble.")
+                valido = False
+            Else
+                valido = False
+                For fila As Integer = 0 To bs_copia.Count - 1
+                    bs_copia.Position = fila
+                    If bs_copia.Current("descripcion") = "ESCRITURA O POSESION" Then
+                        valido = True
+                    End If
+                Next
+                If valido = False Then
+                    msg.Add("(×) Es obligatorio cargar una copia de la Escritura o Posesión del inmueble para continuar.")
+                End If
+            End If
+        End If
 
-		If valido = False Then
-			Dim error_form As New visor_error("Errores en Inmueble", msg)
-			dr = error_form.ShowDialog(Me)
-			error_form.Dispose()
-		End If
-		Return dr
-	End Function
+        If valido = False Then
+            Dim error_form As New visor_error("Errores en Inmueble", msg)
+            dr = error_form.ShowDialog(Me)
+            error_form.Dispose()
+        End If
+        Return dr
+    End Function
 
     Private Sub BloquearMod()
         Dim lock As Boolean = (info_estado.Text <> "BLOQUEADO")
@@ -286,7 +286,7 @@
     End Sub
 
     Private Sub GuardarCambios()
-		With grupo_mod
+        With grupo_mod
             If .SelectedIndex = 1 Then
                 If operacion.Text = "MOD" Then
                     Catastro.Modificar.Inmueble(opr_id.Text, catastro_id.Text, titular_id.Text,
@@ -314,21 +314,21 @@
                 Cargar(dtab_cat)
             End If
         End With
-	End Sub
+    End Sub
 
     'UBICACIÓN Y TITULAR
     Private Sub cuenta_ValueChanged(sender As Object, e As EventArgs) Handles cuenta.ValueChanged
-		info_cuenta.Text = cuenta.Value
-	End Sub
-	Private Sub uso_TextChanged(sender As Object, e As EventArgs) Handles uso.TextChanged
-		info_uso.Text = uso.Text
-	End Sub
+        info_cuenta.Text = cuenta.Value
+    End Sub
+    Private Sub uso_TextChanged(sender As Object, e As EventArgs) Handles uso.TextChanged
+        info_uso.Text = uso.Text
+    End Sub
 
-	Private Sub barrio_TextChanged(sender As Object, e As EventArgs) Handles barrio.TextChanged
-		info_barrio.Text = barrio.Text
-	End Sub
+    Private Sub barrio_TextChanged(sender As Object, e As EventArgs) Handles barrio.TextChanged
+        info_barrio.Text = barrio.Text
+    End Sub
 
-	Private Sub mod_titular_Click(sender As Object, e As EventArgs) Handles mod_titular.Click
+    Private Sub mod_titular_Click(sender As Object, e As EventArgs) Handles mod_titular.Click
         Dim bs As BindingSource = Persona.Seleccionar(Me)
         With bs
             If .DataSource Is Nothing = False Then
@@ -347,19 +347,19 @@
             .Dispose()
         End With
     End Sub
-	Private Sub titular_TextChanged(sender As Object, e As EventArgs) Handles titular.TextChanged
-		info_titular.Text = titular.Text
-	End Sub
-	Private Sub cuil_TextChanged(sender As Object, e As EventArgs) Handles cuil.TextChanged
-		info_cuil.Text = cuil.Text
-	End Sub
-	Private Sub archivado_CheckedChanged(sender As Object, e As EventArgs) Handles archivado.CheckedChanged
-		With archivado
-			.Checked = tab_ubicacion.Enabled.CompareTo(True)
-			.Checked = tab_sup.Enabled.CompareTo(True)
-			.Checked = tab_caracter.Enabled.CompareTo(True)
-			.Checked = tab_frente.Enabled.CompareTo(True)
-			.Checked = tab_copia.Enabled.CompareTo(True)
+    Private Sub titular_TextChanged(sender As Object, e As EventArgs) Handles titular.TextChanged
+        info_titular.Text = titular.Text
+    End Sub
+    Private Sub cuil_TextChanged(sender As Object, e As EventArgs) Handles cuil.TextChanged
+        info_cuil.Text = cuil.Text
+    End Sub
+    Private Sub archivado_CheckedChanged(sender As Object, e As EventArgs) Handles archivado.CheckedChanged
+        With archivado
+            .Checked = tab_ubicacion.Enabled.CompareTo(True)
+            .Checked = tab_sup.Enabled.CompareTo(True)
+            .Checked = tab_caracter.Enabled.CompareTo(True)
+            .Checked = tab_frente.Enabled.CompareTo(True)
+            .Checked = tab_copia.Enabled.CompareTo(True)
             '.Checked = cuenta.Enabled.CompareTo(True)
             '.Checked = barrio.Enabled.CompareTo(True)
             '.Checked = uso.Enabled.CompareTo(True)
@@ -371,28 +371,28 @@
             '.Checked = consulta_caract.ReadOnly
             '.Checked = menu_copia.Enabled.CompareTo(True)
         End With
-	End Sub
+    End Sub
 
     ' FRENTES
     Private Sub frente_click_events(sender As Object, e As EventArgs) Handles add_frente.Click, del_frente.Click, ubicacion_principal.Click
-		If sender Is add_frente Then
-			Dim agregar_frente As New AgregarFrente
-			With agregar_frente
-				.ShowDialog(Me)
-				If .calle.Text <> "" Then
-					Catastro.Agregar.Frente(catastro_id.Text, .calle.Text, .altura.Value, .metros.Value)
-					ubicacion_principal.PerformClick()
-				End If
-				.Dispose()
-			End With
-		ElseIf bs_frente.Position > -1 Then
-			If sender Is ubicacion_principal Then
-				Catastro.Modificar.Ubicacion(bs_frente, catastro_id.Text)
-			ElseIf sender Is del_frente Then
-				Catastro.Eliminar.Frente(bs_frente, catastro_id.Text)
-			End If
-		End If
-        CtrlMan.LoadDataGridView(consulta_frente, bs_frente, "", Catastro.ListarFrente(catastro_id.Text))
+        If sender Is add_frente Then
+            Dim agregar_frente As New AgregarFrente
+            With agregar_frente
+                .ShowDialog(Me)
+                If .calle.Text <> "" Then
+                    Catastro.Agregar.Frente(catastro_id.Text, .calle.Text, .altura.Value, .metros.Value)
+                    ubicacion_principal.PerformClick()
+                End If
+                .Dispose()
+            End With
+        ElseIf bs_frente.Position > -1 Then
+            If sender Is ubicacion_principal Then
+                Catastro.Modificar.Ubicacion(bs_frente, catastro_id.Text)
+            ElseIf sender Is del_frente Then
+                Catastro.Eliminar.Frente(bs_frente, catastro_id.Text)
+            End If
+        End If
+        CtrlMan.DataGridViewTools.Load(consulta_frente, bs_frente, "", Catastro.ListarFrente(catastro_id.Text))
     End Sub
 
     ' SUPERFICIE

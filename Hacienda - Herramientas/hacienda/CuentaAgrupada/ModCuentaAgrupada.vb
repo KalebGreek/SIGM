@@ -1,5 +1,4 @@
-﻿Imports Sigm.CuentaAgrupada
-Public Class ModCuentaAgrupada
+﻿Public Class ModCuentaAgrupada
     '###### VARIABLES #######################################################################################
     Dim cuota_vence As Integer
     Dim dtab_imp, dtab_cuenta, dtab_vence, dtab_deto As New DataTable
@@ -55,11 +54,11 @@ Public Class ModCuentaAgrupada
         End With
     End Sub
 
-	Function deuda(ByVal deuda_total As Boolean, ByVal cuenta_agrupada As Boolean, ByVal impuesto As String,
-				   ByVal filter As Integer, ByVal keyword As String, ByVal range As Integer,
-				   ByVal dmin As Integer, ByVal dmax As Integer) As DataTable
-		progreso.Value = 5
-		Dim consulta As New DataTable
+    Function deuda(ByVal deuda_total As Boolean, ByVal cuenta_agrupada As Boolean, ByVal impuesto As String,
+                   ByVal filter As Integer, ByVal keyword As String, ByVal range As Integer,
+                   ByVal dmin As Integer, ByVal dmax As Integer) As DataTable
+        progreso.Value = 5
+        Dim consulta As New DataTable
         '### Crear consulta sin filtros
         Dim sql(5) As String
         sql(0) = "SELECT " & ext_persona & ".codigo as codigo, " & ext_persona & ".razon as razon,"
@@ -77,9 +76,9 @@ Public Class ModCuentaAgrupada
             sql(2) += " WHERE " & ext_persona & ".codigo=" & bs_contrib.Current("codigo")
         End If
         consulta = DbMan.readDB(Nothing, My.Settings.foxConnection, sql)
-		progreso.Value = 20
-		Return consulta
-	End Function
+        progreso.Value = 20
+        Return consulta
+    End Function
 
     '### CUENTA AGRUPADA
 
@@ -88,54 +87,54 @@ Public Class ModCuentaAgrupada
         'Esto guarda los ID de los registros borrados para guardar los 
         'cambios correctamente después.
         If e.KeyCode = Keys.Delete Then
-			With bs_mod_contrib
-				If IsDBNull(.Current("id")) = False Then
-					del_rows(ndel) = .Current("id")
-					found = True
-					ndel += 1
-				End If
-			End With
-		End If
-	End Sub
-	Private Sub imp_add_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-		With bs_mod_contrib
-			.AddNew()
-			.Current("impuesto") = TipoImpuesto.Text
-			.Current("codigo") = bs_consulta.Current("codigo")
-			.Current("alta") = imp_alta.Value 'alta
+            With bs_mod_contrib
+                If IsDBNull(.Current("id")) = False Then
+                    del_rows(ndel) = .Current("id")
+                    found = True
+                    ndel += 1
+                End If
+            End With
+        End If
+    End Sub
+    Private Sub imp_add_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        With bs_mod_contrib
+            .AddNew()
+            .Current("impuesto") = TipoImpuesto.Text
+            .Current("codigo") = bs_consulta.Current("codigo")
+            .Current("alta") = imp_alta.Value 'alta
             .EndEdit()
-		End With
-	End Sub
-	Private Sub save_ca_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-		Dim nupd, nins As Integer
-		Dim fila As Integer = 0
-		With imp_lista_mod
-			If .RowCount > 0 Then
-				Do While fila < .RowCount
-					If .Item(0, fila).Value.ToString = Nothing Then
-						'mod_sql = "INSERT INTO contribuyente(razon, cuil, impuesto, codigo, alta) VALUES ('" &
-						'razon.Text & "', " & cuil.Text & ", '" & .Item(1, fila).Value & "', " &
-						'.Item(2, fila).Value & ", '" & .Item(3, fila).Value & "');"
-						'DbMan.editDB()
-						nins += 1
-					Else
-						'mod_sql = "UPDATE contribuyente SET razon='" & razon.Text & "', impuesto='" & .Item(1, fila).Value &
-						'   "', codigo=" & .Item(2, fila).Value & ", alta='" & .Item(3, fila).Value & "'" &
-						'   " WHERE id=" & .Item(0, fila).Value
-						'DbMan.editDB()
-						nupd += 1
-					End If
-					fila += 1
-				Loop
-				ndel = 0
-				If found = True Then
-					Do While ndel < del_rows.Count And del_rows(ndel) <> Nothing
-						DbMan.editDB(Nothing, My.Settings.foxConnection, "DELETE FROM contribuyente WHERE id=" & del_rows(ndel) & ";")
-						ndel += 1
-					Loop
-				End If
-			Else
-				If MsgBoxResult.Ok = MsgBox("Esto eliminará todos los registros de la cuenta agrupada, ¿desea continuar?.", MsgBoxStyle.OkCancel) Then
+        End With
+    End Sub
+    Private Sub save_ca_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        Dim nupd, nins As Integer
+        Dim fila As Integer = 0
+        With imp_lista_mod
+            If .RowCount > 0 Then
+                Do While fila < .RowCount
+                    If .Item(0, fila).Value.ToString = Nothing Then
+                        'mod_sql = "INSERT INTO contribuyente(razon, cuil, impuesto, codigo, alta) VALUES ('" &
+                        'razon.Text & "', " & cuil.Text & ", '" & .Item(1, fila).Value & "', " &
+                        '.Item(2, fila).Value & ", '" & .Item(3, fila).Value & "');"
+                        'DbMan.editDB()
+                        nins += 1
+                    Else
+                        'mod_sql = "UPDATE contribuyente SET razon='" & razon.Text & "', impuesto='" & .Item(1, fila).Value &
+                        '   "', codigo=" & .Item(2, fila).Value & ", alta='" & .Item(3, fila).Value & "'" &
+                        '   " WHERE id=" & .Item(0, fila).Value
+                        'DbMan.editDB()
+                        nupd += 1
+                    End If
+                    fila += 1
+                Loop
+                ndel = 0
+                If found = True Then
+                    Do While ndel < del_rows.Count And del_rows(ndel) <> Nothing
+                        DbMan.editDB(Nothing, My.Settings.foxConnection, "DELETE FROM contribuyente WHERE id=" & del_rows(ndel) & ";")
+                        ndel += 1
+                    Loop
+                End If
+            Else
+                If MsgBoxResult.Ok = MsgBox("Esto eliminará todos los registros de la cuenta agrupada, ¿desea continuar?.", MsgBoxStyle.OkCancel) Then
                     '    DbMan.editDB(  "DELETE FROM contribuyente WHERE cuil=" & cuil.Text & ";")
                 End If
             End If

@@ -1,6 +1,4 @@
 ﻿Imports System.Resources
-
-Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
@@ -10,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("SIGM")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
+<Assembly: AssemblyTitle("SIGM")>
+<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("Sistema Integral de Gestión Municipal")>
 <Assembly: AssemblyCopyright("©  2019")>
-<Assembly: AssemblyTrademark("SIGM")> 
+<Assembly: AssemblyTrademark("SIGM")>
 
-<Assembly: ComVisible(False)> 
+<Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("af9b3c66-94b2-43f5-b6c0-823727bb93bc")> 
+<Assembly: Guid("af9b3c66-94b2-43f5-b6c0-823727bb93bc")>
 
 ' Version information for an assembly consists of the following four values:
 '
@@ -33,7 +31,7 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyVersion("1.0.0.0")>
+<Assembly: AssemblyFileVersion("1.0.0.0")>
 
-<Assembly: NeutralResourcesLanguageAttribute("es-AR")> 
+<Assembly: NeutralResourcesLanguageAttribute("es-AR")>

@@ -15,10 +15,10 @@
             'Calcular vencimientos
             'Agregar
             DbMan.editDB(Nothing, My.Settings.CurrentDB,
-					"INSERT INTO opr_pago(opr_id, tipo_deuda, cuota, deuda, vence)
+                    "INSERT INTO opr_pago(opr_id, tipo_deuda, cuota, deuda, vence)
                      VALUES(" & opr_id & ", '" & desc & "', " & cuota & ", '" & monto / cuotas & "'," &
-					" '" & CtrlMan.CalcExpirationDate(fecha, cuota) & "')")
-		Next
+                    " '" & CtrlMan.CalcularVencimiento(fecha, cuota) & "')")
+        Next
 	End Sub
 	Shared Sub EliminarDeuda(deuda_id As Integer, opr_id As Integer)
 		DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM opr_pago WHERE id=" & deuda_id)

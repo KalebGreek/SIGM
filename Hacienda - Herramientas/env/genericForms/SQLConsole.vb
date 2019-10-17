@@ -1,26 +1,24 @@
-﻿Imports System.ComponentModel
-
-Public Class SQLConsole
-	Private Sub SQLConsole_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
-		If Me.Visible Then
-			connection.Items.Add(My.Settings.AdbConnection)
-			connection.Items.Add(My.Settings.foxConnection)
-			connection.Items.Add(My.Settings.pgsql_disabled)
-		End If
-	End Sub
+﻿Public Class SQLConsole
+    Private Sub SQLConsole_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+        If Me.Visible Then
+            connection.Items.Add(My.Settings.AdbConnection)
+            connection.Items.Add(My.Settings.foxConnection)
+            connection.Items.Add(My.Settings.pgsql_disabled)
+        End If
+    End Sub
 
 
 
 
     Private Sub query_KeyUp(sender As Object, e As KeyEventArgs) Handles query.KeyUp
-		If e.KeyValue = Keys.Enter Then
-			query.Text = ExecuteQuery(query.Text)
-		End If
-	End Sub
+        If e.KeyValue = Keys.Enter Then
+            query.Text = ExecuteQuery(query.Text)
+        End If
+    End Sub
 
-	Private Sub query_log_SelectedValueChanged(sender As Object, e As EventArgs) Handles QueryLog.SelectedIndexChanged
-		ToolTip1.SetToolTip(QueryLog, QueryLog.SelectedItem)
-	End Sub
+    Private Sub query_log_SelectedValueChanged(sender As Object, e As EventArgs) Handles QueryLog.SelectedIndexChanged
+        ToolTip1.SetToolTip(QueryLog, QueryLog.SelectedItem)
+    End Sub
 
     Private Sub connection_SelectedIndexChanged(sender As Object, e As EventArgs) Handles connection.SelectedIndexChanged
         ConnectDB()
@@ -34,20 +32,20 @@ Public Class SQLConsole
 
 
     Private Sub TableList_DoubleClick() Handles TableList.DoubleClick
-		If TableList.SelectedItem <> "" Then
-			query.Text = "SELECT * FROM " & TableList.SelectedItem
-			ExecuteQuery(query.Text)
-		End If
-	End Sub
+        If TableList.SelectedItem <> "" Then
+            query.Text = "SELECT * FROM " & TableList.SelectedItem
+            ExecuteQuery(query.Text)
+        End If
+    End Sub
 
-	Private Sub QueryLog_DoubleClick(sender As Object, e As EventArgs) Handles QueryLog.DoubleClick
-		If QueryLog.Text.Contains("SELECT") Or QueryLog.Text.Contains("INSERT INTO") _
-		Or QueryLog.Text.Contains("UPDATE") Or QueryLog.Text.Contains("DELETE") Then
-			query.Text = QueryLog.Text
-			query.Text = ExecuteQuery(query.Text)
-		End If
+    Private Sub QueryLog_DoubleClick(sender As Object, e As EventArgs) Handles QueryLog.DoubleClick
+        If QueryLog.Text.Contains("SELECT") Or QueryLog.Text.Contains("INSERT INTO") _
+        Or QueryLog.Text.Contains("UPDATE") Or QueryLog.Text.Contains("DELETE") Then
+            query.Text = QueryLog.Text
+            query.Text = ExecuteQuery(query.Text)
+        End If
 
-	End Sub
+    End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles AddScript.Click
         Dim ruta As String = ""
@@ -85,7 +83,7 @@ Public Class SQLConsole
                         QueryLog.Items.Insert(0, DbMan.editDB(OleDBCmd, connection.Text))
 
                     ElseIf .CommandText.Contains("SELECT") Then
-                        CtrlMan.LoadDataGridView(QueryResult, bs_result, "", DbMan.ReadDB(OleDBCmd, connection.Text))
+                        CtrlMan.DataGridViewTools.Load(QueryResult, bs_result, "", DbMan.ReadDB(OleDBCmd, connection.Text))
                     End If
                     sql = ""
                 Else
@@ -100,10 +98,13 @@ Public Class SQLConsole
     Private Sub ConnectDB()
         TableList.Items.Clear()
         If connection.Text <> "" Then
-            Dim TableNames As DataTable = DbMan.readTableSchema(connection.Text)
-            For Each dr As DataRow In TableNames.Rows
-                TableList.Items.Add(dr("table_name").ToString)
-            Next
+            Dim TableNames As DataTable = DbMan.ReadTableSchema(connection.Text)
+            If TableNames.Rows.Count > 0 Then
+
+                For Each dr As DataRow In TableNames.Rows
+                    TableList.Items.Add(dr("table_name").ToString)
+                Next
+            End If
         End If
     End Sub
 End Class

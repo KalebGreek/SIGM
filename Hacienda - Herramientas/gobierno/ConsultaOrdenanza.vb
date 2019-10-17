@@ -84,7 +84,7 @@
         dtab = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
         If dtab Is Nothing = False Then
-            visor = CtrlMan.LoadDataGridView(visor, bs_consulta, "", dtab)
+            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, "", dtab)
             If dtab.Rows.Count = 0 Then
                 MsgBox("No hay resultados.")
                 Me.Text = "Buscar Ordenanza"
