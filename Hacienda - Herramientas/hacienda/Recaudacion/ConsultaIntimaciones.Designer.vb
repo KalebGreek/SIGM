@@ -27,6 +27,7 @@ Partial Class ConsultaIntimaciones
         Me.bs_intimaciones = New System.Windows.Forms.BindingSource(Me.components)
         Me.visor_contribuyente = New System.Windows.Forms.DataGridView()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.GenSearchControl1 = New Sigm.genSearchControl()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -43,11 +44,11 @@ Partial Class ConsultaIntimaciones
         Me.nuevaInt = New System.Windows.Forms.Button()
         Me.historialInt = New System.Windows.Forms.Button()
         Me.print = New System.Windows.Forms.Button()
+        Me.opcion_aviso = New System.Windows.Forms.ComboBox()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.progreso = New System.Windows.Forms.ToolStripProgressBar()
         Me.info = New System.Windows.Forms.ToolStripStatusLabel()
         Me.info2 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.GenSearchControl1 = New Sigm.genSearchControl()
         CType(Me.bs_contribuyente, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.bs_intimaciones, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.visor_contribuyente, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -58,11 +59,15 @@ Partial Class ConsultaIntimaciones
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
+        'bs_contribuyente
+        '
+        '
         'visor_contribuyente
         '
         Me.visor_contribuyente.AllowUserToAddRows = False
         Me.visor_contribuyente.AllowUserToDeleteRows = False
         Me.visor_contribuyente.AllowUserToResizeRows = False
+        Me.visor_contribuyente.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.visor_contribuyente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.visor_contribuyente.Dock = System.Windows.Forms.DockStyle.Fill
         Me.visor_contribuyente.EnableHeadersVisualStyles = False
@@ -91,6 +96,17 @@ Partial Class ConsultaIntimaciones
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1033, 34)
         Me.Panel1.TabIndex = 7
+        '
+        'GenSearchControl1
+        '
+        Me.GenSearchControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.GenSearchControl1.BackColor = System.Drawing.Color.Silver
+        Me.GenSearchControl1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GenSearchControl1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GenSearchControl1.Location = New System.Drawing.Point(73, 0)
+        Me.GenSearchControl1.Name = "GenSearchControl1"
+        Me.GenSearchControl1.Size = New System.Drawing.Size(960, 34)
+        Me.GenSearchControl1.TabIndex = 5
         '
         'Label3
         '
@@ -245,6 +261,7 @@ Partial Class ConsultaIntimaciones
         Me.FlowLayoutPanel2.Controls.Add(Me.nuevaInt)
         Me.FlowLayoutPanel2.Controls.Add(Me.historialInt)
         Me.FlowLayoutPanel2.Controls.Add(Me.print)
+        Me.FlowLayoutPanel2.Controls.Add(Me.opcion_aviso)
         Me.FlowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FlowLayoutPanel2.Enabled = False
         Me.FlowLayoutPanel2.Location = New System.Drawing.Point(0, 0)
@@ -281,6 +298,16 @@ Partial Class ConsultaIntimaciones
         Me.print.TabIndex = 3
         Me.print.Text = "Imprimir Aviso"
         Me.print.UseVisualStyleBackColor = True
+        '
+        'opcion_aviso
+        '
+        Me.opcion_aviso.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.opcion_aviso.FormattingEnabled = True
+        Me.opcion_aviso.Items.AddRange(New Object() {"Aviso de Deuda", "Reiteración de Aviso de Deuda", "Reducción de Servicio"})
+        Me.opcion_aviso.Location = New System.Drawing.Point(3, 90)
+        Me.opcion_aviso.Name = "opcion_aviso"
+        Me.opcion_aviso.Size = New System.Drawing.Size(139, 27)
+        Me.opcion_aviso.TabIndex = 4
         '
         'StatusStrip1
         '
@@ -320,17 +347,6 @@ Partial Class ConsultaIntimaciones
         Me.info2.Size = New System.Drawing.Size(15, 19)
         Me.info2.Text = "-"
         Me.info2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'GenSearchControl1
-        '
-        Me.GenSearchControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.GenSearchControl1.BackColor = System.Drawing.Color.Silver
-        Me.GenSearchControl1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GenSearchControl1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GenSearchControl1.Location = New System.Drawing.Point(73, 0)
-        Me.GenSearchControl1.Name = "GenSearchControl1"
-        Me.GenSearchControl1.Size = New System.Drawing.Size(960, 34)
-        Me.GenSearchControl1.TabIndex = 5
         '
         'ConsultaIntimaciones
         '
@@ -385,4 +401,5 @@ Partial Class ConsultaIntimaciones
     Friend WithEvents info As ToolStripStatusLabel
     Friend WithEvents info2 As ToolStripStatusLabel
     Friend WithEvents print As Button
+    Friend WithEvents opcion_aviso As ComboBox
 End Class

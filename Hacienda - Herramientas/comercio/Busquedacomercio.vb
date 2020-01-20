@@ -1,6 +1,5 @@
 ﻿Public Class BusquedaComercio
 
-    Private RowIsSelected As Boolean = False
     Public Sub New()
 
         ' This call is required by the designer.

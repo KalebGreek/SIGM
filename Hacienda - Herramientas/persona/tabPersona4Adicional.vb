@@ -1,101 +1,55 @@
 ﻿Public Class tabPersona4Adicional
-	Inherits System.Windows.Forms.UserControl
-	Public Sub New()
-		' This call is required by the designer.
-		InitializeComponent()
+    Inherits System.Windows.Forms.UserControl
+    Dim sql(0) As String
 
-        ' Add any initialization after the InitializeComponent() call.
-        Dim sql(0) As String
-
-
-        'Todo esto se puede cargar en una sola consulta
-        'Proveedor
-        sql(0) = "SELECT * FROM responsable_iva ORDER BY descripcion"
-        bs_responsable_iva.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
-        CtrlMan.Fill.SetAutoComplete(responsable_iva, bs_responsable_iva, "descripcion", "id")
-        sql(0) = "SELECT * FROM prov_actividad ORDER BY actividad"
-        bs_actividad.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
-        CtrlMan.Fill.SetAutoComplete(actividad, bs_actividad, "actividad", "id")
-        'Profesional
-        sql(0) = "SELECT * FROM profesional_titulo ORDER BY descripcion"
-        bs_titulo.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
-        CtrlMan.Fill.SetAutoComplete(titulo, bs_titulo, "descripcion", "id")
-	End Sub
-
-	'FUNCIONES
-	Public Function cargar(id As Integer) As Boolean
-        If id > 0 Then
-            Dim sql(0) As String
-            sql(0) = "SELECT id as persona_id, difunto, ruta_defuncion, fisica
-												  FROM persona WHERE id=" & id
-            Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
-            CtrlMan.LoadAllControls(dtab(0), Me)
-
-            difunto.Enabled = dtab(0)("fisica")
-            If difunto.Enabled = False Then
-                difunto.Checked = False
-                ruta_defuncion.Text = ""
-            End If
-
-            dtab = Proveedor.Seleccionar(proveedor_id.Text, id)
-            EsProveedor.Checked = dtab.Rows.Count > 0
-            If dtab.Rows.Count > 0 Then
-                CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel2)
-            End If
-
-            dtab = Profesional.Seleccionar(profesional_id.Text, id)
-            EsProfesional.Checked = dtab.Rows.Count > 0
-            If dtab.Rows.Count > 0 Then
-                CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel1)
-            End If
+    Private Sub tabPersona4Adicional_ParentChanged(sender As Object, e As EventArgs) Handles Me.ParentChanged
+        If Me.Parent Is Nothing = False And My.Settings.CurrentDB <> "" Then
+            'Proveedor
+            sql(0) = "SELECT * FROM responsable_iva ORDER BY descripcion"
+            bs_responsable_iva.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+            CtrlMan.Fill.SetAutoComplete(responsable_iva, bs_responsable_iva, "descripcion", "id")
+            sql(0) = "SELECT * FROM prov_actividad ORDER BY actividad"
+            bs_actividad.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+            CtrlMan.Fill.SetAutoComplete(actividad, bs_actividad, "actividad", "id")
+            'Profesional
+            sql(0) = "SELECT * FROM profesional_titulo ORDER BY descripcion"
+            bs_titulo.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+            CtrlMan.Fill.SetAutoComplete(titulo, bs_titulo, "descripcion", "id")
         End If
-        Return True
-	End Function
+    End Sub
 
-	Public Function guardar(persona_id As Integer) As Boolean
-		If CtrlMan.Validate(Me) Then
-			'Difunto
-			DbMan.editDB(Nothing, My.Settings.CurrentDB,
-						"UPDATE persona SET difunto=" & difunto.Checked & ", 
-							    ruta_defuncion='" & ruta_defuncion.Text & "'
-						  WHERE id=" & persona_id)
-			'Proveedor
-			If EsProveedor.Checked Then
-				proveedor_id.Text = Proveedor.guardar(proveedor_id.Text, persona_id, actividad.SelectedValue, responsable_iva.SelectedValue)
-			Else
-				proveedor_id.Text = Proveedor.eliminar(persona_id)
-			End If
-			'Profesional
-			If EsProfesional.Checked Then
-				profesional_id.Text = Profesional.guardar(profesional_id.Text, persona_id, titulo.SelectedValue, matricula.Text)(0)
-			Else
-				profesional_id.Text = Profesional.eliminar(persona_id)
-			End If
-		End If
-		Return True
-	End Function
+    Private Sub tabPersona4Adicional_Load(sender As Object, e As EventArgs) Handles Me.Load
+    End Sub
 
-	'Eventos
-	Private Sub esProveedor_CheckedChanged(sender As Object, e As EventArgs) Handles EsProveedor.CheckedChanged, difunto.CheckedChanged, EsProfesional.CheckedChanged
-		responsable_iva.Visible = EsProveedor.Checked
-		et_act.Visible = EsProveedor.Checked
-		actividad.Visible = EsProveedor.Checked
-		add_actividad.Visible = EsProveedor.Checked
-		del_actividad.Visible = EsProveedor.Checked
+    Private Sub tabPersona4Adicional_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
 
-		ruta_defuncion.Visible = difunto.Checked
-		cargar_defu.Visible = difunto.Checked
+    End Sub
 
-		titulo.Visible = EsProfesional.Checked
-		add_titulo.Visible = EsProfesional.Checked
-		del_titulo.Visible = EsProfesional.Checked
-		et_matr.Visible = EsProfesional.Checked
-		matricula.Visible = EsProfesional.Checked
+    'Eventos
+    Private Sub esProveedor_CheckedChanged(sender As Object, e As EventArgs) Handles EsEmpleado.CheckedChanged, EsProveedor.CheckedChanged, difunto.CheckedChanged, EsProfesional.CheckedChanged
+        jerarquia.Visible = EsEmpleado.Checked
+        alta.Visible = EsEmpleado.Checked
+        Label1.Visible = EsEmpleado.Checked
 
-	End Sub
+        responsable_iva.Visible = EsProveedor.Checked
+        et_act.Visible = EsProveedor.Checked
+        actividad.Visible = EsProveedor.Checked
+        add_actividad.Visible = EsProveedor.Checked
+        del_actividad.Visible = EsProveedor.Checked
 
-	'EVENTOS
-	Private Sub ruta_defuncion_DoubleClick(sender As Object, e As EventArgs) Handles ruta_defuncion.DoubleClick
+        ruta_defuncion.Visible = difunto.Checked
+        cargar_defu.Visible = difunto.Checked
+
+        titulo.Visible = EsProfesional.Checked
+        add_titulo.Visible = EsProfesional.Checked
+        del_titulo.Visible = EsProfesional.Checked
+        et_matr.Visible = EsProfesional.Checked
+        matricula.Visible = EsProfesional.Checked
+
+    End Sub
+
+    'EVENTOS
+    Private Sub ruta_defuncion_DoubleClick(sender As Object, e As EventArgs) Handles ruta_defuncion.DoubleClick
 		If Len(ruta_defuncion.Text) > 0 Then
 			Process.Start(root & My.Settings.DocFolderPersona & ruta_defuncion.Text)
 		End If
@@ -170,6 +124,71 @@
 
 
 
+    'FUNCIONES
+    Public Function cargar(persona_id As Integer) As Boolean
+        If persona_id > 0 Then
+            Dim sql(0) As String
+            sql(0) = "SELECT id as persona_id, difunto, ruta_defuncion, fisica
+												  FROM persona WHERE id=" & persona_id
+            Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+            CtrlMan.LoadAllControls(dtab(0), Me)
+
+            difunto.Enabled = dtab(0)("fisica")
+            If difunto.Enabled = False Then
+                difunto.Checked = False
+                ruta_defuncion.Text = ""
+            End If
+
+            dtab = Empleado.Seleccionar(empleado_id.Text, persona_id)
+            EsEmpleado.Checked = dtab.Rows.Count > 0
+            If dtab.Rows.Count > 0 Then
+                CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel4)
+            End If
+
+            dtab = Proveedor.Seleccionar(proveedor_id.Text, persona_id)
+            EsProveedor.Checked = dtab.Rows.Count > 0
+            If dtab.Rows.Count > 0 Then
+                CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel2)
+            End If
+
+            dtab = Profesional.Seleccionar(profesional_id.Text, persona_id)
+            EsProfesional.Checked = dtab.Rows.Count > 0
+            If dtab.Rows.Count > 0 Then
+                CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel1)
+            End If
+        End If
+        Return True
+    End Function
+
+    Public Function guardar(persona_id As Integer) As Boolean
+        If CtrlMan.Validate(Me) Then
+            'Empleado
+            If EsEmpleado.Checked Then
+                Empleado.guardar(empleado_id.Text, persona_id, alta.Value, jerarquia.Text)
+            Else
+                Empleado.eliminar(empleado_id.Text)
+            End If
+            'Proveedor
+            If EsProveedor.Checked Then
+                proveedor_id.Text = Proveedor.guardar(proveedor_id.Text, persona_id, actividad.SelectedValue, responsable_iva.SelectedValue)
+            Else
+                proveedor_id.Text = Proveedor.eliminar(persona_id)
+            End If
+            'Profesional
+            If EsProfesional.Checked Then
+                profesional_id.Text = Profesional.guardar(profesional_id.Text, persona_id, titulo.SelectedValue, matricula.Text)(0)
+            Else
+                profesional_id.Text = Profesional.eliminar(persona_id)
+            End If
+            'Difunto
+            DbMan.editDB(Nothing, My.Settings.CurrentDB,
+                        "UPDATE persona SET difunto=" & difunto.Checked & ", 
+							    ruta_defuncion='" & ruta_defuncion.Text & "'
+						  WHERE id=" & persona_id)
+
+        End If
+        Return True
+    End Function
 
 
 End Class

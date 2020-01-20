@@ -1,5 +1,6 @@
 ﻿Public Class BusquedaPersona
-    Public Sub New(Optional SelectMode As Boolean = False)
+    Public SelectionMode As Boolean = False
+    Public Sub New()
 
         ' This call is required by the designer.
         InitializeComponent()
@@ -7,8 +8,8 @@
         ' Add any initialization after the InitializeComponent() call.
         'Setting up views
         genSearchControl1.vista.Items.AddRange(New Object() {"PERSONA", "EMPLEADO", "PROFESIONAL", "PROVEEDOR"})
-        genSearchControl1.selectRow.Visible = SelectMode
-        genSearchControl1.cancel.Visible = SelectMode
+        genSearchControl1.selectRow.Visible = SelectionMode
+        genSearchControl1.cancel.Visible = SelectionMode
 
     End Sub
     '-- RUTINAS
@@ -121,8 +122,9 @@
             If e.KeyValue = Keys.F2 Then
                 If resultado.DataSource.Position > -1 Then
                     Dim mper As New ModPersona
-                    mper.cargar(resultado.DataSource.Current("persona_id"))
-                    mper.ShowDialog()
+                    mper.id = resultado.DataSource.Current("persona_id")
+                    mper.ShowDialog(Me)
+                    mper.Dispose()
                     genSearchControl1.search.PerformClick()
                 End If
             ElseIf e.KeyValue = Keys.Delete Then

@@ -3,7 +3,7 @@
         If Me.Visible Then
             connection.Items.Add(My.Settings.AdbConnection)
             connection.Items.Add(My.Settings.foxConnection)
-            connection.Items.Add(My.Settings.pgsql_disabled)
+            connection.Items.Add(My.Settings.pgsqlCon_disabled)
         End If
     End Sub
 
@@ -53,10 +53,16 @@
         filediag.ShowDialog()
         ruta = filediag.FileName
         If My.Computer.FileSystem.FileExists(ruta) Then
-            Dim parsedScript As String = Trim(My.Computer.FileSystem.ReadAllText(ruta))
-            If MsgBoxResult.Yes = MsgBox(parsedScript, MsgBoxStyle.YesNo) Then
-                Replace(parsedScript, Chr(13), "")
-                ExecuteQuery(parsedScript)
+            If MsgBoxResult.Yes = MsgBox("Ejecutar script?", MsgBoxStyle.YesNo) Then
+                Dim sr As StreamReader = My.Computer.FileSystem.OpenTextFileReader(ruta)
+                Dim script As String = ""
+                Do
+                    script = Trim(sr.ReadLine())
+                    MsgBox(script)
+                    ExecuteQuery(script)
+                Loop Until sr.EndOfStream
+
+
             End If
         End If
     End Sub

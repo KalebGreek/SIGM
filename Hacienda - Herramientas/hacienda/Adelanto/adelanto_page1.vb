@@ -8,7 +8,8 @@
 	End Sub
 	'Events
 	Private Sub buscarPersona_Click(sender As Object, e As EventArgs) Handles buscarPersona.Click
-        Dim bper As New BusquedaPersona(True)
+        Dim bper As New BusquedaPersona()
+        bper.SelectionMode = True
         bper.ShowDialog(Me)
         With bper
 			If .bs_resultado.Position > -1 Then

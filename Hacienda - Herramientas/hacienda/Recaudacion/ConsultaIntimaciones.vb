@@ -124,8 +124,9 @@
         bs_contribuyente.Filter = GenSearchControl1.bsCustomFilter
     End Sub
 
+
     Private Sub vista_SelectedIndexChanged() Handles GenSearchControl1.CVista_IndexTextChanged
-        FlowLayoutPanel2.Enabled = GenSearchControl1.vista.SelectedIndex > -1
+
         If Me.Visible And GenSearchControl1.vista.SelectedIndex > -1 Then
             Consultar(True)
         Else
@@ -133,7 +134,18 @@
         End If
     End Sub
 
-    'BS Events
+    Private Sub FlowLayoutPanel2_VisibleChanged(sender As Object, e As EventArgs) Handles FlowLayoutPanel2.VisibleChanged
+        opcion_aviso.SelectedIndex = 0
+    End Sub
+
+
+    'BS and DGV Events
+    Private Sub bs_contribuyente_CurrentChanged(sender As Object, e As EventArgs) Handles bs_contribuyente.CurrentChanged,
+                                                                                          bs_contribuyente.PositionChanged,
+                                                                                          bs_contribuyente.DataSourceChanged
+
+        FlowLayoutPanel2.Enabled = GenSearchControl1.vista.SelectedIndex > -1 And bs_contribuyente.Count > 0 And bs_contribuyente.Position > -1
+    End Sub
     Private Sub visor_contribuyente_RowsAdded(sender As Object, e As DataGridViewRowsAddedEventArgs) Handles visor_contribuyente.RowsAdded
         If bs_contribuyente Is Nothing = False Then
             With bs_contribuyente
@@ -209,7 +221,7 @@
                 End If
 
                 parametros = ParamReporte.Intimaciones.DetalleIntimacion(parametros, GenSearchControl1.vista.Text,
-                                                                         .Current("codigo"), 0, Trim(.Current("titular")),
+                                                                         .Current("codigo"), opcion_aviso.SelectedIndex, Trim(.Current("titular")),
                                                                          tenedor, direccion, Today)
 
                 Dim titulo_reporte As String = "Intimación " & GenSearchControl1.vista.Text & " - Cta. N° " & .Current("codigo")
@@ -219,4 +231,6 @@
             End If
         End With
     End Sub
+
+
 End Class

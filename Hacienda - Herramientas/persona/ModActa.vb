@@ -85,10 +85,10 @@
 			Dim ver_error As New visor_error("Errores en Acta", msg)
 			Dim answer As DialogResult = ver_error.ShowDialog(Me)
 			ver_error.Dispose()
-			If answer = Windows.Forms.DialogResult.OK Then
-				Return MsgBoxResult.No
-			Else
-				Return MsgBoxResult.Cancel
+            If answer = DialogResult.OK Then
+                Return MsgBoxResult.No
+            Else
+                Return MsgBoxResult.Cancel
 			End If
 		Else
 			Return MsgBoxResult.Yes

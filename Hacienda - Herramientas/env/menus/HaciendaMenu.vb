@@ -8,11 +8,13 @@
     End Sub
 
     Private Sub ConsultasEspecialesStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsultasEspecialesStripMenuItem.Click
+        Hacienda.ConsolidarCuentas(Today)
         Dim arqueo1 As New ConsultasEspeciales _
         With {.MdiParent = Me.Parent}
         arqueo1.Show()
     End Sub
     Private Sub ConsultaDeMovimientosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsultaDeMovimientosToolStripMenuItem.Click
+        Hacienda.ConsolidarCuentas(Today)
         Dim movimis1 As New ConsultaMovimientos _
         With {.MdiParent = Me.Parent}
         movimis1.Show()
@@ -20,7 +22,7 @@
 
     Private Sub CalculoAnualDeImpuestosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CalculoAnualDeImpuestosToolStripMenuItem.Click
         System.Windows.Forms.Application.CurrentCulture = New System.Globalization.CultureInfo("EN-US")
-        Dim cai As New CalculoAnualImpuesto
+        Dim cai As New CalcAnualImpUI
         cai.ShowDialog()
         System.Windows.Forms.Application.CurrentCulture = New System.Globalization.CultureInfo("ES-AR")
     End Sub

@@ -12,7 +12,7 @@
     <Setting Name="AdbConnection" Type="System.String" Scope="User">
       <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.16.0;Data Source=vrosas.accdb</Value>
     </Setting>
-    <Setting Name="pgsql_disabled" Type="System.String" Scope="User">
+    <Setting Name="pgsqlCon_disabled" Type="System.String" Scope="User">
       <Value Profile="(Default)">Provider=PostgreSQL.1;Data Source=\\malingunvila;Location=vrosas;User ID=sigm_admin;password=sigm2019.;</Value>
     </Setting>
     <Setting Name="foxConnection" Type="(Connection string)" Scope="Application">
@@ -74,6 +74,9 @@
   &lt;ProviderName&gt;System.Data.OleDb&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Provider=VFPOLEDB.1;Data Source=z:\datos</Value>
+    </Setting>
+    <Setting Name="delete_enabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

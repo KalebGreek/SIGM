@@ -50,7 +50,7 @@ Partial Class tabPersona1Datos
         Me.FlowLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
         Me.FlowLayoutPanel1.Size = New System.Drawing.Size(360, 96)
-        Me.FlowLayoutPanel1.TabIndex = 379
+        Me.FlowLayoutPanel1.TabIndex = 10
         '
         'Label24
         '
@@ -70,7 +70,7 @@ Partial Class tabPersona1Datos
         Me.razon.MaxLength = 100
         Me.razon.Name = "razon"
         Me.razon.Size = New System.Drawing.Size(295, 27)
-        Me.razon.TabIndex = 233
+        Me.razon.TabIndex = 11
         '
         'Label2
         '
@@ -89,7 +89,7 @@ Partial Class tabPersona1Datos
         Me.dni.Mask = "99999999"
         Me.dni.Name = "dni"
         Me.dni.Size = New System.Drawing.Size(126, 27)
-        Me.dni.TabIndex = 238
+        Me.dni.TabIndex = 12
         Me.dni.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.dni.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals
         '
@@ -112,7 +112,7 @@ Partial Class tabPersona1Datos
         Me.gen.Margin = New System.Windows.Forms.Padding(0)
         Me.gen.Name = "gen"
         Me.gen.Size = New System.Drawing.Size(126, 27)
-        Me.gen.TabIndex = 235
+        Me.gen.TabIndex = 13
         '
         'Label14
         '
@@ -132,7 +132,7 @@ Partial Class tabPersona1Datos
         Me.cuil.Mask = "99-99999999-9"
         Me.cuil.Name = "cuil"
         Me.cuil.Size = New System.Drawing.Size(126, 27)
-        Me.cuil.TabIndex = 232
+        Me.cuil.TabIndex = 14
         Me.cuil.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.cuil.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals
         '

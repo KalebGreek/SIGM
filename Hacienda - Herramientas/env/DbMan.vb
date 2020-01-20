@@ -6,39 +6,39 @@
     Public olecon As New OleDb.OleDbConnection
 
     ' READ: Rutinas de lectura 
-    Function KeywordToSQL(sql As String, field As String, keyword As String) As String
-		'Rutina para validar datos de busqueda y armar instruccion WHERE basada en nombres comunes de columna
-		keyword = Trim(keyword)
-		If Len(keyword) > 1 Or Val(keyword) > 0 Then
-			If field.Contains("_id") Or field.Contains("num") Then
-				sql += field & "=" & keyword
+    '   Function KeywordToSQL(sql As String, field As String, keyword As String) As String
+    '	'Rutina para validar datos de busqueda y armar instruccion WHERE basada en nombres comunes de columna
+    '	keyword = Trim(keyword)
+    '	If Len(keyword) > 1 Or Val(keyword) > 0 Then
+    '		If field.Contains("_id") Or field.Contains("num") Then
+    '			sql += field & "=" & keyword
 
-			ElseIf field.Contains("razon") Or field.Contains("apellido") Or field.Contains("nombre") Or field.Contains("direccion") _
-			Or field.Contains("ubicacion") Or field.Contains("direccion") Or field.Contains("calle") Or field.Contains("localidad") _
-			Or field.Contains("provincia") Then
-				sql += field & " LIKE '%" & keyword & "%'"
+    '		ElseIf field.Contains("razon") Or field.Contains("apellido") Or field.Contains("nombre") Or field.Contains("direccion") _
+    '		Or field.Contains("ubicacion") Or field.Contains("direccion") Or field.Contains("calle") Or field.Contains("localidad") _
+    '		Or field.Contains("provincia") Then
+    '			sql += field & " LIKE '%" & keyword & "%'"
 
-			ElseIf field.Contains("fecha") Or field.Contains("alta") Or field.Contains("baja") Then
-				sql += field & "='" & keyword & "'"
+    '		ElseIf field.Contains("fecha") Or field.Contains("alta") Or field.Contains("baja") Then
+    '			sql += field & "='" & keyword & "'"
 
-			ElseIf field.Contains("cuil") Or field.Contains("cuit") Then
-				If Len(keyword) = 13 Then
-					keyword = Replace(keyword, "-", "")
-				End If
-				If Len(keyword) = 11 Then
-					sql += field & "='" & keyword & "'"
-				End If
+    '		ElseIf field.Contains("cuil") Or field.Contains("cuit") Then
+    '			If Len(keyword) = 13 Then
+    '				keyword = Replace(keyword, "-", "")
+    '			End If
+    '			If Len(keyword) = 11 Then
+    '				sql += field & "='" & keyword & "'"
+    '			End If
 
-			ElseIf field.Contains("dni") Then
-				If Len(keyword) > 4 And Len(keyword) < 9 Then
-					sql += field & "='" & keyword & "'"
-				End If
-			End If
-		Else
-			sql = ""
-		End If
-		Return sql
-	End Function 'Unused
+    '		ElseIf field.Contains("dni") Then
+    '			If Len(keyword) > 4 And Len(keyword) < 9 Then
+    '				sql += field & "='" & keyword & "'"
+    '			End If
+    '		End If
+    '	Else
+    '		sql = ""
+    '	End If
+    '	Return sql
+    'End Function 'Unused
 
     Function ReadTableSchema(Optional constr As String = "") As DataTable
         Dim schemaTable As New DataTable
@@ -81,6 +81,7 @@
                             If sql.Contains("SELECT") Or sql.Contains("FROM") _
                             Or sql.Contains("WHERE") Or sql.Contains("GROUP BY") _
                             Or sql.Contains("HAVING") Or sql.Contains("ORDER BY") Then
+
                                 .CommandText &= " " & sql
                             End If
                         End If
@@ -153,6 +154,7 @@
         '    editDB(Nothing, constr, "INSERT INTO sql_log(_date, _user_id, _sql, _con) VALUES('" & Date.Now & "', '" & My.Settings.UserId & "', '" & OleDBProcedure.CommandText & "','" & My.Settings.CurrentDB & "');")
         '    dtab = Nothing
         'End If
+
         Return dtab
 
     End Function
@@ -167,39 +169,43 @@
 
     ' SAVE: Rutinas para grabar registros 
     Function editDB(OleDBProcedure As OleDb.OleDbCommand, Optional ByVal constr As String = Nothing,
-				  Optional sql As String = "") As String
-		Dim result As String = ""
-		'Para conectarse a la bd en modo de inserción
-		'Se necesita convertir el string a un objeto ConnectionString
-		'antes de aplicarlo al OleDbCommand "Comm"
-		If OleDBProcedure Is Nothing And sql.Contains("INSERT") Or sql.Contains("UPDATE") Or sql.Contains("DELETE") Then
-			Dim SQLCommand As New OleDb.OleDbCommand
-			SQLCommand.CommandText = sql
-			OleDBProcedure = SQLCommand
-		End If
+                  Optional sql As String = "") As String
+        Dim result As String = ""
+        'Para conectarse a la bd en modo de inserción
+        'Se necesita convertir el string a un objeto ConnectionString
+        'antes de aplicarlo al OleDbCommand "Comm"
+        If OleDBProcedure Is Nothing And sql.Contains("INSERT") Or sql.Contains("UPDATE") Or sql.Contains("DELETE") Then
+            If sql.Contains("DELETE") And My.Settings.delete_enabled = False Then
+                MsgBox("Imposible borrar registros de la tabla.", MsgBoxStyle.Critical, "Error")
+            Else
+                Dim SQLCommand As New OleDb.OleDbCommand
+                SQLCommand.CommandText = sql
+                OleDBProcedure = SQLCommand
+            End If
+        End If
 
-		If constr Is Nothing Then
-			constr = My.Settings.CurrentDB
-		End If
+        If constr Is Nothing Then
+            constr = My.Settings.CurrentDB
+        End If
 
-		If OleDBProcedure Is Nothing = False Then
-			olecon.ConnectionString = constr
-			OleDBProcedure.Connection = olecon
-			'Abrir la conexión y ejecutar
-			olecon.Open()
-			Try
-				Dim RowsAffected As Int32 = OleDBProcedure.ExecuteNonQuery()
-				result = RowsAffected
-			Catch e As Exception
-				result = e.ToString
-			End Try
-			olecon.Close()
-			'SecMan.log_write(sql, constr, My.Settings.UserId)
-		Else
-			result = "Datos insuficientes para realizar la operación."
-		End If
-		Return result
-	End Function
+        If OleDBProcedure Is Nothing = False Then
+            olecon.ConnectionString = constr
+            OleDBProcedure.Connection = olecon
+            'Abrir la conexión y ejecutar
+            olecon.Open()
+            Try
+                Dim RowsAffected As Int32 = OleDBProcedure.ExecuteNonQuery()
+                result = RowsAffected
+            Catch e As Exception
+                result = e.ToString
+            End Try
+            olecon.Close()
+            'SecMan.WriteSQLLog(sql, constr, My.Settings.UserId)
+        Else
+            result = "Datos insuficientes para realizar la operación."
+        End If
+        Return result
+    End Function
     ' END SAVE    
 
 

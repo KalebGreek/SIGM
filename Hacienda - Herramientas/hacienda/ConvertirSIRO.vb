@@ -34,7 +34,7 @@
 
     'RUTINAS
     Sub CargarPadronMunici(servicio As Object)
-        Dim var_padron As String()
+        Dim var_padron(2) As String
 
         If servicio Is PadronAgua Then
             var_padron = var_PadronAgua
@@ -67,8 +67,8 @@
         Dim dtab_mora As New DataTable
         Dim dtab_corriente As New DataTable
         Dim dtab_total As New DataTable
-        Dim var_Padron As String()
-        Dim var_Deuda As String()
+        Dim var_Padron(2) As String
+        Dim var_Deuda(5) As String
         Dim tabla_padron, tabla_deuda, id_servicio, importe1, vence_original, vence_mora, valor_mora, pagado As String
 
         If servicio.Name.Contains("Agua") Then

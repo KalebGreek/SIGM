@@ -81,12 +81,12 @@ Namespace My
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Provider=PostgreSQL.1;Data Source=\\malingunvila;Location=vrosas;User ID=sigm_adm"& _ 
             "in;password=sigm2019.;")>  _
-        Public Property pgsql_disabled() As String
+        Public Property pgsqlCon_disabled() As String
             Get
-                Return CType(Me("pgsql_disabled"),String)
+                Return CType(Me("pgsqlCon_disabled"),String)
             End Get
             Set
-                Me("pgsql_disabled") = value
+                Me("pgsqlCon_disabled") = value
             End Set
         End Property
         
@@ -249,6 +249,18 @@ Namespace My
             Get
                 Return CType(Me("VFP_OleDB_Munici"),String)
             End Get
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property delete_enabled() As Boolean
+            Get
+                Return CType(Me("delete_enabled"),Boolean)
+            End Get
+            Set
+                Me("delete_enabled") = value
+            End Set
         End Property
     End Class
 End Namespace

@@ -1,5 +1,7 @@
 ﻿Imports System.Reflection
 Public Class CtrlMan 'Control Manager
+    Public Shared ErrorColorValue As Color = Color.MistyRose
+    Public Shared DefaultColorValue As Color = SystemColors.Window
 
     '###### VENTANAS
     'Impedir creación de ventanas que deben abrirse una sola vez en el formulario MDI
@@ -14,6 +16,7 @@ Public Class CtrlMan 'Control Manager
         Return False
     End Function
 
+
     Public Shared Sub SetDoubleBuffered(ByVal control As Control)
         GetType(Control).InvokeMember("DoubleBuffered", BindingFlags.SetProperty Or BindingFlags.Instance Or BindingFlags.NonPublic, Nothing, control, New Object() {True})
     End Sub
@@ -26,10 +29,10 @@ Public Class CtrlMan 'Control Manager
 
         'Default color values
         If DefaultColor = Nothing Then
-            DefaultColor = SystemColors.Window
+            DefaultColor = DefaultColorValue
         End If
         If ErrorColor = Nothing Then
-            ErrorColor = Color.MistyRose
+            ErrorColor = ErrorColorValue
         End If
 
         'Validation
@@ -128,16 +131,6 @@ Public Class CtrlMan 'Control Manager
         If mtb.Name = "cuil" Then
             If Len(mtb.Text) <> 11 Then
                 mtb.Tag = "CUIL invalido."
-            Else
-                Dim dtab As New DataTable
-                Dim sql(5) As String
-                sql(0) = "SELECT * FROM persona	WHERE cuil=" & mtb.Text
-
-                dtab = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
-
-                If dtab.Rows.Count > 0 Then
-                    mtb.Tag = "CUIL duplicado. Este CUIL pertenece a " & dtab(0)("razon") & "."
-                End If
             End If
         ElseIf mtb.Name = "dni" Then
             If Len(Val(mtb.Text)) > 8 Or Len(Val(mtb.Text)) < 5 Then
@@ -585,8 +578,9 @@ Public Class CtrlMan 'Control Manager
                 Return ColumnList_dtab
             End Function
 
-            Shared Sub GetStates(ByRef StateList As ComboBox, ByRef bs As BindingSource)
-                Dim sql(5) As String
+        Shared Sub GetStates(ByRef StateList As ComboBox, ByRef bs As BindingSource)
+            Dim sql(5) As String
+            If My.Settings.CurrentDB <> "" Then
                 sql(0) = "SELECT * FROM provincias ORDER BY nombre"
 
                 StateList.BeginUpdate()
@@ -595,8 +589,9 @@ Public Class CtrlMan 'Control Manager
                 StateList.DisplayMember = "nombre"
                 StateList.ValueMember = "id"
                 StateList.EndUpdate()
-            End Sub
+            End If
+        End Sub
 
-        End Class
+    End Class
 
     End Class

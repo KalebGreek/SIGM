@@ -1,9 +1,9 @@
 ﻿Public Class Catastro
-	Shared sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy As String
+    'Shared sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy As String
 
-	'** READ ONLY **
-	Shared CatastroSelect _
-	As String = "SELECT persona.id as titular_id, persona.razon as titular, persona.cuil, persona.difunto, persona.fisica,
+    '** READ ONLY **
+    Shared ReadOnly CatastroSelect _
+    As String = "SELECT persona.id as titular_id, persona.razon as titular, persona.cuil, persona.difunto, persona.fisica,
 				catastro.zona, catastro.circ, catastro.secc, catastro.manz, catastro.parc, catastro.lote,
                 catastro.id as catastro_id, catastro.cuenta, 
                 cat_frente.calle, cat_frente.altura, 
@@ -11,17 +11,17 @@
                 oprivadas.id as opr_id, oprivadas.expediente,
                 catastro.archivado, catastro.user_id as user_id"
 
-	Shared CatastroFrom _
-	As String = " FROM (oprivadas INNER JOIN (persona INNER JOIN (catastro INNER JOIN titular_catastro
+    Shared ReadOnly CatastroFrom _
+    As String = " FROM (oprivadas INNER JOIN (persona INNER JOIN (catastro INNER JOIN titular_catastro
 				ON catastro.Id = titular_catastro.cat_id) ON persona.id = titular_catastro.per_id)
                 ON oprivadas.Id = catastro.opr_id) INNER JOIN cat_frente
                 ON catastro.Id = cat_frente.catastro_id"
 
-	Shared CatastroWhere As String = " WHERE ubicacion=True"
+    Shared ReadOnly CatastroWhere As String = " WHERE ubicacion=True"
 
-	Shared CatastroInsert As String
-	Shared CatastroUpdate As String
-	Shared CatastroDelete As String = "DELETE DISTINCTROW catastro.*
+    'Shared CatastroInsert As String
+    'Shared CatastroUpdate As String
+    Shared ReadOnly CatastroDelete As String = "DELETE DISTINCTROW catastro.*
                                   FROM ((((catastro LEFT JOIN cat_documento ON catastro.Id = cat_documento.catastro_id)
                                   LEFT JOIN cat_frente ON catastro.Id = cat_frente.catastro_id) 
                                   LEFT JOIN cat_servicio ON catastro.Id = cat_servicio.catastro_id)
@@ -244,24 +244,22 @@
 		End Sub
 	End Class
 	Public Class Modificar
-		Shared Sub Inmueble(opr_id As Integer, ByRef catastro_id As Integer, titular_id As Integer,
-										barrio As String, uso As String, cuenta As Integer, archivado As Boolean,
-										zona As Integer, circ As Integer, secc As Integer,
-										manz As Integer, parc As Integer, lote As Integer)
+        Shared Sub Inmueble(opr_id As Integer, ByRef catastro_id As Integer, titular_id As Integer,
+                                        barrio As String, uso As String, cuenta As Integer)
 
-			'Modificar
-			DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE catastro SET user_id=" & My.Settings.UserId & ", opr_id=" & opr_id & ", " &
-					  " barrio='" & barrio & "', uso='" & uso & "', cuenta=" & Val(cuenta) &
-					  " WHERE id=" & catastro_id)
+            'Modificar
+            DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE catastro SET user_id=" & My.Settings.UserId & ", opr_id=" & opr_id & ", " &
+                      " barrio='" & barrio & "', uso='" & uso & "', cuenta=" & Val(cuenta) &
+                      " WHERE id=" & catastro_id)
 
-			If catastro_id > 0 And titular_id > 0 Then
+            If catastro_id > 0 And titular_id > 0 Then
                 'Guardar titular
                 DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM titular_catastro WHERE cat_id=" & catastro_id)
-				DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO titular_catastro(cat_id, per_id)" &
-							   " VALUES(" & catastro_id & ", " & titular_id & ")")
-			End If
-		End Sub
-		Shared Sub Ubicacion(bs_frente As BindingSource, catastro_id As Integer)
+                DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO titular_catastro(cat_id, per_id)" &
+                               " VALUES(" & catastro_id & ", " & titular_id & ")")
+            End If
+        End Sub
+        Shared Sub Ubicacion(bs_frente As BindingSource, catastro_id As Integer)
 			DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE cat_frente SET ubicacion=False WHERE catastro_id=" & catastro_id)
 			DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE cat_frente SET ubicacion=True WHERE id=" & bs_frente.Current.Row("frente_id"))
 		End Sub
@@ -283,13 +281,13 @@
                 End If
             End If
         End Sub
-		Shared Sub Frente(bs_frente As BindingSource, catastro_id As Integer)
-			'Eliminar registro
-			DbMan.editDB(Nothing,
-					   My.Settings.CurrentDB,
-					   "DELETE * FROM cat_frente WHERE id=" & bs_frente.Current.Row("frente_id"))
-		End Sub
-	End Class
+        Shared Sub Frente(bs_frente As BindingSource)
+            'Eliminar registro
+            DbMan.editDB(Nothing,
+                       My.Settings.CurrentDB,
+                       "DELETE * FROM cat_frente WHERE id=" & bs_frente.Current.Row("frente_id"))
+        End Sub
+    End Class
     ' ROUTINES
     Shared Sub CalcularSuperficie(ByRef existente As Decimal, ByRef proyecto As Decimal,
 								  ByRef relevamiento As Decimal, ByRef terreno As Decimal,

@@ -9,8 +9,9 @@
 	'PERSONA
 	Private Sub NuevaPersonaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevaPersonaToolStripMenuItem.Click
 		Dim modper1 As New ModPersona()
-		modper1.ShowDialog()
-	End Sub
+        modper1.ShowDialog()
+        modper1.Dispose()
+    End Sub
 	Private Sub BuscarPersonaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarPersonaToolStripMenuItem.Click
 		Dim buscar1 As New BusquedaPersona
 		buscar1.MdiParent = Me.Parent

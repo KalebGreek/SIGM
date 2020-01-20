@@ -49,6 +49,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -143,45 +145,52 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Keymon\.nuget\packages\microsoft.reportingservices.reportviewercontrol.winforms\150.1358.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Keymon\.nuget\packages\microsoft.reportingservices.reportviewercontrol.winforms\150.1358.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Types.Resources, Version=12.0.0.0, Culture=de, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Microsoft SQL Server\120\SDK\Assemblies\es\Microsoft.SqlServer.Types.Resources.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Data">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Data.Entity">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Drawing">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Windows.Forms">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Serialization">
       <EmbedInteropTypes>False</EmbedInteropTypes>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.Reporting.WinForms" />
     <Import Include="Microsoft.VisualBasic" />
+    <Import Include="Microsoft.VisualBasic.FileIO" />
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
@@ -190,6 +199,7 @@
     <Import Include="System.Diagnostics" />
     <Import Include="System.Drawing" />
     <Import Include="System.Drawing.Printing" />
+    <Import Include="System.IO" />
     <Import Include="System.Linq" />
     <Import Include="System.Windows.Forms" />
     <Import Include="System.Xml" />
@@ -291,7 +301,7 @@
     <Compile Include="hacienda\Adelanto\ModAdelanto.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="hacienda\CalculoAnualImpuesto\CalculoAnualSQL.vb" />
+    <Compile Include="hacienda\CalculoAnualImpuesto\CalculoAnual.vb" />
     <Compile Include="hacienda\Combustibles\Combustible.vb" />
     <Compile Include="hacienda\Combustibles\CtrlBusquedaCombustiblePorTicket.Designer.vb">
       <DependentUpon>CtrlBusquedaCombustiblePorTicket.vb</DependentUpon>
@@ -309,6 +319,12 @@
       <DependentUpon>ModCombustibleTicket.vb</DependentUpon>
     </Compile>
     <Compile Include="hacienda\Combustibles\ModCombustibleTicket.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="contratos\ConsultaContrato.Designer.vb">
+      <DependentUpon>ConsultaContrato.vb</DependentUpon>
+    </Compile>
+    <Compile Include="contratos\ConsultaContrato.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hacienda\ConvertirSIRO.Designer.vb">
@@ -342,16 +358,16 @@
     <Compile Include="gobierno\ModOrdenanza.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="env\MainForm.Designer.vb">
+    <Compile Include="MainForm.Designer.vb">
       <DependentUpon>MainForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="env\MainForm.vb">
+    <Compile Include="MainForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="hacienda\CalculoAnualImpuesto\CalculoAnualImpuesto.Designer.vb">
-      <DependentUpon>CalculoAnualImpuesto.vb</DependentUpon>
+    <Compile Include="hacienda\CalculoAnualImpuesto\CalcAnualImpUI.Designer.vb">
+      <DependentUpon>CalcAnualImpUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="hacienda\CalculoAnualImpuesto\CalculoAnualImpuesto.vb">
+    <Compile Include="hacienda\CalculoAnualImpuesto\CalcAnualImpUI.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hacienda\CuentaAgrupada\CuentaAgrupada.vb" />
@@ -387,10 +403,10 @@
     </Compile>
     <Compile Include="hacienda\Hacienda.vb" />
     <Compile Include="hacienda\CuentaAgrupada\hac_contrib.vb" />
-    <Compile Include="env\acceso.designer.vb">
+    <Compile Include="acceso.designer.vb">
       <DependentUpon>acceso.vb</DependentUpon>
     </Compile>
-    <Compile Include="env\acceso.vb">
+    <Compile Include="acceso.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="catastro\ConsultaCatastro.Designer.vb">
@@ -399,10 +415,10 @@
     <Compile Include="catastro\ConsultaCatastro.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="env\launcher.designer.vb">
+    <Compile Include="launcher.designer.vb">
       <DependentUpon>launcher.vb</DependentUpon>
     </Compile>
-    <Compile Include="env\launcher.vb">
+    <Compile Include="launcher.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="catastro\Catastro.vb" />
@@ -436,10 +452,10 @@
     <Compile Include="hacienda\Recaudacion\ModIntimaciones.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="hacienda\ModContrato.Designer.vb">
+    <Compile Include="contratos\ModContrato.Designer.vb">
       <DependentUpon>ModContrato.vb</DependentUpon>
     </Compile>
-    <Compile Include="hacienda\ModContrato.vb">
+    <Compile Include="contratos\ModContrato.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="gobierno\ModEmpleado.Designer.vb">
@@ -652,6 +668,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="contratos\reportes\ModeloContrato.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="env\menus\AccionSocialMenu.resx">
       <DependentUpon>AccionSocialMenu.vb</DependentUpon>
     </EmbeddedResource>
@@ -676,7 +695,7 @@
     <EmbeddedResource Include="env\menus\ComercioMenu.resx">
       <DependentUpon>ComercioMenu.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="env\acceso.resx">
+    <EmbeddedResource Include="acceso.resx">
       <DependentUpon>acceso.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="env\genericForms\genToolContainer.resx">
@@ -708,6 +727,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="env\menus\HaciendaMenu.resx">
       <DependentUpon>HaciendaMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="contratos\ConsultaContrato.resx">
+      <DependentUpon>ConsultaContrato.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\ConvertirSIRO.resx">
       <DependentUpon>ConvertirSIRO.vb</DependentUpon>
@@ -742,12 +764,12 @@
     <EmbeddedResource Include="gobierno\ModOrdenanza.resx">
       <DependentUpon>ModOrdenanza.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="env\MainForm.resx">
+    <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\CalculoAnualImpuesto\CalculoAnualImpuesto.resx">
-      <DependentUpon>CalculoAnualImpuesto.vb</DependentUpon>
+    <EmbeddedResource Include="hacienda\CalculoAnualImpuesto\CalcAnualImpUI.resx">
+      <DependentUpon>CalcAnualImpUI.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\CuentaAgrupada\ModCuentaAgrupada.resx">
@@ -776,7 +798,7 @@
     <EmbeddedResource Include="hacienda\ConsultaEmpleado.resx">
       <DependentUpon>ConsultaEmpleado.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\ModContrato.resx">
+    <EmbeddedResource Include="contratos\ModContrato.resx">
       <DependentUpon>ModContrato.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="gobierno\ModEmpleado.resx">
@@ -846,19 +868,19 @@
     <EmbeddedResource Include="gobierno\reportes\sic.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\reportes\lco.rdlc">
+    <EmbeddedResource Include="hacienda\reportes\LibreDeudaCome.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\reportes\lce.rdlc">
+    <EmbeddedResource Include="hacienda\reportes\LibreDeudaCeme.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\reportes\lca.rdlc">
+    <EmbeddedResource Include="hacienda\reportes\LibreDeudaProp.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\reportes\lau.rdlc">
+    <EmbeddedResource Include="hacienda\reportes\LibreDeudaAuto.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\reportes\lag.rdlc">
+    <EmbeddedResource Include="hacienda\reportes\LibreDeudaAgua.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="oprivadas\reportes\car.rdlc">
@@ -874,7 +896,7 @@
       <DependentUpon>config.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="env\launcher.resx">
+    <EmbeddedResource Include="launcher.resx">
       <DependentUpon>launcher.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="env\visor_error.resx">

@@ -201,220 +201,260 @@
         Return parametros
     End Function
 
-    'Certificado Libre Deuda
-    Public Class LibreDeuda
-        Shared Function DetalleVencimiento(parametros As List(Of ReportParameter), Creado As DateTimePicker,
-                             Vence As DateTimePicker, Exento As Boolean, OpcionMes As Boolean, Mes As DateTimePicker,
-                             OpcionTrim As Boolean, Trimestre As String) As List(Of ReportParameter)
-            Dim Detalle As String = ""
+    'Contratos
+    Public Class Contrato
+        Shared Function DetalleContrato(parametros As List(Of ReportParameter), fecha As Date,
+                                        autoridad1 As String, dni1 As String, cargo1 As String,
+                                        autoridad2 As String, dni2 As String, cargo2 As String,
+                                        masculino As Boolean, contratado As String, cuil_contratado As String,
+                                        calle As String, altura As Integer, localidad As String,
+                                        descripcion As String, monto As Decimal, dias As Integer,
+                                        codigo As Integer, seccion As String) As List(Of ReportParameter)
 
-            If Exento = False Then
-                If OpcionMes Then
-                    If Mes.Value <= Vence.Value Then
-                        Detalle = "hasta " & Mes.Text & ", valido hasta el dia " & Vence.Text & "."
-                    End If
-                ElseIf OpcionTrim Then
-                    Detalle = "hasta el " & Trimestre & " de " & Vence.Value.Year &
-                                         ", valido hasta el dia " & Vence.Text & "."
-                End If
+            Dim detalle_fecha As String = "a los " & fecha.Day & " días del mes de " & MonthName(fecha.Month) & " de " & fecha.Year
+            Dim contratado1, contratado2 As String
+
+            If masculino Then
+                contratado1 = "el Sr. " & contratado
+                contratado2 = "del Sr. " & contratado
             Else
-                Detalle = "del cual se encuentra EXENTO POR MODELO."
+                contratado1 = "la Sra. " & contratado
+                contratado2 = "de la Sra. " & contratado
             End If
 
             With parametros
-                .Add(New ReportParameter("FechaCertificado", Creado.Value.ToLongDateString))
-                .Add(New ReportParameter("DetalleVencimiento", Detalle))
+                .Add(New ReportParameter("fecha", detalle_fecha))
+                .Add(New ReportParameter("autoridad1", autoridad1))
+                .Add(New ReportParameter("cuil_aut1", dni1))
+                .Add(New ReportParameter("cargo1", cargo1))
+                .Add(New ReportParameter("autoridad2", autoridad2))
+                .Add(New ReportParameter("cuil_aut2", dni2))
+                .Add(New ReportParameter("cargo2", cargo2))
+                .Add(New ReportParameter("contratado1", contratado1))
+                .Add(New ReportParameter("cuil_contratado", cuil_contratado))
+                .Add(New ReportParameter("direccion_contratado", calle & " " & altura & ", " & localidad))
+                .Add(New ReportParameter("contratado2", contratado2))
+                .Add(New ReportParameter("descripcion", descripcion))
+                .Add(New ReportParameter("monto", FormatCurrency(monto)))
+                .Add(New ReportParameter("detalle_monto", ConverterMan.ConvertirNum(monto)))
+                .Add(New ReportParameter("plazo", dias.ToString & " dias"))
+                .Add(New ReportParameter("codigo", fecha.Year & "-" & codigo))
+                .Add(New ReportParameter("seccion", seccion))
             End With
-            Return parametros
-        End Function
-        Shared Function DetalleAuto(parametros As Generic.List(Of ReportParameter), OpcionBaja As Integer, FechaBaja As DateTimePicker) As List(Of ReportParameter)
 
-            Dim DetalleBaja As String = ""
-            Dim DetalleVencimiento As String = ""
-
-            If OpcionBaja > 0 Then
-                DetalleBaja = "El automotor segun datos precedentes ha sido dado de baja de este municipio por"
-                If OpcionBaja = 1 Then
-                    DetalleBaja += " cambio de radicacion a partir del " & FechaBaja.Text & "."
-                ElseIf OpcionBaja = 2 Then
-                    DetalleBaja += " denuncia por robo a partir del " & FechaBaja.Text & "."
-                ElseIf OpcionBaja = 3 Then
-                    DetalleBaja += " destruccion del vehiculo a partir del " & FechaBaja.Text & "."
-                End If
-            End If
-
-            With parametros
-                .Add(New ReportParameter("DetalleBaja", DetalleBaja))
-            End With
             Return parametros
         End Function
     End Class
 
-    'Intimaciones
-    Public Class Intimaciones
-        Shared Function DetalleIntimacion(parametros As Generic.List(Of ReportParameter), servicio As String, codigo As Integer,
+
+
+    'Certificado Libre Deuda
+    Public Class LibreDeuda
+            Shared Function DetalleVencimiento(parametros As List(Of ReportParameter), Creado As DateTimePicker,
+                             Vence As DateTimePicker, Exento As Boolean, OpcionMes As Boolean, Mes As DateTimePicker,
+                             OpcionTrim As Boolean, Trimestre As String) As List(Of ReportParameter)
+
+                Dim Detalle As String = "del cual se encuentra EXENTO POR MODELO."
+
+                If Exento = False Then
+                    If OpcionMes Then
+                        If Mes.Value <= Vence.Value Then
+                            Detalle = "hasta " & Mes.Text & ", valido hasta el dia " & Vence.Text & "."
+                        End If
+                    ElseIf OpcionTrim Then
+                        Detalle = "hasta el " & Trimestre & " de " & Vence.Value.Year &
+                                         ", valido hasta el dia " & Vence.Text & "."
+                    End If
+                End If
+
+                With parametros
+                    .Add(New ReportParameter("FechaCertificado", Creado.Value.ToLongDateString))
+                    .Add(New ReportParameter("DetalleVencimiento", Detalle))
+                End With
+                Return parametros
+            End Function
+            Shared Function DetalleAuto(parametros As Generic.List(Of ReportParameter), OpcionBaja As Integer, FechaBaja As DateTimePicker) As List(Of ReportParameter)
+
+                Dim DetalleBaja As String = ""
+                Dim DetalleVencimiento As String = ""
+
+                If OpcionBaja > 0 Then
+                    DetalleBaja = "El automotor segun datos precedentes ha sido dado de baja de este municipio por"
+                    If OpcionBaja = 1 Then
+                        DetalleBaja += " cambio de radicacion a partir del " & FechaBaja.Text & "."
+                    ElseIf OpcionBaja = 2 Then
+                        DetalleBaja += " denuncia por robo a partir del " & FechaBaja.Text & "."
+                    ElseIf OpcionBaja = 3 Then
+                        DetalleBaja += " destruccion del vehiculo a partir del " & FechaBaja.Text & "."
+                    End If
+                End If
+
+                With parametros
+                    .Add(New ReportParameter("DetalleBaja", DetalleBaja))
+                End With
+                Return parametros
+            End Function
+        End Class
+
+        'Intimaciones
+        Public Class Intimaciones
+            Shared Function DetalleIntimacion(parametros As Generic.List(Of ReportParameter), servicio As String, codigo As Integer,
                                           aviso As Integer, titular As String, tenedor As String, direccion As String,
                                           fecha As Date) As List(Of ReportParameter)
 
+                Dim titulo_servicio As String = "TASAS VARIAS" 'Default
+                Dim detalle_servicio As String = "Tasas Varias" 'Default
+                Dim tipo_aviso As String = "AVISO DE DEUDA" 'Selected=0
 
+                If servicio = "aguas" Then
+                    titulo_servicio = "SERVICIO DE AGUA CORRIENTE"
+                    detalle_servicio = "Servicio de Agua Corriente"
+                ElseIf servicio = "automovil" Then
+                    titulo_servicio = "IMPUESTO AL AUTOMOTOR"
+                    detalle_servicio = "Impuesto al Automotor"
+                ElseIf servicio = "barrios" Then
+                    titulo_servicio = "CUOTAS DEL PLAN DE VIVIENDAS"
+                    detalle_servicio = "cuotas del Plan de Viviendas"
+                ElseIf servicio = "catastro" Then
+                    titulo_servicio = "SERVICIOS AL INMUEBLE"
+                    detalle_servicio = "Servicios al Inmueble"
+                ElseIf servicio = "comercio" Then
+                    titulo_servicio = "IMPUESTO A LA ACTIVIDAD COMERCIAL"
+                    detalle_servicio = "Impuesto a la Actividad Comercial"
+                ElseIf servicio = "sepelio" Then
+                    titulo_servicio = "SERVICIOS DE SEPELIO"
+                    detalle_servicio = "Servicios de Sepelio"
+                End If
 
-            Dim titulo_servicio, detalle_servicio As String
-            Dim tipo_aviso As String
+                If aviso = 1 Then
+                    tipo_aviso = "REITERACIÓN DE AVISO DE DEUDA"
+                ElseIf aviso = 2 Then
+                    tipo_aviso = "AVISO DE REDUCCIÓN"
+                End If
 
-            If servicio = "aguas" Then
-                titulo_servicio = "SERVICIO DE AGUA CORRIENTE"
-                detalle_servicio = "Servicio de Agua Corriente"
-            ElseIf servicio = "automovil" Then
-                titulo_servicio = "IMPUESTO AL AUTOMOTOR"
-                detalle_servicio = "Impuesto al Automotor"
-            ElseIf servicio = "barrios" Then
-                titulo_servicio = "CUOTAS DEL PLAN DE VIVIENDAS"
-                detalle_servicio = "cuotas del Plan de Viviendas"
-            ElseIf servicio = "catastro" Then
-                titulo_servicio = "SERVICIOS AL INMUEBLE"
-                detalle_servicio = "Servicios al Inmueble"
-            ElseIf servicio = "comercio" Then
-                titulo_servicio = "IMPUESTO A LA ACTIVIDAD COMERCIAL"
-                detalle_servicio = "Impuesto a la Actividad Comercial"
-            ElseIf servicio = "sepelio" Then
-                titulo_servicio = "SERVICIOS DE SEPELIO"
-                detalle_servicio = "Servicios de Sepelio"
-            Else
-                titulo_servicio = "TASAS VARIAS"
-                detalle_servicio = "Tasas Varias"
-            End If
+                With parametros
+                    .Add(New ReportParameter("titulo_servicio", titulo_servicio))
+                    .Add(New ReportParameter("servicio", detalle_servicio))
+                    .Add(New ReportParameter("codigo", CStr(codigo)))
+                    .Add(New ReportParameter("tipo_aviso", tipo_aviso))
+                    .Add(New ReportParameter("titular", titular))
+                    .Add(New ReportParameter("tenedor", tenedor))
+                    .Add(New ReportParameter("direccion", direccion))
+                    .Add(New ReportParameter("fecha", fecha.ToShortDateString))
 
-            If aviso = 0 Then
-                tipo_aviso = "AVISO DE DEUDA"
-            ElseIf aviso = 1 Then
-                tipo_aviso = "REITERACIÓN DE AVISO DE DEUDA"
-            Else
-                tipo_aviso = "AVISO DE REDUCCIÓN"
-            End If
+                End With
+                Return parametros
+            End Function
+        End Class
 
-            With parametros
-                .Add(New ReportParameter("titulo_servicio", titulo_servicio))
-                .Add(New ReportParameter("servicio", detalle_servicio))
-                .Add(New ReportParameter("codigo", CStr(codigo)))
-                .Add(New ReportParameter("tipo_aviso", tipo_aviso))
-                .Add(New ReportParameter("titular", titular))
-                .Add(New ReportParameter("tenedor", tenedor))
-                .Add(New ReportParameter("direccion", direccion))
-                .Add(New ReportParameter("fecha", fecha.ToShortDateString))
-
-            End With
-            Return parametros
-        End Function
-    End Class
-
-    'OPRIVADAS
-    Public Class ObrasPrivadas
-        Shared Function BaseExpediente(parametros As Generic.List(Of ReportParameter),
+        'OPRIVADAS
+        Public Class ObrasPrivadas
+            Shared Function BaseExpediente(parametros As Generic.List(Of ReportParameter),
                                    expediente As String, fecha As Date, tarea As String) As List(Of ReportParameter)
 
-            expediente = Strings.Left(expediente, 4) & " - " & Strings.Right(expediente, 4)
+                expediente = Strings.Left(expediente, 4) & " - " & Strings.Right(expediente, 4)
 
-            With parametros
-                .Add(New ReportParameter("Expediente", expediente))
-                .Add(New ReportParameter("Inicio", fecha.ToShortDateString))
-                .Add(New ReportParameter("Tarea", tarea))
-            End With
+                With parametros
+                    .Add(New ReportParameter("Expediente", expediente))
+                    .Add(New ReportParameter("Inicio", fecha.ToShortDateString))
+                    .Add(New ReportParameter("Tarea", tarea))
+                End With
 
-            Return parametros
-        End Function
-        Shared Function DetalleExpediente(parametros As Generic.List(Of ReportParameter),
+                Return parametros
+            End Function
+            Shared Function DetalleExpediente(parametros As Generic.List(Of ReportParameter),
                                       profesional As String, recibido As String,
                                       observacion As String, visado As Boolean,
                                       finalizado As Boolean, final As Date) As List(Of ReportParameter)
 
-            With parametros
-                .Add(New ReportParameter("Profesional", profesional))
-                .Add(New ReportParameter("Recibido", recibido))
-                .Add(New ReportParameter("Observacion", observacion))
+                With parametros
+                    .Add(New ReportParameter("Profesional", profesional))
+                    .Add(New ReportParameter("Recibido", recibido))
+                    .Add(New ReportParameter("Observacion", observacion))
 
-                If visado Then
-                    .Add(New ReportParameter("Visado", "SI"))
-                Else
-                    .Add(New ReportParameter("Visado", "NO"))
-                End If
+                    If visado Then
+                        .Add(New ReportParameter("Visado", "SI"))
+                    Else
+                        .Add(New ReportParameter("Visado", "NO"))
+                    End If
 
-                If finalizado Then
-                    .Add(New ReportParameter("Final", final.ToShortDateString))
-                Else
-                    .Add(New ReportParameter("Final", "NO DECLARADO"))
-                End If
+                    If finalizado Then
+                        .Add(New ReportParameter("Final", final.ToShortDateString))
+                    Else
+                        .Add(New ReportParameter("Final", "NO DECLARADO"))
+                    End If
 
 
-            End With
+                End With
 
-            Return parametros
-        End Function
+                Return parametros
+            End Function
 
-        'Modulos
-        Shared Function ListarResponsables(parametros As Generic.List(Of ReportParameter),
+            'Modulos
+            Shared Function ListarResponsables(parametros As Generic.List(Of ReportParameter),
                                        registro As BindingSource) As List(Of ReportParameter)
-            Dim responsable As String = ""
-            Dim cuil As String = ""
-            Dim difunto As String = ""
+                Dim responsable As String = ""
+                Dim cuil As String = ""
+                Dim difunto As String = ""
 
-            For fila As Integer = 0 To registro.Count - 1
-                registro.Position = fila
+                For fila As Integer = 0 To registro.Count - 1
+                    registro.Position = fila
 
-                cuil = Microsoft.VisualBasic.Left(registro.Current("cuil"), 2) &
+                    cuil = Microsoft.VisualBasic.Left(registro.Current("cuil"), 2) &
                    "-" & Mid(registro.Current("cuil"), 3, 8) & "-" &
                    Microsoft.VisualBasic.Right(registro.Current("cuil"), 1)
-                If registro.Current("difunto") Then
-                    difunto = "SI"
-                Else
-                    difunto = "NO"
-                End If
+                    If registro.Current("difunto") Then
+                        difunto = "SI"
+                    Else
+                        difunto = "NO"
+                    End If
 
-                responsable += fila + 1 & ") " & registro.Current("razon") & System.Environment.NewLine &
+                    responsable += fila + 1 & ") " & registro.Current("razon") & System.Environment.NewLine &
                            "CUIL: " & cuil & " | Difunto: " & difunto & System.Environment.NewLine
 
-            Next
+                Next
 
-            With parametros
-                .Add(New ReportParameter("Responsable", responsable))
-            End With
+                With parametros
+                    .Add(New ReportParameter("Responsable", responsable))
+                End With
 
-            Return parametros
-        End Function
-        Shared Function ListarInmuebles(parametros As Generic.List(Of ReportParameter),
+                Return parametros
+            End Function
+            Shared Function ListarInmuebles(parametros As Generic.List(Of ReportParameter),
                                     registro As BindingSource) As List(Of ReportParameter)
-            Dim inmueble As String = ""
-            With registro
-                For fila As Integer = 0 To .Count - 1
-                    .Position = fila
-                    inmueble += fila + 1 & ") Partida: " &
+                Dim inmueble As String = ""
+                With registro
+                    For fila As Integer = 0 To .Count - 1
+                        .Position = fila
+                        inmueble += fila + 1 & ") Partida: " &
                            " Z" & .Current("zona") & " C" & .Current("circ") & " S" & .Current("secc") &
                            " M" & .Current("manz") & " P" & .Current("parc") & " L" & .Current("lote") &
                             System.Environment.NewLine &
                            " Ubicacion: " & .Current("calle") & " " & .Current("altura") & ", " & .Current("barrio") &
                             System.Environment.NewLine
-                Next
-            End With
+                    Next
+                End With
 
-            With parametros
-                .Add(New ReportParameter("Inmueble", inmueble))
-            End With
+                With parametros
+                    .Add(New ReportParameter("Inmueble", inmueble))
+                End With
 
-            Return parametros
-        End Function
-    End Class
+                Return parametros
+            End Function
+        End Class
 
-    Public Class Hacienda
-        Shared Sub ImprimirDeudaContribuyente(ByVal source As DataTable, agrupada As Boolean)
-            Dim dtab(0) As DataTable
-            dtab(0) = source
+        Public Class Hacienda
+            Shared Sub ImprimirDeudaContribuyente(ByVal source As DataTable, agrupada As Boolean)
+                Dim dtab(0) As DataTable
+                dtab(0) = source
 
-            'Ahora hay que crear los datasets en Access para que hagan de plantilla para cada consulta
-            'revisar screenshots de cada impuesto
-            Dim consulta As New VisorReporte("Consulta Deuda Contribuyente",
+                'Ahora hay que crear los datasets en Access para que hagan de plantilla para cada consulta
+                'revisar screenshots de cada impuesto
+                Dim consulta As New VisorReporte("Consulta Deuda Contribuyente",
                                                  "HACIENDA\REPORTES\DeudaContribuyente",
                                                  Nothing, dtab, False)
-            consulta.ShowDialog()
-        End Sub
+                consulta.ShowDialog()
+            End Sub
 
+        End Class
     End Class
-End Class

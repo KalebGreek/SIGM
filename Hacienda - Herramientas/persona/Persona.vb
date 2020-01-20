@@ -7,7 +7,8 @@
 								" WHERE per_domicilio.principal=True"
 
     Shared Function Seleccionar(ParentForm As Form, Optional vista As String = "PERSONA") As BindingSource
-        Dim SeleccionarPersona As New BusquedaPersona(True)
+        Dim SeleccionarPersona As New BusquedaPersona()
+        SeleccionarPersona.SelectionMode = True
         SeleccionarPersona.genSearchControl1.vista.Text = vista
         SeleccionarPersona.ShowDialog(ParentForm)
         Return SeleccionarPersona.bs_resultado
@@ -55,8 +56,8 @@
 		If profesional_id = 0 Then
 			dtab_con = Profesional.BuscarPorPersona(persona_id)
 			If dtab_con.Rows.Count > 0 Then
-				profesional_id = dtab_con(0)("prof_id")
-			End If
+                profesional_id = dtab_con(0)("profesional_id")
+            End If
 		End If
 		If profesional_id > 0 Then
 			dtab_con = Oprivadas.Expediente.ListarPorProfesional(profesional_id)
@@ -133,12 +134,12 @@
 			msg.Add("Desea continuar?")
 
 			Dim errormsg As New visor_error("Eliminar persona", msg)
-			If errormsg.ShowDialog() = DialogResult.OK Then
-				DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE FROM per_documento WHERE per_id=" & persona_id)
-				DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE FROM persona WHERE id=" & persona_id)
-				Return True
-			Else
-				Return False
+            If errormsg.ShowDialog() = DialogResult.Ignore Then
+                DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE FROM per_documento WHERE per_id=" & persona_id)
+                DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE FROM persona WHERE id=" & persona_id)
+                Return True
+            Else
+                Return False
 			End If
 		End If
 	End Function

@@ -17,8 +17,8 @@
 			conexion_fox.Text = My.Settings.foxConnection
 		End If
         ' CONEXION PSQL
-        If My.Settings.pgsql_disabled <> "" Then
-			conexion_pgsql.Text = My.Settings.pgsql_disabled
+        If My.Settings.pgsqlCon_disabled <> "" Then
+			conexion_pgsql.Text = My.Settings.pgsqlCon_disabled
 		End If
 
 		cargar_tablas_ext()

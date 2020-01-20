@@ -26,7 +26,7 @@
         End With
         Keyword.Visible = zona.Visible.CompareTo(True)
     End Sub
-    Private Sub zona_VisibleChanged(sender As Object, e As EventArgs) Handles zona.VisibleChanged
+    Private Sub Zona_VisibleChanged(sender As Object, e As EventArgs) Handles zona.VisibleChanged
         With zona
             circ.Visible = .Visible
             secc.Visible = .Visible
@@ -39,7 +39,7 @@
 
     ' SEARCH / MOD 
 
-    Private Sub buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
+    Private Sub Buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
         Dim dtab As New DataTable
         With Filtro1.Text
             If .Contains("PARTIDA") Then
@@ -53,8 +53,8 @@
             ElseIf .Contains("CUIL") Then
                 dtab = Catastro.BuscarPorTitular(, Val(Keyword.Text))
             ElseIf .Contains("EXPEDIENTE") Then
-				dtab = Catastro.ListarInmueblePorExpediente(CInt(Keyword.Text))
-			End If
+                dtab = Catastro.ListarInmueblePorExpediente(CInt(Keyword.Text))
+            End If
         End With
         CtrlMan.DataGridViewTools.Load(tabla_consulta, bs_consulta, "", dtab)
     End Sub
@@ -86,6 +86,7 @@
                     mod_i.parc.Value = bs_consulta.Current("parc")
                     mod_i.lote.Value = bs_consulta.Current("lote")
                     mod_i.ShowDialog(Me)
+                    mod_i.Dispose()
                 End If
             End If
             End If

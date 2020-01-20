@@ -67,7 +67,7 @@
         Return persona_id
     End Function
 
-    Private Sub gen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gen.TextChanged
+    Private Sub gen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gen.SelectedIndexChanged, gen.SelectedValueChanged, gen.TextChanged
         If gen.SelectedIndex > -1 And Me.Visible Then
             If Len(dni.Text) >= 7 And Len(dni.Text) <= 8 Then
                 cuil.Text = Persona.CalcularCuil(dni.Text, Microsoft.VisualBasic.Left(gen.Text, 1))
@@ -77,21 +77,11 @@
 
     Private Sub dni_KeyUp(sender As Object, e As KeyEventArgs) Handles dni.KeyUp, cuil.KeyUp
         If sender Is dni Then
-            cuil.Text = ""
-            gen.SelectedIndex = 0
             If e.KeyValue = Keys.Enter Then
-                If Len(dni.Text) >= 7 And Len(dni.Text) <= 8 And gen.SelectedIndex > -1 And Me.Visible Then
+                If Len(dni.Text) >= 7 And Len(dni.Text) <= 8 And gen.SelectedIndex > -1 Then
                     cuil.Text = Persona.CalcularCuil(dni.Text, Microsoft.VisualBasic.Left(gen.Text, 1))
                 End If
             End If
-        Else
-            dni.Text = ""
-            gen.SelectedIndex = 2
         End If
     End Sub
-
-    Private Sub cuil_TextChanged(sender As Object, e As EventArgs) Handles cuil.TextChanged
-
-    End Sub
-
 End Class

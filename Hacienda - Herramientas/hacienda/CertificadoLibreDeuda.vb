@@ -113,7 +113,7 @@
             With servicio.Text
                 If servicio.Text.Contains("AGUA") Then
                     parametros = ParamReporte.Agua(registro(0), parametros)
-                    Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HACIENDA\REPORTES\LAG", parametros, Nothing, False)
+                    Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HACIENDA\REPORTES\LibreDeudaAgua", parametros, Nothing, False)
                     certificado.ShowDialog()
                 ElseIf servicio.Text.Contains("AUTO") Then
                     parametros = ParamReporte.Automotor(registro(0), parametros, SinBaja.Checked)
@@ -128,19 +128,19 @@
                     End If
 
                     parametros = ParamReporte.LibreDeuda.DetalleAuto(parametros, OpcionBaja, FechaBaja)
-                    Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HACIENDA\REPORTES\LAU", parametros, Nothing, False)
+                    Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HACIENDA\REPORTES\LibreDeudaAuto", parametros, Nothing, False)
                     certificado.ShowDialog()
                 ElseIf servicio.Text.Contains("CATA") Then
                     parametros = ParamReporte.Catastro(registro(0), parametros)
-                    Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HACIENDA\REPORTES\LCA", parametros, Nothing, False)
+                    Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HACIENDA\REPORTES\LibreDeudaProp", parametros, Nothing, False)
                     certificado.ShowDialog()
                 ElseIf servicio.Text.Contains("CEME") Then
                     parametros = ParamReporte.Cementerio(registro(0), parametros)
-                    Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HACIENDA\REPORTES\LCE", parametros, Nothing, False)
+                    Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HACIENDA\REPORTES\LibreDeudaCeme", parametros, Nothing, False)
                     certificado.ShowDialog()
                 ElseIf servicio.Text.Contains("COME") Then
                     parametros = ParamReporte.Comercio(registro(0), parametros)
-                    Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HACIENDA\REPORTES\LCO", parametros, Nothing, False)
+                    Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda", "HACIENDA\REPORTES\LibreDeudaCome", parametros, Nothing, False)
                     certificado.ShowDialog()
                 End If
             End With

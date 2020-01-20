@@ -20,8 +20,8 @@
 		Return dtab
 	End Function
 	Shared Function DataTableToSIJCOR(dtab As DataTable, path As String) As String
-		'Dim example As String = "20270342435OVIEDO JORGE EDUARDO          MAESTRANZA Y SERVICIO GRALES  8                             000100010001003200030001001800240100010100000000000030 11184,10     0,00     0,00     0,00     0,00     0,00     0,00101     0,00   296,72"
-		Dim output(dtab.Rows.Count - 1) As String
+        'Example: "20270342435OVIEDO JORGE EDUARDO          MAESTRANZA Y SERVICIO GRALES  8                             000100010001003200030001001800240100010100000000000030 11184,10     0,00     0,00     0,00     0,00     0,00     0,00101     0,00   296,72"
+        Dim output(dtab.Rows.Count - 1) As String
 		'Replace with new file
 		If System.IO.File.Exists(path) Then
 			Kill(path)
@@ -46,93 +46,117 @@
 
 		Return path
 	End Function
-	Shared Function NumberToDescString(n As Decimal) As String
-		'Spanish
-		Dim strout As String = ""
-		Dim mill, thou, hundr, dec As Integer
-        Dim dict As New BindingSource
-        Dim sql(5) As String
 
-        sql(0) = "SELECT num, str FROM numtostr_dict"
-        dict.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, )
-        n = n.ToString("d2")
+    Shared Function ConvertirNum(Numero As Decimal, Optional CentimosEnLetra As Boolean = True) As String
 
-		mill = Val(n) \ Math.Pow(10, 6)
-		If mill > 0 Then
-			strout &= NumToStrDictSearch(dict, mill, True, False, False, False)
-			n -= (mill * Math.Pow(10, 6))
-		End If
+        Dim Moneda As String
+        Dim Monedas As String
+        Dim Centimo As String
+        Dim Centimos As String
+        Dim Preposicion As String
+        Dim NumCentimos As Double
+        Dim Letra As String
+        Dim Maximo As Decimal = 1999999999.99
 
-		thou = Val(n) \ Math.Pow(10, 3)
-		If thou > 0 Then
-			strout &= NumToStrDictSearch(dict, thou, False, True, False, False)
-			n -= (thou * Math.Pow(10, 3))
-		End If
-		hundr = Val(n)
-		If hundr > 0 Then
-			strout &= NumToStrDictSearch(dict, hundr, False, False, True, False)
-			n -= hundr
-		End If
+        '************************************************************
+        ' Parámetros
+        '************************************************************
+        Moneda = "Peso"         'Nombre de Moneda (Singular)
+        Monedas = "Pesos"       'Nombre de Moneda (Plural)
+        Centimo = "Centavo"     'Nombre de Céntimos (Singular)
+        Centimos = "Centavos"   'Nombre de Céntimos (Plural)
+        Preposicion = "Con"     'Preposición entre Moneda y Céntimos
+        '************************************************************
 
-		If mill = 0 And thou = 0 And hundr = 0 Then
-			strout &= " CERO PESOS CON"
-		ElseIf n = 1 Then
-			strout &= " UN PESO CON"
-		Else
-			strout &= " PESOS CON"
-		End If
+        'Validar que el Numero está dentro de los límites
+        If (Numero >= 0) And (Numero <= Maximo) Then
 
-		'CENTAVOS
-		dec = Mid(n.ToString, 3, 2)
-		strout &= NumToStrDictSearch(dict, dec, False, False, False, True)
 
-		If dec = 1 Then
-			strout &= " CENTAVO"
-		Else
-			strout &= " CENTAVOS"
-		End If
-		Return strout
-	End Function
-	Shared Function NumToStrDictSearch(dict As BindingSource, n As Integer, mill_pos As Boolean, thou_pos As Boolean, hundr_pos As Boolean, dec_pos As Boolean) As String
-		Dim str As String = ""
-		Dim hundreds, tens, singles As Integer
-		hundreds = (n \ 100) * 100
-		tens = (n \ 10) * 10
-		singles = n - (hundreds + tens)
+            Letra = NumeroRecursivo((Fix(Numero)))              'Convertir el Numero en letras
 
-		If hundreds > 0 Then
-			dict.Position = dict.Find("num", hundreds)
-			str &= dict.Current("str")
-			If hundreds = 1 Then
-				If tens > 0 Or singles > 0 Then
-					str &= "TO " 'CIENTO
-				End If
-			End If
-		End If
-		If tens > 0 Then
-			dict.Position = dict.Find("num", tens)
-			str &= " " & dict.Current("str")
-		End If
-		If singles > 0 Then
-			dict.Position = dict.Find("num", singles)
-			If hundreds = 0 And tens = 0 And singles = 1 Then
-				If mill_pos Then
-					str &= " UN MILLÓN"
-				ElseIf thou_pos Then
-					str = " MIL"
-				ElseIf hundreds Then
-					'UNO
-				ElseIf dec_pos Then
-					str = " UN"
-				End If
-			Else
-				str &= " " & dict.Current("str")
-			End If
-		Else
-			str &= " CERO"
-		End If
+            'Si Numero = 1 agregar leyenda Moneda (Singular)
+            If (Numero = 1) Then
+                Letra = Letra & " " & Moneda
+                'De lo contrario agregar leyenda Monedas (Plural)
+            Else
+                Letra = Letra & " " & Monedas
+            End If
 
-		Return str
-	End Function
+
+            NumCentimos = Math.Round((Numero - Fix(Numero)) * 100)   'Obtener los centimos del Numero
+
+            'Si NumCentimos es mayor a cero inicar la conversión
+            If NumCentimos >= 0 Then
+                'Si el parámetro CentimosEnLetra es VERDADERO obtener letras para los céntimos
+                If CentimosEnLetra Then
+                    Letra = Letra & " " & Preposicion & " " & NumeroRecursivo(Fix(NumCentimos)) 'Convertir los céntimos en letra
+
+                    'Si NumCentimos = 1 agregar leyenda Centimos (Singular)
+                    If (NumCentimos = 1) Then
+                        Letra = Letra & " " & Centimo
+                        'De lo contrario agregar leyenda Centimos (Plural)
+                    Else
+                        Letra = Letra & " " & Centimos
+                    End If
+                    'De lo contrario mostrar los céntimos como número
+                Else
+                    If NumCentimos < 10 Then
+                        Letra = Letra & " 0" & NumCentimos & "/100"
+                    Else
+                        Letra = Letra & " " & NumCentimos & "/100"
+                    End If
+                End If
+            End If
+
+        Else
+            'Si el Numero no está dentro de los límites, entivar un mensaje de error
+            Letra = "ERROR: El número excede los límites."
+        End If
+        Return Letra
+    End Function
+
+    Shared Function NumeroRecursivo(Numero As Long) As String
+
+        Dim Resultado As String = 0
+
+        '**************************************************
+        ' Nombre de los números
+        '**************************************************
+        Dim Unidades() As String
+        Unidades = {"", "Un", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "Ocho", "Nueve", "Diez",
+                    "Once", "Doce", "Trece", "Catorce", "Quince", "Dieciséis", "Diecisiete", "Dieciocho",
+                    "Diecinueve", "Veinte", "Veintiuno", "Veintidos", "Veintitres", "Veinticuatro",
+                    "Veinticinco", "Veintiseis", "Veintisiete", "Veintiocho", "Veintinueve"}
+
+        Dim Decenas() As String
+        Decenas = {"", "Diez", "Veinte", "Treinta", "Cuarenta", "Cincuenta", "Sesenta", "Setenta", "Ochenta", "Noventa", "Cien"}
+
+        Dim centenas() As String
+        centenas = {"", "Ciento", "Doscientos", "Trescientos", "Cuatrocientos", "Quinientos", "Seiscientos", "Setecientos", "Ochocientos", "Novecientos"}
+        '**************************************************
+
+        Select Case Numero
+            Case 0
+                'Resultado por defecto
+            Case 1 To 29
+                Resultado = Unidades(Numero)
+            Case 30 To 100
+                Resultado = Decenas(Numero \ 10) + IIf(Numero Mod 10 <> 0, " y " + NumeroRecursivo(Numero Mod 10), "")
+            Case 101 To 999
+                Resultado = Centenas(Numero \ 100) + IIf(Numero Mod 100 <> 0, " " + NumeroRecursivo(Numero Mod 100), "")
+            Case 1000 To 1999
+                Resultado = "Mil" + IIf(Numero Mod 1000 <> 0, " " + NumeroRecursivo(Numero Mod 1000), "")
+            Case 2000 To 999999
+                Resultado = NumeroRecursivo(Numero \ 1000) + " Mil" + IIf(Numero Mod 1000 <> 0, " " + NumeroRecursivo(Numero Mod 1000), "")
+            Case 1000000 To 1999999
+                Resultado = "Un Millón" + IIf(Numero Mod 1000000 <> 0, " " + NumeroRecursivo(Numero Mod 1000000), "")
+            Case 2000000 To 1999999999
+                Resultado = NumeroRecursivo(Numero \ 1000000) + " Millones" + IIf(Numero Mod 1000000 <> 0, " " + NumeroRecursivo(Numero Mod 1000000), "")
+        End Select
+
+        NumeroRecursivo = Resultado
+
+    End Function
 End Class
+
 

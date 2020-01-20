@@ -1,6 +1,6 @@
 ﻿Public Class ModInmueble
-	Dim dtab_cat As DataTable
-	Public Sub New(OprId As Integer)
+    Dim dtab_cat As DataTable
+    Public Sub New(OprId As Integer)
         ' This call is required by the designer.
         InitializeComponent()
 		' Add any initialization after the InitializeComponent() call.
@@ -290,9 +290,7 @@
             If .SelectedIndex = 1 Then
                 If operacion.Text = "MOD" Then
                     Catastro.Modificar.Inmueble(opr_id.Text, catastro_id.Text, titular_id.Text,
-                                                  barrio.Text, uso.Text, cuenta.Value, archivado.Checked,
-                                                  zona.Value, circ.Value, secc.Value,
-                                                  manz.Value, parc.Value, lote.Value)
+                                                  barrio.Text, uso.Text, cuenta.Value)
                 ElseIf operacion.Text = "NEW" Or operacion.Text = "DUP" Then
                     Catastro.Agregar.Inmueble(opr_id.Text, catastro_id.Text, titular_id.Text,
                                               barrio.Text, uso.Text, cuenta.Value, archivado.Checked,
@@ -389,7 +387,7 @@
             If sender Is ubicacion_principal Then
                 Catastro.Modificar.Ubicacion(bs_frente, catastro_id.Text)
             ElseIf sender Is del_frente Then
-                Catastro.Eliminar.Frente(bs_frente, catastro_id.Text)
+                Catastro.Eliminar.Frente(bs_frente)
             End If
         End If
         CtrlMan.DataGridViewTools.Load(consulta_frente, bs_frente, "", Catastro.ListarFrente(catastro_id.Text))

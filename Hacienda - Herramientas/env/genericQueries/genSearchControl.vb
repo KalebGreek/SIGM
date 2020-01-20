@@ -19,10 +19,9 @@
 		' This call is required by the designer.
 		InitializeComponent()
 
-		' Add any initialization after the InitializeComponent() call.
-		DateValue.MaxDate = Today
-		DateValue.Value = Today
-	End Sub
+        ' Add any initialization after the InitializeComponent() call.
+        DateValue.Value = Today
+    End Sub
 
     Private Sub Vista_Events(sender As Object, e As EventArgs) Handles vista.SelectedIndexChanged
         'Avoid seeing this control if there are no options
@@ -104,11 +103,11 @@
 		End If
 	End Sub
 
-	Private Sub keyword_ClicknFocus(sender As Object, e As EventArgs) Handles keyword.GotFocus, keyword.DoubleClick
-		If keyword.Visible Then
-			keyword.SelectAll()
-		End If
-	End Sub
+    Private Sub keyword_ClicknFocus(sender As Object, e As EventArgs) Handles keyword.DoubleClick
+        If keyword.Visible Then
+            keyword.SelectAll()
+        End If
+    End Sub
 
     Public Sub FilterSearch()
         'O bien se manejan los filtros y tipos de datos directamente acá, o tengo que llamar eventos por separado para 
@@ -148,7 +147,7 @@
                             bsCustomFilter = filtro.Text & " => '" & DateValue.Value.ToShortDateString & "'
 											 AND " & filtro.Text & " <= '" & MaxDateValue.Value.ToShortDateString & "'"
                         Else
-                            bsCustomFilter = filtro.Text & Condition.Text & "'" & DateValue.Value.ToShortDateString & "'"
+                            bsCustomFilter = filtro.Text & Condition.Text & "='" & DateValue.Value.ToShortDateString & "'"
                         End If
                     Else
                         If Condition.Text = "<->" Then
