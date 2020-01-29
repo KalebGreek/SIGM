@@ -1,0 +1,1139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{63599C84-320F-46EE-8621-FDDA0F83729C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>Sigm.My.MyApplication</StartupObject>
+    <RootNamespace>Sigm</RootNamespace>
+    <AssemblyName>Sigm</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+    <ManifestCertificateThumbprint>0E2D99BC8B5875D6334BD031E161BCF903DF9639</ManifestCertificateThumbprint>
+    <ManifestKeyFile>Hacienda - Herramientas_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>false</GenerateManifests>
+    <SignManifests>false</SignManifests>
+    <TargetZone>LocalIntranet</TargetZone>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <NoWin32Manifest>False</NoWin32Manifest>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <PublishUrl>C:\Users\Keymon\Dropbox\Villa de Las Rosas\Hacienda - Villa de Las Rosas\out\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>17</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Sigm.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42032,42036,42353,42354,42355</NoWarn>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Sigm.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42032,42036,42353,42354,42355</NoWarn>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DocumentationFile>Sigm.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42032,42036,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>ExtendedCorrectnessRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>Sigm.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42032,42036,42353,42354,42355</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Optimize>False</Optimize>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>x86</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\ACROPOLIS.ICO</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DocumentationFile>Sigm.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42032,42036,42353,42354,42355</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DocumentationFile>Sigm.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42032,42036,42353,42354,42355</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1400.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.2.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1400.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types.Resources, Version=12.0.0.0, Culture=de, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SQL Server\120\SDK\Assemblies\es\Microsoft.SqlServer.Types.Resources.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data.Entity">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard1.1\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.3\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Serialization">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="Microsoft.VisualBasic.FileIO" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Data.Common" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Drawing.Printing" />
+    <Import Include="System.IO" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Xml" />
+    <Import Include="system.xml.serialization" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="env\menus\AccionSocialMenu.Designer.vb">
+      <DependentUpon>AccionSocialMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\AccionSocialMenu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="asocial\ModBeneficiario.Designer.vb">
+      <DependentUpon>ModBeneficiario.vb</DependentUpon>
+    </Compile>
+    <Compile Include="asocial\ModBeneficiario.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\menus\CatastroMenu.Designer.vb">
+      <DependentUpon>CatastroMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\CatastroMenu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="catastro\ModInmueble.Designer.vb">
+      <DependentUpon>ModInmueble.vb</DependentUpon>
+    </Compile>
+    <Compile Include="catastro\ModInmueble.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="catastro\AgregarFrente.Designer.vb">
+      <DependentUpon>AgregarFrente.vb</DependentUpon>
+    </Compile>
+    <Compile Include="catastro\AgregarFrente.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="comercio\BusquedaComercio.Designer.vb">
+      <DependentUpon>BusquedaComercio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="comercio\BusquedaComercio.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\menus\ComercioMenu.Designer.vb">
+      <DependentUpon>ComercioMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\ComercioMenu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="env\ConverterMan.vb" />
+    <Compile Include="env\CtrlMan.vb" />
+    <Compile Include="env\DbMan.vb" />
+    <Compile Include="env\FileMan.vb" />
+    <Compile Include="env\genericForms\genToolContainer.Designer.vb">
+      <DependentUpon>genToolContainer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\genericForms\genToolContainer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\genericForms\genDataVisor.Designer.vb">
+      <DependentUpon>genDataVisor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\genericForms\genDataVisor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\genericForms\genModDialog.Designer.vb">
+      <DependentUpon>genModDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\genericForms\genModDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\genericForms\SQLConsole.Designer.vb">
+      <DependentUpon>SQLConsole.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\genericForms\SQLConsole.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\genericQueries\genSearchControl.Designer.vb">
+      <DependentUpon>genSearchControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\genericQueries\genSearchControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="env\SecMan.vb" />
+    <Compile Include="env\menus\GobiernoMenu.Designer.vb">
+      <DependentUpon>GobiernoMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\GobiernoMenu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="hacienda\Adelanto\adelanto_page1.Designer.vb">
+      <DependentUpon>adelanto_page1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\Adelanto\adelanto_page1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="hacienda\Adelanto\ModAdelanto.Designer.vb">
+      <DependentUpon>ModAdelanto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\Adelanto\ModAdelanto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="hacienda\CalculoAnualImpuesto\CalculoAnual.vb" />
+    <Compile Include="hacienda\Combustibles\Combustible.vb" />
+    <Compile Include="hacienda\Combustibles\CtrlBusquedaCombustiblePorTicket.Designer.vb">
+      <DependentUpon>CtrlBusquedaCombustiblePorTicket.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\Combustibles\CtrlBusquedaCombustiblePorTicket.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="hacienda\Combustibles\ModCombustibleReceptor.Designer.vb">
+      <DependentUpon>ModCombustibleReceptor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\Combustibles\ModCombustibleReceptor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="hacienda\Combustibles\ModCombustibleTicket.Designer.vb">
+      <DependentUpon>ModCombustibleTicket.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\Combustibles\ModCombustibleTicket.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="contratos\ConsultaContrato.Designer.vb">
+      <DependentUpon>ConsultaContrato.vb</DependentUpon>
+    </Compile>
+    <Compile Include="contratos\ConsultaContrato.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="hacienda\ConvertirSIRO.Designer.vb">
+      <DependentUpon>ConvertirSIRO.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\ConvertirSIRO.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="hacienda\EditorSijCor.Designer.vb">
+      <DependentUpon>EditorSijCor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\EditorSijCor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="hacienda\CtrlVenceImpuesto.Designer.vb">
+      <DependentUpon>CtrlVenceImpuesto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\CtrlVenceImpuesto.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="docs\Documento.vb" />
+    <Compile Include="gobierno\ConsultaOrdenanza.Designer.vb">
+      <DependentUpon>ConsultaOrdenanza.vb</DependentUpon>
+    </Compile>
+    <Compile Include="gobierno\ConsultaOrdenanza.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gobierno\ModOrdenanza.Designer.vb">
+      <DependentUpon>ModOrdenanza.vb</DependentUpon>
+    </Compile>
+    <Compile Include="gobierno\ModOrdenanza.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.vb">
+      <DependentUpon>MainForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="hacienda\CalculoAnualImpuesto\CalcAnualImpUI.Designer.vb">
+      <DependentUpon>CalcAnualImpUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\CalculoAnualImpuesto\CalcAnualImpUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="hacienda\CuentaAgrupada\CuentaAgrupada.vb" />
+    <Compile Include="hacienda\CuentaAgrupada\ModCuentaAgrupada.Designer.vb">
+      <DependentUpon>ModCuentaAgrupada.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\CuentaAgrupada\ModCuentaAgrupada.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="hacienda\CuentaAgrupada\ConsultaCuentaAgrupada.Designer.vb">
+      <DependentUpon>ConsultaCuentaAgrupada.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\CuentaAgrupada\ConsultaCuentaAgrupada.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="hacienda\CertificadoLibreDeuda.Designer.vb">
+      <DependentUpon>CertificadoLibreDeuda.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\CertificadoLibreDeuda.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="hacienda\ConsultaMovimientos.Designer.vb">
+      <DependentUpon>ConsultaMovimientos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\ConsultaMovimientos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="hacienda\ConsultaImpuesto.Designer.vb">
+      <DependentUpon>ConsultaImpuesto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\ConsultaImpuesto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="hacienda\Hacienda.vb" />
+    <Compile Include="hacienda\CuentaAgrupada\hac_contrib.vb" />
+    <Compile Include="acceso.designer.vb">
+      <DependentUpon>acceso.vb</DependentUpon>
+    </Compile>
+    <Compile Include="acceso.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="catastro\ConsultaCatastro.Designer.vb">
+      <DependentUpon>ConsultaCatastro.vb</DependentUpon>
+    </Compile>
+    <Compile Include="catastro\ConsultaCatastro.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="launcher.designer.vb">
+      <DependentUpon>launcher.vb</DependentUpon>
+    </Compile>
+    <Compile Include="launcher.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="catastro\Catastro.vb" />
+    <Compile Include="hacienda\ConsultasEspeciales.Designer.vb">
+      <DependentUpon>ConsultasEspeciales.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\ConsultasEspeciales.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\visor_error.Designer.vb">
+      <DependentUpon>visor_error.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\visor_error.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="hacienda\ConsultaEmpleado.Designer.vb">
+      <DependentUpon>ConsultaEmpleado.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\ConsultaEmpleado.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\menus\HaciendaMenu.Designer.vb">
+      <DependentUpon>HaciendaMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\HaciendaMenu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="hacienda\Recaudacion\ModIntimaciones.Designer.vb">
+      <DependentUpon>ModIntimaciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\Recaudacion\ModIntimaciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="contratos\ModContrato.Designer.vb">
+      <DependentUpon>ModContrato.vb</DependentUpon>
+    </Compile>
+    <Compile Include="contratos\ModContrato.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gobierno\ModEmpleado.Designer.vb">
+      <DependentUpon>ModEmpleado.vb</DependentUpon>
+    </Compile>
+    <Compile Include="gobierno\ModEmpleado.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="hacienda\Recaudacion.vb" />
+    <Compile Include="hacienda\Recaudacion\ConsultaIntimaciones.Designer.vb">
+      <DependentUpon>ConsultaIntimaciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\Recaudacion\ConsultaIntimaciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="oprivadas\BusquedaExpediente.Designer.vb">
+      <DependentUpon>BusquedaExpediente.vb</DependentUpon>
+    </Compile>
+    <Compile Include="oprivadas\BusquedaExpediente.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="oprivadas\BusquedaPropietario.Designer.vb">
+      <DependentUpon>BusquedaPropietario.vb</DependentUpon>
+    </Compile>
+    <Compile Include="oprivadas\BusquedaPropietario.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\menus\OprivadasMenu.Designer.vb">
+      <DependentUpon>OprivadasMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\OprivadasMenu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="oprivadas\Pagos.vb" />
+    <Compile Include="hacienda\Combustibles\ModCombustible.Designer.vb">
+      <DependentUpon>ModCombustible.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\Combustibles\ModCombustible.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="oprivadas\toolCalculoPlanos.Designer.vb">
+      <DependentUpon>toolCalculoPlanos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="oprivadas\toolCalculoPlanos.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="hacienda\Adelanto\BusquedaAdelanto.Designer.vb">
+      <DependentUpon>BusquedaAdelanto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="hacienda\Adelanto\BusquedaAdelanto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\menus\OpublicasMenu.Designer.vb">
+      <DependentUpon>OpublicasMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\OpublicasMenu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="opublicas\NotaPedido\BusquedaOrdenTrabajo.Designer.vb">
+      <DependentUpon>BusquedaOrdenTrabajo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="opublicas\NotaPedido\BusquedaOrdenTrabajo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="opublicas\NotaPedido\ModOrdenTrabajo.Designer.vb">
+      <DependentUpon>ModOrdenTrabajo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="opublicas\NotaPedido\ModOrdenTrabajo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="opublicas\NotaPedido\NotaPedido.vb" />
+    <Compile Include="persona\BusquedaPersona.Designer.vb">
+      <DependentUpon>BusquedaPersona.vb</DependentUpon>
+    </Compile>
+    <Compile Include="persona\BusquedaPersona.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="persona\DomicilioPage.Designer.vb">
+      <DependentUpon>DomicilioPage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="persona\DomicilioPage.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="persona\Empleado.vb" />
+    <Compile Include="persona\ModActa.Designer.vb">
+      <DependentUpon>ModActa.vb</DependentUpon>
+    </Compile>
+    <Compile Include="persona\ModActa.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\menus\PersonaMenu.Designer.vb">
+      <DependentUpon>PersonaMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\PersonaMenu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="persona\Profesional.vb" />
+    <Compile Include="persona\Proveedor.vb" />
+    <Compile Include="persona\tabPersona3Contacto.Designer.vb">
+      <DependentUpon>tabPersona3Contacto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="persona\tabPersona3Contacto.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="persona\tabPersona4Adicional.Designer.vb">
+      <DependentUpon>tabPersona4Adicional.vb</DependentUpon>
+    </Compile>
+    <Compile Include="persona\tabPersona4Adicional.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="persona\tabPersona2Domicilio.Designer.vb">
+      <DependentUpon>tabPersona2Domicilio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="persona\tabPersona2Domicilio.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="persona\tabPersona1Datos.Designer.vb">
+      <DependentUpon>tabPersona1Datos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="persona\tabPersona1Datos.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="persona\Domicilio.vb" />
+    <Compile Include="reportes\ParametrosReporte.vb" />
+    <Compile Include="reportes\VisorReporte.Designer.vb">
+      <DependentUpon>VisorReporte.vb</DependentUpon>
+    </Compile>
+    <Compile Include="reportes\VisorReporte.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="oprivadas\ModPago.Designer.vb">
+      <DependentUpon>ModPago.vb</DependentUpon>
+    </Compile>
+    <Compile Include="oprivadas\ModPago.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="oprivadas\Oprivadas.vb" />
+    <Compile Include="oprivadas\ModExpediente.designer.vb">
+      <DependentUpon>ModExpediente.vb</DependentUpon>
+    </Compile>
+    <Compile Include="oprivadas\ModExpediente.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="env\EnvInit.vb" />
+    <Compile Include="env\config.Designer.vb">
+      <DependentUpon>config.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\config.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="persona\ModPersona.Designer.vb">
+      <DependentUpon>ModPersona.vb</DependentUpon>
+    </Compile>
+    <Compile Include="persona\ModPersona.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="persona\Persona.vb" />
+    <Compile Include="env\Settings.vb" />
+    <Compile Include="reportes\PrintTableDS.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrintTableDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="reportes\PrintTableDS.vb">
+      <DependentUpon>PrintTableDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="transito\BusquedaMulta.Designer.vb">
+      <DependentUpon>BusquedaMulta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="transito\BusquedaMulta.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="transito\ModMulta.Designer.vb">
+      <DependentUpon>ModMulta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="transito\ModMulta.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="transito\tabMultas3Vehiculo.Designer.vb">
+      <DependentUpon>tabMultas3Vehiculo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="transito\tabMultas3Vehiculo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="transito\tabMultas1Boleta.Designer.vb">
+      <DependentUpon>tabMultas1Boleta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="transito\tabMultas1Boleta.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="transito\tabMultas2Persona.Designer.vb">
+      <DependentUpon>tabMultas2Persona.vb</DependentUpon>
+    </Compile>
+    <Compile Include="transito\tabMultas2Persona.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="transito\Transito.vb" />
+    <Compile Include="env\menus\TransitoMenu.Designer.vb">
+      <DependentUpon>TransitoMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\TransitoMenu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="contratos\reportes\ModeloContrato.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\AccionSocialMenu.resx">
+      <DependentUpon>AccionSocialMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="asocial\ModBeneficiario.resx">
+      <DependentUpon>ModBeneficiario.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="catastro\ConsultaCatastro.resx">
+      <DependentUpon>ConsultaCatastro.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\CatastroMenu.resx">
+      <DependentUpon>CatastroMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="catastro\ModInmueble.resx">
+      <DependentUpon>ModInmueble.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="catastro\AgregarFrente.resx">
+      <DependentUpon>AgregarFrente.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="comercio\BusquedaComercio.resx">
+      <DependentUpon>BusquedaComercio.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\ComercioMenu.resx">
+      <DependentUpon>ComercioMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="acceso.resx">
+      <DependentUpon>acceso.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\genericForms\genToolContainer.resx">
+      <DependentUpon>genToolContainer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\genericForms\genDataVisor.resx">
+      <DependentUpon>genDataVisor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\genericForms\genModDialog.resx">
+      <DependentUpon>genModDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\genericForms\SQLConsole.resx">
+      <DependentUpon>SQLConsole.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\genericQueries\genSearchControl.resx">
+      <DependentUpon>genSearchControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gobierno\ConsultaOrdenanza.resx">
+      <DependentUpon>ConsultaOrdenanza.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\GobiernoMenu.resx">
+      <DependentUpon>GobiernoMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\Adelanto\adelanto_page1.resx">
+      <DependentUpon>adelanto_page1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\Adelanto\ModAdelanto.resx">
+      <DependentUpon>ModAdelanto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\HaciendaMenu.resx">
+      <DependentUpon>HaciendaMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="contratos\ConsultaContrato.resx">
+      <DependentUpon>ConsultaContrato.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\ConvertirSIRO.resx">
+      <DependentUpon>ConvertirSIRO.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\Recaudacion\ConsultaIntimaciones.resx">
+      <DependentUpon>ConsultaIntimaciones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\Recaudacion\ModIntimaciones.resx">
+      <DependentUpon>ModIntimaciones.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\Recaudacion\reportes\intima.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\reportes\DeudaContribuyente.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\Combustibles\CtrlBusquedaCombustiblePorTicket.resx">
+      <DependentUpon>CtrlBusquedaCombustiblePorTicket.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\Combustibles\ModCombustibleReceptor.resx">
+      <DependentUpon>ModCombustibleReceptor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\Combustibles\ModCombustibleTicket.resx">
+      <DependentUpon>ModCombustibleTicket.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\EditorSijCor.resx">
+      <DependentUpon>EditorSijCor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\CtrlVenceImpuesto.resx">
+      <DependentUpon>CtrlVenceImpuesto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gobierno\ModOrdenanza.resx">
+      <DependentUpon>ModOrdenanza.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\CalculoAnualImpuesto\CalcAnualImpUI.resx">
+      <DependentUpon>CalcAnualImpUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\CuentaAgrupada\ModCuentaAgrupada.resx">
+      <DependentUpon>ModCuentaAgrupada.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\CuentaAgrupada\ConsultaCuentaAgrupada.resx">
+      <DependentUpon>ConsultaCuentaAgrupada.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\CertificadoLibreDeuda.resx">
+      <DependentUpon>CertificadoLibreDeuda.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\ConsultaMovimientos.resx">
+      <DependentUpon>ConsultaMovimientos.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\ConsultaImpuesto.resx">
+      <DependentUpon>ConsultaImpuesto.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\ConsultasEspeciales.resx">
+      <DependentUpon>ConsultasEspeciales.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\ConsultaEmpleado.resx">
+      <DependentUpon>ConsultaEmpleado.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="contratos\ModContrato.resx">
+      <DependentUpon>ModContrato.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gobierno\ModEmpleado.resx">
+      <DependentUpon>ModEmpleado.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\Combustibles\ModCombustible.resx">
+      <DependentUpon>ModCombustible.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\BusquedaExpediente.resx">
+      <DependentUpon>BusquedaExpediente.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\BusquedaPropietario.resx">
+      <DependentUpon>BusquedaPropietario.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\OprivadasMenu.resx">
+      <DependentUpon>OprivadasMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\toolCalculoPlanos.resx">
+      <DependentUpon>toolCalculoPlanos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\Adelanto\BusquedaAdelanto.resx">
+      <DependentUpon>BusquedaAdelanto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\OpublicasMenu.resx">
+      <DependentUpon>OpublicasMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="opublicas\NotaPedido\BusquedaOrdenTrabajo.resx">
+      <DependentUpon>BusquedaOrdenTrabajo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="opublicas\reportes\nop.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="opublicas\NotaPedido\ModOrdenTrabajo.resx">
+      <DependentUpon>ModOrdenTrabajo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="persona\BusquedaPersona.resx">
+      <DependentUpon>BusquedaPersona.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="persona\DomicilioPage.resx">
+      <DependentUpon>DomicilioPage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="persona\ModActa.resx">
+      <DependentUpon>ModActa.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\PersonaMenu.resx">
+      <DependentUpon>PersonaMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="persona\tabPersona3Contacto.resx">
+      <DependentUpon>tabPersona3Contacto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="persona\tabPersona4Adicional.resx">
+      <DependentUpon>tabPersona4Adicional.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="persona\tabPersona2Domicilio.resx">
+      <DependentUpon>tabPersona2Domicilio.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="persona\tabPersona1Datos.resx">
+      <DependentUpon>tabPersona1Datos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gobierno\reportes\sid.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gobierno\reportes\sia.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gobierno\reportes\sic.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\reportes\LibreDeudaCome.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\reportes\LibreDeudaCeme.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\reportes\LibreDeudaProp.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\reportes\LibreDeudaAuto.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="hacienda\reportes\LibreDeudaAgua.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\reportes\car.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\reportes\cfo.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\reportes\clm.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\config.resx">
+      <DependentUpon>config.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="launcher.resx">
+      <DependentUpon>launcher.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\visor_error.resx">
+      <DependentUpon>visor_error.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\reportes\exp.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\reportes\spr.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="opublicas\reportes\cdp.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reportes\VisorReporte.resx">
+      <DependentUpon>VisorReporte.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\reportes\ppm.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\reportes\ppe.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\reportes\sfo.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\reportes\sin.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\reportes\slm.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gobierno\reportes\sug.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\ModPago.resx">
+      <DependentUpon>ModPago.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\reportes\smt.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\ModExpediente.resx">
+      <DependentUpon>ModExpediente.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="persona\ModPersona.resx">
+      <DependentUpon>ModPersona.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="transito\BusquedaMulta.resx">
+      <DependentUpon>BusquedaMulta.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="transito\ModMulta.resx">
+      <DependentUpon>ModMulta.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="transito\tabMultas3Vehiculo.resx">
+      <DependentUpon>tabMultas3Vehiculo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="transito\tabMultas1Boleta.resx">
+      <DependentUpon>tabMultas1Boleta.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="transito\tabMultas2Persona.resx">
+      <DependentUpon>tabMultas2Persona.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\TransitoMenu.resx">
+      <DependentUpon>TransitoMenu.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <EmbeddedResource Include="reportes\printTable.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="reportes\PrintTableDS.xsc">
+      <DependentUpon>PrintTableDS.xsd</DependentUpon>
+    </None>
+    <None Include="reportes\PrintTableDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PrintTableDS.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="reportes\PrintTableDS.xss">
+      <DependentUpon>PrintTableDS.xsd</DependentUpon>
+    </None>
+    <None Include="Resources\shiny_blue_water_droplet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ACROPOLIS.ICO" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Blue Bus.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DISK.ICO" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\app.manifest" />
+    <None Include="Resources\SHOPPING.ICO" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fondo_gris3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fondo_gris31.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fondo_gris4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\yesh.png" />
+    <None Include="Resources\save.png" />
+    <None Include="Resources\print.png" />
+    <None Include="Resources\personas.png" />
+    <None Include="Resources\nuevo.png" />
+    <None Include="Resources\nope.png" />
+    <None Include="Resources\lupa_archivo.png" />
+    <None Include="Resources\lupa.png" />
+    <None Include="Resources\login.png" />
+    <None Include="Resources\home.png" />
+    <None Include="Resources\historial.png" />
+    <None Include="Resources\shell32_16741.ico" />
+    <None Include="Resources\shell32_1_240.ico" />
+    <None Include="Resources\shell32_240.ico" />
+    <None Include="Resources\Printers2.ico" />
+    <None Include="Resources\shell32_17.ico" />
+    <None Include="Resources\shell32_16804.ico" />
+    <None Include="Resources\sombreado-arriba.png" />
+    <None Include="Resources\x15.png" />
+    <None Include="Resources\trama5.png" />
+    <None Include="Resources\trama41.png" />
+    <None Include="Resources\trama32.png" />
+    <None Include="Resources\trama2b.png" />
+    <None Include="Resources\trama2.png" />
+    <None Include="Resources\trama1.png" />
+    <None Include="Resources\shell32_5.ico" />
+    <None Include="Resources\shell32_210.ico" />
+    <None Include="Resources\shell32_2.ico" />
+    <None Include="Resources\escudo Municipal.JPG" />
+    <None Include="Resources\blanco 25%25.png" />
+    <None Include="Resources\blanco 50%25.png" />
+    <None Include="Resources\abrir.png" />
+    <None Include="Resources\config.png" />
+    <None Include="Resources\copia.png" />
+    <None Include="Resources\doc.png" />
+    <None Include="Resources\doc_error.png" />
+    <None Include="Resources\doc_ok.png" />
+    <None Include="Resources\docs.png" />
+    <None Include="Resources\escaner.png" />
+    <None Include="Resources\blanco 50%251.png" />
+    <Content Include="vrosas.accdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\fondo_rojo_test.png" />
+    <Content Include="Resources\fondo_rojo_test1.png" />
+    <None Include="Resources\logo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="My Project\DataSources\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
