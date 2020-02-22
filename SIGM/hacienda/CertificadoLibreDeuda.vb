@@ -114,11 +114,11 @@ Public Class CertificadoLibreDeuda
                                                                     OpcionMes.Checked, Mes, OpcionTrim.Checked, Trimestre.Text)
             With servicio.Text
                 If servicio.Text.Contains("AGUA") Then
-                    ReportType = "HACIENDA\REPORTES\LibreDeudaAgua"
+                    ReportType = "REPORTES\HACIENDA\LibreDeudaAgua"
                     parametros = ParametrosReporte.Agua(registro(0), parametros)
 
                 ElseIf servicio.Text.Contains("AUTO") Then
-                    ReportType = "HACIENDA\REPORTES\LibreDeudaAuto"
+                    ReportType = "REPORTES\HACIENDA\LibreDeudaAuto"
                     parametros = ParametrosReporte.Automotor(registro(0), parametros, SinBaja.Checked)
 
                     Dim OpcionBaja As Integer
@@ -132,26 +132,25 @@ Public Class CertificadoLibreDeuda
 
                     parametros = ParametrosReporte.LibreDeuda.DetalleAuto(parametros, OpcionBaja, FechaBaja)
 
-
                 ElseIf servicio.Text.Contains("CATA") Then
-                    ReportType = "HACIENDA\REPORTES\LibreDeudaProp"
+                    ReportType = "REPORTES\HACIENDA\LibreDeudaProp"
                     parametros = ParametrosReporte.Catastro(registro(0), parametros)
 
                 ElseIf servicio.Text.Contains("CEME") Then
-                    ReportType = "HACIENDA\REPORTES\LibreDeudaCeme"
+                    ReportType = "REPORTES\HACIENDA\LibreDeudaCeme"
                     parametros = ParametrosReporte.Cementerio(registro(0), parametros)
 
                 ElseIf servicio.Text.Contains("COME") Then
-                    ReportType = "HACIENDA\REPORTES\LibreDeudaCome"
+                    ReportType = "REPORTES\HACIENDA\LibreDeudaCome"
                     parametros = ParametrosReporte.Comercio(registro(0), parametros)
 
                 End If
+
                 If ReportType <> "" Then
                     Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda")
                     certificado.mostrar(ReportType, parametros)
                     certificado.ShowDialog()
                     certificado.Dispose()
-
                 End If
             End With
 

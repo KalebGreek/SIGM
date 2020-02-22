@@ -165,7 +165,7 @@
 
 
         'frentes
-        CtrlMan.DataGridViewTools.Load(consulta_frente, bs_frente, "", Catastro.ListarFrente(catastro_id.Text))
+        CtrlMan.DataGridViewTools.Load(consulta_frente, bs_frente, Catastro.ListarFrente(catastro_id.Text))
 
         'superficies
         sql(0) = "SELECT *"
@@ -179,11 +179,10 @@
         sql(1) = "FROM cat_servicio"
         sql(2) = "WHERE catastro_id=" & catastro_id.Text
 
-        CtrlMan.DataGridViewTools.Load(consulta_caract, bs_car, "",
-                                 DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql))
+        CtrlMan.DataGridViewTools.Load(consulta_caract, bs_car, DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql))
 
         'copias
-        CtrlMan.DataGridViewTools.Load(consulta_copia, bs_copia, "", Documento.Catastro.BuscarDoc(catastro_id.Text))
+        CtrlMan.DataGridViewTools.Load(consulta_copia, bs_copia, Documento.Catastro.BuscarDoc(catastro_id.Text))
 
     End Sub
 
@@ -390,7 +389,7 @@
                 Catastro.Eliminar.Frente(bs_frente)
             End If
         End If
-        CtrlMan.DataGridViewTools.Load(consulta_frente, bs_frente, "", Catastro.ListarFrente(catastro_id.Text))
+        CtrlMan.DataGridViewTools.Load(consulta_frente, Catastro.ListarFrente(catastro_id.Text))
     End Sub
 
     ' SUPERFICIE

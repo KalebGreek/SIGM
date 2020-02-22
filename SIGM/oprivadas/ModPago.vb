@@ -21,7 +21,11 @@ Public Class ModPago
     End Sub
     Private Sub ConsultarDeudas()
         If Me.Visible Then
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_pago, "", Pagos.Consultar(opr_id.Text, solo_deuda.Checked))
+            bs_pago.Filter = ""
+            bs_pago.Sort = ""
+            bs_pago.Position = -1
+            bs_pago.DataSource = Pagos.Consultar(opr_id.Text, solo_deuda.Checked)
+            visor = CtrlMan.DataGridViewTools.Load(visor, bs_pago)
         End If
     End Sub
 

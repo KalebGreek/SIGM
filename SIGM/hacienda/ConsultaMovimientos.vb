@@ -33,8 +33,8 @@
         visor.DataSource = Nothing
         bs_consulta.DataSource = Nothing
         If SeleccionCuenta.SelectedIndex > -1 And Me.Visible Then
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, "", ConsultarMovimientos(bs_cuenta.Current("orden"), keyword_movimis.Text, ActivarFiltro.Checked,
-                                                                                          fecha.Checked, inicio.Value, final.Value))
+            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), keyword_movimis.Text, ActivarFiltro.Checked,
+                                                                               fecha.Checked, inicio.Value, final.Value))
             SumarTotales(bs_cuenta, Ingresos.Checked)
         End If
 
@@ -43,7 +43,7 @@
     Private Sub ActivarFiltro_CheckedChanged(sender As Object, e As EventArgs) Handles ActivarFiltro.CheckedChanged
         GrupoFiltro.Visible = ActivarFiltro.Checked
         If SeleccionCuenta.SelectedIndex > -1 And Me.Visible Then
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, "", ConsultarMovimientos(bs_cuenta.Current("orden"), keyword_movimis.Text, ActivarFiltro.Checked,
+            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), keyword_movimis.Text, ActivarFiltro.Checked,
                                                                                           fecha.Checked, inicio.Value, final.Value))
             SumarTotales(bs_cuenta, Ingresos.Checked)
         End If
@@ -53,14 +53,14 @@
         final.Enabled = fecha.Checked
         keyword_movimis.Enabled = concepto.Checked
         If SeleccionCuenta.SelectedIndex > -1 And Me.Visible Then
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, "", ConsultarMovimientos(bs_cuenta.Current("orden"), keyword_movimis.Text, ActivarFiltro.Checked,
+            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), keyword_movimis.Text, ActivarFiltro.Checked,
                                                                         fecha.Checked, inicio.Value, final.Value))
             SumarTotales(bs_cuenta, Ingresos.Checked)
         End If
     End Sub
     Private Sub Keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles keyword_movimis.KeyUp
         If SeleccionCuenta.SelectedIndex > -1 And Me.Visible Then
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, "", ConsultarMovimientos(bs_cuenta.Current("orden"), keyword_movimis.Text, ActivarFiltro.Checked,
+            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), keyword_movimis.Text, ActivarFiltro.Checked,
                                                                                             fecha.Checked, inicio.Value, final.Value))
 
             SumarTotales(bs_cuenta, Ingresos.Checked)
@@ -84,7 +84,7 @@
         inicio.MaxDate = final.Value
         final.MinDate = inicio.Value
         If SeleccionCuenta.SelectedIndex > -1 And Me.Visible Then
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, "", ConsultarMovimientos(bs_cuenta.Current("orden"), keyword_movimis.Text, ActivarFiltro.Checked,
+            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), keyword_movimis.Text, ActivarFiltro.Checked,
                                                                         fecha.Checked, inicio.Value, final.Value))
             SumarTotales(bs_cuenta, Ingresos.Checked)
         End If

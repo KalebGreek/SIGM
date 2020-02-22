@@ -169,7 +169,7 @@
 							 mostrar_f1b.Checked, mostrar_f2.Checked, mostrar_f3.Checked,
 							 progreso) 'Consulta básica de impuesto específico sobre Fox
 
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, "", dtab_imp)
+            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, dtab_imp)
         ElseIf sender Is bs_consulta Then
 			'Deuda agrupada para mostrar al pie de la consulta
 			info.Text = "Deuda Total:"

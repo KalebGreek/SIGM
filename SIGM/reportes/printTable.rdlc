@@ -277,7 +277,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Column1.Value</Value>
+                                  <Value>=Fields!Column1.UniqueName</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -304,7 +304,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Column2.Value</Value>
+                                  <Value>=Fields!Column2.UniqueName</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -331,7 +331,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Column3.Value</Value>
+                                  <Value>=Fields!Column3.UniqueName</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -358,7 +358,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Column4.Value</Value>
+                                  <Value>=Fields!Column4.UniqueName</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -385,7 +385,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Column5.Value</Value>
+                                  <Value>=Fields!Column5.UniqueName</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -412,7 +412,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Column6.Value</Value>
+                                  <Value>=Fields!Column6.UniqueName</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -491,10 +491,10 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>11.6in</Height>
+        <Height>11.04792in</Height>
         <Style />
       </Body>
-      <Width>8.2in</Width>
+      <Width>8.04375in</Width>
       <Page>
         <PageHeader>
           <Height>0.80849cm</Height>
@@ -582,8 +582,8 @@
         </PageHeader>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
-        <InteractiveHeight>29cm</InteractiveHeight>
-        <InteractiveWidth>20cm</InteractiveWidth>
+        <InteractiveHeight>29.7cm</InteractiveHeight>
+        <InteractiveWidth>21cm</InteractiveWidth>
         <LeftMargin>0cm</LeftMargin>
         <RightMargin>0cm</RightMargin>
         <TopMargin>0cm</TopMargin>

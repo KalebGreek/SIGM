@@ -870,7 +870,7 @@ Partial Class ModExpediente
 		'ver_fin_obra
 		'
 		Me.ver_fin_obra.BackColor = System.Drawing.Color.Transparent
-		Me.ver_fin_obra.BackgroundImage = Global.Sigm.My.Resources.Resources.print
+		Me.ver_fin_obra.BackgroundImage = Nothing
 		Me.ver_fin_obra.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
 		Me.ver_fin_obra.FlatAppearance.BorderSize = 0
 		Me.ver_fin_obra.FlatStyle = System.Windows.Forms.FlatStyle.Flat
@@ -889,7 +889,7 @@ Partial Class ModExpediente
 		'cargar_fin_obra
 		'
 		Me.cargar_fin_obra.BackColor = System.Drawing.Color.Transparent
-		Me.cargar_fin_obra.BackgroundImage = Global.Sigm.My.Resources.Resources.abrir
+		Me.cargar_fin_obra.BackgroundImage = Nothing
 		Me.cargar_fin_obra.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
 		Me.cargar_fin_obra.FlatAppearance.BorderSize = 0
 		Me.cargar_fin_obra.FlatStyle = System.Windows.Forms.FlatStyle.Flat

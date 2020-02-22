@@ -352,7 +352,7 @@ Public Class CalcAnualImpUI
         Dim dtab_cuenta, dtab_vence, dtab_deuda As DataTable
         Dim minimo, taecom, importe, franqueo As New Decimal
         Dim cuota_max As Integer
-        Dim sql(2) As String
+        Dim sql(3) As String
 
         cuentas_modificadas = 0
         total_cuotas = 0
@@ -360,6 +360,7 @@ Public Class CalcAnualImpUI
         sql(0) = "SELECT * "
         sql(1) = "FROM comvence"
         sql(2) = "WHERE periodo=" & periodo.Value
+        sql(3) = ""
         dtab_vence = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
         'Cuentas
@@ -370,18 +371,20 @@ Public Class CalcAnualImpUI
                          comact.cuota4,comact.cuota5,comact.cuota6"
         sql(1) = "FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
         sql(2) = "WHERE comercio.baja = {} AND comact.cuota1>0 AND comercio.codigo=>" & CuentaInicial.Value
+        sql(3) = "ORDER BY comercio.codigo"
 
         dtab_cuenta = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
+        'Deudas
         sql(0) = "SELECT *"
         sql(1) = "FROM comcue"
-        sql(2) = ""
+        sql(2) = "WHERE agrupado='' AND pago={} AND ano=" & periodo.Value & " AND codigo=> " & CuentaInicial.Value
+        sql(3) = "ORDER BY codigo"
+
         dtab_deuda = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-
-
         progreso.Maximum = dtab_cuenta.Rows.Count - 1
-        For fila As Integer = 1 To progreso.Maximum
+        For fila As Integer = 0 To progreso.Maximum
             Dim cuota_added As New Integer
             Dim vence As Date = Date.Today
             CheckProgress(fila, dtab_cuenta(fila)("codigo"))
@@ -418,7 +421,7 @@ Public Class CalcAnualImpUI
                     franqueo = dtab_var(0)("franqueo")
                     importe = minimo + taecom + franqueo
 
-                    If CalculoAnual.sql.Comercio.VerificarCuota(dtab_cuenta, fila, ncuota, periodo.Value, dtab_deuda) Then
+                    If CalculoAnual.sql.Comercio.VerificarCuota(dtab_cuenta, fila, ncuota, dtab_deuda) Then
                         cuota_added += CalculoAnual.sql.Comercio.InsertarCuota(dtab_cuenta, fila, ncuota, periodo.Value, minimo, taecom,
                                                                                     franqueo, importe, vence)
                     End If

@@ -20,14 +20,14 @@
     End Sub
 
     Private Sub FilterResults() Handles GenSearchControl1.CFilter
-        query_bs.Filter = GenSearchControl1.bsCustomFilter
+        bs_query.Filter = GenSearchControl1.bsCustomFilter
     End Sub
 
     Private Sub BuildFilter() Handles GenSearchControl1.CFiltro_IndexTextChanged
-        If GenSearchControl1.filtro.SelectedIndex > -1 And query_bs.Count > 0 And
+        If GenSearchControl1.filtro.SelectedIndex > -1 And bs_query.Count > 0 And
            GenSearchControl1.filtro.Text <> "System.Data.DataRowView" Then
 
-            Dim ordered_bs As BindingSource = query_bs
+            Dim ordered_bs As BindingSource = bs_query
             ordered_bs.Sort = GenSearchControl1.filtro.Text
             ordered_bs.MoveFirst()
 
@@ -79,19 +79,19 @@
             Dim sql(0) As String
             sql(0) = CustomQuery.Text
             Dim dtab As DataTable = DbMan.ReadDB(Nothing, Connection.Text, sql)
-            CtrlMan.DataGridViewTools.Load(QueryView, query_bs, "", dtab)
+            CtrlMan.DataGridViewTools.Load(QueryView, bs_query, dtab)
             CustomQuery.Items.Insert(0, Trim(CustomQuery.Text))
             CustomQuery.Text = ""
         End If
     End Sub
 
-	'Connections
-	Private Sub DBFoxMuniciToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DBFoxMuniciToolStripMenuItem.Click
-		Connection.Text = My.Settings.foxConnection
-	End Sub
-	Private Sub DBAccessToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DBAccessToolStripMenuItem.Click
-		Connection.Text = My.Settings.AdbConnection
-	End Sub
+    'Connections
+    Private Sub DBFoxMuniciToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DBFoxMuniciToolStripMenuItem.Click
+        Connection.Text = My.Settings.foxConnection
+    End Sub
+    Private Sub DBAccessToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DBAccessToolStripMenuItem.Click
+        Connection.Text = My.Settings.AdbConnection
+    End Sub
     Private Sub DBPostgreSQLToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles DBPostgreSQLToolStripMenuItem.Click
         Connection.Text = My.Settings.pgsqlCon_disabled
     End Sub
@@ -222,9 +222,9 @@
 
         If ReadTable Then
             Dim LastQueryView As DataGridView = QueryView
-            Dim LastQueryBS As BindingSource = query_bs
+            Dim LastQueryBS As BindingSource = bs_query
 
-            query_bs = New BindingSource With {
+            bs_query = New BindingSource With {
                 .DataSource = DbMan.ReadDB(Nothing, Connection.Text, sql)
             } 'Avoids IBindingList error
 
@@ -233,14 +233,14 @@
             Next
 
 
-            If query_bs.DataSource Is Nothing = False Then
+            If bs_query.DataSource Is Nothing = False Then
                 'Create filter with columns
                 Dim ColumnList_bs As New BindingSource
                 GenSearchControl1.filtro.Visible = False
-                ColumnList_bs.DataSource = CtrlMan.Fill.GetColumnList(query_bs)
+                ColumnList_bs.DataSource = CtrlMan.Fill.GetColumnList(bs_query)
                 GenSearchControl1.filtro = CtrlMan.Fill.SetAutoComplete(GenSearchControl1.filtro, ColumnList_bs, "ColumnName", "DataType")
                 'Fill with data
-                CtrlMan.DataGridViewTools.Load(QueryView, query_bs)
+                CtrlMan.DataGridViewTools.Load(QueryView, bs_query)
             Else
                 'Retrieves last search
                 CtrlMan.DataGridViewTools.Load(LastQueryView, LastQueryBS)

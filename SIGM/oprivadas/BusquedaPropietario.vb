@@ -23,7 +23,11 @@
                     sql(0) = "SELECT * FROM catastro"
                     Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
                     If dtab Is Nothing = False Then
-                        CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, "", dtab)
+                        bs_resultado.Filter = ""
+                        bs_resultado.Sort = ""
+                        bs_resultado.Position = -1
+                        bs_resultado.DataSource = dtab
+                        CtrlMan.DataGridViewTools.Load(resultado, bs_resultado)
                         Dim bs_ColumnList As New BindingSource
                         bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)
                         .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")

@@ -35,12 +35,12 @@ Partial Class ConsultasEspeciales
         Me.CustomQuery = New System.Windows.Forms.ToolStripComboBox()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.CustomTable = New System.Windows.Forms.LinkLabel()
-        Me.query_bs = New System.Windows.Forms.BindingSource(Me.components)
+        Me.bs_query = New System.Windows.Forms.BindingSource(Me.components)
         Me.GenSearchControl1 = New Sigm.genSearchControl()
         CType(Me.QueryView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel2.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
-        CType(Me.query_bs, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.bs_query, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'QueryView
@@ -191,7 +191,7 @@ Partial Class ConsultasEspeciales
         Me.Panel2.ResumeLayout(False)
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
-        CType(Me.query_bs, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.bs_query, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -206,7 +206,7 @@ Partial Class ConsultasEspeciales
 	Friend WithEvents Connection As ToolStripLabel
 	Friend WithEvents CustomTable As LinkLabel
 	Friend WithEvents RadioButton1 As RadioButton
-	Friend WithEvents query_bs As BindingSource
+	Friend WithEvents bs_query As BindingSource
 	Friend WithEvents ToolStripLabel1 As ToolStripLabel
 	Friend WithEvents CustomQuery As ToolStripComboBox
 	Friend WithEvents GenSearchControl1 As genSearchControl

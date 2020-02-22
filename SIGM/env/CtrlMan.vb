@@ -217,16 +217,14 @@ Public Class CtrlMan 'Control Manager
 
     Public Class DataGridViewTools
         ''' <summary>
-        ''' Validates, formats, and loads data to a DataGridView control from a BindingSource or a DataTable.
+        ''' Validates, formats, and loads data to a DataGridView control from a BindingSource.
         ''' </summary>
         ''' <param name="TargetVisor">Target DataGridView used to load data.</param>
         ''' <param name="bs">BindingSource containing the column collection.</param>
         ''' <param name="bsFilter">SQL-like filter that is being applied to the BindingSource.</param>
-        ''' <param name="dtab">Datatable linked to the BindingSource</param>
 
         Overloads Shared Function Load(ByVal TargetVisor As DataGridView,
-                                       ByVal bs As BindingSource, Optional bsFilter As String = "",
-                                       Optional ByVal dtab As DataTable = Nothing) As DataGridView
+                                       ByRef bs As BindingSource, Optional bsFilter As String = "") As DataGridView
 
             Dim visor As DataGridView = TargetVisor
 
@@ -238,10 +236,6 @@ Public Class CtrlMan 'Control Manager
             'Reset sort and filter before adding a new datasource
             bs.Sort = ""
             bs.Filter = ""
-            If dtab Is Nothing = False Then
-                bs.DataSource = Nothing
-                bs.DataSource = dtab
-            End If
             If bs.DataSource Is Nothing = False Then
                 'Aplicar filtro
                 bs.Filter = bsFilter
@@ -252,6 +246,37 @@ Public Class CtrlMan 'Control Manager
                 'Enlazar
                 visor.DataSource = bs
             End If
+            If visor.DataSource Is Nothing = False Then
+                'Dar formato
+                visor = FormatColumns(visor)
+            End If
+            visor.ResumeLayout()
+            Return visor
+        End Function
+
+        ''' <summary>
+        ''' Validates, formats, and loads data to a DataGridView control from a Datatable.
+        ''' </summary>
+        ''' <param name="TargetVisor">Target DataGridView used to load data.</param>
+        ''' <param name="dtab">Datatable linked to the BindingSource of the DataGridView</param>
+        Overloads Shared Function Load(ByVal TargetVisor As DataGridView, ByRef bs As BindingSource,
+                                       ByVal dtab As DataTable) As DataGridView
+
+            Dim visor As DataGridView = TargetVisor
+
+            SetDoubleBuffered(visor)
+            visor.SuspendLayout()
+
+            'Reset datagridview and bindingsource   
+            bs.Position = -1
+            bs.Filter = ""
+            bs.Sort = ""
+
+            visor.DataSource = Nothing
+            bs.DataSource = Nothing
+            bs.DataSource = dtab
+            visor.DataSource = bs
+
             If visor.DataSource Is Nothing = False Then
                 'Dar formato
                 visor = FormatColumns(visor)
@@ -597,17 +622,17 @@ Public Class CtrlMan 'Control Manager
     Shared Function BindingSourceListToDataTable(ByVal source As BindingSource) As DataTable
         'Solo se usa en resultados filtrados
         Dim dtab As New DataTable
-        dtab = source.DataSource.Copy()
-        If source.Filter <> "" Then
-            dtab.Rows.Clear()
-            For Each i In source.List
-                Dim dr As DataRow = dtab.NewRow()
-                For Each col As DataColumn In dtab.Columns
-                    dr(col) = i(col.ColumnName)
-                Next
-                dtab.Rows.Add(dr)
+        'Obtener registros y columnas sin filtrar
+        dtab = CType(source.DataSource, DataTable).Clone()
+
+        For Each i In source.List
+            Dim dr As DataRow = dtab.NewRow()
+            For Each col As DataColumn In dtab.Columns
+                dr(col) = i(col.ColumnName)
             Next
-        End If
+            dtab.Rows.Add(dr)
+        Next
+        dtab.AcceptChanges()
         Return dtab
     End Function
 

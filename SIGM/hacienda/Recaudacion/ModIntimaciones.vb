@@ -96,7 +96,7 @@
 
         dtab = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
         If dtab Is Nothing = False Then
-            CtrlMan.DataGridViewTools.Load(visor_intimaciones, bs_intimaciones, "", dtab)
+            CtrlMan.DataGridViewTools.Load(visor_intimaciones, bs_intimaciones, dtab)
         End If
     End Sub
 

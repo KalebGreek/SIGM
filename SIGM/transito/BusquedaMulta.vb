@@ -37,7 +37,11 @@
 
                 'COLUMN SECTION
                 If dtab.Rows.Count > 0 Then
-                    CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, "", dtab)
+                    bs_resultado.Filter = ""
+                    bs_resultado.Sort = ""
+                    bs_resultado.Position = -1
+                    bs_resultado.DataSource = dtab
+                    CtrlMan.DataGridViewTools.Load(resultado, bs_resultado)
                     bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)
                     .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
                     .filtro.SelectedIndex = 0

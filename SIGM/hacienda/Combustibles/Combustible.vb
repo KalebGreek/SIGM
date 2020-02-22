@@ -113,7 +113,7 @@
             sql(2) = "WHERE hac_combustible_items.ticket_id=" & ticket_id
 
             Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
-            CtrlMan.DataGridViewTools.Load(visor, bs, "", dtab)
+            CtrlMan.DataGridViewTools.Load(visor, bs, dtab)
         End Sub
 
 		Shared Function SelectTicket(id As Integer) As DataTable

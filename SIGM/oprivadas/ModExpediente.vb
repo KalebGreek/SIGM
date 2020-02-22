@@ -121,9 +121,17 @@ Public Class ModExpediente
             Next
 
             '##### Cargar personas
-            CtrlMan.DataGridViewTools.Load(consulta_resp, bs_resp, "", Oprivadas.Expediente.ListarResponsables(expediente.Text))
+            bs_resp.Filter = ""
+            bs_resp.Sort = ""
+            bs_resp.Position = -1
+            bs_resp.DataSource = Oprivadas.Expediente.ListarResponsables(expediente.Text)
+            CtrlMan.DataGridViewTools.Load(consulta_resp, bs_resp)
             'INMUEBLES
-            CtrlMan.DataGridViewTools.Load(consulta_inmueble, bs_catastro, "", Catastro.ListarInmueblePorExpediente(expediente.Text))
+            bs_catastro.Filter = ""
+            bs_catastro.Sort = ""
+            bs_catastro.Position = -1
+            bs_catastro.DataSource = Catastro.ListarInmueblePorExpediente(expediente.Text)
+            CtrlMan.DataGridViewTools.Load(consulta_inmueble, bs_catastro)
             'PROFESIONAL
             profesional_id.Text = registro(0)("profesional_id").ToString
 
@@ -351,7 +359,11 @@ Public Class ModExpediente
             .ShowDialog(Me)
             .Dispose()
             'Recargar
-            CtrlMan.DataGridViewTools.Load(consulta_inmueble, bs_catastro, "", Catastro.ListarInmueblePorExpediente(expediente.Text))
+            bs_catastro.Filter = ""
+            bs_catastro.Sort = ""
+            bs_catastro.Position = -1
+            bs_catastro.DataSource = Catastro.ListarInmueblePorExpediente(expediente.Text)
+            CtrlMan.DataGridViewTools.Load(consulta_inmueble, bs_catastro)
         End With
     End Sub
     Private Sub mod_inmueble_Click(sender As Object, e As EventArgs) Handles mod_inmueble.Click
@@ -367,7 +379,11 @@ Public Class ModExpediente
                 .ShowDialog(Me)
                 .Dispose()
                 'Recargar
-                CtrlMan.DataGridViewTools.Load(consulta_inmueble, bs_catastro, "", Catastro.ListarInmueblePorExpediente(expediente.Text))
+                bs_catastro.Filter = ""
+                bs_catastro.Sort = ""
+                bs_catastro.Position = -1
+                bs_catastro.DataSource = Catastro.ListarInmueblePorExpediente(expediente.Text)
+                CtrlMan.DataGridViewTools.Load(consulta_inmueble, bs_catastro)
             End If
         End With
     End Sub

@@ -131,7 +131,7 @@ Partial Class ModActa
 		'cargar_copia_acta
 		'
 		Me.cargar_copia_acta.BackColor = System.Drawing.Color.Transparent
-		Me.cargar_copia_acta.BackgroundImage = Global.Sigm.My.Resources.Resources.abrir
+		Me.cargar_copia_acta.BackgroundImage = Nothing
 		Me.cargar_copia_acta.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
 		Me.cargar_copia_acta.FlatAppearance.BorderSize = 0
 		Me.cargar_copia_acta.FlatStyle = System.Windows.Forms.FlatStyle.Flat

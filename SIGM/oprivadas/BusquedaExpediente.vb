@@ -32,7 +32,11 @@
                     dtab = Oprivadas.Expediente.Buscar.Profesional()
                 End If
                 If dtab Is Nothing = False Then
-                    CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, .bsCustomFilter, dtab)
+                    bs_resultado.Filter = ""
+                    bs_resultado.Sort = ""
+                    bs_resultado.Position = -1
+                    bs_resultado.DataSource = dtab
+                    CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, .bsCustomFilter)
                     Dim bs_ColumnList As New BindingSource
                     bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)
                     CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")

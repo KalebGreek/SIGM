@@ -115,7 +115,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\ACROPOLIS.ICO</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>
@@ -147,13 +148,16 @@
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1400.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.2.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1400.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
     </Reference>
@@ -182,12 +186,15 @@
     </Reference>
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard1.1\System.Memory.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.3\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms">
@@ -687,7 +694,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="contratos\reportes\ModeloContrato.rdlc">
+    <EmbeddedResource Include="reportes\contratos\ModeloContrato.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="env\menus\AccionSocialMenu.resx">
@@ -759,10 +766,10 @@
     <EmbeddedResource Include="hacienda\Recaudacion\ModIntimaciones.resx">
       <DependentUpon>ModIntimaciones.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\Recaudacion\reportes\intima.rdlc">
+    <EmbeddedResource Include="reportes\hacienda\intima.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\reportes\DeudaContribuyente.rdlc">
+    <EmbeddedResource Include="reportes\hacienda\DeudaContribuyente.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\Combustibles\CtrlBusquedaCombustiblePorTicket.resx">
@@ -847,7 +854,7 @@
     <EmbeddedResource Include="opublicas\NotaPedido\BusquedaOrdenTrabajo.resx">
       <DependentUpon>BusquedaOrdenTrabajo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="opublicas\reportes\nop.rdlc">
+    <EmbeddedResource Include="reportes\opublicas\nop.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="opublicas\NotaPedido\ModOrdenTrabajo.resx">
@@ -878,37 +885,37 @@
     <EmbeddedResource Include="persona\tabPersona1Datos.resx">
       <DependentUpon>tabPersona1Datos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="gobierno\reportes\sid.rdlc">
+    <EmbeddedResource Include="reportes\gobierno\sid.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="gobierno\reportes\sia.rdlc">
+    <EmbeddedResource Include="reportes\gobierno\sia.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="gobierno\reportes\sic.rdlc">
+    <EmbeddedResource Include="reportes\gobierno\sic.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\reportes\LibreDeudaCome.rdlc">
+    <EmbeddedResource Include="reportes\hacienda\LibreDeudaCome.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\reportes\LibreDeudaCeme.rdlc">
+    <EmbeddedResource Include="reportes\hacienda\LibreDeudaCeme.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\reportes\LibreDeudaProp.rdlc">
+    <EmbeddedResource Include="reportes\hacienda\LibreDeudaProp.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\reportes\LibreDeudaAuto.rdlc">
+    <EmbeddedResource Include="reportes\hacienda\LibreDeudaAuto.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\reportes\LibreDeudaAgua.rdlc">
+    <EmbeddedResource Include="reportes\hacienda\LibreDeudaAgua.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\reportes\car.rdlc">
+    <EmbeddedResource Include="reportes\oprivadas\car.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\reportes\cfo.rdlc">
+    <EmbeddedResource Include="reportes\oprivadas\cfo.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\reportes\clm.rdlc">
+    <EmbeddedResource Include="reportes\oprivadas\clm.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="env\config.resx">
@@ -921,13 +928,13 @@
     <EmbeddedResource Include="env\visor_error.resx">
       <DependentUpon>visor_error.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\reportes\exp.rdlc">
+    <EmbeddedResource Include="reportes\oprivadas\exp.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\reportes\spr.rdlc">
+    <EmbeddedResource Include="reportes\oprivadas\spr.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="opublicas\reportes\cdp.rdlc">
+    <EmbeddedResource Include="reportes\opublicas\cdp.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="reportes\VisorReporte.resx">
@@ -939,28 +946,28 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\reportes\ppm.rdlc">
+    <EmbeddedResource Include="reportes\oprivadas\ppm.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\reportes\ppe.rdlc">
+    <EmbeddedResource Include="reportes\oprivadas\ppe.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\reportes\sfo.rdlc">
+    <EmbeddedResource Include="reportes\oprivadas\sfo.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\reportes\sin.rdlc">
+    <EmbeddedResource Include="reportes\oprivadas\sin.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\reportes\slm.rdlc">
+    <EmbeddedResource Include="reportes\oprivadas\slm.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="gobierno\reportes\sug.rdlc">
+    <EmbeddedResource Include="reportes\gobierno\sug.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="oprivadas\ModPago.resx">
       <DependentUpon>ModPago.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\reportes\smt.rdlc">
+    <EmbeddedResource Include="reportes\oprivadas\smt.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="oprivadas\ModExpediente.resx">
@@ -1050,76 +1057,22 @@
     <None Include="reportes\PrintTableDS.xss">
       <DependentUpon>PrintTableDS.xsd</DependentUpon>
     </None>
-    <None Include="Resources\shiny_blue_water_droplet.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ACROPOLIS.ICO" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Blue Bus.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DISK.ICO" />
   </ItemGroup>
   <ItemGroup>
     <None Include="My Project\app.manifest" />
-    <None Include="Resources\SHOPPING.ICO" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\fondo_gris3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\fondo_gris31.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\fondo_gris4.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\yesh.png" />
-    <None Include="Resources\save.png" />
-    <None Include="Resources\print.png" />
-    <None Include="Resources\personas.png" />
-    <None Include="Resources\nuevo.png" />
     <None Include="Resources\nope.png" />
-    <None Include="Resources\lupa_archivo.png" />
-    <None Include="Resources\lupa.png" />
-    <None Include="Resources\login.png" />
-    <None Include="Resources\home.png" />
-    <None Include="Resources\historial.png" />
-    <None Include="Resources\shell32_16741.ico" />
-    <None Include="Resources\shell32_1_240.ico" />
-    <None Include="Resources\shell32_240.ico" />
-    <None Include="Resources\Printers2.ico" />
-    <None Include="Resources\shell32_17.ico" />
-    <None Include="Resources\shell32_16804.ico" />
-    <None Include="Resources\sombreado-arriba.png" />
     <None Include="Resources\x15.png" />
-    <None Include="Resources\trama5.png" />
     <None Include="Resources\trama41.png" />
-    <None Include="Resources\trama32.png" />
     <None Include="Resources\trama2b.png" />
     <None Include="Resources\trama2.png" />
     <None Include="Resources\trama1.png" />
-    <None Include="Resources\shell32_5.ico" />
-    <None Include="Resources\shell32_210.ico" />
-    <None Include="Resources\shell32_2.ico" />
     <None Include="Resources\escudo Municipal.JPG" />
-    <None Include="Resources\blanco 25%25.png" />
-    <None Include="Resources\blanco 50%25.png" />
-    <None Include="Resources\abrir.png" />
-    <None Include="Resources\config.png" />
-    <None Include="Resources\copia.png" />
-    <None Include="Resources\doc.png" />
-    <None Include="Resources\doc_error.png" />
-    <None Include="Resources\doc_ok.png" />
-    <None Include="Resources\docs.png" />
-    <None Include="Resources\escaner.png" />
-    <None Include="Resources\blanco 50%251.png" />
     <Content Include="vrosas.accdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\fondo_rojo_test.png" />
-    <Content Include="Resources\fondo_rojo_test1.png" />
     <None Include="Resources\logo.jpg" />
   </ItemGroup>
   <ItemGroup>

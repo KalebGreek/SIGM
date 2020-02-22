@@ -57,7 +57,7 @@
         sql(2) = "WHERE codigo>0 AND mail LIKE '%@%'"
 
         Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
-        CtrlMan.DataGridViewTools.Load(DataView, bs,, dtab)
+        CtrlMan.DataGridViewTools.Load(DataView, bs, dtab)
 
     End Sub
 
@@ -153,7 +153,7 @@
             End If
         End If
 
-        CtrlMan.DataGridViewTools.Load(DataView, bs,, dtab_total)
+        CtrlMan.DataGridViewTools.Load(DataView, bs, dtab_total)
     End Sub
 
     Sub CargarNovedadesSIRO()

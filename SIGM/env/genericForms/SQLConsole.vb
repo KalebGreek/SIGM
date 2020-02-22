@@ -89,7 +89,7 @@
                         QueryLog.Items.Insert(0, DbMan.editDB(OleDBCmd, connection.Text))
 
                     ElseIf .CommandText.Contains("SELECT") Then
-                        CtrlMan.DataGridViewTools.Load(QueryResult, bs_result, "", DbMan.ReadDB(OleDBCmd, connection.Text))
+                        CtrlMan.DataGridViewTools.Load(QueryResult, bs_result, DbMan.ReadDB(OleDBCmd, connection.Text))
                     End If
                     sql = ""
                 Else

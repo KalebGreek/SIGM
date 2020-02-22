@@ -89,10 +89,9 @@
 			End Function
 		End Class
 		Public Class Comercio
-			Shared Function VerificarCuota(registro As DataTable, fila As Integer, cuota As Integer, periodo As Integer, deudas As DataTable) As Boolean
+			Shared Function VerificarCuota(registro As DataTable, fila As Integer, cuota As Integer, deudas As DataTable) As Boolean
 
-				Dim result As DataRow() = deudas.Select("codigo=" & registro(fila)("codigo") & " And agrupado='' AND bimestre=" & cuota & " 
-															  And ano=" & periodo)
+				Dim result As DataRow() = deudas.Select("codigo=" & registro(fila)("codigo") & " AND bimestre=" & cuota)
 
 				Return result.Count = 0
 			End Function

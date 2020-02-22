@@ -2,9 +2,10 @@
     Public Sub New(persona_id As Integer)
         ' This call is required by the designer.
         InitializeComponent()
-        ' Add any initialization after the InitializeComponent() call.
-        CtrlMan.DataGridViewTools.Load(consulta_acta, bs_acta, "", buscar(persona_id))
-    End Sub
+		' Add any initialization after the InitializeComponent() call.
+		bs_acta.DataSource = buscar(persona_id)
+		CtrlMan.DataGridViewTools.Load(consulta_acta, bs_acta)
+	End Sub
 
     '###### GUI ##########################################################################################
     Private Sub save_Click(sender As Object, e As EventArgs) Handles save.Click

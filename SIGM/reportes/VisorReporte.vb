@@ -10,10 +10,10 @@ Public Class VisorReporte
         ReporteActual.Visible = Me.Visible
     End Sub
     'Rutinas
-    Public Function NewPageSetting() As PageSettings
+    Public Function NewPageSetting(Optional PageSize As String = "A4") As PageSettings
         With ReporteActual
             Dim config_pag As PageSettings = .GetPageSettings()
-            config_pag.PaperSize = GetPaperSize(.PrinterSettings, "A4")
+            config_pag.PaperSize = GetPaperSize(.PrinterSettings, PageSize)
             Return config_pag
         End With
     End Function
@@ -27,7 +27,7 @@ Public Class VisorReporte
         Next
     End Function
 
-    Public Overloads Sub mostrar(ReportType As String, blank As Boolean)
+    Public Overloads Sub mostrar(ReportType As String, Blank As Boolean, Optional PageSize As String = "A4")
         With ReporteActual
             ReportType = Trim(ReportType)
             If Len(ReportType) >= 7 Then 'OPR\PPE
@@ -35,7 +35,7 @@ Public Class VisorReporte
 
                 'Resetear config pagina
                 Try
-                    .SetPageSettings(NewPageSetting())
+                    .SetPageSettings(NewPageSetting(PageSize))
                 Catch e As Exception 'Problema con impresora
                     MsgBox(e.Data, MsgBoxStyle.Exclamation, "Error al configurar la página.")
                 End Try
@@ -43,7 +43,7 @@ Public Class VisorReporte
             End If
         End With
     End Sub
-    Public Overloads Sub mostrar(ReportType As String, parametros As Generic.List(Of ReportParameter))
+    Public Overloads Sub mostrar(ReportType As String, parametros As Generic.List(Of ReportParameter), Optional PageSize As String = "A4")
         With ReporteActual
             ReportType = Trim(ReportType)
             If Len(ReportType) >= 7 Then 'OPR\PPE
@@ -55,17 +55,17 @@ Public Class VisorReporte
                 End If
                 'Resetear config pagina
                 Try
-                    Dim config_pag As PageSettings = .GetPageSettings()
-                    config_pag.PaperSize = GetPaperSize(.PrinterSettings, "A4")
-                    .SetPageSettings(config_pag)
+                    'Dim config_pag As PageSettings = .GetPageSettings()
+                    'config_pag.PaperSize = GetPaperSize(.PrinterSettings, "A4")
+                    .SetPageSettings(NewPageSetting(PageSize))
                 Catch e As Exception 'Problema con impresora
-                    MsgBox(e.Data, MsgBoxStyle.Exclamation, "Error")
+                    MsgBox(e.Data, MsgBoxStyle.Exclamation, "Error al configurar la página.")
                 End Try
                 .RefreshReport()
             End If
         End With
     End Sub
-    Public Overloads Sub mostrar(ReportType As String, parametros As Generic.List(Of ReportParameter), DataSource As DataTable())
+    Public Overloads Sub mostrar(ReportType As String, parametros As Generic.List(Of ReportParameter), DataSource As DataTable(), Optional PageSize As String = "A4")
         With ReporteActual
             If DataSource Is Nothing = False Then
                 .LocalReport.DataSources.Clear()
@@ -85,54 +85,25 @@ Public Class VisorReporte
                 End If
                 'Resetear config pagina
                 Try
-                    Dim config_pag As PageSettings = .GetPageSettings()
-                    config_pag.PaperSize = GetPaperSize(.PrinterSettings, "A4")
-                    .SetPageSettings(config_pag)
+                    'Dim config_pag As PageSettings = .GetPageSettings()
+                    'config_pag.PaperSize = GetPaperSize(.PrinterSettings, "A4")
+                    .SetPageSettings(NewPageSetting(PageSize))
                 Catch e As Exception 'Problema con impresora
-                    MsgBox(e.Data, MsgBoxStyle.Exclamation, "Error")
+                    MsgBox(e.Data, MsgBoxStyle.Exclamation, "Error al configurar la página.")
                 End Try
                 .RefreshReport()
             End If
         End With
     End Sub
 
-
-
-    'Public Overloads Sub mostrar(Optional tipo As String = "",
-    '                   Optional parametros As Generic.List(Of ReportParameter) = Nothing,
-    '                   Optional blank As Boolean = True)
-    '    With ReporteActual
-    '        tipo = Trim(tipo)
-    '        If Len(tipo) >= 7 Then 'OPR\PPE
-    '            .LocalReport.ReportPath = root & "\" & tipo & ".rdlc"
-
-    '            '.RefreshReport()
-    '            If blank = False And parametros Is Nothing = False Then
-    '                .LocalReport.SetParameters(parametros)
-    '            End If
-    '            'Resetear config pagina
-    '            Try
-    '                Dim config_pag As PageSettings = .GetPageSettings()
-    '                config_pag.PaperSize = GetPaperSize(.PrinterSettings, "A4")
-    '                .SetPageSettings(config_pag)
-    '            Catch e As Exception 'Problema con impresora
-    '                MsgBox(e.Data, MsgBoxStyle.Exclamation, "Error")
-    '            End Try
-    '            .RefreshReport()
-    '            'Mostrar
-    '            .Visible = True
-    '        End If
-    '    End With
-    'End Sub
-
     ' > Formularios
     ' > > Presentación
     Private Sub MenuPresentacion_Click(sender As Object, e As EventArgs) Handles PlanosDeEdificaciónToolStripMenuItem.Click, PlanosDeMensuraToolStripMenuItem.Click
 
         If sender Is PlanosDeEdificaciónToolStripMenuItem Then
-            mostrar("oprivadas\REPORTES\PPE", True)
+            mostrar("REPORTES\oprivadas\PPE", True)
         ElseIf sender Is PlanosDeMensuraToolStripMenuItem Then
-            mostrar("oprivadas\REPORTES\PPM", True)
+            mostrar("REPORTES\oprivadas\PPM", True)
         End If
 
     End Sub
@@ -144,38 +115,38 @@ Public Class VisorReporte
                                                                               UsoGeneralToolStripMenuItem.Click, NotaDePedidoToolStripMenuItem.Click
 
         If sender Is FinalDeObraToolStripMenuItem Then
-            mostrar("oprivadas\REPORTES\SFO", True)
+            mostrar("REPORTES\oprivadas\SFO", True)
         ElseIf sender Is InspecciónToolStripMenuItem Then
-            mostrar("oprivadas\REPORTES\SIN", True)
+            mostrar("REPORTES\oprivadas\SIN", True)
         ElseIf sender Is LíneaMunicipalToolStripMenuItem Then
-            mostrar("oprivadas\REPORTES\SLM", True)
+            mostrar("REPORTES\oprivadas\SLM", True)
         ElseIf sender Is PrórrogaToolStripMenuItem Then
-            mostrar("oprivadas\REPORTES\SPR", True)
+            mostrar("REPORTES\oprivadas\SPR", True)
         ElseIf sender Is MediciónToolStripMenuItem Then
-            mostrar("oprivadas\REPORTES\SMT", True)
+            mostrar("REPORTES\oprivadas\SMT", True)
         ElseIf sender Is ActividadComercialToolStripMenuItem Then
-            mostrar("gobierno\REPORTES\SIC", True)
+            mostrar("REPORTES\gobierno\SIC", True)
         ElseIf sender Is AutomotorToolStripMenuItem Then
-            mostrar("gobierno\REPORTES\SIA", True)
+            mostrar("REPORTES\gobierno\SIA", True)
         ElseIf sender Is AutomotorConDDJJToolStripMenuItem Then
-            mostrar("gobierno\REPORTES\SID", True)
+            mostrar("REPORTES\gobierno\SID", True)
         ElseIf sender Is UsoGeneralToolStripMenuItem Then
-            mostrar("gobierno\REPORTES\SUG", True)
+            mostrar("REPORTES\gobierno\SUG", True)
         ElseIf sender Is NotaDePedidoToolStripMenuItem Then
-            mostrar("opublicas\REPORTES\NOP", True)
+            mostrar("REPORTES\opublicas\NOP", True)
         End If
     End Sub
 
     ' > > Constancia
     Private Sub MenuConstancia_Click(sender As Object, e As EventArgs) Handles FinalDeObraToolStripMenuItem1.Click, LíneaMunicipalToolStripMenuItem1.Click
         If sender Is FinalDeObraToolStripMenuItem1 Then
-            mostrar("oprivadas\REPORTES\CFO", True)
+            mostrar("REPORTES\oprivadas\CFO", True)
         ElseIf sender Is LíneaMunicipalToolStripMenuItem1 Then
             Dim param As New Generic.List(Of ReportParameter)
             Dim razon As String = InputBox("Ingresar Razon Social", "Ingresar Razon Social", "APELLIDO, NOMBRE")
             If Len(razon) > 4 Then
                 param.Add(New ReportParameter("razon", razon))
-                mostrar("oprivadas\REPORTES\CLM", param)
+                mostrar("REPORTES\oprivadas\CLM", param)
             End If
         End If
     End Sub

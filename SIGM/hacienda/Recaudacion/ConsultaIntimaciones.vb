@@ -52,7 +52,7 @@ Public Class ConsultaIntimaciones
                          docume, telefono, mail, 
                          calle, localidad, provincia,
                          SUM(" & col_importe & ") as deuda, intima2.estado"
-            Else 'comercio'
+            ElseIf .vista.Text = "comercio" Then
                 sql(0) = "SELECT " & tabla_persona & ".codigo as codigo , 
                          " & tabla_persona & ".razon as titular, 
                          docume, telefono, mail, 
@@ -69,9 +69,7 @@ Public Class ConsultaIntimaciones
                                       WHERE servicio='" & tabla_persona & "') as intima2 
                                  ON " & tabla_persona & ".codigo=intima2.codigo"
 
-            sql(2) = "WHERE " & col_importe & ">0 AND " & col_pagado & "=0 
-                            AND " & col_vence & "<DATE()"
-
+            sql(2) = "WHERE " & col_pagado & "=0"
 
             If .vista.Text <> "comercio" And .vista.Text <> "automovil" Then
                 sql(3) = "GROUP BY " & tabla_persona & ".codigo, " & tabla_persona & ".razon, 
@@ -148,7 +146,7 @@ Public Class ConsultaIntimaciones
         FlowLayoutPanel2.Enabled = GenSearchControl1.vista.SelectedIndex > -1 And bs_contribuyente.Count > 0 And bs_contribuyente.Position > -1
     End Sub
     Private Sub visor_contribuyente_RowsAdded(sender As Object, e As DataGridViewRowsAddedEventArgs) Handles visor_contribuyente.RowsAdded
-        If bs_contribuyente Is Nothing = False Then
+        If bs_contribuyente Is Nothing = False And visor_contribuyente.Rows.Count = bs_contribuyente.Count Then
             With bs_contribuyente
                 Dim ColorValue(bs_contribuyente.Count - 1) As Color
                 progreso.Value = 0
@@ -226,7 +224,7 @@ Public Class ConsultaIntimaciones
                                                                          tenedor, direccion, Today)
 
                 Dim titulo_reporte As String = "Intimación " & GenSearchControl1.vista.Text & " - Cta. N° " & .Current("codigo")
-                Dim ruta_acceso As String = "HACIENDA\RECAUDACION\REPORTES\INTIMA"
+                Dim ruta_acceso As String = "REPORTES\HACIENDA\INTIMA"
                 Dim certificado As New VisorReporte(titulo_reporte)
                 certificado.mostrar(ruta_acceso, parametros)
                 certificado.ShowDialog()

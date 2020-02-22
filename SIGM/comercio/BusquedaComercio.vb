@@ -2,14 +2,14 @@
 Public Class BusquedaComercio
 
     Public Sub New()
-
         ' This call is required by the designer.
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
         'Setting up views
-        ControlBusqueda1.vista.Items.AddRange(New Object() {"COMERCIO SIN BAJA", "COMERCIO CON BAJA", "DEUDORES"})
+        ControlBusqueda1.vista.Items.AddRange(New Object() {"COMERCIO SIN BAJA", "COMERCIO CON BAJA", "COMERCIO SIN ACTIVIDAD", "DEUDORES"})
     End Sub
+
     '-- RUTINAS
     Sub Consultar() Handles ControlBusqueda1.CSearch_Click
         ControlBusqueda1.FilterSearch()
@@ -21,54 +21,53 @@ Public Class BusquedaComercio
 
     '-- EVENTOS UNICOS
     Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVista_IndexTextChanged
-        Dim OleDBCmd As New OleDb.OleDbCommand With
-        {.CommandType = CommandType.Text,
-         .CommandText = ""}
-        With ControlBusqueda1
-            If .vista.SelectedIndex > -1 Then
-                Dim dtab As New DataTable
-                Dim bs_ColumnList As New BindingSource
-                .filtro.DataSource = Nothing
 
-                If .vista.Text = "COMERCIO SIN BAJA" Then
-                    OleDBCmd.CommandText = " SELECT codigo, razon, fantasia, domicilio, DTOC(inscripto) as inscripto, detalle as actividad"
-                    OleDBCmd.CommandText += " FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
-                    OleDBCmd.CommandText += " WHERE baja={}"
+        If ControlBusqueda1.vista.SelectedIndex > -1 Then
+            Dim consulta As String = ControlBusqueda1.vista.Text
+            Dim OleDBCmd As New OleDb.OleDbCommand With
+                                {.CommandType = CommandType.Text, .CommandText = ""}
+            Dim dtab As New DataTable
+            Dim bs_ColumnList As New BindingSource
+            ControlBusqueda1.filtro.DataSource = Nothing
 
-                    dtab = DbMan.ReadDB(OleDBCmd, My.Settings.foxConnection, , "dtab1")
+            With OleDBCmd
+                If consulta = "COMERCIO SIN BAJA" Then
+                    .CommandText = " SELECT codigo, razon, fantasia, domicilio, inscripto, detalle as actividad"
+                    .CommandText += " FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
+                    .CommandText += " WHERE baja={}"
 
-                ElseIf .vista.Text = "COMERCIO CON BAJA" Then
-                    OleDBCmd.CommandText = " SELECT codigo, razon, fantasia, domicilio, DTOC(baja) as baja, detalle as actividad"
-                    OleDBCmd.CommandText += " FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
-                    OleDBCmd.CommandText += " WHERE baja<>{}"
+                ElseIf consulta = "COMERCIO CON BAJA" Then
+                    .CommandText = " SELECT codigo, razon, fantasia, domicilio, baja, detalle as actividad"
+                    .CommandText += " FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
+                    .CommandText += " WHERE baja<>{}"
 
-                    dtab = DbMan.ReadDB(OleDBCmd, My.Settings.foxConnection, , "dtab1")
+                ElseIf consulta = "COMERCIO SIN ACTIVIDAD" Then
+                    .CommandText = " SELECT codigo, razon, fantasia, domicilio, comercio.actividad, comact.actividad"
+                    .CommandText += " FROM comercio LEFT OUTER JOIN comact ON comercio.actividad=comact.actividad"
+                    .CommandText += " WHERE comact.actividad IS NULL"
 
-                ElseIf .vista.Text = "DEUDORES" Then
-                    OleDBCmd.CommandText = " SELECT comercio.codigo, comercio.razon, 
-											 comact.detalle as actividad, SUM(comcue.importe) AS original, 
-											 SUM(ROUND((comcue.importe * ((DATE() - comcue.vence1) * 0.1315)), 2)) AS mora, 
-											 SUM(comcue.importe) + 
-											 SUM(ROUND((comcue.importe * ((DATE() - comcue.vence1) * 0.1315)), 2)) AS deuda"
+                ElseIf consulta = "DEUDORES" Then
+                    OleDBCmd.CommandText = " SELECT comercio.codigo, comercio.razon, inscripto, baja,
+											 comact.detalle as actividad, SUM(comcue.importe) AS original"
                     OleDBCmd.CommandText += " FROM comcue INNER JOIN comercio ON comcue.codigo=comercio.codigo 
-														  INNER JOIN comact ON comercio.actividad=comact.actividad"
-                    OleDBCmd.CommandText += " GROUP BY comercio.codigo, comercio.razon, comercio.fantasia, comercio.domicilio,
-													   comact.detalle"
+														  LEFT OUTER JOIN comact ON comercio.actividad=comact.actividad"
+                    OleDBCmd.CommandText += " GROUP BY comercio.codigo, comercio.razon, comercio.inscripto, comercio.baja, comact.detalle"
                     OleDBCmd.CommandText += " WHERE comcue.pago={}"
 
-                    dtab = DbMan.ReadDB(OleDBCmd, My.Settings.foxConnection, , "dtab1")
-
                 End If
-
+            End With
+            With ControlBusqueda1
+                dtab = DbMan.ReadDB(OleDBCmd, My.Settings.foxConnection, , "dtab1")
                 If dtab.Rows.Count > 0 Then
-                    CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, "", dtab)
+                    CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, dtab)
                     bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)
                     .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
                 End If
-            Else
-                .reset_search.PerformClick()
-            End If
-        End With
+            End With
+        Else
+            ControlBusqueda1.reset_search.PerformClick()
+        End If
+
     End Sub
 
     Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles ControlBusqueda1.CKeyword_KeyUp, resultado.KeyUp
@@ -83,11 +82,11 @@ Public Class BusquedaComercio
         End If
     End Sub
 
-    Private Sub Imprimir() Handles ControlBusqueda1.CPrint
+    Private Sub PrintResult() Handles ControlBusqueda1.CPrint
         If bs_resultado.DataSource Is Nothing = False Then
             If bs_resultado.Count > 0 Then
-                Dim parametros As New List(Of ReportParameter)
                 Dim dtab(0) As DataTable
+                Dim parametros As New List(Of ReportParameter)
 
                 dtab(0) = CtrlMan.BindingSourceListToDataTable(bs_resultado)
                 parametros = ParametrosReporte.TableToReport(dtab(0), ControlBusqueda1.vista.Text, parametros)

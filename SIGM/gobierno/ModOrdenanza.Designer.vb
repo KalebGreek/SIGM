@@ -187,7 +187,7 @@ Partial Class ModOrdenanza
         'cargar_doc
         '
         Me.cargar_doc.BackColor = System.Drawing.Color.Transparent
-        Me.cargar_doc.BackgroundImage = Global.Sigm.My.Resources.Resources.abrir
+        Me.cargar_doc.BackgroundImage = Nothing
         Me.cargar_doc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.cargar_doc.FlatAppearance.BorderSize = 0
         Me.cargar_doc.FlatStyle = System.Windows.Forms.FlatStyle.Flat

@@ -182,7 +182,7 @@
         bs_consulta.DataSource = Nothing
         If sender Is ca_search Then 'Búsqueda de cuentas agrupadas
             dtab_cuenta = CuentaAgrupada.sql.leer(keyword, "", sender)
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, "", dtab_cuenta)
+            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, dtab_cuenta)
         ElseIf sender Is con_ca Then
             dtab_contrib = hac_contrib.leer(dtab_contrib, sender) 'Esta consulta vuelca los resultados directamente en el datagridview especial lista_con
             'Cuando el usuario hace click en algún impuesto de la cuenta agrupada, debería poder ver las cuotas
@@ -190,10 +190,10 @@
         ElseIf sender Is bs_contrib Then 'Esta consulta muestra un id de cuenta desglosado en el datagridview de la izquierda
             tablas_fox(bs_contrib.Current("impuesto"))
             dtab_imp = deuda(False, True) 'filtrado por nombre
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, "", dtab_imp)
+            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, dtab_imp)
         ElseIf sender Is mod_ca_imp_search Then
             dtab_imp = CuentaAgrupada.sql.leer(keyword, Microsoft.VisualBasic.Left(impuesto, 4), sender) 'Búsqueda de id para modificar cuenta agrupada
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, "", dtab_imp)
+            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, dtab_imp)
         End If
         visor.Focus()
     End Sub
