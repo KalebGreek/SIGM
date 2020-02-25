@@ -10,9 +10,6 @@
 								 INNER JOIN persona AS persona_1 ON opu_nota_pedido.responsable_id = persona_1.id) 
 								 INNER JOIN persona AS persona_2 ON opu_nota_pedido.autoriza_id = persona_2.id"
 
-	Shared SQLWhere As String
-	Shared SQLOrder As String
-
     Shared Function Buscar() As DataTable
         Dim sql(1) As String
         sql(0) = SQLSelect

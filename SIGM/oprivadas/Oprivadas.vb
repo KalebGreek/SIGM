@@ -1,13 +1,5 @@
 ﻿Public Class Oprivadas
 
-	Shared SQLSelect _
-	As String = "SELECT oprivadas.expediente, persona.razon, persona.cuil, persona.telefono, persona.email,
-				 persona.difunto, persona.fisica, persona_1.razon, persona_1.cuil, persona_1.email, persona_1.telefono, 
-				 profesional.matricula, profesional_titulo.descripcion, oprivadas.recibe, oprivadas.tarea, oprivadas.tarea2, 
-				 oprivadas.inicio_obra, oprivadas.fin_obra, oprivadas.temporal, oprivadas.visado, 
-				 cat_frente.calle, cat_frente.altura, catastro.barrio"
-
-
 	Shared SQLTable _
 	As String = " FROM ((((profesional_titulo INNER JOIN ((profesional 
 				INNER JOIN oprivadas ON profesional.Id = oprivadas.profesional_id) 

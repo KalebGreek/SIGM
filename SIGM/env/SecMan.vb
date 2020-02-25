@@ -87,8 +87,10 @@ Public Class SecMan 'Security Manager
         'Hardcoded SQL logging to check changes in DB
         'Independent from DbMan.editDB()
         sql = Replace(sql, "'", "`") 'To avoid conflict with other hardcoded sql queries
-        Dim LogInsert As New OleDb.OleDbCommand
-        LogInsert.CommandText = "INSERT INTO sql_log(_date, _user_id, _sql, _con) VALUES('" & Date.Now & "', '" & user_id & "', '" & sql & "','" & connection & "');"
+        Dim LogInsert As New OleDb.OleDbCommand _
+            With {.CommandText = "INSERT INTO sql_log(_date, _user_id, _sql, _con)
+                                        VALUES('" & Date.Now & "', '" & user_id & "', '" & sql & "','" & connection & "');"}
+
         olecon.ConnectionString = My.Settings.AdbConnection
 
         LogInsert.Connection = olecon

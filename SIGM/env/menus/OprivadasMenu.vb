@@ -1,8 +1,7 @@
 ﻿Public Class OprivadasMenu
 	Private Sub me_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
 		If e.KeyValue = Keys.F10 Then
-			Dim console1 As New SQLConsole
-			console1.MdiParent = Me.Parent
+			Dim console1 As New SQLConsole With {.MdiParent = Me.Parent}
 			console1.Show()
 		End If
 	End Sub
@@ -17,27 +16,24 @@
 		End If
 	End Sub
 	Private Sub BuscarExpedienteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarExpedienteToolStripMenuItem.Click
-		Dim buscar1 As New BusquedaExpediente()
-		buscar1.MdiParent = Me.Parent
+		Dim buscar1 As New BusquedaExpediente With {.MdiParent = Me.Parent}
 		buscar1.Show()
 	End Sub
 
 	'Herramientas
 	Private Sub BuscarProfesionalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarProfesionalToolStripMenuItem.Click
-        Dim buscar1 As New BusquedaPersona
-        buscar1.MdiParent = Me.Parent
+		Dim buscar1 As New BusquedaPersona With {.MdiParent = Me.Parent}
+
 		buscar1.genSearchControl1.vista.Text = "PROFESIONAL"
 		buscar1.Show()
 	End Sub
 	Private Sub CalculosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CalculosToolStripMenuItem.Click
-		Dim calcOprivadas As New genToolContainer
-		calcOprivadas.MdiParent = Me.Parent
+		Dim calcOprivadas As New genToolContainer With {.MdiParent = Me.Parent}
 		calcOprivadas.Text = "Calculadora"
 
-		Dim calcObras As New toolCalculoPlanos
-		calcObras.Dock = DockStyle.Fill
-		calcOprivadas.Controls.Add(calcObras)
+		Dim calcObras As New toolCalculoPlanos With {.Dock = DockStyle.Fill}
 
+		calcOprivadas.Controls.Add(calcObras)
 		calcOprivadas.Show()
 	End Sub
 

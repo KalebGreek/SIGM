@@ -7,11 +7,11 @@
 								" WHERE per_domicilio.principal=True"
 
     Shared Function Seleccionar(ParentForm As Form, Optional vista As String = "PERSONA") As BindingSource
-        Dim SeleccionarPersona As New BusquedaPersona()
-        SeleccionarPersona.SelectionMode = True
-        SeleccionarPersona.genSearchControl1.vista.Text = vista
-        SeleccionarPersona.ShowDialog(ParentForm)
-        Return SeleccionarPersona.bs_resultado
+		Dim SeleccionarPersona As New BusquedaPersona(True) With {.Owner = ParentForm}
+
+		SeleccionarPersona.genSearchControl1.vista.Text = vista
+		SeleccionarPersona.ShowDialog()
+		Return SeleccionarPersona.bs_resultado
     End Function
 
     Shared Function Buscar(difunto As Boolean, fisica As Boolean) As DataTable
@@ -22,15 +22,7 @@
         Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
 	End Function
 
-    Shared Sub Cargar(persona_id As Integer,
-                          ByRef TabDPersonal As tabPersona1Datos, ByRef TabDomicilio As tabPersona2Domicilio,
-                          ByRef TabContacto As tabPersona3Contacto, ByRef TabAdicional As tabPersona4Adicional)
-        TabDPersonal.cargar(persona_id)
-        TabDomicilio.cargar(persona_id)
-        TabContacto.cargar(persona_id)
-        TabAdicional.cargar(persona_id)
-    End Sub
-    Shared Function Nueva(razon As String, cuil As Double, fisica As Boolean,
+	Shared Function Nueva(razon As String, cuil As Double, fisica As Boolean,
 							  email As String, telefono As String, difunto As Boolean, Optional ruta_defuncion As String = "") As String
 		Dim sql As String
 		sql = "INSERT INTO persona(razon, cuil, email, telefono, 

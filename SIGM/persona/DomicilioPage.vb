@@ -2,33 +2,23 @@
 	Inherits System.Windows.Forms.TabPage
     Public contador As Integer
 
-    Public Sub New()
-
-        ' This call is required by the designer.
-        InitializeComponent()
-
-        ' Add any initialization after the InitializeComponent() call.
-
-    End Sub
-
     Private Sub DomicilioPage_ParentChanged(sender As Object, e As EventArgs) Handles Me.ParentChanged
         CtrlMan.Fill.GetStates(provincia, bs_provincia)
         bs_provincia.Position = bs_provincia.Find("nombre", "CORDOBA")
         bs_localidad.Position = bs_localidad.Find("nombre", "VILLA DE LAS ROSAS")
-
         GenerateName(contador)
     End Sub
 
     Private Sub bs_provincia_CurrentChanged(sender As Object, e As EventArgs) Handles bs_provincia.CurrentChanged, bs_provincia.PositionChanged
-		If bs_provincia.Position > -1 And bs_provincia.DataSource Is Nothing = False Then
-			CtrlMan.Fill.GetCities(localidad, bs_localidad, bs_provincia.Current("id"))
-		Else
-			localidad.DataSource = Nothing
+        If bs_provincia.Position > -1 And bs_provincia.DataSource Is Nothing = False Then
+            CtrlMan.Fill.GetCities(localidad, bs_localidad, bs_provincia.Current("id"))
+        Else
+            localidad.DataSource = Nothing
 		End If
 	End Sub
 
     Private Sub bs_localidad_CurrentChanged(sender As Object, e As EventArgs) Handles bs_localidad.CurrentChanged, bs_localidad.PositionChanged
-        If bs_localidad.Position > -1 And bs_localidad.DataSource Is Nothing = False Then
+        If bs_localidad.Position > -1 And bs_localidad.DataSource Is Nothing = False And Me.Visible Then
             cp.Text = bs_localidad.Current("cp")
         Else
             cp.Text = ""

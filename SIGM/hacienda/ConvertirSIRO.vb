@@ -129,25 +129,6 @@
                     AND " & pagado & "=0 AND " & tabla_padron & ".mail LIKE '%@%'"
             dtab_corriente = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-            'sql(0) = "SELECT DEUDA_CORRIENTE.NROCLIENTE, DEUDA_CORRIENTE.VTO1, DEUDA_CORRIENTE.MONTO1 
-            '        FROM(
-            '             SELECT " & tabla_deuda & ".CODIGO AS CODIGO, 
-            '                    10*(1000000)+" & tabla_deuda & ".CODIGO AS NROCLIENTE, 
-            '                    " & vence_original & " AS VTO1, " & importe1 & " AS MONTO1 
-            '               FROM(
-            '                        SELECT " & tabla_deuda & ".CODIGO AS CODIGO 
-            '                          FROM " & tabla_deuda & " 
-            '                         WHERE " & tabla_deuda & ".CODIGO>0 AND " & vence_original & "<DATE() AND " & pagado & "=0 
-            '                      GROUP BY " & tabla_deuda & ".codigo 
-            '                    HAVING SUM(" & importe1 & ")<=0)AS SIN_MORA 
-            '          INNER JOIN " & tabla_deuda & " ON SIN_MORA.CODIGO=" & tabla_deuda & ".CODIGO
-            '               WHERE " & vence_original & "=>DATE() AND " & pagado & "=0) AS DEUDA_CORRIENTE
-            '   INNER JOIN " & tabla_padron & " ON DEUDA_CORRIENTE.CODIGO=" & tabla_padron & ".CODIGO
-            '        WHERE " & tabla_padron & ".MAIL LIKE '%@%'"
-
-            dtab_corriente = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
-
-
             If dtab_corriente Is Nothing = False Then
                 dtab_total = dtab_corriente
             End If

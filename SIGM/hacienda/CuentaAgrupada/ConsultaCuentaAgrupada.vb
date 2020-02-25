@@ -1,7 +1,6 @@
 ﻿Public Class ConsultaCuentaAgrupada
     '###### VARIABLES #######################################################################################
-    Dim cuota_vence As Integer
-    Dim dtab_imp, dtab_cuenta, dtab_vence, dtab_deto As New DataTable
+    Dim dtab_imp, dtab_cuenta, dtab_deto As New DataTable
     Public dtab_contrib, dtab_mod_contrib As New DataTable
     Dim impuesto As String
     Dim found As Boolean

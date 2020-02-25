@@ -457,8 +457,7 @@ Public Class CtrlMan 'Control Manager
         Overloads Shared Function SetAutoComplete(ByVal source As ComboBox, ByVal bs As BindingSource,
                                                   Optional DisplayOption As String = "", Optional ValueOption As String = "") As ComboBox
 
-            Dim target As New ComboBox
-            target = source
+            Dim target As ComboBox = source
 
             target.BeginUpdate()
             target.AutoCompleteMode = AutoCompleteMode.None
@@ -620,10 +619,9 @@ Public Class CtrlMan 'Control Manager
 
     'Report related tools
     Shared Function BindingSourceListToDataTable(ByVal source As BindingSource) As DataTable
-        'Solo se usa en resultados filtrados
-        Dim dtab As New DataTable
-        'Obtener registros y columnas sin filtrar
-        dtab = CType(source.DataSource, DataTable).Clone()
+
+        'Obtener registros y columnas
+        Dim dtab As DataTable = CType(source.DataSource, DataTable).Clone()
 
         For Each i In source.List
             Dim dr As DataRow = dtab.NewRow()

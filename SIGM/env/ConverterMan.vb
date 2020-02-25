@@ -7,11 +7,12 @@
 							   New DataColumn("valor3"), New DataColumn("valor4"), New DataColumn("valor5"), New DataColumn("valor6"),
 							   New DataColumn("valor7"), New DataColumn("familiar")})
 
-		Dim tfp As New FileIO.TextFieldParser(path, System.Text.Encoding.GetEncoding(1252))
-		tfp.TextFieldType = FileIO.FieldType.FixedWidth
-		tfp.SetFieldWidths(11, 30, 30, 30, 54, 9, 9, 9, 9, 9, 9, 12, 9, 9)
+        Dim tfp As New FileIO.TextFieldParser(path, System.Text.Encoding.GetEncoding(1252)) _
+        With {.TextFieldType = FileIO.FieldType.FixedWidth}
 
-		While Not tfp.EndOfData
+        tfp.SetFieldWidths(11, 30, 30, 30, 54, 9, 9, 9, 9, 9, 9, 12, 9, 9)
+
+        While Not tfp.EndOfData
 			register = tfp.ReadFields()
 			dtab.Rows.Add({register(0), register(1), register(2), register(3), register(4), register(5), register(6), register(7),
 						   register(8), register(9), register(10), register(11), register(12), register(13)})

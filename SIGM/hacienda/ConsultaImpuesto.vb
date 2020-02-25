@@ -1,10 +1,9 @@
 ﻿Public Class ConsultaImpuesto
     '###### VARIABLES #######################################################################################
-    Dim cuota_vence As Integer
-    Dim dtab_imp, dtab_cuenta, dtab_vence, dtab_deto As New DataTable
+    Dim dtab_imp, dtab_deto As New DataTable
     Public dtab_contrib, dtab_mod_contrib As New DataTable
-    Dim found As Boolean
     '###### FIN VARIABLES ###################################################################################
+
     '###### ATAJOS DE TECLADO ###############################################################################
     Private Sub ConsultaImpuesto_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
         If e.KeyValue = Keys.F3 Then
@@ -137,7 +136,7 @@
 	Private Sub ImprimirConsulta_Click(sender As Object, e As EventArgs) Handles ImprimirConsulta.Click
 		If bs_consulta.Count > 0 Then
 
-            ParametrosReporte.Hacienda.ImprimirDeudaContribuyente(bs_consulta.DataSource, mostrar_f1b.Checked)
+            ParametrosReporte.Hacienda.ImprimirDeudaContribuyente(bs_consulta.DataSource)
         End If
 	End Sub
 

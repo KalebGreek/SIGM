@@ -8,7 +8,6 @@
     End Sub
 
     Private Sub Seleccionar()
-        Dim dtab As New DataTable
         Dim nroBoleta As Double = CDbl(boleta.Text)
         boleta.Text = ""
         boleta.Enabled = True
@@ -25,7 +24,7 @@
                     boleta.Text = nroBoleta
                 End If
             Else
-                dtab = Transito.Multas.SeleccionarMulta(multa_id)
+                Dim dtab As DataTable = Transito.Multas.SeleccionarMulta(multa_id)
                 boleta.Text = dtab(0)("boleta")
                 TabMultas1Boleta1.LoadMe(dtab(0))
                 TabMultas2Persona1.LoadMe(dtab(0))

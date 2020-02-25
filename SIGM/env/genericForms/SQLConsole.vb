@@ -74,7 +74,8 @@
             sql = ""
         ElseIf sql <> "" Then
             Dim dtab As New DataTable
-            Dim OleDBCmd As New OleDb.OleDbCommand
+            Dim OleDBCmd As New OleDb.OleDbCommand With {
+                .CommandType = CommandType.Text}
             With OleDBCmd
                 Replace(sql, "select", "SELECT")
                 Replace(sql, "insert", "INSERT")

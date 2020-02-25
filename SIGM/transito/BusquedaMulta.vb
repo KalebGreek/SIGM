@@ -1,6 +1,5 @@
 ﻿Public Class BusquedaMulta
     Private OleDBCmd As New OleDb.OleDbCommand
-    Private RowIsSelected As Boolean = False
     Public Sub New()
         OleDBCmd.CommandType = CommandType.Text
         ' This call is required by the designer.

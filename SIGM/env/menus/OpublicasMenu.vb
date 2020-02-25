@@ -1,8 +1,8 @@
 ﻿Public Class OpublicasMenu
 	Private Sub me_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
 		If e.KeyValue = Keys.F10 Then
-			Dim console1 As New SQLConsole
-			console1.MdiParent = Me.Parent
+			Dim console1 As New SQLConsole With {.MdiParent = Me.Parent}
+
 			console1.Show()
 		End If
 	End Sub
@@ -32,8 +32,8 @@
 
 	'>Proveedores
 	Private Sub BuscarProveedorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarProveedorToolStripMenuItem.Click
-		Dim buscar1 As New BusquedaPersona
-		buscar1.MdiParent = Me.Parent
+		Dim buscar1 As New BusquedaPersona With {.MdiParent = Me.Parent}
+
 		buscar1.genSearchControl1.vista.Text = "PROVEEDOR"
 		buscar1.Show()
 	End Sub
@@ -44,8 +44,8 @@
 
 	End Sub
 	Private Sub BuscarNotaDePedidoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarNotaDePedidoToolStripMenuItem.Click
-		Dim buscarnp As New BusquedaOrdenTrabajo
-		buscarnp.MdiParent = Me.Parent
+		Dim buscarnp As New BusquedaOrdenTrabajo With {.MdiParent = Me.Parent}
+
 		buscarnp.ControlBusqueda1.vista.SelectedIndex = 0
 		buscarnp.Show()
 	End Sub

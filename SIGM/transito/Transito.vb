@@ -2,8 +2,8 @@
 	Public Class Multas
 		'BASE QUERIES
 		Shared Function BuscarMulta(Optional impaga As Boolean = False) As OleDb.OleDbCommand
-			Dim sql As New OleDb.OleDbCommand
-			sql.CommandType = CommandType.Text
+			Dim sql As New OleDb.OleDbCommand With {.CommandType = CommandType.Text}
+
 			With sql
 				.CommandText = "SELECT  multas_historial.boleta, multas_historial.fecha_boleta as fecha, 
 										conductor.razon AS conductor, conductor.cuil AS cuil_conductor,
@@ -33,8 +33,8 @@
 			Return sql
 		End Function
 		Shared Function SeleccionarMulta(multa_id As Integer) As DataTable
-			Dim sql As New OleDb.OleDbCommand
-			sql.CommandType = CommandType.Text
+			Dim sql As New OleDb.OleDbCommand With {.CommandType = CommandType.Text}
+
 			With sql
 				.CommandText = "SELECT  multas_historial.id as multa_id, multas_historial.boleta as boleta, multas_historial.fecha_boleta, 
 										multas_articulo.id as articulo_id, multas_articulo.articulo AS articulo, 
@@ -60,8 +60,8 @@
 			Return DbMan.readDB(sql, My.Settings.CurrentDB)
 		End Function
 		Shared Function MultasPorVehiculo(Optional impaga As Boolean = False) As OleDb.OleDbCommand
-			Dim sql As New OleDb.OleDbCommand
-			sql.CommandType = CommandType.Text
+			Dim sql As New OleDb.OleDbCommand With {.CommandType = CommandType.Text}
+
 			With sql
 
 				.CommandText = "SELECT 	vehiculo.id, vehiculo_marca.marca, vehiculo_tipo.tipo, vehiculo.patente,

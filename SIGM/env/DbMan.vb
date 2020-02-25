@@ -140,41 +140,90 @@
 
     ' SAVE: Rutinas para grabar registros 
     Function editDB(OleDBProcedure As OleDb.OleDbCommand, Optional ByVal constr As String = Nothing,
-                  Optional sql As String = "") As String
+                    Optional sql As String = Nothing,
+                    Optional BulkInsert As Boolean = False, Optional sqlStringList() As String = Nothing,
+                    Optional ByRef progreso As ToolStripProgressBar = Nothing) As String
+        Dim RowsAffected As Integer = 0
         Dim result As String = ""
         'Para conectarse a la bd en modo de inserción
         'Se necesita convertir el string a un objeto ConnectionString
         'antes de aplicarlo al OleDbCommand "Comm"
-        If OleDBProcedure Is Nothing And sql.Contains("INSERT") Or sql.Contains("UPDATE") Or sql.Contains("DELETE") Then
-            If sql.Contains("DELETE") And My.Settings.delete_enabled = False Then
-                MsgBox("Imposible borrar registros de la tabla.", MsgBoxStyle.Critical, "Error")
-            Else
-                Dim SQLCommand As New OleDb.OleDbCommand
-                SQLCommand.CommandText = sql
-                OleDBProcedure = SQLCommand
-            End If
-        End If
-
         If constr Is Nothing Then
             constr = My.Settings.CurrentDB
+        End If
+
+        If OleDBProcedure Is Nothing Then
+            OleDBProcedure = New OleDb.OleDbCommand With {
+              .CommandType = CommandType.Text}
+
+            If BulkInsert And sqlStringList Is Nothing = False Then
+                If sqlStringList(0).Contains("INSERT") Then
+                    'Check if there is a progress bar
+                    If progreso Is Nothing = False Then
+                        progreso.Minimum = 0
+                        progreso.Value = progreso.Minimum
+                        progreso.Maximum = sqlStringList.Count()
+                    End If
+
+                    'Set connection parameters
+                    olecon.ConnectionString = constr
+                    OleDBProcedure.Connection = olecon
+                    'Open and execute BulkInsert
+                    olecon.Open()
+                    For Each sqlString As String In sqlStringList
+                        With sqlString
+                            If progreso Is Nothing = False Then
+                                progreso.Value += 1
+                            End If
+
+                            OleDBProcedure.CommandText = sqlString
+                            Try
+                                RowsAffected += OleDBProcedure.ExecuteNonQuery()
+                            Catch e As Exception
+                                result &= e.ToString & Chr(13)
+                            End Try
+                        End With
+                    Next
+                    olecon.Close()
+                    'Clear Procedure
+                    OleDBProcedure = Nothing
+                Else
+                    result = "Datos insuficientes para realizar la operación."
+                End If
+
+            ElseIf sql Is Nothing = False Then
+                If sql.Contains("INSERT") Or sql.Contains("UPDATE") Or sql.Contains("DELETE") Then
+                    If sql.Contains("DELETE") And My.Settings.delete_enabled = False Then
+                        MsgBox("Imposible borrar registros de la tabla.", MsgBoxStyle.Critical, "Error")
+                        sql = ""
+                    End If
+                    OleDBProcedure.CommandText = sql
+
+                Else
+                    result = "Datos insuficientes para realizar la operación."
+                End If
+
+            End If
         End If
 
         If OleDBProcedure Is Nothing = False Then
             olecon.ConnectionString = constr
             OleDBProcedure.Connection = olecon
-            'Abrir la conexión y ejecutar
             olecon.Open()
+            'Abrir la conexión y ejecutar
             Try
-                Dim RowsAffected As Int32 = OleDBProcedure.ExecuteNonQuery()
-                result = RowsAffected
+                RowsAffected = OleDBProcedure.ExecuteNonQuery()
             Catch e As Exception
                 result = e.ToString
             End Try
             olecon.Close()
             'SecMan.WriteSQLLog(sql, constr, My.Settings.UserId)
-        Else
-            result = "Datos insuficientes para realizar la operación."
         End If
+
+        If RowsAffected > 0 Then
+            result = RowsAffected
+        End If
+
         Return result
     End Function
     ' END SAVE    

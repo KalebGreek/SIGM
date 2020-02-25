@@ -28,8 +28,6 @@ Partial Class tabPersona4Adicional
         Me.del_titulo = New System.Windows.Forms.Button()
         Me.et_matr = New System.Windows.Forms.Label()
         Me.matricula = New System.Windows.Forms.TextBox()
-        Me.profesional_id = New System.Windows.Forms.TextBox()
-        Me.proveedor_id = New System.Windows.Forms.TextBox()
         Me.FlowLayoutPanel2 = New System.Windows.Forms.FlowLayoutPanel()
         Me.EsProveedor = New System.Windows.Forms.CheckBox()
         Me.responsable_iva = New System.Windows.Forms.ComboBox()
@@ -41,28 +39,16 @@ Partial Class tabPersona4Adicional
         Me.difunto = New System.Windows.Forms.CheckBox()
         Me.ruta_defuncion = New System.Windows.Forms.TextBox()
         Me.cargar_defu = New System.Windows.Forms.Button()
-        Me.persona_id = New System.Windows.Forms.TextBox()
-        Me.bs_proveedor = New System.Windows.Forms.BindingSource(Me.components)
-        Me.bs_profesional = New System.Windows.Forms.BindingSource(Me.components)
-        Me.bs_responsable_iva = New System.Windows.Forms.BindingSource(Me.components)
-        Me.bs_titulo = New System.Windows.Forms.BindingSource(Me.components)
         Me.ErrorInfo = New System.Windows.Forms.ToolTip(Me.components)
-        Me.bs_actividad = New System.Windows.Forms.BindingSource(Me.components)
         Me.FlowLayoutPanel4 = New System.Windows.Forms.FlowLayoutPanel()
         Me.EsEmpleado = New System.Windows.Forms.CheckBox()
         Me.jerarquia = New System.Windows.Forms.ComboBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.alta = New System.Windows.Forms.DateTimePicker()
-        Me.empleado_id = New System.Windows.Forms.TextBox()
         Me.FlowLayoutPanel1.SuspendLayout()
         Me.FlowLayoutPanel2.SuspendLayout()
         Me.FlowLayoutPanel3.SuspendLayout()
-        CType(Me.bs_proveedor, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.bs_profesional, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.bs_responsable_iva, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.bs_titulo, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.bs_actividad, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FlowLayoutPanel4.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -75,7 +61,6 @@ Partial Class tabPersona4Adicional
         Me.FlowLayoutPanel1.Controls.Add(Me.del_titulo)
         Me.FlowLayoutPanel1.Controls.Add(Me.et_matr)
         Me.FlowLayoutPanel1.Controls.Add(Me.matricula)
-        Me.FlowLayoutPanel1.Controls.Add(Me.profesional_id)
         Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 120)
         Me.FlowLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
@@ -171,40 +156,11 @@ Partial Class tabPersona4Adicional
         Me.matricula.TabIndex = 55
         Me.matricula.Visible = False
         '
-        'profesional_id
-        '
-        Me.profesional_id.BackColor = System.Drawing.Color.DodgerBlue
-        Me.profesional_id.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-        Me.profesional_id.Location = New System.Drawing.Point(298, 28)
-        Me.profesional_id.Margin = New System.Windows.Forms.Padding(0)
-        Me.profesional_id.MaxLength = 128
-        Me.profesional_id.Name = "profesional_id"
-        Me.profesional_id.ReadOnly = True
-        Me.profesional_id.Size = New System.Drawing.Size(28, 27)
-        Me.profesional_id.TabIndex = 396
-        Me.profesional_id.Text = "0"
-        Me.profesional_id.Visible = False
-        '
-        'proveedor_id
-        '
-        Me.proveedor_id.BackColor = System.Drawing.Color.DeepSkyBlue
-        Me.proveedor_id.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-        Me.proveedor_id.Location = New System.Drawing.Point(298, 0)
-        Me.proveedor_id.Margin = New System.Windows.Forms.Padding(0)
-        Me.proveedor_id.MaxLength = 128
-        Me.proveedor_id.Name = "proveedor_id"
-        Me.proveedor_id.ReadOnly = True
-        Me.proveedor_id.Size = New System.Drawing.Size(28, 27)
-        Me.proveedor_id.TabIndex = 410
-        Me.proveedor_id.Text = "0"
-        Me.proveedor_id.Visible = False
-        '
         'FlowLayoutPanel2
         '
         Me.FlowLayoutPanel2.AutoSize = True
         Me.FlowLayoutPanel2.Controls.Add(Me.EsProveedor)
         Me.FlowLayoutPanel2.Controls.Add(Me.responsable_iva)
-        Me.FlowLayoutPanel2.Controls.Add(Me.proveedor_id)
         Me.FlowLayoutPanel2.Controls.Add(Me.et_act)
         Me.FlowLayoutPanel2.Controls.Add(Me.actividad)
         Me.FlowLayoutPanel2.Controls.Add(Me.add_actividad)
@@ -312,7 +268,6 @@ Partial Class tabPersona4Adicional
         Me.FlowLayoutPanel3.Controls.Add(Me.difunto)
         Me.FlowLayoutPanel3.Controls.Add(Me.ruta_defuncion)
         Me.FlowLayoutPanel3.Controls.Add(Me.cargar_defu)
-        Me.FlowLayoutPanel3.Controls.Add(Me.persona_id)
         Me.FlowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top
         Me.FlowLayoutPanel3.Location = New System.Drawing.Point(0, 177)
         Me.FlowLayoutPanel3.Margin = New System.Windows.Forms.Padding(0)
@@ -367,20 +322,6 @@ Partial Class tabPersona4Adicional
         Me.cargar_defu.UseVisualStyleBackColor = False
         Me.cargar_defu.Visible = False
         '
-        'persona_id
-        '
-        Me.persona_id.BackColor = System.Drawing.Color.FromArgb(CType(CType(122, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(185, Byte), Integer))
-        Me.persona_id.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-        Me.persona_id.Location = New System.Drawing.Point(328, 0)
-        Me.persona_id.Margin = New System.Windows.Forms.Padding(0)
-        Me.persona_id.MaxLength = 128
-        Me.persona_id.Name = "persona_id"
-        Me.persona_id.ReadOnly = True
-        Me.persona_id.Size = New System.Drawing.Size(25, 27)
-        Me.persona_id.TabIndex = 412
-        Me.persona_id.Text = "0"
-        Me.persona_id.Visible = False
-        '
         'FlowLayoutPanel4
         '
         Me.FlowLayoutPanel4.AutoSize = True
@@ -389,7 +330,6 @@ Partial Class tabPersona4Adicional
         Me.FlowLayoutPanel4.Controls.Add(Me.Label3)
         Me.FlowLayoutPanel4.Controls.Add(Me.Label1)
         Me.FlowLayoutPanel4.Controls.Add(Me.alta)
-        Me.FlowLayoutPanel4.Controls.Add(Me.empleado_id)
         Me.FlowLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Top
         Me.FlowLayoutPanel4.Location = New System.Drawing.Point(0, 0)
         Me.FlowLayoutPanel4.Margin = New System.Windows.Forms.Padding(0)
@@ -461,20 +401,6 @@ Partial Class tabPersona4Adicional
         Me.alta.TabIndex = 43
         Me.alta.Visible = False
         '
-        'empleado_id
-        '
-        Me.empleado_id.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.empleado_id.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-        Me.empleado_id.Location = New System.Drawing.Point(206, 28)
-        Me.empleado_id.Margin = New System.Windows.Forms.Padding(0)
-        Me.empleado_id.MaxLength = 128
-        Me.empleado_id.Name = "empleado_id"
-        Me.empleado_id.ReadOnly = True
-        Me.empleado_id.Size = New System.Drawing.Size(22, 27)
-        Me.empleado_id.TabIndex = 412
-        Me.empleado_id.Text = "0"
-        Me.empleado_id.Visible = False
-        '
         'tabPersona4Adicional
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
@@ -490,52 +416,36 @@ Partial Class tabPersona4Adicional
         Me.FlowLayoutPanel1.ResumeLayout(False)
         Me.FlowLayoutPanel1.PerformLayout()
         Me.FlowLayoutPanel2.ResumeLayout(False)
-        Me.FlowLayoutPanel2.PerformLayout()
         Me.FlowLayoutPanel3.ResumeLayout(False)
         Me.FlowLayoutPanel3.PerformLayout()
-        CType(Me.bs_proveedor, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.bs_profesional, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.bs_responsable_iva, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.bs_titulo, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.bs_actividad, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FlowLayoutPanel4.ResumeLayout(False)
-        Me.FlowLayoutPanel4.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
-    Friend WithEvents profesional_id As TextBox
     Friend WithEvents EsProfesional As CheckBox
     Friend WithEvents titulo As ComboBox
     Friend WithEvents matricula As TextBox
     Friend WithEvents FlowLayoutPanel2 As FlowLayoutPanel
     Friend WithEvents EsProveedor As CheckBox
     Friend WithEvents responsable_iva As ComboBox
-    Friend WithEvents proveedor_id As TextBox
     Friend WithEvents FlowLayoutPanel3 As FlowLayoutPanel
     Friend WithEvents difunto As CheckBox
     Friend WithEvents ruta_defuncion As TextBox
     Friend WithEvents cargar_defu As Button
     Friend WithEvents et_matr As Label
-    Public WithEvents bs_proveedor As BindingSource
-    Public WithEvents bs_profesional As BindingSource
-    Friend WithEvents bs_responsable_iva As BindingSource
-    Friend WithEvents bs_titulo As BindingSource
     Friend WithEvents add_titulo As Button
     Friend WithEvents del_titulo As Button
-    Friend WithEvents persona_id As TextBox
     Friend WithEvents ErrorInfo As ToolTip
     Friend WithEvents et_act As Label
     Friend WithEvents actividad As ComboBox
-    Friend WithEvents bs_actividad As BindingSource
     Friend WithEvents add_actividad As Button
     Friend WithEvents del_actividad As Button
     Friend WithEvents FlowLayoutPanel4 As FlowLayoutPanel
     Friend WithEvents EsEmpleado As CheckBox
     Friend WithEvents jerarquia As ComboBox
-    Friend WithEvents empleado_id As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents alta As DateTimePicker

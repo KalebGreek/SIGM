@@ -2,7 +2,6 @@
 Public Class CertificadoLibreDeuda
     Public registro As DataTable
     Public DetalleVencimiento As String
-    Private sqlSelect, sqlFrom, sqlWhere, sqlGroupBy, sqlHaving, sqlOrderBy As String
 
     'Routines
     Public Function ConsultarCuenta(tipo As String, cuenta As Integer) As DataTable

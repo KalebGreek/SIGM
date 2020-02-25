@@ -189,22 +189,24 @@ Public Class ConsultaIntimaciones
     'GUI
     Private Sub NuevaInt_Click(sender As Object, e As EventArgs) Handles nuevaInt.Click
         If GenSearchControl1.vista.SelectedIndex > -1 Then
-            Dim modInt As New ModIntimaciones(GenSearchControl1.vista.Text, 0)
-            modInt.Text = "Nueva Intimación"
+            Dim modInt As New ModIntimaciones(GenSearchControl1.vista.Text, 0) _
+                With {.Text = "Nueva Intimación"}
+
             modInt.ShowDialog(Me)
             Consultar(False)
         End If
     End Sub
 
     Private Sub HistorialInt_Click(sender As Object, e As EventArgs) Handles historialInt.Click
-        With bs_contribuyente
-            If bs_contribuyente.Position > -1 And GenSearchControl1.vista.SelectedIndex > -1 Then
-                Dim modInt As New ModIntimaciones(GenSearchControl1.vista.Text, Val(.Current("codigo")))
-                modInt.Text = "Historial para Cta. " & .Current("codigo") & " | " & .Current("titular")
-                modInt.ShowDialog(Me)
-                Consultar(False)
-            End If
-        End With
+        If bs_contribuyente.Position > -1 And GenSearchControl1.vista.SelectedIndex > -1 Then
+            Dim modInt As New ModIntimaciones(GenSearchControl1.vista.Text, Val(bs_contribuyente.Current("codigo"))) _
+                With {.Text = "Historial para Cta. " & bs_contribuyente.Current("codigo") & " 
+                                | " & bs_contribuyente.Current("titular")}
+
+            modInt.ShowDialog(Me)
+            Consultar(False)
+        End If
+
     End Sub
 
     Private Sub print_Click(sender As Object, e As EventArgs) Handles print.Click

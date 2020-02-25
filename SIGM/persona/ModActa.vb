@@ -51,9 +51,9 @@
 		End If
 	End Sub
 
-    '###### CARGAR ##########################################################################################
-    Private Function validar(registro As BindingSource, fecha As Date, acta As Integer, libro As Integer,
-				   ruta_copia As String, nota As String) As MsgBoxResult
+	'###### CARGAR ##########################################################################################
+	Private Function validar(registro As BindingSource, fecha As Date, acta As Integer, libro As Integer,
+				   ruta_copia As String) As MsgBoxResult
 		Dim msg As New List(Of String)
 
 		If fecha > Date.Today Then
@@ -86,10 +86,10 @@
 			Dim ver_error As New visor_error("Errores en Acta", msg)
 			Dim answer As DialogResult = ver_error.ShowDialog(Me)
 			ver_error.Dispose()
-            If answer = DialogResult.OK Then
-                Return MsgBoxResult.No
-            Else
-                Return MsgBoxResult.Cancel
+			If answer = DialogResult.OK Then
+				Return MsgBoxResult.No
+			Else
+				Return MsgBoxResult.Cancel
 			End If
 		Else
 			Return MsgBoxResult.Yes
@@ -112,10 +112,10 @@
 	End Function
 
 	Private Sub add_acta_Click(sender As Object, e As EventArgs) Handles add_acta.Click
-		If validar(bs_acta, fecha_acta.Value, acta.Value, libro.Value, copia.Text, nota.Text) = MsgBoxResult.Yes Then
+		If validar(bs_acta, fecha_acta.Value, acta.Value, libro.Value, copia.Text) = MsgBoxResult.Yes Then
 			With bs_acta
 				If .Position > -1 And consulta_acta.Enabled = False Then 'Actualizar
-                    .RemoveCurrent()
+					.RemoveCurrent()
 					consulta_acta.Enabled = True
 				End If
 				.AddNew()

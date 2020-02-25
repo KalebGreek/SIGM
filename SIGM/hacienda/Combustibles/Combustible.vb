@@ -30,10 +30,10 @@
                 End If
 			End If
 
-			Dim bs As New BindingSource
-			bs.DataSource = DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
+            Dim bs As New BindingSource _
+                With {.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)}
 
-			Return bs
+            Return bs
 		End Function
         Shared Function Seleccionar(id As Integer) As DataTable
             Dim sql(3) As String

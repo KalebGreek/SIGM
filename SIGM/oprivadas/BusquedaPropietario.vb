@@ -28,8 +28,8 @@
                         bs_resultado.Position = -1
                         bs_resultado.DataSource = dtab
                         CtrlMan.DataGridViewTools.Load(resultado, bs_resultado)
-                        Dim bs_ColumnList As New BindingSource
-                        bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)
+                        Dim bs_ColumnList As New BindingSource _
+                            With {.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)}
                         .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
                         .filtro.Text = "razon"
                     Else

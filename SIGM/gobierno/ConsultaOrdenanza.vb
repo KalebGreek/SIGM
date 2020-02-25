@@ -1,8 +1,5 @@
 ﻿Public Class ConsultaOrdenanza
-    Shared SQLSelect As String = "SELECT *"
-    Shared SQLTable As String = " FROM ordenanza"
-    Shared SQLCriteria As String = ""
-    Shared SQLGrouping As String = ""
+
     Private Sub ConsultaOrdenanza_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
         KeyFecha.MaxDate = Date.Today
         KeyFecha.Value = Date.Today
@@ -62,8 +59,8 @@
         Dim sql(2) As String
         Dim dtab As New DataTable
 
-        sql(0) = SQLSelect
-        sql(1) = SQLTable
+        sql(0) = "SELECT *"
+        sql(1) = " FROM ordenanza"
 
         grupo_mod.Enabled = False
         If filtro.SelectedIndex > -1 Then

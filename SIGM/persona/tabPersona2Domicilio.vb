@@ -1,41 +1,47 @@
 ﻿Public Class tabPersona2Domicilio
     Inherits System.Windows.Forms.UserControl
     Dim principal As DomicilioPage
+    Dim PersonaId As Integer
 
-    Private Sub tabPersona2Domicilio_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
-        If Me.Visible Then
-            If TabControl1.TabCount > 1 Then
-                TabControl1.SelectTab(principal)
-            End If
-        End If
+    Public Sub New(PerId As Integer)
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+        PersonaId = PerId
     End Sub
 
-
-    Public Sub cargar(persona_id As Integer)
+    Public Sub cargar()
         'Cargar domicilios
-        Dim dtab As DataTable = Domicilio.Listar(persona_id)
+        Dim dtab As DataTable = Domicilio.Listar(PersonaId)
         For Each dr As DataRow In dtab.Rows
-            Dim TabDom As New DomicilioPage()
-            TabDom.contador = TabControl1.TabCount + 1
+            Dim TabDom As New DomicilioPage() _
+                With {.contador = TabControl1.TabCount + 1}
+
             TabDom.cargar(dr)
             TabControl1.TabPages.Add(TabDom)
             If dr("principal") Then
                 principal = TabDom
             End If
         Next
-    End Sub
-
-    Public Sub guardar(persona_id As Integer)
-        If CtrlMan.Validate(Me, ErrorInfo) Then
-            For Each domicilio As DomicilioPage In TabControl1.TabPages
-                domicilio.guardar(persona_id, TabControl1.SelectedTab Is domicilio)
-            Next
+        If TabControl1.TabCount > 1 Then
+            TabControl1.SelectTab(principal)
         End If
     End Sub
 
+    Public Function guardar() As Integer
+        If CtrlMan.Validate(Me, ErrorInfo) Then
+            For Each domicilio As DomicilioPage In TabControl1.TabPages
+                domicilio.guardar(PersonaId, TabControl1.SelectedTab Is domicilio)
+            Next
+        End If
+        Return PersonaId
+    End Function
+
     Private Sub AddDomicilio_Click(sender As Object, e As EventArgs) Handles AddDomicilio.Click
-        Dim TabDom As New DomicilioPage()
-        TabDom.contador = TabControl1.TabCount + 1
+        Dim TabDom As New DomicilioPage() _
+            With {.contador = TabControl1.TabCount + 1}
         TabControl1.TabPages.Add(TabDom)
     End Sub
 

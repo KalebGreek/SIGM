@@ -1,13 +1,10 @@
 ﻿Public Class ConsultaCatastro
-    Dim user_id As Integer
-    Public Sub New(user As Integer)
+    Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
-        user_id = user
+
     End Sub
-    ' VARIABLES Y RUTINAS 
-    ' FIN VARIABLES Y RUTINAS 
     ' GUI 
     'INMUEBLE
     Private Sub Filtro1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Filtro1.SelectedIndexChanged
@@ -26,6 +23,7 @@
         End With
         Keyword.Visible = zona.Visible.CompareTo(True)
     End Sub
+
     Private Sub Zona_VisibleChanged(sender As Object, e As EventArgs) Handles zona.VisibleChanged
         With zona
             circ.Visible = .Visible
@@ -38,7 +36,6 @@
     ' END GUI 
 
     ' SEARCH / MOD 
-
     Private Sub Buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
         Dim dtab As New DataTable
         With Filtro1.Text

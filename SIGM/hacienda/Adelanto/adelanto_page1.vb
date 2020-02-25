@@ -8,10 +8,10 @@
 	End Sub
 	'Events
 	Private Sub buscarPersona_Click(sender As Object, e As EventArgs) Handles buscarPersona.Click
-        Dim bper As New BusquedaPersona()
-        bper.SelectionMode = True
-        bper.ShowDialog(Me)
-        With bper
+		Dim bper As New BusquedaPersona(True) With {.Owner = Me.Parent}
+
+		bper.ShowDialog(Me)
+		With bper
 			If .bs_resultado.Position > -1 Then
 				persona_id = .bs_resultado.Current("persona_id").ToString
 				razon.Text = .bs_resultado.Current("razon").ToString

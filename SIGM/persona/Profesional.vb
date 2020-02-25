@@ -63,8 +63,8 @@
         sql(0) = "SELECT id FROM profesional WHERE per_id=" & persona_id
         Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)(0)
     End Function
-	Shared Function eliminar(ByVal per_id As Integer) As Integer
-		DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM profesional WHERE per_id=" & per_id)
+	Shared Function eliminar(ByVal profesional_id As Integer) As Integer
+		DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM profesional WHERE id=" & profesional_id)
 		Return 0
 	End Function
 End Class

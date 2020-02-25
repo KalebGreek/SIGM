@@ -1,6 +1,5 @@
 ﻿Public Class BusquedaPersona
-    Public SelectionMode As Boolean = False
-    Public Sub New()
+    Public Sub New(Optional SelectionMode As Boolean = False)
 
         ' This call is required by the designer.
         InitializeComponent()
@@ -66,8 +65,9 @@
                     End If
 
                     bs_resultado.DataSource = dtab
-                    Dim bs_ColumnList As New BindingSource
-                    bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)
+                    Dim bs_ColumnList As New BindingSource _
+                        With {.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)}
+
                     .filtro.DataSource = Nothing
                     .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
 
@@ -121,9 +121,9 @@
         ElseIf sender Is resultado Then
             If e.KeyValue = Keys.F2 Then
                 If resultado.DataSource.Position > -1 Then
-                    Dim mper As New ModPersona
-                    mper.id = resultado.DataSource.Current("persona_id")
-                    mper.ShowDialog(Me)
+                    Dim mper As New ModPersona(resultado.DataSource.Current("persona_id")) _
+                            With {.Owner = Me}
+                    mper.ShowDialog()
                     mper.Dispose()
                     genSearchControl1.search.PerformClick()
                 End If

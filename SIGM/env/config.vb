@@ -74,8 +74,8 @@
 
 	Private Sub RepararFechasNulas()
 		Dim d, m, y, cuenta, vence, pago, periodo As String
-		Dim dtab As New DataTable
-		d = Today.Day
+
+        d = Today.Day
 		m = Today.Month
 		y = Today.Year
 
@@ -120,7 +120,7 @@
             Dim sql(5) As String
             sql(0) = "SELECT codigo, " & periodo & ", " & vence & " WHERE " & vence & " Is NULL FROM " & cuenta
 
-            dtab = DbMan.ReadDB(Nothing, conexion_fox.Text, sql)
+            Dim dtab As DataTable = DbMan.ReadDB(Nothing, conexion_fox.Text, sql)
 
             For Each drow As DataRow In dtab.Rows
                 DbMan.editDB(Nothing, conexion_fox.Text,

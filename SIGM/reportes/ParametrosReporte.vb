@@ -457,7 +457,7 @@ Public Class ParametrosReporte
     End Class
 
     Public Class Hacienda
-        Shared Sub ImprimirDeudaContribuyente(ByVal bs As BindingSource, agrupada As Boolean)
+        Shared Sub ImprimirDeudaContribuyente(ByVal bs As BindingSource)
             Dim parametros As New List(Of ReportParameter)
             Dim dtab(0) As DataTable
 

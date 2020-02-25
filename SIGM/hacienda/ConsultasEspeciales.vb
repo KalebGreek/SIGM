@@ -70,7 +70,7 @@
     End Sub
 
     Private Sub vista_n_customtable_events() Handles GenSearchControl1.CVista_IndexTextChanged, CustomTable.LinkClicked
-        ExecuteQuery(GenSearchControl1.vista.Text, True)
+        ExecuteQuery(GenSearchControl1.vista.Text)
     End Sub
 
     'CUSTOM QUERY
@@ -98,7 +98,7 @@
 
     'RUTINAS
 
-    Private Sub ExecuteQuery(vista As String, ByVal reset As Boolean)
+    Private Sub ExecuteQuery(vista As String)
         Dim ReadTable As Boolean = True
         Dim sql(5) As String
         If Connection.Text <> "Seleccione una base de datos antes de continuar." Then

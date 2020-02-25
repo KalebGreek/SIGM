@@ -1,8 +1,6 @@
 ﻿Public Class Documento
     Shared titulo As String = ""
     Shared destino As String = ""
-    Shared SQLSelect As String = "SELECT id, descripcion, fecha, ruta"
-    Shared SQLGrouping As String = " ORDER BY fecha ASC"
 
     Shared ultima_ubicacion As String = Environment.SpecialFolder.Desktop
     'My.Settings.DocFolderHacienda As String = "\HACIENDA\"
@@ -16,13 +14,13 @@
     Public Class Persona
         Shared Function BuscarDoc(persona_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
             Dim sql(5) As String
-            sql(0) = SQLSelect
+            sql(0) = "SELECT id, descripcion, fecha, ruta"
             sql(1) = " FROM per_documento"
             sql(2) = " WHERE persona_id=" & persona_id
             If tipo_archivo <> "" Then
                 sql(2) += " AND descripcion='" & tipo_archivo & "'"
             End If
-            sql(3) = SQLGrouping
+            sql(3) = " ORDER BY fecha ASC"
 
             Return ConsultarHistorial(sql, solo_ruta)
         End Function
@@ -79,14 +77,14 @@
     Public Class Catastro
         Shared Function BuscarDoc(catastro_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
             Dim sql(5) As String
-            sql(0) = SQLSelect
+            sql(0) = "SELECT id, descripcion, fecha, ruta"
             sql(1) = " FROM cat_documento"
 
             sql(2) = " WHERE catastro_id=" & catastro_id
             If tipo_archivo <> "" Then
                 sql(2) += " And descripcion='" & tipo_archivo & "'"
             End If
-            sql(3) = SQLGrouping
+            sql(3) = " ORDER BY fecha ASC"
 
             Return ConsultarHistorial(sql, solo_ruta)
         End Function
@@ -128,13 +126,13 @@
     Public Class Comercio
         Shared Function BuscarDoc(id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
             Dim sql(5) As String
-            sql(0) = SQLSelect
+            sql(0) = "SELECT id, descripcion, fecha, ruta"
             sql(1) = " FROM com_documento"
             sql(2) = " WHERE com_id=" & id
             If tipo_archivo <> "" Then
                 sql(2) += " AND descripcion='" & tipo_archivo & "'"
             End If
-            sql(3) = SQLGrouping
+            sql(3) = " ORDER BY fecha ASC"
 
             Return ConsultarHistorial(sql, solo_ruta)
         End Function
@@ -154,13 +152,13 @@
     Public Class Hacienda
         Shared Function BuscarDoc(id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
             Dim sql(5) As String
-            sql(0) = SQLSelect
+            sql(0) = "SELECT id, descripcion, fecha, ruta"
             sql(1) = " FROM hac_documento"
             sql(2) = " WHERE =" & id
             If tipo_archivo <> "" Then
                 Sql(2) += " AND descripcion='" & tipo_archivo & "'"
             End If
-            sql(3) = SQLGrouping
+            sql(3) = " ORDER BY fecha ASC"
 
             Return ConsultarHistorial(sql, solo_ruta)
         End Function
@@ -168,13 +166,13 @@
     Public Class OPrivadas
         Shared Function BuscarDoc(opr_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
             Dim sql(5) As String
-            sql(0) = SQLSelect
+            sql(0) = "SELECT id, descripcion, fecha, ruta"
             sql(1) = " FROM opr_documento"
             sql(2) = " WHERE opr_id=" & opr_id
             If tipo_archivo <> "" Then
                 sql(2) += " AND descripcion='" & tipo_archivo & "'"
             End If
-            sql(3) = SQLGrouping
+            sql(3) = " ORDER BY fecha ASC"
 
             Return ConsultarHistorial(sql, solo_ruta)
         End Function

@@ -1,7 +1,6 @@
 ﻿Public Class ModCuentaAgrupada
     '###### VARIABLES #######################################################################################
-    Dim cuota_vence As Integer
-    Dim dtab_imp, dtab_cuenta, dtab_vence, dtab_deto As New DataTable
+    Dim dtab_deto As New DataTable
     Public dtab_contrib, dtab_mod_contrib As New DataTable
     Dim impuesto As String
     Dim found As Boolean
@@ -127,7 +126,7 @@
                     fila += 1
                 Loop
                 ndel = 0
-                If found = True Then
+                If found Then
                     Do While ndel < del_rows.Count And del_rows(ndel) <> Nothing
                         DbMan.editDB(Nothing, My.Settings.foxConnection, "DELETE FROM contribuyente WHERE id=" & del_rows(ndel) & ";")
                         ndel += 1

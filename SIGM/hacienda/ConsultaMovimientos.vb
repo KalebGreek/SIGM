@@ -1,6 +1,4 @@
 ﻿Public Class ConsultaMovimientos
-	Private SQLSelect, SQLTable, SQLCriteria, SQLGrouping, SQLOrder As String
-
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()

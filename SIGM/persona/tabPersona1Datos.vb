@@ -1,39 +1,43 @@
 ﻿Public Class tabPersona1Datos
-	Inherits System.Windows.Forms.UserControl
-	Public Sub New()
-		' This call is required by the designer.
-		InitializeComponent()
+    Inherits System.Windows.Forms.UserControl
+    Dim PersonaId As Integer
 
-		' Add any initialization after the InitializeComponent() call.
-	End Sub
+    Public Sub New(PerId As Integer)
+        ' This call is required by the designer.
+        InitializeComponent()
 
-	Public Sub cargar(persona_id As Integer)
-		Dim genero As Integer = 0
-        Dim valor_cuil As Double = 0
-        Dim sql(0) As String
-        sql(0) = "SELECT id as persona_id, razon, cuil  FROM persona WHERE id=" & persona_id
-        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        ' Add any initialization after the InitializeComponent() call.
+        PersonaId = PerId
+    End Sub
 
-        razon.Text = dtab(0)("razon").ToString
-        valor_cuil = CDbl(dtab(0)("cuil"))
-        If valor_cuil > 20000000000 Then
-            genero = Val(Microsoft.VisualBasic.Left(valor_cuil, 2))
-            If genero > 27 Then
-                gen.Text = "N/A"
-            ElseIf genero > 23 Then
-                gen.Text = "Femenino"
-            ElseIf genero > 0 Then
-                gen.Text = "Masculino"
+    Public Sub cargar()
+        If PersonaId > 0 Then
+            Dim genero As Integer = 0
+            Dim valor_cuil As Double = 0
+            Dim sql(0) As String
+            sql(0) = "SELECT id as persona_id, razon, cuil  FROM persona WHERE id=" & PersonaId
+            Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+
+            razon.Text = dtab(0)("razon").ToString
+            valor_cuil = CDbl(dtab(0)("cuil"))
+            If valor_cuil > 20000000000 Then
+                genero = Val(Microsoft.VisualBasic.Left(valor_cuil, 2))
+                If genero > 27 Then
+                    gen.Text = "N/A"
+                ElseIf genero > 23 Then
+                    gen.Text = "Femenino"
+                ElseIf genero > 0 Then
+                    gen.Text = "Masculino"
+                End If
+                dni.Text = Microsoft.VisualBasic.Mid(dtab(0)("cuil"), 3, 8)
+                cuil.Text = valor_cuil
+            Else
+                dni.Text = valor_cuil
             End If
-            dni.Text = Microsoft.VisualBasic.Mid(dtab(0)("cuil"), 3, 8)
-            cuil.Text = valor_cuil
-        Else
-            dni.Text = valor_cuil
         End If
+    End Sub
 
-	End Sub
-
-    Public Function guardar(persona_id As Integer) As Integer
+    Public Function guardar() As Integer
         'Buscar duplicado de CUIL/CUIT
         Dim dtab As DataTable
         Dim sql(0) As String
@@ -49,11 +53,11 @@
         If CtrlMan.Validate(Me, ErrorInfo) Then
 
             Dim fisica As Boolean = gen.Text <> "N/A"
-            If persona_id > 0 Then
+            If PersonaId > 0 Then
                 DbMan.editDB(Nothing, My.Settings.CurrentDB,
                             "UPDATE persona SET razon='" & razon.Text & "', cuil=" & cuil.Text & ", 
 									fisica=" & fisica & "
-							  WHERE id=" & persona_id)
+							  WHERE id=" & PersonaId)
             Else
                 DbMan.editDB(Nothing, My.Settings.CurrentDB,
                        "INSERT INTO persona(razon, cuil, fisica)
@@ -61,10 +65,10 @@
                 'Next query could be replaced by OUTPUT insert.id
 
                 sql(0) = "SELECT MAX(id) as id FROM persona"
-                persona_id = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)(0)("id") 'Last insert
+                PersonaId = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)(0)("id") 'Last insert
             End If
         End If
-        Return persona_id
+        Return PersonaId
     End Function
 
     Private Sub gen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gen.SelectedIndexChanged, gen.SelectedValueChanged, gen.TextChanged
@@ -84,4 +88,6 @@
             End If
         End If
     End Sub
+
+
 End Class
