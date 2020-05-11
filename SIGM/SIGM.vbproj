@@ -519,10 +519,22 @@
     <Compile Include="hacienda\Combustibles\ModCombustible.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="oprivadas\toolCalculoPlanos.Designer.vb">
-      <DependentUpon>toolCalculoPlanos.vb</DependentUpon>
+    <Compile Include="oprivadas\tasamunicipal\calcTasaMunicipalObras.Designer.vb">
+      <DependentUpon>calcTasaMunicipalObras.vb</DependentUpon>
     </Compile>
-    <Compile Include="oprivadas\toolCalculoPlanos.vb">
+    <Compile Include="oprivadas\tasamunicipal\calcTasaMunicipalObras.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="oprivadas\tasamunicipal\calcTasaMunicipalPlanosEdif.Designer.vb">
+      <DependentUpon>calcTasaMunicipalPlanosEdif.vb</DependentUpon>
+    </Compile>
+    <Compile Include="oprivadas\tasamunicipal\calcTasaMunicipalPlanosEdif.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="oprivadas\tasamunicipal\toolCalculoTasaMunicipal.Designer.vb">
+      <DependentUpon>toolCalculoTasaMunicipal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="oprivadas\tasamunicipal\toolCalculoTasaMunicipal.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="hacienda\Adelanto\BusquedaAdelanto.Designer.vb">
@@ -694,6 +706,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="oprivadas\tasamunicipal\calcTasaMunicipalObras.resx">
+      <DependentUpon>calcTasaMunicipalObras.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\tasamunicipal\calcTasaMunicipalPlanosEdif.resx">
+      <DependentUpon>calcTasaMunicipalPlanosEdif.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="reportes\contratos\ModeloContrato.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -842,8 +860,8 @@
     <EmbeddedResource Include="env\menus\OprivadasMenu.resx">
       <DependentUpon>OprivadasMenu.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\toolCalculoPlanos.resx">
-      <DependentUpon>toolCalculoPlanos.vb</DependentUpon>
+    <EmbeddedResource Include="oprivadas\tasamunicipal\toolCalculoTasaMunicipal.resx">
+      <DependentUpon>toolCalculoTasaMunicipal.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\Adelanto\BusquedaAdelanto.resx">
       <DependentUpon>BusquedaAdelanto.vb</DependentUpon>

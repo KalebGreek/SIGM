@@ -31,7 +31,7 @@
 		Dim calcOprivadas As New genToolContainer With {.MdiParent = Me.Parent}
 		calcOprivadas.Text = "Calculadora"
 
-		Dim calcObras As New toolCalculoPlanos With {.Dock = DockStyle.Fill}
+		Dim calcObras As New toolCalculoTasaMunicipal With {.Dock = DockStyle.Fill}
 
 		calcOprivadas.Controls.Add(calcObras)
 		calcOprivadas.Show()

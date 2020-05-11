@@ -55,9 +55,9 @@
     End Sub
 
     Private Sub Me_Closed(sender As Object, e As EventArgs) Handles Me.Closed
-        If genSearchControl1.RowSelected = False Then
-            bs_resultado.DataSource = Nothing
-        End If
+        'If genSearchControl1.RowSelected = False Then
+        '    bs_resultado.DataSource = Nothing
+        'End If
     End Sub
 
 End Class
