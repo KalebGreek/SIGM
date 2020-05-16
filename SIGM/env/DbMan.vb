@@ -2,12 +2,12 @@
     'Muestra ultimo comando SQL ejecutado
     Public last_sql As String = ""
 	Public last_connection As String = ""
-    'Conexiones de base de datos
-    Public olecon As New OleDb.OleDbConnection
 
     ' READ: Rutinas de lectura 
     Function ReadTableSchema(Optional constr As String = "") As DataTable
         Dim schemaTable As New DataTable
+        Dim olecon As New OleDb.OleDbConnection
+
         If constr = "" Then
             constr = My.Settings.CurrentDB
         End If
@@ -24,9 +24,9 @@
     End Function
     Function ReadDB(OleDBProcedure As OleDb.OleDbCommand, constr As String,
                     Optional TextQuery As String() = Nothing, Optional TableName As String = "") As DataTable
-
         Dim dtab As New DataTable
         Dim errorMsg As String = ""
+        Dim olecon As New OleDb.OleDbConnection
 
         'Crear adaptador de datos
         Dim dada As New OleDb.OleDbDataAdapter
@@ -98,6 +98,7 @@
                 errorMsg = "Uno de los campos de la consulta contiene datos inválidos." & Chr(13) & "Detalles:" & ex.Message.ToString
             Finally
                 olecon.Close()
+                olecon.Dispose()
                 dada.Dispose()
 
                 If TableName <> "" Then
@@ -145,6 +146,7 @@
                     Optional ByRef progreso As ToolStripProgressBar = Nothing) As String
         Dim RowsAffected As Integer = 0
         Dim result As String = ""
+        Dim olecon As New OleDb.OleDbConnection
         'Para conectarse a la bd en modo de inserción
         'Se necesita convertir el string a un objeto ConnectionString
         'antes de aplicarlo al OleDbCommand "Comm"
@@ -226,7 +228,24 @@
 
         Return result
     End Function
-    ' END SAVE    
 
+    'SQL History
+    Sub WriteSQLLog(sql As String, connection As String, user_id As Integer)
+        Dim olecon As New OleDb.OleDbConnection
+        'Hardcoded SQL logging to check changes in DB
+        'Independent from DbMan.editDB()
+        sql = Replace(sql, "'", "`") 'To avoid conflict with other hardcoded sql queries
+        Dim LogInsert As New OleDb.OleDbCommand _
+            With {.CommandText = "INSERT INTO sql_log(_date, _user_id, _sql, _con)
+                                        VALUES('" & Date.Now & "', '" & user_id & "', '" & sql & "','" & connection & "');"}
 
+        olecon.ConnectionString = My.Settings.AdbConnection
+
+        LogInsert.Connection = olecon
+        'Abrir la conexión y ejecutar
+        olecon.Open()
+        LogInsert.ExecuteNonQuery()
+        olecon.Close()
+    End Sub
+    ' END SAVE  
 End Module

@@ -1,24 +1,48 @@
 ﻿Public Class toolCalculoTasaMunicipal
-
-
 	Private Sub search_Click(sender As Object, e As EventArgs) Handles search.Click
 		Dim bprop As New BusquedaPropietario
 		bprop.genSearchControl1.vista.Text = "PROPIETARIO"
-		bprop.genSearchControl1.selectRow.Visible = True
-		bprop.genSearchControl1.cancel.Visible = True
 		bprop.ShowDialog(Me)
 		With bprop.bs_resultado
 			If .Position > -1 Then
 				propietario.Text = .Current("razon").ToString()
 				tenedor.Text = .Current("tenedor").ToString()
-				'calcTasaMunicipalPlanosEdif.metrosFrente.Value = CDec(.Current("frente1")) + CDec(.Current("frente2")) + CDec(.Current("frente3")) + CDec(.Current("frente4"))
+				cuenta.Text = .Current("codigo").ToString()
 			End If
 		End With
 		bprop.Dispose()
 	End Sub
 
-	Private Sub ReiniciarMenuItem_Click(sender As Object, e As EventArgs) Handles ReiniciarMenuItem.Click
-		'CalcTasaMunicipalPlanosEdif1 = New calcTasaMunicipalPlanosEdif
-		'CalcTasaMunicipalObras1 = New calcTasaMunicipalObras
+	Private Sub WrapperFill(sender As Object, e As EventArgs) Handles ObrasVariasToolStripMenuItem.Click, RelevamientoToolStripMenuItem.Click,
+																		MensuraToolStripMenuItem.Click, ReiniciarMenuItem.Click
+		For Each ctl As Control In wrapper.Controls
+			ctl.Dispose()
+		Next
+
+		If sender Is ReiniciarMenuItem Then
+			fecha.Value = Date.Today
+			cuenta.Text = ""
+			propietario.Text = ""
+			tenedor.Text = ""
+			obra.Text = ""
+			help.Visible = False
+
+		Else
+			Dim ctl As New UserControl
+			If sender Is ObrasVariasToolStripMenuItem Then
+				ctl = New calcTMuniObrasVarias
+				help.DataSource = CType(ctl, calcTMuniObrasVarias).help_source
+			ElseIf sender Is RelevamientoToolStripMenuItem Then
+				ctl = New calcTMuniPlanosEdif
+				help.DataSource = CType(ctl, calcTMuniPlanosEdif).help_source
+			ElseIf sender Is MensuraToolStripMenuItem Then
+				ctl = New calcTMuniMensura
+				help.DataSource = CType(ctl, calcTMuniMensura).help_source
+			End If
+			wrapper.Controls.Add(ctl)
+			help.Visible = True
+			ctl.Dock = DockStyle.Fill
+		End If
+
 	End Sub
 End Class

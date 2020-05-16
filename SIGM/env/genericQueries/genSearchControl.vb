@@ -112,6 +112,10 @@
 
     Public Sub FilterSearch()
         bsCustomFilter = ""
+        If filtro.SelectedIndex = -1 And filtro.Items.Count > 0 Then
+            filtro.SelectedIndex = 0
+        End If
+
         If Len(filtro.Text) > 1 Then
             If keyword.Visible Then
 

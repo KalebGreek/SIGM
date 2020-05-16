@@ -146,17 +146,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1400.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.2.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1400.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
@@ -207,6 +198,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Import Include="Microsoft.Reporting" />
+    <Import Include="Microsoft.Reporting.WinForms" />
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="Microsoft.VisualBasic.FileIO" />
     <Import Include="System" />
@@ -519,16 +512,28 @@
     <Compile Include="hacienda\Combustibles\ModCombustible.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="oprivadas\tasamunicipal\calcTasaMunicipalObras.Designer.vb">
-      <DependentUpon>calcTasaMunicipalObras.vb</DependentUpon>
+    <Compile Include="oprivadas\tasamunicipal\calcTMuniObrasVarias.Designer.vb">
+      <DependentUpon>calcTMuniObrasVarias.vb</DependentUpon>
     </Compile>
-    <Compile Include="oprivadas\tasamunicipal\calcTasaMunicipalObras.vb">
+    <Compile Include="oprivadas\tasamunicipal\calcTMuniObrasVarias.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="oprivadas\tasamunicipal\calcTasaMunicipalPlanosEdif.Designer.vb">
-      <DependentUpon>calcTasaMunicipalPlanosEdif.vb</DependentUpon>
+    <Compile Include="oprivadas\tasamunicipal\calcTMuniMensura.Designer.vb">
+      <DependentUpon>calcTMuniMensura.vb</DependentUpon>
     </Compile>
-    <Compile Include="oprivadas\tasamunicipal\calcTasaMunicipalPlanosEdif.vb">
+    <Compile Include="oprivadas\tasamunicipal\calcTMuniMensura.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="oprivadas\tasamunicipal\calcTMuniPlanosEdif.Designer.vb">
+      <DependentUpon>calcTMuniPlanosEdif.vb</DependentUpon>
+    </Compile>
+    <Compile Include="oprivadas\tasamunicipal\calcTMuniPlanosEdif.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="oprivadas\tasamunicipal\ctrlAddInmuebleEdificacion.Designer.vb">
+      <DependentUpon>ctrlAddInmuebleEdificacion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="oprivadas\tasamunicipal\ctrlAddInmuebleEdificacion.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="oprivadas\tasamunicipal\toolCalculoTasaMunicipal.Designer.vb">
@@ -706,11 +711,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="oprivadas\tasamunicipal\calcTasaMunicipalObras.resx">
-      <DependentUpon>calcTasaMunicipalObras.vb</DependentUpon>
+    <EmbeddedResource Include="oprivadas\tasamunicipal\calcTMuniObrasVarias.resx">
+      <DependentUpon>calcTMuniObrasVarias.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\tasamunicipal\calcTasaMunicipalPlanosEdif.resx">
-      <DependentUpon>calcTasaMunicipalPlanosEdif.vb</DependentUpon>
+    <EmbeddedResource Include="oprivadas\tasamunicipal\calcTMuniMensura.resx">
+      <DependentUpon>calcTMuniMensura.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\tasamunicipal\calcTMuniPlanosEdif.resx">
+      <DependentUpon>calcTMuniPlanosEdif.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oprivadas\tasamunicipal\ctrlAddInmuebleEdificacion.resx">
+      <DependentUpon>ctrlAddInmuebleEdificacion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="reportes\contratos\ModeloContrato.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -13,6 +13,8 @@
     End Sub
     '-- RUTINAS
     Public Sub Consultar(Optional clearFilter As Boolean = False)
+        resultado.DataSource = Nothing
+
         With genSearchControl1
             If .vista.SelectedIndex > -1 Then
                 Dim dtab As New DataTable
@@ -54,16 +56,12 @@
 
                 End If
 
-                resultado.DataSource = Nothing
-                bs_resultado.Filter = ""
-                bs_resultado.Sort = ""
-                bs_resultado.DataSource = Nothing
-
                 If dtab.Rows.Count > 0 Then
                     If clearFilter Then
                         .bsCustomFilter = ""
                     End If
 
+                    bs_resultado = New BindingSource
                     bs_resultado.DataSource = dtab
                     Dim bs_ColumnList As New BindingSource _
                         With {.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)}
@@ -75,7 +73,6 @@
                     bs_resultado.Filter = .bsCustomFilter
 
                     resultado = CtrlMan.DataGridViewTools.Load(resultado, bs_resultado)
-
                 End If
             Else
                 .reset_search.PerformClick()

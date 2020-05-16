@@ -21,7 +21,6 @@ Public Class BusquedaComercio
 
     '-- EVENTOS UNICOS
     Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVista_IndexTextChanged
-
         If ControlBusqueda1.vista.SelectedIndex > -1 Then
             Dim consulta As String = ControlBusqueda1.vista.Text
             Dim OleDBCmd As New OleDb.OleDbCommand With

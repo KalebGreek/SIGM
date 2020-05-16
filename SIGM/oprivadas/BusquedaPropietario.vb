@@ -7,14 +7,33 @@
         ' Add any initialization after the InitializeComponent() call.
         'Setting up views
         genSearchControl1.vista.Items.AddRange(New Object() {"PROPIETARIO"})
+        genSearchControl1.selectRow.Visible = True
+        genSearchControl1.cancel.Visible = True
     End Sub
     '-- RUTINAS
-    Sub Consultar() Handles genSearchControl1.CSearch_Click
+    Sub Consultar() Handles genSearchControl1.CSearch_Click, genSearchControl1.CFiltro_IndexTextChanged
+        genSearchControl1.FilterSearch()
         bs_resultado.Filter = genSearchControl1.bsCustomFilter
     End Sub
 
     '-- EVENTOS UNICOS
+    Public Sub Select_Click(sender As Object, e As EventArgs) Handles genSearchControl1.CSelect
+        If bs_resultado.Position > -1 Then
+            Me.Close()
+        Else
+            MsgBox("No se ha seleccionado una persona.")
+        End If
+    End Sub
+    Public Sub Cancel_Click(sender As Object, e As EventArgs) Handles genSearchControl1.CCancel
+        resultado.DataSource = Nothing
+        bs_resultado.Sort = ""
+        bs_resultado.Filter = ""
+        bs_resultado.DataSource = Nothing
+        Me.Close()
+    End Sub
+
     Private Sub vista_SelectedIndexChanged() Handles genSearchControl1.CVista_IndexTextChanged
+
         With genSearchControl1
             If .vista.SelectedIndex > -1 Then
                 .filtro.DataSource = Nothing
@@ -23,17 +42,13 @@
                     sql(0) = "SELECT * FROM catastro"
                     Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
                     If dtab Is Nothing = False Then
-                        bs_resultado.Filter = ""
-                        bs_resultado.Sort = ""
-                        bs_resultado.Position = -1
+                        bs_resultado = New BindingSource
                         bs_resultado.DataSource = dtab
                         CtrlMan.DataGridViewTools.Load(resultado, bs_resultado)
                         Dim bs_ColumnList As New BindingSource _
                             With {.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)}
                         .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
-                        .filtro.Text = "razon"
-                    Else
-                        bs_resultado = Nothing
+                        Consultar()
                     End If
                 End If
             Else
@@ -52,12 +67,6 @@
 
             End If
         End If
-    End Sub
-
-    Private Sub Me_Closed(sender As Object, e As EventArgs) Handles Me.Closed
-        'If genSearchControl1.RowSelected = False Then
-        '    bs_resultado.DataSource = Nothing
-        'End If
     End Sub
 
 End Class

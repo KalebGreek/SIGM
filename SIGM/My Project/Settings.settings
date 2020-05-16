@@ -10,7 +10,7 @@
       <Value Profile="(Default)">Provider=PostgreSQL.1;Data Source=\\MALINGUNVILA;Location=sigmDB;User ID=admin;Password=hf32n64;</Value>
     </Setting>
     <Setting Name="AdbConnection" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.16.0;Data Source=vrosas.accdb</Value>
+      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.16.0;Data Source=vrosas.accdb;OLE DB Services=-1</Value>
     </Setting>
     <Setting Name="pgsqlCon_disabled" Type="System.String" Scope="User">
       <Value Profile="(Default)">Provider=PostgreSQL.1;Data Source=\\malingunvila;Location=vrosas;User ID=sigm_admin;password=sigm2019.;</Value>
@@ -18,9 +18,9 @@
     <Setting Name="foxConnection" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Provider=vfpoledb.1;Data Source=Z:\DATOS&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Provider=vfpoledb.1;Data Source=Z:\DATOS;OLE DB Services=-1&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Provider=vfpoledb.1;Data Source=Z:\DATOS</Value>
+      <Value Profile="(Default)">Provider=vfpoledb.1;Data Source=Z:\DATOS;OLE DB Services=-1</Value>
     </Setting>
     <Setting Name="DefaultPgsql_disabled2" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;

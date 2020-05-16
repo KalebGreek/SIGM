@@ -82,24 +82,6 @@ Public Class SecMan 'Security Manager
         Return inicio
     End Function
 
-    'SQL History
-    Shared Sub WriteSQLLog(sql As String, connection As String, user_id As Integer)
-        'Hardcoded SQL logging to check changes in DB
-        'Independent from DbMan.editDB()
-        sql = Replace(sql, "'", "`") 'To avoid conflict with other hardcoded sql queries
-        Dim LogInsert As New OleDb.OleDbCommand _
-            With {.CommandText = "INSERT INTO sql_log(_date, _user_id, _sql, _con)
-                                        VALUES('" & Date.Now & "', '" & user_id & "', '" & sql & "','" & connection & "');"}
-
-        olecon.ConnectionString = My.Settings.AdbConnection
-
-        LogInsert.Connection = olecon
-        'Abrir la conexión y ejecutar
-        olecon.Open()
-        LogInsert.ExecuteNonQuery()
-        olecon.Close()
-    End Sub
-
     'Read MAC or CPU to identify user/computer
     Shared Function GetMacAddress() As String
         Try
