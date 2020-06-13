@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.Reporting.WinForms
 Public Class ConsultaIntimaciones
-    Dim ColorJudicial, ColorPrejudicial, ColorCartaDoc, ColorMora, ColorContactado, ColorPlan, SinColor As Color
+    Dim PaletaIntimaciones As New List(Of Color)
 
     Public Sub New()
         ' This call is required by the designer.
@@ -8,19 +8,14 @@ Public Class ConsultaIntimaciones
 
         ' Add any initialization after the InitializeComponent() call.
 
-        ColorJudicial = Color.Firebrick 'JUDICIAL
-        estado6.BackColor = ColorJudicial
-        ColorPrejudicial = Color.Tomato   'PRE-JUDICIAL
-        estado5.BackColor = ColorPrejudicial
-        ColorCartaDoc = Color.Goldenrod 'CARTA DOCUMENTO
-        estado4.BackColor = ColorCartaDoc
-        ColorMora = Color.Plum    'EN MORA
-        estado3.BackColor = ColorMora
-        ColorContactado = Color.CornflowerBlue    'CONTACTADO
-        estado2.BackColor = ColorContactado
-        ColorPlan = Color.DarkSeaGreen 'PLAN DE PAGOS
-        estado1.BackColor = ColorPlan
-        SinColor = visor_contribuyente.DefaultCellStyle.BackColor
+        PaletaIntimaciones.AddRange({visor_contribuyente.DefaultCellStyle.BackColor, Color.Firebrick, Color.Tomato, Color.Goldenrod, Color.Plum, Color.CornflowerBlue, Color.DarkSeaGreen})
+
+        estado6.BackColor = PaletaIntimaciones(1) 'JUDICIAL
+        estado5.BackColor = PaletaIntimaciones(2) 'PRE-JUDICIAL
+        estado4.BackColor = PaletaIntimaciones(3) 'CARTA DOCUMENTO
+        estado3.BackColor = PaletaIntimaciones(4) 'EN MORA
+        estado2.BackColor = PaletaIntimaciones(5) 'CONTACTADO
+        estado1.BackColor = PaletaIntimaciones(6) 'PLAN DE PAGOS
 
         GenSearchControl1.vista.Items.AddRange(New Object() {"aguas", "automovil", "barrios", "catastro", "comercio", "sepelio"})
     End Sub
@@ -159,17 +154,17 @@ Public Class ConsultaIntimaciones
                     End If
 
                     If state = "JUDICIAL" Then
-                        ColorValue(i) = ColorJudicial
+                        ColorValue(i) = PaletaIntimaciones(1)
                     ElseIf state = "PRE-JUDICIAL" Then
-                        ColorValue(i) = ColorPrejudicial
+                        ColorValue(i) = PaletaIntimaciones(2)
                     ElseIf state = "CARTA DOCUMENTO" Then
-                        ColorValue(i) = ColorCartaDoc
+                        ColorValue(i) = PaletaIntimaciones(3)
                     ElseIf state = "EN MORA" Then
-                        ColorValue(i) = ColorMora
+                        ColorValue(i) = PaletaIntimaciones(4)
                     ElseIf state = "CONTACTADO" Then
-                        ColorValue(i) = ColorContactado
+                        ColorValue(i) = PaletaIntimaciones(5)
                     ElseIf state = "PLAN DE PAGO" Then
-                        ColorValue(i) = ColorPlan
+                        ColorValue(i) = PaletaIntimaciones(6)
                     End If
 
                     progreso.Value = i

@@ -32,8 +32,8 @@
 		calcOprivadas.Text = "Calculadora"
 
 		Dim calcObras As New toolCalculoTasaMunicipal With {.Dock = DockStyle.Fill}
-
 		calcOprivadas.Controls.Add(calcObras)
+		calcOprivadas.WindowState = FormWindowState.Maximized
 		calcOprivadas.Show()
 	End Sub
 
