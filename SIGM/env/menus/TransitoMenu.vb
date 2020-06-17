@@ -14,9 +14,9 @@
 	End Sub
 
 	Private Sub NuevaMultaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevaMultaToolStripMenuItem.Click
-		Dim modMulta1 As New ModMulta
-
-		modMulta1.ShowDialog(Me.Parent)
+		Using modMulta1 As New ModMulta
+			modMulta1.ShowDialog(Me.Parent)
+		End Using
 	End Sub
 
 	'INFRACTORES

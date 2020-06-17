@@ -139,36 +139,38 @@
 
     Sub CargarNovedadesSIRO()
         Dim result As DialogResult
-        Dim od As New OpenFileDialog _
+        Using od As New OpenFileDialog _
                  With {.CheckFileExists = True,
                        .Filter = "txt|*.txt",
                        .DefaultExt = ".txt",
                        .InitialDirectory = Environment.SpecialFolder.Desktop}
 
-        result = od.ShowDialog()
-        If result = DialogResult.OK Then
-            If od.FileName <> "" And Len(od.FileName) > 4 Then
-                info.Text = od.FileName
+            result = od.ShowDialog()
+            If result = DialogResult.OK Then
+                If od.FileName <> "" And Len(od.FileName) > 4 Then
+                    info.Text = od.FileName
+                End If
             End If
-        End If
+        End Using
     End Sub
 
 
 
     Sub Guardar()
         'info.Focus() 'Takes away the focus from the dataview, so it saves itself before writing the file
-        Dim sd As New SaveFileDialog
-        Dim result As DialogResult
-        sd.Filter = "txt|*.txt"
-        sd.DefaultExt = ".txt"
-        sd.InitialDirectory = Environment.SpecialFolder.Desktop
-        sd.OverwritePrompt = True
-        result = sd.ShowDialog()
-        If result = DialogResult.OK Then
-            If sd.FileName <> "" And Len(sd.FileName) > 4 Then
-                info.Text = ConverterMan.DataTableToSIJCOR(bs.DataSource, sd.FileName)
+        Using sd As New SaveFileDialog
+            Dim result As DialogResult
+            sd.Filter = "txt|*.txt"
+            sd.DefaultExt = ".txt"
+            sd.InitialDirectory = Environment.SpecialFolder.Desktop
+            sd.OverwritePrompt = True
+            result = sd.ShowDialog()
+            If result = DialogResult.OK Then
+                If sd.FileName <> "" And Len(sd.FileName) > 4 Then
+                    info.Text = ConverterMan.DataTableToSIJCOR(bs.DataSource, sd.FileName)
+                End If
             End If
-        End If
+        End Using
     End Sub
 
     'EVENTOS

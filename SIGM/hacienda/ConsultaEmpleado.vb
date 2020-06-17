@@ -90,13 +90,14 @@
 	End Sub
 	Private Sub modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles modificar.Click
 		If bs_consulta.Position > -1 Then
-			Dim ModificarOrdenanza As New ModOrdenanza
-			With ModificarOrdenanza
-				.bs_registro = bs_consulta
-				.ShowDialog()
-				.Dispose()
-			End With
-			buscar.PerformClick()
+            Using ModificarOrdenanza As New ModOrdenanza
+                With ModificarOrdenanza
+                    .bs_registro = bs_consulta
+                    .ShowDialog()
+                    .Dispose()
+                End With
+            End Using
+            buscar.PerformClick()
 		End If
 	End Sub
 	Private Sub eliminar_Click(sender As Object, e As EventArgs) Handles eliminar.Click

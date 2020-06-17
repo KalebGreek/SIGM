@@ -22,8 +22,9 @@
 
     Private Sub CalculoAnualDeImpuestosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CalculoAnualDeImpuestosToolStripMenuItem.Click
         System.Windows.Forms.Application.CurrentCulture = New System.Globalization.CultureInfo("EN-US")
-        Dim cai As New CalcAnualImpUI
-        cai.ShowDialog()
+        Using cai As New CalcAnualImpUI
+            cai.ShowDialog()
+        End Using
         System.Windows.Forms.Application.CurrentCulture = New System.Globalization.CultureInfo("ES-AR")
     End Sub
 
@@ -63,8 +64,9 @@
     End Sub
 
     Private Sub GenerarCertificadoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GenerarCertificadoToolStripMenuItem.Click
-        Dim certld As New CertificadoLibreDeuda
-        certld.ShowDialog()
+        Using certld As New CertificadoLibreDeuda
+            certld.ShowDialog()
+        End Using
     End Sub
 
     Private Sub IntimacionesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IntimacionesToolStripMenuItem.Click

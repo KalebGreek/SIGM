@@ -75,15 +75,15 @@
         If e.KeyValue = Keys.F2 Then
             If bs_consulta.Position > -1 Then
                 If bs_consulta.Current("opr_id") > 0 Then
-                    Dim mod_i As New ModInmueble(bs_consulta.Current("opr_id"))
-                    mod_i.zona.Value = bs_consulta.Current("zona")
-                    mod_i.circ.Value = bs_consulta.Current("circ")
-                    mod_i.secc.Value = bs_consulta.Current("secc")
-                    mod_i.manz.Value = bs_consulta.Current("manz")
-                    mod_i.parc.Value = bs_consulta.Current("parc")
-                    mod_i.lote.Value = bs_consulta.Current("lote")
-                    mod_i.ShowDialog(Me)
-                    mod_i.Dispose()
+                    Using mod_i As New ModInmueble(bs_consulta.Current("opr_id"))
+                        mod_i.zona.Value = bs_consulta.Current("zona")
+                        mod_i.circ.Value = bs_consulta.Current("circ")
+                        mod_i.secc.Value = bs_consulta.Current("secc")
+                        mod_i.manz.Value = bs_consulta.Current("manz")
+                        mod_i.parc.Value = bs_consulta.Current("parc")
+                        mod_i.lote.Value = bs_consulta.Current("lote")
+                        mod_i.ShowDialog(Me)
+                    End Using
                 End If
             End If
             End If

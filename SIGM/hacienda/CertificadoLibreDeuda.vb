@@ -146,10 +146,10 @@ Public Class CertificadoLibreDeuda
                 End If
 
                 If ReportType <> "" Then
-                    Dim certificado As New VisorReporte("Imprimir Certificado de Libre Deuda")
-                    certificado.mostrar(ReportType, parametros)
-                    certificado.ShowDialog()
-                    certificado.Dispose()
+                    Using certificado As New VisorReporte("Imprimir Certificado de Libre Deuda")
+                        certificado.mostrar(ReportType, parametros)
+                        certificado.ShowDialog()
+                    End Using
                 End If
             End With
 

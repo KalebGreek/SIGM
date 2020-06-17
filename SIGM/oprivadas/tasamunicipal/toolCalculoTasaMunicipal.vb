@@ -1,16 +1,16 @@
 ﻿Public Class toolCalculoTasaMunicipal
 	Private Sub search_Click(sender As Object, e As EventArgs) Handles search.Click
-		Dim bprop As New BusquedaPropietario
-		bprop.genSearchControl1.vista.Text = "PROPIETARIO"
-		bprop.ShowDialog(Me)
-		With bprop.bs_resultado
-			If .Position > -1 Then
-				propietario.Text = .Current("razon").ToString()
-				tenedor.Text = .Current("tenedor").ToString()
-				cuenta.Text = .Current("codigo").ToString()
-			End If
-		End With
-		bprop.Dispose()
+		Using bprop As New BusquedaPropietario
+			bprop.genSearchControl1.vista.Text = "PROPIETARIO"
+			bprop.ShowDialog(Me)
+			With bprop.bs_resultado
+				If .Position > -1 Then
+					propietario.Text = .Current("razon").ToString()
+					tenedor.Text = .Current("tenedor").ToString()
+					cuenta.Text = .Current("codigo").ToString()
+				End If
+			End With
+		End Using
 	End Sub
 
 	Private Sub WrapperFill(sender As Object, e As EventArgs) Handles ObrasVariasToolStripMenuItem.Click, RelevamientoToolStripMenuItem.Click,

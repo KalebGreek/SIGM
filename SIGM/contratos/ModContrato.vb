@@ -54,16 +54,16 @@
 	End Sub
 
 	Private Sub Buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
-		Dim SelPersona As New BusquedaPersona(True) With {.Owner = Me}
-
-		With SelPersona
-			.ShowDialog()
-			If .bs_resultado.Position > -1 Then
-				persona_id = .bs_resultado.Current("persona_id").ToString
-				razon.Text = .bs_resultado.Current("razon").ToString
-				cuil.Text = .bs_resultado.Current("cuil").ToString
-			End If
-		End With
+		Using SelPersona As New BusquedaPersona(True) With {.Owner = Me}
+			With SelPersona
+				.ShowDialog()
+				If .bs_resultado.Position > -1 Then
+					persona_id = .bs_resultado.Current("persona_id").ToString
+					razon.Text = .bs_resultado.Current("razon").ToString
+					cuil.Text = .bs_resultado.Current("cuil").ToString
+				End If
+			End With
+		End Using
 	End Sub
 
 

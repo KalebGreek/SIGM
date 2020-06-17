@@ -184,21 +184,23 @@ Public Class ConsultaIntimaciones
     'GUI
     Private Sub NuevaInt_Click(sender As Object, e As EventArgs) Handles nuevaInt.Click
         If GenSearchControl1.vista.SelectedIndex > -1 Then
-            Dim modInt As New ModIntimaciones(GenSearchControl1.vista.Text, 0) _
+            Using modInt As New ModIntimaciones(GenSearchControl1.vista.Text, 0) _
                 With {.Text = "Nueva Intimación"}
 
-            modInt.ShowDialog(Me)
+                modInt.ShowDialog(Me)
+            End Using
             Consultar(False)
         End If
     End Sub
 
     Private Sub HistorialInt_Click(sender As Object, e As EventArgs) Handles historialInt.Click
         If bs_contribuyente.Position > -1 And GenSearchControl1.vista.SelectedIndex > -1 Then
-            Dim modInt As New ModIntimaciones(GenSearchControl1.vista.Text, Val(bs_contribuyente.Current("codigo"))) _
+            Using modInt As New ModIntimaciones(GenSearchControl1.vista.Text, Val(bs_contribuyente.Current("codigo"))) _
                 With {.Text = "Historial para Cta. " & bs_contribuyente.Current("codigo") & " 
                                 | " & bs_contribuyente.Current("titular")}
 
-            modInt.ShowDialog(Me)
+                modInt.ShowDialog(Me)
+            End Using
             Consultar(False)
         End If
 
@@ -222,9 +224,10 @@ Public Class ConsultaIntimaciones
 
                 Dim titulo_reporte As String = "Intimación " & GenSearchControl1.vista.Text & " - Cta. N° " & .Current("codigo")
                 Dim ruta_acceso As String = "REPORTES\HACIENDA\INTIMA"
-                Dim certificado As New VisorReporte(titulo_reporte)
-                certificado.mostrar(ruta_acceso, parametros)
-                certificado.ShowDialog()
+                Using certificado As New VisorReporte(titulo_reporte)
+                    certificado.mostrar(ruta_acceso, parametros)
+                    certificado.ShowDialog()
+                End Using
             End If
         End With
     End Sub

@@ -201,52 +201,53 @@
     End Function
     Private Shared Function Cargar(carpeta_raiz As String, destino As String, titulo As String, return_path As Boolean) As Object
         Dim accion As Integer
-        Dim load_dialog As New OpenFileDialog
+        Using load_dialog As New OpenFileDialog
 
-        carpeta_raiz = root & carpeta_raiz
+            carpeta_raiz = root & carpeta_raiz
 
-        With My.Computer.FileSystem
-            If .DirectoryExists(carpeta_raiz) = False Then
-                System.IO.Directory.CreateDirectory(carpeta_raiz)
-            End If
-            If .DirectoryExists(ultima_ubicacion) = False Then
-                ultima_ubicacion = Nothing
-            End If
-        End With
+            With My.Computer.FileSystem
+                If .DirectoryExists(carpeta_raiz) = False Then
+                    System.IO.Directory.CreateDirectory(carpeta_raiz)
+                End If
+                If .DirectoryExists(ultima_ubicacion) = False Then
+                    ultima_ubicacion = Nothing
+                End If
+            End With
 
-        With load_dialog
-            .Title = titulo
-            .Filter = "Documento PDF|*.pdf"
-            If ultima_ubicacion Is Nothing Then
-                .InitialDirectory = carpeta_raiz
-            Else
-                .InitialDirectory = ultima_ubicacion
-            End If
-            accion = .ShowDialog() 'Mostramos diálogo de carga de archivo
+            With load_dialog
+                .Title = titulo
+                .Filter = "Documento PDF|*.pdf"
+                If ultima_ubicacion Is Nothing Then
+                    .InitialDirectory = carpeta_raiz
+                Else
+                    .InitialDirectory = ultima_ubicacion
+                End If
+                accion = .ShowDialog() 'Mostramos diálogo de carga de archivo
 
-            'Si es mayor a 4 caracteres (1.jpg) es váido
-            'Bajar todo a LCase para evitar problemas
-            'Puede que no sea necesario hacer backups acá con el sistema de versiones
+                'Si es mayor a 4 caracteres (1.jpg) es váido
+                'Bajar todo a LCase para evitar problemas
+                'Puede que no sea necesario hacer backups acá con el sistema de versiones
 
-            If accion = 1 Then
-                ultima_ubicacion = Microsoft.VisualBasic.Left(.FileName, Len(.FileName) - Len(.SafeFileName))
-                .FileName = LCase(load_dialog.FileName)
-                If Len(load_dialog.FileName) > 4 Then
-                    If My.Computer.FileSystem.FileExists(carpeta_raiz & destino) Then
-                        If MsgBoxResult.Yes = MsgBox("¿Este archivo ya existe, desea reemplazarlo?", MsgBoxStyle.YesNo) Then
-                            Kill(carpeta_raiz & destino)
+                If accion = 1 Then
+                    ultima_ubicacion = Microsoft.VisualBasic.Left(.FileName, Len(.FileName) - Len(.SafeFileName))
+                    .FileName = LCase(load_dialog.FileName)
+                    If Len(load_dialog.FileName) > 4 Then
+                        If My.Computer.FileSystem.FileExists(carpeta_raiz & destino) Then
+                            If MsgBoxResult.Yes = MsgBox("¿Este archivo ya existe, desea reemplazarlo?", MsgBoxStyle.YesNo) Then
+                                Kill(carpeta_raiz & destino)
+                                FileCopy(load_dialog.FileName, carpeta_raiz & destino)
+                            End If
+                        Else
                             FileCopy(load_dialog.FileName, carpeta_raiz & destino)
                         End If
                     Else
-                        FileCopy(load_dialog.FileName, carpeta_raiz & destino)
+                        destino = ""
                     End If
                 Else
                     destino = ""
                 End If
-            Else
-                destino = ""
-            End If
-        End With
+            End With
+        End Using
 
         If return_path Then
             Return destino

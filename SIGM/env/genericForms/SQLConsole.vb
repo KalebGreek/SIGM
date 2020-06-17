@@ -49,22 +49,23 @@
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles AddScript.Click
         Dim ruta As String = ""
-        Dim filediag As New OpenFileDialog
-        filediag.ShowDialog()
-        ruta = filediag.FileName
-        If My.Computer.FileSystem.FileExists(ruta) Then
-            If MsgBoxResult.Yes = MsgBox("Ejecutar script?", MsgBoxStyle.YesNo) Then
-                Dim sr As StreamReader = My.Computer.FileSystem.OpenTextFileReader(ruta)
-                Dim script As String = ""
-                Do
-                    script = Trim(sr.ReadLine())
-                    MsgBox(script)
-                    ExecuteQuery(script)
-                Loop Until sr.EndOfStream
+        Using filediag As New OpenFileDialog
+            filediag.ShowDialog()
+            ruta = filediag.FileName
+            If My.Computer.FileSystem.FileExists(ruta) Then
+                If MsgBoxResult.Yes = MsgBox("Ejecutar script?", MsgBoxStyle.YesNo) Then
+                    Dim sr As StreamReader = My.Computer.FileSystem.OpenTextFileReader(ruta)
+                    Dim script As String = ""
+                    Do
+                        script = Trim(sr.ReadLine())
+                        MsgBox(script)
+                        ExecuteQuery(script)
+                    Loop Until sr.EndOfStream
 
 
+                End If
             End If
-        End If
+        End Using
     End Sub
 
     'RUTINAS

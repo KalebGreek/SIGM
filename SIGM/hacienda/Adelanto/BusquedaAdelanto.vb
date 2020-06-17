@@ -46,8 +46,9 @@
 		If e.KeyValue = Keys.Enter And sender Is GenSearchControl1 Then
 			GenSearchControl1.search.PerformClick()
 		ElseIf e.KeyValue = Keys.F2 Then
-			Dim madel As New ModAdelanto
-			madel.ShowDialog(Me)
+			Using madel As New ModAdelanto
+				madel.ShowDialog(Me)
+			End Using
 		ElseIf e.KeyValue = Keys.Delete Then
 			If bs_resultado.Count > 0 Then
 				If bs_resultado.Position > -1 Then

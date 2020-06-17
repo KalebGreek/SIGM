@@ -57,8 +57,9 @@ Public Class ConsultaContrato
     End Sub
 
     Private Sub nuevoCont_Click(sender As Object, e As EventArgs) Handles nuevoCont.Click
-        Dim modcont1 As New ModContrato
-        modcont1.ShowDialog(Me)
+        Using modcont1 As New ModContrato
+            modcont1.ShowDialog(Me)
+        End Using
         BuscarContrato()
     End Sub
 
@@ -105,9 +106,10 @@ Public Class ConsultaContrato
 
                 Dim titulo_reporte As String = "Contrato N° " & CDate(.Current("inicio")).Year & "-" & .Current("codigo") & " - " & .Current("seccion")
                 Dim ruta_acceso As String = "CONTRATOS\REPORTES\ModeloContrato"
-                Dim certificado As New VisorReporte(titulo_reporte)
-                certificado.mostrar(ruta_acceso, parametros)
-                certificado.ShowDialog()
+                Using certificado As New VisorReporte(titulo_reporte)
+                    certificado.mostrar(ruta_acceso, parametros)
+                    certificado.ShowDialog()
+                End Using
             End If
         End With
     End Sub

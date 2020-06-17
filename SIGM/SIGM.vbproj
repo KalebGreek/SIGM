@@ -381,19 +381,6 @@
     <Compile Include="hacienda\CalculoAnualImpuesto\CalcAnualImpUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="hacienda\CuentaAgrupada\CuentaAgrupada.vb" />
-    <Compile Include="hacienda\CuentaAgrupada\ModCuentaAgrupada.Designer.vb">
-      <DependentUpon>ModCuentaAgrupada.vb</DependentUpon>
-    </Compile>
-    <Compile Include="hacienda\CuentaAgrupada\ModCuentaAgrupada.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="hacienda\CuentaAgrupada\ConsultaCuentaAgrupada.Designer.vb">
-      <DependentUpon>ConsultaCuentaAgrupada.vb</DependentUpon>
-    </Compile>
-    <Compile Include="hacienda\CuentaAgrupada\ConsultaCuentaAgrupada.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="hacienda\CertificadoLibreDeuda.Designer.vb">
       <DependentUpon>CertificadoLibreDeuda.vb</DependentUpon>
     </Compile>
@@ -413,7 +400,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hacienda\Hacienda.vb" />
-    <Compile Include="hacienda\CuentaAgrupada\hac_contrib.vb" />
     <Compile Include="acceso.designer.vb">
       <DependentUpon>acceso.vb</DependentUpon>
     </Compile>
@@ -827,14 +813,6 @@
       <DependentUpon>CalcAnualImpUI.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\CuentaAgrupada\ModCuentaAgrupada.resx">
-      <DependentUpon>ModCuentaAgrupada.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\CuentaAgrupada\ConsultaCuentaAgrupada.resx">
-      <DependentUpon>ConsultaCuentaAgrupada.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="hacienda\CertificadoLibreDeuda.resx">
       <DependentUpon>CertificadoLibreDeuda.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -1031,6 +1009,14 @@
     <EmbeddedResource Include="reportes\printTable.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <None Include="hacienda\CuentaAgrupada_disabled\ConsultaCuentaAgrupada.Designer.vb.old" />
+    <None Include="hacienda\CuentaAgrupada_disabled\ConsultaCuentaAgrupada.resx.old" />
+    <None Include="hacienda\CuentaAgrupada_disabled\ConsultaCuentaAgrupada.vb.old" />
+    <None Include="hacienda\CuentaAgrupada_disabled\CuentaAgrupada.vb.old" />
+    <None Include="hacienda\CuentaAgrupada_disabled\hac_contrib.vb.old" />
+    <None Include="hacienda\CuentaAgrupada_disabled\ModCuentaAgrupada.Designer.vb.old" />
+    <None Include="hacienda\CuentaAgrupada_disabled\ModCuentaAgrupada.resx.old" />
+    <None Include="hacienda\CuentaAgrupada_disabled\ModCuentaAgrupada.vb.old" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

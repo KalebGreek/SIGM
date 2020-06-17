@@ -464,11 +464,12 @@ Public Class ParametrosReporte
             dtab(0) = CtrlMan.BindingSourceListToDataTable(bs)
             'Ahora hay que crear los datasets en Access para que hagan de plantilla para cada consulta
             'revisar screenshots de cada impuesto
-            Dim consulta As New VisorReporte("Consulta Deuda Contribuyente")
+            Using consulta As New VisorReporte("Consulta Deuda Contribuyente")
 
-            parametros = ParametrosReporte.TableToReport(dtab(0), "Deuda Contribuyente", parametros)
-            consulta.mostrar("HACIENDA\REPORTES\DeudaContribuyente", parametros, dtab)
-            consulta.ShowDialog()
+                parametros = ParametrosReporte.TableToReport(dtab(0), "Deuda Contribuyente", parametros)
+                consulta.mostrar("HACIENDA\REPORTES\DeudaContribuyente", parametros, dtab)
+                consulta.ShowDialog()
+            End Using
         End Sub
 
     End Class

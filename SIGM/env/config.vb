@@ -213,19 +213,20 @@
         'No elimina registros
         'Genera log de acciones sobre bd de destino
 
-        Dim visor As New genDataVisor
-        visor.LoadDtab(DbMan.readTableSchema())
-		visor.ShowDialog()
-		Dim sourceTables As DataTable = DbMan.readTableSchema()
-		Dim destTables As DataTable = DbMan.readTableSchema()
-		For Each dr As DataRow In destTables.Rows
-			If dr("TABLE_TYPE") = "TABLE" Then
-				destTables.Rows.Find(dr("TABLE_NAME"))
-                'TODO
+        Using visor As New genDataVisor
+            visor.LoadDtab(DbMan.readTableSchema())
+            visor.ShowDialog()
+            Dim sourceTables As DataTable = DbMan.readTableSchema()
+            Dim destTables As DataTable = DbMan.readTableSchema()
+            For Each dr As DataRow In destTables.Rows
+                If dr("TABLE_TYPE") = "TABLE" Then
+                    destTables.Rows.Find(dr("TABLE_NAME"))
+                    'TODO
 
-            End If
-		Next
-	End Sub
+                End If
+            Next
+        End Using
+    End Sub
 
 	Private Sub DetectarCambios(sender As Object, e As EventArgs)
 

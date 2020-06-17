@@ -7,12 +7,15 @@
 								" WHERE per_domicilio.principal=True"
 
     Shared Function Seleccionar(ParentForm As Form, Optional vista As String = "PERSONA") As BindingSource
-		Dim SeleccionarPersona As New BusquedaPersona(True) With {.Owner = ParentForm}
+		Dim bs As New BindingSource
+		Using SeleccionarPersona As New BusquedaPersona(True) With {.Owner = ParentForm}
 
-		SeleccionarPersona.genSearchControl1.vista.Text = vista
-		SeleccionarPersona.ShowDialog()
-		Return SeleccionarPersona.bs_resultado
-    End Function
+			SeleccionarPersona.genSearchControl1.vista.Text = vista
+			SeleccionarPersona.ShowDialog()
+			bs = SeleccionarPersona.bs_resultado
+		End Using
+		Return bs
+	End Function
 
     Shared Function Buscar(difunto As Boolean, fisica As Boolean) As DataTable
         Dim sql(1) As String
@@ -106,8 +109,9 @@
 		End If
 
 		If msg.Count > 0 Then
-			Dim errormsg As New visor_error("Error al eliminar persona", msg)
-			errormsg.ShowDialog()
+			Using errormsg As New visor_error("Error al eliminar persona", msg)
+				errormsg.ShowDialog()
+			End Using
 			Return False
 		Else
             'documentos
@@ -125,14 +129,15 @@
 			End If
 			msg.Add("Desea continuar?")
 
-			Dim errormsg As New visor_error("Eliminar persona", msg)
-            If errormsg.ShowDialog() = DialogResult.Ignore Then
-                DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE FROM per_documento WHERE per_id=" & persona_id)
-                DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE FROM persona WHERE id=" & persona_id)
-                Return True
-            Else
-                Return False
-			End If
+			Using errormsg As New visor_error("Eliminar persona", msg)
+				If errormsg.ShowDialog() = DialogResult.Ignore Then
+					DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE FROM per_documento WHERE per_id=" & persona_id)
+					DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE FROM persona WHERE id=" & persona_id)
+					Return True
+				Else
+					Return False
+				End If
+			End Using
 		End If
 	End Function
 

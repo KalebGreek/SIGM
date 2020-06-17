@@ -90,10 +90,10 @@ Public Class BusquedaComercio
                 dtab(0) = CtrlMan.BindingSourceListToDataTable(bs_resultado)
                 parametros = ParametrosReporte.TableToReport(dtab(0), ControlBusqueda1.vista.Text, parametros)
 
-                Dim vr As New VisorReporte(ControlBusqueda1.vista.Text)
-                vr.mostrar("reportes\PrintTable", parametros, dtab)
-                vr.ShowDialog(Me)
-                vr.Dispose()
+                Using vr As New VisorReporte(ControlBusqueda1.vista.Text)
+                    vr.mostrar("reportes\PrintTable", parametros, dtab)
+                    vr.ShowDialog(Me)
+                End Using
             End If
         End If
 

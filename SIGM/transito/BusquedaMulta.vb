@@ -58,10 +58,10 @@
         ElseIf sender Is resultado Then
             If bs_resultado.Position > -1 Then
                 If e.KeyValue = Keys.F2 Then
-                    Dim modMulta1 As New ModMulta
-                    modMulta1.boleta.Text = bs_resultado.Current("boleta")
-                    modMulta1.ShowDialog(Me)
-
+                    Using modMulta1 As New ModMulta
+                        modMulta1.boleta.Text = bs_resultado.Current("boleta")
+                        modMulta1.ShowDialog(Me)
+                    End Using
                 ElseIf e.KeyValue = Keys.Delete Then
                     If MsgBoxResult.Yes = MsgBox("Desea eliminar la multa N° " & bs_resultado.Current("boleta") & "?",
                                                  "Eliminar Multa", MsgBoxStyle.YesNo) Then

@@ -118,10 +118,9 @@
         ElseIf sender Is resultado Then
             If e.KeyValue = Keys.F2 Then
                 If resultado.DataSource.Position > -1 Then
-                    Dim mper As New ModPersona(resultado.DataSource.Current("persona_id")) _
-                            With {.Owner = Me}
-                    mper.ShowDialog()
-                    mper.Dispose()
+                    Using mper As New ModPersona(resultado.DataSource.Current("persona_id")) With {.Owner = Me}
+                        mper.ShowDialog()
+                    End Using
                     genSearchControl1.search.PerformClick()
                 End If
             ElseIf e.KeyValue = Keys.Delete Then

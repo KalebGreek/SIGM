@@ -208,14 +208,15 @@ Public Class ModExpediente
                                               End Function)
 
         If valido > -1 Then
-            Dim ver_error As New visor_error("Errores en Expediente", msg)
-            Dim answer As DialogResult = ver_error.ShowDialog(Me)
-            ver_error.Dispose()
-            If answer = DialogResult.OK Then
-                Return MsgBoxResult.No
-            Else
-                Return MsgBoxResult.Cancel
-            End If
+            Using ver_error As New visor_error("Errores en Expediente", msg)
+                Dim answer As DialogResult = ver_error.ShowDialog(Me)
+
+                If answer = DialogResult.OK Then
+                    Return MsgBoxResult.No
+                Else
+                    Return MsgBoxResult.Cancel
+                End If
+            End Using
         Else
             Return MsgBoxResult.Yes
         End If
@@ -354,28 +355,8 @@ Public Class ModExpediente
         End With
     End Sub
     Private Sub add_inmueble_Click(sender As Object, e As EventArgs) Handles add_inmueble.Click
-        Dim agregar_inmueble As New ModInmueble(opr_id.Text)
-        With agregar_inmueble
-            .ShowDialog(Me)
-            .Dispose()
-            'Recargar
-            bs_catastro.Filter = ""
-            bs_catastro.Sort = ""
-            bs_catastro.Position = -1
-            bs_catastro.DataSource = Catastro.ListarInmueblePorExpediente(expediente.Text)
-            CtrlMan.DataGridViewTools.Load(consulta_inmueble, bs_catastro)
-        End With
-    End Sub
-    Private Sub mod_inmueble_Click(sender As Object, e As EventArgs) Handles mod_inmueble.Click
-        Dim agregar_inmueble As New ModInmueble(opr_id.Text)
-        With agregar_inmueble
-            If bs_catastro.Position > -1 Then 'Modificar
-                .zona.Value = bs_catastro.Current("zona")
-                .circ.Value = bs_catastro.Current("circ")
-                .secc.Value = bs_catastro.Current("secc")
-                .manz.Value = bs_catastro.Current("manz")
-                .parc.Value = bs_catastro.Current("parc")
-                .lote.Value = bs_catastro.Current("lote")
+        Using agregar_inmueble As New ModInmueble(opr_id.Text)
+            With agregar_inmueble
                 .ShowDialog(Me)
                 .Dispose()
                 'Recargar
@@ -384,8 +365,30 @@ Public Class ModExpediente
                 bs_catastro.Position = -1
                 bs_catastro.DataSource = Catastro.ListarInmueblePorExpediente(expediente.Text)
                 CtrlMan.DataGridViewTools.Load(consulta_inmueble, bs_catastro)
-            End If
-        End With
+            End With
+        End Using
+    End Sub
+    Private Sub mod_inmueble_Click(sender As Object, e As EventArgs) Handles mod_inmueble.Click
+        Using agregar_inmueble As New ModInmueble(opr_id.Text)
+            With agregar_inmueble
+                If bs_catastro.Position > -1 Then 'Modificar
+                    .zona.Value = bs_catastro.Current("zona")
+                    .circ.Value = bs_catastro.Current("circ")
+                    .secc.Value = bs_catastro.Current("secc")
+                    .manz.Value = bs_catastro.Current("manz")
+                    .parc.Value = bs_catastro.Current("parc")
+                    .lote.Value = bs_catastro.Current("lote")
+                    .ShowDialog(Me)
+                    .Dispose()
+                    'Recargar
+                    bs_catastro.Filter = ""
+                    bs_catastro.Sort = ""
+                    bs_catastro.Position = -1
+                    bs_catastro.DataSource = Catastro.ListarInmueblePorExpediente(expediente.Text)
+                    CtrlMan.DataGridViewTools.Load(consulta_inmueble, bs_catastro)
+                End If
+            End With
+        End Using
     End Sub
     Private Sub del_inmueble_Click(sender As Object, e As EventArgs) Handles del_inmueble.Click
         With bs_catastro
@@ -413,16 +416,18 @@ Public Class ModExpediente
         If temporal.Visible Then
             MsgBox("No se pueden agregar deudas a un expediente temporal.")
         Else
-            Dim deudas As New ModPago(opr_id.Text, True)
-            deudas.ShowDialog()
+            Using deudas As New ModPago(opr_id.Text, True)
+                deudas.ShowDialog()
+            End Using
         End If
     End Sub
     Private Sub AgregarPagoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AgregarPagoToolStripMenuItem.Click
         If temporal.Visible Then
             MsgBox("No se pueden agregar pagos a un expediente temporal.")
         Else
-            Dim pagos As New ModPago(opr_id.Text, False)
-            pagos.ShowDialog()
+            Using pagos As New ModPago(opr_id.Text, False)
+                pagos.ShowDialog()
+            End Using
         End If
     End Sub
     '###### END VALIDATION ######################################################################################
@@ -445,14 +450,15 @@ Public Class ModExpediente
             parametros = ParametrosReporte.ObrasPrivadas.ListarInmuebles(parametros, bs_catastro)
 
             'Crear informe
-            Dim formEXP As New VisorReporte("Caratula de Expediente")
-            With formEXP
-                .mostrar("OPRIVADAS\REPORTES\CAR", parametros)
-                .ShowDialog()
-                .Dispose()
-            End With
+            Using formEXP As New VisorReporte("Caratula de Expediente")
+                With formEXP
+                    .mostrar("OPRIVADAS\REPORTES\CAR", parametros)
+                    .ShowDialog()
+                End With
+            End Using
         End If
     End Sub
+
     Private Sub CopiaDeExpedienteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopiaDeExpedienteToolStripMenuItem.Click
         If temporal.Visible Then
             MsgBox("Debe completar este expediente para imprimirlo.")
@@ -477,12 +483,13 @@ Public Class ModExpediente
             parametros = ParametrosReporte.ObrasPrivadas.ListarInmuebles(parametros, bs_catastro)
 
             'Crear informe
-            Dim formEXP As New VisorReporte("Resumen de Expediente")
-            With formEXP
-                .mostrar("OPRIVADAS\REPORTES\EXP", parametros)
-                .ShowDialog()
-                .Dispose()
-            End With
+            Using formEXP As New VisorReporte("Resumen de Expediente")
+                With formEXP
+                    .mostrar("OPRIVADAS\REPORTES\EXP", parametros)
+                    .ShowDialog()
+                    .Dispose()
+                End With
+            End Using
         End If
     End Sub
 

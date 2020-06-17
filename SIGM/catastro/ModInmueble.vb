@@ -268,9 +268,9 @@
         End If
 
         If valido = False Then
-            Dim error_form As New visor_error("Errores en Inmueble", msg)
-            dr = error_form.ShowDialog(Me)
-            error_form.Dispose()
+            Using error_form As New visor_error("Errores en Inmueble", msg)
+                dr = error_form.ShowDialog(Me)
+            End Using
         End If
         Return dr
     End Function
@@ -373,15 +373,15 @@
     ' FRENTES
     Private Sub frente_click_events(sender As Object, e As EventArgs) Handles add_frente.Click, del_frente.Click, ubicacion_principal.Click
         If sender Is add_frente Then
-            Dim agregar_frente As New AgregarFrente
-            With agregar_frente
-                .ShowDialog(Me)
-                If .calle.Text <> "" Then
-                    Catastro.Agregar.Frente(catastro_id.Text, .calle.Text, .altura.Value, .metros.Value)
-                    ubicacion_principal.PerformClick()
-                End If
-                .Dispose()
-            End With
+            Using agregar_frente As New AgregarFrente
+                With agregar_frente
+                    .ShowDialog(Me)
+                    If .calle.Text <> "" Then
+                        Catastro.Agregar.Frente(catastro_id.Text, .calle.Text, .altura.Value, .metros.Value)
+                        ubicacion_principal.PerformClick()
+                    End If
+                End With
+            End Using
         ElseIf bs_frente.Position > -1 Then
             If sender Is ubicacion_principal Then
                 Catastro.Modificar.Ubicacion(bs_frente, catastro_id.Text)

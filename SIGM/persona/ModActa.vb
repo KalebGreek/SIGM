@@ -83,14 +83,15 @@
 												  Return value(0) = "("
 											  End Function)
 		If valido > -1 Then
-			Dim ver_error As New visor_error("Errores en Acta", msg)
-			Dim answer As DialogResult = ver_error.ShowDialog(Me)
-			ver_error.Dispose()
-			If answer = DialogResult.OK Then
-				Return MsgBoxResult.No
-			Else
-				Return MsgBoxResult.Cancel
-			End If
+			Using ver_error As New visor_error("Errores en Acta", msg)
+				Dim answer As DialogResult = ver_error.ShowDialog(Me)
+
+				If answer = DialogResult.OK Then
+					Return MsgBoxResult.No
+				Else
+					Return MsgBoxResult.Cancel
+				End If
+			End Using
 		Else
 			Return MsgBoxResult.Yes
 		End If

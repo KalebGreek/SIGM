@@ -41,9 +41,10 @@
 		ElseIf sender Is resultado Then
 			If e.KeyValue = Keys.F2 Then
 				If resultado.DataSource.Position > -1 Then
-					'Dim mnp As New ModNotaPedido
+					'using mnp As New ModNotaPedido
 					'mnp.cargar(resultado.DataSource.Current("nota_pedido_id"))
 					'mnp.ShowDialog()
+					'end using
 					ControlBusqueda1.search.PerformClick()
 				End If
 			ElseIf e.KeyValue = Keys.Delete Then

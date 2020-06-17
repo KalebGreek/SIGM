@@ -60,8 +60,9 @@
         If sender Is resultado Then
             If e.KeyValue = Keys.F2 Then
                 If resultado.DataSource.Position > -1 Then
-                    Dim mexp As New ModExpediente(resultado.DataSource.Current("expediente"))
-                    mexp.ShowDialog()
+                    Using mexp As New ModExpediente(resultado.DataSource.Current("expediente"))
+                        mexp.ShowDialog()
+                    End Using
                     ControlBusqueda1.search.PerformClick()
                 End If
             ElseIf e.KeyValue = Keys.Delete Then 'No implementado

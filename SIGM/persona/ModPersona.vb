@@ -52,9 +52,9 @@ Public Class ModPersona
 	'###### MODIFICAR ##########################################################################################
 	Private Sub ModActas_Click(sender As Object, e As EventArgs)
 		If PersonaId > 0 Then
-			Dim visor_acta As New ModActa(PersonaId)
-			visor_acta.ShowDialog(Me)
-			visor_acta.Dispose()
+			Using visor_acta As New ModActa(PersonaId)
+				visor_acta.ShowDialog(Me)
+			End Using
 		Else
 			MsgBox("Debe guardar el registro de la persona antes de continuar.")
 		End If

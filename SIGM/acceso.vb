@@ -59,7 +59,9 @@ Public Class acceso
         If My.Settings.UserId > 0 Then 'Iniciar sesión
             If RegisterLogon(My.Settings.UserId, True) Then
                 Me.Hide()
-                Privileges(My.Settings.UserId).ShowDialog() 'Mostrar inicio
+                Using inicio As launcher = Privileges(My.Settings.UserId) 'Mostrar inicio
+                    inicio.ShowDialog()
+                End Using
                 Me.Show()
                 RegisterLogon(My.Settings.UserId, False) 'Cerrar Sesión
             End If

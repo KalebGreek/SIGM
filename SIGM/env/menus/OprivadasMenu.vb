@@ -8,12 +8,11 @@
 	'OBRAS PRIVADAS
 	'Expedientes
 	Private Sub NuevoExpedienteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevoExpedienteToolStripMenuItem.Click
-		Dim NuevoExp As New ModExpediente()
-		If NuevoExp.dtab_exp Is Nothing Then
-			NuevoExp.Dispose()
-		Else
-			NuevoExp.ShowDialog()
-		End If
+		Using NuevoExp As New ModExpediente()
+			If NuevoExp.dtab_exp Is Nothing = False Then
+				NuevoExp.ShowDialog()
+			End If
+		End Using
 	End Sub
 	Private Sub BuscarExpedienteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarExpedienteToolStripMenuItem.Click
 		Dim buscar1 As New BusquedaExpediente With {.MdiParent = Me.Parent}

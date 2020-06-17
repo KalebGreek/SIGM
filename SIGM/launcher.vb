@@ -17,43 +17,45 @@
         My.Settings.CurrentMenuColor = CType(sender, Button).BackColor.ToArgb
 
         If sender Is opcion Then
-            config.ShowDialog()
+            Using config_dialog As New config
+                config_dialog.ShowDialog()
+            End Using
         Else
             Dim form1 As New Form
             If sender Is l_formularios Then
-                form1 = New VisorReporte(sender.Text)
-                CType(form1, VisorReporte).FormulariosToolStripMenuItem1.Visible = True
-            ElseIf sender Is l_contrato Then
-                form1 = New ConsultaContrato
-            Else
-                Dim menu1 As New UserControl
-                If sender Is l_accionsocial Then
-                    menu1 = New AccionSocialMenu
-                ElseIf sender Is l_catastro Then
-                    menu1 = New CatastroMenu
-                ElseIf sender Is l_comercio Then
-                    menu1 = New ComercioMenu
-                ElseIf sender Is l_gobierno Then
-                    menu1 = New GobiernoMenu
-                ElseIf sender Is l_hacienda Then
-                    menu1 = New HaciendaMenu
-                ElseIf sender Is l_oprivadas Then
-                    menu1 = New OprivadasMenu
-                ElseIf sender Is l_opublicas Then
-                    menu1 = New OpublicasMenu
-                ElseIf sender Is l_persona Then
-                    menu1 = New PersonaMenu
-                ElseIf sender Is l_transito Then
-                    menu1 = New TransitoMenu
-                End If
+                    form1 = New VisorReporte(sender.Text)
+                    CType(form1, VisorReporte).FormulariosToolStripMenuItem1.Visible = True
+                ElseIf sender Is l_contrato Then
+                    form1 = New ConsultaContrato
+                Else
+                    Dim menu1 As New UserControl
+                    If sender Is l_accionsocial Then
+                        menu1 = New AccionSocialMenu
+                    ElseIf sender Is l_catastro Then
+                        menu1 = New CatastroMenu
+                    ElseIf sender Is l_comercio Then
+                        menu1 = New ComercioMenu
+                    ElseIf sender Is l_gobierno Then
+                        menu1 = New GobiernoMenu
+                    ElseIf sender Is l_hacienda Then
+                        menu1 = New HaciendaMenu
+                    ElseIf sender Is l_oprivadas Then
+                        menu1 = New OprivadasMenu
+                    ElseIf sender Is l_opublicas Then
+                        menu1 = New OpublicasMenu
+                    ElseIf sender Is l_persona Then
+                        menu1 = New PersonaMenu
+                    ElseIf sender Is l_transito Then
+                        menu1 = New TransitoMenu
+                    End If
 
-                form1 = New MainForm(menu1)
-            End If
-            Me.Hide()
+                    form1 = New MainForm(menu1)
+                End If
+                Me.Hide()
             form1.Text = sender.Text & " | SIGM Villa de Las Rosas"
-            form1.ShowDialog(Me)
-            form1.Dispose()
-            GC.Collect()
+            Using form1
+                form1.ShowDialog(Me)
+            End Using
             Me.Show()
             Me.Focus()
         End If

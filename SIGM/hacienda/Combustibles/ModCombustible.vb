@@ -62,24 +62,24 @@
     End Sub
 
     Private Sub NewReceptor_Click(sender As Object, e As EventArgs) Handles NewReceptor.Click
-        Dim NewRec As New ModCombustibleReceptor
-        NewRec.ShowDialog(Me)
-        FillReceptor()
-        If NewRec.receptor_id.Text > 0 Then
-            receptor.SelectedValue = NewRec.receptor_id.Text
-        End If
-        NewRec.Dispose()
+        Using NewRec As New ModCombustibleReceptor
+            NewRec.ShowDialog(Me)
+            FillReceptor()
+            If NewRec.receptor_id.Text > 0 Then
+                receptor.SelectedValue = NewRec.receptor_id.Text
+            End If
+        End Using
     End Sub
     Private Sub EditReceptor_Click(sender As Object, e As EventArgs) Handles EditReceptor.Click
         If bs_receptor.Position > -1 Then
-            Dim EditRec As New ModCombustibleReceptor
-            EditRec.LoadReceptor(bs_receptor.Current("receptor_id"))
-            EditRec.ShowDialog(Me)
-            FillReceptor()
-            If EditRec.receptor_id.Text > 0 Then
-                receptor.SelectedValue = EditRec.receptor_id.Text
-            End If
-            EditRec.Dispose()
+            Using EditRec As New ModCombustibleReceptor
+                EditRec.LoadReceptor(bs_receptor.Current("receptor_id"))
+                EditRec.ShowDialog(Me)
+                FillReceptor()
+                If EditRec.receptor_id.Text > 0 Then
+                    receptor.SelectedValue = EditRec.receptor_id.Text
+                End If
+            End Using
         End If
     End Sub
     Private Sub DelReceptor_Click(sender As Object, e As EventArgs) Handles DelReceptor.Click
@@ -102,16 +102,16 @@
 
     Private Sub AddTicket_Click(sender As Object, e As EventArgs) Handles AddTicket.Click, EditTicket.Click
         If bs_receptor.Position > -1 Then
-            Dim AddModTicket As New ModCombustibleTicket()
-            If sender Is EditTicket And bs_historial.Position > -1 Then
-                AddModTicket.titulo.Text = "MODIFICAR TICKET"
-                AddModTicket.LoadTicket(bs_historial.Current("ticket_id"))
-                AddModTicket.ShowDialog(Me)
-            ElseIf sender Is AddTicket Then
-                AddModTicket.NewTicket(bs_receptor.Current("receptor_id"))
-                AddModTicket.ShowDialog(Me)
-            End If
-            AddModTicket.Dispose()
+            Using AddModTicket As New ModCombustibleTicket()
+                If sender Is EditTicket And bs_historial.Position > -1 Then
+                    AddModTicket.titulo.Text = "MODIFICAR TICKET"
+                    AddModTicket.LoadTicket(bs_historial.Current("ticket_id"))
+                    AddModTicket.ShowDialog(Me)
+                ElseIf sender Is AddTicket Then
+                    AddModTicket.NewTicket(bs_receptor.Current("receptor_id"))
+                    AddModTicket.ShowDialog(Me)
+                End If
+            End Using
         End If
         CtrlMan.DataGridViewTools.Load(historial, bs_historial, Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
     End Sub
