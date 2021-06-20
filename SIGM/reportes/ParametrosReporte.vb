@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.Reporting.WinForms
-Public Class ParametrosReporte
+Imports System.Collections.Generic
+Class ParametrosReporte
 
     'Genericos 
     Shared Function TableToReport(dtab As DataTable, titulo As String, parametros As List(Of ReportParameter)) As List(Of ReportParameter)
@@ -36,14 +37,14 @@ Public Class ParametrosReporte
         End With
         Return parametros
     End Function
-    Shared Function Contacto(dr As DataRow, parametros As Generic.List(Of ReportParameter)) As List(Of ReportParameter)
+    Shared Function Contacto(dr As DataRow, parametros As List(Of ReportParameter)) As List(Of ReportParameter)
         With parametros
             .Add(New ReportParameter("telefono", dr("telefono").ToString))
             .Add(New ReportParameter("email", dr("email").ToString))
         End With
         Return parametros
     End Function
-    Shared Function Inmueble(dr As DataRow, parametros As Generic.List(Of ReportParameter)) As List(Of ReportParameter)
+    Shared Function Inmueble(dr As DataRow, parametros As List(Of ReportParameter)) As List(Of ReportParameter)
         With parametros
             .Add(New ReportParameter("Catastro", dr("catastro").ToString))
             .Add(New ReportParameter("UbicacionInmueble", dr("ubicacion").ToString))
@@ -54,7 +55,7 @@ Public Class ParametrosReporte
     End Function
 
     'Exclusivos
-    Shared Function Agua(dr As DataRow, parametros As Generic.List(Of ReportParameter)) As List(Of ReportParameter)
+    Shared Function Agua(dr As DataRow, parametros As List(Of ReportParameter)) As List(Of ReportParameter)
         With parametros
             'Persona
             .Add(New ReportParameter("Razon", dr("razon").ToString))
@@ -65,16 +66,16 @@ Public Class ParametrosReporte
             .Add(New ReportParameter("Postal", dr("postal").ToString))
             'Servicio
             .Add(New ReportParameter("Cuenta", dr("codigo").ToString))
-            Dim alta As Date = dr("alta")
+            Dim alta As Date = CDate(dr("alta"))
             .Add(New ReportParameter("Alta", alta.ToShortDateString))
             .Add(New ReportParameter("Catastro", dr("catastro").ToString))
             .Add(New ReportParameter("UbicacionInmueble", dr("ubicacion").ToString))
             .Add(New ReportParameter("LocalidadInmueble", dr("reparto").ToString))
 
             Dim TipoServicio As String
-            If dr("potable") = 1 Then
+            If CInt(dr("potable")) = 1 Then
                 TipoServicio = "DOMICILIARIO"
-            ElseIf dr("comercial") = 1 Then
+            ElseIf CInt(dr("comercial")) = 1 Then
                 TipoServicio = "COMERCIAL"
             Else
                 TipoServicio = "INDUSTRIAL"
@@ -84,7 +85,7 @@ Public Class ParametrosReporte
         End With
         Return parametros
     End Function
-    Shared Function Automotor(dr As DataRow, parametros As Generic.List(Of ReportParameter), SinBaja As Boolean) As List(Of ReportParameter)
+    Shared Function Automotor(dr As DataRow, parametros As List(Of ReportParameter), SinBaja As Boolean) As List(Of ReportParameter)
         With parametros
             If SinBaja Then
                 .Add(New ReportParameter("TITULO", "CERTIFICADO DE LIBRE DEUDA DE IMPUESTO AL AUTOMOTOR"))
@@ -101,8 +102,8 @@ Public Class ParametrosReporte
             'Rodado
             .Add(New ReportParameter("Cuenta", dr("codigo").ToString))
             Dim alta, baja As Date
-            alta = dr("incorpora")
-            baja = dr("baja")
+            alta = CDate(dr("incorpora"))
+            baja = CDate(dr("baja"))
             .Add(New ReportParameter("Alta", alta.ToShortDateString))
             .Add(New ReportParameter("Baja", baja.ToShortDateString))
             .Add(New ReportParameter("Modelo", dr("modelo").ToString))
@@ -117,7 +118,7 @@ Public Class ParametrosReporte
         End With
         Return parametros
     End Function
-    Shared Function Catastro(dr As DataRow, parametros As Generic.List(Of ReportParameter)) As List(Of ReportParameter)
+    Shared Function Catastro(dr As DataRow, parametros As List(Of ReportParameter)) As List(Of ReportParameter)
         With parametros
             'Persona
             .Add(New ReportParameter("Razon", dr("razon").ToString))
@@ -129,7 +130,7 @@ Public Class ParametrosReporte
             .Add(New ReportParameter("Postal", dr("postal").ToString))
             'Servicio
             .Add(New ReportParameter("Cuenta", dr("codigo").ToString))
-            Dim alta As Date = dr("alta")
+            Dim alta As Date = CDate(dr("alta"))
             .Add(New ReportParameter("Alta", alta.ToShortDateString))
             .Add(New ReportParameter("Catastro", dr("catastro").ToString))
             .Add(New ReportParameter("UbicacionInmueble", dr("ubicacion").ToString))
@@ -139,12 +140,12 @@ Public Class ParametrosReporte
             .Add(New ReportParameter("Frente4", dr("frente4").ToString))
 
             Dim jubilado, baldio As String
-            If dr("jubilado") = 1 Then
+            If CInt(dr("jubilado")) = 1 Then
                 jubilado = "SI"
             Else
                 jubilado = "NO"
             End If
-            If dr("baldio") = 1 Then
+            If CInt(dr("baldio")) = 1 Then
                 baldio = "SI"
             Else
                 baldio = "NO"
@@ -154,7 +155,7 @@ Public Class ParametrosReporte
         End With
         Return parametros
     End Function
-    Shared Function Cementerio(dr As DataRow, parametros As Generic.List(Of ReportParameter)) As List(Of ReportParameter)
+    Shared Function Cementerio(dr As DataRow, parametros As List(Of ReportParameter)) As List(Of ReportParameter)
         With parametros
             'Persona
             .Add(New ReportParameter("Razon", dr("razon").ToString))
@@ -164,7 +165,7 @@ Public Class ParametrosReporte
             .Add(New ReportParameter("Provincia", dr("provincia").ToString))
             .Add(New ReportParameter("Postal", dr("postal").ToString))
             .Add(New ReportParameter("Cuenta", dr("codigo").ToString))
-            Dim alta As Date = dr("alta")
+            Dim alta As Date = CDate(dr("alta"))
             .Add(New ReportParameter("Alta", alta.ToShortDateString))
             .Add(New ReportParameter("Tipo", dr("tipo").ToString))
             .Add(New ReportParameter("Ubicacion", dr("ubicacion").ToString))
@@ -185,7 +186,7 @@ Public Class ParametrosReporte
             .Add(New ReportParameter("Difunto10", dr("difunto10").ToString))
 
             Dim jubilado As String
-            If dr("jubilado") = 1 Then
+            If CInt(dr("jubilado")) = 1 Then
                 jubilado = "SI"
             Else
                 jubilado = "NO"
@@ -195,7 +196,7 @@ Public Class ParametrosReporte
         End With
         Return parametros
     End Function
-    Shared Function Comercio(dr As DataRow, parametros As Generic.List(Of ReportParameter)) As List(Of ReportParameter)
+    Shared Function Comercio(dr As DataRow, parametros As List(Of ReportParameter)) As List(Of ReportParameter)
         With parametros
             'Persona
             .Add(New ReportParameter("Razon", dr("razon").ToString))
@@ -207,8 +208,8 @@ Public Class ParametrosReporte
             .Add(New ReportParameter("Cuit", dr("docume").ToString))
             .Add(New ReportParameter("Brutos", dr("brutos").ToString))
             Dim alta, baja As Date
-            alta = dr("inscripto")
-            baja = dr("baja")
+            alta = CDate(dr("inscripto"))
+            baja = CDate(dr("baja"))
             .Add(New ReportParameter("Alta", alta.ToShortDateString))
             .Add(New ReportParameter("Baja", baja.ToShortDateString))
             .Add(New ReportParameter("Acta", dr("acta").ToString))
@@ -286,7 +287,7 @@ Public Class ParametrosReporte
             End With
             Return parametros
         End Function
-        Shared Function DetalleAuto(parametros As Generic.List(Of ReportParameter), OpcionBaja As Integer, FechaBaja As DateTimePicker) As List(Of ReportParameter)
+        Shared Function DetalleAuto(parametros As List(Of ReportParameter), OpcionBaja As Integer, FechaBaja As DateTimePicker) As List(Of ReportParameter)
 
             Dim DetalleBaja As String = ""
             Dim DetalleVencimiento As String = ""
@@ -311,7 +312,7 @@ Public Class ParametrosReporte
 
     'Intimaciones
     Public Class Intimaciones
-        Shared Function DetalleIntimacion(parametros As Generic.List(Of ReportParameter), servicio As String, codigo As Integer,
+        Shared Function DetalleIntimacion(parametros As List(Of ReportParameter), servicio As String, codigo As Integer,
                                           aviso As Integer, titular As String, tenedor As String, direccion As String,
                                           fecha As Date) As List(Of ReportParameter)
 
@@ -362,7 +363,7 @@ Public Class ParametrosReporte
 
     'OPRIVADAS
     Public Class ObrasPrivadas
-        Shared Function BaseExpediente(parametros As Generic.List(Of ReportParameter),
+        Shared Function BaseExpediente(parametros As List(Of ReportParameter),
                                    expediente As String, fecha As Date, tarea As String) As List(Of ReportParameter)
 
             expediente = Strings.Left(expediente, 4) & " - " & Strings.Right(expediente, 4)
@@ -375,7 +376,7 @@ Public Class ParametrosReporte
 
             Return parametros
         End Function
-        Shared Function DetalleExpediente(parametros As Generic.List(Of ReportParameter),
+        Shared Function DetalleExpediente(parametros As List(Of ReportParameter),
                                       profesional As String, recibido As String,
                                       observacion As String, visado As Boolean,
                                       finalizado As Boolean, final As Date) As List(Of ReportParameter)
@@ -404,7 +405,7 @@ Public Class ParametrosReporte
         End Function
 
         'Modulos
-        Shared Function ListarResponsables(parametros As Generic.List(Of ReportParameter),
+        Shared Function ListarResponsables(parametros As List(Of ReportParameter),
                                        registro As BindingSource) As List(Of ReportParameter)
             Dim responsable As String = ""
             Dim cuil As String = ""
@@ -422,8 +423,8 @@ Public Class ParametrosReporte
                     difunto = "NO"
                 End If
 
-                responsable += fila + 1 & ") " & registro.Current("razon") & System.Environment.NewLine &
-                           "CUIL: " & cuil & " | Difunto: " & difunto & System.Environment.NewLine
+                responsable += CStr(fila + 1) & ") " & registro.Current("razon").ToString & System.Environment.NewLine &
+                           "CUIL: " & CStr(cuil) & " | Difunto: " & difunto & System.Environment.NewLine
 
             Next
 
@@ -433,17 +434,17 @@ Public Class ParametrosReporte
 
             Return parametros
         End Function
-        Shared Function ListarInmuebles(parametros As Generic.List(Of ReportParameter),
+        Shared Function ListarInmuebles(parametros As List(Of ReportParameter),
                                     registro As BindingSource) As List(Of ReportParameter)
             Dim inmueble As String = ""
             With registro
                 For fila As Integer = 0 To .Count - 1
                     .Position = fila
-                    inmueble += fila + 1 & ") Partida: " &
-                           " Z" & .Current("zona") & " C" & .Current("circ") & " S" & .Current("secc") &
-                           " M" & .Current("manz") & " P" & .Current("parc") & " L" & .Current("lote") &
+                    inmueble += CStr(fila + 1) & ") Partida: " &
+                           " Z" & .Current("zona").ToString & " C" & .Current("circ").ToString & " S" & .Current("secc").ToString &
+                           " M" & .Current("manz").ToString & " P" & .Current("parc").ToString & " L" & .Current("lote").ToString &
                             System.Environment.NewLine &
-                           " Ubicacion: " & .Current("calle") & " " & .Current("altura") & ", " & .Current("barrio") &
+                           " Ubicacion: " & .Current("calle").ToString & " " & .Current("altura").ToString & ", " & .Current("barrio").ToString &
                             System.Environment.NewLine
                 Next
             End With
@@ -464,10 +465,10 @@ Public Class ParametrosReporte
             dtab(0) = CtrlMan.BindingSourceListToDataTable(bs)
             'Ahora hay que crear los datasets en Access para que hagan de plantilla para cada consulta
             'revisar screenshots de cada impuesto
-            Using consulta As New VisorReporte("Consulta Deuda Contribuyente")
+            Using consulta As New Formularios("Consulta Deuda Contribuyente")
 
                 parametros = ParametrosReporte.TableToReport(dtab(0), "Deuda Contribuyente", parametros)
-                consulta.mostrar("HACIENDA\REPORTES\DeudaContribuyente", parametros, dtab)
+                consulta.Mostrar("REPORTES\HACIENDA\DeudaContribuyente", parametros, dtab)
                 consulta.ShowDialog()
             End Using
         End Sub

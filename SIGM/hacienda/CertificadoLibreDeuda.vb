@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.Reporting.WinForms
-Public Class CertificadoLibreDeuda
-    Public registro As DataTable
-    Public DetalleVencimiento As String
+Class CertificadoLibreDeuda
+    'Public registro As DataTable
+    'Dim DetalleVencimiento As String
 
     'Routines
     Public Function ConsultarCuenta(tipo As String, cuenta As Integer) As DataTable
@@ -65,13 +65,11 @@ Public Class CertificadoLibreDeuda
         GrupoFecha.Visible = False
         razon.Text = ""
         If Cuenta.Value > 0 Then
-            registro = ConsultarCuenta(servicio.Text, Cuenta.Value)
-            If registro Is Nothing = False Then
-                If registro.Rows.Count > 0 Then
-                    Cuenta.BackColor = Color.White
-                    GrupoFecha.Visible = True
-                    razon.Text = registro(0)("razon")
-                End If
+            bs_registro.DataSource = ConsultarCuenta(servicio.Text, Cuenta.Value)
+            If bs_registro.Position > -1 Then
+                Cuenta.BackColor = Color.White
+                GrupoFecha.Visible = True
+                razon.Text = bs_registro.Current("razon")
             End If
         End If
         GrupoCuenta.Enabled = GrupoFecha.Visible.CompareTo(True)
@@ -105,8 +103,8 @@ Public Class CertificadoLibreDeuda
         End If
     End Sub
 
-    Private Sub Crear_Click(sender As Object, e As EventArgs) Handles Crear.Click
-        If registro Is Nothing = False Then
+    Public Sub CrearClick(sender As Object, e As EventArgs) Handles Crear.Click
+        If bs_registro.Position > -1 Then
             Dim ReportType As String = ""
             Dim parametros As New Generic.List(Of ReportParameter)
             parametros = ParametrosReporte.LibreDeuda.DetalleVencimiento(parametros, Creado, Vence, OpcionExento.Checked,
@@ -114,11 +112,11 @@ Public Class CertificadoLibreDeuda
             With servicio.Text
                 If servicio.Text.Contains("AGUA") Then
                     ReportType = "REPORTES\HACIENDA\LibreDeudaAgua"
-                    parametros = ParametrosReporte.Agua(registro(0), parametros)
+                    parametros = ParametrosReporte.Agua(bs_registro.DataSource(0), parametros)
 
                 ElseIf servicio.Text.Contains("AUTO") Then
                     ReportType = "REPORTES\HACIENDA\LibreDeudaAuto"
-                    parametros = ParametrosReporte.Automotor(registro(0), parametros, SinBaja.Checked)
+                    parametros = ParametrosReporte.Automotor(bs_registro.DataSource(0), parametros, SinBaja.Checked)
 
                     Dim OpcionBaja As Integer
                     If BajaRadicacion.Checked Then
@@ -133,20 +131,20 @@ Public Class CertificadoLibreDeuda
 
                 ElseIf servicio.Text.Contains("CATA") Then
                     ReportType = "REPORTES\HACIENDA\LibreDeudaProp"
-                    parametros = ParametrosReporte.Catastro(registro(0), parametros)
+                    parametros = ParametrosReporte.Catastro(bs_registro.DataSource(0), parametros)
 
                 ElseIf servicio.Text.Contains("CEME") Then
                     ReportType = "REPORTES\HACIENDA\LibreDeudaCeme"
-                    parametros = ParametrosReporte.Cementerio(registro(0), parametros)
+                    parametros = ParametrosReporte.Cementerio(bs_registro.DataSource(0), parametros)
 
                 ElseIf servicio.Text.Contains("COME") Then
                     ReportType = "REPORTES\HACIENDA\LibreDeudaCome"
-                    parametros = ParametrosReporte.Comercio(registro(0), parametros)
+                    parametros = ParametrosReporte.Comercio(bs_registro.DataSource(0), parametros)
 
                 End If
 
                 If ReportType <> "" Then
-                    Using certificado As New VisorReporte("Imprimir Certificado de Libre Deuda")
+                    Using certificado As New Formularios("Imprimir Certificado de Libre Deuda")
                         certificado.mostrar(ReportType, parametros)
                         certificado.ShowDialog()
                     End Using
@@ -157,7 +155,7 @@ Public Class CertificadoLibreDeuda
         End If
     End Sub
     Private Sub Cancelar_Click(sender As Object, e As EventArgs) Handles Cancelar.Click
-        registro = Nothing
+        bs_registro.DataSource = Nothing
         Me.Close()
     End Sub
 

@@ -1,4 +1,3 @@
-﻿Partial Class PrintTableDS
-    Partial Public Class comercio_sin_bajaDataTable
-    End Class
+﻿Partial Class PrintTableDataSet
+
 End Class

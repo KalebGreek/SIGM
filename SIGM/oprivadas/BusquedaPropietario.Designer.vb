@@ -82,6 +82,6 @@ Partial Class BusquedaPropietario
 	End Sub
 
 	Friend WithEvents resultado As DataGridView
-	Public WithEvents genSearchControl1 As genSearchControl
+	Friend WithEvents genSearchControl1 As genSearchControl
 	Friend WithEvents bs_resultado As BindingSource
 End Class

@@ -27,12 +27,12 @@ Public Class ConsultaContrato
         GenSearchControl1.vista.Items.AddRange(New Object() {"HACIENDA", "DEPORTES", "OBRAS PUBLICAS", "TRANSITO", "TURISMO"})
     End Sub
 
-    Public Sub Consultar() Handles GenSearchControl1.CSearch_Click
-        bs_contrato.Filter = GenSearchControl1.bsCustomFilter
+    Shared Sub Consultar() Handles GenSearchControl1.CSearchClick
+        'bs_contrato.Filter = GenSearchControl1.bsCustomFilter
     End Sub
 
     '-- EVENTOS UNICOS
-    Private Sub vista_SelectedIndexChanged() Handles GenSearchControl1.CVista_IndexTextChanged
+    Private Sub vista_SelectedIndexChanged() Handles GenSearchControl1.CVistaIndexTextChanged
         resultado.Visible = False
         With GenSearchControl1
             If .vista.SelectedIndex > -1 Then
@@ -77,7 +77,7 @@ Public Class ConsultaContrato
 
             If bs_contrato.Count > 0 Then
                 Dim bs_ColumnList As New BindingSource _
-                With {.DataSource = CtrlMan.Fill.GetColumnList(bs_contrato)}
+                With {.DataSource = CtrlMan.Fill.GetColumnList(bs_contrato.DataSource.Columns)}
                 CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
 
                 resultado.Visible = True
@@ -105,8 +105,8 @@ Public Class ConsultaContrato
                                                                    .Current("codigo"), .Current("seccion"))
 
                 Dim titulo_reporte As String = "Contrato N° " & CDate(.Current("inicio")).Year & "-" & .Current("codigo") & " - " & .Current("seccion")
-                Dim ruta_acceso As String = "CONTRATOS\REPORTES\ModeloContrato"
-                Using certificado As New VisorReporte(titulo_reporte)
+                Dim ruta_acceso As String = "REPORTES\Hacienda\ModeloContrato"
+                Using certificado As New Formularios(titulo_reporte)
                     certificado.mostrar(ruta_acceso, parametros)
                     certificado.ShowDialog()
                 End Using

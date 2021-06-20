@@ -1,5 +1,5 @@
-﻿Public Class DomicilioPage
-	Inherits System.Windows.Forms.TabPage
+﻿Class DomicilioPage
+    Inherits System.Windows.Forms.TabPage
     Public contador As Integer
 
     Private Sub DomicilioPage_ParentChanged(sender As Object, e As EventArgs) Handles Me.ParentChanged
@@ -14,8 +14,8 @@
             CtrlMan.Fill.GetCities(localidad, bs_localidad, bs_provincia.Current("id"))
         Else
             localidad.DataSource = Nothing
-		End If
-	End Sub
+        End If
+    End Sub
 
     Private Sub bs_localidad_CurrentChanged(sender As Object, e As EventArgs) Handles bs_localidad.CurrentChanged, bs_localidad.PositionChanged
         If bs_localidad.Position > -1 And bs_localidad.DataSource Is Nothing = False And Me.Visible Then
@@ -31,7 +31,7 @@
     End Sub
 
     Public Sub cargar(drow As DataRow)
-        CtrlMan.LoadAllControls(drow, Me)
+        CtrlMan.LoadControls(drow, Me)
     End Sub
     Public Function guardar(persona_id As Integer, principal As Boolean) As Boolean
         If domicilio_id.Text > 0 Then

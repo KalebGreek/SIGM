@@ -1,8 +1,6 @@
 ﻿Imports System.Reflection
-Public Class CtrlMan 'Control Manager
-    Public Shared ErrorColorValue As Color = Color.MistyRose
-    Public Shared DefaultColorValue As Color = SystemColors.Window
-
+Imports Sigm.CtrlMan
+Class CtrlMan 'Control Manager
     '###### VENTANAS
     'Impedir creación de ventanas que deben abrirse una sola vez en el formulario MDI
     Public Shared Function IsFormOpen(ByVal env As Form, ByVal target As Object) As Boolean
@@ -23,15 +21,16 @@ Public Class CtrlMan 'Control Manager
     'General Validation
     Shared Function Validate(ByRef container As Object, Optional ByRef ErrorTooltip As ToolTip = Nothing,
                              Optional DefaultColor As Color = Nothing, Optional ErrorColor As Color = Nothing) As Boolean
+
         'Flag
         Dim valid As Boolean = True
 
         'Default color values
         If DefaultColor = Nothing Then
-            DefaultColor = DefaultColorValue
+            DefaultColor = Color.FromName(My.Settings.DefaultColorValue)
         End If
         If ErrorColor = Nothing Then
-            ErrorColor = ErrorColorValue
+            ErrorColor = Color.FromName(My.Settings.ErrorColorValue)
         End If
 
         'Validation
@@ -168,7 +167,21 @@ Public Class CtrlMan 'Control Manager
     End Sub
 
     'LOAD ALL THE CONTROLS!!!!1ONE
-    Shared Function LoadAllControls(drow As DataRow, ByVal target As Object) As Object
+    Overloads Shared Function LoadControlData(bs As BindingSource, ByVal target As Object) As Object
+        If bs Is Nothing = False Then
+            If bs.Current Is Nothing = False Then
+                target = LoadControlData(bs.DataSource, target)
+            End If
+        End If
+        Return target
+    End Function
+    Overloads Shared Function LoadControlData(dtab As DataTable, ByVal target As Object) As Object
+        If dtab Is Nothing = False Then
+            target = LoadControls(dtab.Rows.Item(0), target)
+        End If
+        Return target
+    End Function
+    Shared Function LoadControls(drow As DataRow, ByVal target As Object) As Object
         'Loads the values of each column of the DataRow in the controls sharing the column name
         'Recursive!
         If drow Is Nothing = False Then
@@ -208,7 +221,7 @@ Public Class CtrlMan 'Control Manager
                    TypeOf c Is TabControl Or
                    TypeOf c Is TabPage Then
                     'Recursive control loading
-                    LoadAllControls(drow, c)
+                    LoadControls(drow, c)
                 End If
             Next
         End If
@@ -474,7 +487,7 @@ Public Class CtrlMan 'Control Manager
             Return target
         End Function
 
-        Overloads Shared Function SetAutocomplete(target As NumericUpDown, bs As BindingSource, FilterColumn As ComboBox) As NumericUpDown
+        Overloads Shared Function SetAutocomplete(target As NumericUpDown, bsMinValue As Long, bsMaxValue As Long, FilterColumn As ComboBox) As NumericUpDown
 
             If target Is Nothing Then
                 target = New NumericUpDown
@@ -487,19 +500,13 @@ Public Class CtrlMan 'Control Manager
 
             If FilterColumn.SelectedIndex > -1 Then
                 'Return and sort range of values to use for the specified column
-                If FilterColumn.SelectedValue = "System.Decimal" Or FilterColumn.SelectedValue = "System.Integer" Then
-                    Dim minValue, maxValue As Long
-                    bs.Sort = FilterColumn.Text & " ASC"
-                    bs.MoveFirst()
-                    minValue = bs.Current(FilterColumn.Text)
-                    bs.MoveLast()
-                    maxValue = bs.Current(FilterColumn.Text)
+                If FilterColumn.SelectedValue.ToString = "System.Decimal" Or FilterColumn.SelectedValue.ToString = "System.Integer" Then
 
-                    target.Minimum = minValue
-                    target.Maximum = minValue
-                    target.Value = minValue
+                    target.Minimum = bsMinValue
+                    target.Maximum = bsMaxValue
+                    target.Value = bsMinValue
                 End If
-            End If
+                End If
             target.Update()
 
             Return target
@@ -518,7 +525,7 @@ Public Class CtrlMan 'Control Manager
 
             If FilterColumn.SelectedIndex > -1 Then
                 'Return and sort range of values to use for the specified column
-                If FilterColumn.SelectedValue = "System.Date" Then
+                If FilterColumn.SelectedValue.ToString = "System.Date" Then
                     bs.Sort = FilterColumn.Text & " ASC"
 
                     bs.MoveFirst()
@@ -557,11 +564,11 @@ Public Class CtrlMan 'Control Manager
         ''' <summary>
         ''' Returns the column collection of a Bindingsource in DataTable format. Fields: ColumnName(string), DataType(string)
         ''' </summary>
-        ''' <param name="bs">BindingSource containing the column collection.</param>
-        Shared Function GetColumnList(ByVal bs As BindingSource) As DataTable
-            Dim source As BindingSource = bs
+        ''' <param name="ColumnList">Object of type ColumnCollection.</param>
+        Shared Function GetColumnList(ByVal ColumnList As DataColumnCollection) As DataTable
+
             Dim ColumnList_dtab As New DataTable
-            If source.DataSource.Columns.Count > 0 Then
+            If ColumnList.Count > 0 Then
                 'Add only useful columns to the list, to avoid garbage
                 'Useful column types include date, integer, decimal and string
                 'Other types could be added as soon as I figure how to use them :p
@@ -573,26 +580,26 @@ Public Class CtrlMan 'Control Manager
                 ColumnList_dtab.Columns.Add("DateMinValue", GetType(Date))
                 ColumnList_dtab.Columns.Add("DateMaxValue", GetType(Date))
 
-                For Each dc As DataColumn In source.DataSource.Columns
+                For Each dc As DataColumn In ColumnList
                     If dc.DataType = GetType(Date) Or dc.DataType = GetType(Decimal) _
                 Or dc.DataType = GetType(Integer) Or dc.DataType = GetType(String) Then
                         Dim dr As DataRow = ColumnList_dtab.NewRow
                         dr("ColumnName") = dc.ColumnName.ToString
                         dr("DataType") = dc.DataType.ToString
 
-                        source.Sort = dc.ColumnName.ToString
-                        If dc.DataType = GetType(Date) Then
-                            source.Position = 0
-                            dr("DateMinValue") = source.Current(dc.ColumnName.ToString)
-                            source.Position = source.Count - 1
-                            dr("DateMaxValue") = source.Current(dc.ColumnName.ToString)
-                        ElseIf dc.DataType = GetType(Decimal) Or dc.DataType = GetType(Integer) Then
-                            source.Sort = dc.ColumnName.ToString
-                            source.Position = 0
-                            dr("DecMinValue") = source.Current(dc.ColumnName.ToString)
-                            source.Position = source.Count - 1
-                            dr("DecMaxValue") = source.Current(dc.ColumnName.ToString)
-                        End If
+                        'source.Sort = dc.ColumnName.ToString
+                        'If dc.DataType = GetType(Date) Then
+                        '    source.Position = 0
+                        '    dr("DateMinValue") = source.Current(dc.ColumnName.ToString)
+                        '    source.Position = source.Count - 1
+                        '    dr("DateMaxValue") = source.Current(dc.ColumnName.ToString)
+                        'ElseIf dc.DataType = GetType(Decimal) Or dc.DataType = GetType(Integer) Then
+                        '    source.Sort = dc.ColumnName.ToString
+                        '    source.Position = 0
+                        '    dr("DecMinValue") = source.Current(dc.ColumnName.ToString)
+                        '    source.Position = source.Count - 1
+                        '    dr("DecMaxValue") = source.Current(dc.ColumnName.ToString)
+                        'End If
 
                         ColumnList_dtab.Rows.Add(dr)
                     End If

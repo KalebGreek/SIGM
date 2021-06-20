@@ -15,7 +15,7 @@
     End Sub
 
     'EVENTOS
-    Private Sub Search() Handles GenSearchControl1.CSearch_Click
+    Private Sub Search() Handles GenSearchControl1.CSearchClick
         GenSearchControl1.FilterSearch()
     End Sub
 
@@ -23,7 +23,7 @@
         bs_query.Filter = GenSearchControl1.bsCustomFilter
     End Sub
 
-    Private Sub BuildFilter() Handles GenSearchControl1.CFiltro_IndexTextChanged
+    Private Sub BuildFilter() Handles GenSearchControl1.CFiltroIndexTextChanged
         If GenSearchControl1.filtro.SelectedIndex > -1 And bs_query.Count > 0 And
            GenSearchControl1.filtro.Text <> "System.Data.DataRowView" Then
 
@@ -69,7 +69,7 @@
         End If
     End Sub
 
-    Private Sub vista_n_customtable_events() Handles GenSearchControl1.CVista_IndexTextChanged, CustomTable.LinkClicked
+    Private Sub vista_n_customtable_events() Handles GenSearchControl1.CVistaIndexTextChanged, CustomTable.LinkClicked
         ExecuteQuery(GenSearchControl1.vista.Text)
     End Sub
 
@@ -103,8 +103,6 @@
         Dim sql(5) As String
         If Connection.Text <> "Seleccione una base de datos antes de continuar." Then
             If vista <> "" Then
-                Dim dtab As New DataTable
-
                 'Build SQL query
                 CustomTable.Enabled = False
                 If vista = "HACIENDA - INGRESOS" Then
@@ -132,10 +130,12 @@
 
                 ElseIf vista = "BANCOS - SALDO" Then
                     sql(0) = "SELECT MIN(fecha) as fecha FROM bancos"
-                    dtab = DbMan.ReadDB(Nothing, Connection.Text, sql)
-                    Dim minDateValue As Date = dtab(0)("fecha").ToString
-                    Dim maxDateValue As Date = Today
 
+                    Dim minDateValue As Date = Today
+                    Dim maxDateValue As Date = Today
+                    Using dtab As DataTable = DbMan.ReadDB(Nothing, Connection.Text, sql)
+                        minDateValue = dtab.Rows(0)("fecha").ToString
+                    End Using
                     sql(0) = "SELECT banco, 
                            (SELECT SUM(b3.importe)
                             FROM bancos as b3
@@ -190,9 +190,10 @@
                 ElseIf vista = "PERSONALIZADA" Then
                     Dim TableName As String
                     CustomTable.Enabled = True
-
+                    Dim dtab As New DataTable
                     Do
                         TableName = InputBox("Ingrese nombre de tabla.", "Ingresar Tabla")
+
                         If Trim(TableName) <> "" Then
                             TableName = Trim(TableName)
                             sql(0) = "SELECT * FROM " & TableName
@@ -201,6 +202,7 @@
                             TableName = Nothing
                         End If
                     Loop Until TableName Is Nothing Or dtab Is Nothing = False
+                    dtab.Dispose()
 
                     If TableName <> "" Then
                         sql(0) = "SELECT *"
@@ -233,11 +235,11 @@
             Next
 
 
-            If bs_query.DataSource Is Nothing = False Then
+            If bs_query.DataSource Is Nothing = False And bs_query.Count > 0 Then
                 'Create filter with columns
                 Dim ColumnList_bs As New BindingSource
                 GenSearchControl1.filtro.Visible = False
-                ColumnList_bs.DataSource = CtrlMan.Fill.GetColumnList(bs_query)
+                ColumnList_bs.DataSource = CtrlMan.Fill.GetColumnList(bs_query.DataSource.Columns)
                 GenSearchControl1.filtro = CtrlMan.Fill.SetAutoComplete(GenSearchControl1.filtro, ColumnList_bs, "ColumnName", "DataType")
                 'Fill with data
                 CtrlMan.DataGridViewTools.Load(QueryView, bs_query)

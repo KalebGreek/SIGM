@@ -117,10 +117,11 @@ Partial Class ModInmueble
         Me.del_copia = New System.Windows.Forms.Button()
         Me.add_copia = New System.Windows.Forms.Button()
         Me.tipo_copia = New System.Windows.Forms.ComboBox()
-        Me.bs_frente = New System.Windows.Forms.BindingSource(Me.components)
-        Me.bs_car = New System.Windows.Forms.BindingSource(Me.components)
-        Me.bs_copia = New System.Windows.Forms.BindingSource(Me.components)
+        Me.BSFrente = New System.Windows.Forms.BindingSource(Me.components)
+        Me.BSCar = New System.Windows.Forms.BindingSource(Me.components)
+        Me.BSCopia = New System.Windows.Forms.BindingSource(Me.components)
         Me.subtitulo = New System.Windows.Forms.Label()
+        Me.BSCat = New System.Windows.Forms.BindingSource(Me.components)
         Me.Menu1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.grupo_mod.SuspendLayout()
@@ -150,9 +151,10 @@ Partial Class ModInmueble
         Me.tab_copia.SuspendLayout()
         CType(Me.consulta_copia, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.menu_copia.SuspendLayout()
-        CType(Me.bs_frente, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.bs_car, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.bs_copia, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BSFrente, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BSCar, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BSCopia, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BSCat, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Menu1
@@ -1405,10 +1407,10 @@ Partial Class ModInmueble
         Me.tipo_copia.Size = New System.Drawing.Size(331, 28)
         Me.tipo_copia.TabIndex = 348
         '
-        'bs_car
+        'BSCar
         '
         '
-        'bs_copia
+        'BSCopia
         '
         '
         'subtitulo
@@ -1476,9 +1478,10 @@ Partial Class ModInmueble
         Me.tab_copia.ResumeLayout(False)
         CType(Me.consulta_copia, System.ComponentModel.ISupportInitialize).EndInit()
         Me.menu_copia.ResumeLayout(False)
-        CType(Me.bs_frente, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.bs_car, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.bs_copia, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BSFrente, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BSCar, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BSCopia, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BSCat, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1542,9 +1545,9 @@ Partial Class ModInmueble
 	Friend WithEvents add_copia As System.Windows.Forms.Button
 	Friend WithEvents Label2 As System.Windows.Forms.Label
 	Friend WithEvents uso As System.Windows.Forms.ComboBox
-	Friend WithEvents bs_frente As System.Windows.Forms.BindingSource
-	Friend WithEvents bs_car As System.Windows.Forms.BindingSource
-	Friend WithEvents bs_copia As System.Windows.Forms.BindingSource
+	Friend WithEvents BSFrente As System.Windows.Forms.BindingSource
+	Friend WithEvents BSCar As System.Windows.Forms.BindingSource
+	Friend WithEvents BSCopia As System.Windows.Forms.BindingSource
 	Friend WithEvents Partida As System.Windows.Forms.ToolStripMenuItem
 	Friend WithEvents subtitulo As System.Windows.Forms.Label
 	Friend WithEvents del_copia As System.Windows.Forms.Button
@@ -1580,4 +1583,5 @@ Partial Class ModInmueble
 	Friend WithEvents cuil As MaskedTextBox
 	Friend WithEvents titular_id As Label
 	Friend WithEvents ubicacion_principal As Button
+    Friend WithEvents BSCat As BindingSource
 End Class

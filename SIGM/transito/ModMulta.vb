@@ -1,4 +1,4 @@
-﻿Public Class ModMulta
+﻿Class ModMulta
     Public multa_id As Integer
 
     Public Sub New()
@@ -24,11 +24,12 @@
                     boleta.Text = nroBoleta
                 End If
             Else
-                Dim dtab As DataTable = Transito.Multas.SeleccionarMulta(multa_id)
-                boleta.Text = dtab(0)("boleta")
-                TabMultas1Boleta1.LoadMe(dtab(0))
-                TabMultas2Persona1.LoadMe(dtab(0))
-                TabMultas3Vehiculo1.LoadMe(dtab(0))
+                Using dtab As DataTable = Transito.Multas.SeleccionarMulta(multa_id)
+                    boleta.Text = dtab.Rows(0)("boleta")
+                    TabMultas1Boleta1.LoadMe(dtab.Rows(0))
+                    TabMultas2Persona1.LoadMe(dtab.Rows(0))
+                    TabMultas3Vehiculo1.LoadMe(dtab.Rows(0))
+                End Using
             End If
         End If
 

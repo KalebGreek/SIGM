@@ -1,4 +1,5 @@
-﻿Public Class calcTMuniObrasVarias
+﻿Imports System.Collections.Generic
+Public Class calcTMuniObrasVarias
 
 	Public help_source As New List(Of String)({"test4", "test5", "test6"})
 	'EVENTOS

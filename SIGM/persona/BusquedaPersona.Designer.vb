@@ -121,8 +121,8 @@ Partial Class BusquedaPersona
     End Sub
 
     Friend WithEvents resultado As DataGridView
-	Public WithEvents genSearchControl1 As genSearchControl
-	Friend WithEvents PanelFiltros As FlowLayoutPanel
+    Friend WithEvents genSearchControl1 As genSearchControl
+    Friend WithEvents PanelFiltros As FlowLayoutPanel
 	Friend WithEvents difunto As CheckBox
 	Friend WithEvents fisica As CheckBox
 	Friend WithEvents bs_resultado As BindingSource

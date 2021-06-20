@@ -38,32 +38,34 @@ Partial Class ModContrato
         Me.razon = New System.Windows.Forms.TextBox()
         Me.cuil = New System.Windows.Forms.MaskedTextBox()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.FlowLayoutPanel2 = New System.Windows.Forms.FlowLayoutPanel()
+        Me.buscar = New System.Windows.Forms.Button()
         Me.Aut1Cuil = New System.Windows.Forms.MaskedTextBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Aut2Cuil = New System.Windows.Forms.MaskedTextBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.FlowLayoutPanel2 = New System.Windows.Forms.FlowLayoutPanel()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.codigo = New System.Windows.Forms.NumericUpDown()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.BottomMenu = New System.Windows.Forms.FlowLayoutPanel()
         Me.Cancelar = New System.Windows.Forms.Button()
         Me.GuardarCambios = New System.Windows.Forms.Button()
-        Me.bs1 = New System.Windows.Forms.BindingSource(Me.components)
-        Me.bs2 = New System.Windows.Forms.BindingSource(Me.components)
+        Me.BSAutoridad1 = New System.Windows.Forms.BindingSource(Me.components)
+        Me.BSAutoridad2 = New System.Windows.Forms.BindingSource(Me.components)
         Me.FlowLayoutPanel3 = New System.Windows.Forms.FlowLayoutPanel()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.seccion = New System.Windows.Forms.ComboBox()
-        Me.buscar = New System.Windows.Forms.Button()
+        Me.BSContratado = New System.Windows.Forms.BindingSource(Me.components)
         CType(Me.dias, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.monto, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FlowLayoutPanel1.SuspendLayout()
         Me.FlowLayoutPanel2.SuspendLayout()
         CType(Me.codigo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.BottomMenu.SuspendLayout()
-        CType(Me.bs1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.bs2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BSAutoridad1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BSAutoridad2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FlowLayoutPanel3.SuspendLayout()
+        CType(Me.BSContratado, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label8
@@ -236,33 +238,17 @@ Partial Class ModContrato
         Me.FlowLayoutPanel1.Size = New System.Drawing.Size(513, 104)
         Me.FlowLayoutPanel1.TabIndex = 20
         '
-        'Label9
+        'buscar
         '
-        Me.Label9.BackColor = System.Drawing.Color.Gray
-        Me.Label9.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label9.Font = New System.Drawing.Font("PF DinText Pro Medium", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.ForeColor = System.Drawing.Color.White
-        Me.Label9.Location = New System.Drawing.Point(0, 0)
-        Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(514, 27)
-        Me.Label9.TabIndex = 381
-        Me.Label9.Text = " NUEVO CONTRATO"
-        Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'FlowLayoutPanel2
-        '
-        Me.FlowLayoutPanel2.Controls.Add(Me.Label5)
-        Me.FlowLayoutPanel2.Controls.Add(Me.descripcion)
-        Me.FlowLayoutPanel2.Controls.Add(Me.Label6)
-        Me.FlowLayoutPanel2.Controls.Add(Me.dias)
-        Me.FlowLayoutPanel2.Controls.Add(Me.Label7)
-        Me.FlowLayoutPanel2.Controls.Add(Me.Label8)
-        Me.FlowLayoutPanel2.Controls.Add(Me.monto)
-        Me.FlowLayoutPanel2.Location = New System.Drawing.Point(0, 210)
-        Me.FlowLayoutPanel2.Name = "FlowLayoutPanel2"
-        Me.FlowLayoutPanel2.Size = New System.Drawing.Size(513, 323)
-        Me.FlowLayoutPanel2.TabIndex = 30
+        Me.buscar.FlatAppearance.BorderSize = 0
+        Me.buscar.Font = New System.Drawing.Font("Segoe MDL2 Assets", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.buscar.Location = New System.Drawing.Point(470, 1)
+        Me.buscar.Margin = New System.Windows.Forms.Padding(2, 1, 0, 0)
+        Me.buscar.Name = "buscar"
+        Me.buscar.Size = New System.Drawing.Size(33, 33)
+        Me.buscar.TabIndex = 411
+        Me.buscar.Text = ""
+        Me.buscar.UseVisualStyleBackColor = True
         '
         'Aut1Cuil
         '
@@ -299,6 +285,34 @@ Partial Class ModContrato
         Me.Aut2Cuil.TabStop = False
         Me.Aut2Cuil.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.Aut2Cuil.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals
+        '
+        'Label9
+        '
+        Me.Label9.BackColor = System.Drawing.Color.Gray
+        Me.Label9.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label9.Font = New System.Drawing.Font("PF DinText Pro Medium", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.ForeColor = System.Drawing.Color.White
+        Me.Label9.Location = New System.Drawing.Point(0, 0)
+        Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(514, 27)
+        Me.Label9.TabIndex = 381
+        Me.Label9.Text = " NUEVO CONTRATO"
+        Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'FlowLayoutPanel2
+        '
+        Me.FlowLayoutPanel2.Controls.Add(Me.Label5)
+        Me.FlowLayoutPanel2.Controls.Add(Me.descripcion)
+        Me.FlowLayoutPanel2.Controls.Add(Me.Label6)
+        Me.FlowLayoutPanel2.Controls.Add(Me.dias)
+        Me.FlowLayoutPanel2.Controls.Add(Me.Label7)
+        Me.FlowLayoutPanel2.Controls.Add(Me.Label8)
+        Me.FlowLayoutPanel2.Controls.Add(Me.monto)
+        Me.FlowLayoutPanel2.Location = New System.Drawing.Point(0, 210)
+        Me.FlowLayoutPanel2.Name = "FlowLayoutPanel2"
+        Me.FlowLayoutPanel2.Size = New System.Drawing.Size(513, 323)
+        Me.FlowLayoutPanel2.TabIndex = 30
         '
         'Label5
         '
@@ -406,20 +420,8 @@ Partial Class ModContrato
         Me.seccion.Location = New System.Drawing.Point(109, 3)
         Me.seccion.Margin = New System.Windows.Forms.Padding(0, 3, 0, 0)
         Me.seccion.Name = "seccion"
-        Me.seccion.Size = New System.Drawing.Size(230, 30)
+        Me.seccion.Size = New System.Drawing.Size(242, 30)
         Me.seccion.TabIndex = 11
-        '
-        'buscar
-        '
-        Me.buscar.FlatAppearance.BorderSize = 0
-        Me.buscar.Font = New System.Drawing.Font("Segoe MDL2 Assets", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.buscar.Location = New System.Drawing.Point(470, 1)
-        Me.buscar.Margin = New System.Windows.Forms.Padding(2, 1, 0, 0)
-        Me.buscar.Name = "buscar"
-        Me.buscar.Size = New System.Drawing.Size(33, 33)
-        Me.buscar.TabIndex = 411
-        Me.buscar.Text = ""
-        Me.buscar.UseVisualStyleBackColor = True
         '
         'ModContrato
         '
@@ -447,9 +449,10 @@ Partial Class ModContrato
         Me.FlowLayoutPanel2.PerformLayout()
         CType(Me.codigo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.BottomMenu.ResumeLayout(False)
-        CType(Me.bs1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.bs2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BSAutoridad1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BSAutoridad2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FlowLayoutPanel3.ResumeLayout(False)
+        CType(Me.BSContratado, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -475,8 +478,8 @@ Partial Class ModContrato
     Friend WithEvents GuardarCambios As Button
     Friend WithEvents Label10 As Label
     Friend WithEvents Label5 As Label
-    Friend WithEvents bs1 As BindingSource
-    Friend WithEvents bs2 As BindingSource
+    Friend WithEvents BSAutoridad1 As BindingSource
+    Friend WithEvents BSAutoridad2 As BindingSource
     Friend WithEvents Aut1Cuil As MaskedTextBox
     Friend WithEvents Aut2Cuil As MaskedTextBox
     Friend WithEvents codigo As NumericUpDown
@@ -485,4 +488,5 @@ Partial Class ModContrato
     Friend WithEvents Label4 As Label
     Friend WithEvents seccion As ComboBox
     Friend WithEvents buscar As Button
+    Friend WithEvents BSContratado As BindingSource
 End Class

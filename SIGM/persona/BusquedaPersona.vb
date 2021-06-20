@@ -64,7 +64,7 @@
                     bs_resultado = New BindingSource
                     bs_resultado.DataSource = dtab
                     Dim bs_ColumnList As New BindingSource _
-                        With {.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)}
+                        With {.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource.Columns)}
 
                     .filtro.DataSource = Nothing
                     .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
@@ -86,24 +86,24 @@
             genSearchControl1.vista.SelectedIndex = 0 'First option
         End If
     End Sub
-    Public Sub Search_Click() Handles genSearchControl1.CSearch_Click, genSearchControl1.CFiltro_IndexTextChanged
+    Public Sub SearchClick() Handles genSearchControl1.CSearchClick, genSearchControl1.CFiltroIndexTextChanged
         genSearchControl1.FilterSearch()
         bs_resultado.Filter = genSearchControl1.bsCustomFilter
     End Sub
-    Private Sub vista_SelectedIndexChanged() Handles genSearchControl1.CVista_IndexTextChanged, genSearchControl1.CReset_Click
+    Private Sub vistaSelectedIndexChanged() Handles genSearchControl1.CVistaIndexTextChanged, genSearchControl1.CResetClick
         resultado.DataSource = Nothing
         If genSearchControl1.vista.SelectedIndex > -1 Then
             Consultar(True)
         End If
     End Sub
-    Public Sub Select_Click(sender As Object, e As EventArgs) Handles genSearchControl1.CSelect
+    Public Sub SelectClick(sender As Object, e As EventArgs) Handles genSearchControl1.CSelect
         If bs_resultado.Position > -1 Then
             Me.Close()
         Else
             MsgBox("No se ha seleccionado una persona.")
         End If
     End Sub
-    Public Sub Cancel_Click(sender As Object, e As EventArgs) Handles genSearchControl1.CCancel
+    Public Sub CancelClick(sender As Object, e As EventArgs) Handles genSearchControl1.CCancel
         resultado.DataSource = Nothing
         bs_resultado.Sort = ""
         bs_resultado.Filter = ""
@@ -112,7 +112,7 @@
     End Sub
 
 
-    Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles genSearchControl1.CKeyword_KeyUp, resultado.KeyUp
+    Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles genSearchControl1.CKeywordKeyUp, resultado.KeyUp
         If e.KeyValue = Keys.F3 Then
             Consultar(False)
         ElseIf sender Is resultado Then

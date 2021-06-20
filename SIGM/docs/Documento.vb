@@ -1,4 +1,4 @@
-﻿Public Class Documento
+﻿Class Documento
     Shared titulo As String = ""
     Shared destino As String = ""
 
@@ -11,18 +11,18 @@
     'My.Settings.DocFolderOrdenanza As String = "\ORDENANZAS\"
     'My.Settings.DocFolderPersona As String = "\PERSONA\"
 
-    Public Class Persona
-        Shared Function BuscarDoc(persona_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
+    Class Persona
+        Shared Function BuscarDoc(PersonaId As Integer, Optional TipoArchivo As String = "", Optional SoloRuta As Boolean = False) As Object
             Dim sql(5) As String
             sql(0) = "SELECT id, descripcion, fecha, ruta"
             sql(1) = " FROM per_documento"
-            sql(2) = " WHERE persona_id=" & persona_id
-            If tipo_archivo <> "" Then
-                sql(2) += " AND descripcion='" & tipo_archivo & "'"
+            sql(2) = " WHERE persona_id=" & PersonaId
+            If TipoArchivo <> "" Then
+                sql(2) += " AND descripcion='" & TipoArchivo & "'"
             End If
             sql(3) = " ORDER BY fecha ASC"
 
-            Return ConsultarHistorial(sql, solo_ruta)
+            Return ConsultarHistorial(sql, SoloRuta)
         End Function
         Shared Function CopiaCuil(ByVal cuil As Double) As String
             titulo = "Buscar Copia de DNI / CUIL | CUIL N° " & cuil
@@ -47,16 +47,16 @@
 
                     Dim dtab_acta = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
                     If dtab.Rows.Count > 0 Then
-                        If dtab_acta(0)("per_id") <> persona_id Then
-                            MsgBox("El acta N." & acta & " del libro N." & libro & " no corresponde a " & dtab(0)("razon"))
+                        If dtab_acta.Rows(0)("per_id") <> persona_id Then
+                            MsgBox("El acta N." & acta & " del libro N." & libro & " no corresponde a " & dtab.Rows(0)("razon"))
                             Return ""
                         End If
                     End If
-                    titulo = "Buscar Acta N° " & acta & " del libro N°" & libro & " | CUIL N° " & dtab(0)("cuil")
+                    titulo = "Buscar Acta N° " & acta & " del libro N°" & libro & " | CUIL N° " & dtab.Rows(0)("cuil")
                     destino = "\acta[" & acta & "]_libro[" & libro & "].pdf"
                     'Muestra diálogo de búsqueda
-                    destino = Cargar(My.Settings.DocFolderPersona & dtab(0)("cuil"), destino, titulo, True)
-                    Return dtab(0)("cuil") & "\ACTAS" & destino
+                    destino = Cargar(My.Settings.DocFolderPersona & dtab.Rows(0)("cuil"), destino, titulo, True)
+                    Return dtab.Rows(0)("cuil") & "\ACTAS" & destino
                 Else
                     MsgBox("Debe indicar número de acta y libro antes de continuar.")
                     Return ""
@@ -74,7 +74,7 @@
             Return persona_id & destino
         End Function
     End Class
-    Public Class Catastro
+    Class Catastro
         Shared Function BuscarDoc(catastro_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
             Dim sql(5) As String
             sql(0) = "SELECT id, descripcion, fecha, ruta"
@@ -123,7 +123,7 @@
             Return ruta
         End Function
     End Class
-    Public Class Comercio
+    Class Comercio
         Shared Function BuscarDoc(id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
             Dim sql(5) As String
             sql(0) = "SELECT id, descripcion, fecha, ruta"
@@ -137,8 +137,8 @@
             Return ConsultarHistorial(sql, solo_ruta)
         End Function
     End Class
-    Public Class Gobierno
-        Shared Function CopiaOrdenanza(ventana As Form, ByVal codigo As Double) As String
+    Class Gobierno
+        Shared Function CopiaOrdenanza(ByVal codigo As Double) As String
             If codigo > 0 Then
                 destino = "\CopiaOrdenanza_" & FileMan.DateToFilename(Date.Now) & ".pdf"
                 titulo = "Buscar Copia de Ordenanza N° " & Microsoft.VisualBasic.Left(codigo, Len(codigo.ToString) - 4) & "/" & Microsoft.VisualBasic.Right(codigo, 4)
@@ -149,21 +149,21 @@
             Return "No se encuentra el archivo."
         End Function
     End Class
-    Public Class Hacienda
+    Class Hacienda
         Shared Function BuscarDoc(id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
             Dim sql(5) As String
             sql(0) = "SELECT id, descripcion, fecha, ruta"
             sql(1) = " FROM hac_documento"
             sql(2) = " WHERE =" & id
             If tipo_archivo <> "" Then
-                Sql(2) += " AND descripcion='" & tipo_archivo & "'"
+                sql(2) += " AND descripcion='" & tipo_archivo & "'"
             End If
             sql(3) = " ORDER BY fecha ASC"
 
             Return ConsultarHistorial(sql, solo_ruta)
         End Function
     End Class
-    Public Class OPrivadas
+    Class OPrivadas
         Shared Function BuscarDoc(opr_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
             Dim sql(5) As String
             sql(0) = "SELECT id, descripcion, fecha, ruta"
@@ -194,7 +194,7 @@
         Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
         If RutaDoc Then
-            Return dtab(0)("ruta").ToString
+            Return dtab.Rows(0)("ruta").ToString
         Else
             Return dtab
         End If
@@ -269,11 +269,11 @@
 
         If dtab.Rows.Count > 0 Then
             For Each dr As DataRow In dtab.Rows
-                DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE " & tabla & " SET fecha='" & fecha.ToShortDateString & "', ruta='" & ruta & "'
+                DbMan.EditDB(Nothing, My.Settings.CurrentDB, "UPDATE " & tabla & " SET fecha='" & fecha.ToShortDateString & "', ruta='" & ruta & "'
 															WHERE " & col_id & "=" & id & " AND  descripcion='" & descripcion & "'")
             Next
         Else
-            DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)
 														VALUES(" & id & ", #" & fecha & "# ,'" & descripcion & "', '" & ruta & "')")
         End If
     End Sub
@@ -281,7 +281,7 @@
         'Guarda una lista de rutas de documento a una tabla
         With lista
             For Each dr As DataRow In lista.DataSource.Rows
-                DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)" &
+                DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)" &
                           " VALUES(" & id & ", #" & dr("fecha") & "# ,'" & dr("descripcion") & "'," &
                           " '" & dr("ruta") & "')")
             Next
@@ -292,6 +292,6 @@
         If tipo_archivo <> "" Then
             sql += " AND descripcion='" & tipo_archivo & "'"
         End If
-        DbMan.editDB(Nothing, My.Settings.CurrentDB, sql)
+        DbMan.EditDB(Nothing, My.Settings.CurrentDB, sql)
     End Sub
 End Class

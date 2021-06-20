@@ -1,38 +1,38 @@
-﻿Public Class genSearchControl
-	Inherits System.Windows.Forms.UserControl
+﻿Class genSearchControl
+    Inherits System.Windows.Forms.UserControl
 
-	'Custom Events
-	Public RowSelected As Boolean = False
-	Public bsCustomFilter As String
-    Public Event CSearch_Click(sender As Object)
-    Public Event CReset_Click(sender As Object)
+    'Custom Events
+    Public RowSelected As Boolean = False
+    Public bsCustomFilter As String = ""
+    Public Event CSearchClick(sender As Object)
+    Public Event CResetClick(sender As Object)
     Public Event CFilter()
-    Public Event CVista_IndexTextChanged()
-	Public Event CFiltro_IndexTextChanged()
-	Public Event CKeyword_KeyUp(sender As Object, e As KeyEventArgs)
-	Public Event CSelect(sender As Object, e As EventArgs)
+    Public Event CVistaIndexTextChanged()
+    Public Event CFiltroIndexTextChanged()
+    Public Event CKeywordKeyUp(sender As Object, e As KeyEventArgs)
+    Public Event CSelect(sender As Object, e As EventArgs)
     Public Event CCancel(sender As Object, e As EventArgs)
     Public Event CPrint()
 
     'Events
     Public Sub New()
 
-		' This call is required by the designer.
-		InitializeComponent()
+        ' This call is required by the designer.
+        InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
         DateValue.Value = Today
     End Sub
 
     Private Sub Vista_Events(sender As Object, e As EventArgs) Handles vista.SelectedIndexChanged
-        'Avoid seeing this control if there are no options
+        'Avoid drawing this control if there are no options
         vista.Visible = vista.Items.Count > 1
-        RaiseEvent CVista_IndexTextChanged() 'Load items
+        RaiseEvent CVistaIndexTextChanged() 'Load items
     End Sub
 
     'Visibility events
     Private Sub filtro_SelectedIndexnTextChanged(sender As Object, e As EventArgs) Handles filtro.SelectedIndexChanged, filtro.TextChanged
-		bsCustomFilter = ""
+        bsCustomFilter = ""
 
         If filtro.Visible And filtro.SelectedIndex > -1 Then
             'String
@@ -54,11 +54,11 @@
                 NumValue.DecimalPlaces = 0
                 NumValue.DecimalPlaces = 0
             End If
-            RaiseEvent CFiltro_IndexTextChanged()
+            RaiseEvent CFiltroIndexTextChanged()
         End If
         filtro.Visible = filtro.Items.Count > 0
 
-	End Sub
+    End Sub
 
     Private Sub NumValue_MaxNumValue_VisibleChanged(sender As Object, e As EventArgs) Handles NumValue.VisibleChanged, MaxNumValue.VisibleChanged
         If NumValue.Visible = False Or MaxNumValue.Visible = False Then
@@ -90,19 +90,19 @@
             End If
         End If
     End Sub
-	Private Sub keyword_VisibleChanged(sender As Object, e As EventArgs) Handles keyword.VisibleChanged
-		Condition.SelectedIndex = -1
-		If keyword.Visible = False Then
-			keyword.ResetText()
-			keyword.Items.Clear()
-		End If
-	End Sub
+    Private Sub keyword_VisibleChanged(sender As Object, e As EventArgs) Handles keyword.VisibleChanged
+        Condition.SelectedIndex = -1
+        If keyword.Visible = False Then
+            keyword.ResetText()
+            keyword.Items.Clear()
+        End If
+    End Sub
 
-	Private Sub keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles keyword.KeyUp
-		If e.KeyValue = Keys.Enter Or e.KeyValue = Keys.F3 Then
-			search.PerformClick()
-		End If
-	End Sub
+    Private Sub keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles keyword.KeyUp
+        If e.KeyValue = Keys.Enter Or e.KeyValue = Keys.F3 Then
+            search.PerformClick()
+        End If
+    End Sub
 
     Private Sub keyword_ClicknFocus(sender As Object, e As EventArgs) Handles keyword.DoubleClick
         If keyword.Visible Then
@@ -125,7 +125,7 @@
                 End If
             ElseIf NumValue.Visible Then
 
-                If filtro.SelectedValue = "System.Decimal" Or filtro.SelectedValue = "System.Integer" Then 'Dec or Int
+                If filtro.SelectedValue.ToString = "System.Decimal" Or filtro.SelectedValue.ToString = "System.Integer" Then 'Dec or Int
                     If NumValue.Value <> Nothing Then
 
                         Dim NumValueString As String
@@ -143,7 +143,7 @@
                 End If
             ElseIf DateValue.Visible Then
 
-                If filtro.SelectedValue = "System.DateTime" Or filtro.SelectedValue = "System.Date" Then 'Date
+                If filtro.SelectedValue.ToString = "System.DateTime" Or filtro.SelectedValue.ToString = "System.Date" Then 'Date
                     'Filter by full date
                     If last_connection = My.Settings.foxConnection Then 'Foxpro needs the en-US date format
                         If Condition.Text = "<->" Then
@@ -168,7 +168,7 @@
     End Sub
 
     Private Sub search_Click(sender As Object, e As EventArgs) Handles search.Click
-        RaiseEvent CSearch_Click(sender)
+        RaiseEvent CSearchClick(sender)
     End Sub
 
     Private Sub reset_search_Click(sender As Object, e As EventArgs) Handles reset_search.Click
@@ -193,7 +193,7 @@
         MaxNumValue.Value = 0
         MaxNumValue.Maximum = 1
 
-        RaiseEvent CReset_Click(sender)
+        RaiseEvent CResetClick(sender)
     End Sub
 
     Private Sub print_Click(sender As Object, e As EventArgs) Handles print.Click
@@ -201,25 +201,25 @@
     End Sub
 
     Private Sub selectRow_Click(sender As Object, e As EventArgs) Handles selectRow.Click
-		RowSelected = True
-		RaiseEvent CSelect(sender, e)
-	End Sub
+        RowSelected = True
+        RaiseEvent CSelect(sender, e)
+    End Sub
 
-	Private Sub cancel_Click(sender As Object, e As EventArgs) Handles cancel.Click
-		RaiseEvent CCancel(sender, e)
-	End Sub
+    Private Sub cancel_Click(sender As Object, e As EventArgs) Handles cancel.Click
+        RaiseEvent CCancel(sender, e)
+    End Sub
 
-	'Routines and functions
-	Private Sub Condition_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Condition.SelectedIndexChanged
-		Condition.Visible = keyword.Visible.CompareTo(True)
-		If Condition.Visible = False Then
-			Condition.SelectedIndex = 0
-		End If
-		If Condition.Visible Then
-			MaxDateValue.Visible = DateValue.Visible And Condition.Text.Contains("<->")
-			MaxNumValue.Visible = NumValue.Visible And Condition.Text.Contains("<->")
-		End If
-		RaiseEvent CFiltro_IndexTextChanged()
-	End Sub
+    'Routines and functions
+    Private Sub Condition_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Condition.SelectedIndexChanged
+        Condition.Visible = keyword.Visible.CompareTo(True)
+        If Condition.Visible = False Then
+            Condition.SelectedIndex = 0
+        End If
+        If Condition.Visible Then
+            MaxDateValue.Visible = DateValue.Visible And Condition.Text.Contains("<->")
+            MaxNumValue.Visible = NumValue.Visible And Condition.Text.Contains("<->")
+        End If
+        RaiseEvent CFiltroIndexTextChanged()
+    End Sub
 
 End Class

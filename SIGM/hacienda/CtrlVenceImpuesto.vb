@@ -13,13 +13,13 @@
             sql(0) = "SELECT * FROM " & ext_vence & " WHERE periodo=" & año_menor
             vencimientos = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
             If vencimientos.Rows.Count > 0 Then
-                vence1.Text = Convert.ToString(vencimientos(0)("vence1"))
-                vence2.Text = Convert.ToString(vencimientos(0)("vence2"))
-                vence3.Text = Convert.ToString(vencimientos(0)("vence3"))
-                vence4.Text = Convert.ToString(vencimientos(0)("vence4"))
+                vence1.Text = Convert.ToString(vencimientos.Rows(0)("vence1"))
+                vence2.Text = Convert.ToString(vencimientos.Rows(0)("vence2"))
+                vence3.Text = Convert.ToString(vencimientos.Rows(0)("vence3"))
+                vence4.Text = Convert.ToString(vencimientos.Rows(0)("vence4"))
                 If impuesto <> "AUTOMOVIL" Then
-                    vence5.Text = Convert.ToString(vencimientos(0)("vence5"))
-                    vence6.Text = Convert.ToString(vencimientos(0)("vence6"))
+                    vence5.Text = Convert.ToString(vencimientos.Rows(0)("vence5"))
+                    vence6.Text = Convert.ToString(vencimientos.Rows(0)("vence6"))
                 End If
             End If
         End If

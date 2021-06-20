@@ -1,4 +1,4 @@
-﻿Public Class Proveedor
+﻿Class Proveedor
 	Shared Function BuscarPorPersona(keyword As String, difunto As Boolean, fisica As Boolean) As DataTable
 		Dim sql(2) As String
 		sql(0) = "SELECT persona.id as persona_id, persona.razon, persona.cuil, persona.fisica, 
@@ -56,23 +56,23 @@
 	End Function
 	Shared Function guardar(proveedor_id As Integer, ByVal per_id As Integer, ByVal actividad As Integer, ByVal responsable As Integer) As Integer
 		If proveedor_id <> 0 Then
-			DbMan.editDB(Nothing, My.Settings.CurrentDB,
+			DbMan.EditDB(Nothing, My.Settings.CurrentDB,
 							"UPDATE proveedor SET per_id=" & per_id & ", actividad_id=" & actividad & ",
 									responsable_iva_id=" & responsable & "
 							  WHERE id=" & proveedor_id)
 		Else
-			DbMan.editDB(Nothing, My.Settings.CurrentDB,
+			DbMan.EditDB(Nothing, My.Settings.CurrentDB,
 							"INSERT INTO proveedor(per_id, actividad_id, responsable_iva_id) 
 								 VALUES(" & per_id & ", " & actividad & ", " & responsable & ")")
 
 			Dim sql(0) As String
 			sql(0) = "SELECT MAX(id) as id FROM proveedor WHERE per_id=" & per_id
-			proveedor_id = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)(0)("id")
+			proveedor_id = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql).Rows(0)("id")
 		End If
 		Return proveedor_id
 	End Function
 	Shared Function eliminar(ByVal proveedor_id As Integer) As Integer
-		DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM proveedor WHERE id=" & proveedor_id)
+		DbMan.EditDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM proveedor WHERE id=" & proveedor_id)
 		Return 0
 	End Function
 End Class

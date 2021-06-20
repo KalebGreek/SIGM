@@ -1,7 +1,7 @@
-﻿Public Class Empleado
-    Shared ReadOnly SelectSQL As String = "SELECT empleado.id as empleado_id, persona.id as persona_id, persona.razon, persona.cuil, persona.difunto,
+﻿Class Empleado
+    Const SelectSQL As String = "SELECT empleado.id as empleado_id, persona.id as persona_id, persona.razon, persona.cuil, persona.difunto,
 								                  empleado.alta, empleado.jerarquia"
-    Shared ReadOnly TableSQL As String = "FROM persona INNER JOIN empleado ON persona.id=empleado.persona_id"
+    Const TableSQL As String = "FROM persona INNER JOIN empleado ON persona.id=empleado.persona_id"
 
     Shared Function BuscarPorPersona(keyword As String, difunto As Boolean) As DataTable
         Dim sql(3) As String
@@ -20,7 +20,7 @@
             End If
         End If
         sql(3) = " ORDER By Persona.razon"
-        Return DbMan.readDB(Nothing, My.Settings.CurrentDB, sql)
+        Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
     End Function
 
     Shared Function Seleccionar(empleado_id As Integer, persona_id As Integer) As DataTable
@@ -37,23 +37,23 @@
 
     Shared Function guardar(empleado_id As Integer, ByVal persona_id As Integer, alta As Date, jerarquia As String) As Integer
         If empleado_id <> 0 Then
-            DbMan.editDB(Nothing, My.Settings.CurrentDB,
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB,
                             "UPDATE empleado SET persona_id=" & persona_id & ", alta='" & alta & "',
 							        jerarquia='" & jerarquia & "'
 							  WHERE id=" & empleado_id)
         Else
-            DbMan.editDB(Nothing, My.Settings.CurrentDB,
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB,
                             "INSERT INTO empleado(persona_id, alta, jerarquia) 
 								 VALUES(" & persona_id & ", '" & alta & "', '" & jerarquia & "')")
 
             Dim sql(0) As String
             sql(0) = "SELECT MAX(id) as id FROM empleado WHERE persona_id=" & persona_id
-            empleado_id = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)(0)("id")
+            empleado_id = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql).Rows(0)("id")
         End If
         Return empleado_id
     End Function
     Shared Function eliminar(ByVal empleado_id As Integer) As Integer
-        DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM empleado WHERE id=" & empleado_id)
+        DbMan.EditDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM empleado WHERE id=" & empleado_id)
         Return 0
     End Function
 End Class

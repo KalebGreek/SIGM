@@ -1,6 +1,6 @@
 ﻿Public Class genModDialog
 
-	Public pageCount As Integer = 1
+	'Dim pageCount As Integer = 1
 	Public Event Csave()
 	Public Event Ccancel()
 	Public Event ClastPage()

@@ -1,5 +1,5 @@
-﻿Public Class Combustible
-	Public Class Receptor
+﻿Class Combustible
+    Public Class Receptor
         Shared Sub FillCategory(ByRef bs As BindingSource, ByRef target As ComboBox, ByRef vehiculo As Boolean)
             Dim sql(0) As String
             sql(0) = "SELECT * FROM hac_combustible_categoria_receptor 
@@ -7,34 +7,34 @@
             bs.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
             CtrlMan.Fill.SetAutoComplete(target, bs, "detalle", "id")
         End Sub
-        Shared Function ListAll(bs_cuenta As BindingSource, bs_categoria As BindingSource, id As Integer) As BindingSource
+        Shared Function ListAll(BSCuenta As BindingSource, BSCategoria As BindingSource, id As Integer) As BindingSource
             Dim sql(2) As String
             sql(0) = "SELECT Id as receptor_id, marca+' | '+dominio+' |'+STR(modelo) AS descripcion"
             sql(1) = "FROM hac_combustible_receptor"
 
-            If bs_categoria Is Nothing And bs_cuenta Is Nothing Then
-				If id > 0 Then
+            If BSCategoria Is Nothing And BSCuenta Is Nothing Then
+                If id > 0 Then
                     sql(2) = " WHERE hac_combustible_receptor.id=" & id
                 End If
-			ElseIf bs_categoria Is Nothing Then
-				If bs_cuenta.Position > -1 Then
-                    sql(2) = " WHERE cuenta=" & bs_cuenta.Current("orden")
+            ElseIf BSCategoria Is Nothing Then
+                If BSCuenta.Position > -1 Then
+                    sql(2) = " WHERE cuenta=" & BSCuenta.Current("orden")
                 End If
-			ElseIf bs_cuenta Is Nothing Then
-				If bs_categoria.Position > -1 Then
-                    sql(2) = " WHERE categoria_id=" & bs_categoria.Current("id")
+            ElseIf BSCuenta Is Nothing Then
+                If BSCategoria.Position > -1 Then
+                    sql(2) = " WHERE categoria_id=" & BSCategoria.Current("id")
                 End If
-			Else
-				If bs_categoria.Position > -1 And bs_cuenta.Position > -1 Then
-                    sql(2) = " WHERE cuenta=" & bs_cuenta.Current("orden") & " AND categoria_id=" & bs_categoria.Current("id")
+            Else
+                If BSCategoria.Position > -1 And BSCuenta.Position > -1 Then
+                    sql(2) = " WHERE cuenta=" & BSCuenta.Current("orden") & " AND categoria_id=" & BSCategoria.Current("id")
                 End If
-			End If
+            End If
 
             Dim bs As New BindingSource _
                 With {.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)}
 
             Return bs
-		End Function
+        End Function
         Shared Function Seleccionar(id As Integer) As DataTable
             Dim sql(3) As String
             sql(0) = "SELECT hac_combustible_receptor.id as receptor_id, cuenta, categoria_id,
@@ -48,8 +48,8 @@
         End Function
     End Class
 
-	Public Class Responsable
-		Shared Sub Fill(ByRef bs As BindingSource, ByRef target As ComboBox, receptor_id As Integer)
+    Public Class Responsable
+        Shared Sub Fill(ByRef bs As BindingSource, ByRef target As ComboBox, receptor_id As Integer)
             Dim sql(3) As String
             sql(0) = "SELECT hac_combustible_responsable.id as responsable_id, razon, cuil, persona_id"
             sql(1) = "FROM hac_combustible_responsable INNER JOIN persona
@@ -60,11 +60,11 @@
             bs.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
             CtrlMan.Fill.SetAutoComplete(target, bs, "razon", "responsable_id")
-		End Sub
-	End Class
+        End Sub
+    End Class
 
-	Public Class Ticket
-		Shared Function Find(Optional receptor_id As Integer = -1, Optional last As Boolean = False) As DataTable
+    Public Class Ticket
+        Shared Function Find(Optional receptor_id As Integer = -1, Optional last As Boolean = False) As DataTable
             Dim sql(3) As String
 
             sql(0) = "SELECT hac_combustible_ticket.id AS ticket_id, hac_combustible_ticket.fecha,
@@ -93,17 +93,17 @@
 
             Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
         End Function
-        Shared Function ReturnLastTicketID(receptor_id As Integer) As Integer
+        Shared Function ReturnLastTicketID() As Integer
             Dim sql(0) As String
             sql(0) = "SELECT id FROM hac_combustible_ticket ORDER BY id DESC"
             Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-            Return dtab(0)("id")
+            Return dtab.Rows(0)("id")
         End Function
 
         Shared Sub Detail(ByRef visor As DataGridView, ByRef bs As BindingSource, ticket_id As Integer)
             Dim sql(2) As String
-            sql(0) =    "SELECT hac_combustible_items.Id as item_id, 
+            sql(0) = "SELECT hac_combustible_items.Id as item_id, 
 							   hac_combustible_tipo.descripcion,
 							   hac_combustible_items.litros, 
 							   hac_combustible_items.unidades, 
@@ -116,7 +116,7 @@
             CtrlMan.DataGridViewTools.Load(visor, bs, dtab)
         End Sub
 
-		Shared Function SelectTicket(id As Integer) As DataTable
+        Shared Function SelectTicket(id As Integer) As DataTable
             Dim sql(2) As String
             sql(0) = "SELECT hac_combustible_ticket.id AS ticket_id, hac_combustible_ticket.proveedor_id,
 									  persona.razon AS proveedor_razon, persona.cuil AS proveedor_cuil,
@@ -139,35 +139,35 @@
         End Function
 
         Shared Function SaveTicket(id As Integer, proveedor_id As Integer, responsable_id As Integer, fecha As Date, ticket As Integer) As Boolean
-			'SQL
-			If id > 0 Then
-				DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE hac_combustible_ticket 
+            'SQL
+            If id > 0 Then
+                DbMan.EditDB(Nothing, My.Settings.CurrentDB, "UPDATE hac_combustible_ticket 
 							   SET proveedor_id=" & proveedor_id & ", responsable_id=" & responsable_id & ",
 								   fecha=#" & fecha & "#, ticket=" & ticket & ", 
 								   user_id=" & My.Settings.UserId & "
 							 WHERE hac_combustible_ticket.id=" & id)
-			Else
-				DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO hac_combustible_ticket(proveedor_id, responsable_id, 
+            Else
+                DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO hac_combustible_ticket(proveedor_id, responsable_id, 
 															   fecha, ticket, total, user_id) 
 										    			VALUES(" & proveedor_id & ", " & responsable_id & ", #" & Date.Today & "#, 0,
 															   0, " & My.Settings.UserId & ")")
-			End If
-			Return True
-		End Function
-	End Class
+            End If
+            Return True
+        End Function
+    End Class
 
-	Public Class Item
-		Shared Function FillTypeList(bs As BindingSource, target As ComboBox, displayColumn As String, valueColumn As String) As ComboBox
+    Public Class Item
+        Shared Function FillTypeList(bs As BindingSource, target As ComboBox, displayColumn As String, valueColumn As String) As ComboBox
             Dim sql(0) As String
             sql(0) = "SELECT id as tipo_id, descripcion, por_litro 
 										  FROM hac_combustible_tipo"
 
             bs.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-            CtrlMan.Fill.SetAutoComplete(target, bs, "descripcion", "tipo_id")
+            CtrlMan.Fill.SetAutoComplete(target, bs, displayColumn, valueColumn)
 
-			Return target
-		End Function
+            Return target
+        End Function
 
-	End Class
+    End Class
 End Class

@@ -1,8 +1,8 @@
 ﻿Imports Microsoft.Reporting.WinForms
-Public Class ModExpediente
-    Public dtab_exp As DataTable
-
-    Public Sub New(Optional exp As Integer = 0)
+Class ModExpediente
+    'Public dtab_exp As DataTable
+    Public exp As Integer
+    Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
@@ -12,22 +12,22 @@ Public Class ModExpediente
             End If
             exp = Val(InputBox("Ingrese Nº de Expediente", "Seleccionar Expediente", exp))
             If exp <> Nothing Then
-                dtab_exp = Oprivadas.Expediente.Seleccionar(exp)
-                If dtab_exp.Rows.Count = 0 Then
-                    dtab_exp = Oprivadas.Expediente.Generar(exp)
+                bs_expediente.DataSource = Oprivadas.Expediente.Seleccionar(exp)
+                If bs_expediente.Count = 0 Then
+                    bs_expediente.DataSource = Oprivadas.Expediente.Generar(exp)
                 End If
             End If
-        Loop Until exp = Nothing Or dtab_exp Is Nothing = False
+        Loop Until exp = Nothing Or bs_expediente.DataSource Is Nothing = False
         If exp = Nothing Then
-            dtab_exp = Nothing
+            bs_expediente.DataSource = Nothing
         Else
-            Oprivadas.Expediente.Bloquear(dtab_exp(0)("id"), True)
-            cargar(dtab_exp)
+            Oprivadas.Expediente.Bloquear(bs_expediente.Current("id"), True)
+            cargar(bs_expediente)
         End If
     End Sub
 
     Private Sub ModExpediente_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
-        If Me.Visible And dtab_exp Is Nothing Then
+        If Me.Visible And bs_expediente.DataSource Is Nothing Then
             Me.Close()
         Else
             inicio_obra.MaxDate = Date.Today
@@ -50,22 +50,22 @@ Public Class ModExpediente
                 answer = MsgBox("¿Desea guardar este expediente temporal bajo el N° " & expediente.Text & "?",
                                 MsgBoxStyle.YesNoCancel, "Guardar Expediente")
                 If answer = MsgBoxResult.Yes Then 'Asignar N° de Expediente y quitar temporal
-                    DbMan.editDB(Nothing, My.Settings.foxConnection,
+                    DbMan.EditDB(Nothing, My.Settings.foxConnection,
                                 "UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
                                   WHERE id=" & opr_id.Text)
                     Me.Close()
                 End If
             End If
-            dtab_exp = Oprivadas.Expediente.Seleccionar(expediente.Text)
-            cargar(dtab_exp)
+            bs_expediente.DataSource = Oprivadas.Expediente.Seleccionar(expediente.Text)
+            cargar(bs_expediente)
         End If
     End Sub
 
     Private Sub grupo_exp_TabIndexChanged(sender As Object, e As EventArgs) Handles grupo_exp.TabIndexChanged
         If Me.Visible Then
-            dtab_exp = Oprivadas.Expediente.Seleccionar(expediente.Text)
-            If dtab_exp Is Nothing = False Then
-                cargar(dtab_exp)
+            bs_expediente.DataSource = Oprivadas.Expediente.Seleccionar(expediente.Text)
+            If bs_expediente.DataSource Is Nothing = False Then
+                cargar(bs_expediente)
             End If
         End If
     End Sub
@@ -91,64 +91,67 @@ Public Class ModExpediente
     '###### END GUI #############################################################################################
 
     '###### VALIDATION ##########################################################################################
-    Private Sub cargar(registro As DataTable)
+    Private Sub cargar(registro As BindingSource)
         razon.Clear()
         cuil.Clear()
         matricula.Clear()
 
-        If registro.Rows.Count > 0 Then
-            'Reset
-            check_fin_obra.Checked = False
-            fin_obra.Value = fin_obra.MinDate
-            ruta_fin_obra.Text = ""
+        With registro
+            If .Count > 0 Then
+                'Reset
+                check_fin_obra.Checked = False
+                fin_obra.Value = fin_obra.MinDate
+                ruta_fin_obra.Text = ""
 
-            'Estos controles estan fuera de GrupoExp
-            opr_id.Text = registro(0)("id")
-            temporal.Visible = registro(0)("temporal")
-            expediente.Text = registro(0)("expediente")
-            '##### EXPEDIENTE (base)
-            CtrlMan.LoadAllControls(registro(0), grupoExp)
-            'Tareas se carga al reves por alguna razon, asi que no sirve
-            tarea.Text = registro(0)("tarea").ToString
-            tarea2.Text = registro(0)("tarea2").ToString
-            'Mostrar final de obra
-            check_fin_obra.Checked = fin_obra.Value > fin_obra.MinDate
+                'Estos controles estan fuera de GrupoExp
+                opr_id.Text = .Current("id")
+                temporal.Visible = .Current("temporal")
+                expediente.Text = .Current("expediente")
+                '##### EXPEDIENTE (base)
+                CtrlMan.LoadControlData(registro, grupoExp)
+                'Tareas se carga al reves por alguna razon, asi que no sirve
+                tarea.Text = .Current("tarea").ToString
+                tarea2.Text = .Current("tarea2").ToString
+                'Mostrar final de obra
+                check_fin_obra.Checked = fin_obra.Value > fin_obra.MinDate
 
-            'CARGAR COPIAS DIGITALES
-            Dim copias As DataTable = Documento.OPrivadas.BuscarDoc(opr_id.Text, "FINAL DE OBRA")
-            For Each dr As DataRow In copias.Rows
-                ruta_fin_obra.Text = dr("ruta").ToString
-            Next
+                'CARGAR COPIAS DIGITALES
+                Using copias As DataTable = Documento.OPrivadas.BuscarDoc(opr_id.Text, "FINAL DE OBRA")
+                    For Each dr As DataRow In copias.Rows
+                        ruta_fin_obra.Text = dr("ruta").ToString
+                    Next
+                End Using
 
-            '##### Cargar personas
-            bs_resp.Filter = ""
-            bs_resp.Sort = ""
-            bs_resp.Position = -1
-            bs_resp.DataSource = Oprivadas.Expediente.ListarResponsables(expediente.Text)
-            CtrlMan.DataGridViewTools.Load(consulta_resp, bs_resp)
-            'INMUEBLES
-            bs_catastro.Filter = ""
-            bs_catastro.Sort = ""
-            bs_catastro.Position = -1
-            bs_catastro.DataSource = Catastro.ListarInmueblePorExpediente(expediente.Text)
-            CtrlMan.DataGridViewTools.Load(consulta_inmueble, bs_catastro)
-            'PROFESIONAL
-            profesional_id.Text = registro(0)("profesional_id").ToString
+                '##### Cargar personas
+                bs_resp.Filter = ""
+                bs_resp.Sort = ""
+                bs_resp.Position = -1
+                bs_resp.DataSource = Oprivadas.Expediente.ListarResponsables(expediente.Text)
+                CtrlMan.DataGridViewTools.Load(consulta_resp, bs_resp)
+                'INMUEBLES
+                bs_catastro.Filter = ""
+                bs_catastro.Sort = ""
+                bs_catastro.Position = -1
+                bs_catastro.DataSource = Catastro.ListarInmueblePorExpediente(expediente.Text)
+                CtrlMan.DataGridViewTools.Load(consulta_inmueble, bs_catastro)
+                'PROFESIONAL
+                profesional_id.Text = .Current("profesional_id").ToString
 
-            If profesional_id.Text > 0 Then
-                Dim prof As DataTable = Profesional.Seleccionar(profesional_id.Text, 0)
-
-                If prof.Rows.Count > 0 Then
-                    CtrlMan.LoadAllControls(prof(0), Panel3)
+                If profesional_id.Text > 0 Then
+                    Using prof As DataTable = Profesional.Seleccionar(profesional_id.Text, 0)
+                        If prof.Rows.Count > 0 Then
+                            CtrlMan.LoadControlData(prof, Panel3)
+                        End If
+                    End Using
                 Else
                     MsgBox("Profesional no válido.", MsgBoxStyle.Exclamation)
                     profesional_id.Text = 0
                 End If
             End If
-        End If
+        End With
     End Sub
 
-    Private Function validar(Optional pagina As Integer = -1) As MsgBoxResult
+    Private Function Validar(Optional pagina As Integer = -1) As MsgBoxResult
         'Hay que reformatear esto para que salte con actualizar()
         'La idea sería mostrar los datos en un msgbox cuando apretás "guardar".
         'Si todo sale bien, te muestra el resumen y pregunta, si faltan datos esenciales,
@@ -318,7 +321,7 @@ Public Class ModExpediente
     Private Sub mod_prof_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mod_prof.Click
         Dim bs As BindingSource = Persona.Seleccionar(Me, "PROFESIONAL")
         If bs.Position > -1 Then
-            CtrlMan.LoadAllControls(bs.Current.Row, Panel3)
+            CtrlMan.LoadControlData(bs, Panel3)
         End If
         bs.Dispose()
     End Sub
@@ -450,9 +453,9 @@ Public Class ModExpediente
             parametros = ParametrosReporte.ObrasPrivadas.ListarInmuebles(parametros, bs_catastro)
 
             'Crear informe
-            Using formEXP As New VisorReporte("Caratula de Expediente")
+            Using formEXP As New Formularios("Caratula de Expediente")
                 With formEXP
-                    .mostrar("OPRIVADAS\REPORTES\CAR", parametros)
+                    .Mostrar("REPORTES\CAR", parametros)
                     .ShowDialog()
                 End With
             End Using
@@ -483,9 +486,9 @@ Public Class ModExpediente
             parametros = ParametrosReporte.ObrasPrivadas.ListarInmuebles(parametros, bs_catastro)
 
             'Crear informe
-            Using formEXP As New VisorReporte("Resumen de Expediente")
+            Using formEXP As New Formularios("Resumen de Expediente")
                 With formEXP
-                    .mostrar("OPRIVADAS\REPORTES\EXP", parametros)
+                    .Mostrar("REPORTES\EXP", parametros)
                     .ShowDialog()
                     .Dispose()
                 End With

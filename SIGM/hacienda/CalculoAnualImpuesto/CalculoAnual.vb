@@ -1,37 +1,39 @@
-﻿Public Class CalculoAnual
-	Public Class sql
+﻿Class CalculoAnual
+	Public Class Sql
 		Public Class Agua
 			Shared Function CargarTablas(dtab As DataTable(), periodo As Integer, CuentaInicial As Integer) As DataTable()
 				Dim sql(0) As String
 
-				'Zonas
-				sql(0) = "SELECT * FROM aguzona"
-				dtab(0) = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+				If dtab Is Nothing = False Then
+					'Zonas
+					sql(0) = "SELECT * FROM aguzona ORDER BY tipo"
+					dtab(0) = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-				'Vencimientos
-				sql(0) = "SELECT * FROM aguvence
-										 WHERE periodo=" & periodo
-				dtab(1) = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+					'Vencimientos
+					sql(0) = "SELECT * FROM aguvence
+								WHERE periodo=" & periodo
+					dtab(1) = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-				'Cuentas
-				sql(0) = "SELECT codigo, potable, comercial, industrial FROM aguas
-							WHERE codigo=>" & CuentaInicial & " ORDER BY codigo"
-				dtab(2) = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+					'Cuentas
+					sql(0) = "SELECT codigo, tipo, cantidad
+								FROM aguas WHERE codigo=>" & CuentaInicial & " ORDER BY codigo"
+					dtab(2) = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-				'Deudas
-				sql(0) = "SELECT * FROM agucue 
-							WHERE codigo=>" & CuentaInicial & " AND periodo=" & periodo
-				dtab(3) = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
-
+					'Deudas
+					sql(0) = "SELECT * FROM agucue 
+								WHERE codigo=>" & CuentaInicial & " AND periodo=" & periodo & "
+								ORDER BY codigo"
+					dtab(3) = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+				End If
 				Return dtab
 			End Function
 			Shared Function VerificarCuota(cuentas As DataRow, cuota As Integer, periodo As Integer,
 											deudas As DataTable) As Boolean
 
-				Dim result As DataRow() = deudas.Select("codigo=" & cuentas("codigo") & " And agrupado='' AND mes=" & cuota & " 
-															  And periodo=" & periodo)
+				Dim result As DataRow() = deudas.Select("codigo=" & cuentas("codigo").ToString & " And agrupado='' AND mes=" & cuota.ToString & " 
+															  And periodo=" & periodo.ToString)
 
-				Return result.Count = 0
+				Return result.Length = 0
 			End Function
 			Shared Function InsertarCuota(registro As DataRow, cuota As Integer, periodo As Integer, importe As Decimal,
 									  vence As DataRow, reside As Decimal, comercio As Decimal, industria As Decimal, franqueo As Decimal) As String
@@ -39,9 +41,9 @@
 				Return "INSERT INTO agucue(tipo, mes, agrupado, periodo, codigo, cedulon,
                                                 importe, original, vencio, pagado, pago,
                                                 reside, comercio, industria, contado, franqueo, link)
-										VALUES('N', " & cuota & ", '', " & periodo & ", " & registro("codigo") & ", 0,
-												" & importe & ", " & importe & ", {" & vence("vence" & cuota) & "}, 0, {},
-												" & reside & ", " & comercio & ", " & industria & ", 0, " & franqueo & ", '')"
+										VALUES('N', " & cuota.ToString & ", '', " & periodo.ToString & ", " & registro("codigo").ToString & ", 0,
+												" & importe.ToString & ", " & importe.ToString & ", {" & vence("vence" & cuota).ToString & "}, 0, {},
+												" & reside.ToString & ", " & comercio.ToString & ", " & industria.ToString & ", 0, " & franqueo.ToString & ", '')"
 			End Function
 		End Class
 		Public Class Auto
@@ -51,7 +53,7 @@
 				Dim result As DataRow() = deudas.Select("codigo=" & registro("codigo") & " And moratoria='N' AND cuota=" & cuota & " 
 															  And ano=" & periodo)
 
-				Return result.Count = 0
+				Return result.any = 0
 			End Function
 			Shared Function InsertarCuota(registro As DataRow, cuota As Integer, periodo As Integer,
 									 importe As Decimal, vence As DataRow) As String
@@ -111,7 +113,7 @@
 				Dim result As DataRow() = deudas.Select("codigo=" & registro("codigo") & " And agrupado='' AND mes=" & cuota & " 
 															  AND periodo=" & periodo)
 
-				Return result.Count = 0
+				Return result.Any = 0
 			End Function
 			Shared Function InsertarCuota(registro As DataRow, cuota As Integer, periodo As Integer, importe As Decimal,
 								 vence As DataRow, minimo As Decimal, basica As Decimal, baldio As Decimal, jubilado As Decimal, pasillo As Decimal,
@@ -162,7 +164,7 @@
 
 				Dim result As DataRow() = deudas.Select("codigo=" & registro("codigo") & " AND bimestre=" & cuota)
 
-				Return result.Count = 0
+				Return result.Any = 0
 			End Function
 
 			Shared Function InsertarCuota(registro As DataRow, cuota As Integer, periodo As Integer, minimo As Decimal,
@@ -177,11 +179,10 @@
 		End Class
 		Public Class Sepelio
 			Shared Function VerificarCuota(registro As DataRow, periodo As Integer, deudas As DataTable) As Boolean
-
 				Dim result As DataRow() = deudas.Select("codigo=" & registro("codigo") & " AND agrupado='' AND mes=1
 														 AND periodo=" & periodo)
 
-				Return result.Count = 0
+				Return result.Any = 0
 			End Function
 			Shared Function InsertarCuota(registro As DataRow, periodo As Integer, importe As Decimal, vence As Date) As String
 				Return "INSERT INTO sepecue(tipo, mes, agrupado, periodo, codigo, 

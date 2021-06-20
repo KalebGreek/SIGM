@@ -1,21 +1,21 @@
-﻿Public Class Recaudacion
-	Shared Function ConsultarDeuda(ByVal impuesto As String, deudor As Boolean,
-					  ByVal filtro_cuenta As Integer, ByVal keyword As String,
-					   ByVal fecha As String, interes As String,
-					   ByVal filtro_importe As Boolean, ByVal filtro_mora As Boolean,
-					   ByVal deudamin As Integer, ByVal deudamax As Integer,
-					   ByVal minyear As Integer, ByVal maxyear As Integer,
-					   ByVal deuda_agrupada As Boolean, ByVal deuda_por_periodo As Boolean,
-					   ByVal deuda_por_cuenta As Boolean, ByRef progreso As ToolStripProgressBar) As DataTable
+﻿Class Recaudacion
+    Shared Function ConsultarDeuda(ByVal impuesto As String, deudor As Boolean,
+                      ByVal filtro_cuenta As Integer, ByVal keyword As String,
+                       ByVal fecha As String, interes As String,
+                       ByVal filtro_importe As Boolean, ByVal filtro_mora As Boolean,
+                       ByVal deudamin As Integer, ByVal deudamax As Integer,
+                       ByVal minyear As Integer, ByVal maxyear As Integer,
+                       ByVal deuda_agrupada As Boolean, ByVal deuda_por_periodo As Boolean,
+                       ByVal deuda_por_cuenta As Boolean, ByRef progreso As ToolStripProgressBar) As DataTable
 
 
 
-		progreso.Value = 5
+        progreso.Value = 5
         'Columnas calculadas
         interes = interes.Replace(",", ".") 'Evita error en consulta
         Dim columna_mora As String = " ROUND((" & col_importe & " * ((DATE() - " & col_vence & ") * " & interes & ")), 2)"
 
-		Dim consulta As New DataTable
+        Dim consulta As New DataTable
         '### Crear consulta
         Dim sql(5) As String
         sql(0) = "SELECT " & ext_persona & ".codigo As codigo, " & ext_persona & ".razon As razon,"
@@ -47,7 +47,7 @@
             End If
             '### Rango de años o único año?
             If deuda_por_periodo Then
-				If minyear = maxyear Then
+                If minyear = maxyear Then
                     sql(2) += " " & col_periodo & "=" & minyear & " And"
                 Else
                     sql(2) += " " & col_periodo & "=>" & minyear & " And " & col_periodo & "<=" & maxyear & " And"
@@ -59,7 +59,7 @@
             End If
             '### Valor específico?
             If (keyword Is Nothing = False And deuda_por_cuenta) Or deuda_agrupada Then
-				If filtro_cuenta = 0 And Val(keyword) > 0 Then
+                If filtro_cuenta = 0 And Val(keyword) > 0 Then
                     sql(2) += " " & ext_persona & ".codigo=" & Val(keyword) & " And"
                 ElseIf filtro_cuenta = 1 And Val(keyword) > 999999 Then
                     sql(2) += " documento=" & Val(keyword) & " And"
@@ -72,7 +72,7 @@
                 ElseIf filtro_cuenta = 3 And Val(keyword) > 0 Then
                     sql(2) += " " & ext_persona & ".actividad=" & Val(keyword) & " AND"
                 End If
-			End If
+            End If
 
             'Borra el último AND antes de pasar a GROUP BY
             sql(2) = Microsoft.VisualBasic.Left(sql(2), Len(sql(2)) - 4)
@@ -80,7 +80,7 @@
 
 
 
-		If deuda_agrupada Then
+        If deuda_agrupada Then
             '### Límite mínimo y máximo de deuda total
             sql(3) = " GROUP BY " & ext_persona & " .codigo, " & ext_persona & ".razon "
 
@@ -92,21 +92,21 @@
                 sql(4) = " HAVING SUM(" & col_importe & " +" & columna_mora & ")"
             End If
 
-			If deudamax > deudamin Then
-				If deudamin = 0 Then            'Hasta
+            If deudamax > deudamin Then
+                If deudamin = 0 Then            'Hasta
                     sql(4) = sql(4) & " <" & Val(deudamax)
                 Else                            'Entre
                     sql(4) = sql(4) & " >" & Val(deudamin) & " AND " &
                     Microsoft.VisualBasic.Right(sql(4), Len(sql(4)) - 7) & "<" & Val(deudamax)
                 End If
-			ElseIf deudamin = deudamax Then     'Desde
+            ElseIf deudamin = deudamax Then     'Desde
                 sql(4) = sql(4) & " >" & Val(deudamin)
             End If
-		End If
+        End If
 
         'MsgBox(SQLSelect & SQLTable & SQLWhere)
         consulta = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
         progreso.Value = 10
-		Return consulta
-	End Function
+        Return consulta
+    End Function
 End Class

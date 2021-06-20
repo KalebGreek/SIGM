@@ -1,4 +1,4 @@
-﻿Public Class ModIntimaciones
+﻿Class ModIntimaciones
 
     Public pageCount As Integer = 1
 
@@ -25,7 +25,7 @@
         sql(0) = "SELECT " & ext_persona & ".razon FROM " & ext_persona & " WHERE codigo=" & codigo.Text
         dtab = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
         If dtab.Rows.Count > 0 Then
-            razon.Text = Trim(dtab(0)("razon"))
+            razon.Text = Trim(dtab.Rows(0)("razon"))
         End If
     End Sub
 
@@ -41,7 +41,7 @@
                     If .Position > -1 Then
                         If DialogResult.Yes = MessageBox.Show("Desea eliminar este registro?", "Eliminar registro", MessageBoxButtons.YesNo, MessageBoxIcon.Question) Then
                             Dim ing As Date = .Current("ingreso")
-                            DbMan.editDB(Nothing, My.Settings.foxConnection,
+                            DbMan.EditDB(Nothing, My.Settings.foxConnection,
                                          "DELETE FROM hac_intimaciones
                                            WHERE codigo=" & codigo.Text & " AND servicio='" & servicio.Text & "'
                                              AND ingreso={^" & ing.Year & "/" & ing.Month & "/" & ing.Day & "}
@@ -82,7 +82,7 @@
         sql = "INSERT INTO hac_intimaciones(servicio, codigo, ingreso, observacion, estado)
                     VALUES('" & servicio.Text & "'," & codigo.Text & ",{^" & ing.Year & "/" & ing.Month & "/" & ing.Day & "},
                            '" & observacion.Text & "', '" & estado.Text & "')"
-        Return DbMan.editDB(Nothing, My.Settings.foxConnection, sql)
+        Return DbMan.EditDB(Nothing, My.Settings.foxConnection, sql)
     End Function
 
     Private Sub Listar(serv As String, cod As Integer)

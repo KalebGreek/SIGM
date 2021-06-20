@@ -1,4 +1,5 @@
-﻿Module EnvInit
+﻿Imports System.Collections.Generic
+Module EnvInit
 
     ' CARPETAS
     Public root As String = Environment.CurrentDirectory

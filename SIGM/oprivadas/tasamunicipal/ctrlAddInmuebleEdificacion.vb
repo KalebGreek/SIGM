@@ -1,17 +1,16 @@
-﻿Public Class ctrlAddInmuebleEdificacion
-    Public bs_categoria_inmueble As New BindingSource
+﻿Class ctrlAddInmuebleEdificacion
     Public Event manage_edificacion(sender As Object, target As Object)
 
-    Public Sub New(Optional dtab_indice_inmueble As DataTable = Nothing, Optional can_delete_self As Boolean = True)
+    Public Sub New(Optional DtabIndiceInmueble As DataTable = Nothing, Optional CanDeleteSelf As Boolean = True)
 
         ' This call is required by the designer.
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        bs_categoria_inmueble.DataSource = dtab_indice_inmueble
+        bs_categoria_inmueble.DataSource = DtabIndiceInmueble
 
-        eliminar.Visible = can_delete_self
-        agregar.Visible = can_delete_self.CompareTo(True)
+        eliminar.Visible = CanDeleteSelf
+        agregar.Visible = CanDeleteSelf.CompareTo(True)
     End Sub
 
     Private Sub ctlAddInmuebleEdificacion_Load(sender As Object, e As EventArgs) Handles Me.Load

@@ -21,7 +21,7 @@
                 Keyword.Mask = "AAAAAAAAAAAAA"
             End If
         End With
-        Keyword.Visible = zona.Visible.CompareTo(True)
+        Keyword.Visible = CBool(zona.Visible.CompareTo(True))
     End Sub
 
     Private Sub Zona_VisibleChanged(sender As Object, e As EventArgs) Handles zona.VisibleChanged
@@ -40,7 +40,7 @@
         Dim dtab As New DataTable
         With Filtro1.Text
             If .Contains("PARTIDA") Then
-                dtab = Catastro.BuscarPorPartida(zona.Text, circ.Text, secc.Text, manz.Text, parc.Text, lote.Text)
+                dtab = Catastro.BuscarPorPartida(CInt(zona.Text), CInt(circ.Text), CInt(secc.Text), CInt(manz.Text), CInt(parc.Text), CInt(lote.Text))
             ElseIf .Contains("DIRECCION") Then
                 dtab = Catastro.BuscarPorDireccion(Trim(Keyword.Text))
             ElseIf .Contains("BARRIO") Then

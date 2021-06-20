@@ -45,7 +45,6 @@
 
     '###### RECEPTORES 
     Private Sub FillReceptor()
-        Dim dtab As New DataTable
         If categoria.Enabled Or cuenta.Enabled Then
             If categoria.Enabled And cuenta.Enabled Then
                 bs_receptor = Combustible.Receptor.ListAll(bs_cuenta, bs_categoria, 0)

@@ -1,8 +1,6 @@
-﻿Public Class calcTMuniPlanosEdif
+﻿Imports System.Collections.Generic
+Class calcTMuniPlanosEdif
     Public help_source As New List(Of String)
-    Dim dtab_tasa_edificacion As New DataTable
-    Dim dtab_indice_inmueble As New DataTable
-    Dim bs_tasa_edificacion As New BindingSource
     Dim basico, ad_sismico, desc_renovacion, linea_muni1, linea_muni2, ad_linea_muni As Decimal
 
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -11,8 +9,7 @@
 
             sql(0) = "SELECT id as tasa_edificacion_id, articulo, valor, descripcion"
             sql(1) = "FROM opr_tasa_edificacion"
-            dtab_tasa_edificacion = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql, "opr_tasa_edificacion")
-            bs_tasa_edificacion.DataSource = dtab_tasa_edificacion
+            bs_tasa_edificacion.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql, "opr_tasa_edificacion")
 
             basico = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "basico"))("valor")
             ad_sismico = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "85b"))("valor")
@@ -24,8 +21,8 @@
             sql(0) = "SELECT id as tasa_edificacion_id, articulo, valor*alicuota as indice, descripcion"
             sql(1) = "FROM opr_tasa_edificacion WHERE visible=True ORDER BY descripcion"
 
-            dtab_indice_inmueble = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql, "opr_indice_inmueble")
-            Dim ctrl As New ctrlAddInmuebleEdificacion(dtab_indice_inmueble, False)
+            bs_indice_inmueble.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql, "opr_indice_inmueble")
+            Dim ctrl As New ctrlAddInmuebleEdificacion(bs_indice_inmueble.DataSource, False)
             lista_edificacion.Controls.Add(ctrl)
             AddHandler ctrl.manage_edificacion, AddressOf manage_edificacion
 
@@ -54,7 +51,7 @@
     'Custom events from AddInmuebleEdificacion add, delete, calculate
     Private Sub manage_edificacion(sender As Object, target As ctrlAddInmuebleEdificacion)
         If sender Is target.agregar Then
-            Dim ctrl As New ctrlAddInmuebleEdificacion(dtab_indice_inmueble, True)
+            Dim ctrl As New ctrlAddInmuebleEdificacion(bs_indice_inmueble.DataSource, True)
             lista_edificacion.Controls.Add(ctrl)
             AddHandler ctrl.manage_edificacion, AddressOf manage_edificacion
 

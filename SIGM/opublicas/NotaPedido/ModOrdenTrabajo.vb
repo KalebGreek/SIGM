@@ -11,7 +11,7 @@
     Sub Cargar(id As Integer)
 		If id > 0 Then
 			nota_pedido_id.Text = id
-			CtrlMan.LoadAllControls(NotaPedido.Seleccionar(id), Me)
+			CtrlMan.LoadControls(NotaPedido.Seleccionar(id), Me)
 		End If
 	End Sub
 End Class

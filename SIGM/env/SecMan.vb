@@ -1,86 +1,87 @@
-﻿Imports System.Net.NetworkInformation
-Public Class SecMan 'Security Manager
+﻿Imports System.Data
+Imports System.Net.NetworkInformation
+Class SecMan 'Security Manager
     ' SEGURIDAD
     'Login functions
     Shared Function ValidateUser(user As String, pass As String) As Integer
         If Len(user) >= 5 And Len(pass) >= 5 Then
             Dim sql(5) As String
             sql(0) = "SELECT id, usuario, pass FROM usuarios WHERE usuario='" & user & "' AND pass ='" & pass & "'"
-            Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
-
-            If dtab Is Nothing Then
-                Return -1
-            Else
-                If dtab.Rows.Count > 0 Then 'Contraseña válida
-                    Return dtab(0)("id")
-                ElseIf dtab.Rows.Count = 0 Then
+            Using dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+                If dtab Is Nothing Then
                     Return -1
+                Else
+                    If dtab.Rows.Count = 0 Then 'Contraseña válida
+                        Return -1
+                    End If
+                    Return dtab.Rows(0)("id")
                 End If
-            End If
+            End Using
         Else
             Return -1
         End If
     End Function
     Shared Function RegisterLogon(user_id As Integer, lock As Boolean) As Boolean
         Dim fecha_hora As String = Date.Today.ToShortDateString & " " & TimeOfDay.ToShortTimeString
-        Dim token As String = getCpuId()
+        Dim token As String = GetCpuId()
         Dim equipo As String = Environment.MachineName
         Dim sql(5) As String
         sql(0) = "SELECT id, fecha_hora, user_id, token, equipo, sesion 
                     FROM usr_log
                    WHERE user_id=" & user_id & " ORDER BY id DESC"
         'Últimos accesos
-        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        Using dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-
-        If lock Then 'Iniciar sesion
-            If dtab.Rows.Count > 0 Then
-                If dtab(0)("token").ToString = token Then 'Sesion iniciada en este equipo
-                    If dtab(0)("sesion") Then
-                        'Sin cambios
-                    ElseIf dtab(0)("sesion") = False Then 'Agregar registro a historial
-                        DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)
+            If lock Then 'Iniciar sesion
+                If dtab.Rows.Count > 0 Then
+                    If dtab.Rows(0)("token").ToString = token Then 'Sesion iniciada en este equipo
+                        If dtab.Rows(0)("sesion") Then
+                            'Sin cambios
+                        ElseIf dtab.Rows(0)("sesion").ToString = False Then 'Agregar registro a historial
+                            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)
 										 VALUES(" & user_id & ", '" & fecha_hora & "' ,
 												'" & token & "', '" & equipo & "', " & lock & ")")
-                    End If
-                ElseIf dtab(0)("token").ToString <> token Then  'Sesión iniciada en otro equipo
-                    If MsgBoxResult.Yes = MsgBox("Sesion abierta en " & dtab(0)("equipo") & ". Presione SI para continuar, NO para salir",
-                                                  MsgBoxStyle.YesNo, "Sesion iniciada en otro equipo") Then
+                        End If
+                    ElseIf dtab.Rows(0)("token").ToString <> token Then  'Sesión iniciada en otro equipo
+                        If MsgBoxResult.Yes = MsgBox("Sesion abierta en " & dtab.Rows(0)("equipo").ToString & ". Presione SI para continuar, NO para salir",
+                                                      MsgBoxStyle.YesNo, "Sesion iniciada en otro equipo") Then
 
-                        'Iniciar sesion en este equipo, cerrar sesión de accesos anteriores
-                        DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE usr_log Set sesion=False WHERE user_id=" & user_id)
+                            'Iniciar sesion en este equipo, cerrar sesión de accesos anteriores
+                            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "UPDATE usr_log Set sesion=False WHERE user_id=" & user_id)
 
-                        DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)
+                            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)
 											     VALUES(" & user_id & ", '" & fecha_hora & "' ,
 														'" & token & "', '" & equipo & "', " & lock & ")")
 
-                    Else 'No iniciar sesion en este equipo
-                        Return False
+                        Else 'No iniciar sesion en este equipo
+                            Return False
+                        End If
                     End If
-                End If
 
-            ElseIf dtab.Rows.Count = 0 Then 'No hay registros de inicio de sesion
-                DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
-                                  " VALUES(" & user_id & ", '" & fecha_hora & "' ," &
-                                  " '" & token & "', '" & equipo & "', True)")
+                ElseIf dtab.Rows.Count = 0 Then 'No hay registros de inicio de sesion
+                    DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
+                                      " VALUES(" & user_id & ", '" & fecha_hora & "' ," &
+                                      " '" & token & "', '" & equipo & "', True)")
+                End If
+            Else 'Cerrar sesion correctamente
+                DbMan.EditDB(Nothing, My.Settings.CurrentDB, "UPDATE usr_log SET sesion=" & lock & " WHERE user_id=" & user_id)
             End If
-        Else 'Cerrar sesion correctamente
-            DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE usr_log SET sesion=" & lock & " WHERE user_id=" & user_id)
-        End If
+        End Using
 
         Return True
     End Function
-    Shared Function Privileges(user_id As Integer) As launcher
+    Shared Sub Privileges(owner As Form, user_id As Integer)
         Dim inicio As New launcher
         Dim sql(0) As String
-        sql(0) = "SELECT * FROM usuarios WHERE id=" & user_id
-        'Leer
-        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+            sql(0) = "SELECT * FROM usuarios WHERE id=" & user_id
+            'Leer
+            Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
         'Cargar
-        My.Settings.delete_enabled = dtab(0)("delete_permission")
-        CtrlMan.LoadAllControls(dtab(0), inicio)
-        Return inicio
-    End Function
+        My.Settings.delete_enabled = dtab.Rows(0)("delete_permission")
+        CtrlMan.LoadControlData(dtab, inicio)
+            inicio.ShowDialog(owner)
+        inicio.Dispose()
+    End Sub
 
     'Read MAC or CPU to identify user/computer
     Shared Function GetMacAddress() As String
@@ -119,7 +120,7 @@ Public Class SecMan 'Security Manager
 
         Dim cpu_ids As String = ""
         For Each cpu As Object In processors
-            cpu_ids = cpu_ids & ", " & cpu.ProcessorId
+            cpu_ids = cpu_ids & ", " & cpu.ProcessorId.ToString
         Next cpu
         If cpu_ids.Length > 0 Then cpu_ids =
             cpu_ids.Substring(2)

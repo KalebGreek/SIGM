@@ -21,25 +21,23 @@
 			conexion_pgsql.Text = My.Settings.pgsqlCon_disabled
 		End If
 
-		cargar_tablas_ext()
-	End Sub
+        CargarTablasExternas()
+    End Sub
 
     ' GUI
     Private Sub RestablecerToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RestablecerToolStripMenuItem.Click
 
-		cargar_tablas_ext()
+        CargarTablasExternas()
 
-		RestablecerToolStripMenuItem.Enabled = False
+        RestablecerToolStripMenuItem.Enabled = False
 	End Sub
 	Private Sub CerrarToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CerrarSinGuardarToolStripMenuItem.Click
-		Dim dtab_con As New DataTable
-		If MsgBox("¿Desea guardar los cambios?", MsgBoxStyle.YesNo, "Configuración") = MsgBoxResult.Yes Then
-			'Guardar conexiones
-
-			RestablecerToolStripMenuItem.Enabled = False
-			MsgBox("Configuración guardada correctamente.")
-		End If
-		Me.Close()
+        If MsgBox("¿Desea guardar los cambios?", MsgBoxStyle.YesNo, "Configuración") = MsgBoxResult.Yes Then
+            'Guardar conexiones
+            RestablecerToolStripMenuItem.Enabled = False
+            MsgBox("Configuración guardada correctamente.")
+        End If
+        Me.Close()
 	End Sub
 
     ' VALIDACION
@@ -76,17 +74,16 @@
 		Dim d, m, y, cuenta, vence, pago, periodo As String
 
         d = Today.Day
-		m = Today.Month
-		y = Today.Year
+        m = Today.Month
+        y = Today.Year
 
-		cuenta = ""
-		vence = ""
-		pago = ""
-		periodo = ""
+        cuenta = ""
+        vence = ""
+        pago = ""
+        periodo = ""
 
 
-
-		For imp As Integer = 0 To 4 Step 1 '5 impuestos
+        For imp As Integer = 0 To 4 Step 1 '5 impuestos
             If imp = 0 Then 'AGUA
                 cuenta = agua_cuentas.Text
                 vence = "vencio"
@@ -109,33 +106,30 @@
                 periodo = "ano"
             ElseIf imp = 4 Then 'SEPE
                 cuenta = sepe_cuentas.Text
-                vence = "vencio"
-                pago = "pago"
-                periodo = "periodo"
-            End If
-            DbMan.editDB(Nothing, conexion_fox.Text,
-                         "UPDATE " & cuenta & " SET " & vence & "=" & pago & " WHERE " & vence & " IS NULL AND " & pago & " IS NOT NULL")
+                    vence = "vencio"
+                    pago = "pago"
+                    periodo = "periodo"
+                End If
+            DbMan.EditDB(Nothing, conexion_fox.Text,
+                             "UPDATE " & cuenta & " SET " & vence & "=" & pago & " WHERE " & vence & " IS NULL AND " & pago & " IS NOT NULL")
 
             'Si no funciona
             Dim sql(5) As String
-            sql(0) = "SELECT codigo, " & periodo & ", " & vence & " WHERE " & vence & " Is NULL FROM " & cuenta
+                sql(0) = "SELECT codigo, " & periodo & ", " & vence & " WHERE " & vence & " Is NULL FROM " & cuenta
 
-            Dim dtab As DataTable = DbMan.ReadDB(Nothing, conexion_fox.Text, sql)
+            Dim dtab As DataTable = ReadDB(Nothing, conexion_fox.Text, sql)
 
             For Each drow As DataRow In dtab.Rows
                 DbMan.editDB(Nothing, conexion_fox.Text,
                         "UPDATE " & cuenta & " Set " & vence & "=#" & Today.Day & "/" & Today.Month & "/" & drow(periodo) & "#
                     WHERE codigo=" & drow("codigo") & " AND " & vence & " IS NULL")
             Next
+            dtab.Dispose()
         Next
-
-
-
-
 
     End Sub
 
-	Public Sub cargar_tablas_ext()
+    Public Sub CargarTablasExternas()
         Dim dtab_ext As New DataTable With {
             .Locale = System.Globalization.CultureInfo.CurrentCulture
         }
@@ -146,64 +140,64 @@
 
         If dtab_ext.Rows.Count > 0 Then
             ' TABLAS EXTERNAS AGUA 
-            agua_personas.Text = dtab_ext(0)("personas")
-			agua_cuentas.Text = dtab_ext(0)("cuentas")
-			agua_historial.Text = dtab_ext(0)("historial")
-			agua_variables.Text = dtab_ext(0)("variables")
-			agua_vencimientos.Text = dtab_ext(0)("vencimientos")
-			agua_zonas.Text = dtab_ext(0)("zona")
-		End If
+            agua_personas.Text = dtab_ext.Rows(0)("personas")
+            agua_cuentas.Text = dtab_ext.Rows(0)("cuentas")
+            agua_historial.Text = dtab_ext.Rows(0)("historial")
+            agua_variables.Text = dtab_ext.Rows(0)("variables")
+            agua_vencimientos.Text = dtab_ext.Rows(0)("vencimientos")
+            agua_zonas.Text = dtab_ext.Rows(0)("zona")
+        End If
 
         sql(0) = "SELECT * FROM tablas_externas WHERE  personas='automovil'"
         dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
         If dtab_ext.Rows.Count > 0 Then
             ' TABLAS EXTERNAS AUTO 
-            auto_personas.Text = dtab_ext(0)("personas")
-			auto_cuentas.Text = dtab_ext(0)("cuentas")
-			auto_vencimientos.Text = dtab_ext(0)("vencimientos")
-			auto_tipo.Text = dtab_ext(0)("tipo")
-		End If
+            auto_personas.Text = dtab_ext.Rows(0)("personas")
+            auto_cuentas.Text = dtab_ext.Rows(0)("cuentas")
+            auto_vencimientos.Text = dtab_ext.Rows(0)("vencimientos")
+            auto_tipo.Text = dtab_ext.Rows(0)("tipo")
+        End If
 
         sql(0) = "SELECT * FROM tablas_externas WHERE  personas='catastro'"
         dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
         If dtab_ext.Rows.Count > 0 Then
             ' TABLAS EXTERNAS CATA 
-            cata_personas.Text = dtab_ext(0)("personas")
-			cata_cuentas.Text = dtab_ext(0)("cuentas")
-			cata_historial.Text = dtab_ext(0)("historial")
-			cata_vencimientos.Text = dtab_ext(0)("vencimientos")
-			cata_zonas.Text = dtab_ext(0)("zona")
-		End If
+            cata_personas.Text = dtab_ext.Rows(0)("personas")
+            cata_cuentas.Text = dtab_ext.Rows(0)("cuentas")
+            cata_historial.Text = dtab_ext.Rows(0)("historial")
+            cata_vencimientos.Text = dtab_ext.Rows(0)("vencimientos")
+            cata_zonas.Text = dtab_ext.Rows(0)("zona")
+        End If
 
         sql(0) = "SELECT * FROM tablas_externas WHERE  personas='comercio'"
         dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
         If dtab_ext.Rows.Count > 0 Then
             ' TABLAS EXTERNAS COME 
-            come_personas.Text = dtab_ext(0)("personas")
-			come_cuentas.Text = dtab_ext(0)("cuentas")
-			come_historial.Text = dtab_ext(0)("historial")
-			come_variables.Text = dtab_ext(0)("variables")
-			come_vencimientos.Text = dtab_ext(0)("vencimientos")
-			come_actividades.Text = dtab_ext(0)("actividad")
-		End If
+            come_personas.Text = dtab_ext.Rows(0)("personas")
+            come_cuentas.Text = dtab_ext.Rows(0)("cuentas")
+            come_historial.Text = dtab_ext.Rows(0)("historial")
+            come_variables.Text = dtab_ext.Rows(0)("variables")
+            come_vencimientos.Text = dtab_ext.Rows(0)("vencimientos")
+            come_actividades.Text = dtab_ext.Rows(0)("actividad")
+        End If
 
         sql(0) = "SELECT * FROM tablas_externas WHERE  personas='sepelio'"
         dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
         If dtab_ext.Rows.Count > 0 Then
             ' TABLAS EXTERNAS SEPE 
-            sepe_personas.Text = dtab_ext(0)("personas")
-			sepe_cuentas.Text = dtab_ext(0)("cuentas")
-			sepe_historial.Text = dtab_ext(0)("historial")
-			sepe_variables.Text = dtab_ext(0)("variables")
-			sepe_muertos.Text = dtab_ext(0)("muertos")
-		End If
-	End Sub
+            sepe_personas.Text = dtab_ext.Rows(0)("personas")
+            sepe_cuentas.Text = dtab_ext.Rows(0)("cuentas")
+            sepe_historial.Text = dtab_ext.Rows(0)("historial")
+            sepe_variables.Text = dtab_ext.Rows(0)("variables")
+            sepe_muertos.Text = dtab_ext.Rows(0)("muertos")
+        End If
+    End Sub
 
-	Private Sub ImportarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportarToolStripMenuItem.Click
+    Private Sub ImportarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportarToolStripMenuItem.Click
         '>> Ventana de importacion de base de datos
         'Permite seleccionar bd de origen y de destino
         'Compara los nombres de las tablas en ambas bd

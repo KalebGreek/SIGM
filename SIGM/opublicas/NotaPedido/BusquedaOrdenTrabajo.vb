@@ -10,32 +10,32 @@
 		ControlBusqueda1.vista.Items.AddRange(New Object() {"NOTA DE PEDIDO"})
 	End Sub
 	'-- RUTINAS
-	Public Sub Consultar() Handles ControlBusqueda1.CSearch_Click
+	Public Sub Consultar() Handles ControlBusqueda1.CSearchClick
 		bs_resultado.Filter = ControlBusqueda1.bsCustomFilter
 	End Sub
 
 	'-- EVENTOS UNICOS
-	Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVista_IndexTextChanged
+	Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVistaIndexTextChanged
 		With ControlBusqueda1
 			If .vista.SelectedIndex > -1 Then
 				.filtro.DataSource = Nothing
 				If .vista.Text = "NOTA DE PEDIDO" Then
 					Dim bs_ColumnList As New BindingSource
 					bs_resultado.DataSource = NotaPedido.Buscar()
-                    bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)
-                    CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
+					bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource.Columns)
+					CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
 				End If
 				If .filtro.Items.Count > 0 Then
 					.filtro.SelectedIndex = 0
 				End If
-                CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, .bsCustomFilter)
-            Else
+				CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, .bsCustomFilter)
+			Else
 				ControlBusqueda1.reset_search.PerformClick()
 			End If
 
 		End With
 	End Sub
-	Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles ControlBusqueda1.CKeyword_KeyUp, resultado.KeyUp
+	Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles ControlBusqueda1.CKeywordKeyUp, resultado.KeyUp
 		If e.KeyValue = Keys.Enter And sender Is ControlBusqueda1.keyword Then
 			ControlBusqueda1.search.PerformClick()
 		ElseIf sender Is resultado Then

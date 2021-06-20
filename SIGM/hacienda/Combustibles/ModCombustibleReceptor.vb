@@ -20,7 +20,7 @@
 
     'LOAD
     Public Sub LoadReceptor(id As Integer)
-        CtrlMan.LoadAllControls(Combustible.Receptor.Seleccionar(id)(0), Me)
+        CtrlMan.LoadControlData(Combustible.Receptor.Seleccionar(id), Me)
         Combustible.Responsable.Fill(bs_responsable, responsable, receptor_id.Text)
     End Sub
 
@@ -154,7 +154,7 @@
                     sql(0) = "SELECT id FROM hac_combustible_receptor ORDER BY id ASC"
                     Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-                    receptor_id.Text = dtab(0)("id")
+                    receptor_id.Text = dtab.Rows(0)("id")
                     saved = True
                 End If
             End If

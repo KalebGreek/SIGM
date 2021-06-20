@@ -22,13 +22,16 @@ Partial Class ctrlAddInmuebleEdificacion
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.categoria = New System.Windows.Forms.ComboBox()
         Me.superficie = New System.Windows.Forms.NumericUpDown()
         Me.agregar = New System.Windows.Forms.Button()
         Me.eliminar = New System.Windows.Forms.Button()
+        Me.bs_categoria_inmueble = New System.Windows.Forms.BindingSource(Me.components)
         Me.FlowLayoutPanel1.SuspendLayout()
         CType(Me.superficie, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.bs_categoria_inmueble, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'FlowLayoutPanel1
@@ -102,6 +105,7 @@ Partial Class ctrlAddInmuebleEdificacion
         Me.Size = New System.Drawing.Size(460, 35)
         Me.FlowLayoutPanel1.ResumeLayout(False)
         CType(Me.superficie, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.bs_categoria_inmueble, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -111,4 +115,5 @@ Partial Class ctrlAddInmuebleEdificacion
     Friend WithEvents superficie As NumericUpDown
     Friend WithEvents agregar As Button
     Friend WithEvents eliminar As Button
+    Friend WithEvents bs_categoria_inmueble As BindingSource
 End Class

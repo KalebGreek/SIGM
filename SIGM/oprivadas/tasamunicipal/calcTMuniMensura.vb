@@ -1,4 +1,5 @@
-﻿Public Class calcTMuniMensura
+﻿Imports System.Collections.Generic
+Class calcTMuniMensura
     Public help_source As New List(Of String)({"test7", "test8", "test9"})
     Dim ad_agua_corriente As Decimal
 
@@ -10,7 +11,7 @@
             sql(1) = "FROM opr_tasa_mensura WHERE articulo='953'"
             dtab = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-            ad_agua_corriente = CDec(dtab(0)("valor"))
+            ad_agua_corriente = CDec(dtab.Rows(0)("valor"))
 
             sql(0) = "SELECT id as tasa_mensura_id, articulo, valor, descripcion"
             sql(1) = "FROM opr_tasa_mensura"

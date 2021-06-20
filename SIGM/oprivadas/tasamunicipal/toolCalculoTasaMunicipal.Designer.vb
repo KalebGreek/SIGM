@@ -27,7 +27,7 @@ Partial Class toolCalculoTasaMunicipal
         Me.ObrasVariasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RelevamientoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MensuraToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ImprimirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReiniciarMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.search = New System.Windows.Forms.Button()
@@ -53,7 +53,7 @@ Partial Class toolCalculoTasaMunicipal
         Me.MenuStrip2.AutoSize = False
         Me.MenuStrip2.BackColor = System.Drawing.Color.Black
         Me.MenuStrip2.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-        Me.MenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ObrasVariasToolStripMenuItem, Me.RelevamientoToolStripMenuItem, Me.MensuraToolStripMenuItem, Me.ToolStripSeparator1, Me.ReiniciarMenuItem})
+        Me.MenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ObrasVariasToolStripMenuItem, Me.RelevamientoToolStripMenuItem, Me.MensuraToolStripMenuItem, Me.ImprimirToolStripMenuItem, Me.ReiniciarMenuItem})
         Me.MenuStrip2.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip2.Name = "MenuStrip2"
         Me.MenuStrip2.Size = New System.Drawing.Size(800, 29)
@@ -81,17 +81,23 @@ Partial Class toolCalculoTasaMunicipal
         Me.MensuraToolStripMenuItem.Size = New System.Drawing.Size(76, 25)
         Me.MensuraToolStripMenuItem.Text = "Mensura"
         '
-        'ToolStripSeparator1
+        'ImprimirToolStripMenuItem
         '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 25)
+        Me.ImprimirToolStripMenuItem.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ImprimirToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control
+        Me.ImprimirToolStripMenuItem.Name = "ImprimirToolStripMenuItem"
+        Me.ImprimirToolStripMenuItem.ShortcutKeyDisplayString = "Imprimir"
+        Me.ImprimirToolStripMenuItem.Size = New System.Drawing.Size(36, 25)
+        Me.ImprimirToolStripMenuItem.Text = ""
         '
         'ReiniciarMenuItem
         '
+        Me.ReiniciarMenuItem.Font = New System.Drawing.Font("Segoe MDL2 Assets", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ReiniciarMenuItem.ForeColor = System.Drawing.SystemColors.Control
         Me.ReiniciarMenuItem.Name = "ReiniciarMenuItem"
-        Me.ReiniciarMenuItem.Size = New System.Drawing.Size(78, 25)
-        Me.ReiniciarMenuItem.Text = "Reiniciar"
+        Me.ReiniciarMenuItem.ShortcutKeyDisplayString = "Reiniciar"
+        Me.ReiniciarMenuItem.Size = New System.Drawing.Size(36, 25)
+        Me.ReiniciarMenuItem.Text = ""
         '
         'search
         '
@@ -228,8 +234,9 @@ Partial Class toolCalculoTasaMunicipal
         Me.wrapper.Location = New System.Drawing.Point(4, 110)
         Me.wrapper.Margin = New System.Windows.Forms.Padding(0)
         Me.wrapper.Name = "wrapper"
-        Me.wrapper.Size = New System.Drawing.Size(480, 482)
+        Me.wrapper.Size = New System.Drawing.Size(557, 482)
         Me.wrapper.TabIndex = 52
+        Me.wrapper.Visible = False
         '
         'help
         '
@@ -237,7 +244,7 @@ Partial Class toolCalculoTasaMunicipal
         Me.help.Font = New System.Drawing.Font("PF DinDisplay Pro", 13.0!)
         Me.help.FormattingEnabled = True
         Me.help.ItemHeight = 20
-        Me.help.Location = New System.Drawing.Point(493, 110)
+        Me.help.Location = New System.Drawing.Point(564, 110)
         Me.help.Name = "help"
         Me.help.Size = New System.Drawing.Size(222, 482)
         Me.help.TabIndex = 53
@@ -282,6 +289,6 @@ Partial Class toolCalculoTasaMunicipal
     Friend WithEvents ObrasVariasToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RelevamientoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MensuraToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents ReiniciarMenuItem As ToolStripMenuItem
+    Friend WithEvents ImprimirToolStripMenuItem As ToolStripMenuItem
 End Class

@@ -104,7 +104,7 @@
 			modificar.PerformClick()
 		End If
 	End Sub
-	Private Sub ver_Click(sender As Object, e As EventArgs) Handles ver.Click
+    Private Sub VerClick(sender As Object, e As EventArgs) Handles ver.Click
         If bs_consulta.Position > -1 Then
             Try
                 Process.Start(root & My.Settings.DocFolderOrdenanza & bs_consulta.Current("ruta_copia").ToString)
@@ -113,7 +113,7 @@
             End Try
         End If
     End Sub
-	Private Sub modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles modificar.Click
+    Private Sub modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles modificar.Click
 		If bs_consulta.Position > -1 Then
             Using ModificarOrdenanza As New ModOrdenanza
                 With ModificarOrdenanza

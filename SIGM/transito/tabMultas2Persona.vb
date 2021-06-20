@@ -17,7 +17,7 @@
 	End Sub
 
 	Public Function LoadMe(drow As DataRow) As Boolean
-		CtrlMan.LoadAllControls(drow, Me)
+		CtrlMan.LoadControls(drow, Me)
 		Return True
 	End Function
 

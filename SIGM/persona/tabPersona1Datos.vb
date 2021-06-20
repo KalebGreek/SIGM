@@ -18,8 +18,8 @@
             sql(0) = "SELECT id as persona_id, razon, cuil  FROM persona WHERE id=" & PersonaId
             Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-            razon.Text = dtab(0)("razon").ToString
-            valor_cuil = CDbl(dtab(0)("cuil"))
+            razon.Text = dtab.Rows(0)("razon").ToString
+            valor_cuil = CDbl(dtab.Rows(0)("cuil"))
             If valor_cuil > 20000000000 Then
                 genero = Val(Microsoft.VisualBasic.Left(valor_cuil, 2))
                 If genero > 27 Then
@@ -29,7 +29,7 @@
                 ElseIf genero > 0 Then
                     gen.Text = "Masculino"
                 End If
-                dni.Text = Microsoft.VisualBasic.Mid(dtab(0)("cuil"), 3, 8)
+                dni.Text = Microsoft.VisualBasic.Mid(dtab.Rows(0)("cuil"), 3, 8)
                 cuil.Text = valor_cuil
             Else
                 dni.Text = valor_cuil
@@ -44,7 +44,7 @@
         sql(0) = "SELECT id, razon FROM persona WHERE cuil=" & cuil.Text
         dtab = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
         If dtab.Rows.Count > 0 Then
-            ErrorInfo.SetToolTip(cuil, "Este CUIL/CUIT pertenece a " & dtab(0)("id") & "-" & dtab(0)("razon"))
+            ErrorInfo.SetToolTip(cuil, "Este CUIL/CUIT pertenece a " & dtab.Rows(0)("id") & "-" & dtab.Rows(0)("razon"))
             cuil.BackColor = Color.MistyRose
         Else
             ErrorInfo.RemoveAll()
@@ -65,7 +65,7 @@
                 'Next query could be replaced by OUTPUT insert.id
 
                 sql(0) = "SELECT MAX(id) as id FROM persona"
-                PersonaId = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)(0)("id") 'Last insert
+                PersonaId = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql).Rows(0)("id") 'Last insert
             End If
         End If
         Return PersonaId

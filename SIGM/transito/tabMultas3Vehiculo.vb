@@ -22,7 +22,7 @@
 
 	Public Function LoadMe(drow As DataRow) As Boolean
 		'Load controls
-		CtrlMan.LoadAllControls(drow, Me)
+		CtrlMan.LoadControls(drow, Me)
 		patente.Text = drow("patente").ToString
 		Return True
 	End Function

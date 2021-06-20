@@ -135,9 +135,9 @@
 						 FROM persona WHERE id=" & PersonaId
 		dtab = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-		difunto.Enabled = dtab(0)("fisica") 'Para estar morido tiene que ser una persona real
+		difunto.Enabled = dtab.Rows(0)("fisica") 'Para estar morido tiene que ser una persona real
 		If difunto.Enabled Then
-			CtrlMan.LoadAllControls(dtab(0), Me)
+			CtrlMan.LoadControlData(dtab, Me)
 		Else
 			difunto.Checked = False
 			ruta_defuncion.Text = ""
@@ -147,24 +147,24 @@
 		dtab = Empleado.Seleccionar(0, PersonaId)
 		EsEmpleado.Checked = dtab.Rows.Count > 0
 		If dtab.Rows.Count > 0 Then
-			EmpleadoId = dtab(0)("empleado_id")
-			CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel4)
+			EmpleadoId = dtab.Rows(0)("empleado_id")
+			CtrlMan.LoadControlData(dtab, FlowLayoutPanel4)
 		End If
 
 		'Es Proveedor?
 		dtab = Proveedor.Seleccionar(0, PersonaId)
 		EsProveedor.Checked = dtab.Rows.Count > 0
 		If dtab.Rows.Count > 0 Then
-			ProveedorId = dtab(0)("proveedor_id")
-			CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel2)
+			ProveedorId = dtab.Rows(0)("proveedor_id")
+			CtrlMan.LoadControlData(dtab, FlowLayoutPanel2)
 		End If
 
 		'Es profesional?
 		dtab = Profesional.Seleccionar(0, PersonaId)
 		EsProfesional.Checked = dtab.Rows.Count > 0
 		If dtab.Rows.Count > 0 Then
-			ProfesionalId = dtab(0)("profesional_id")
-			CtrlMan.LoadAllControls(dtab(0), FlowLayoutPanel1)
+			ProfesionalId = dtab.Rows(0)("profesional_id")
+			CtrlMan.LoadControlData(dtab, FlowLayoutPanel1)
 		End If
 	End Sub
 

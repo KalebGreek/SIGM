@@ -11,20 +11,20 @@ Public Class BusquedaComercio
     End Sub
 
     '-- RUTINAS
-    Sub Consultar() Handles ControlBusqueda1.CSearch_Click
+    Sub Consultar() Handles ControlBusqueda1.CSearchClick
         ControlBusqueda1.FilterSearch()
     End Sub
     Private Sub FilterResults() Handles ControlBusqueda1.CFilter
-        bs_resultado.Filter = ControlBusqueda1.bsCustomFilter
+        'bs_resultado.Filter = ControlBusqueda1.bsCustomFilter
     End Sub
 
 
     '-- EVENTOS UNICOS
-    Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVista_IndexTextChanged
+    Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVistaIndexTextChanged
         If ControlBusqueda1.vista.SelectedIndex > -1 Then
             Dim consulta As String = ControlBusqueda1.vista.Text
             Dim OleDBCmd As New OleDb.OleDbCommand With
-                                {.CommandType = CommandType.Text, .CommandText = ""}
+                                {.CommandType = System.Data.CommandType.Text, .CommandText = ""}
             Dim dtab As New DataTable
             Dim bs_ColumnList As New BindingSource
             ControlBusqueda1.filtro.DataSource = Nothing
@@ -59,7 +59,7 @@ Public Class BusquedaComercio
                 dtab = DbMan.ReadDB(OleDBCmd, My.Settings.foxConnection, , "dtab1")
                 If dtab.Rows.Count > 0 Then
                     CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, dtab)
-                    bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)
+                    bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource.Columns)
                     .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
                 End If
             End With
@@ -69,7 +69,7 @@ Public Class BusquedaComercio
 
     End Sub
 
-    Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles ControlBusqueda1.CKeyword_KeyUp, resultado.KeyUp
+    Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles ControlBusqueda1.CKeywordKeyUp, resultado.KeyUp
         If e.KeyValue = Keys.Enter And sender Is ControlBusqueda1.keyword Then
             ControlBusqueda1.search.PerformClick()
         ElseIf sender Is resultado Then
@@ -90,7 +90,7 @@ Public Class BusquedaComercio
                 dtab(0) = CtrlMan.BindingSourceListToDataTable(bs_resultado)
                 parametros = ParametrosReporte.TableToReport(dtab(0), ControlBusqueda1.vista.Text, parametros)
 
-                Using vr As New VisorReporte(ControlBusqueda1.vista.Text)
+                Using vr As New Formularios(ControlBusqueda1.vista.Text)
                     vr.mostrar("reportes\PrintTable", parametros, dtab)
                     vr.ShowDialog(Me)
                 End Using

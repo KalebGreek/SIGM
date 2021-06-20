@@ -1,8 +1,7 @@
 ﻿Public Class HaciendaMenu
-	Private Sub me_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
+    Private Sub Me_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
         If e.KeyValue = Keys.F10 Then
-            Dim console1 As New SQLConsole _
-            With {.MdiParent = Me.Parent}
+            Dim console1 As New SQLConsole With {.MdiParent = Me.Parent}
             console1.Show()
         End If
     End Sub
@@ -18,6 +17,7 @@
         Dim movimis1 As New ConsultaMovimientos _
         With {.MdiParent = Me.Parent}
         movimis1.Show()
+
     End Sub
 
     Private Sub CalculoAnualDeImpuestosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CalculoAnualDeImpuestosToolStripMenuItem.Click
@@ -32,16 +32,19 @@
         Dim mcomb As New ModCombustible _
         With {.MdiParent = Me.Parent}
         mcomb.Show()
+
     End Sub
     Private Sub SIJCORToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SIJCORToolStripMenuItem.Click
         Dim sijcor As New EditorSijCor _
         With {.MdiParent = Me.Parent}
         sijcor.Show()
+
     End Sub
     Private Sub AdelantosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AdelantosToolStripMenuItem.Click
         Dim buscar1 As New BusquedaAdelanto
         buscar1.GenSearchControl1.vista.SelectedIndex = 0
         buscar1.Show()
+
     End Sub
     Private Sub ConsolidarIngresosYEgresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsolidarIngresosYEgresosToolStripMenuItem.Click
         Hacienda.ConsolidarCuentas(Today)
@@ -51,6 +54,7 @@
         Dim convsiro As New ConvertirSIRO _
         With {.MdiParent = Me.Parent}
         convsiro.Show()
+
     End Sub
 
     Private Sub ConsultarImpuestoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsultarImpuestoToolStripMenuItem.Click
@@ -60,6 +64,7 @@
             Dim ConsultaImpuesto1 As New ConsultaImpuesto _
             With {.MdiParent = Me.Parent}
             ConsultaImpuesto1.Show()
+
         End If
     End Sub
 
@@ -73,5 +78,6 @@
         Dim ConIntimaciones As New ConsultaIntimaciones _
        With {.MdiParent = Me.Parent}
         ConIntimaciones.Show()
+
     End Sub
 End Class

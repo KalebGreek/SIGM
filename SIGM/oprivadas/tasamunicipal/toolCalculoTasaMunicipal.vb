@@ -1,5 +1,5 @@
 ﻿Public Class toolCalculoTasaMunicipal
-	Private Sub search_Click(sender As Object, e As EventArgs) Handles search.Click
+	Private Sub SearchClick(sender As Object, e As EventArgs) Handles search.Click
 		Using bprop As New BusquedaPropietario
 			bprop.genSearchControl1.vista.Text = "PROPIETARIO"
 			bprop.ShowDialog(Me)
@@ -11,6 +11,17 @@
 				End If
 			End With
 		End Using
+	End Sub
+	Private Sub ImprimirToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImprimirToolStripMenuItem.Click
+		If wrapper.Controls.Count > 0 Then
+			Using FormImpresion As New Formularios("Tasa Municipal")
+				FormImpresion.Mostrar("REPORTES\")
+			End Using
+		End If
+	End Sub
+
+	Private Sub WrapperVisibility() Handles wrapper.ControlRemoved, wrapper.ControlAdded
+		wrapper.Visible = wrapper.Controls.Count > 0
 	End Sub
 
 	Private Sub WrapperFill(sender As Object, e As EventArgs) Handles ObrasVariasToolStripMenuItem.Click, RelevamientoToolStripMenuItem.Click,
@@ -45,4 +56,6 @@
 		End If
 
 	End Sub
+
+
 End Class

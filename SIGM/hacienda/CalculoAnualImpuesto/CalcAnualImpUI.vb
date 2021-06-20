@@ -1,15 +1,49 @@
 Public Class CalcAnualImpUI
-    Dim dtab_var As New DataTable
     Dim cuentas_modificadas As Integer
     Dim total_cuotas As Integer
 
+    'Eventos
+    Private Sub CalculoAnualImpuesto_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim sql(0) As String
+
+        periodo.Maximum = Today.Year + 5
+        periodo.Minimum = 1990
+        periodo.Value = Today.Year
+
+        sql(0) = "SELECT * FROM numeros"
+        bs_variables.DataSource = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+    End Sub
+
+    Private Sub Impuesto_SelectedIndexChanged(sender As Object, e As EventArgs) Handles impuesto.SelectedIndexChanged
+        tae.Text = 0
+        If impuesto.Text = "COMERCIO" Then
+            tae.Text = bs_variables.Current("taecom").ToString
+        ElseIf impuesto.Text = "CATASTRO" Then
+            tae.Text = bs_variables.Current("taecat").ToString
+        End If
+        tae.Text += "%"
+    End Sub
+
+    Private Sub Iniciar_Click(sender As Object, e As EventArgs) Handles iniciar.Click
+        Dim time_start, time_end As DateTime
+        Dim run_time As TimeSpan
+        time_start = Now
+        iniciar.Visible = False
+        Validar()
+        iniciar.Visible = True
+        time_end = Now
+        run_time = time_end - time_start
+        info.Text += Chr(13) & "Procesado en " & run_time.Minutes & " minuto/s, " & run_time.Seconds & " segundo/s."
+    End Sub
+
+
     'Rutinas
-    Public Function Validar() As Boolean
+    Public Sub Validar()
         Dim sql(0) As String
         sql(0) = "SELECT MAX(codigo) as codigo FROM " & impuesto.Text
         Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
         If dtab.Rows.Count > 0 Then
-            If CuentaInicial.Value > dtab(0)("codigo") Then
+            If CuentaInicial.Value > dtab.Rows(0)("codigo") Then
                 MsgBox("No se encuentra la cuenta inicial.", MsgBoxStyle.OkOnly, Nothing)
             Else
                 info.Text = "Leyendo datos.."
@@ -26,10 +60,9 @@ Public Class CalcAnualImpUI
                 ElseIf impuesto.Text = "SEPELIO" Then
                     Sepelio()
                 End If
-
             End If
         End If
-    End Function
+    End Sub
 
     Public Sub Agua()
         Dim dtab(3) As DataTable
@@ -46,54 +79,60 @@ Public Class CalcAnualImpUI
         progreso.Maximum = dtab(2).Rows.Count - 1
 
         For Each dr As DataRow In dtab(2).Rows
-            Dim reside, comercio, industria, importe, franqueo As New Decimal
+
+            Dim reside, comercio, industria, excedente, original, importe, franqueo As New Decimal
             Dim cuota, cuota_max As New Integer
             Dim cuota_mod As New Integer
+            Dim tipo As Integer = dr("tipo")
+            Dim cantidad As Integer = dr("cantidad")
 
-            'Residencial
-            If dr("potable") = 1 Then
-                reside = dtab(0)(0)("resido")
-            End If
-            'Comercial
-            If dr("comercial") = 1 Then
-                comercio = dtab(0)(0)("comercio")
-            End If
-            'Industrial
-            If dr("industrial") = 1 Then
-                industria = dtab(0)(0)("industria")
-            End If
-            importe = reside + comercio + industria
 
-            'Minimo
-            If importe < dtab(0)(0)("minimo") Then
-                importe = dtab(0)(0)("minimo")
-            End If
-
-            'Franqueo
-            franqueo = dtab_var(0)("franqueo")
-
-            'Total
-            importe += franqueo
-
-            'Ingresar cuotas
-            cuota_max = 6
-            cuota = 1
-            Do While cuota <= cuota_max
-                If CalculoAnual.sql.Agua.VerificarCuota(dr, cuota, periodo.Value, dtab(3)) Then
-                    'No existente
-                    cuota_mod += 1
-                    ReDim Preserve sqlInsertList(total_cuotas)
-                    sqlInsertList(total_cuotas) = CalculoAnual.sql.Agua.InsertarCuota(dr, cuota, periodo.Value, importe, dtab(1)(0),
-                                                            reside, comercio, industria, franqueo)
-                    total_cuotas += 1
+            'Solo se puede generar deduda anual sobre usuarios sin medidor
+            If tipo <> 2 Or tipo <> 5 Then
+                'Residencial
+                If tipo = 1 Then
+                    original = dtab(0)(0)("importe")
+                    excedente = dtab(0)(1)("excedente")
+                    If cantidad > 1 Then
+                        reside = original * ((1 + (CInt(excedente / 100) * cantidad)))
+                    Else
+                        reside = original
+                    End If
+                    'Comercial
+                ElseIf tipo = 3 Then
+                    comercio = dtab(0)(2)("importe")
+                ElseIf tipo = 4 Then
+                    comercio = dtab(0)(3)("importe")
+                    'Industrial
+                ElseIf tipo = 6 Then
+                    industria = dtab(0)(5)("importe")
                 End If
-                cuota += 1
-            Loop
+                importe = reside + comercio + industria
 
-            If cuota_mod > 0 Then
-                cuentas_modificadas += 1
+                franqueo = 0
+
+                'Ingresar cuotas
+                cuota_max = 6
+                cuota = 1
+                Do While cuota <= cuota_max
+                    If CalculoAnual.Sql.Agua.VerificarCuota(dr, cuota, periodo.Value, dtab(3)) Then
+                        'No existente
+                        cuota_mod += 1
+                        ReDim Preserve sqlInsertList(total_cuotas)
+                        sqlInsertList(total_cuotas) = CalculoAnual.Sql.Agua.InsertarCuota(dr, cuota, periodo.Value, importe, dtab(1)(0),
+                                                                reside, comercio, industria, franqueo)
+                        total_cuotas += 1
+                    End If
+                    cuota += 1
+                Loop
+
+                If cuota_mod > 0 Then
+                    cuentas_modificadas += 1
+                End If
+            Else
+                'Usuario con medidor: se genera la deuda cada dos meses basada en las lecturas
             End If
-            CheckProgress(dtab(2).Rows.IndexOf(dr), dr("codigo"))
+            CheckProgress(dtab(2).Rows.IndexOf(dr), CInt(dr("codigo")))
         Next
         If total_cuotas > 0 Then
             DbMan.editDB(Nothing, My.Settings.foxConnection, Nothing, True, sqlInsertList, progreso)
@@ -172,24 +211,27 @@ Public Class CalcAnualImpUI
             Dim basica, minimo, baldio, alumbrado, pasillo, agrario, comercio, jubilado,
             vereda, parque, taecat, franqueo, importe, subtotal As New Decimal
             Dim metros As Decimal = 0
-
             Dim cuota_added As New Integer
-
+            Dim frente(3) As Integer
+            frente(0) = CInt(dr("frente1"))
+            frente(1) = CInt(dr("frente2"))
+            frente(2) = CInt(dr("frente3"))
+            frente(3) = CInt(dr("frente4"))
 
             'Calculo de importes
             basica = 0
 
-            If dr("frente1") > 0 Then  'ESQUINA
+            If frente(0) > 0 Then  'ESQUINA
                 Dim frentes As Integer = 0
-                metros += dr("frente1")
+                metros += frente(0)
                 frentes += 1
 
                 If dr("zona") < 4 Then
-                    If dr("frente2") > 0 Then
-                        metros += dr("frente2")
+                    If frente(1) > 0 Then
+                        metros += frente(1)
                         frentes += 1
                     End If
-                    If dr("frente3") > 0 Then
+                    If frente(2) > 0 Then
                         metros += dr("frente3")
                         frentes += 1
                     End If
@@ -217,7 +259,7 @@ Public Class CalcAnualImpUI
                 End If
             ElseIf dr("zona") = 5 Then 'ZONA 5
                 Dim fraccion As Integer = dr("frente1") / 200
-                If dr("frente1") Mod 200 > 0 Then
+                If CInt(dr("frente1")) Mod 200 > 0 Then
                     fraccion += 1
                 End If
                 basica = dr("monto_unidad") * fraccion
@@ -237,19 +279,20 @@ Public Class CalcAnualImpUI
             End If
 
             'TAE
-            taecat = basica * (dtab_var(0)("taecat") / 100)
+            taecat = basica * (bs_variables.Current("taecat") / 100)
 
             subtotal = basica + taecat
 
             'Baldio
             If dr("baldio") = 1 Then
                 'Recargo por alumbrado en baldío en zonas 1-5
-                If dr("zona") < 5 Then
+                If dr("zona") < 6 Then
 
-                    If metros <= 15 Then
-                        alumbrado = dr("alumbrado_minimo")
-                    Else
+                    If metros > 15 Then
                         alumbrado = dr("alumbrado_basico") * metros
+                    End If
+                    If alumbrado < dr("alumbrado_minimo") Then
+                        alumbrado = dr("alumbrado_minimo")
                     End If
 
                     'Recargo por baldío en zonas 1-3
@@ -298,7 +341,7 @@ Public Class CalcAnualImpUI
             subtotal -= (vereda + parque + agrario + jubilado)
 
             'Franqueo
-            franqueo = dtab_var(0)("franqueo") * 6
+            franqueo = bs_variables.Current("franqueo") * 6
 
             'Total
             importe = subtotal + franqueo
@@ -399,8 +442,8 @@ Public Class CalcAnualImpUI
                         minimo *= dr("cantidad")
                     End If
 
-                    taecom = minimo * (dtab_var(0)("taecom") / 100)
-                    franqueo = dtab_var(0)("franqueo")
+                    taecom = minimo * (bs_variables.Current("taecom") / 100)
+                    franqueo = bs_variables.Current("franqueo")
                     importe = minimo + taecom + franqueo
 
                     If CalculoAnual.sql.Comercio.VerificarCuota(dr, ncuota, dtab_deuda) Then
@@ -505,37 +548,5 @@ Public Class CalcAnualImpUI
         info.Refresh()
     End Sub
 
-    'Eventos
-    Private Sub CalculoAnualImpuesto_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim sql(0) As String
-        periodo.Maximum = Today.Year + 5
-        periodo.Minimum = 1990
-        periodo.Value = Today.Year
-
-        sql(0) = "SELECT * FROM numeros"
-        dtab_var = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
-    End Sub
-
-    Private Sub Impuesto_SelectedIndexChanged(sender As Object, e As EventArgs) Handles impuesto.SelectedIndexChanged
-        tae.Text = 0
-        If impuesto.Text = "COMERCIO" Then
-            tae.Text = dtab_var(0)("taecom").ToString
-        ElseIf impuesto.Text = "CATASTRO" Then
-            tae.Text = dtab_var(0)("taecat").ToString
-        End If
-        tae.Text += "%"
-    End Sub
-
-    Private Sub Iniciar_Click(sender As Object, e As EventArgs) Handles iniciar.Click
-        Dim time_start, time_end As DateTime
-        Dim run_time As TimeSpan
-        time_start = Now
-        iniciar.Visible = False
-        Validar()
-        iniciar.Visible = True
-        time_end = Now
-        run_time = time_end - time_start
-        info.Text += Chr(13) & "Procesado en " & run_time.Minutes & " minuto/s, " & run_time.Seconds & " segundo/s."
-    End Sub
 
 End Class

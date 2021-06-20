@@ -1,6 +1,6 @@
-﻿Public Class tabPersona2Domicilio
+﻿Class tabPersona2Domicilio
     Inherits System.Windows.Forms.UserControl
-    Dim principal As DomicilioPage
+
     Dim PersonaId As Integer
 
     Public Sub New(PerId As Integer)
@@ -13,18 +13,20 @@
     End Sub
 
     Public Sub cargar()
+        Dim principal As Integer
         'Cargar domicilios
-        Dim dtab As DataTable = Domicilio.Listar(PersonaId)
-        For Each dr As DataRow In dtab.Rows
-            Dim TabDom As New DomicilioPage() _
+        Using dtab As DataTable = Domicilio.Listar(PersonaId)
+            For Each dr As DataRow In dtab.Rows
+                Dim TabDom As New DomicilioPage() _
                 With {.contador = TabControl1.TabCount + 1}
 
-            TabDom.cargar(dr)
-            TabControl1.TabPages.Add(TabDom)
-            If dr("principal") Then
-                principal = TabDom
-            End If
-        Next
+                TabDom.cargar(dr)
+                TabControl1.TabPages.Add(TabDom)
+                If dr("principal") Then
+                    principal = TabDom.TabIndex
+                End If
+            Next
+        End Using
         If TabControl1.TabCount > 1 Then
             TabControl1.SelectTab(principal)
         End If
@@ -55,4 +57,5 @@
             Next
         End If
     End Sub
+
 End Class

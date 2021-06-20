@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.6.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Public NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -244,7 +244,7 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Provider=VFPOLEDB.1;Data Source=z:\datos")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=VFPOLEDB.1;Data Source=z:\datos; OLE DB Services=-1")>  _
         Public ReadOnly Property VFP_OleDB_Munici() As String
             Get
                 Return CType(Me("VFP_OleDB_Munici"),String)
@@ -260,6 +260,30 @@ Namespace My
             End Get
             Set
                 Me("delete_enabled") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Color.MistyRose")>  _
+        Public Property ErrorColorValue() As String
+            Get
+                Return CType(Me("ErrorColorValue"),String)
+            End Get
+            Set
+                Me("ErrorColorValue") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("SystemColors.Window")>  _
+        Public Property DefaultColorValue() As String
+            Get
+                Return CType(Me("DefaultColorValue"),String)
+            End Get
+            Set
+                Me("DefaultColorValue") = value
             End Set
         End Property
     End Class

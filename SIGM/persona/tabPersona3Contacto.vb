@@ -1,4 +1,4 @@
-﻿Public Class tabPersona3Contacto
+﻿Public Class TabPersona3Contacto
 	Inherits System.Windows.Forms.UserControl
 	Dim PersonaId As Integer
 
@@ -16,8 +16,8 @@
 		sql(0) = "SELECT * FROM persona WHERE id=" & PersonaId
 		registro = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
 
-		tele.Text = registro(0)("telefono").ToString
-		email.Text = registro(0)("email").ToString
+		tele.Text = registro.Rows(0)("telefono").ToString
+		email.Text = registro.Rows(0)("email").ToString
 	End Sub
 
 	Public Function Guardar() As Integer

@@ -82,6 +82,6 @@ Partial Class BusquedaComercio
     End Sub
 
     Friend WithEvents resultado As DataGridView
-	Public WithEvents ControlBusqueda1 As genSearchControl
-	Friend WithEvents bs_resultado As BindingSource
+    Friend WithEvents ControlBusqueda1 As genSearchControl
+    Friend WithEvents bs_resultado As BindingSource
 End Class

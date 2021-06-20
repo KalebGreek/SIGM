@@ -38,7 +38,7 @@
                     bs_resultado.DataSource = dtab
                     CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, .bsCustomFilter)
                     Dim bs_ColumnList As New BindingSource _
-                        With {.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)}
+                        With {.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource.Columns)}
 
                     CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
                     .FilterSearch()
@@ -47,12 +47,12 @@
             End If
         End With
     End Sub
-    Private Sub Buscar() Handles ControlBusqueda1.CSearch_Click
+    Private Sub Buscar() Handles ControlBusqueda1.CSearchClick
         Consultar()
     End Sub
-    Private Sub Reiniciar() Handles ControlBusqueda1.CReset_Click
+    Private Sub Reiniciar() Handles ControlBusqueda1.CResetClick
     End Sub
-    Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVista_IndexTextChanged
+    Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVistaIndexTextChanged
         Consultar()
     End Sub
 
@@ -60,7 +60,8 @@
         If sender Is resultado Then
             If e.KeyValue = Keys.F2 Then
                 If resultado.DataSource.Position > -1 Then
-                    Using mexp As New ModExpediente(resultado.DataSource.Current("expediente"))
+                    Using mexp As New ModExpediente()
+                        mexp.exp = CInt(resultado.DataSource.Current("expediente"))
                         mexp.ShowDialog()
                     End Using
                     ControlBusqueda1.search.PerformClick()

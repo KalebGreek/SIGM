@@ -1,6 +1,6 @@
-﻿Public Class FileMan
-    ' CARPETAS
-    Public root As String = Environment.CurrentDirectory
+﻿Class FileMan
+	' CARPETAS
+	'Dim root As String = Environment.CurrentDirectory
 
 	Shared Function DateToFilename(DateTime As Date) As String
 		Dim texto As String = DateTime.Year.ToString

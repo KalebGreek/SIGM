@@ -22,6 +22,7 @@ Partial Class ModOrdenanza
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.grupo_codigo = New System.Windows.Forms.Panel()
         Me.verificar = New System.Windows.Forms.Button()
         Me.codigo = New System.Windows.Forms.MaskedTextBox()
@@ -38,9 +39,11 @@ Partial Class ModOrdenanza
         Me.concepto = New System.Windows.Forms.TextBox()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
+        Me.bs_registro = New System.Windows.Forms.BindingSource(Me.components)
         Me.grupo_codigo.SuspendLayout()
         Me.grupo_datos.SuspendLayout()
         Me.grupo_mod.SuspendLayout()
+        CType(Me.bs_registro, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'grupo_codigo
@@ -187,7 +190,6 @@ Partial Class ModOrdenanza
         'cargar_doc
         '
         Me.cargar_doc.BackColor = System.Drawing.Color.Transparent
-        Me.cargar_doc.BackgroundImage = Nothing
         Me.cargar_doc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.cargar_doc.FlatAppearance.BorderSize = 0
         Me.cargar_doc.FlatStyle = System.Windows.Forms.FlatStyle.Flat
@@ -266,6 +268,7 @@ Partial Class ModOrdenanza
         Me.grupo_datos.ResumeLayout(False)
         Me.grupo_datos.PerformLayout()
         Me.grupo_mod.ResumeLayout(False)
+        CType(Me.bs_registro, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -285,4 +288,5 @@ Partial Class ModOrdenanza
     Friend WithEvents grupo_mod As System.Windows.Forms.FlowLayoutPanel
     Friend WithEvents Cancelar As System.Windows.Forms.Button
     Friend WithEvents GuardarCambios As System.Windows.Forms.Button
+    Friend WithEvents bs_registro As BindingSource
 End Class

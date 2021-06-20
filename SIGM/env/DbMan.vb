@@ -15,120 +15,131 @@
         Try
             olecon.Open()
             schemaTable = olecon.GetOleDbSchemaTable(OleDb.OleDbSchemaGuid.Tables, Nothing)
-        Catch ex As Exception
+        Catch ex As oledb.OleDbException
             MsgBox("No se puede conectar a " & constr & Chr(13) & "Detalles:" & ex.Data.ToString)
             schemaTable = Nothing
         End Try
         olecon.Close()
+        GC.Collect()
+        GC.WaitForPendingFinalizers()
         Return schemaTable
     End Function
     Function ReadDB(OleDBProcedure As OleDb.OleDbCommand, constr As String,
                     Optional TextQuery As String() = Nothing, Optional TableName As String = "") As DataTable
         Dim dtab As New DataTable
         Dim errorMsg As String = ""
-        Dim olecon As New OleDb.OleDbConnection
 
-        'Crear adaptador de datos
-        Dim dada As New OleDb.OleDbDataAdapter
+        Using olecon As New OleDb.OleDbConnection
+            'Crear adaptador de datos
+            Dim dada As New OleDb.OleDbDataAdapter
 
-        If OleDBProcedure Is Nothing = False Then
-            If OleDBProcedure.CommandType <> CommandType.Text Then
-                OleDBProcedure.CommandType = CommandType.StoredProcedure
-            End If
-        ElseIf TextQuery Is Nothing = False Then
-            OleDBProcedure = New OleDb.OleDbCommand
-            With OleDBProcedure
-                .CommandType = CommandType.Text
-                'TextQuery usage:
-                '0: Select |1: From |2: Where |3: Group By |4: Having |5: Order by
-                For Each sql As String In TextQuery
-                    If sql Is Nothing = False Then
-                        If sql <> "" Then
-                            If sql.Contains("SELECT") Or sql.Contains("FROM") _
+            If OleDBProcedure Is Nothing = False Then
+                If OleDBProcedure.CommandType <> System.Data.CommandType.Text Then
+                    OleDBProcedure.CommandType = System.Data.CommandType.StoredProcedure
+                End If
+            ElseIf TextQuery Is Nothing = False Then
+                OleDBProcedure = New OleDb.OleDbCommand
+                With OleDBProcedure
+                    .CommandType = System.Data.CommandType.Text
+                    'TextQuery usage:
+                    '0: Select |1: From |2: Where |3: Group By |4: Having |5: Order by
+                    For Each sql As String In TextQuery
+                        If sql Is Nothing = False Then
+                            If sql <> "" Then
+                                If sql.Contains("SELECT") Or sql.Contains("FROM") _
                             Or sql.Contains("WHERE") Or sql.Contains("GROUP BY") _
                             Or sql.Contains("HAVING") Or sql.Contains("ORDER BY") Then
 
-                                .CommandText &= " " & sql
+#Disable Warning CA2100 ' Review SQL queries for security vulnerabilities
+                                    .CommandText &= " " & sql
+#Enable Warning CA2100 ' Review SQL queries for security vulnerabilities
+                                End If
                             End If
                         End If
+                    Next
+                    'Close the query properly
+                    If Right(.CommandText, 1) <> ";" Then
+                        .CommandText &= ";"
                     End If
-                Next
-                'Close the query properly
-                If Right(.CommandText, 1) <> ";" Then
-                    .CommandText &= ";"
-                End If
-            End With
-        End If
-
-        dada.SelectCommand = OleDBProcedure
-
-        If dada.SelectCommand Is Nothing = False Then
-            'Si la conexión estaba abierta, cerrarla y mostrar mensaje
-            If olecon.State = ConnectionState.Open Then
-                olecon.Close()
-                MsgBox("Se cerrará la conexión actual." & Chr(13) & Chr(13) & "Detalles: " & last_sql)
+                End With
             End If
 
-            olecon.ConnectionString = constr
-            OleDBProcedure.Connection = olecon
-            'Abrir conexion
-            Try
-                olecon.Open()
-            Catch ex As OleDb.OleDbException
+            dada.SelectCommand = OleDBProcedure
+
+            If dada.SelectCommand Is Nothing = False Then
+                'Si la conexión estaba abierta, cerrarla y mostrar mensaje
+                If olecon.State = ConnectionState.Open Then
+                    olecon.Close()
+                    errorMsg &= "Se cerrará la conexión actual." & Chr(13) & Chr(13) & "Detalles: " & last_sql
+                End If
+
+                olecon.ConnectionString = constr
+                OleDBProcedure.Connection = olecon
+                'Abrir conexion
                 Try
-                    olecon.ConnectionString = My.Settings.CurrentDB
                     olecon.Open()
-                Catch ex2 As Exception
-                    errorMsg = "La ruta de acceso a la base de datos es incorrecta."
+                Catch ex As OleDb.OleDbException
+                    Try
+                        olecon.ConnectionString = My.Settings.CurrentDB
+                        olecon.Close()
+                        olecon.Open()
+                    Catch ex2 As AccessViolationException
+                        errorMsg &= "Una conexión establecida anteriormente impide el acceso a la base de datos."
+                        Try
+                            olecon.Close()
+                            olecon.Open()
+                        Catch ex3 As OutOfMemoryException
+                            errorMsg &= "No hay memoria suficiente para mostrar la consulta."
+                            Try
+                                olecon.Close()
+                                olecon.Open()
+                            Catch ex4 As Exception
+                                errorMsg &= "La ruta de acceso a la base de datos es incorrecta."
+                            End Try
+                        End Try
+
+
+                    End Try
                 End Try
-            End Try
-            'Comandos
-            Try
-                dada.Fill(dtab)
+                'Comandos
+                Try
+                    dada.Fill(dtab)
 
-            Catch ex As OleDb.OleDbException
-                If ex.Message.ToString.Contains("Decimal") Then
-                    errorMsg = "Datos inválidos en un campo de la tabla."
-                Else
-                    errorMsg = "No se encuentra la tabla indicada."
-                End If
-                errorMsg += Chr(13) & "Detalles:" & ex.Message.ToString
+                Catch ex As OleDb.OleDbException
+                    If ex.Message.ToString.Contains("Decimal") Then
+                        errorMsg &= "Datos inválidos en un campo de la tabla."
+                    Else
+                        errorMsg &= "No se encuentra la tabla indicada."
+                    End If
+                    errorMsg &= Chr(13) & "Detalles:" & ex.Message.ToString
 
-            Catch ex As System.InvalidOperationException
-                errorMsg = "Uno de los campos de la consulta contiene datos inválidos." & Chr(13) & "Detalles:" & ex.Message.ToString
-            Finally
-                olecon.Close()
-                olecon.Dispose()
-                dada.Dispose()
+                Catch ex As System.InvalidOperationException
+                    errorMsg &= "Uno de los campos de la consulta contiene datos inválidos." & Chr(13) & "Detalles:" & ex.Message.ToString
+                Finally
+                    olecon.Close()
+                    olecon.Dispose()
+                    dada.Dispose()
 
-                If TableName <> "" Then
-                    dtab.TableName = TableName
-                End If
+                    If TableName <> "" Then
+                        dtab.TableName = TableName
+                    End If
 
-            End Try
+                End Try
 
-            last_sql = OleDBProcedure.CommandText
-            last_connection = constr
+                last_sql = OleDBProcedure.CommandText
+                last_connection = constr
 
-        Else
-            errorMsg = "Datos insuficientes para realizar la consulta."
-        End If
+            Else
+                errorMsg &= "Datos insuficientes para realizar la consulta."
+            End If
 
-        'If errorMsg <> "" Then
-        '    Dim sql As String
-        '    If OleDBProcedure.CommandType = CommandType.Text Then
-        '        sql = "Consulta: "
-        '        sql += Replace(OleDBProcedure.CommandText, "'", "`")
-        '    Else
-        '        sql = "Procedimiento: "
-        '        sql += OleDBProcedure.CommandText
-        '    End If
-        '    editDB(Nothing, constr, "INSERT INTO sql_log(_date, _user_id, _sql, _con) VALUES('" & Date.Now & "', '" & My.Settings.UserId & "', '" & OleDBProcedure.CommandText & "','" & My.Settings.CurrentDB & "');")
-        '    dtab = Nothing
-        'End If
-
+            If errorMsg <> "" Then
+                MsgBox(errorMsg)
+            End If
+        End Using
+        GC.Collect()
+        GC.WaitForPendingFinalizers()
         Return dtab
-
     End Function
 
     Function GenerateReportDataset(OleDBProcedure As OleDb.OleDbCommand) As DataSet
@@ -140,7 +151,7 @@
     ' END READ 
 
     ' SAVE: Rutinas para grabar registros 
-    Function editDB(OleDBProcedure As OleDb.OleDbCommand, Optional ByVal constr As String = Nothing,
+    Function EditDB(OleDBProcedure As OleDb.OleDbCommand, Optional ByVal constr As String = Nothing,
                     Optional sql As String = Nothing,
                     Optional BulkInsert As Boolean = False, Optional sqlStringList() As String = Nothing,
                     Optional ByRef progreso As ToolStripProgressBar = Nothing) As String
@@ -156,7 +167,7 @@
 
         If OleDBProcedure Is Nothing Then
             OleDBProcedure = New OleDb.OleDbCommand With {
-              .CommandType = CommandType.Text}
+              .CommandType = System.Data.CommandType.Text}
 
             If BulkInsert And sqlStringList Is Nothing = False Then
                 If sqlStringList(0).Contains("INSERT") Then
@@ -164,7 +175,7 @@
                     If progreso Is Nothing = False Then
                         progreso.Minimum = 0
                         progreso.Value = progreso.Minimum
-                        progreso.Maximum = sqlStringList.Count()
+                        progreso.Maximum = sqlStringList.Length()
                     End If
 
                     'Set connection parameters
@@ -178,7 +189,9 @@
                                 progreso.Value += 1
                             End If
 
+#Disable Warning CA2100 ' Review SQL queries for security vulnerabilities
                             OleDBProcedure.CommandText = sqlString
+#Enable Warning CA2100 ' Review SQL queries for security vulnerabilities
                             Try
                                 RowsAffected += OleDBProcedure.ExecuteNonQuery()
                             Catch e As Exception
@@ -221,31 +234,34 @@
             olecon.Close()
             'SecMan.WriteSQLLog(sql, constr, My.Settings.UserId)
         End If
+        GC.Collect()
+        GC.WaitForPendingFinalizers()
 
         If RowsAffected > 0 Then
             result = RowsAffected
         End If
-
         Return result
     End Function
 
     'SQL History
-    Sub WriteSQLLog(sql As String, connection As String, user_id As Integer)
-        Dim olecon As New OleDb.OleDbConnection
-        'Hardcoded SQL logging to check changes in DB
-        'Independent from DbMan.editDB()
-        sql = Replace(sql, "'", "`") 'To avoid conflict with other hardcoded sql queries
-        Dim LogInsert As New OleDb.OleDbCommand _
-            With {.CommandText = "INSERT INTO sql_log(_date, _user_id, _sql, _con)
-                                        VALUES('" & Date.Now & "', '" & user_id & "', '" & sql & "','" & connection & "');"}
+    'Sub WriteSQLLog(sql As String, connection As String, user_id As Integer)
+    '    Dim olecon As New OleDb.OleDbConnection
+    '    'Hardcoded SQL logging to check changes in DB
+    '    'Independent from DbMan.editDB()
+    '    sql = Replace(sql, "'", "`") 'To avoid conflict with other hardcoded sql queries
+    '    Dim LogInsert As New OleDb.OleDbCommand _
+    '        With {.CommandText = "INSERT INTO sql_log(_date, _user_id, _sql, _con)
+    '                                    VALUES('" & Date.Now & "', '" & user_id & "', '" & sql & "','" & connection & "');"}
 
-        olecon.ConnectionString = My.Settings.AdbConnection
+    '    olecon.ConnectionString = My.Settings.AdbConnection
 
-        LogInsert.Connection = olecon
-        'Abrir la conexión y ejecutar
-        olecon.Open()
-        LogInsert.ExecuteNonQuery()
-        olecon.Close()
-    End Sub
-    ' END SAVE  
+    '    LogInsert.Connection = olecon
+    '    'Abrir la conexión y ejecutar
+    '    olecon.Open()
+    '    LogInsert.ExecuteNonQuery()
+    '    olecon.Close()
+    'End Sub
+    ' END SAVE 
+
+
 End Module

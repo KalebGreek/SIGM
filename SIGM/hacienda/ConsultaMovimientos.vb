@@ -209,14 +209,14 @@
         If dtab Is Nothing = False Then
             If dtab.Rows.Count > 0 Then
 
-                total_autorizado = dtab(0)("total_autorizado")
-                porcentaje = dtab(0)("porcentaje")
-                mes = Month(dtab(0)("fecha"))
+                total_autorizado = dtab.Rows(0)("total_autorizado")
+                porcentaje = dtab.Rows(0)("porcentaje")
+                mes = Month(dtab.Rows(0)("fecha"))
 
                 info.Text = "AUTORIZADO: " & FormatCurrency(total_autorizado, 2)
 
                 If ingresos Then
-                    total_ingresado = dtab(0)("total_ingresado")
+                    total_ingresado = dtab.Rows(0)("total_ingresado")
                     proyectado = (total_ingresado / mes) * 12
                     porcentaje_proyectado = proyectado / total_autorizado
 
@@ -237,7 +237,7 @@
                     End If
 
                 Else
-                    total_gastado = dtab(0)("total_gastado")
+                    total_gastado = dtab.Rows(0)("total_gastado")
                     proyectado = (total_gastado / mes) * 12
                     porcentaje_proyectado = proyectado / total_autorizado
 

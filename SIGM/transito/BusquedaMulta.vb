@@ -1,7 +1,6 @@
 ﻿Public Class BusquedaMulta
-    Private OleDBCmd As New OleDb.OleDbCommand
+    'Private OleDBCmd As New OleDb.OleDbCommand
     Public Sub New()
-        OleDBCmd.CommandType = CommandType.Text
         ' This call is required by the designer.
         InitializeComponent()
 
@@ -16,7 +15,9 @@
     End Sub
 
     '-- EVENTOS UNICOS
-    Private Sub vista_SelectedIndexChanged() Handles GenSearchControl1.CVista_IndexTextChanged
+    Private Sub vista_SelectedIndexChanged() Handles GenSearchControl1.CVistaIndexTextChanged
+        Dim OleDBCmd As New OleDb.OleDbCommand
+        OleDBCmd.CommandType = System.Data.CommandType.Text
         OleDBCmd.CommandText = ""
 
         With GenSearchControl1
@@ -41,7 +42,7 @@
                     bs_resultado.Position = -1
                     bs_resultado.DataSource = dtab
                     CtrlMan.DataGridViewTools.Load(resultado, bs_resultado)
-                    bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado)
+                    bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource.Columns)
                     .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
                     .filtro.SelectedIndex = 0
 

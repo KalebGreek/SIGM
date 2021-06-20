@@ -30,9 +30,9 @@ Public Class ModPago
     End Sub
 
 
-    Private Sub bs_pago_positionChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles bs_pago.PositionChanged
+    Private Sub Bs_pago_positionChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles bs_pago.PositionChanged
         With visor
-            If bs_pago.Count > 0 And add_deuda.Visible = False Then 'Activa o desactiva la lista según el bindingsource
+            If bs_pago.Count > 0 And add_deuda.Visible = False And bs_pago.Current Is Nothing = False Then 'Activa o desactiva la lista según el bindingsource
                 .DataSource = bs_pago
                 'Dar formato a DataGridView
 
@@ -55,12 +55,12 @@ Public Class ModPago
             End If
         End With
     End Sub
-    Private Sub consulta_KeyUp(sender As Object, e As KeyEventArgs) Handles visor.KeyUp
+    Private Sub Consulta_KeyUp(sender As Object, e As KeyEventArgs) Handles visor.KeyUp
         With bs_pago
             If e.KeyValue = Keys.Delete And bs_pago.Position > -1 Then
                 If .Current("fecha_pago").ToString = "" Then
                     If MsgBoxResult.Yes = MsgBox("¿Desea eliminar esta deuda?", MsgBoxStyle.YesNo) Then
-                        Pagos.EliminarDeuda(.Current("id"), opr_id.Text)
+                        Pagos.EliminarDeuda(.Current("id"))
                         ConsultarDeudas()
                     End If
                 Else
@@ -69,15 +69,15 @@ Public Class ModPago
             End If
         End With
     End Sub
-    Private Sub solo_deuda_CheckedChanged(sender As Object, e As EventArgs) Handles solo_deuda.CheckedChanged
+    Private Sub Solo_deuda_CheckedChanged(sender As Object, e As EventArgs) Handles solo_deuda.CheckedChanged
         ConsultarDeudas()
     End Sub
-    Private Sub cancel_Click(sender As Object, e As EventArgs) Handles cancel.Click
+    Private Sub Cancel_Click(sender As Object, e As EventArgs) Handles cancel.Click
         Me.Close()
     End Sub
 
 
-    Private Sub add_deuda_Click(sender As Object, e As EventArgs) Handles add_deuda.Click
+    Private Sub Add_deuda_Click(sender As Object, e As EventArgs) Handles add_deuda.Click
         If Len(desc.Text) > 4 And monto.Value > 0 And cuota.Value >= 1 Then
             Pagos.AgregarDeuda(opr_id.Text, desc.Text, monto.Value, cuota.Value,
                                                fecha.Value)
@@ -85,12 +85,12 @@ Public Class ModPago
             ConsultarDeudas()
         End If
     End Sub
-    Private Sub add_pago_Click(sender As Object, e As EventArgs) Handles add_pago.Click
+    Private Sub Add_pago_Click(sender As Object, e As EventArgs) Handles add_pago.Click
         With visor.DataSource
             If Len(desc.Text) > 0 And monto.Value > 0 And fecha.Value.Date <= Date.Today Then
                 If .Current("fecha_pago").ToString = "" And .Current("pago").ToString = "0,00" Then
                     'Agregar Pago
-                    Pagos.AgregarPago(.Current("id"), opr_id.Text, fecha.Value, monto.Value)
+                    Pagos.AgregarPago(.Current("id"), fecha.Value, monto.Value)
                     'Generar recibo
                     Dim parametros As New Generic.List(Of ReportParameter)
 

@@ -59,6 +59,8 @@ Partial Class calcTMuniPlanosEdif
         Me.total = New System.Windows.Forms.Label()
         Me.bs_zona = New System.Windows.Forms.BindingSource(Me.components)
         Me.bs_tasas = New System.Windows.Forms.BindingSource(Me.components)
+        Me.bs_tasa_edificacion = New System.Windows.Forms.BindingSource(Me.components)
+        Me.bs_indice_inmueble = New System.Windows.Forms.BindingSource(Me.components)
         Me.FlowLayoutPanel2.SuspendLayout()
         Me.lista_edificacion.SuspendLayout()
         CType(Me.monto_linea_municipal, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -66,6 +68,8 @@ Partial Class calcTMuniPlanosEdif
         CType(Me.cuotas, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.bs_zona, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.bs_tasas, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.bs_tasa_edificacion, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.bs_indice_inmueble, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'FlowLayoutPanel2
@@ -497,6 +501,8 @@ Partial Class calcTMuniPlanosEdif
         CType(Me.cuotas, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.bs_zona, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.bs_tasas, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.bs_tasa_edificacion, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.bs_indice_inmueble, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -538,4 +544,6 @@ Partial Class calcTMuniPlanosEdif
     Friend WithEvents descuento_renovacion As CheckBox
     Friend WithEvents monto_descuento_renovacion As Label
     Friend WithEvents desc_porcentaje As NumericUpDown
+    Friend WithEvents bs_tasa_edificacion As BindingSource
+    Friend WithEvents bs_indice_inmueble As BindingSource
 End Class

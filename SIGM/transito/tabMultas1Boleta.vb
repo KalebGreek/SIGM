@@ -22,7 +22,7 @@
 
 	Public Function LoadMe(drow As DataRow) As Boolean
 		'Load multa
-		CtrlMan.LoadAllControls(drow, Me)
+		CtrlMan.LoadControls(drow, Me)
 		Return True
 	End Function
 

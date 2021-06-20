@@ -215,11 +215,11 @@ Partial Class acceso
     Friend WithEvents pass As System.Windows.Forms.MaskedTextBox
     Friend WithEvents login As System.Windows.Forms.Button
 	Friend WithEvents salir As System.Windows.Forms.Button
-	Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
-	Friend WithEvents info As Label
-	Friend WithEvents Label2 As Label
-	Friend WithEvents Label1 As Label
-	Friend WithEvents Label3 As Label
-	Friend WithEvents Label4 As Label
-	Friend WithEvents ServerList As ComboBox
+	Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
+	Friend WithEvents info As System.Windows.Forms.Label
+	Friend WithEvents Label2 As System.Windows.Forms.Label
+	Friend WithEvents Label1 As System.Windows.Forms.Label
+	Friend WithEvents Label3 As System.Windows.Forms.Label
+	Friend WithEvents Label4 As System.Windows.Forms.Label
+	Friend WithEvents ServerList As System.Windows.Forms.ComboBox
 End Class

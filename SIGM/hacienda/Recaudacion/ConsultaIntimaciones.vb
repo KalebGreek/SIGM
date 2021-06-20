@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.Reporting.WinForms
+Imports System.Collections.Generic
 Public Class ConsultaIntimaciones
     Dim PaletaIntimaciones As New List(Of Color)
 
@@ -97,7 +98,7 @@ Public Class ConsultaIntimaciones
                 bs_contribuyente.Filter = ""
 
                 bs_contribuyente.DataSource = dtab
-                bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_contribuyente)
+                bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_contribuyente.DataSource.Columns)
                 .filtro.DataSource = Nothing
                 .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
 
@@ -113,13 +114,13 @@ Public Class ConsultaIntimaciones
     End Sub
     'Search Box events
 
-    Sub buscar() Handles GenSearchControl1.CSearch_Click, GenSearchControl1.CFiltro_IndexTextChanged
+    Sub buscar() Handles GenSearchControl1.CSearchClick, GenSearchControl1.CFiltroIndexTextChanged
         GenSearchControl1.FilterSearch()
         bs_contribuyente.Filter = GenSearchControl1.bsCustomFilter
     End Sub
 
 
-    Private Sub vista_SelectedIndexChanged() Handles GenSearchControl1.CVista_IndexTextChanged
+    Private Sub vista_SelectedIndexChanged() Handles GenSearchControl1.CVistaIndexTextChanged
 
         If Me.Visible And GenSearchControl1.vista.SelectedIndex > -1 Then
             Consultar(True)
@@ -209,7 +210,7 @@ Public Class ConsultaIntimaciones
     Private Sub print_Click(sender As Object, e As EventArgs) Handles print.Click
         With bs_contribuyente
             If bs_contribuyente.Position > -1 And GenSearchControl1.vista.SelectedIndex > -1 Then
-                Dim parametros As New Generic.List(Of ReportParameter)
+                Dim parametros As New List(Of ReportParameter)
                 Dim tenedor As String = ""
                 Dim direccion As String = Trim(.Current("calle")) & ", " & Trim(.Current("localidad"))
                 If GenSearchControl1.vista.Text <> "comercio" And
@@ -224,8 +225,8 @@ Public Class ConsultaIntimaciones
 
                 Dim titulo_reporte As String = "Intimación " & GenSearchControl1.vista.Text & " - Cta. N° " & .Current("codigo")
                 Dim ruta_acceso As String = "REPORTES\HACIENDA\INTIMA"
-                Using certificado As New VisorReporte(titulo_reporte)
-                    certificado.mostrar(ruta_acceso, parametros)
+                Using certificado As New Formularios(titulo_reporte)
+                    certificado.Mostrar(ruta_acceso, parametros)
                     certificado.ShowDialog()
                 End Using
             End If

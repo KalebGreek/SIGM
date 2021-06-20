@@ -20,20 +20,20 @@ Public Class ModCombustibleTicket
 		receptor_id.Text = ReceptorID
 		Combustible.Ticket.SaveTicket(0, proveedor_id.Text, responsable.SelectedValue, fecha.Value, ticket.Text)
 
-		ticket_id.Text = Combustible.Ticket.ReturnLastTicketID(receptor_id.Text)
+		ticket_id.Text = Combustible.Ticket.ReturnLastTicketID()
 		LoadTicket(ticket_id.Text)
 	End Sub
 
 	Public Sub LoadTicket(id As Integer)
 		If id > 0 Then
 			ticket_id.Text = id
-			Dim dtab As DataTable = Combustible.Ticket.SelectTicket(id)
-
-			'Cargar ticket
-			If dtab.Rows.Count > 0 Then
-				CtrlMan.LoadAllControls(dtab(0), Me)
-				Combustible.Ticket.Detail(DetalleTicket, bs_item_ticket, ticket_id.Text)
-			End If
+			Using dtab As DataTable = Combustible.Ticket.SelectTicket(id)
+				'Cargar ticket
+				If dtab.Rows.Count > 0 Then
+					CtrlMan.LoadControlData(dtab, Me)
+					Combustible.Ticket.Detail(DetalleTicket, bs_item_ticket, ticket_id.Text)
+				End If
+			End Using
 		End If
 	End Sub
 
@@ -48,11 +48,12 @@ Public Class ModCombustibleTicket
 	'Receptor
 	Private Sub receptor_id_TextChanged(sender As Object, e As EventArgs) Handles receptor_id.TextChanged
 		If receptor_id.Text > 0 Then
-			Dim dtab As DataTable = Combustible.Receptor.Seleccionar(receptor_id.Text)
-			receptor_categoria.Text = dtab(0)("detalle")
-			receptor_marca_observaciones.Text = dtab(0)("marca") & " " & dtab(0)("observaciones")
-			receptor_modelo.Text = dtab(0)("modelo").ToString()
-			receptor_dominio.Text = dtab(0)("dominio")
+			Using dtab As DataTable = Combustible.Receptor.Seleccionar(receptor_id.Text)
+				receptor_categoria.Text = dtab.Rows(0)("detalle")
+				receptor_marca_observaciones.Text = dtab.Rows(0)("marca") & " " & dtab.Rows(0)("observaciones")
+				receptor_modelo.Text = dtab.Rows(0)("modelo").ToString()
+				receptor_dominio.Text = dtab.Rows(0)("dominio")
+			End Using
 			'Cargar responsable
 			Combustible.Responsable.Fill(bs_responsable, responsable, receptor_id.Text)
 		Else
@@ -67,22 +68,24 @@ Public Class ModCombustibleTicket
 	'Proveedor
 	Private Sub proveedor_id_TextChanged(sender As Object, e As EventArgs) Handles proveedor_id.TextChanged
 		If proveedor_id.Text > 0 Then
-			Dim dtab As DataTable = Proveedor.Seleccionar(proveedor_id.Text, 0)
-			proveedor_razon.Text = dtab(0)("razon")
-			proveedor_cuil.Text = dtab(0)("cuil")
+			Using dtab As DataTable = Proveedor.Seleccionar(proveedor_id.Text, 0)
+				proveedor_razon.Text = dtab.Rows(0)("razon")
+				proveedor_cuil.Text = dtab.Rows(0)("cuil")
+			End Using
 		Else
 			proveedor_razon.Clear()
 			proveedor_cuil.Clear()
 		End If
 	End Sub
 	Private Sub SelectProveedor_Click(sender As Object, e As EventArgs) Handles SelectProveedor.Click
-        Dim bs As BindingSource = Persona.Seleccionar(Me, "PROVEEDOR")
-        If bs.Position > -1 Then
-            proveedor_razon.Text = bs.Current("razon")
-            proveedor_cuil.Text = bs.Current("cuil")
-            proveedor_id.Text = bs.Current("proveedor_id")
-        End If
-    End Sub
+		Using bs As BindingSource = Persona.Seleccionar(Me, "PROVEEDOR")
+			If bs.Position > -1 Then
+				proveedor_razon.Text = bs.Current("razon")
+				proveedor_cuil.Text = bs.Current("cuil")
+				proveedor_id.Text = bs.Current("proveedor_id")
+			End If
+		End Using
+	End Sub
 
 	'Ticket
 	Private Sub SaveTicket_Click(sender As Object, e As EventArgs) Handles Save.Click, SaveAdd.Click
