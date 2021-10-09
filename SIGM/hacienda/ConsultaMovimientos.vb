@@ -1,4 +1,6 @@
 ﻿Public Class ConsultaMovimientos
+    Dim anexo_dtab, inciso_dtab, item_dtab, rubro_dtab, subrubro_dtab, partida_dtab, subpartida_dtab As New DataTable
+    Dim level As Integer = 0
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
@@ -15,54 +17,35 @@
         keyword_hacienda.Enabled = Ingresos.Checked Or Egresos.Checked
         If sender Is Ingresos Then
             visor.DataSource = Nothing
-            bs_cuenta.RemoveFilter()
             bs_consulta.DataSource = Nothing
-            bs_cuenta.DataSource = RellenarCuentas(Ingresos.Checked)
-            SeleccionCuenta.DataSource = bs_cuenta
-            SeleccionCuenta.DisplayMember = "nombre"
-            bs_cuenta.Position = -1
+            ObtenerCuentas(Ingresos.Checked)
+            DiagramarCuentas()
         Else
             Call Ingresos_CheckedChanged(Ingresos, Nothing)
         End If
     End Sub
 
-    Private Sub SeleccionCuenta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles SeleccionCuenta.SelectedIndexChanged, SeleccionCuenta.SelectedValueChanged
+    Private Sub SeleccionCuenta_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles SeleccionCuenta.AfterSelect
         progreso.Value = 0
         visor.DataSource = Nothing
         bs_consulta.DataSource = Nothing
-        If SeleccionCuenta.SelectedIndex > -1 And Me.Visible Then
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), keyword_movimis.Text, ActivarFiltro.Checked,
-                                                                               fecha.Checked, inicio.Value, final.Value))
-            SumarTotales(bs_cuenta, Ingresos.Checked)
-        End If
-
+        ValidarConsulta()
     End Sub
+
+
 
     Private Sub ActivarFiltro_CheckedChanged(sender As Object, e As EventArgs) Handles ActivarFiltro.CheckedChanged
         GrupoFiltro.Visible = ActivarFiltro.Checked
-        If SeleccionCuenta.SelectedIndex > -1 And Me.Visible Then
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), keyword_movimis.Text, ActivarFiltro.Checked,
-                                                                                          fecha.Checked, inicio.Value, final.Value))
-            SumarTotales(bs_cuenta, Ingresos.Checked)
-        End If
+        ValidarConsulta()
     End Sub
     Private Sub fecha_CheckedChanged(sender As Object, e As EventArgs) Handles fecha.CheckedChanged
         inicio.Enabled = fecha.Checked
         final.Enabled = fecha.Checked
         keyword_movimis.Enabled = concepto.Checked
-        If SeleccionCuenta.SelectedIndex > -1 And Me.Visible Then
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), keyword_movimis.Text, ActivarFiltro.Checked,
-                                                                        fecha.Checked, inicio.Value, final.Value))
-            SumarTotales(bs_cuenta, Ingresos.Checked)
-        End If
+        ValidarConsulta()
     End Sub
     Private Sub Keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles keyword_movimis.KeyUp
-        If SeleccionCuenta.SelectedIndex > -1 And Me.Visible Then
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), keyword_movimis.Text, ActivarFiltro.Checked,
-                                                                                            fecha.Checked, inicio.Value, final.Value))
-
-            SumarTotales(bs_cuenta, Ingresos.Checked)
-        End If
+        ValidarConsulta()
     End Sub
 
     Private Sub KeywordHacienda_KeyUp(sender As Object, e As KeyEventArgs) Handles keyword_hacienda.KeyUp
@@ -81,36 +64,133 @@
     Private Sub inicio_ValueChanged(sender As Object, e As EventArgs) Handles inicio.ValueChanged
         inicio.MaxDate = final.Value
         final.MinDate = inicio.Value
-        If SeleccionCuenta.SelectedIndex > -1 And Me.Visible Then
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, ConsultarMovimientos(bs_cuenta.Current("orden"), keyword_movimis.Text, ActivarFiltro.Checked,
-                                                                        fecha.Checked, inicio.Value, final.Value))
-            SumarTotales(bs_cuenta, Ingresos.Checked)
-        End If
+        ValidarConsulta()
     End Sub
 
     '### RUTINAS
-    Private Function RellenarCuentas(ingresos As Boolean) As DataTable
+    Private Sub ObtenerCuentas(ingresos As Boolean)
         Dim dtab As New DataTable
-        Dim sql(3) As String
-        sql(0) = "SELECT orden, IIF(sumado=1,'* ','- ') + nombre AS nombre, sumado, 
-                         pertenece, anexo, inciso, item, rubro, subrubro, partida, subpartida"
+        Dim sqlstring(3) As String
 
-        sql(1) = " FROM hacienda"
+        sqlstring(0) = "SELECT orden, nombre, sumado, pertenece, anexo, inciso, item, rubro, subrubro, partida, subpartida"
+        sqlstring(1) = " FROM hacienda"
 
         If ingresos Then
-            sql(2) = "  WHERE pertenece='8'"
+            sqlstring(2) = " WHERE pertenece='8'"
         Else
-            sql(2) = "  WHERE orden>899999999999"
+            sqlstring(2) = " WHERE pertenece='9'"
         End If
 
-        sql(3) = " ORDER BY orden"
+        sqlstring(3) = " ORDER BY orden"
 
-        dtab = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
-        Return dtab
+        dtab = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sqlstring)
+        If dtab.Rows.Count > 0 Then
+            dtab.DefaultView.RowFilter = "inciso='0' AND item='0' AND rubro='00' AND subrubro='00' AND partida='00' AND subpartida='00'"
+            anexo_dtab.DefaultView.RowFilter = Nothing
+            anexo_dtab = dtab.DefaultView.ToTable()
+
+            dtab.DefaultView.RowFilter = "inciso<>'0' AND item='0' AND rubro='00' AND subrubro='00' AND partida='00' AND subpartida='00'"
+            inciso_dtab.DefaultView.RowFilter = Nothing
+            inciso_dtab = dtab.DefaultView.ToTable()
+
+            dtab.DefaultView.RowFilter = "inciso<>'0' AND item<>'0' AND rubro='00' AND subrubro='00' AND partida='00' AND subpartida='00'"
+            item_dtab.DefaultView.RowFilter = Nothing
+            item_dtab = dtab.DefaultView.ToTable()
+
+            dtab.DefaultView.RowFilter = "inciso<>'0' AND item<>'0' AND rubro<>'00' AND subrubro='00' AND partida='00' AND subpartida='00'"
+            rubro_dtab.DefaultView.RowFilter = Nothing
+            rubro_dtab = dtab.DefaultView.ToTable()
+
+            dtab.DefaultView.RowFilter = "inciso<>'0' AND item<>'0' AND rubro<>'00' AND subrubro<>'00' AND partida='00' AND subpartida='00'"
+            subrubro_dtab.DefaultView.RowFilter = Nothing
+            subrubro_dtab = dtab.DefaultView.ToTable()
+
+            dtab.DefaultView.RowFilter = "inciso<>'0' AND item<>'0' AND rubro<>'00' AND subrubro<>'00' AND partida<>'00' AND subpartida='00'"
+            partida_dtab.DefaultView.RowFilter = Nothing
+            partida_dtab = dtab.DefaultView.ToTable()
+
+            dtab.DefaultView.RowFilter = "inciso<>'0' AND item<>'0' AND rubro<>'00' AND subrubro<>'00' AND partida<>'00' AND subpartida<>'00'"
+            subpartida_dtab.DefaultView.RowFilter = Nothing
+            subpartida_dtab = dtab.DefaultView.ToTable()
+        End If
+    End Sub
+
+    Private Sub DiagramarCuentas()
+        SeleccionCuenta.Nodes.Clear()
+        level = 0
+        '7 levels
+        'Fisrt one has to be completed manually
+        For Each row As DataRow In anexo_dtab.Rows
+            Dim tn As New TreeNode With {
+            .Name = row("orden").ToString,
+            .Text = row("nombre").ToString,
+            .Tag = row("sumado").ToString}
+
+            inciso_dtab.DefaultView.RowFilter = "anexo='" & row.Item("anexo").ToString & "'"
+            RellenarCuentas(tn, inciso_dtab.DefaultView.ToTable())
+            SeleccionCuenta.BeginUpdate()
+            SeleccionCuenta.Nodes.Add(tn)
+            SeleccionCuenta.EndUpdate()
+
+        Next
+
+        SeleccionCuenta.SelectedNode = SeleccionCuenta.Nodes(0)
+        SeleccionCuenta.Focus()
+    End Sub
+    Private Function RellenarCuentas(raiz As TreeNode, origen As DataTable) As TreeNode
+        level += 1
+        For Each row As DataRow In origen.Rows
+
+            Dim tn As New TreeNode With {
+            .Name = row("orden").ToString,
+            .Text = row("nombre").ToString,
+            .Tag = row("sumado").ToString}
+
+            If row("subpartida").ToString <> "00" Then
+                'Needed to avoid loop
+            ElseIf row("partida").ToString <> "00" Then
+                subpartida_dtab.DefaultView.RowFilter = "anexo='" & row.Item("anexo").ToString & "' AND inciso='" & row.Item("inciso").ToString & "' AND item='" & row.Item("item").ToString &
+                                                        "' AND rubro='" & row.Item("rubro").ToString & "' AND subrubro='" & row.Item("subrubro").ToString & "' AND partida='" & row.Item("partida").ToString & "'"
+                RellenarCuentas(tn, subpartida_dtab.DefaultView.ToTable())
+
+            ElseIf row("subrubro").ToString <> "00" Then
+                partida_dtab.DefaultView.RowFilter = "anexo='" & row.Item("anexo").ToString & "' AND inciso='" & row.Item("inciso").ToString & "' AND item='" & row.Item("item").ToString &
+                                                     "' AND rubro='" & row.Item("rubro").ToString & "' AND subrubro='" & row.Item("subrubro").ToString & "'"
+                RellenarCuentas(tn, partida_dtab.DefaultView.ToTable())
+
+            ElseIf row("rubro").ToString <> "00" Then
+                subrubro_dtab.DefaultView.RowFilter = "anexo='" & row.Item("anexo").ToString & "' AND inciso='" & row.Item("inciso").ToString & "' AND item='" & row.Item("item").ToString &
+                                                        "' AND rubro='" & row.Item("rubro").ToString & "'"
+                RellenarCuentas(tn, subrubro_dtab.DefaultView.ToTable())
+
+            ElseIf row("item").ToString <> "0" Then
+                rubro_dtab.DefaultView.RowFilter = "anexo='" & row.Item("anexo").ToString & "' AND inciso='" & row.Item("inciso").ToString & "' AND item='" & row.Item("item").ToString & "'"
+                RellenarCuentas(tn, rubro_dtab.DefaultView.ToTable())
+
+            ElseIf row("inciso").ToString <> "0" Then
+                item_dtab.DefaultView.RowFilter = "anexo='" & row.Item("anexo").ToString & "' AND inciso='" & row.Item("inciso").ToString & "'"
+                RellenarCuentas(tn, item_dtab.DefaultView.ToTable())
+
+            End If
+
+            raiz.Nodes.Add(tn)
+        Next
+
+        Return raiz
     End Function
+
+
+    Private Sub ValidarConsulta()
+        If SeleccionCuenta.SelectedNode Is Nothing = False And Me.Visible Then
+            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, ConsultarMovimientos(SeleccionCuenta.SelectedNode.Name, keyword_movimis.Text, ActivarFiltro.Checked,
+                                                                        fecha.Checked, inicio.Value, final.Value))
+            SumarTotales()
+        End If
+    End Sub
+
     Private Function ConsultarMovimientos(ByVal cuenta As Double, ByVal keyword As String,
-										  Filtrado As Boolean, FiltroFecha As Boolean,
-										  ByVal FechaInicio As Date, ByVal FechaFinal As Date) As DataTable
+                                          Filtrado As Boolean, FiltroFecha As Boolean,
+                                          ByVal FechaInicio As Date, ByVal FechaFinal As Date) As DataTable
         Dim sql(3) As String
 
         sql(0) = "SELECT movimis.orden, movimis.fecha, movimis.documento, movimis.pagado, 
@@ -133,26 +213,25 @@
 
         Return DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
     End Function
-    Private Sub SumarTotales(cuentas As BindingSource, ingresos As Boolean)
+    Private Sub SumarTotales()
         Dim sql(4) As String
-        Dim orden As Double = cuentas.Current("orden")
-        '812345678901 | 8 pert | 1 anexo | 2 inciso | 3 item | 45 rubro | 67 subrubro | 89 partida | 01 subpartida
+        Dim orden As String = SeleccionCuenta.SelectedNode.Name
+        '812345678901 | 8 part | 1 anexo | 2 inciso | 3 item | 45 rubro | 67 subrubro | 89 partida | 01 subpartida
         Dim anexo, inciso, item, rubro, subrubro, partida, mes As Integer
         Dim total_autorizado, total_ingresado, total_gastado, proyectado, porcentaje, porcentaje_proyectado As Decimal
-        anexo = cuentas.Current("anexo")
-        inciso = cuentas.Current("inciso")
-        item = cuentas.Current("item")
-        rubro = cuentas.Current("rubro")
-        subrubro = cuentas.Current("subrubro")
-        partida = cuentas.Current("partida")
+        anexo = Mid(orden, 2, 1)
+        inciso = Mid(orden, 3, 1)
+        item = Mid(orden, 4, 1)
+        rubro = Mid(orden, 5, 2)
+        subrubro = Mid(orden, 7, 2)
+        partida = Mid(orden, 9, 2)
 
-
-        Dim sumado As Boolean = cuentas.Current("sumado") = 2
+        Dim sumado As Boolean = (CInt(SeleccionCuenta.SelectedNode.Tag) = 2)
         info.Text = " - "
         info2.Text = " - "
 
         If sumado Then
-            If ingresos Then
+            If Ingresos.Checked Then
                 sql(0) = "SELECT orden, fecha, autorizado as total_autorizado, sumatodo as total_ingresado,  (sumatodo/autorizado) as porcentaje"
                 sql(1) = "FROM ingresos"
             Else
@@ -191,7 +270,7 @@
                 End If
             End If
 
-            If ingresos Then
+            If Ingresos.Checked Then
                 sql(0) += ", SUM(autorizado) as total_autorizado, SUM(sumatodo) as total_ingresado,
                            (SUM(sumatodo)/SUM(autorizado)) as porcentaje"
                 sql(1) = "FROM ingresos"
@@ -215,7 +294,7 @@
 
                 info.Text = "AUTORIZADO: " & FormatCurrency(total_autorizado, 2)
 
-                If ingresos Then
+                If Ingresos.Checked Then
                     total_ingresado = dtab.Rows(0)("total_ingresado")
                     proyectado = (total_ingresado / mes) * 12
                     porcentaje_proyectado = proyectado / total_autorizado
@@ -263,6 +342,7 @@
 
 
     End Sub
+
 
 End Class
 

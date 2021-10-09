@@ -23,7 +23,7 @@ Public Class ConsultaContrato
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        GenSearchControl1.BackColor = Color.FromArgb(My.Settings.CurrentMenuColor)
+        GenSearchControl1.BackColor = My.Settings.CurrentMenuColor
         GenSearchControl1.vista.Items.AddRange(New Object() {"HACIENDA", "DEPORTES", "OBRAS PUBLICAS", "TRANSITO", "TURISMO"})
     End Sub
 

@@ -39,7 +39,7 @@ Partial Class ConsultaMovimientos
         Me.Ingresos = New System.Windows.Forms.RadioButton()
         Me.Egresos = New System.Windows.Forms.RadioButton()
         Me.keyword_hacienda = New System.Windows.Forms.TextBox()
-        Me.SeleccionCuenta = New System.Windows.Forms.ListBox()
+        Me.SeleccionCuenta = New System.Windows.Forms.TreeView()
         Me.ActivarFiltro = New System.Windows.Forms.CheckBox()
         Me.GrupoFiltro = New System.Windows.Forms.FlowLayoutPanel()
         Me.fecha = New System.Windows.Forms.RadioButton()
@@ -51,7 +51,8 @@ Partial Class ConsultaMovimientos
         Me.Label1 = New System.Windows.Forms.Label()
         Me.final = New System.Windows.Forms.DateTimePicker()
         Me.visor = New System.Windows.Forms.DataGridView()
-        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.bs_consulta, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.bs_cuenta, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -60,7 +61,14 @@ Partial Class ConsultaMovimientos
         Me.FlowLayoutPanel2.SuspendLayout()
         Me.GrupoFiltro.SuspendLayout()
         CType(Me.visor, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Panel1.SuspendLayout()
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer1.Panel1.SuspendLayout()
+        Me.SplitContainer1.Panel2.SuspendLayout()
+        Me.SplitContainer1.SuspendLayout()
+        CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer2.Panel1.SuspendLayout()
+        Me.SplitContainer2.Panel2.SuspendLayout()
+        Me.SplitContainer2.SuspendLayout()
         Me.SuspendLayout()
         '
         'basura1
@@ -82,10 +90,10 @@ Partial Class ConsultaMovimientos
         Me.StatusStrip1.BackColor = System.Drawing.SystemColors.Control
         Me.StatusStrip1.Font = New System.Drawing.Font("PF DinDisplay Pro", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.progreso, Me.info, Me.info2, Me.info3})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 434)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 494)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(1, 0, 9, 0)
-        Me.StatusStrip1.Size = New System.Drawing.Size(884, 27)
+        Me.StatusStrip1.Size = New System.Drawing.Size(879, 27)
         Me.StatusStrip1.SizingGrip = False
         Me.StatusStrip1.TabIndex = 2
         Me.StatusStrip1.Text = "StatusStrip1"
@@ -130,15 +138,14 @@ Partial Class ConsultaMovimientos
         'FlowLayoutPanel1
         '
         Me.FlowLayoutPanel1.BackColor = System.Drawing.Color.Gainsboro
-        Me.FlowLayoutPanel1.Controls.Add(Me.FlowLayoutPanel2)
-        Me.FlowLayoutPanel1.Controls.Add(Me.SeleccionCuenta)
         Me.FlowLayoutPanel1.Controls.Add(Me.ActivarFiltro)
         Me.FlowLayoutPanel1.Controls.Add(Me.GrupoFiltro)
+        Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FlowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.FlowLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(753, 146)
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(410, 357)
         Me.FlowLayoutPanel1.TabIndex = 149
         '
         'FlowLayoutPanel2
@@ -146,9 +153,10 @@ Partial Class ConsultaMovimientos
         Me.FlowLayoutPanel2.Controls.Add(Me.Ingresos)
         Me.FlowLayoutPanel2.Controls.Add(Me.Egresos)
         Me.FlowLayoutPanel2.Controls.Add(Me.keyword_hacienda)
-        Me.FlowLayoutPanel2.Location = New System.Drawing.Point(3, 3)
+        Me.FlowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top
+        Me.FlowLayoutPanel2.Location = New System.Drawing.Point(0, 0)
         Me.FlowLayoutPanel2.Name = "FlowLayoutPanel2"
-        Me.FlowLayoutPanel2.Size = New System.Drawing.Size(456, 32)
+        Me.FlowLayoutPanel2.Size = New System.Drawing.Size(465, 32)
         Me.FlowLayoutPanel2.TabIndex = 167
         '
         'Ingresos
@@ -186,18 +194,16 @@ Partial Class ConsultaMovimientos
         '
         'SeleccionCuenta
         '
-        Me.SeleccionCuenta.Font = New System.Drawing.Font("PF DinDisplay Pro", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SeleccionCuenta.FormattingEnabled = True
-        Me.SeleccionCuenta.ItemHeight = 18
-        Me.SeleccionCuenta.Location = New System.Drawing.Point(3, 41)
+        Me.SeleccionCuenta.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SeleccionCuenta.Location = New System.Drawing.Point(0, 32)
         Me.SeleccionCuenta.Name = "SeleccionCuenta"
-        Me.SeleccionCuenta.Size = New System.Drawing.Size(456, 94)
-        Me.SeleccionCuenta.TabIndex = 151
+        Me.SeleccionCuenta.Size = New System.Drawing.Size(465, 325)
+        Me.SeleccionCuenta.TabIndex = 168
         '
         'ActivarFiltro
         '
         Me.ActivarFiltro.BackColor = System.Drawing.Color.Transparent
-        Me.ActivarFiltro.Location = New System.Drawing.Point(462, 6)
+        Me.ActivarFiltro.Location = New System.Drawing.Point(0, 6)
         Me.ActivarFiltro.Margin = New System.Windows.Forms.Padding(0, 6, 0, 0)
         Me.ActivarFiltro.Name = "ActivarFiltro"
         Me.ActivarFiltro.Size = New System.Drawing.Size(279, 23)
@@ -216,9 +222,9 @@ Partial Class ConsultaMovimientos
         Me.GrupoFiltro.Controls.Add(Me.Label3)
         Me.GrupoFiltro.Controls.Add(Me.Label1)
         Me.GrupoFiltro.Controls.Add(Me.final)
-        Me.GrupoFiltro.Location = New System.Drawing.Point(465, 32)
+        Me.GrupoFiltro.Location = New System.Drawing.Point(3, 32)
         Me.GrupoFiltro.Name = "GrupoFiltro"
-        Me.GrupoFiltro.Size = New System.Drawing.Size(276, 110)
+        Me.GrupoFiltro.Size = New System.Drawing.Size(374, 110)
         Me.GrupoFiltro.TabIndex = 166
         Me.GrupoFiltro.Visible = False
         '
@@ -254,7 +260,7 @@ Partial Class ConsultaMovimientos
         Me.keyword_movimis.Location = New System.Drawing.Point(0, 23)
         Me.keyword_movimis.Margin = New System.Windows.Forms.Padding(0, 0, 0, 4)
         Me.keyword_movimis.Name = "keyword_movimis"
-        Me.keyword_movimis.Size = New System.Drawing.Size(270, 27)
+        Me.keyword_movimis.Size = New System.Drawing.Size(370, 27)
         Me.keyword_movimis.TabIndex = 163
         '
         'Label2
@@ -283,7 +289,7 @@ Partial Class ConsultaMovimientos
         Me.Label3.Location = New System.Drawing.Point(175, 54)
         Me.Label3.Margin = New System.Windows.Forms.Padding(0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(92, 22)
+        Me.Label3.Size = New System.Drawing.Size(195, 22)
         Me.Label3.TabIndex = 169
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
@@ -314,31 +320,59 @@ Partial Class ConsultaMovimientos
         Me.visor.AllowUserToResizeRows = False
         Me.visor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.visor.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.visor.Location = New System.Drawing.Point(0, 148)
+        Me.visor.Location = New System.Drawing.Point(0, 0)
         Me.visor.Name = "visor"
         Me.visor.ReadOnly = True
         Me.visor.RowHeadersVisible = False
         Me.visor.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.visor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.visor.Size = New System.Drawing.Size(884, 286)
+        Me.visor.Size = New System.Drawing.Size(879, 133)
         Me.visor.TabIndex = 6
         '
-        'Panel1
+        'SplitContainer1
         '
-        Me.Panel1.BackColor = System.Drawing.Color.Gainsboro
-        Me.Panel1.Controls.Add(Me.FlowLayoutPanel1)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel1.Location = New System.Drawing.Point(0, 0)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(884, 148)
-        Me.Panel1.TabIndex = 150
+        Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
+        Me.SplitContainer1.MinimumSize = New System.Drawing.Size(760, 0)
+        Me.SplitContainer1.Name = "SplitContainer1"
+        Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
+        '
+        'SplitContainer1.Panel1
+        '
+        Me.SplitContainer1.Panel1.BackColor = System.Drawing.Color.Gainsboro
+        Me.SplitContainer1.Panel1.Controls.Add(Me.SplitContainer2)
+        Me.SplitContainer1.Panel1MinSize = 30
+        '
+        'SplitContainer1.Panel2
+        '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.visor)
+        Me.SplitContainer1.Size = New System.Drawing.Size(879, 494)
+        Me.SplitContainer1.SplitterDistance = 357
+        Me.SplitContainer1.TabIndex = 151
+        '
+        'SplitContainer2
+        '
+        Me.SplitContainer2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer2.Location = New System.Drawing.Point(0, 0)
+        Me.SplitContainer2.Name = "SplitContainer2"
+        '
+        'SplitContainer2.Panel1
+        '
+        Me.SplitContainer2.Panel1.Controls.Add(Me.SeleccionCuenta)
+        Me.SplitContainer2.Panel1.Controls.Add(Me.FlowLayoutPanel2)
+        '
+        'SplitContainer2.Panel2
+        '
+        Me.SplitContainer2.Panel2.Controls.Add(Me.FlowLayoutPanel1)
+        Me.SplitContainer2.Size = New System.Drawing.Size(879, 357)
+        Me.SplitContainer2.SplitterDistance = 465
+        Me.SplitContainer2.TabIndex = 150
         '
         'ConsultaMovimientos
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
-        Me.ClientSize = New System.Drawing.Size(884, 461)
-        Me.Controls.Add(Me.visor)
-        Me.Controls.Add(Me.Panel1)
+        Me.ClientSize = New System.Drawing.Size(879, 521)
+        Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
@@ -360,7 +394,14 @@ Partial Class ConsultaMovimientos
         Me.GrupoFiltro.ResumeLayout(False)
         Me.GrupoFiltro.PerformLayout()
         CType(Me.visor, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Panel1.ResumeLayout(False)
+        Me.SplitContainer1.Panel1.ResumeLayout(False)
+        Me.SplitContainer1.Panel2.ResumeLayout(False)
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer1.ResumeLayout(False)
+        Me.SplitContainer2.Panel1.ResumeLayout(False)
+        Me.SplitContainer2.Panel2.ResumeLayout(False)
+        CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer2.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -378,7 +419,6 @@ Partial Class ConsultaMovimientos
     Friend WithEvents FlowLayoutPanel2 As FlowLayoutPanel
     Friend WithEvents Ingresos As RadioButton
     Friend WithEvents Egresos As RadioButton
-    Friend WithEvents SeleccionCuenta As ListBox
     Friend WithEvents ActivarFiltro As CheckBox
     Friend WithEvents GrupoFiltro As FlowLayoutPanel
     Friend WithEvents fecha As RadioButton
@@ -389,8 +429,10 @@ Partial Class ConsultaMovimientos
     Friend WithEvents Label3 As Label
     Friend WithEvents final As DateTimePicker
     Friend WithEvents visor As DataGridView
-    Friend WithEvents Panel1 As Panel
     Friend WithEvents info3 As ToolStripStatusLabel
     Friend WithEvents Label1 As Label
     Friend WithEvents keyword_hacienda As TextBox
+    Friend WithEvents SeleccionCuenta As TreeView
+    Friend WithEvents SplitContainer1 As SplitContainer
+    Friend WithEvents SplitContainer2 As SplitContainer
 End Class

@@ -101,24 +101,24 @@ Class ModInmueble
             info_estado.Text = "NUEVO"
             operacion.Text = "NEW"
         ElseIf BSCat.Count > 0 Then
-            With BSCat
+            With BSCat.DataSource
                 CtrlMan.LoadControlData(BSCat, tab_ubicacion)
-                info_ubicacion.Text = .DataSource(0)("calle").ToString & " " & .DataSource(0)("altura").ToString
+                info_ubicacion.Text = .Rows(0)("calle").ToString & " " & .Rows(0)("altura").ToString
 
-                If BSCat.DataSource(0)("expediente") Is DBNull.Value = False Then
-                    info_exp.Text = .DataSource(0)("expediente")
+                If .Rows(0)("expediente") Is DBNull.Value = False Then
+                    info_exp.Text = .Rows(0)("expediente")
                 End If
 
-                If My.Settings.UserId = .DataSource(0)("user_id") Then
-                    If opr_id.Text = .DataSource(0)("opr_id") Then 'Modificar
-                        If .DataSource(0)("archivado") Then 'Solo lectura
+                If My.Settings.UserId = .Rows(0)("user_id") Then
+                    If opr_id.Text = .Rows(0)("opr_id") Then 'Modificar
+                        If .Rows(0)("archivado") Then 'Solo lectura
                             info_estado.Text = "CONSULTA"
                         Else
                             info_estado.Text = "ACTIVO"
                             operacion.Text = "MOD"
                         End If
-                    ElseIf opr_id.Text <> .DataSource(0)("opr_id") Then
-                        If .DataSource(0)("archivado") Then 'Duplicar
+                    ElseIf opr_id.Text <> .Rows(0)("opr_id") Then
+                        If .Rows(0)("archivado") Then 'Duplicar
                             operacion.Text = "DUP"
                             info_estado.Text = "LISTO PARA DUPLICAR"
                         Else

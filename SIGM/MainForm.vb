@@ -10,7 +10,7 @@ Class MainForm
 		Me.Controls.Add(menu)
 		menu.Height = 25
 		menu.Dock = DockStyle.Top
-		menu.BackColor = Color.FromArgb(My.Settings.CurrentMenuColor)
+		menu.BackColor = My.Settings.CurrentMenuColor
 
 	End Sub
 

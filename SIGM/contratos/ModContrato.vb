@@ -3,7 +3,7 @@
 		' This call is required by the designer.
 		InitializeComponent()
 		' Add any initialization after the InitializeComponent() call.
-		Label9.BackColor = Color.FromArgb(My.Settings.CurrentMenuColor)
+		Label9.BackColor = My.Settings.CurrentMenuColor
 		inicio.Value = Today
 		inicio.MaxDate = Today
 
@@ -88,9 +88,9 @@
 		If CtrlMan.Validate(FlowLayoutPanel1) And CtrlMan.Validate(FlowLayoutPanel2) _
 	   And CtrlMan.Validate(FlowLayoutPanel3) Then
 			If autoridad1.Text = autoridad2.Text Then
-				autoridad2.BackColor = Color.FromName(My.Settings.ErrorColorValue)
+				autoridad2.BackColor = My.Settings.ErrorColorValue
 			Else
-				autoridad2.BackColor = Color.FromName(My.Settings.DefaultColorValue)
+				autoridad2.BackColor = My.Settings.DefaultColorValue
 				valido = True
 			End If
 		End If

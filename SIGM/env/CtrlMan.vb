@@ -27,10 +27,10 @@ Class CtrlMan 'Control Manager
 
         'Default color values
         If DefaultColor = Nothing Then
-            DefaultColor = Color.FromName(My.Settings.DefaultColorValue)
+            DefaultColor = My.Settings.DefaultColorValue
         End If
         If ErrorColor = Nothing Then
-            ErrorColor = Color.FromName(My.Settings.ErrorColorValue)
+            ErrorColor = My.Settings.ErrorColorValue
         End If
 
         'Validation

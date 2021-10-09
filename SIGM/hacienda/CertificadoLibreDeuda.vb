@@ -1,54 +1,65 @@
 ﻿Imports Microsoft.Reporting.WinForms
 Class CertificadoLibreDeuda
-    'Public registro As DataTable
+    Dim agua, auto, catastro, sepelio, comercio As DataTable
     'Dim DetalleVencimiento As String
 
     'Routines
-    Public Function ConsultarCuenta(tipo As String, cuenta As Integer) As DataTable
+    Public Sub ObtenerCuentas()
         Dim sql(5) As String
-
-        If tipo.Contains("AGUA") Then
-            sql(0) = "SELECT razon, calle, barrio, localidad, provincia, postal,
+        sql(0) = "SELECT razon, calle, barrio, localidad, provincia, postal,
 						 codigo, alta, catastro, ubicacion, reparto,
 						 potable, comercial"
-            sql(1) = "FROM aguas"
-            sql(2) = "WHERE codigo=" & cuenta
+        Sql(1) = "FROM aguas"
+        agua = ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-        ElseIf tipo.Contains("AUTO") Then
-            sql(0) = "SELECT razon, calle, barrio, localidad, provincia, postal,
+        sql(0) = "SELECT razon, calle, barrio, localidad, provincia, postal,
 						 codigo, incorpora, baja, modelo, peso, marca, motor, chassis,
 						 tipauto.describo as describo, anterior, letrahoy, numerohoy"
-            sql(1) = "FROM automovil INNER JOIN tipauto ON automovil.tipo=tipauto.tipo"
-            sql(2) = "WHERE codigo=" & cuenta
+        sql(1) = "FROM automovil INNER JOIN tipauto ON automovil.tipo=tipauto.tipo"
+        auto = ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-        ElseIf tipo.Contains("CATA") Then
-            sql(0) = "SELECT razon, docume, calle, barrio, localidad, provincia, postal,
+        sql(0) = "SELECT razon, docume, calle, barrio, localidad, provincia, postal,
 						codigo, alta, catastro, ubicacion, frente1, frente2, frente3, frente4,
 						jubilado, baldio"
-            sql(1) = "FROM catastro"
-            sql(2) = "WHERE codigo=" & cuenta
+        sql(1) = "FROM catastro"
+        catastro = ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-        ElseIf tipo.Contains("CEME") Then
-            sql(0) = "SELECT razon, calle, barrio, localidad, provincia, postal,
+        sql(0) = "SELECT razon, calle, barrio, localidad, provincia, postal,
 						sepevar.tipo as tipo, codigo, alta, ubicacion, numero, fila, sector, lugares,
 						espacio, difunto1, difunto2, difunto3, difunto4, difunto5,
 						difunto6, difunto7, difunto8, difunto9, difunto10, sepelio.jubilado as jubilado"
-            sql(1) = "FROM sepelio INNER JOIN sepevar ON sepelio.tipo=sepevar.orden"
-            sql(2) = "WHERE codigo=" & cuenta
+        sql(1) = "FROM sepelio INNER JOIN sepevar ON sepelio.tipo=sepevar.orden"
+        sepelio = ReadDB(Nothing, My.Settings.foxConnection, sql)
 
-        ElseIf tipo.Contains("COME") Then
-            sql(0) = "SELECT razon, domicilio, localidad, codigo, comact.detalle as detalle, docume,
+        sql(0) = "SELECT razon, domicilio, localidad, codigo, comact.detalle as detalle, docume,
 						brutos, inscripto, baja, acta"
-            sql(1) = "FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
-            sql(2) = "WHERE codigo=" & cuenta
+        sql(1) = "FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
+        comercio = ReadDB(Nothing, My.Settings.foxConnection, sql)
+
+
+    End Sub
+    Public Function ValidarCuenta(tipo As String, cuenta As Integer) As DataTable
+        Dim dtab As New DataTable
+        If tipo.Contains("AGUA") Then
+            dtab = agua
+        ElseIf tipo.Contains("AUTO") Then
+            dtab = auto
+        ElseIf tipo.Contains("CATA") Then
+            dtab = catastro
+        ElseIf tipo.Contains("CEME") Then
+            dtab = sepelio
+        ElseIf tipo.Contains("COME") Then
+            dtab = comercio
         End If
-        Return DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        dtab.DefaultView.RowFilter = "codigo=" & cuenta
+        Return dtab
     End Function
 
     'Events
     Private Sub CertificadoLibreDeuda_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
         If Me.Visible Then
             Creado.MaxDate = Today
+            ObtenerCuentas()
         End If
     End Sub
 
@@ -65,7 +76,7 @@ Class CertificadoLibreDeuda
         GrupoFecha.Visible = False
         razon.Text = ""
         If Cuenta.Value > 0 Then
-            bs_registro.DataSource = ConsultarCuenta(servicio.Text, Cuenta.Value)
+            bs_registro.DataSource = ValidarCuenta(servicio.Text, Cuenta.Value)
             If bs_registro.Position > -1 Then
                 Cuenta.BackColor = Color.White
                 GrupoFecha.Visible = True
@@ -112,11 +123,11 @@ Class CertificadoLibreDeuda
             With servicio.Text
                 If servicio.Text.Contains("AGUA") Then
                     ReportType = "REPORTES\HACIENDA\LibreDeudaAgua"
-                    parametros = ParametrosReporte.Agua(bs_registro.DataSource(0), parametros)
+                    parametros = ParametrosReporte.Agua(bs_registro.DataSource.Rows(0), parametros)
 
                 ElseIf servicio.Text.Contains("AUTO") Then
                     ReportType = "REPORTES\HACIENDA\LibreDeudaAuto"
-                    parametros = ParametrosReporte.Automotor(bs_registro.DataSource(0), parametros, SinBaja.Checked)
+                    parametros = ParametrosReporte.Automotor(bs_registro.DataSource.Rows(0), parametros, SinBaja.Checked)
 
                     Dim OpcionBaja As Integer
                     If BajaRadicacion.Checked Then
@@ -131,21 +142,21 @@ Class CertificadoLibreDeuda
 
                 ElseIf servicio.Text.Contains("CATA") Then
                     ReportType = "REPORTES\HACIENDA\LibreDeudaProp"
-                    parametros = ParametrosReporte.Catastro(bs_registro.DataSource(0), parametros)
+                    parametros = ParametrosReporte.Catastro(bs_registro.DataSource.Rows(0), parametros)
 
                 ElseIf servicio.Text.Contains("CEME") Then
                     ReportType = "REPORTES\HACIENDA\LibreDeudaCeme"
-                    parametros = ParametrosReporte.Cementerio(bs_registro.DataSource(0), parametros)
+                    parametros = ParametrosReporte.Cementerio(bs_registro.DataSource.Rows(0), parametros)
 
                 ElseIf servicio.Text.Contains("COME") Then
                     ReportType = "REPORTES\HACIENDA\LibreDeudaCome"
-                    parametros = ParametrosReporte.Comercio(bs_registro.DataSource(0), parametros)
+                    parametros = ParametrosReporte.Comercio(bs_registro.DataSource.Rows(0), parametros)
 
                 End If
 
                 If ReportType <> "" Then
                     Using certificado As New Formularios("Imprimir Certificado de Libre Deuda")
-                        certificado.mostrar(ReportType, parametros)
+                        certificado.Mostrar(ReportType, parametros)
                         certificado.ShowDialog()
                     End Using
                 End If

@@ -18,7 +18,7 @@
             If TypeOf sender Is Button Then
                 Dim title As String = sender.Text.ToString & " | SIGM Villa de Las Rosas"
 
-                My.Settings.CurrentMenuColor = Str(CType(sender, Button).BackColor.ToArgb)
+                My.Settings.CurrentMenuColor = CType(sender, Button).BackColor
                 form1.Text = title
 
                 Me.Hide()

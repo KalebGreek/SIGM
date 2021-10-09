@@ -241,13 +241,13 @@ Partial Class ModContrato
         'buscar
         '
         Me.buscar.FlatAppearance.BorderSize = 0
-        Me.buscar.Font = New System.Drawing.Font("Segoe MDL2 Assets", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.buscar.Font = New System.Drawing.Font("Segoe MDL2 Assets", 14.0!)
         Me.buscar.Location = New System.Drawing.Point(470, 1)
         Me.buscar.Margin = New System.Windows.Forms.Padding(2, 1, 0, 0)
         Me.buscar.Name = "buscar"
-        Me.buscar.Size = New System.Drawing.Size(33, 33)
+        Me.buscar.Size = New System.Drawing.Size(35, 33)
         Me.buscar.TabIndex = 411
-        Me.buscar.Text = ""
+        Me.buscar.Text = ""
         Me.buscar.UseVisualStyleBackColor = True
         '
         'Aut1Cuil
