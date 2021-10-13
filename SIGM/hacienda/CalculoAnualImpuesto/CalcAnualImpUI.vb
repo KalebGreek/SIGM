@@ -135,7 +135,7 @@ Public Class CalcAnualImpUI
             CheckProgress(dtab(2).Rows.IndexOf(dr), CInt(dr("codigo")))
         Next
         If total_cuotas > 0 Then
-            DbMan.editDB(Nothing, My.Settings.foxConnection, Nothing, True, sqlInsertList, progreso)
+            DbMan.EditDB(Nothing, My.Settings.foxConnection, sqlInsertList, progreso)
         End If
     End Sub
 
@@ -190,7 +190,7 @@ Public Class CalcAnualImpUI
         Next
 
         If total_cuotas > 0 Then
-            DbMan.editDB(Nothing, My.Settings.foxConnection, Nothing, True, sqlInsertList, progreso)
+            DbMan.EditDB(Nothing, My.Settings.foxConnection, sqlInsertList, progreso)
         End If
     End Sub
 
@@ -367,7 +367,7 @@ Public Class CalcAnualImpUI
             CheckProgress(dtab(1).Rows.IndexOf(dr), dr("codigo"))
         Next
         If total_cuotas > 0 Then
-            DbMan.editDB(Nothing, My.Settings.foxConnection, Nothing, True, sqlInsertList, progreso)
+            DbMan.EditDB(Nothing, My.Settings.foxConnection, sqlInsertList, progreso)
         End If
     End Sub
 
@@ -462,7 +462,7 @@ Public Class CalcAnualImpUI
             CheckProgress(dtab_cuenta.Rows.IndexOf(dr), dr("codigo"))
         Next
         If total_cuotas > 0 Then
-            DbMan.editDB(Nothing, My.Settings.foxConnection, Nothing, True, sqlInsertList, progreso)
+            DbMan.EditDB(Nothing, My.Settings.foxConnection, sqlInsertList, progreso)
         End If
     End Sub
 
@@ -529,7 +529,7 @@ Public Class CalcAnualImpUI
             CheckProgress(dtab_cuenta.Rows.IndexOf(dr), dr("codigo"))
         Next
         If total_cuotas > 0 Then
-            DbMan.editDB(Nothing, My.Settings.foxConnection, Nothing, True, sqlInsertList, progreso)
+            DbMan.EditDB(Nothing, My.Settings.foxConnection, sqlInsertList, progreso)
         End If
     End Sub
 

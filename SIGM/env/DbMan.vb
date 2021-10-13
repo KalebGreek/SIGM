@@ -152,9 +152,8 @@
 
     ' SAVE: Rutinas para grabar registros 
     Function EditDB(OleDBProcedure As OleDb.OleDbCommand, Optional ByVal constr As String = Nothing,
-                    Optional sql As String = Nothing,
-                    Optional BulkInsert As Boolean = False, Optional sqlStringList() As String = Nothing,
-                    Optional ByRef progreso As ToolStripProgressBar = Nothing) As String
+                    Optional sqlSourceList() As String = Nothing, Optional ByRef progreso As ToolStripProgressBar = Nothing) As String
+        Dim sqlValidList() As String
         Dim RowsAffected As Integer = 0
         Dim result As String = ""
         Dim olecon As New OleDb.OleDbConnection
@@ -169,59 +168,57 @@
             OleDBProcedure = New OleDb.OleDbCommand With {
               .CommandType = System.Data.CommandType.Text}
 
-            If BulkInsert And sqlStringList Is Nothing = False Then
-                If sqlStringList(0).Contains("INSERT") Then
-                    'Check if there is a progress bar
-                    If progreso Is Nothing = False Then
-                        progreso.Minimum = 0
-                        progreso.Value = progreso.Minimum
-                        progreso.Maximum = sqlStringList.Length()
+            If sqlSourceList Is Nothing = False Then
+                'Check if there is a progress bar
+                If progreso Is Nothing = False Then
+                    progreso.Minimum = 0
+                    progreso.Value = progreso.Minimum
+                    progreso.Maximum = sqlSourceList.Length()
+                End If
+                For Each sqlString As String In sqlSourceList
+                    If Right(sqlString, 1) <> ";" Then
+                        sqlString &= ";"
                     End If
+                    If sqlString.Contains("INSERT") Or sqlString.Contains("UPDATE") Then
+                        sqlValidList.Append(sqlString)
 
-                    'Set connection parameters
-                    olecon.ConnectionString = constr
-                    OleDBProcedure.Connection = olecon
-                    'Open and execute BulkInsert
-                    olecon.Open()
-                    For Each sqlString As String In sqlStringList
-                        With sqlString
-                            If progreso Is Nothing = False Then
-                                progreso.Value += 1
-                            End If
+                    ElseIf sqlString.Contains("DELETE") Then
+                        If My.Settings.delete_enabled Then
+                            sqlValidList.Append(sqlString)
+                        Else
+                            MsgBox("No posee permisos para eliminar registros de la tabla seleccionanda.", MsgBoxStyle.Critical, "Error")
+                        End If
+                    End If
+                Next
+
+                'Set connection parameters
+                olecon.ConnectionString = constr
+                OleDBProcedure.Connection = olecon
+                'Open and execute BulkInsert on valid sql statements
+                olecon.Open()
+                For Each sqlString As String In sqlValidList
+                    With sqlString
+                        If progreso Is Nothing = False Then
+                            progreso.Value += 1
+                        End If
 
 #Disable Warning CA2100 ' Review SQL queries for security vulnerabilities
-                            OleDBProcedure.CommandText = sqlString
+                        OleDBProcedure.CommandText = sqlString
 #Enable Warning CA2100 ' Review SQL queries for security vulnerabilities
-                            Try
-                                RowsAffected += OleDBProcedure.ExecuteNonQuery()
-                            Catch e As Exception
-                                result &= e.ToString & Chr(13)
-                            End Try
-                        End With
-                    Next
-                    olecon.Close()
-                    'Clear Procedure
-                    OleDBProcedure = Nothing
-                Else
-                    result = "Datos insuficientes para realizar la operación."
-                End If
-
-            ElseIf sql Is Nothing = False Then
-                If sql.Contains("INSERT") Or sql.Contains("UPDATE") Or sql.Contains("DELETE") Then
-                    If sql.Contains("DELETE") And My.Settings.delete_enabled = False Then
-                        MsgBox("Imposible borrar registros de la tabla.", MsgBoxStyle.Critical, "Error")
-                        sql = ""
-                    End If
-                    OleDBProcedure.CommandText = sql
-
-                Else
-                    result = "Datos insuficientes para realizar la operación."
-                End If
-
+                        Try
+                            RowsAffected += OleDBProcedure.ExecuteNonQuery()
+                        Catch e As Exception
+                            result &= e.ToString & Chr(13)
+                        End Try
+                    End With
+                Next
+                olecon.Close()
+                'Clear Procedure
+                OleDBProcedure = Nothing
             End If
         End If
 
-        If OleDBProcedure Is Nothing = False Then
+        If OleDBProcedure Is Nothing = False And result <> "" Then
             olecon.ConnectionString = constr
             OleDBProcedure.Connection = olecon
             olecon.Open()
@@ -240,28 +237,11 @@
         If RowsAffected > 0 Then
             result = RowsAffected
         End If
+
+        If result = "" Then
+            result = "Datos insuficientes para realizar la operación."
+        End If
+
         Return result
     End Function
-
-    'SQL History
-    'Sub WriteSQLLog(sql As String, connection As String, user_id As Integer)
-    '    Dim olecon As New OleDb.OleDbConnection
-    '    'Hardcoded SQL logging to check changes in DB
-    '    'Independent from DbMan.editDB()
-    '    sql = Replace(sql, "'", "`") 'To avoid conflict with other hardcoded sql queries
-    '    Dim LogInsert As New OleDb.OleDbCommand _
-    '        With {.CommandText = "INSERT INTO sql_log(_date, _user_id, _sql, _con)
-    '                                    VALUES('" & Date.Now & "', '" & user_id & "', '" & sql & "','" & connection & "');"}
-
-    '    olecon.ConnectionString = My.Settings.AdbConnection
-
-    '    LogInsert.Connection = olecon
-    '    'Abrir la conexión y ejecutar
-    '    olecon.Open()
-    '    LogInsert.ExecuteNonQuery()
-    '    olecon.Close()
-    'End Sub
-    ' END SAVE 
-
-
 End Module

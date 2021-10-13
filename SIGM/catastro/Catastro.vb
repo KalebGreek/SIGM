@@ -122,14 +122,14 @@
         End If
         Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
     End Function
-    Shared Function Seleccionar(catastroId As Integer) As DataTable
+    Shared Function Seleccionar(catastroId As Integer) As DataRow
         If catastroId > 0 Then
             Dim sql(3) As String
             sql(0) = CatastroSelect
             sql(1) = CatastroFrom
             sql(2) = " WHERE catastro.id=" & catastroId
 
-            Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+            Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)(0)
         Else
             Return Nothing
         End If
@@ -147,11 +147,9 @@
                        " AND catastro.manz=" & manz & " AND catastro.parc=" & parc & " AND catastro.lote=" & lote
 
             Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
-            If dtab Is Nothing = False Then
-                If dtab.Rows.Count > 0 Then
-                    id = CInt(dtab.Rows(0)("catastro_id"))
-                End If
-            End If
+            For Each dr In dtab.Rows
+                id = CInt(dr("catastro_id"))
+            Next
         Else
             id = -1
         End If
@@ -187,104 +185,149 @@
                                       zona As Integer, circ As Integer, secc As Integer,
                                       manz As Integer, parc As Integer, lote As Integer)
             'Agregar
+            Dim sqlInsert As String()
 
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB,
-                                "INSERT INTO catastro(user_id, opr_id, zona, circ, secc, manz, parc, lote, barrio, uso, cuenta, archivado) " &
-                                " VALUES(" & My.Settings.UserId & "," & oprId & ", " & zona & ", " & circ & ", " & secc & "," &
-                                " " & manz & ", " & parc & ", " & lote & ",'" & barrio & "', '" & uso & "', " & cuenta &
-                                "," & archivado & ")")
+            sqlInsert.Append("INSERT INTO catastro(user_id, opr_id, zona, circ, secc, manz, parc, lote, barrio, uso, cuenta, archivado) " &
+                         " VALUES(" & My.Settings.UserId & "," & oprId & ", " & zona & ", " & circ & ", " & secc & "," &
+                         " " & manz & ", " & parc & ", " & lote & ",'" & barrio & "', '" & uso & "', " & cuenta &
+                         "," & archivado & ")")
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
+
             'leer ultimo inmueble
             catastroId = Catastro.SeleccionarPartida(zona, circ, secc, manz, parc, lote)
 
+            Titular(catastroId, titularId)
+        End Sub
+        Shared Sub Titular(ByRef catastroId As Integer, titularId As Integer)
+            Dim sqlDelete As String()
+            Dim sqlInsert As String()
+
             If catastroId > 0 And titularId > 0 Then
                 'Guardar titular
-                DbMan.EditDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM titular_catastro WHERE cat_id=" & catastroId)
-                DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO titular_catastro(cat_id, per_id)" &
-                                                            " VALUES(" & catastroId & ", " & titularId & ")")
+                sqlDelete.Append("DELETE * FROM titular_catastro WHERE cat_id=" & catastroId)
+                DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlDelete)
+
+                sqlInsert.Append("INSERT INTO titular_catastro(cat_id, per_id)" &
+                                     " VALUES(" & catastroId & ", " & titularId & ")")
+                DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
             End If
+
         End Sub
         Shared Sub Frente(catastroId As Integer, calle As String, altura As Integer, metros As Decimal)
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO cat_frente(catastro_id, calle, altura, metros)" &
-                                                         " VALUES(" & catastroId & ",'" & calle & "', " & altura & "," &
-                                                        " '" & metros & "')")
+            Dim sqlInsert As String()
+
+            sqlInsert.Append("INSERT INTO cat_frente(catastro_id, calle, altura, metros)" &
+                         " VALUES(" & catastroId & ",'" & calle & "', " & altura & "," &
+                         " '" & metros & "')")
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
         End Sub
         Shared Sub Superficie(catastroId As Integer,
                                  existente As Decimal, relevamiento As Decimal,
                                  proyecto As Decimal, terreno As Decimal)
+
+            Dim sqlDelete As String()
+            Dim sqlInsert As String()
+
             'cat_superficie
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM cat_superficie WHERE catastro_id=" & catastroId)
+            sqlDelete.Append("DELETE * FROM cat_superficie WHERE catastro_id=" & catastroId)
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlDelete)
 
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO cat_superficie(catastro_id, existente, proyecto, relevamiento, terreno)" &
-                                                        " VALUES(" & catastroId & ", '" & existente & "', '" & proyecto & "'," &
-                                                        " '" & relevamiento & "', '" & terreno & "')")
+            sqlInsert.Append("INSERT INTO cat_superficie(catastro_id, existente, proyecto, relevamiento, terreno)" &
+                         " VALUES(" & catastroId & ", '" & existente & "', '" & proyecto & "'," &
+                         " '" & relevamiento & "', '" & terreno & "')")
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
 
         End Sub
-        Shared Sub Caracteristica(BSCar As BindingSource, CatastroId As Integer)
+        Shared Sub Caracteristica(registro As DataTable, CatastroId As Integer)
+            Dim sqlDelete As String()
+            Dim sqlInsert As String()
+
             'cat_servicio
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM cat_servicio WHERE catastro_id=" & CatastroId)
-            For fila As Integer = 0 To BSCar.Count - 1
-                BSCar.Position = fila
-                DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO cat_servicio(catastro_id, descripcion, activo)" &
-                              " VALUES(" & CatastroId & ",'" & BSCar.Current("descripcion") & "', " & BSCar.Current("activo") & ")")
+            sqlDelete.Append("DELETE * FROM cat_servicio WHERE catastro_id=" & CatastroId)
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlDelete)
+
+            For Each dr As DataRow In registro.Rows
+                sqlInsert.Append("INSERT INTO cat_servicio(catastro_id, descripcion, activo)" &
+                               " VALUES(" & CatastroId.ToString & ",'" & dr("descripcion").ToString &
+                               "', " & dr("activo").ToString & ")")
             Next
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
         End Sub
-        Shared Sub Documento(BSCopia As BindingSource, catastroId As Integer)
+        Shared Sub Documento(registro As DataTable, catastroId As Integer)
+
+            Dim sqlDelete As String()
+            Dim sqlInsert As String()
+
             'cat_documento
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM cat_documento WHERE catastro_id=" & catastroId)
-            With BSCopia
-                For fila As Integer = 0 To .Count - 1
-                    .Position = fila
-                    DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO cat_documento(catastro_id, descripcion, fecha, ruta)" &
-                          " VALUES(" & catastroId & ",'" & .Current("descripcion") & "'," &
-                          " '" & .Current("fecha") & "', '" & .Current("ruta") & "')")
-                Next
-            End With
+            sqlDelete.Append("DELETE * FROM cat_documento WHERE catastro_id=" & catastroId)
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlDelete)
+
+            For Each dr As DataRow In registro.Rows
+                sqlInsert.Append("INSERT INTO cat_documento(catastro_id, descripcion, fecha, ruta)" &
+                               " VALUES(" & catastroId & ",'" & dr("descripcion").ToString & "'," &
+                               " '" & dr("fecha").ToString & "', '" & dr("ruta").ToString & "')")
+            Next
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
+
         End Sub
     End Class
     Class Modificar
         Shared Sub Inmueble(OprId As Integer, ByRef CatastroId As Integer, TitularId As Integer,
                                         barrio As String, uso As String, cuenta As Integer)
 
+            Dim sqlDelete As String()
+            Dim sqlInsert As String()
+            Dim sqlUpdate As String()
+
+            sqlUpdate.Append("UPDATE catastro SET user_id=" & My.Settings.UserId & ", opr_id=" & OprId & ", " &
+                                   " barrio='" & barrio & "', uso='" & uso & "', cuenta=" & Val(cuenta) &
+                             " WHERE id=" & CatastroId)
             'Modificar
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "UPDATE catastro SET user_id=" & My.Settings.UserId & ", opr_id=" & OprId & ", " &
-                      " barrio='" & barrio & "', uso='" & uso & "', cuenta=" & Val(cuenta) &
-                      " WHERE id=" & CatastroId)
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlUpdate)
 
             If CatastroId > 0 And TitularId > 0 Then
                 'Guardar titular
-                DbMan.EditDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM titular_catastro WHERE cat_id=" & CatastroId)
-                DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO titular_catastro(cat_id, per_id)" &
-                               " VALUES(" & CatastroId & ", " & TitularId & ")")
+                sqlDelete.Append("DELETE * FROM titular_catastro WHERE cat_id=" & CatastroId)
+                DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlDelete)
+                sqlInsert.Append("INSERT INTO titular_catastro(cat_id, per_id)" &
+                                     " VALUES(" & CatastroId & ", " & TitularId & ")")
+                DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
             End If
         End Sub
-        Shared Sub Ubicacion(BSFrente As BindingSource, CatastroId As Integer)
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "UPDATE cat_frente SET ubicacion=False WHERE catastro_id=" & CatastroId)
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "UPDATE cat_frente SET ubicacion=True WHERE id=" & BSFrente.Current.Row("frente_id"))
+        Shared Sub Ubicacion(FrenteId As Integer, CatastroId As Integer)
+            Dim sqlUpdate As String()
+            sqlUpdate(0) = "UPDATE cat_frente SET ubicacion=False WHERE catastro_id=" & CatastroId
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlUpdate)
+
+            sqlUpdate(0) = "UPDATE cat_frente SET ubicacion=True WHERE id=" & FrenteId
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlUpdate)
         End Sub
     End Class
     Class Eliminar
         Shared Sub Inmueble(CatastroId As Integer, UserId As Integer)
+            Dim sqlSelect As String()
+            Dim sqlInsert As String()
+            Dim RowsAffected As Integer = 0
             If UserId > 0 Then 'Solo el usuario que bloqueo el inmueble puede eliminarlo
-                Dim sql(3) As String
-                sql(0) = "SELECT *"
-                sql(1) = "FROM catastro"
-                sql(2) = "WHERE id=" & CatastroId & " AND user_id=" & UserId
-                Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
-                If dtab.Rows.Count > 0 Then
-                    DbMan.EditDB(Nothing,
-                               My.Settings.CurrentDB,
-                               CatastroDelete & " WHERE catastro.id=" & CatastroId & " AND catastro.user_id=" & UserId)
-                Else
+                sqlSelect.Append("SELECT *")
+                sqlSelect.Append("FROM catastro")
+                sqlSelect.Append("WHERE id=" & CatastroId & " AND user_id=" & UserId)
+                Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sqlSelect)
+                For Each dr As DataRow In dtab.Rows
+                    sqlInsert.Append(CatastroDelete & " WHERE catastro.id=" & CatastroId & " AND catastro.user_id=" & UserId)
+                Next
+                RowsAffected = DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
+                If RowsAffected = 0 Then
                     MsgBox("Registro bloqueado.")
                 End If
             End If
         End Sub
         Shared Sub Frente(bsFrente As BindingSource)
+            Dim sqlDelete As String()
             'Eliminar registro
             If bsFrente Is Nothing = False Then
-                DbMan.EditDB(Nothing,
-                       My.Settings.CurrentDB,
-                       "DELETE * FROM cat_frente WHERE id=" & CInt(bsFrente.Current("frente_id")))
+                sqlDelete.Append("DELETE * FROM cat_frente WHERE id=" & CInt(bsFrente.Current("frente_id")))
+                DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlDelete)
             End If
         End Sub
     End Class

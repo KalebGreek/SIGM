@@ -45,14 +45,15 @@ Class ModExpediente
     ' > Expediente
     Private Sub save_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles save.Click
         Dim answer As MsgBoxResult
+        Dim sqlUpdate As String()
         If actualizar(grupo_exp.SelectedIndex) = MsgBoxResult.Yes Then
             If temporal.Visible Then
                 answer = MsgBox("¿Desea guardar este expediente temporal bajo el N° " & expediente.Text & "?",
                                 MsgBoxStyle.YesNoCancel, "Guardar Expediente")
                 If answer = MsgBoxResult.Yes Then 'Asignar N° de Expediente y quitar temporal
-                    DbMan.EditDB(Nothing, My.Settings.foxConnection,
-                                "UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
-                                  WHERE id=" & opr_id.Text)
+                    sqlUpdate.Append("UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
+                                       WHERE id=" & opr_id.Text)
+                    DbMan.EditDB(Nothing, My.Settings.foxConnection, sqlUpdate)
                     Me.Close()
                 End If
             End If
@@ -230,7 +231,7 @@ Class ModExpediente
         If result = MsgBoxResult.Yes Then
             If pagina = 0 Then 'Responsables
                 Oprivadas.Expediente.LimpiarResponsable(opr_id.Text)
-                Oprivadas.Expediente.AgregarResponsable(bs_resp, opr_id.Text, bs_resp.Current("persona_id"))
+                Oprivadas.Expediente.AgregarResponsable(bs_resp.DataSource, opr_id.Text, bs_resp.Current("persona_id"))
                 Oprivadas.Expediente.ActualizarProfesional(opr_id.Text, profesional_id.Text)
 
             ElseIf pagina = 1 Then 'Inmuebles
@@ -396,7 +397,7 @@ Class ModExpediente
     Private Sub del_inmueble_Click(sender As Object, e As EventArgs) Handles del_inmueble.Click
         With bs_catastro
             If .Position > -1 Then
-                If .Current("archivado") = False _
+                If CBool(.Current("archivado")).ToString = False _
                 And MsgBoxResult.Yes = MsgBox("¿Desea eliminar el inmueble seleccionado? Esta operación no se puede deshacer.", MsgBoxStyle.YesNo, "Eliminar Inmueble") Then
                     Catastro.Eliminar.Inmueble(.Current("catastro_id"), .Current("user_id"))
                     .RemoveCurrent()
@@ -449,8 +450,8 @@ Class ModExpediente
                                                      inicio_obra.Value,
                                                      tarea.Text & " " & tarea2.Text)
 
-            parametros = ParametrosReporte.ObrasPrivadas.ListarResponsables(parametros, bs_resp)
-            parametros = ParametrosReporte.ObrasPrivadas.ListarInmuebles(parametros, bs_catastro)
+            parametros = ParametrosReporte.ObrasPrivadas.ListarResponsables(parametros, bs_resp.DataSource)
+            parametros = ParametrosReporte.ObrasPrivadas.ListarInmuebles(parametros, bs_catastro.DataSource)
 
             'Crear informe
             Using formEXP As New Formularios("Caratula de Expediente")
@@ -471,7 +472,7 @@ Class ModExpediente
                                                      inicio_obra.Value,
                                                      tarea.Text & " " & tarea2.Text)
 
-            parametros = ParametrosReporte.ObrasPrivadas.ListarResponsables(parametros, bs_resp)
+            parametros = ParametrosReporte.ObrasPrivadas.ListarResponsables(parametros, bs_resp.DataSource)
 
             cuil.TextMaskFormat = MaskFormat.IncludePromptAndLiterals
             Dim prof_completo As String = "Razon: " & razon.Text & System.Environment.NewLine &
@@ -483,7 +484,7 @@ Class ModExpediente
                                                         visado.Checked, check_fin_obra.Checked,
                                                         fin_obra.Value)
 
-            parametros = ParametrosReporte.ObrasPrivadas.ListarInmuebles(parametros, bs_catastro)
+            parametros = ParametrosReporte.ObrasPrivadas.ListarInmuebles(parametros, bs_catastro.DataSource)
 
             'Crear informe
             Using formEXP As New Formularios("Resumen de Expediente")

@@ -70,9 +70,9 @@
 		Sql(0) = "SELECT MAX(codigo) as ultimo"
 		Sql(1) = "FROM contrato"
 		Sql(2) = "WHERE seccion='" & seccion.Text & "'"
-		Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, Sql)
-		If dtab.Rows(0)("ultimo") Is DBNull.Value = False Then
-			contrato_id = CInt(dtab.Rows(0)("ultimo")) + 1
+		Dim dr As DataRow = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, Sql)(0)
+		If dr("ultimo") Is DBNull.Value = False Then
+			contrato_id = CInt(dr("ultimo")) + 1
 		End If
 		Return contrato_id
 	End Function
@@ -104,17 +104,17 @@
 			Dim answer As MsgBoxResult = MsgBox("¿Desea guardar este contrato?", MsgBoxStyle.YesNoCancel, "Guardar cambios")
 			If answer = MsgBoxResult.Yes Or answer = MsgBoxResult.No Then
 				If answer = MsgBoxResult.Yes Then
-					Dim sql As String
-					sql = "INSERT INTO contrato(codigo, contratado_id, inicio, 
+					Dim sqlInsert As String()
+					sqlInsert.Append("INSERT INTO contrato(codigo, contratado_id, inicio, 
 												dias, monto, descripcion,
 												autoridad1_id, autoridad2_id,
 												seccion, user_id)
-										 VALUES(" & codigo.Value & ", " & CInt(BSContratado.Current("persona_id")) & ", '" & inicio.Value & "',
+										 VALUES(" & codigo.Value & ", " & CInt(BSContratado.Current("persona_id").ToString) & ", '" & inicio.Value & "',
 												 " & dias.Value & ", " & monto.Value & ", '" & descripcion.Text & "',
-												 " & BSAutoridad1.Current("empleado_id") & ", " & BSAutoridad2.Current("empleado_id") & ",
-												'" & seccion.Text & "', " & My.Settings.UserId & ")"
+												 " & BSAutoridad1.Current("empleado_id").ToString & ", " & BSAutoridad2.Current("empleado_id").ToString & ",
+												'" & seccion.Text & "', " & My.Settings.UserId & ")")
 
-					DbMan.EditDB(Nothing, Nothing, sql)
+					DbMan.EditDB(Nothing, Nothing, sqlInsert)
 				End If
 				Me.Close()
 			End If

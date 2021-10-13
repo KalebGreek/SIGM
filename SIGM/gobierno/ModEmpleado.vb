@@ -69,10 +69,11 @@
         subpartida.DataSource = Nothing
         bs_subpartida.DataSource = Nothing
         If bs_partida.Position > -1 Then
-            Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.foxConnection, "SELECT nombre, subpartida 
+            Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.foxConnection,
+                                                 "SELECT nombre, subpartida 
 												  FROM hacienda WHERE pertenece='9' AND anexo='1' AND inciso='1'
-												   AND item ='1' AND rubro='" & bs_rubro.Current("rubro") & "' AND subrubro='01'
-												   AND partida ='" & bs_partida.Current("partida") & "' AND subpartida>'00'")
+												  AND item ='1' AND rubro='" & bs_rubro.Current("rubro") & "' AND subrubro='01'
+												  AND partida ='" & bs_partida.Current("partida") & "' AND subpartida>'00'")
 
             If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then

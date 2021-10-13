@@ -130,7 +130,6 @@
 
     Private Sub ImprimirConsulta_Click(sender As Object, e As EventArgs) Handles ImprimirConsulta.Click
         If bs_consulta.Count > 0 Then
-
             ParametrosReporte.Hacienda.ImprimirDeudaContribuyente(bs_consulta.DataSource)
         End If
     End Sub

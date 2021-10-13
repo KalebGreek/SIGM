@@ -83,7 +83,7 @@ Class ModInmueble
     Private Sub MostrarResumen()
         catastro_id.Text = Catastro.SeleccionarPartida(zona.Value, circ.Value, secc.Value, manz.Value, parc.Value, lote.Value)
         BSCat.DataSource = Nothing
-        BSCat.DataSource = Catastro.Seleccionar(catastro_id.Text)
+        Dim registro As DataRow = Catastro.Seleccionar(catastro_id.Text)
 
         titular_id.Text = 0
         titular.Text = " - "
@@ -100,38 +100,36 @@ Class ModInmueble
         ElseIf catastro_id.Text = 0 Then 'Inmueble nuevo
             info_estado.Text = "NUEVO"
             operacion.Text = "NEW"
-        ElseIf BSCat.Count > 0 Then
-            With BSCat.DataSource
-                CtrlMan.LoadControlData(BSCat, tab_ubicacion)
-                info_ubicacion.Text = .Rows(0)("calle").ToString & " " & .Rows(0)("altura").ToString
+        ElseIf registro Is Nothing = False Then
+            CtrlMan.LoadControlData(registro, tab_ubicacion)
+            info_ubicacion.Text = registro("calle").ToString & " " & registro("altura").ToString
 
-                If .Rows(0)("expediente") Is DBNull.Value = False Then
-                    info_exp.Text = .Rows(0)("expediente")
-                End If
+            If registro("expediente") Is DBNull.Value = False Then
+                info_exp.Text = registro("expediente")
+            End If
 
-                If My.Settings.UserId = .Rows(0)("user_id") Then
-                    If opr_id.Text = .Rows(0)("opr_id") Then 'Modificar
-                        If .Rows(0)("archivado") Then 'Solo lectura
-                            info_estado.Text = "CONSULTA"
-                        Else
-                            info_estado.Text = "ACTIVO"
-                            operacion.Text = "MOD"
-                        End If
-                    ElseIf opr_id.Text <> .Rows(0)("opr_id") Then
-                        If .Rows(0)("archivado") Then 'Duplicar
-                            operacion.Text = "DUP"
-                            info_estado.Text = "LISTO PARA DUPLICAR"
-                        Else
-                            info_estado.Text = "CONSULTA"
-                        End If
-                    Else 'Temporal
+            If My.Settings.UserId = registro("user_id").ToString Then
+                If opr_id.Text = registro("opr_id").ToString Then 'Modificar
+                    If registro("archivado") Then 'Solo lectura
+                        info_estado.Text = "CONSULTA"
+                    Else
+                        info_estado.Text = "ACTIVO"
                         operacion.Text = "MOD"
-                        info_estado.Text = "TEMPORAL"
                     End If
-                Else
-                    info_estado.Text = "BLOQUEADO"
+                ElseIf opr_id.Text <> registro("opr_id").ToString Then
+                    If registro("archivado") Then 'Duplicar
+                        operacion.Text = "DUP"
+                        info_estado.Text = "LISTO PARA DUPLICAR"
+                    Else
+                        info_estado.Text = "CONSULTA"
+                    End If
+                Else 'Temporal
+                    operacion.Text = "MOD"
+                    info_estado.Text = "TEMPORAL"
                 End If
-            End With
+            Else
+                info_estado.Text = "BLOQUEADO"
+            End If
         End If
 
         'Formatear por operación
@@ -161,7 +159,7 @@ Class ModInmueble
 
         'detalles
         If registro.Count > 0 Then
-            CtrlMan.LoadControlData(registro, tab_ubicacion)
+            CtrlMan.LoadControlData(registro.DataSource, tab_ubicacion)
             If archivado.Checked Then
                 archivado.Enabled = False
             End If
@@ -261,7 +259,7 @@ Class ModInmueble
                 valido = False
                 For fila As Integer = 0 To BSCopia.Count - 1
                     BSCopia.Position = fila
-                    If BSCopia.Current("descripcion") = "ESCRITURA O POSESION" Then
+                    If BSCopia.Current("descripcion").ToString = "ESCRITURA O POSESION" Then
                         valido = True
                     End If
                 Next
@@ -308,10 +306,10 @@ Class ModInmueble
                                  proyecto.Value, terreno.Value)
             ElseIf .SelectedIndex = 4 Then 'caracteristicas
                 If BSCar Is Nothing = False Then
-                    Catastro.Agregar.Caracteristica(BSCar, catastro_id.Text)
+                    Catastro.Agregar.Caracteristica(BSCar.DataSource, catastro_id.Text)
                 End If
             ElseIf .SelectedIndex = 5 Then 'documentos
-                Catastro.Agregar.Documento(BSCopia, catastro_id.Text)
+                Catastro.Agregar.Documento(BSCopia.DataSource, catastro_id.Text)
             End If
             If BSCat.Position > -1 Then
                 Cargar(BSCat)
@@ -390,7 +388,8 @@ Class ModInmueble
             End Using
         ElseIf BSFrente.Position > -1 Then
             If sender Is ubicacion_principal Then
-                Catastro.Modificar.Ubicacion(BSFrente, catastro_id.Text)
+                Dim FrenteId As Integer = BSFrente.Current.Row("frente_id")
+                Catastro.Modificar.Ubicacion(frenteId, catastro_id.Text)
             ElseIf sender Is del_frente Then
                 Catastro.Eliminar.Frente(BSFrente)
             End If
@@ -465,7 +464,7 @@ Class ModInmueble
     Private Sub consulta_copia_CellContentDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles consulta_copia.CellContentDoubleClick
         If BSCopia.Position > -1 Then
             Try
-                Process.Start(root & My.Settings.DocFolderCatastro & BSCopia.Current("ruta"))
+                Process.Start(root & My.Settings.DocFolderCatastro & BSCopia.Current("ruta").ToString)
             Catch ex As LocalProcessingException
                 MsgBox(ex.GetBaseException.Message, MsgBoxStyle.Exclamation, "Error")
             End Try

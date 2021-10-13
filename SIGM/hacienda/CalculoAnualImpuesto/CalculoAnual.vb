@@ -110,8 +110,9 @@
 
 			Shared Function VerificarCuota(registro As DataRow, cuota As Integer, periodo As Integer, deudas As DataTable) As Boolean
 
-				Dim result As DataRow() = deudas.Select("codigo=" & registro("codigo") & " And agrupado='' AND mes=" & cuota & " 
-															  AND periodo=" & periodo)
+				Dim result As DataRow() = deudas.Select("codigo=" & registro("codigo").ToString &
+														" AND agrupado='' AND mes=" & cuota &
+														" AND periodo=" & periodo)
 
 				Return result.Any = 0
 			End Function
@@ -171,8 +172,8 @@
 								  taecom As Decimal, franqueo As Decimal, importe As Decimal, vence As Date) As String
 				Return "INSERT INTO comcue(item, tipo, cedulon, bimestre, agrupado, ano, codigo, actividad, importe, franqueo, tae,
 							  			        total, total1, total2, vence1, vence2, vence3, pagado, pago)
-								  VALUES(0, 'N', 0, " & cuota & ", ' ', " & periodo & ", " & registro("codigo") & ",
-									     " & registro("actividad") & "," & minimo & ", " & franqueo & ", " & taecom & ",
+								  VALUES(0, 'N', 0, " & cuota & ", ' ', " & periodo & ", " & registro("codigo").ToString & ",
+									     " & registro("actividad").ToString & "," & minimo & ", " & franqueo & ", " & taecom & ",
 									 	 " & importe & ", " & importe & ", " & importe & ", {" & vence & "}, {}, {}, 0, {})"
 
 			End Function

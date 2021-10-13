@@ -406,26 +406,25 @@ Class ParametrosReporte
 
         'Modulos
         Shared Function ListarResponsables(parametros As List(Of ReportParameter),
-                                       registro As BindingSource) As List(Of ReportParameter)
+                                       registro As DataTable) As List(Of ReportParameter)
             Dim responsable As String = ""
             Dim cuil As String = ""
             Dim difunto As String = ""
+            Dim fila As Integer = 0
 
-            For fila As Integer = 0 To registro.Count - 1
-                registro.Position = fila
-
-                cuil = Microsoft.VisualBasic.Left(registro.Current("cuil"), 2) &
-                   "-" & Mid(registro.Current("cuil"), 3, 8) & "-" &
-                   Microsoft.VisualBasic.Right(registro.Current("cuil"), 1)
-                If registro.Current("difunto") Then
+            For Each dr As DataRow In registro.Rows
+                fila += 1
+                cuil = Microsoft.VisualBasic.Left(dr("cuil"), 2) &
+                  "-" & Mid(dr("cuil"), 3, 8) & "-" &
+                  Microsoft.VisualBasic.Right(dr("cuil"), 1)
+                If dr("difunto") Then
                     difunto = "SI"
                 Else
                     difunto = "NO"
                 End If
 
-                responsable += CStr(fila + 1) & ") " & registro.Current("razon").ToString & System.Environment.NewLine &
+                responsable += CStr(fila) & ") " & dr("razon").ToString & System.Environment.NewLine &
                            "CUIL: " & CStr(cuil) & " | Difunto: " & difunto & System.Environment.NewLine
-
             Next
 
             With parametros
@@ -435,19 +434,19 @@ Class ParametrosReporte
             Return parametros
         End Function
         Shared Function ListarInmuebles(parametros As List(Of ReportParameter),
-                                    registro As BindingSource) As List(Of ReportParameter)
+                                    registro As DataTable) As List(Of ReportParameter)
             Dim inmueble As String = ""
-            With registro
-                For fila As Integer = 0 To .Count - 1
-                    .Position = fila
-                    inmueble += CStr(fila + 1) & ") Partida: " &
-                           " Z" & .Current("zona").ToString & " C" & .Current("circ").ToString & " S" & .Current("secc").ToString &
-                           " M" & .Current("manz").ToString & " P" & .Current("parc").ToString & " L" & .Current("lote").ToString &
-                            System.Environment.NewLine &
-                           " Ubicacion: " & .Current("calle").ToString & " " & .Current("altura").ToString & ", " & .Current("barrio").ToString &
-                            System.Environment.NewLine
-                Next
-            End With
+            Dim fila As Integer = 0
+
+            For Each dr As DataRow In registro.Rows
+                fila += 1
+                inmueble += CStr(fila) & ") Partida: " &
+                       " Z" & dr("zona").ToString & " C" & dr("circ").ToString & " S" & dr("secc").ToString &
+                       " M" & dr("manz").ToString & " P" & dr("parc").ToString & " L" & dr("lote").ToString &
+                        System.Environment.NewLine &
+                       " Ubicacion: " & dr("calle").ToString & " " & dr("altura").ToString & ", " & dr("barrio").ToString &
+                        System.Environment.NewLine
+            Next
 
             With parametros
                 .Add(New ReportParameter("Inmueble", inmueble))

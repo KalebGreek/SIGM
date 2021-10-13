@@ -169,8 +169,8 @@ Class CtrlMan 'Control Manager
     'LOAD ALL THE CONTROLS!!!!1ONE
     Overloads Shared Function LoadControlData(bs As BindingSource, ByVal target As Object) As Object
         If bs Is Nothing = False Then
-            If bs.Current Is Nothing = False Then
-                target = LoadControlData(bs.DataSource, target)
+            If bs.Count > 0 Then
+                target = LoadControls(bs.DataSource.Rows.Item(0), target)
             End If
         End If
         Return target
@@ -181,6 +181,13 @@ Class CtrlMan 'Control Manager
         End If
         Return target
     End Function
+    Overloads Shared Function LoadControlData(dr As DataRow, ByVal target As Object) As Object
+        If dr Is Nothing = False Then
+            target = LoadControls(dr, target)
+        End If
+        Return target
+    End Function
+
     Shared Function LoadControls(drow As DataRow, ByVal target As Object) As Object
         'Loads the values of each column of the DataRow in the controls sharing the column name
         'Recursive!

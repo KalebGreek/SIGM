@@ -112,8 +112,11 @@ Public Class ModCombustibleTicket
 	Private Sub bs_item_ticket_ListChanged(sender As Object, e As ListChangedEventArgs) Handles bs_item_ticket.ListChanged
 		Dim total As Decimal = 0
 		If bs_item_ticket.Count > 0 Then
-			For row = 0 To bs_item_ticket.Count - 1
-				total += bs_item_ticket(row)("monto")
+			For Each dr As DataRow In bs_item_ticket.DataSource.Rows
+				total += CDec(dr("monto"))
+				'For row = 0 To bs_item_ticket.Count - 1
+				'	total += bs_item_ticket(row)("monto")
+				'Next
 			Next
 		End If
 

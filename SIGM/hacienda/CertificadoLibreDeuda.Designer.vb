@@ -22,7 +22,6 @@ Partial Class CertificadoLibreDeuda
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CertificadoLibreDeuda))
         Me.GrupoControles = New System.Windows.Forms.FlowLayoutPanel()
         Me.Cancelar = New System.Windows.Forms.Button()
@@ -55,14 +54,12 @@ Partial Class CertificadoLibreDeuda
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Creado = New System.Windows.Forms.DateTimePicker()
-        Me.bs_registro = New System.Windows.Forms.BindingSource(Me.components)
         Me.GrupoControles.SuspendLayout()
         Me.GrupoFecha.SuspendLayout()
         Me.GrupoCuenta.SuspendLayout()
         CType(Me.Cuenta, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GrupoBaja.SuspendLayout()
         Me.Panel1.SuspendLayout()
-        CType(Me.bs_registro, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GrupoControles
@@ -446,7 +443,6 @@ Partial Class CertificadoLibreDeuda
         Me.GrupoBaja.PerformLayout()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        CType(Me.bs_registro, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -479,7 +475,6 @@ Partial Class CertificadoLibreDeuda
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Creado As System.Windows.Forms.DateTimePicker
     Friend WithEvents BajaDestruccion As RadioButton
-	Friend WithEvents et_razon As Label
-	Friend WithEvents razon As TextBox
-	Friend WithEvents bs_registro As BindingSource
+    Friend WithEvents et_razon As Label
+    Friend WithEvents razon As TextBox
 End Class

@@ -70,8 +70,9 @@
 		End If
 	End Sub
 
-	Private Sub RepararFechasNulas()
-		Dim d, m, y, cuenta, vence, pago, periodo As String
+    Private Sub RepararFechasNulas()
+        Dim d, m, y, cuenta, vence, pago, periodo As String
+
 
         d = Today.Day
         m = Today.Month
@@ -84,6 +85,7 @@
 
 
         For imp As Integer = 0 To 4 Step 1 '5 impuestos
+            Dim sqlSelect, sqlUpdate As String()
             If imp = 0 Then 'AGUA
                 cuenta = agua_cuentas.Text
                 vence = "vencio"
@@ -106,27 +108,31 @@
                 periodo = "ano"
             ElseIf imp = 4 Then 'SEPE
                 cuenta = sepe_cuentas.Text
-                    vence = "vencio"
-                    pago = "pago"
-                    periodo = "periodo"
-                End If
-            DbMan.EditDB(Nothing, conexion_fox.Text,
-                             "UPDATE " & cuenta & " SET " & vence & "=" & pago & " WHERE " & vence & " IS NULL AND " & pago & " IS NOT NULL")
+                vence = "vencio"
+                pago = "pago"
+                periodo = "periodo"
+            End If
+
+            sqlUpdate.Append("UPDATE " & cuenta & " 
+                                 SET " & vence & "=" & pago & " 
+                               WHERE " & vence & " IS NULL AND " & pago & " IS NOT NULL")
 
             'Si no funciona
-            Dim sql(5) As String
-                sql(0) = "SELECT codigo, " & periodo & ", " & vence & " WHERE " & vence & " Is NULL FROM " & cuenta
+            sqlSelect.Append("SELECT codigo, " & periodo & ", " & vence)
+            sqlSelect.Append(" WHERE " & vence & " Is NULL")
+            sqlSelect.Append("FROM " & cuenta)
 
-            Dim dtab As DataTable = ReadDB(Nothing, conexion_fox.Text, sql)
+            Dim dtab As DataTable = ReadDB(Nothing, conexion_fox.Text, sqlSelect)
 
             For Each drow As DataRow In dtab.Rows
-                DbMan.editDB(Nothing, conexion_fox.Text,
-                        "UPDATE " & cuenta & " Set " & vence & "=#" & Today.Day & "/" & Today.Month & "/" & drow(periodo) & "#
-                    WHERE codigo=" & drow("codigo") & " AND " & vence & " IS NULL")
+                sqlUpdate.Append("UPDATE " & cuenta & " 
+                                     SET " & vence & "=#" & Today.Day & "/" & Today.Month & "/" & drow(periodo).ToString & "#
+                                   WHERE codigo=" & drow("codigo").ToString & " AND " & vence & " IS NULL")
             Next
             dtab.Dispose()
-        Next
 
+            DbMan.EditDB(Nothing, conexion_fox.Text, sqlUpdate)
+        Next
     End Sub
 
     Public Sub CargarTablasExternas()

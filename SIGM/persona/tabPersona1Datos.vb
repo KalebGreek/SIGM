@@ -40,9 +40,9 @@
     Public Function guardar() As Integer
         'Buscar duplicado de CUIL/CUIT
         Dim dtab As DataTable
-        Dim sql(0) As String
-        sql(0) = "SELECT id, razon FROM persona WHERE cuil=" & cuil.Text
-        dtab = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        Dim sqlSelect As String()
+        sqlSelect.Append("SELECT id, razon FROM persona WHERE cuil=" & cuil.Text)
+        dtab = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sqlSelect)
         If dtab.Rows.Count > 0 Then
             ErrorInfo.SetToolTip(cuil, "Este CUIL/CUIT pertenece a " & dtab.Rows(0)("id") & "-" & dtab.Rows(0)("razon"))
             cuil.BackColor = Color.MistyRose
@@ -51,21 +51,21 @@
             cuil.BackColor = SystemColors.Window
         End If
         If CtrlMan.Validate(Me, ErrorInfo) Then
-
+            Dim sqlInsert, sqlUpdate As String()
             Dim fisica As Boolean = gen.Text <> "N/A"
             If PersonaId > 0 Then
-                DbMan.editDB(Nothing, My.Settings.CurrentDB,
-                            "UPDATE persona SET razon='" & razon.Text & "', cuil=" & cuil.Text & ", 
-									fisica=" & fisica & "
-							  WHERE id=" & PersonaId)
+                sqlUpdate.Append("UPDATE persona 
+                                     SET razon='" & razon.Text & "', cuil=" & cuil.Text & ", fisica=" & fisica & "
+							       WHERE id=" & PersonaId)
+                DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlUpdate)
             Else
-                DbMan.editDB(Nothing, My.Settings.CurrentDB,
-                       "INSERT INTO persona(razon, cuil, fisica)
-							 VALUES('" & razon.Text & "','" & cuil.Text & "'," & fisica & ")")
+                sqlInsert.Append("INSERT INTO persona(razon, cuil, fisica)
+							           VALUES('" & razon.Text & "','" & cuil.Text & "'," & fisica & ")")
+                DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
                 'Next query could be replaced by OUTPUT insert.id
 
-                sql(0) = "SELECT MAX(id) as id FROM persona"
-                PersonaId = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql).Rows(0)("id") 'Last insert
+                sqlSelect(0) = "SELECT MAX(id) as id FROM persona"
+                PersonaId = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sqlSelect).Rows(0)("id") 'Last insert
             End If
         End If
         Return PersonaId

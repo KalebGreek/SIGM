@@ -30,43 +30,42 @@ Class SecMan 'Security Manager
                     FROM usr_log
                    WHERE user_id=" & user_id & " ORDER BY id DESC"
         'Últimos accesos
-        Using dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        Dim registro As DataRow = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)(0)
 
-            If lock Then 'Iniciar sesion
-                If dtab.Rows.Count > 0 Then
-                    If dtab.Rows(0)("token").ToString = token Then 'Sesion iniciada en este equipo
-                        If dtab.Rows(0)("sesion") Then
-                            'Sin cambios
-                        ElseIf dtab.Rows(0)("sesion").ToString = False Then 'Agregar registro a historial
-                            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)
+        If lock Then 'Iniciar sesion
+            If registro Is Nothing = False Then
+                If registro("token").ToString = token Then 'Sesion iniciada en este equipo
+                    If registro("sesion") Then
+                        'Sin cambios
+                    ElseIf registro("sesion").ToString = False Then 'Agregar registro a historial
+                        DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)
 										 VALUES(" & user_id & ", '" & fecha_hora & "' ,
 												'" & token & "', '" & equipo & "', " & lock & ")")
-                        End If
-                    ElseIf dtab.Rows(0)("token").ToString <> token Then  'Sesión iniciada en otro equipo
-                        If MsgBoxResult.Yes = MsgBox("Sesion abierta en " & dtab.Rows(0)("equipo").ToString & ". Presione SI para continuar, NO para salir",
+                    End If
+                ElseIf registro("token").ToString <> token Then  'Sesión iniciada en otro equipo
+                    If MsgBoxResult.Yes = MsgBox("Sesion abierta en " & registro("equipo").ToString & ". Presione SI para continuar, NO para salir",
                                                       MsgBoxStyle.YesNo, "Sesion iniciada en otro equipo") Then
 
-                            'Iniciar sesion en este equipo, cerrar sesión de accesos anteriores
-                            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "UPDATE usr_log Set sesion=False WHERE user_id=" & user_id)
+                        'Iniciar sesion en este equipo, cerrar sesión de accesos anteriores
+                        DbMan.EditDB(Nothing, My.Settings.CurrentDB, "UPDATE usr_log Set sesion=False WHERE user_id=" & user_id)
 
-                            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)
+                        DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)
 											     VALUES(" & user_id & ", '" & fecha_hora & "' ,
 														'" & token & "', '" & equipo & "', " & lock & ")")
 
-                        Else 'No iniciar sesion en este equipo
-                            Return False
-                        End If
+                    Else 'No iniciar sesion en este equipo
+                        Return False
                     End If
+                End If
 
-                ElseIf dtab.Rows.Count = 0 Then 'No hay registros de inicio de sesion
-                    DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
+            ElseIf registro Is Nothing Then 'No hay registros de inicio de sesion
+                DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO usr_log(user_id, fecha_hora, token, equipo, sesion)" &
                                       " VALUES(" & user_id & ", '" & fecha_hora & "' ," &
                                       " '" & token & "', '" & equipo & "', True)")
-                End If
-            Else 'Cerrar sesion correctamente
-                DbMan.EditDB(Nothing, My.Settings.CurrentDB, "UPDATE usr_log SET sesion=" & lock & " WHERE user_id=" & user_id)
             End If
-        End Using
+        Else 'Cerrar sesion correctamente
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "UPDATE usr_log SET sesion=" & lock & " WHERE user_id=" & user_id)
+        End If
 
         Return True
     End Function

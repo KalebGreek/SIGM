@@ -46,7 +46,7 @@
                     sql(2) = "WHERE acta=" & acta & " And libro=" & libro
 
                     Dim dtab_acta = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
-                    If dtab.Rows.Count > 0 Then
+                    If dtab_acta.Rows.Count > 0 Then
                         If dtab_acta.Rows(0)("per_id") <> persona_id Then
                             MsgBox("El acta N." & acta & " del libro N." & libro & " no corresponde a " & dtab.Rows(0)("razon"))
                             Return ""
@@ -260,32 +260,38 @@
         'Guarda una ruta de documento en una tabla
         'Todas las tablas de documentos deben contener las mismas columnas:
         'FOO_ID, FECHA, DESCRIPCION, RUTA
-        Dim sql(3) As String
-        sql(0) = "SELECT *"
-        sql(1) = "FROM " & tabla
-        sql(2) = "WHERE " & col_id & "=" & id & " And descripcion='" & descripcion & "'"
+        Dim sqlInsert, sqlSelect, sqlUpdate As String()
+        sqlSelect.Append("SELECT *")
+        sqlSelect.Append("FROM " & tabla)
+        sqlSelect.Append("WHERE " & col_id & "=" & id & " And descripcion='" & descripcion & "'")
 
-        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
-
+        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sqlSelect)
         If dtab.Rows.Count > 0 Then
             For Each dr As DataRow In dtab.Rows
-                DbMan.EditDB(Nothing, My.Settings.CurrentDB, "UPDATE " & tabla & " SET fecha='" & fecha.ToShortDateString & "', ruta='" & ruta & "'
-															WHERE " & col_id & "=" & id & " AND  descripcion='" & descripcion & "'")
+                sqlUpdate.Append("UPDATE " & tabla & " 
+                                     SET fecha='" & fecha.ToShortDateString & "', ruta='" & ruta & "'
+								   WHERE " & col_id & "=" & id & " AND  descripcion='" & descripcion & "'")
+
             Next
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlUpdate)
         Else
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)
-														VALUES(" & id & ", #" & fecha & "# ,'" & descripcion & "', '" & ruta & "')")
+            sqlInsert.Append("INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)
+								   VALUES(" & id & ", #" & fecha & "# ,'" & descripcion & "', '" & ruta & "')")
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
         End If
     End Sub
-    Overloads Shared Sub Guardar(lista As BindingSource, tabla As String, col_id As String, id As Integer)
+    Overloads Shared Sub Guardar(lista As DataTable, tabla As String, col_id As String, id As Integer)
         'Guarda una lista de rutas de documento a una tabla
-        With lista
-            For Each dr As DataRow In lista.DataSource.Rows
-                DbMan.EditDB(Nothing, My.Settings.CurrentDB, "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)" &
-                          " VALUES(" & id & ", #" & dr("fecha") & "# ,'" & dr("descripcion") & "'," &
-                          " '" & dr("ruta") & "')")
+        If lista.Rows.Count > 0 Then
+            Dim sqlInsert As String()
+            For Each dr As DataRow In lista.Rows
+                sqlInsert.Append("INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)" &
+                                     " VALUES(" & id & ", #" & dr("fecha").ToString & "# ,'" & dr("descripcion").ToString & "'," &
+                                              " '" & dr("ruta").ToString & "')")
+
             Next
-        End With
+            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
+        End If
     End Sub
     Shared Sub Limpiar(tabla As String, col_id As String, id As Integer, Optional tipo_archivo As String = "")
         Dim sql As String = "DELETE * FROM " & tabla & " WHERE " & col_id & "=" & id

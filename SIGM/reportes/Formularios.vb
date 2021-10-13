@@ -1,4 +1,5 @@
-﻿Class Formularios
+﻿Imports Microsoft.Reporting.WinForms
+Class Formularios
 
     Public Sub New(Optional titulo As String = "Informe")
         ' This call is required by the designer.

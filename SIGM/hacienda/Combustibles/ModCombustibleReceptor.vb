@@ -33,8 +33,7 @@
                 If pos < 0 Then
 
                     DbMan.editDB(Nothing, My.Settings.CurrentDB, "INSERT INTO hac_combustible_responsable(receptor_id, persona_id) 
-															 VALUES(" & receptor_id.Text & ", 
-																	" & .Current("persona_id") & ")")
+															      VALUES(" & receptor_id.Text & ", " & .Current("persona_id") & ")")
 
                     Combustible.Responsable.Fill(bs_responsable, responsable, receptor_id.Text)
                     pos = bs_responsable.Find("persona_id", .Current("persona_id"))

@@ -64,7 +64,9 @@
 		Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql).Rows(0)
 	End Function
 	Shared Function eliminar(ByVal profesional_id As Integer) As Integer
-		DbMan.EditDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM profesional WHERE id=" & profesional_id)
+		Dim sqlDelete As String()
+		sqlDelete.Append("DELETE * FROM profesional WHERE id=" & profesional_id)
+		DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlDelete)
 		Return 0
 	End Function
 End Class

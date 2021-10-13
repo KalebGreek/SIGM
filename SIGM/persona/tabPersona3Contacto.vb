@@ -22,9 +22,10 @@
 
 	Public Function Guardar() As Integer
 		If CtrlMan.Validate(Me, ErrorInfo) Then
-			DbMan.editDB(Nothing, My.Settings.CurrentDB,
-						"UPDATE persona SET telefono=" & tele.Text & ", email='" & email.Text & "'
+			Dim sqlUpdate As String()
+			sqlUpdate.Append("UPDATE persona SET telefono=" & tele.Text & ", email='" & email.Text & "'
 						  WHERE id=" & PersonaId)
+			DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlUpdate)
 		End If
 		Return PersonaId
 	End Function
