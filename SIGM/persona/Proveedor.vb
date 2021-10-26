@@ -30,9 +30,9 @@
 			End If
 		End If
 		sql(2) = " ORDER By Persona.razon"
-		Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+		Return DbMan.ReadDB(sql, My.Settings.CurrentDB)
 	End Function
-	Shared Function Seleccionar(proveedor_id As Integer, persona_id As Integer) As DataTable
+	Shared Function Seleccionar(proveedor_id As Integer, persona_id As Integer) As DataRow
 		Dim sql(1) As String
 		sql(0) = "SELECT persona.id as persona_id, persona.razon, persona.cuil, persona.fisica, 
 									  per_domicilio.calle, per_domicilio.altura, localidades.nombre, 
@@ -52,30 +52,28 @@
 		Else
 			sql(1) += " AND persona.id=" & persona_id
 		End If
-		Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+		Return DbMan.ReadDB(sql, My.Settings.CurrentDB).Rows(0)
 	End Function
 	Shared Function guardar(proveedor_id As Integer, ByVal per_id As Integer, ByVal actividad As Integer, ByVal responsable As Integer) As Integer
-		Dim sqlInsert, sqlSelect, sqlUpdate As String()
+		Dim sqlInsert, sqlSelect, sqlUpdate As String
 		If proveedor_id <> 0 Then
-			sqlUpdate.Append("UPDATE proveedor 
+			sqlUpdate = "UPDATE proveedor 
 								 SET per_id=" & per_id & ", actividad_id=" & actividad & ",	responsable_iva_id=" & responsable & "
-							   WHERE id=" & proveedor_id)
+							   WHERE id=" & proveedor_id
 
-			DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlUpdate)
+			DbMan.EditDB(sqlUpdate, My.Settings.CurrentDB)
 		Else
-			sqlInsert.Append("INSERT INTO proveedor(per_id, actividad_id, responsable_iva_id) 
-								 VALUES(" & per_id & ", " & actividad & ", " & responsable & ")")
-			DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
+			sqlInsert = "INSERT INTO proveedor(per_id, actividad_id, responsable_iva_id) 
+							  VALUES(" & per_id & ", " & actividad & ", " & responsable & ")"
+			DbMan.EditDB(sqlInsert, My.Settings.CurrentDB)
 
-			sqlSelect.Append("SELECT MAX(id) as id FROM proveedor WHERE per_id=" & per_id)
-			proveedor_id = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sqlSelect).Rows(0)("id")
+			sqlSelect = "SELECT MAX(id) as id FROM proveedor WHERE per_id=" & per_id
+			proveedor_id = DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB).Rows(0)("id")
 		End If
 		Return proveedor_id
 	End Function
 	Shared Function eliminar(ByVal proveedor_id As Integer) As Integer
-		Dim sqlDelete As String()
-		sqlDelete.Append("DELETE * FROM proveedor WHERE id=" & proveedor_id)
-		DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlDelete)
+		DbMan.EditDB("DELETE * FROM proveedor WHERE id=" & proveedor_id, My.Settings.CurrentDB)
 		Return 0
 	End Function
 End Class

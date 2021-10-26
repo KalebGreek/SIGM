@@ -4,14 +4,11 @@ Public Class CalcAnualImpUI
 
     'Eventos
     Private Sub CalculoAnualImpuesto_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim sql(0) As String
-
         periodo.Maximum = Today.Year + 5
         periodo.Minimum = 1990
         periodo.Value = Today.Year
 
-        sql(0) = "SELECT * FROM numeros"
-        bs_variables.DataSource = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        bs_variables.DataSource = DbMan.ReadDB("SELECT * FROM numeros", My.Settings.foxConnection)
     End Sub
 
     Private Sub Impuesto_SelectedIndexChanged(sender As Object, e As EventArgs) Handles impuesto.SelectedIndexChanged
@@ -39,11 +36,9 @@ Public Class CalcAnualImpUI
 
     'Rutinas
     Public Sub Validar()
-        Dim sql(0) As String
-        sql(0) = "SELECT MAX(codigo) as codigo FROM " & impuesto.Text
-        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        Dim dtab As DataTable = DbMan.ReadDB("SELECT MAX(codigo) as codigo FROM " & impuesto.Text, My.Settings.foxConnection)
         If dtab.Rows.Count > 0 Then
-            If CuentaInicial.Value > dtab.Rows(0)("codigo") Then
+            If CuentaInicial.Value > dtab.Rows(0)("codigo").ToString Then
                 MsgBox("No se encuentra la cuenta inicial.", MsgBoxStyle.OkOnly, Nothing)
             Else
                 info.Text = "Leyendo datos.."
@@ -135,7 +130,7 @@ Public Class CalcAnualImpUI
             CheckProgress(dtab(2).Rows.IndexOf(dr), CInt(dr("codigo")))
         Next
         If total_cuotas > 0 Then
-            DbMan.EditDB(Nothing, My.Settings.foxConnection, sqlInsertList, progreso)
+            DbMan.EditDB(sqlInsertList, My.Settings.foxConnection, progreso)
         End If
     End Sub
 
@@ -148,18 +143,17 @@ Public Class CalcAnualImpUI
         total_cuotas = 0
 
         'Vencimientos
-        sql(0) = "SELECT * FROM autovence
-								 WHERE periodo=" & periodo.Value
-        dtab_vence = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        dtab_vence = DbMan.ReadDB("SELECT * FROM autovence
+								           WHERE periodo=" & periodo.Value,
+                                  My.Settings.foxConnection)
 
         'Cuentas
-        sql(0) = "SELECT codigo, razon, marca, modelo, apagar FROM automovil
-								 WHERE apagar>0 AND baja={}
-								 AND codigo=>" & CuentaInicial.Value & " ORDER BY codigo"
-        dtab_cuenta = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        dtab_cuenta = DbMan.ReadDB("SELECT codigo, razon, marca, modelo, apagar FROM automovil
+								     WHERE apagar>0 AND baja={} AND codigo=>" & CuentaInicial.Value & " 
+                                  ORDER BY codigo",
+                                   My.Settings.foxConnection)
 
-        sql(0) = "SELECT * FROM autocue"
-        dtab_deuda = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        dtab_deuda = DbMan.ReadDB("SELECT * FROM autocue", My.Settings.foxConnection)
 
         progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -168,7 +162,6 @@ Public Class CalcAnualImpUI
             Dim cuota As New Integer
             Dim cuota_max As New Integer
             Dim cuota_mod As New Integer
-
 
             importe = dr("apagar")
             cuota = 1
@@ -190,7 +183,7 @@ Public Class CalcAnualImpUI
         Next
 
         If total_cuotas > 0 Then
-            DbMan.EditDB(Nothing, My.Settings.foxConnection, sqlInsertList, progreso)
+            DbMan.EditDB(sqlInsertList, My.Settings.foxConnection, progreso)
         End If
     End Sub
 
@@ -341,7 +334,7 @@ Public Class CalcAnualImpUI
             subtotal -= (vereda + parque + agrario + jubilado)
 
             'Franqueo
-            franqueo = bs_variables.Current("franqueo") * 6
+            franqueo = bs_variables.Current("franqueo").ToString * 6
 
             'Total
             importe = subtotal + franqueo
@@ -367,7 +360,7 @@ Public Class CalcAnualImpUI
             CheckProgress(dtab(1).Rows.IndexOf(dr), dr("codigo"))
         Next
         If total_cuotas > 0 Then
-            DbMan.EditDB(Nothing, My.Settings.foxConnection, sqlInsertList, progreso)
+            DbMan.EditDB(sqlInsertList, My.Settings.foxConnection, progreso)
         End If
     End Sub
 
@@ -375,37 +368,33 @@ Public Class CalcAnualImpUI
         Dim dtab_cuenta, dtab_vence, dtab_deuda As DataTable
         Dim minimo, taecom, importe, franqueo As New Decimal
         Dim cuota_max As Integer
+        Dim sqlSelect As String
         Dim sqlInsertList(0) As String
-        Dim sql(3) As String
 
         cuentas_modificadas = 0
         total_cuotas = 0
         'Vencimientos
-        sql(0) = "SELECT * "
-        sql(1) = "FROM comvence"
-        sql(2) = "WHERE periodo=" & periodo.Value
-        sql(3) = ""
-        dtab_vence = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        dtab_vence = DbMan.ReadDB("SELECT * FROM comvence WHERE periodo=" & periodo.Value, My.Settings.foxConnection)
 
         'Cuentas
-        sql(0) = "SELECT comercio.codigo as codigo, comercio.cantidad, 
+        sqlSelect = "SELECT comercio.codigo as codigo, comercio.cantidad, 
                          comercio.actividad as actividad, comact.detalle,
 		    			 comact.tributo, comact.cuotas, 
                          comact.cuota1, comact.cuota2, comact.cuota3,
                          comact.cuota4,comact.cuota5,comact.cuota6"
-        sql(1) = "FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
-        sql(2) = "WHERE comercio.baja = {} AND comact.cuota1>0 AND comercio.codigo=>" & CuentaInicial.Value
-        sql(3) = "ORDER BY comercio.codigo"
+        sqlSelect &= "FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
+        sqlSelect &= "WHERE comercio.baja = {} AND comact.cuota1>0 AND comercio.codigo=>" & CuentaInicial.Value
+        sqlSelect &= "ORDER BY comercio.codigo"
 
-        dtab_cuenta = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        dtab_cuenta = DbMan.ReadDB(sqlSelect, My.Settings.foxConnection)
 
         'Deudas
-        sql(0) = "SELECT *"
-        sql(1) = "FROM comcue"
-        sql(2) = "WHERE agrupado='' AND pago={} AND ano=" & periodo.Value & " AND codigo=> " & CuentaInicial.Value
-        sql(3) = "ORDER BY codigo"
+        sqlSelect = "SELECT *"
+        sqlSelect &= "FROM comcue"
+        sqlSelect &= "WHERE agrupado='' AND pago={} AND ano=" & periodo.Value & " AND codigo=> " & CuentaInicial.Value
+        sqlSelect &= "ORDER BY codigo"
 
-        dtab_deuda = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        dtab_deuda = DbMan.ReadDB(sqlSelect, My.Settings.foxConnection)
 
         progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -462,14 +451,14 @@ Public Class CalcAnualImpUI
             CheckProgress(dtab_cuenta.Rows.IndexOf(dr), dr("codigo"))
         Next
         If total_cuotas > 0 Then
-            DbMan.EditDB(Nothing, My.Settings.foxConnection, sqlInsertList, progreso)
+            DbMan.EditDB(sqlInsertList, My.Settings.foxConnection, progreso)
         End If
     End Sub
 
     Public Sub Sepelio()
         Dim dtab_cuenta, dtab_deuda As DataTable
         Dim sqlInsertList(0) As String
-        Dim sql(5) As String
+        Dim sqlSelect As String
         'Vencimientos
         Dim vence As New Date(periodo.Value, 1, 1)
         cuentas_modificadas = 0
@@ -478,20 +467,18 @@ Public Class CalcAnualImpUI
             vence = vence.AddDays(1)
         Loop
         'Cuentas
-        sql(0) = "SELECT sepelio.codigo as codigo, sepelio.fila as fila, sepelio.jubilado as jubilado, 
+        sqlSelect = "SELECT sepelio.codigo as codigo, sepelio.fila as fila, sepelio.jubilado as jubilado, 
                          sepevar.minimo as minimo, sepelio.espacio as espacio, sepevar.jubilado as desc_jubilado, 
                          sepevar.fila1 as fila1, sepevar.fila2 as fila2, sepevar.fila3 as fila3,
 		    			 sepevar.fila4 as fila4, sepevar.fila5 as fila5, sepelio.ubicacion as ubicacion, sepelio.tipo as tipo"
-        sql(1) = "FROM sepelio JOIN sepevar ON sepelio.tipo=sepevar.orden"
-        sql(2) = "WHERE sepelio.tipo > 0 AND sepelio.codigo =>" & CuentaInicial.Value
-        sql(3) = "ORDER BY sepelio.codigo"
-        dtab_cuenta = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        sqlSelect &= " FROM sepelio JOIN sepevar ON sepelio.tipo=sepevar.orden"
+        sqlSelect &= " WHERE sepelio.tipo > 0 AND sepelio.codigo =>" & CuentaInicial.Value
+        sqlSelect &= " ORDER BY sepelio.codigo"
+        dtab_cuenta = DbMan.ReadDB(sqlSelect, My.Settings.foxConnection)
 
-        sql(0) = "SELECT *"
-        sql(1) = "FROM sepecue"
-        sql(2) = ""
-        sql(3) = ""
-        dtab_deuda = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        sqlSelect = "SELECT *"
+        sqlSelect &= " FROM sepecue"
+        dtab_deuda = DbMan.ReadDB(sqlSelect, My.Settings.foxConnection)
 
         progreso.Maximum = dtab_cuenta.Rows.Count - 1
 
@@ -529,7 +516,7 @@ Public Class CalcAnualImpUI
             CheckProgress(dtab_cuenta.Rows.IndexOf(dr), dr("codigo"))
         Next
         If total_cuotas > 0 Then
-            DbMan.EditDB(Nothing, My.Settings.foxConnection, sqlInsertList, progreso)
+            DbMan.EditDB(sqlInsertList, My.Settings.foxConnection, progreso)
         End If
     End Sub
 

@@ -85,7 +85,7 @@
 
 
         For imp As Integer = 0 To 4 Step 1 '5 impuestos
-            Dim sqlSelect, sqlUpdate As String()
+            Dim sqlSelect As String
             If imp = 0 Then 'AGUA
                 cuenta = agua_cuentas.Text
                 vence = "vencio"
@@ -113,25 +113,24 @@
                 periodo = "periodo"
             End If
 
-            sqlUpdate.Append("UPDATE " & cuenta & " 
-                                 SET " & vence & "=" & pago & " 
-                               WHERE " & vence & " IS NULL AND " & pago & " IS NOT NULL")
+            DbMan.EditDB("UPDATE " & cuenta & " 
+                            SET " & vence & "=" & pago & " 
+                          WHERE " & vence & " IS NULL AND " & pago & " IS NOT NULL",
+                         conexion_fox.Text)
 
             'Si no funciona
-            sqlSelect.Append("SELECT codigo, " & periodo & ", " & vence)
-            sqlSelect.Append(" WHERE " & vence & " Is NULL")
-            sqlSelect.Append("FROM " & cuenta)
+            sqlSelect = "SELECT codigo, " & periodo & ", " & vence & " WHERE " & vence & " Is NULL FROM " & cuenta
+            Dim dtab As DataTable = ReadDB(sqlSelect, conexion_fox.Text)
+            Dim sqlUpdateList(dtab.Rows.Count) As String
 
-            Dim dtab As DataTable = ReadDB(Nothing, conexion_fox.Text, sqlSelect)
+            For Each dr As DataRow In dtab.Rows
 
-            For Each drow As DataRow In dtab.Rows
-                sqlUpdate.Append("UPDATE " & cuenta & " 
-                                     SET " & vence & "=#" & Today.Day & "/" & Today.Month & "/" & drow(periodo).ToString & "#
-                                   WHERE codigo=" & drow("codigo").ToString & " AND " & vence & " IS NULL")
+                sqlUpdateList(dtab.Rows.IndexOf(dr)) = "UPDATE " & cuenta & " 
+                                                           SET " & vence & "=#" & Today.Day & "/" & Today.Month & "/" & dr(periodo).ToString & "#
+                                                         WHERE codigo=" & dr("codigo").ToString & " AND " & vence & " IS NULL"
             Next
+            DbMan.EditDB(sqlUpdateList, conexion_fox.Text)
             dtab.Dispose()
-
-            DbMan.EditDB(Nothing, conexion_fox.Text, sqlUpdate)
         Next
     End Sub
 
@@ -140,9 +139,7 @@
             .Locale = System.Globalization.CultureInfo.CurrentCulture
         }
 
-        Dim sql(5) As String
-        sql(0) = "SELECT * FROM tablas_externas WHERE personas='aguas'"
-        dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        dtab_ext = DbMan.ReadDB("SELECT * FROM tablas_externas WHERE personas='aguas'", My.Settings.CurrentDB)
 
         If dtab_ext.Rows.Count > 0 Then
             ' TABLAS EXTERNAS AGUA 
@@ -154,8 +151,7 @@
             agua_zonas.Text = dtab_ext.Rows(0)("zona")
         End If
 
-        sql(0) = "SELECT * FROM tablas_externas WHERE  personas='automovil'"
-        dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        dtab_ext = DbMan.ReadDB("SELECT * FROM tablas_externas WHERE  personas='automovil'", My.Settings.CurrentDB)
 
         If dtab_ext.Rows.Count > 0 Then
             ' TABLAS EXTERNAS AUTO 
@@ -165,8 +161,7 @@
             auto_tipo.Text = dtab_ext.Rows(0)("tipo")
         End If
 
-        sql(0) = "SELECT * FROM tablas_externas WHERE  personas='catastro'"
-        dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        dtab_ext = DbMan.ReadDB("SELECT * FROM tablas_externas WHERE  personas='catastro'", My.Settings.CurrentDB)
 
         If dtab_ext.Rows.Count > 0 Then
             ' TABLAS EXTERNAS CATA 
@@ -177,8 +172,7 @@
             cata_zonas.Text = dtab_ext.Rows(0)("zona")
         End If
 
-        sql(0) = "SELECT * FROM tablas_externas WHERE  personas='comercio'"
-        dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        dtab_ext = DbMan.ReadDB("SELECT * FROM tablas_externas WHERE  personas='comercio'", My.Settings.CurrentDB)
 
         If dtab_ext.Rows.Count > 0 Then
             ' TABLAS EXTERNAS COME 
@@ -190,8 +184,7 @@
             come_actividades.Text = dtab_ext.Rows(0)("actividad")
         End If
 
-        sql(0) = "SELECT * FROM tablas_externas WHERE  personas='sepelio'"
-        dtab_ext = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        dtab_ext = DbMan.ReadDB("SELECT * FROM tablas_externas WHERE  personas='sepelio'", My.Settings.CurrentDB)
 
         If dtab_ext.Rows.Count > 0 Then
             ' TABLAS EXTERNAS SEPE 
@@ -219,7 +212,7 @@
             Dim sourceTables As DataTable = DbMan.readTableSchema()
             Dim destTables As DataTable = DbMan.readTableSchema()
             For Each dr As DataRow In destTables.Rows
-                If dr("TABLE_TYPE") = "TABLE" Then
+                If dr("TABLE_TYPE").ToString = "TABLE" Then
                     destTables.Rows.Find(dr("TABLE_NAME"))
                     'TODO
 

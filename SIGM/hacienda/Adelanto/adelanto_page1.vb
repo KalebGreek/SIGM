@@ -3,10 +3,9 @@
 
 	'Routines
 	Public Sub save()
-		Dim sqlInsert As String()
-		sqlInsert.Append("INSERT INTO hac_adelanto(monto, fecha, persona_id) 
-					VALUES('" & monto.Value & "', '" & fecha.Value & "', " & persona_id & ")")
-		DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
+		DbMan.EditDB("INSERT INTO hac_adelanto(monto, fecha, persona_id) 
+						   VALUES('" & monto.Value & "', '" & fecha.Value & "', " & persona_id & ")",
+					 My.Settings.CurrentDB)
 	End Sub
 	'Events
 	Private Sub buscarPersona_Click(sender As Object, e As EventArgs) Handles buscarPersona.Click

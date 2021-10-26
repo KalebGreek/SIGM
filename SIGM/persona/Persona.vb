@@ -1,8 +1,8 @@
 ﻿Class Persona
-	Shared PersonaSQL As String = "SELECT persona.id as persona_id, persona.razon, persona.cuil," &
-								" per_domicilio.calle, per_domicilio.altura, localidades.nombre as localidad," &
-								" persona.email, persona.telefono, persona.difunto, persona.fisica" &
-								" FROM (persona LEFT JOIN per_domicilio ON persona.id = per_domicilio.per_id)" &
+	Shared ReadOnly PersonaSQL As String = "SELECT persona.id as persona_id, persona.razon, persona.cuil,
+											per_domicilio.calle, per_domicilio.altura, localidades.nombre as localidad,
+											persona.email, persona.telefono, persona.difunto, persona.fisica
+									   FROM (persona LEFT JOIN per_domicilio ON persona.id = per_domicilio.per_id)" &
 								" LEFT JOIN localidades ON per_domicilio.localidad_id = localidades.id" &
 								" WHERE per_domicilio.principal=True"
 
@@ -16,31 +16,27 @@
 	End Function
 
 	Shared Function Buscar(difunto As Boolean, fisica As Boolean) As DataTable
-		Dim sql(1) As String
-		sql(0) = PersonaSQL
-		sql(0) += " AND Persona.difunto=" & difunto & " AND fisica=" & fisica
-		sql(1) = " ORDER By Persona.razon ASC"
-		Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+		Dim sqlSelect As String = PersonaSQL & " AND Persona.difunto=" & difunto & " AND fisica=" & fisica & " ORDER By Persona.razon ASC"
+		Return DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB)
 	End Function
 
 	Shared Function Nueva(razon As String, cuil As Double, fisica As Boolean,
 							  email As String, telefono As String, difunto As Boolean, Optional RutaDefuncion As String = "") As String
-		Dim sql As String
-		sql = "INSERT INTO persona(razon, cuil, email, telefono, 
+		Return "INSERT INTO persona(razon, cuil, email, telefono, 
 									   difunto, ruta_defuncion, fisica)
-							    VALUES('" & razon & "', '" & cuil & "', '" & email & "', " & telefono & ",
-										" & difunto & ", '" & RutaDefuncion & "', " & fisica & ")"
+						  VALUES('" & razon & "', '" & cuil & "', '" & email & "', " & telefono & ",
+								  " & difunto & ", '" & RutaDefuncion & "', " & fisica & ")"
 
-		Return sql
 	End Function
 	Shared Function Modificar(PersonaId As Integer, razon As String, cuil As Double, fisica As Boolean,
 								  email As String, telefono As String, difunto As Boolean, Optional RutaDefuncion As String = "") As String
-		Dim sql As String
-		sql = "UPDATE persona Set razon='" & razon & "', email='" & email & "', telefono=" & telefono & "," &
-			  " difunto = " & difunto & ", ruta_defuncion='" & RutaDefuncion & "', cuil='" & cuil & "', fisica=" & fisica
-		sql += " WHERE id=" & PersonaId
 
-		Return sql
+		Return "UPDATE persona 
+				   SET razon='" & razon & "', email='" & email & "', telefono=" & telefono & ",
+					   difunto = " & difunto & ", ruta_defuncion='" & RutaDefuncion & "', cuil='" & cuil & "', 
+					   fisica=" & fisica & " 
+				 WHERE id=" & PersonaId
+
 	End Function
 	Shared Function Eliminar(PersonaId As Integer, Optional ProfesionalId As Integer = 0,
 							Optional ProveedorId As Integer = 0) As Boolean
@@ -59,7 +55,7 @@
 				msg.Add("> PROFESIONAL")
 				msg.Add("Esta persona está registrada como profesional en los siguientes expedientes: ")
 				For fila As Integer = 0 To dtab_con.Rows.Count - 1
-					msg.Add("Expte. N." & dtab_con.Rows(fila)("expediente"))
+					msg.Add("Expte. N." & dtab_con.Rows(fila)("expediente").ToString)
 				Next
 				msg.Add("Debe reemplazar el profesional en los expedientes indicados antes de continuar.")
 
@@ -114,14 +110,14 @@
 			Return False
 		Else
 			'documentos
-			Dim sql(0) As String
-			sql(0) = "SELECT descripcion, ruta FROM per_documento WHERE per_id=" & PersonaId
-			dtab_con = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+			dtab_con = DbMan.ReadDB("SELECT descripcion, ruta 
+									   FROM per_documento WHERE per_id=" & PersonaId,
+									My.Settings.CurrentDB)
 
 			If dtab_con.Rows.Count > 0 Then
 				msg.Add("Los siguientes documentos seran eliminados del registro junto con la persona seleccionada: ")
 				For fila As Integer = 0 To dtab_con.Rows.Count - 1
-					msg.Add(dtab_con.Rows(fila)("descripcion") & " ubicado en " & dtab_con.Rows(fila)("ruta"))
+					msg.Add(dtab_con.Rows(fila)("descripcion").ToString & " ubicado en " & dtab_con.Rows(fila)("ruta").ToString)
 				Next
 			Else
 				msg.Add("Se eliminara la persona seleccionada.")
@@ -130,9 +126,10 @@
 
 			Using errormsg As New visor_error("Eliminar persona", msg)
 				If errormsg.ShowDialog() = DialogResult.Ignore Then
-					DbMan.EditDB(Nothing, My.Settings.CurrentDB, "DELETE FROM per_documento WHERE per_id=" & PersonaId)
-					DbMan.EditDB(Nothing, My.Settings.CurrentDB, "DELETE FROM persona WHERE id=" & PersonaId)
-					Return True
+					Dim sqlDelete(1) As String
+					sqlDelete(0) = "DELETE FROM per_documento WHERE per_id=" & PersonaId
+					sqlDelete(1) = "DELETE FROM persona WHERE id=" & PersonaId
+					Return DbMan.EditDB(sqlDelete, My.Settings.CurrentDB)
 				Else
 					Return False
 				End If

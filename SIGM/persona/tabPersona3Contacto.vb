@@ -1,6 +1,6 @@
 ﻿Public Class TabPersona3Contacto
 	Inherits System.Windows.Forms.UserControl
-	Dim PersonaId As Integer
+	ReadOnly PersonaId As Integer
 
 	Public Sub New(PerId As Integer)
 		' This call is required by the designer.
@@ -12,9 +12,7 @@
 
 	Public Sub Cargar()
 		Dim registro As New DataTable
-		Dim sql(0) As String
-		sql(0) = "SELECT * FROM persona WHERE id=" & PersonaId
-		registro = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+		registro = DbMan.ReadDB("SELECT * FROM persona WHERE id=" & PersonaId, My.Settings.CurrentDB)
 
 		tele.Text = registro.Rows(0)("telefono").ToString
 		email.Text = registro.Rows(0)("email").ToString
@@ -22,12 +20,13 @@
 
 	Public Function Guardar() As Integer
 		If CtrlMan.Validate(Me, ErrorInfo) Then
-			Dim sqlUpdate As String()
-			sqlUpdate.Append("UPDATE persona SET telefono=" & tele.Text & ", email='" & email.Text & "'
-						  WHERE id=" & PersonaId)
-			DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlUpdate)
+			DbMan.EditDB("UPDATE persona SET telefono=" & tele.Text & ", email='" & email.Text & "'
+						  WHERE id=" & PersonaId,
+						 My.Settings.CurrentDB)
+			Return PersonaId
+		Else
+			Return 0
 		End If
-		Return PersonaId
 	End Function
 
 

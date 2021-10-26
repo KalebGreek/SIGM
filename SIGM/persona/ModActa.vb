@@ -110,7 +110,7 @@
 			sql(2) += " libro = " & libro & " And acta = " & acta
 		End If
 
-		Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+		Return DbMan.ReadDB(sql, My.Settings.CurrentDB)
 	End Function
 
 	Private Sub add_acta_Click(sender As Object, e As EventArgs) Handles add_acta.Click
@@ -141,17 +141,17 @@
 		With registro
 			For fila As Integer = 0 To .Count - 1
 				.Position = fila
-				DbMan.editDB(Nothing, My.Settings.CurrentDB,
-						   "INSERT INTO actas(per_id, fecha, acta, libro, copia, nota)
-                                 VALUES(" & per_id & ", #" & .Current("fecha") & "#,
-                                  " & .Current("acta") & ", " & .Current("libro") & ", '" & .Current("copia") & "',
-                                 '" & .Current("nota") & "')")
+				DbMan.EditDB("INSERT INTO actas(per_id, fecha, acta, libro, copia, nota)
+                                   VALUES(" & per_id & ", #" & .Current("fecha").ToString & "#,
+										  " & .Current("acta").ToString & ", " & .Current("libro").ToString & ", 
+										 '" & .Current("copia").ToString & "', '" & .Current("nota").ToString & "')",
+							 My.Settings.CurrentDB)
 			Next
 		End With
 	End Sub
 
 	Shared Sub limpiar(ByVal PersonaId As Integer) 'Temporales
-		DbMan.EditDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM actas WHERE per_id=" & PersonaId)
+		DbMan.EditDB("DELETE * FROM actas WHERE per_id=" & PersonaId, My.Settings.CurrentDB)
 	End Sub
 	'###### MODIFICAR ##########################################################################################
 	'# ACTAS

@@ -75,12 +75,11 @@
 
     'CUSTOM QUERY
     Private Sub CustomQuery_KeyUp(sender As Object, e As KeyEventArgs) Handles CustomQuery.KeyUp
-        If e.KeyValue = Keys.Enter Then
-            Dim sql(0) As String
-            sql(0) = CustomQuery.Text
-            Dim dtab As DataTable = DbMan.ReadDB(Nothing, Connection.Text, sql)
+        CustomQuery.Text = Trim(CustomQuery.Text)
+        If e.KeyValue = Keys.Enter And Len(CustomQuery.Text) > 5 Then
+            Dim dtab As DataTable = DbMan.ReadDB(CustomQuery.Text, Connection.Text)
             CtrlMan.DataGridViewTools.Load(QueryView, bs_query, dtab)
-            CustomQuery.Items.Insert(0, Trim(CustomQuery.Text))
+            CustomQuery.Items.Insert(0, CustomQuery.Text)
             CustomQuery.Text = ""
         End If
     End Sub
@@ -133,7 +132,7 @@
 
                     Dim minDateValue As Date = Today
                     Dim maxDateValue As Date = Today
-                    Using dtab As DataTable = DbMan.ReadDB(Nothing, Connection.Text, sql)
+                    Using dtab As DataTable = DbMan.ReadDB(sql, Connection.Text)
                         minDateValue = dtab.Rows(0)("fecha").ToString
                     End Using
                     sql(0) = "SELECT banco, 
@@ -193,11 +192,10 @@
                     Dim dtab As New DataTable
                     Do
                         TableName = InputBox("Ingrese nombre de tabla.", "Ingresar Tabla")
+                        TableName = Trim(TableName)
 
-                        If Trim(TableName) <> "" Then
-                            TableName = Trim(TableName)
-                            sql(0) = "SELECT * FROM " & TableName
-                            dtab = DbMan.ReadDB(Nothing, Connection.Text, sql)
+                        If Len(TableName) > 0 Then
+                            dtab = DbMan.ReadDB("SELECT * FROM " & TableName, Connection.Text)
                         Else
                             TableName = Nothing
                         End If
@@ -227,7 +225,7 @@
             Dim LastQueryBS As BindingSource = bs_query
 
             bs_query = New BindingSource With {
-                .DataSource = DbMan.ReadDB(Nothing, Connection.Text, sql)
+                .DataSource = DbMan.ReadDB(sql, Connection.Text)
             } 'Avoids IBindingList error
 
             For Each str As String In sql

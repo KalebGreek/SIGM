@@ -88,12 +88,11 @@
     Private Function cargarJerarquiaPersonal() As DataTable
         Dim sql(0) As String
         sql(0) = "SELECT nombre, rubro 
-											  FROM hacienda 
-											 WHERE pertenece='9' AND anexo='1' AND inciso='1' AND item='1'
-                                               AND rubro >'00' AND rubro <'03' AND subrubro='00' 
-											   AND partida='00' AND subpartida='00'"
-        Return DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
-
+				    FROM hacienda 
+				   WHERE pertenece='9' AND anexo='1' AND inciso='1' AND item='1'
+                     AND rubro >'00' AND rubro <'03' AND subrubro='00' 
+					 AND partida='00' AND subpartida='00'"
+        Return DbMan.ReadDB(sql, My.Settings.foxConnection)
     End Function
 
     ' VALIDAR 
@@ -101,20 +100,18 @@
         Dim valido As Boolean = True
         Dim msg As String = ""
         Dim dtab As New DataTable
-        Dim sql(0) As String
 
         If codigo >= 11899 Or ordenanza_id > 0 Then 'Desde 1-1900
+            Dim sqlSelect As String = "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo
             If ordenanza_id > 0 Then
-                sql(0) = "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id
-            Else
-                sql(0) = "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo
+                sqlSelect = "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id
             End If
-            dtab = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+            dtab = DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB)
 
             If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then
                     If dtab.Rows.Count = 1 And ordenanza_id > 0 Then
-                        If ordenanza_id = dtab.Rows(0)("id") Then
+                        If ordenanza_id = dtab.Rows(0)("id").ToString Then
                             'Editar
                         Else
                             'Mal cargado
@@ -135,7 +132,6 @@
         Return True
     End Function
     Private Function ValidarCambios() As Boolean
-
         Return True
     End Function
 

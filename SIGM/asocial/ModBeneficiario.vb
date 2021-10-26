@@ -7,16 +7,15 @@
 
     End Sub
     Private Sub Me_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
-        CargarBeneficiario()
+        CargarBeneficiario(beneficiario_id.Text)
     End Sub
-    Private Sub CargarBeneficiario()
-        Dim sql(5) As String
-        sql(0) = "SELECT *"
-        sql(1) = "FROM persona INNER JOIN beneficiario ON persona.id=beneficiario.persona_id"
-        sql(2) = "WHERE beneficiario.id=" & beneficiario_id.Text
-
-        DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
-    End Sub
+    Private Function CargarBeneficiario(id As Integer) As DataRow
+        Return DbMan.ReadDB("SELECT * 
+                               FROM persona 
+                         INNER JOIN beneficiario ON persona.id=beneficiario.persona_id 
+                              WHERE beneficiario.id=" & id,
+                            My.Settings.CurrentDB).Rows(0)
+    End Function
     '   Private Sub GuardarBeneficiario()
     '	If Me.Visible Then
 

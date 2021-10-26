@@ -170,18 +170,13 @@ Class ModInmueble
         CtrlMan.DataGridViewTools.Load(consulta_frente, BSFrente, Catastro.ListarFrente(catastro_id.Text))
 
         'superficies
-        sql(0) = "SELECT *"
-        sql(1) = "FROM cat_superficie"
-        sql(2) = "WHERE catastro_id=" & catastro_id.Text
-
-        CtrlMan.LoadControlData(DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql), tab_sup)
+        CtrlMan.LoadControlData(DbMan.ReadDB("SELECT * FROM cat_superficie WHERE catastro_id=" & catastro_id.Text,
+                                             My.Settings.CurrentDB), tab_sup)
 
         'caracteristicas
-        sql(0) = "SELECT descripcion, activo "
-        sql(1) = "FROM cat_servicio"
-        sql(2) = "WHERE catastro_id=" & catastro_id.Text
-
-        CtrlMan.DataGridViewTools.Load(consulta_caract, BSCar, DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql))
+        CtrlMan.DataGridViewTools.Load(consulta_caract, BSCar,
+                                       DbMan.ReadDB("SELECT descripcion, activo FROM cat_servicio WHERE catastro_id=" & catastro_id.Text,
+                                                    My.Settings.CurrentDB))
 
         'copias
         CtrlMan.DataGridViewTools.Load(consulta_copia, BSCopia, Documento.Catastro.BuscarDoc(catastro_id.Text))

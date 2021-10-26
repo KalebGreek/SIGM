@@ -16,9 +16,9 @@
 
     '-- EVENTOS UNICOS
     Private Sub vista_SelectedIndexChanged() Handles GenSearchControl1.CVistaIndexTextChanged
-        Dim OleDBCmd As New OleDb.OleDbCommand
-        OleDBCmd.CommandType = System.Data.CommandType.Text
-        OleDBCmd.CommandText = ""
+        Dim OleDBCmd As New OleDb.OleDbCommand With {
+        .CommandType = System.Data.CommandType.Text,
+        .CommandText = ""}
 
         With GenSearchControl1
             CheckBox1.Enabled = .vista.SelectedIndex > -1
@@ -64,7 +64,7 @@
                         modMulta1.ShowDialog(Me)
                     End Using
                 ElseIf e.KeyValue = Keys.Delete Then
-                    If MsgBoxResult.Yes = MsgBox("Desea eliminar la multa N° " & bs_resultado.Current("boleta") & "?",
+                    If MsgBoxResult.Yes = MsgBox("Desea eliminar la multa N° " & bs_resultado.Current("boleta").ToString & "?",
                                                  "Eliminar Multa", MsgBoxStyle.YesNo) Then
 
                         Transito.Multas.Eliminar(bs_resultado.Current("historial_id"), bs_resultado.Current("vehiculo_id"))

@@ -6,37 +6,36 @@ Class CertificadoLibreDeuda
 
     'Routines
     Public Sub ObtenerCuentas()
-        Dim sql(5) As String
-        sql(0) = "SELECT razon, calle, barrio, localidad, provincia, postal,
-						 codigo, alta, catastro, ubicacion, reparto,
-						 potable, comercial"
-        Sql(1) = "FROM aguas"
-        agua = ReadDB(Nothing, My.Settings.foxConnection, sql)
+        Dim sqlSelect As String
+        sqlSelect = "SELECT razon, calle, barrio, localidad, provincia, postal,
+						    codigo, alta, catastro, ubicacion, reparto,
+						    potable, comercial
+                       FROM aguas"
+        agua = ReadDB(sqlSelect, My.Settings.foxConnection)
 
-        sql(0) = "SELECT razon, calle, barrio, localidad, provincia, postal,
-						 codigo, incorpora, baja, modelo, peso, marca, motor, chassis,
-						 tipauto.describo as describo, anterior, letrahoy, numerohoy"
-        sql(1) = "FROM automovil INNER JOIN tipauto ON automovil.tipo=tipauto.tipo"
-        auto = ReadDB(Nothing, My.Settings.foxConnection, sql)
+        sqlSelect = "SELECT razon, calle, barrio, localidad, provincia, postal,
+						    codigo, incorpora, baja, modelo, peso, marca, motor, chassis,
+						    tipauto.describo as describo, anterior, letrahoy, numerohoy
+                       FROM automovil INNER JOIN tipauto ON automovil.tipo=tipauto.tipo"
+        auto = ReadDB(sqlSelect, My.Settings.foxConnection)
 
-        sql(0) = "SELECT razon, docume, calle, barrio, localidad, provincia, postal,
-						codigo, alta, catastro, ubicacion, frente1, frente2, frente3, frente4,
-						jubilado, baldio"
-        sql(1) = "FROM catastro"
-        catastro = ReadDB(Nothing, My.Settings.foxConnection, sql)
+        sqlSelect = "SELECT razon, docume, calle, barrio, localidad, provincia, postal,
+						    codigo, alta, catastro, ubicacion, frente1, frente2, frente3, frente4,
+						    jubilado, baldio 
+                       FROM catastro"
+        catastro = ReadDB(sqlSelect, My.Settings.foxConnection)
 
-        sql(0) = "SELECT razon, calle, barrio, localidad, provincia, postal,
-						sepevar.tipo as tipo, codigo, alta, ubicacion, numero, fila, sector, lugares,
-						espacio, difunto1, difunto2, difunto3, difunto4, difunto5,
-						difunto6, difunto7, difunto8, difunto9, difunto10, sepelio.jubilado as jubilado"
-        sql(1) = "FROM sepelio INNER JOIN sepevar ON sepelio.tipo=sepevar.orden"
-        sepelio = ReadDB(Nothing, My.Settings.foxConnection, sql)
+        sqlSelect = "SELECT razon, calle, barrio, localidad, provincia, postal,
+						    sepevar.tipo as tipo, codigo, alta, ubicacion, numero, fila, sector, lugares,
+						    espacio, difunto1, difunto2, difunto3, difunto4, difunto5,
+						    difunto6, difunto7, difunto8, difunto9, difunto10, sepelio.jubilado as jubilado 
+                       FROM sepelio INNER JOIN sepevar ON sepelio.tipo=sepevar.orden"
+        sepelio = ReadDB(sqlSelect, My.Settings.foxConnection)
 
-        sql(0) = "SELECT razon, domicilio, localidad, codigo, comact.detalle as detalle, docume,
-						brutos, inscripto, baja, acta"
-        sql(1) = "FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
-        comercio = ReadDB(Nothing, My.Settings.foxConnection, sql)
-
+        sqlSelect = "SELECT razon, domicilio, localidad, codigo, comact.detalle as detalle, docume,
+						    brutos, inscripto, baja, acta 
+                       FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
+        comercio = ReadDB(sqlSelect, My.Settings.foxConnection)
 
     End Sub
     Public Function ValidarCuenta(tipo As String, cuenta As Integer) As DataRow

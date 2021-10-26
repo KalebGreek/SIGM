@@ -45,15 +45,15 @@ Class ModExpediente
     ' > Expediente
     Private Sub save_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles save.Click
         Dim answer As MsgBoxResult
-        Dim sqlUpdate As String()
         If actualizar(grupo_exp.SelectedIndex) = MsgBoxResult.Yes Then
             If temporal.Visible Then
                 answer = MsgBox("¿Desea guardar este expediente temporal bajo el N° " & expediente.Text & "?",
                                 MsgBoxStyle.YesNoCancel, "Guardar Expediente")
                 If answer = MsgBoxResult.Yes Then 'Asignar N° de Expediente y quitar temporal
-                    sqlUpdate.Append("UPDATE oprivadas SET expediente=" & expediente.Text & ", temporal=False
-                                       WHERE id=" & opr_id.Text)
-                    DbMan.EditDB(Nothing, My.Settings.foxConnection, sqlUpdate)
+                    DbMan.EditDB("UPDATE oprivadas 
+                                     SET expediente=" & expediente.Text & ", temporal=False
+                                   WHERE id=" & opr_id.Text,
+                                 My.Settings.foxConnection)
                     Me.Close()
                 End If
             End If
@@ -139,11 +139,10 @@ Class ModExpediente
                 profesional_id.Text = .Current("profesional_id").ToString
 
                 If profesional_id.Text > 0 Then
-                    Using prof As DataTable = Profesional.Seleccionar(profesional_id.Text, 0)
-                        If prof.Rows.Count > 0 Then
-                            CtrlMan.LoadControlData(prof, Panel3)
-                        End If
-                    End Using
+                    Dim drow As DataRow = Profesional.Seleccionar(profesional_id.Text, 0)
+                    If drow Is Nothing = False Then
+                        CtrlMan.LoadControlData(drow, Panel3)
+                    End If
                 Else
                     MsgBox("Profesional no válido.", MsgBoxStyle.Exclamation)
                     profesional_id.Text = 0

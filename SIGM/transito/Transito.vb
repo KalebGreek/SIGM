@@ -89,12 +89,9 @@
 			Return sql
 		End Function
 		Shared Function VerificarBoleta(boleta As Double) As Integer
-			Dim dtab As New DataTable
-			Dim sql(0) As String
-			sql(0) = "SELECT id, boleta FROM multas_historial WHERE boleta=" & boleta
-			dtab = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
-			If dtab.Rows.Count > 0 Then
-				Return CInt(dtab.Rows(0)("id"))
+			Dim drow As DataRow = DbMan.ReadDB("SELECT id, boleta FROM multas_historial WHERE boleta=" & boleta, My.Settings.CurrentDB).Rows(0)
+			If drow Is Nothing = False Then
+				Return CInt(drow("id"))
 			Else
 				Return 0
 			End If
@@ -102,39 +99,32 @@
 
 		'AUX TABLES
 		Shared Function FillArticulo() As DataTable
-			Dim sql(0) As String
-			sql(0) = "SELECT id, articulo, descripcion FROM multas_articulo"
-			Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+			Return DbMan.ReadDB("SELECT id, articulo, descripcion FROM multas_articulo",
+								My.Settings.CurrentDB)
 		End Function
 		Shared Function FillInspector() As DataTable
-			Dim sql(0) As String
-			sql(0) = "SELECT transito_inspector.id as id, razon 
-                        FROM transito_inspector 
-				  INNER JOIN persona ON transito_inspector.persona_id=persona.id"
-			Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+			Return DbMan.ReadDB("SELECT transito_inspector.id as id, razon 
+								   FROM transito_inspector 
+							 INNER JOIN persona ON transito_inspector.persona_id=persona.id",
+								My.Settings.CurrentDB)
 		End Function
 		Shared Function FillTipoVehiculo() As DataTable
-			Dim sql(0) As String
-			sql(0) = "SELECT id, tipo FROM vehiculo_tipo"
-			Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+			Return DbMan.ReadDB("SELECT id, tipo FROM vehiculo_tipo",
+								My.Settings.CurrentDB)
 		End Function
 		Shared Function FillMarcaVehiculo() As DataTable
-			Dim sql(0) As String
-			sql(0) = "SELECT id, marca FROM vehiculo_marca ORDER BY marca"
-			Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+			Return DbMan.ReadDB("SELECT id, marca FROM vehiculo_marca ORDER BY marca",
+								My.Settings.CurrentDB)
 		End Function
 
 		'ABM
 		Shared Function Nueva(boleta As Double) As Integer
-			Dim sqlInsert As String()
-			Dim sqlSelect As String()
-
-			sqlInsert.Append("INSERT INTO multas_historial(boleta, user_id) VALUES(" & boleta & ", " & My.Settings.UserId & ")")
-			DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
-
-			sqlSelect.Append("SELECT id FROM multas_historial WHERE boleta=" & boleta & "
-							   AND user_id=" & My.Settings.UserId)
-			Return CInt(DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sqlSelect).Rows(0)("id"))
+			DbMan.EditDB("INSERT INTO multas_historial(boleta, user_id) 
+							   VALUES(" & boleta & ", " & My.Settings.UserId & ")",
+						 My.Settings.CurrentDB)
+			Return CInt(DbMan.ReadDB("SELECT id FROM multas_historial 
+									   WHERE boleta=" & boleta & " AND user_id=" & My.Settings.UserId,
+									 My.Settings.CurrentDB).Rows(0)("id"))
 
 		End Function
 
@@ -143,7 +133,6 @@
 									multa_id As Integer, boleta As Double, lock As Boolean) As Boolean
 			Dim valid As Boolean = False
 			Dim user_id As Integer = 0
-			Dim sqlUpdate As String()
 
 			If lock Then
 				user_id = My.Settings.UserId
@@ -160,18 +149,20 @@
 					Dim fecha_pago As Date = CDate(.fecha_pago.Value)
 					Dim pago As Boolean = CBool(.pago.Checked)
 
-					sqlUpdate.Append("UPDATE multas_historial 
+					DbMan.EditDB("UPDATE multas_historial 
 									   SET fecha_boleta='" & fecha_boleta & "', inspector_id=" & inspector_id & ",
 										   articulo_id=" & articulo_id & ", observaciones='" & observaciones & "',
 										   ubicacion='" & .ubicacion.Text & "', pago=" & .pago.Checked & ", fecha_pago='" & .fecha_pago.Value & "'
-									 WHERE id=" & multa_id & " AND user_id=" & My.Settings.UserId)
+									 WHERE id=" & multa_id & " AND user_id=" & My.Settings.UserId,
+								 My.Settings.CurrentDB)
 				End With
 			End If
 
 			If CtrlMan.Validate(CObj(persona), persona.ErrorInfo) Then
 				With persona
 					Dim conductor_id As Integer = CInt(.conductor_id.Text)
-					sqlUpdate.Append("UPDATE multas_historial SET conductor_id=" & conductor_id & " WHERE id=" & multa_id)
+					DbMan.EditDB("UPDATE multas_historial SET conductor_id=" & conductor_id & " WHERE id=" & multa_id,
+								 My.Settings.CurrentDB)
 				End With
 			End If
 
@@ -186,31 +177,30 @@
 
 
 					If vehiculo_id > 0 Then
-						sqlUpdate.Append("UPDATE vehiculo
-											 SET vehiculo_tipo_id=" & vehiculo_tipo_id & ", vehiculo_marca_id=" & vehiculo_marca_id & ", 
-												 patente='" & patente & "', mercosur=" & mercosur & ", 
-												 propietario_id=" & propietario_id & "
-										   WHERE id=" & vehiculo_id)
+						DbMan.EditDB("UPDATE vehiculo
+										 SET vehiculo_tipo_id=" & vehiculo_tipo_id & ", vehiculo_marca_id=" & vehiculo_marca_id & ", 
+											 patente='" & patente & "', mercosur=" & mercosur & ", 
+											 propietario_id=" & propietario_id & "
+									   WHERE id=" & vehiculo_id,
+									  My.Settings.CurrentDB)
 
 					Else
-						Dim sqlInsert, sqlSelect As String()
-						sqlInsert(0) = "INSERT INTO vehiculo(vehiculo_tipo_id, vehiculo_marca_id, patente, mercosur, propietario_id)
-								 	   VALUES(" & vehiculo_tipo_id & ", " & vehiculo_marca_id & ",
-											  '" & patente & "', " & mercosur & "," & propietario_id & ")"
-
-						DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
-
-						sqlSelect(0) = "SELECT MAX(id) as vehiculo_id FROM vehiculo"
-						vehiculo_id = CInt(DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sqlSelect).Rows(0)("vehiculo_id"))
-
-						sqlUpdate.Append("UPDATE multas_historial SET vehiculo_id=" & vehiculo_id & " WHERE id=" & multa_id)
+						DbMan.EditDB("INSERT INTO vehiculo(vehiculo_tipo_id, vehiculo_marca_id, patente, mercosur, propietario_id)
+								 		  VALUES(" & vehiculo_tipo_id & ", " & vehiculo_marca_id & ",
+												'" & patente & "', " & mercosur & "," & propietario_id & ")",
+									 My.Settings.CurrentDB)
+						vehiculo_id = CInt(DbMan.ReadDB("SELECT MAX(id) as vehiculo_id FROM vehiculo", My.Settings.CurrentDB).Rows(0)("vehiculo_id"))
 					End If
+
+					DbMan.EditDB("UPDATE multas_historial SET vehiculo_id=" & vehiculo_id & " WHERE id=" & multa_id,
+								 My.Settings.CurrentDB)
 				End With
 			End If
 
-			If sqlUpdate.Length > 0 Then
-				sqlUpdate.Append("UPDATE multas_historial SET boleta=" & boleta & ",  user_id=" & user_id & " WHERE id=" & multa_id)
-				DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlUpdate)
+			If user_id > 0 And multa_id > 0 Then
+				DbMan.EditDB("UPDATE multas_historial SET boleta=" & boleta & ",  user_id=" & user_id & " 
+							   WHERE id=" & multa_id,
+							 My.Settings.CurrentDB)
 				Return True
 			Else
 				Return False
@@ -218,15 +208,15 @@
 		End Function
 
 		Shared Function Eliminar(multa_id As Integer, vehiculo_id As Integer) As Boolean
-			Dim sqlDelete As String()
+			Dim sqlDelete As String
 			If multa_id > 0 Then
 				If vehiculo_id > 0 Then
-					sqlDelete.Append("DELETE FROM vehiculo WHERE id=" & vehiculo_id)
+					sqlDelete = "DELETE FROM vehiculo WHERE id=" & vehiculo_id
 				End If
-				sqlDelete.Append("DELETE FROM multas_historial 
-										WHERE historial_id=" & multa_id & " 
-										  AND (user_id=0 OR user_id=" & My.Settings.UserId & ")")
-				DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlDelete)
+				sqlDelete = "DELETE FROM multas_historial 
+								   WHERE historial_id=" & multa_id & " 
+									 AND (user_id=0 OR user_id=" & My.Settings.UserId & ")"
+				DbMan.EditDB(sqlDelete, My.Settings.CurrentDB)
 				Return True
 			Else
 				Return False

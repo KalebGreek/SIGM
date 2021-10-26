@@ -56,7 +56,7 @@
         sql(1) = "FROM " & var_padron(0)
         sql(2) = "WHERE codigo>0 AND mail LIKE '%@%'"
 
-        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        Dim dtab As DataTable = DbMan.ReadDB(sql, My.Settings.foxConnection)
         CtrlMan.DataGridViewTools.Load(DataView, bs, dtab)
 
     End Sub
@@ -102,8 +102,7 @@
 
         If moroso Then
             'Obtener deuda con mora al día, a 15 días y a 30 días
-            sql(0) = "SELECT mora FROM numeros"
-            dtab_numeros = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+            dtab_numeros = DbMan.ReadDB("SELECT mora FROM numeros", My.Settings.foxConnection)
             valor_mora = Replace((dtab_numeros.Rows(0)("mora") / 30) / 100, ",", ".")
 
             sql(0) = "SELECT " & id_servicio & "*1000000+" & tabla_deuda & ".codigo as NroCliente,{" & vence_mora & "} as Vto1, 
@@ -114,7 +113,7 @@
             sql(2) = "WHERE " & tabla_deuda & ".codigo>0 AND " & importe1 & ">0 AND " & vence_original & "<DATE() 
                     AND " & pagado & "=0 AND " & tabla_padron & ".mail LIKE '%@%'"
             sql(3) = "GROUP BY " & tabla_deuda & ".codigo"
-            dtab_mora = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+            dtab_mora = DbMan.ReadDB(sql, My.Settings.foxConnection)
 
             If dtab_mora Is Nothing = False Then
                 dtab_total = dtab_mora
@@ -127,7 +126,7 @@
             'No se sobrescribe la fecha de deudas no vencidas
             sql(2) = "WHERE " & tabla_deuda & ".codigo>0 AND " & importe1 & ">0 AND " & vence_original & "=>DATE() 
                     AND " & pagado & "=0 AND " & tabla_padron & ".mail LIKE '%@%'"
-            dtab_corriente = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+            dtab_corriente = DbMan.ReadDB(sql, My.Settings.foxConnection)
 
             If dtab_corriente Is Nothing = False Then
                 dtab_total = dtab_corriente

@@ -556,11 +556,9 @@ Class CtrlMan 'Control Manager
         End Function
 
         Shared Sub GetCities(ByRef CityList As ComboBox, ByRef bs As BindingSource, State As Integer)
-            Dim sql(5) As String
-            sql(0) = "SELECT * FROM localidades WHERE provincia_id=" & State & " ORDER BY nombre"
-
             CityList.BeginUpdate()
-            bs.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+            bs.DataSource = DbMan.ReadDB("SELECT * FROM localidades WHERE provincia_id=" & State & " ORDER BY nombre",
+                                         My.Settings.CurrentDB)
 
             CityList.DataSource = bs
             CityList.DisplayMember = "nombre"
@@ -618,10 +616,8 @@ Class CtrlMan 'Control Manager
         Shared Sub GetStates(ByRef StateList As ComboBox, ByRef bs As BindingSource)
             Dim sql(5) As String
             If My.Settings.CurrentDB <> "" Then
-                sql(0) = "SELECT * FROM provincias ORDER BY nombre"
-
                 StateList.BeginUpdate()
-                bs.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+                bs.DataSource = DbMan.ReadDB("SELECT * FROM provincias ORDER BY nombre", My.Settings.CurrentDB)
                 StateList.DataSource = bs
                 StateList.DisplayMember = "nombre"
                 StateList.ValueMember = "id"

@@ -54,22 +54,21 @@
         Dim valido As Boolean = True
         Dim msg As String = ""
         Dim dtab As New DataTable
-        Dim sql(0) As String
+        Dim sqlSelect As String
 
         If codigo >= 11899 Or ordenanza_id > 0 Then
-
             If ordenanza_id > 0 Then
-                sql(0) = "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id
+                sqlSelect = "SELECT id, codigo FROM ordenanza WHERE id=" & ordenanza_id
             Else
-                sql(0) = "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo
+                sqlSelect = "SELECT id, codigo FROM ordenanza WHERE codigo=" & codigo
             End If
 
-            dtab = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+            dtab = DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB)
 
             If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then
                     If dtab.Rows.Count = 1 And ordenanza_id > 0 Then
-                        If ordenanza_id = dtab.Rows(0)("id") Then
+                        If ordenanza_id = dtab.Rows(0)("id").ToString Then
                             'Editar
                         Else
                             'Mal cargado
@@ -105,15 +104,16 @@
 
     ' GUARDAR 
     Private Sub guardar()
+        Dim sqlInsert As String
         If Val(ordenanza_id.Text) > -1 Then 'Mod
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB,
-                    "UPDATE ordenanza SET fecha='" & fecha.Text & "', concepto='" & concepto.Text & "',
-                     ruta_copia='" & ruta_doc.Text & "'")
+            sqlInsert = "UPDATE ordenanza 
+                            SET fecha='" & fecha.Text & "', concepto='" & concepto.Text & "',
+                                ruta_copia='" & ruta_doc.Text & "'"
         Else 'Nueva
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB,
-                    "INSERT INTO ordenanza(codigo, fecha, concepto, ruta_copia)
-                     VALUES(" & Val(codigo.Text) & ", '" & fecha.Text & "',
-                    '" & concepto.Text & "', '" & ruta_doc.Text & "')")
+            sqlInsert = "INSERT INTO ordenanza(codigo, fecha, concepto, ruta_copia)
+                              VALUES(" & Val(codigo.Text) & ", '" & fecha.Text & "',
+                                     '" & concepto.Text & "', '" & ruta_doc.Text & "')"
         End If
+        DbMan.EditDB(sqlInsert, My.Settings.CurrentDB)
     End Sub
 End Class

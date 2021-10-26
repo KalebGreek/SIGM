@@ -38,9 +38,7 @@
             If .vista.SelectedIndex > -1 Then
                 .filtro.DataSource = Nothing
                 If .vista.Text = "PROPIETARIO" Then
-                    Dim sql(0) As String
-                    sql(0) = "SELECT * FROM catastro"
-                    Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+                    Dim dtab As DataTable = DbMan.ReadDB("SELECT * FROM catastro", My.Settings.foxConnection)
                     If dtab Is Nothing = False Then
                         bs_resultado = New BindingSource
                         bs_resultado.DataSource = dtab

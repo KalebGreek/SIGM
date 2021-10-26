@@ -5,21 +5,18 @@ Class calcTMuniMensura
 
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles Me.Load
         If Me.Visible Then
-            Dim sql(1) As String
-            Dim dtab As DataTable
-            sql(0) = "SELECT valor"
-            sql(1) = "FROM opr_tasa_mensura WHERE articulo='953'"
-            dtab = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+            Dim dtab As DataTable = DbMan.ReadDB("SELECT valor FROM opr_tasa_mensura WHERE articulo='953'",
+                                                 My.Settings.CurrentDB)
 
             ad_agua_corriente = CDec(dtab.Rows(0)("valor"))
 
-            sql(0) = "SELECT id as tasa_mensura_id, articulo, valor, descripcion"
-            sql(1) = "FROM opr_tasa_mensura"
-            bs_tasa_mensura.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql, "opr_tasa_mensura")
+            bs_tasa_mensura.DataSource = DbMan.ReadDB("SELECT id as tasa_mensura_id, articulo, valor, descripcion 
+                                                         FROM opr_tasa_mensura",
+                                                     My.Settings.CurrentDB, "opr_tasa_mensura")
 
-            sql(0) = "SELECT id as zona_id, item"
-            sql(1) = "FROM opr_zona_inmueble"
-            bs_zona.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql, "opr_zona_inmueble")
+            bs_zona.DataSource = DbMan.ReadDB("SELECT id as zona_id, item FROM opr_zona_inmueble",
+                                              My.Settings.CurrentDB, "opr_zona_inmueble")
+
             CtrlMan.Fill.SetAutoComplete(zona_inmueble, bs_zona, "item", "zona_id")
         End If
     End Sub

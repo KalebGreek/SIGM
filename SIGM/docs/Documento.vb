@@ -13,16 +13,16 @@
 
     Class Persona
         Shared Function BuscarDoc(PersonaId As Integer, Optional TipoArchivo As String = "", Optional SoloRuta As Boolean = False) As Object
-            Dim sql(5) As String
-            sql(0) = "SELECT id, descripcion, fecha, ruta"
-            sql(1) = " FROM per_documento"
-            sql(2) = " WHERE persona_id=" & PersonaId
+            Dim sqlSelect As String
+            sqlSelect = "SELECT id, descripcion, fecha, ruta"
+            sqlSelect += " FROM per_documento"
+            sqlSelect += " WHERE persona_id=" & PersonaId
             If TipoArchivo <> "" Then
-                sql(2) += " AND descripcion='" & TipoArchivo & "'"
+                sqlSelect += " AND descripcion='" & TipoArchivo & "'"
             End If
-            sql(3) = " ORDER BY fecha ASC"
+            sqlSelect += " ORDER BY fecha ASC"
 
-            Return ConsultarHistorial(sql, SoloRuta)
+            Return ConsultarHistorial(sqlSelect, SoloRuta)
         End Function
         Shared Function CopiaCuil(ByVal cuil As Double) As String
             titulo = "Buscar Copia de DNI / CUIL | CUIL N° " & cuil
@@ -32,32 +32,25 @@
             Return cuil & destino
         End Function
         Shared Function CopiaActa(ByVal persona_id As Integer, ByVal acta As String, ByVal libro As String) As String
-            Dim sql(3) As String
-            sql(0) = "SELECT cuil, razon"
-            sql(1) = "FROM persona"
-            sql(2) = "WHERE id=" & persona_id
-
-            Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+            Dim dtab As DataTable = DbMan.ReadDB("SELECT cuil, razon FROM persona WHERE id=" & persona_id,
+                                                 My.Settings.CurrentDB)
 
             If dtab.Rows.Count > 0 Then
                 If acta > 0 And libro > 0 Then
-                    sql(0) = "SELECT *"
-                    sql(1) = "FROM actas"
-                    sql(2) = "WHERE acta=" & acta & " And libro=" & libro
-
-                    Dim dtab_acta = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+                    Dim dtab_acta = DbMan.ReadDB("SELECT * FROM actas WHERE acta=" & acta & " And libro=" & libro, My.Settings.CurrentDB)
                     If dtab_acta.Rows.Count > 0 Then
-                        If dtab_acta.Rows(0)("per_id") <> persona_id Then
-                            MsgBox("El acta N." & acta & " del libro N." & libro & " no corresponde a " & dtab.Rows(0)("razon"))
+                        If dtab_acta.Rows(0)("per_id").ToString <> persona_id Then
+                            MsgBox("El acta N." & acta & " del libro N." & libro & " no corresponde a " & dtab.Rows(0)("razon").ToString)
                             Return ""
                         End If
                     End If
-                    titulo = "Buscar Acta N° " & acta & " del libro N°" & libro & " | CUIL N° " & dtab.Rows(0)("cuil")
+                    titulo = "Buscar Acta N° " & acta & " del libro N°" & libro & " | CUIL N° " & dtab.Rows(0)("cuil").ToString
                     destino = "\acta[" & acta & "]_libro[" & libro & "].pdf"
                     'Muestra diálogo de búsqueda
-                    destino = Cargar(My.Settings.DocFolderPersona & dtab.Rows(0)("cuil"), destino, titulo, True)
-                    Return dtab.Rows(0)("cuil") & "\ACTAS" & destino
+                    destino = Cargar(My.Settings.DocFolderPersona & dtab.Rows(0)("cuil").ToString, destino, titulo, True)
+                    Return dtab.Rows(0)("cuil").ToString & "\ACTAS" & destino
                 Else
+
                     MsgBox("Debe indicar número de acta y libro antes de continuar.")
                     Return ""
                 End If
@@ -76,17 +69,14 @@
     End Class
     Class Catastro
         Shared Function BuscarDoc(catastro_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
-            Dim sql(5) As String
-            sql(0) = "SELECT id, descripcion, fecha, ruta"
-            sql(1) = " FROM cat_documento"
-
-            sql(2) = " WHERE catastro_id=" & catastro_id
+            Dim sqlSelect As String
+            sqlSelect = "SELECT id, descripcion, fecha, ruta FROM cat_documento WHERE catastro_id=" & catastro_id
             If tipo_archivo <> "" Then
-                sql(2) += " And descripcion='" & tipo_archivo & "'"
+                sqlSelect &= " And descripcion='" & tipo_archivo & "'"
             End If
-            sql(3) = " ORDER BY fecha ASC"
+            sqlSelect &= " ORDER BY fecha ASC"
 
-            Return ConsultarHistorial(sql, solo_ruta)
+            Return ConsultarHistorial(sqlSelect, solo_ruta)
         End Function
         Shared Function CargarCopia(TipoArchivo As String, cat As String) As String
             Dim ruta As String = ""
@@ -125,16 +115,16 @@
     End Class
     Class Comercio
         Shared Function BuscarDoc(id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
-            Dim sql(5) As String
-            sql(0) = "SELECT id, descripcion, fecha, ruta"
-            sql(1) = " FROM com_documento"
-            sql(2) = " WHERE com_id=" & id
+            Dim sqlSelect As String
+            sqlSelect = "SELECT id, descripcion, fecha, ruta"
+            sqlSelect += " FROM com_documento"
+            sqlSelect += " WHERE com_id=" & id
             If tipo_archivo <> "" Then
-                sql(2) += " AND descripcion='" & tipo_archivo & "'"
+                sqlSelect += " AND descripcion='" & tipo_archivo & "'"
             End If
-            sql(3) = " ORDER BY fecha ASC"
+            sqlSelect += " ORDER BY fecha ASC"
 
-            Return ConsultarHistorial(sql, solo_ruta)
+            Return ConsultarHistorial(sqlSelect, solo_ruta)
         End Function
     End Class
     Class Gobierno
@@ -151,30 +141,30 @@
     End Class
     Class Hacienda
         Shared Function BuscarDoc(id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
-            Dim sql(5) As String
-            sql(0) = "SELECT id, descripcion, fecha, ruta"
-            sql(1) = " FROM hac_documento"
-            sql(2) = " WHERE =" & id
+            Dim sqlSelect As String
+            sqlSelect = "SELECT id, descripcion, fecha, ruta"
+            sqlSelect += " FROM hac_documento"
+            sqlSelect += " WHERE =" & id
             If tipo_archivo <> "" Then
-                sql(2) += " AND descripcion='" & tipo_archivo & "'"
+                sqlSelect += " AND descripcion='" & tipo_archivo & "'"
             End If
-            sql(3) = " ORDER BY fecha ASC"
+            sqlSelect += " ORDER BY fecha ASC"
 
-            Return ConsultarHistorial(sql, solo_ruta)
+            Return ConsultarHistorial(sqlSelect, solo_ruta)
         End Function
     End Class
     Class OPrivadas
         Shared Function BuscarDoc(opr_id As Integer, Optional tipo_archivo As String = "", Optional solo_ruta As Boolean = False) As Object
-            Dim sql(5) As String
-            sql(0) = "SELECT id, descripcion, fecha, ruta"
-            sql(1) = " FROM opr_documento"
-            sql(2) = " WHERE opr_id=" & opr_id
+            Dim sqlSelect As String
+            sqlSelect = "SELECT id, descripcion, fecha, ruta"
+            sqlSelect += " FROM opr_documento"
+            sqlSelect += " WHERE opr_id=" & opr_id
             If tipo_archivo <> "" Then
-                sql(2) += " AND descripcion='" & tipo_archivo & "'"
+                sqlSelect += " AND descripcion='" & tipo_archivo & "'"
             End If
-            sql(3) = " ORDER BY fecha ASC"
+            sqlSelect += " ORDER BY fecha ASC"
 
-            Return ConsultarHistorial(sql, solo_ruta)
+            Return ConsultarHistorial(sqlSelect, solo_ruta)
         End Function
 
         Shared Function CargarFinalObra(opr_id As Integer, exp As String) As String
@@ -190,8 +180,8 @@
         End Function
     End Class
 
-    Private Shared Function ConsultarHistorial(sql As String(), RutaDoc As Boolean) As Object
-        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+    Private Shared Function ConsultarHistorial(sql As String, RutaDoc As Boolean) As Object
+        Dim dtab As DataTable = DbMan.ReadDB(sql, My.Settings.CurrentDB)
 
         If RutaDoc Then
             Return dtab.Rows(0)("ruta").ToString
@@ -260,44 +250,43 @@
         'Guarda una ruta de documento en una tabla
         'Todas las tablas de documentos deben contener las mismas columnas:
         'FOO_ID, FECHA, DESCRIPCION, RUTA
-        Dim sqlInsert, sqlSelect, sqlUpdate As String()
-        sqlSelect.Append("SELECT *")
-        sqlSelect.Append("FROM " & tabla)
-        sqlSelect.Append("WHERE " & col_id & "=" & id & " And descripcion='" & descripcion & "'")
 
-        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sqlSelect)
+        Dim dtab As DataTable = DbMan.ReadDB("SELECT * FROM " & tabla & " WHERE " & col_id & "=" & id & " And descripcion='" & descripcion & "'",
+                                             My.Settings.CurrentDB)
         If dtab.Rows.Count > 0 Then
+            Dim sqlUpdate(dtab.Rows.Count) As String
             For Each dr As DataRow In dtab.Rows
-                sqlUpdate.Append("UPDATE " & tabla & " 
-                                     SET fecha='" & fecha.ToShortDateString & "', ruta='" & ruta & "'
-								   WHERE " & col_id & "=" & id & " AND  descripcion='" & descripcion & "'")
+                sqlUpdate(dtab.Rows.IndexOf(dr)) = "UPDATE " & tabla & " 
+                                                       SET fecha='" & fecha.ToShortDateString & "', ruta='" & ruta & "'
+							                         WHERE " & col_id & "=" & id & " AND  descripcion='" & descripcion & "'"
 
             Next
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlUpdate)
+            DbMan.EditDB(sqlUpdate, My.Settings.CurrentDB)
         Else
-            sqlInsert.Append("INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)
-								   VALUES(" & id & ", #" & fecha & "# ,'" & descripcion & "', '" & ruta & "')")
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
+            DbMan.EditDB("INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)
+							   VALUES(" & id & ", #" & fecha & "# ,'" & descripcion & "', '" & ruta & "')",
+                         My.Settings.CurrentDB)
         End If
     End Sub
     Overloads Shared Sub Guardar(lista As DataTable, tabla As String, col_id As String, id As Integer)
         'Guarda una lista de rutas de documento a una tabla
         If lista.Rows.Count > 0 Then
-            Dim sqlInsert As String()
+            Dim sqlInsert(lista.Rows.Count) As String
             For Each dr As DataRow In lista.Rows
-                sqlInsert.Append("INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)" &
-                                     " VALUES(" & id & ", #" & dr("fecha").ToString & "# ,'" & dr("descripcion").ToString & "'," &
-                                              " '" & dr("ruta").ToString & "')")
+                sqlInsert(lista.Rows.IndexOf(dr)) = "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)
+                                                          VALUES(" & id & ", #" & dr("fecha").ToString & "# ,'" & dr("descripcion").ToString & "',
+                                                                 '" & dr("ruta").ToString & "')"
 
             Next
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
+            DbMan.EditDB(sqlInsert, My.Settings.CurrentDB)
         End If
     End Sub
     Shared Sub Limpiar(tabla As String, col_id As String, id As Integer, Optional tipo_archivo As String = "")
-        Dim sql As String = "DELETE * FROM " & tabla & " WHERE " & col_id & "=" & id
+        Dim sqlDelete As String = "DELETE * FROM " & tabla & " WHERE " & col_id & "=" & id
         If tipo_archivo <> "" Then
-            sql += " AND descripcion='" & tipo_archivo & "'"
+            sqlDelete += " AND descripcion='" & tipo_archivo & "'"
         End If
-        DbMan.EditDB(Nothing, My.Settings.CurrentDB, sql)
+        DbMan.EditDB(sqlDelete, My.Settings.CurrentDB)
     End Sub
 End Class
+

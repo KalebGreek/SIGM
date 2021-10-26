@@ -6,24 +6,23 @@
 
 				If dtab Is Nothing = False Then
 					'Zonas
-					sql(0) = "SELECT * FROM aguzona ORDER BY tipo"
-					dtab(0) = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+					dtab(0) = DbMan.ReadDB("SELECT * FROM aguzona ORDER BY tipo", My.Settings.foxConnection)
 
 					'Vencimientos
-					sql(0) = "SELECT * FROM aguvence
-								WHERE periodo=" & periodo
-					dtab(1) = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+					dtab(1) = DbMan.ReadDB("SELECT * FROM aguvence WHERE periodo=" & periodo,
+										   My.Settings.foxConnection)
 
 					'Cuentas
-					sql(0) = "SELECT codigo, tipo, cantidad
-								FROM aguas WHERE codigo=>" & CuentaInicial & " ORDER BY codigo"
-					dtab(2) = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+					dtab(2) = DbMan.ReadDB("SELECT codigo, tipo, cantidad
+											  FROM aguas WHERE codigo=>" & CuentaInicial & " 
+										  ORDER BY codigo",
+										   My.Settings.foxConnection)
 
 					'Deudas
-					sql(0) = "SELECT * FROM agucue 
-								WHERE codigo=>" & CuentaInicial & " AND periodo=" & periodo & "
-								ORDER BY codigo"
-					dtab(3) = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+					dtab(3) = DbMan.ReadDB("SELECT * FROM agucue 
+											 WHERE codigo=>" & CuentaInicial & " AND periodo=" & periodo & "
+										  ORDER BY codigo",
+										   My.Settings.foxConnection)
 				End If
 				Return dtab
 			End Function
@@ -68,16 +67,13 @@
 		End Class
 		Public Class Catastro
 			Shared Function CargarTablas(dtab As DataTable(), periodo As Integer, CuentaInicial As Integer) As DataTable()
-				Dim sql(2) As String
+				Dim sqlSelect As String
 
 				'Vencimientos
-				sql(0) = "SELECT * "
-				sql(1) = "FROM catvence"
-				sql(2) = "WHERE periodo=" & periodo
-				dtab(0) = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+				dtab(0) = DbMan.ReadDB("SELECT * FROM catvence WHERE periodo=" & periodo, My.Settings.foxConnection)
 
 				'Cuentas
-				sql(0) = "SELECT catastro.codigo As codigo, catastro.jubilado As jubilado,
+				sqlSelect = "SELECT catastro.codigo As codigo, catastro.jubilado As jubilado,
 								catastro.baldio As baldio, catastro.pasillo As pasillo,
 								catastro.agrario As agrario, catastro.comercial as comercial,
 								catastro.vereda as vereda, catastro.parque as parque,
@@ -95,15 +91,15 @@
 								catzona.vereda as desc_vereda, catzona.parque as desc_parque,
 								catzona.alumbrado_minimo, catzona.alumbrado_basico"
 
-				sql(1) = "FROM catastro JOIN catzona On catastro.zona1=catzona.zona"
-				sql(2) = "WHERE catastro.codigo=>" & CuentaInicial & " ORDER BY catastro.codigo"
+				sqlSelect &= "FROM catastro JOIN catzona On catastro.zona1=catzona.zona"
+				sqlSelect &= "WHERE catastro.codigo=>" & CuentaInicial & " ORDER BY catastro.codigo"
 
-				dtab(1) = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+				dtab(1) = DbMan.ReadDB(sqlSelect, My.Settings.foxConnection)
 
-				sql(0) = "SELECT codigo, agrupado, mes, periodo"
-				sql(1) = "FROM catcue"
-				sql(2) = "WHERE codigo=>" & CuentaInicial & " AND periodo=" & periodo & " AND agrupado=''"
-				dtab(2) = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+				sqlSelect = "SELECT codigo, agrupado, mes, periodo"
+				sqlSelect &= "FROM catcue"
+				sqlSelect &= "WHERE codigo=>" & CuentaInicial & " AND periodo=" & periodo & " AND agrupado=''"
+				dtab(2) = DbMan.ReadDB(sqlSelect, My.Settings.foxConnection)
 
 				Return dtab
 			End Function
@@ -163,7 +159,7 @@
 		Public Class Comercio
 			Shared Function VerificarCuota(registro As DataRow, cuota As Integer, deudas As DataTable) As Boolean
 
-				Dim result As DataRow() = deudas.Select("codigo=" & registro("codigo") & " AND bimestre=" & cuota)
+				Dim result As DataRow() = deudas.Select("codigo=" & registro("codigo").ToString & " AND bimestre=" & cuota)
 
 				Return result.Any = 0
 			End Function
@@ -180,7 +176,7 @@
 		End Class
 		Public Class Sepelio
 			Shared Function VerificarCuota(registro As DataRow, periodo As Integer, deudas As DataTable) As Boolean
-				Dim result As DataRow() = deudas.Select("codigo=" & registro("codigo") & " AND agrupado='' AND mes=1
+				Dim result As DataRow() = deudas.Select("codigo=" & registro("codigo").ToString & " AND agrupado='' AND mes=1
 														 AND periodo=" & periodo)
 
 				Return result.Any = 0
@@ -188,7 +184,7 @@
 			Shared Function InsertarCuota(registro As DataRow, periodo As Integer, importe As Decimal, vence As Date) As String
 				Return "INSERT INTO sepecue(tipo, mes, agrupado, periodo, codigo, 
 												cedulon, importe, original, vencio, pagado, pago)
-										 VALUES('A', 1, ''," & periodo & ", " & registro("codigo") & ",
+										 VALUES('A', 1, ''," & periodo & ", " & registro("codigo").ToString & ",
 												 0, " & importe & ", " & importe & ", {" & vence & "}, 0, {})"
 
 			End Function

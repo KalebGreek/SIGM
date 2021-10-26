@@ -70,7 +70,7 @@
 		Sql(0) = "SELECT MAX(codigo) as ultimo"
 		Sql(1) = "FROM contrato"
 		Sql(2) = "WHERE seccion='" & seccion.Text & "'"
-		Dim dr As DataRow = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, Sql)(0)
+		Dim dr As DataRow = DbMan.ReadDB(Sql, My.Settings.CurrentDB).Rows(0)
 		If dr("ultimo") Is DBNull.Value = False Then
 			contrato_id = CInt(dr("ultimo")) + 1
 		End If
@@ -114,7 +114,7 @@
 												 " & BSAutoridad1.Current("empleado_id").ToString & ", " & BSAutoridad2.Current("empleado_id").ToString & ",
 												'" & seccion.Text & "', " & My.Settings.UserId & ")")
 
-					DbMan.EditDB(Nothing, Nothing, sqlInsert)
+					DbMan.EditDB(sqlInsert, My.Settings.CurrentDB)
 				End If
 				Me.Close()
 			End If

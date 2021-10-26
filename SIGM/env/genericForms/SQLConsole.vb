@@ -32,8 +32,8 @@
 
 
     Private Sub TableList_DoubleClick() Handles TableList.DoubleClick
-        If TableList.SelectedItem <> "" Then
-            query.Text = "SELECT * FROM " & TableList.SelectedItem
+        If TableList.SelectedItem.ToString <> "" Then
+            query.Text = "SELECT * FROM " & TableList.SelectedItem.ToString
             ExecuteQuery(query.Text)
         End If
     End Sub

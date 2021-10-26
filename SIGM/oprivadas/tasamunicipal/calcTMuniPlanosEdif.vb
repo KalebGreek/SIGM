@@ -5,11 +5,10 @@ Class calcTMuniPlanosEdif
 
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles Me.Load
         If Me.Visible Then
-            Dim sql(1) As String
 
-            sql(0) = "SELECT id as tasa_edificacion_id, articulo, valor, descripcion"
-            sql(1) = "FROM opr_tasa_edificacion"
-            bs_tasa_edificacion.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql, "opr_tasa_edificacion")
+            bs_tasa_edificacion.DataSource = DbMan.ReadDB("SELECT id as tasa_edificacion_id, articulo, valor, descripcion 
+                                                             FROM opr_tasa_edificacion",
+                                                          My.Settings.CurrentDB, "opr_tasa_edificacion")
 
             basico = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "basico"))("valor")
             ad_sismico = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "85b"))("valor")
@@ -18,10 +17,9 @@ Class calcTMuniPlanosEdif
             linea_muni2 = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "93b"))("valor")
             ad_linea_muni = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "93c"))("valor")
 
-            sql(0) = "SELECT id as tasa_edificacion_id, articulo, valor*alicuota as indice, descripcion"
-            sql(1) = "FROM opr_tasa_edificacion WHERE visible=True ORDER BY descripcion"
-
-            bs_indice_inmueble.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql, "opr_indice_inmueble")
+            bs_indice_inmueble.DataSource = DbMan.ReadDB("SELECT id as tasa_edificacion_id, articulo, valor*alicuota as indice, descripcion
+                                                            FROM opr_tasa_edificacion WHERE visible=True ORDER BY descripcion",
+                                                        My.Settings.CurrentDB, "opr_indice_inmueble")
             Dim ctrl As New ctrlAddInmuebleEdificacion(bs_indice_inmueble.DataSource, False)
             lista_edificacion.Controls.Add(ctrl)
             AddHandler ctrl.manage_edificacion, AddressOf manage_edificacion

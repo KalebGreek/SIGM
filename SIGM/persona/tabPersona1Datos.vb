@@ -14,12 +14,11 @@
         If PersonaId > 0 Then
             Dim genero As Integer = 0
             Dim valor_cuil As Double = 0
-            Dim sql(0) As String
-            sql(0) = "SELECT id as persona_id, razon, cuil  FROM persona WHERE id=" & PersonaId
-            Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+            Dim drow As DataRow = DbMan.ReadDB("SELECT id as persona_id, razon, cuil  FROM persona WHERE id=" & PersonaId,
+                                                My.Settings.CurrentDB).Rows(0)
 
-            razon.Text = dtab.Rows(0)("razon").ToString
-            valor_cuil = CDbl(dtab.Rows(0)("cuil"))
+            razon.Text = drow("razon").ToString
+            valor_cuil = CDbl(drow("cuil").ToString)
             If valor_cuil > 20000000000 Then
                 genero = Val(Microsoft.VisualBasic.Left(valor_cuil, 2))
                 If genero > 27 Then
@@ -29,7 +28,7 @@
                 ElseIf genero > 0 Then
                     gen.Text = "Masculino"
                 End If
-                dni.Text = Microsoft.VisualBasic.Mid(dtab.Rows(0)("cuil"), 3, 8)
+                dni.Text = Microsoft.VisualBasic.Mid(drow("cuil").ToString, 3, 8)
                 cuil.Text = valor_cuil
             Else
                 dni.Text = valor_cuil
@@ -40,9 +39,7 @@
     Public Function guardar() As Integer
         'Buscar duplicado de CUIL/CUIT
         Dim dtab As DataTable
-        Dim sqlSelect As String()
-        sqlSelect.Append("SELECT id, razon FROM persona WHERE cuil=" & cuil.Text)
-        dtab = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sqlSelect)
+        dtab = DbMan.ReadDB("SELECT id, razon FROM persona WHERE cuil=" & cuil.Text, My.Settings.CurrentDB)
         If dtab.Rows.Count > 0 Then
             ErrorInfo.SetToolTip(cuil, "Este CUIL/CUIT pertenece a " & dtab.Rows(0)("id") & "-" & dtab.Rows(0)("razon"))
             cuil.BackColor = Color.MistyRose
@@ -51,21 +48,19 @@
             cuil.BackColor = SystemColors.Window
         End If
         If CtrlMan.Validate(Me, ErrorInfo) Then
-            Dim sqlInsert, sqlUpdate As String()
             Dim fisica As Boolean = gen.Text <> "N/A"
             If PersonaId > 0 Then
-                sqlUpdate.Append("UPDATE persona 
-                                     SET razon='" & razon.Text & "', cuil=" & cuil.Text & ", fisica=" & fisica & "
-							       WHERE id=" & PersonaId)
-                DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlUpdate)
+                DbMan.EditDB("UPDATE persona 
+                                 SET razon='" & razon.Text & "', cuil=" & cuil.Text & ", fisica=" & fisica & "
+							   WHERE id=" & PersonaId,
+                             My.Settings.CurrentDB)
             Else
-                sqlInsert.Append("INSERT INTO persona(razon, cuil, fisica)
-							           VALUES('" & razon.Text & "','" & cuil.Text & "'," & fisica & ")")
-                DbMan.EditDB(Nothing, My.Settings.CurrentDB, sqlInsert)
+                DbMan.EditDB("INSERT INTO persona(razon, cuil, fisica)
+					               VALUES('" & razon.Text & "','" & cuil.Text & "'," & fisica & ")",
+                             My.Settings.CurrentDB)
                 'Next query could be replaced by OUTPUT insert.id
 
-                sqlSelect(0) = "SELECT MAX(id) as id FROM persona"
-                PersonaId = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sqlSelect).Rows(0)("id") 'Last insert
+                PersonaId = DbMan.ReadDB("SELECT MAX(id) as id FROM persona", My.Settings.CurrentDB).Rows(0)("id") 'Last insert
             End If
         End If
         Return PersonaId

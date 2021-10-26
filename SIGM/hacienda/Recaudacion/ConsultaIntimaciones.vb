@@ -89,7 +89,7 @@ Public Class ConsultaIntimaciones
 
             sql(4) = "ORDER BY " & tabla_persona & ".razon"
 
-            dtab = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+            dtab = DbMan.ReadDB(sql, My.Settings.foxConnection)
             If dtab.Rows.Count > 0 Then
                 If clearFilter Then
                     .bsCustomFilter = ""

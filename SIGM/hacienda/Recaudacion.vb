@@ -105,7 +105,7 @@
         End If
 
         'MsgBox(SQLSelect & SQLTable & SQLWhere)
-        consulta = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        consulta = DbMan.ReadDB(sql, My.Settings.foxConnection)
         progreso.Value = 10
         Return consulta
     End Function

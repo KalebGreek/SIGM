@@ -20,40 +20,35 @@
             End If
         End If
         sql(3) = " ORDER By Persona.razon"
-        Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        Return DbMan.ReadDB(sql, My.Settings.CurrentDB)
     End Function
 
-    Shared Function Seleccionar(empleado_id As Integer, persona_id As Integer) As DataTable
-        Dim sql(2) As String
-        sql(0) = SelectSQL
-        sql(1) = TableSQL
+    Shared Function Seleccionar(empleado_id As Integer, persona_id As Integer) As DataRow
+        Dim sqlSelect As String
         If empleado_id > 0 Then
-            sql(2) += " WHERE empleado.id=" & empleado_id
+            sqlSelect = " WHERE empleado.id=" & empleado_id
         Else
-            sql(2) += " WHERE persona.id=" & persona_id
+            sqlSelect = " WHERE persona.id=" & persona_id
         End If
-        Return DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        Return DbMan.ReadDB(SelectSQL & TableSQL & sqlSelect, My.Settings.CurrentDB).Rows(0)
     End Function
 
     Shared Function guardar(empleado_id As Integer, ByVal persona_id As Integer, alta As Date, jerarquia As String) As Integer
         If empleado_id <> 0 Then
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB,
-                            "UPDATE empleado SET persona_id=" & persona_id & ", alta='" & alta & "',
-							        jerarquia='" & jerarquia & "'
-							  WHERE id=" & empleado_id)
+            DbMan.EditDB("UPDATE empleado 
+                             SET persona_id=" & persona_id & ", alta='" & alta & "', jerarquia='" & jerarquia & "'
+						   WHERE id=" & empleado_id,
+                         My.Settings.CurrentDB)
         Else
-            DbMan.EditDB(Nothing, My.Settings.CurrentDB,
-                            "INSERT INTO empleado(persona_id, alta, jerarquia) 
-								 VALUES(" & persona_id & ", '" & alta & "', '" & jerarquia & "')")
+            DbMan.EditDB("INSERT INTO empleado(persona_id, alta, jerarquia) 
+							   VALUES(" & persona_id & ", '" & alta & "', '" & jerarquia & "')",
+                         My.Settings.CurrentDB)
 
-            Dim sql(0) As String
-            sql(0) = "SELECT MAX(id) as id FROM empleado WHERE persona_id=" & persona_id
-            empleado_id = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql).Rows(0)("id")
+            empleado_id = DbMan.ReadDB("SELECT MAX(id) as id FROM empleado WHERE persona_id=" & persona_id, My.Settings.CurrentDB).Rows(0)("id")
         End If
         Return empleado_id
     End Function
-    Shared Function eliminar(ByVal empleado_id As Integer) As Integer
-        DbMan.EditDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM empleado WHERE id=" & empleado_id)
-        Return 0
+    Shared Function eliminar(ByVal empleado_id As Integer) As Boolean
+        Return DbMan.EditDB("DELETE * FROM empleado WHERE id=" & empleado_id, My.Settings.CurrentDB)
     End Function
 End Class

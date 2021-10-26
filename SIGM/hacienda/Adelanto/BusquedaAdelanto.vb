@@ -19,12 +19,11 @@
 			If .vista.SelectedIndex > -1 Then
 				.filtro.DataSource = Nothing
 				If .vista.Text = "ADELANTO" Then
-					Dim sql(0) As String
-					sql(0) = "SELECT hac_adelanto.id as id, persona.razon, persona.cuil, 
-								     hac_adelanto.persona_id, hac_adelanto.fecha, hac_adelanto.monto,
-								     persona.email, persona.telefono										 
-							 FROM hac_adelanto INNER JOIN persona ON hac_adelanto.persona_id=persona.id"
-					bs_resultado.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+					bs_resultado.DataSource = DbMan.ReadDB("SELECT hac_adelanto.id as id, persona.razon, persona.cuil, 
+																   hac_adelanto.persona_id, hac_adelanto.fecha, hac_adelanto.monto,
+																   persona.email, persona.telefono										 
+															  FROM hac_adelanto INNER JOIN persona ON hac_adelanto.persona_id=persona.id",
+														   My.Settings.CurrentDB)
 				End If
 
 				If bs_resultado.Count > 0 Then
@@ -52,7 +51,7 @@
 		ElseIf e.KeyValue = Keys.Delete Then
 			If bs_resultado.Count > 0 Then
 				If bs_resultado.Position > -1 Then
-					If DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM hac_adelanto WHERE id=" & bs_resultado.Current("id")) Then
+					If DbMan.EditDB("DELETE * FROM hac_adelanto WHERE id=" & bs_resultado.Current("id").ToString, My.Settings.CurrentDB) Then
 						bs_resultado.RemoveCurrent()
 					End If
 				End If

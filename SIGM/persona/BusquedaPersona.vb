@@ -14,6 +14,7 @@
     '-- RUTINAS
     Public Sub Consultar(Optional clearFilter As Boolean = False)
         resultado.DataSource = Nothing
+        bs_resultado.SuspendBinding()
 
         With genSearchControl1
             If .vista.SelectedIndex > -1 Then
@@ -61,10 +62,10 @@
                         .bsCustomFilter = ""
                     End If
 
-                    bs_resultado = New BindingSource
+
                     bs_resultado.DataSource = dtab
                     Dim bs_ColumnList As New BindingSource _
-                        With {.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource.Columns)}
+                        With {.DataSource = CtrlMan.Fill.GetColumnList(dtab.Columns)}
 
                     .filtro.DataSource = Nothing
                     .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
@@ -72,12 +73,13 @@
                     .FilterSearch()
                     bs_resultado.Filter = .bsCustomFilter
 
-                    resultado = CtrlMan.DataGridViewTools.Load(resultado, bs_resultado)
                 End If
             Else
                 .reset_search.PerformClick()
             End If
         End With
+        bs_resultado.ResumeBinding()
+        resultado = CtrlMan.DataGridViewTools.Load(resultado, bs_resultado)
     End Sub
 
     '-- EVENTOS UNICOS

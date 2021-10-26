@@ -15,19 +15,15 @@
 
     ' GUI
     Private Sub buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
-        BuscarContribuyente()
+        razon.Text = Trim(BuscarContribuyente(codigo.Text))
     End Sub
 
-    Private Sub BuscarContribuyente()
-        Dim sql(0) As String
-        Dim dtab As DataTable
+    Private Function BuscarContribuyente(codigo As Integer) As String
         tablas_fox(servicio.Text)
-        sql(0) = "SELECT " & ext_persona & ".razon FROM " & ext_persona & " WHERE codigo=" & codigo.Text
-        dtab = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
-        If dtab.Rows.Count > 0 Then
-            razon.Text = Trim(dtab.Rows(0)("razon"))
-        End If
-    End Sub
+        Return DbMan.ReadDB("SELECT " & ext_persona & ".razon FROM " & ext_persona & " WHERE codigo=" & codigo,
+                            My.Settings.foxConnection).Rows(0)("razon").ToString
+
+    End Function
 
     Private Sub Buttons_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles addNew.Click, delete.Click, cancel.Click, save.Click
         If sender Is addNew Then
@@ -41,11 +37,11 @@
                     If .Position > -1 Then
                         If DialogResult.Yes = MessageBox.Show("Desea eliminar este registro?", "Eliminar registro", MessageBoxButtons.YesNo, MessageBoxIcon.Question) Then
                             Dim ing As Date = .Current("ingreso")
-                            DbMan.EditDB(Nothing, My.Settings.foxConnection,
-                                         "DELETE FROM hac_intimaciones
-                                           WHERE codigo=" & codigo.Text & " AND servicio='" & servicio.Text & "'
-                                             AND ingreso={^" & ing.Year & "/" & ing.Month & "/" & ing.Day & "}
-                                             AND observacion='" & .Current("observacion") & "' AND estado='" & .Current("estado") & "'")
+                            DbMan.EditDB("DELETE FROM hac_intimaciones
+                                                WHERE codigo=" & codigo.Text & " AND servicio='" & servicio.Text & "'
+                                                  AND ingreso={^" & ing.Year & "/" & ing.Month & "/" & ing.Day & "}
+                                                  AND observacion='" & .Current("observacion") & "' AND estado='" & .Current("estado") & "'",
+                                         My.Settings.foxConnection)
 
                         End If
                     End If
@@ -71,30 +67,28 @@
 
     Private Sub codigo_KeyUp(sender As Object, e As KeyEventArgs) Handles codigo.KeyUp
         If e.KeyValue = Keys.Enter Then
-            BuscarContribuyente()
+            razon.Text = Trim(BuscarContribuyente(codigo.Text))
         End If
     End Sub
 
     Private Function Guardar() As Boolean
-        Dim sql As String
         Dim ing As Date = ingreso.Value
-
-        sql = "INSERT INTO hac_intimaciones(servicio, codigo, ingreso, observacion, estado)
-                    VALUES('" & servicio.Text & "'," & codigo.Text & ",{^" & ing.Year & "/" & ing.Month & "/" & ing.Day & "},
-                           '" & observacion.Text & "', '" & estado.Text & "')"
-        Return DbMan.EditDB(Nothing, My.Settings.foxConnection, sql)
+        Return DbMan.EditDB("INSERT INTO hac_intimaciones(servicio, codigo, ingreso, observacion, estado)
+                                  VALUES('" & servicio.Text & "'," & codigo.Text & ",{^" & ing.Year & "/" & ing.Month & "/" & ing.Day & "},
+                                      '" & observacion.Text & "', '" & estado.Text & "')",
+                            My.Settings.foxConnection)
     End Function
 
     Private Sub Listar(serv As String, cod As Integer)
         Dim dtab As DataTable
-        Dim sql(3) As String
+        Dim sqlSelect As String
 
-        sql(0) = "SELECT ingreso, observacion, estado"
-        sql(1) = "FROM hac_intimaciones"
-        sql(2) = "WHERE servicio='" & serv & "' AND codigo=" & cod
-        sql(3) = "ORDER BY ingreso DESC"
+        sqlSelect = "SELECT ingreso, observacion, estado
+                            FROM hac_intimaciones 
+                           WHERE servicio ='" & serv & "' AND codigo=" & cod & "
+                        ORDER BY ingreso DESC"
 
-        dtab = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        dtab = DbMan.ReadDB(sqlSelect, My.Settings.foxConnection)
         If dtab Is Nothing = False Then
             CtrlMan.DataGridViewTools.Load(visor_intimaciones, bs_intimaciones, dtab)
         End If

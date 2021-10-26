@@ -70,20 +70,20 @@
     '### RUTINAS
     Private Sub ObtenerCuentas(ingresos As Boolean)
         Dim dtab As New DataTable
-        Dim sqlstring(3) As String
+        Dim sqlSelect(3) As String
 
-        sqlstring(0) = "SELECT orden, nombre, sumado, pertenece, anexo, inciso, item, rubro, subrubro, partida, subpartida"
-        sqlstring(1) = " FROM hacienda"
+        sqlSelect(0) = "SELECT orden, nombre, sumado, pertenece, anexo, inciso, item, rubro, subrubro, partida, subpartida"
+        sqlSelect(1) = " FROM hacienda"
 
         If ingresos Then
-            sqlstring(2) = " WHERE pertenece='8'"
+            sqlSelect(2) = " WHERE pertenece='8'"
         Else
-            sqlstring(2) = " WHERE pertenece='9'"
+            sqlSelect(2) = " WHERE pertenece='9'"
         End If
 
-        sqlstring(3) = " ORDER BY orden"
+        sqlSelect(3) = " ORDER BY orden"
 
-        dtab = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sqlstring)
+        dtab = DbMan.ReadDB(sqlSelect, My.Settings.foxConnection)
         If dtab.Rows.Count > 0 Then
             dtab.DefaultView.RowFilter = "inciso='0' AND item='0' AND rubro='00' AND subrubro='00' AND partida='00' AND subpartida='00'"
             anexo_dtab.DefaultView.RowFilter = Nothing
@@ -211,7 +211,7 @@
         End If
 
 
-        Return DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        Return DbMan.ReadDB(sql, My.Settings.foxConnection)
     End Function
     Private Sub SumarTotales()
         Dim sql(4) As String
@@ -283,7 +283,7 @@
             End If
         End If
 
-        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+        Dim dtab As DataTable = DbMan.ReadDB(sql, My.Settings.foxConnection)
 
         If dtab Is Nothing = False Then
             If dtab.Rows.Count > 0 Then

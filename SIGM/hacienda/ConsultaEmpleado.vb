@@ -56,9 +56,7 @@
     End Sub
     Private Sub buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
         grupo_mod.Enabled = False
-        Dim sql(0) As String
-        sql(0) = "SELECT * FROM ordenanza"
-        Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+        Dim dtab As DataTable = DbMan.ReadDB("SELECT * FROM ordenanza", My.Settings.CurrentDB)
         If dtab Is Nothing = False Then
             visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, dtab)
             If dtab.Rows.Count = 0 Then
@@ -104,8 +102,8 @@
 		With bs_consulta
 			If .Position > -1 Then
 				If MsgBoxResult.Yes = MsgBox("¿Desea eliminar el registro seleccionado?", MsgBoxStyle.YesNo, "Eliminar registro") Then
-					DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM ordenanza WHERE id=" & .Current("id"))
-					buscar.PerformClick()
+                    DbMan.EditDB("DELETE * FROM ordenanza WHERE id=" & .Current("id").ToString, My.Settings.CurrentDB)
+                    buscar.PerformClick()
                 End If
             End If
         End With

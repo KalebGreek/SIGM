@@ -9,9 +9,7 @@
         vence6.Text = "No hay datos"
 
         If año_menor = año_mayor And mostrar Then
-            Dim sql(0) As String
-            sql(0) = "SELECT * FROM " & ext_vence & " WHERE periodo=" & año_menor
-            vencimientos = DbMan.ReadDB(Nothing, My.Settings.foxConnection, sql)
+            vencimientos = DbMan.ReadDB("SELECT * FROM " & ext_vence & " WHERE periodo=" & año_menor, My.Settings.foxConnection)
             If vencimientos.Rows.Count > 0 Then
                 vence1.Text = Convert.ToString(vencimientos.Rows(0)("vence1"))
                 vence2.Text = Convert.ToString(vencimientos.Rows(0)("vence2"))

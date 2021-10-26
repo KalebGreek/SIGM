@@ -1,6 +1,5 @@
 ﻿Imports System.Collections.Generic
 Module EnvInit
-
     ' CARPETAS
     Public root As String = Environment.CurrentDirectory
 
@@ -111,6 +110,7 @@ Module EnvInit
     Function ListDBConnections() As List(Of String)
         Dim ConnectionList As New List(Of String)
         Dim current_con As String = ""
+
         'Apenas termino de configurar bien postgres esto va a pasar a
         'cargar la conexión de Access y dejar Postgres como estándar
 
@@ -119,7 +119,7 @@ Module EnvInit
                 If sp.Name.Contains("Adb") Then
                     'ACCESS
                     'Set up root path
-                    sp.DefaultValue = sp.DefaultValue.Replace("Data Source=vrosas.accdb", "Data Source=" & root & "\vrosas.accdb")
+                    sp.DefaultValue = "Provider=Microsoft.ACE.OLEDB.16.0;Data Source=" & root & "\vrosas.accdb;OLE DB Services=-2"
                 End If
 
                 current_con = sp.DefaultValue

@@ -67,11 +67,11 @@ Public Class ModCombustibleTicket
 
 	'Proveedor
 	Private Sub proveedor_id_TextChanged(sender As Object, e As EventArgs) Handles proveedor_id.TextChanged
+		Dim drow As DataRow
 		If proveedor_id.Text > 0 Then
-			Using dtab As DataTable = Proveedor.Seleccionar(proveedor_id.Text, 0)
-				proveedor_razon.Text = dtab.Rows(0)("razon")
-				proveedor_cuil.Text = dtab.Rows(0)("cuil")
-			End Using
+			drow = Proveedor.Seleccionar(proveedor_id.Text, 0)
+			proveedor_razon.Text = drow("razon")
+			proveedor_cuil.Text = drow("cuil")
 		Else
 			proveedor_razon.Clear()
 			proveedor_cuil.Clear()
@@ -114,16 +114,12 @@ Public Class ModCombustibleTicket
 		If bs_item_ticket.Count > 0 Then
 			For Each dr As DataRow In bs_item_ticket.DataSource.Rows
 				total += CDec(dr("monto"))
-				'For row = 0 To bs_item_ticket.Count - 1
-				'	total += bs_item_ticket(row)("monto")
-				'Next
 			Next
 		End If
 
-		DbMan.editDB(Nothing, My.Settings.CurrentDB,
-				   "UPDATE hac_combustible_ticket 
-					   SET total=" & Replace(total, ",", ".") & "
-					 WHERE id=" & ticket_id.Text)
+		DbMan.EditDB("UPDATE hac_combustible_ticket 
+						 SET total=" & Replace(total, ",", ".") & "
+					   WHERE id=" & ticket_id.Text, My.Settings.CurrentDB)
 
 		monto_total.Text = " $ " & total
 	End Sub
@@ -140,15 +136,17 @@ Public Class ModCombustibleTicket
 	Private Sub NewItemType_Click(sender As Object, e As EventArgs) Handles NewItemType.Click
 		Dim nuevo_tipo As String = ""
 		Dim por_litro As Boolean = True
+
 		nuevo_tipo = InputBox("Ingrese nombre de nuevo item.")
 		If nuevo_tipo <> Nothing Then
 			nuevo_tipo = Trim(nuevo_tipo)
 			If Len(nuevo_tipo) > 2 Then
 				If nuevo_tipo <> "OTRO POR LITRO" And nuevo_tipo <> "OTRO" Then
 					por_litro = (MsgBoxResult.Yes = MsgBox("Este item se cuantifica por litro?", MsgBoxStyle.YesNo))
-					DbMan.editDB(Nothing, My.Settings.CurrentDB,
-					"INSERT INTO hac_combustible_tipo(descripcion, por_litro)
-						  VALUES(" & nuevo_tipo & ", " & por_litro & ")")
+
+					DbMan.EditDB("INSERT INTO hac_combustible_tipo(descripcion, por_litro)
+									   VALUES(" & nuevo_tipo & ", " & por_litro & ")",
+								 My.Settings.CurrentDB)
 
 					MsgBox("Item agregado.", MsgBoxStyle.OkOnly)
 				End If
@@ -162,15 +160,17 @@ Public Class ModCombustibleTicket
 											  categoria 'OTRO POR LITRO' u 'OTRO', segun su tipo.",
 											  MsgBoxStyle.YesNo) Then
 
+					Dim sqlModify(1) As String
 					If bs_tipo_item.Current("por_litro") Then
-						DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE hac_combustible_items SET tipo_combustible_id=1 
-															WHERE tipo_combustible=" & TipoItem.SelectedValue)
+						sqlModify(0) = "UPDATE hac_combustible_items SET tipo_combustible_id=1 
+										 WHERE tipo_combustible=" & TipoItem.SelectedValue.ToString
 					Else
-						DbMan.editDB(Nothing, My.Settings.CurrentDB, "UPDATE hac_combustible_items SET tipo_combustible_id=6 
-															WHERE tipo_combustible=" & TipoItem.SelectedValue)
+						sqlModify(0) = "UPDATE hac_combustible_items SET tipo_combustible_id=6 
+										   WHERE tipo_combustible=" & TipoItem.SelectedValue.ToString
 					End If
+					sqlModify(1) = "DELETE * FROM hac_combustible_tipo WHERE id=" & TipoItem.SelectedValue.ToString
 
-					DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM hac_combustible_tipo WHERE id=" & TipoItem.SelectedValue)
+					DbMan.EditDB(sqlModify, My.Settings.CurrentDB)
 
 					MsgBox("Item eliminado.", MsgBoxStyle.OkOnly)
 				End If
@@ -189,11 +189,11 @@ Public Class ModCombustibleTicket
 				unidades = LitrosItem.Value
 			End If
 
-			DbMan.editDB(Nothing, My.Settings.CurrentDB,
-					   "INSERT INTO hac_combustible_items(ticket_id, tipo_item_id, litros, unidades, monto, user_id)
-												   VALUES(" & ticket_id.Text & "," & bs_tipo_item.Current("tipo_id") & ",
-														  " & litros & ", " & unidades & ", " & unitario & ",
-														  " & My.Settings.UserId & ")")
+			DbMan.EditDB("INSERT INTO hac_combustible_items(ticket_id, tipo_item_id, litros, unidades, monto, user_id)
+							   VALUES(" & ticket_id.Text & "," & bs_tipo_item.Current("tipo_id").ToString & ",
+									  " & litros & ", " & unidades & ", " & unitario & ",
+									  " & My.Settings.UserId & ")",
+						 My.Settings.CurrentDB)
 
 			MontoItem.Value = 0
 			LitrosItem.Value = 0
@@ -203,7 +203,8 @@ Public Class ModCombustibleTicket
 	Private Sub DelItem_Click(sender As Object, e As EventArgs)
 		If bs_item_ticket.Position > -1 Then
 			If MsgBoxResult.Yes = MsgBox("Desea eliminar este item?", MsgBoxStyle.YesNo, "Eliminar Item") Then
-				DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM hac_combustible_items WHERE id=" & bs_item_ticket.Current("item_id"))
+				DbMan.EditDB("DELETE * FROM hac_combustible_items WHERE id=" & bs_item_ticket.Current("item_id").ToString,
+							 My.Settings.CurrentDB)
 				Combustible.Ticket.Detail(DetalleTicket, bs_item_ticket, ticket_id.Text)
 			End If
 		End If

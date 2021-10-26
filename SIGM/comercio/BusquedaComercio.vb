@@ -23,40 +23,37 @@ Public Class BusquedaComercio
     Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVistaIndexTextChanged
         If ControlBusqueda1.vista.SelectedIndex > -1 Then
             Dim consulta As String = ControlBusqueda1.vista.Text
-            Dim OleDBCmd As New OleDb.OleDbCommand With
-                                {.CommandType = System.Data.CommandType.Text, .CommandText = ""}
+            Dim sqlSelect As String = ""
             Dim dtab As New DataTable
             Dim bs_ColumnList As New BindingSource
             ControlBusqueda1.filtro.DataSource = Nothing
 
-            With OleDBCmd
-                If consulta = "COMERCIO SIN BAJA" Then
-                    .CommandText = " SELECT codigo, razon, fantasia, domicilio, inscripto, detalle as actividad"
-                    .CommandText += " FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
-                    .CommandText += " WHERE baja={}"
+            If consulta = "COMERCIO SIN BAJA" Then
+                sqlSelect = " SELECT codigo, razon, fantasia, domicilio, inscripto, detalle as actividad"
+                sqlSelect += " FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
+                sqlSelect += " WHERE baja={}"
 
-                ElseIf consulta = "COMERCIO CON BAJA" Then
-                    .CommandText = " SELECT codigo, razon, fantasia, domicilio, baja, detalle as actividad"
-                    .CommandText += " FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
-                    .CommandText += " WHERE baja<>{}"
+            ElseIf consulta = "COMERCIO CON BAJA" Then
+                sqlSelect = " SELECT codigo, razon, fantasia, domicilio, baja, detalle as actividad"
+                sqlSelect += " FROM comercio INNER JOIN comact ON comercio.actividad=comact.actividad"
+                sqlSelect += " WHERE baja<>{}"
 
-                ElseIf consulta = "COMERCIO SIN ACTIVIDAD" Then
-                    .CommandText = " SELECT codigo, razon, fantasia, domicilio, comercio.actividad, comact.actividad"
-                    .CommandText += " FROM comercio LEFT OUTER JOIN comact ON comercio.actividad=comact.actividad"
-                    .CommandText += " WHERE comact.actividad IS NULL"
+            ElseIf consulta = "COMERCIO SIN ACTIVIDAD" Then
+                sqlSelect = " SELECT codigo, razon, fantasia, domicilio, comercio.actividad, comact.actividad"
+                sqlSelect += " FROM comercio LEFT OUTER JOIN comact ON comercio.actividad=comact.actividad"
+                sqlSelect += " WHERE comact.actividad IS NULL"
 
-                ElseIf consulta = "DEUDORES" Then
-                    OleDBCmd.CommandText = " SELECT comercio.codigo, comercio.razon, inscripto, baja,
-											 comact.detalle as actividad, SUM(comcue.importe) AS original"
-                    OleDBCmd.CommandText += " FROM comcue INNER JOIN comercio ON comcue.codigo=comercio.codigo 
-														  LEFT OUTER JOIN comact ON comercio.actividad=comact.actividad"
-                    OleDBCmd.CommandText += " GROUP BY comercio.codigo, comercio.razon, comercio.inscripto, comercio.baja, comact.detalle"
-                    OleDBCmd.CommandText += " WHERE comcue.pago={}"
+            ElseIf consulta = "DEUDORES" Then
+                sqlSelect = " SELECT comercio.codigo, comercio.razon, inscripto, baja,
+									 comact.detalle as actividad, SUM(comcue.importe) AS original"
+                sqlSelect += " FROM comcue INNER JOIN comercio ON comcue.codigo=comercio.codigo 
+									  LEFT OUTER JOIN comact ON comercio.actividad=comact.actividad"
+                sqlSelect += " GROUP BY comercio.codigo, comercio.razon, comercio.inscripto, comercio.baja, comact.detalle"
+                sqlSelect += " WHERE comcue.pago={}"
 
-                End If
-            End With
+            End If
             With ControlBusqueda1
-                dtab = DbMan.ReadDB(OleDBCmd, My.Settings.foxConnection, , "dtab1")
+                dtab = DbMan.ReadDB(sqlSelect, My.Settings.foxConnection, "dtab1")
                 If dtab.Rows.Count > 0 Then
                     CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, dtab)
                     bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource.Columns)

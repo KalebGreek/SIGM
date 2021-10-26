@@ -48,7 +48,7 @@ Public Class ConsultaContrato
         ElseIf e.KeyValue = Keys.Delete Then
             If bs_contrato.Count > 0 Then
                 If bs_contrato.Position > -1 Then
-                    If DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM contrato WHERE id=" & bs_contrato.Current("contrato_id")) Then
+                    If DbMan.EditDB("DELETE * FROM contrato WHERE id=" & bs_contrato.Current("contrato_id").ToString, My.Settings.CurrentDB) Then
                         bs_contrato.RemoveCurrent()
                     End If
                 End If
@@ -68,11 +68,8 @@ Public Class ConsultaContrato
         With GenSearchControl1
             .filtro.DataSource = Nothing
             If .vista.Text <> "" Then
-                Dim sql(2) As String
-                sql(0) = SelectSQL
-                sql(1) = TableSQL
-                sql(2) = WhereSQL & " AND seccion='" & .vista.Text & "'"
-                bs_contrato.DataSource = DbMan.ReadDB(Nothing, My.Settings.CurrentDB, sql)
+                bs_contrato.DataSource = DbMan.ReadDB(SelectSQL & TableSQL & WhereSQL & " AND seccion='" & .vista.Text & "'",
+                                                      My.Settings.CurrentDB)
             End If
 
             If bs_contrato.Count > 0 Then

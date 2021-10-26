@@ -57,7 +57,7 @@
     End Sub
 
     Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles resultado.KeyUp
-        If sender Is resultado Then
+        If sender Is resultado And resultado.DataSource Is Nothing = False Then
             If e.KeyValue = Keys.F2 Then
                 If resultado.DataSource.Position > -1 Then
                     Using mexp As New ModExpediente()

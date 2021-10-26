@@ -24,47 +24,52 @@
         GC.WaitForPendingFinalizers()
         Return schemaTable
     End Function
-    Function ReadDB(OleDBProcedure As OleDb.OleDbCommand, constr As String,
-                    Optional TextQuery As String() = Nothing, Optional TableName As String = "") As DataTable
+    Function ReadDB(SingleQuery As String, constr As String, Optional TableName As String = "") As DataTable
+        'Step 1
+        Dim sqlArray(0) As String
+        sqlArray(0) = SingleQuery
+
+        Return ReadDB(sqlArray, constr, TableName)
+    End Function
+    Function ReadDB(ArrayQuery As String(), constr As String, Optional tablename As String = "") As DataTable
+        'Step 2
+        Dim OleDBProcedure As New OleDb.OleDbCommand
+        With OleDBProcedure
+            .CommandType = System.Data.CommandType.Text
+            'TextQuery usage:
+            '0: Select |1: From |2: Where |3: Group By |4: Having |5: Order by
+            For Each sql As String In ArrayQuery
+                If sql Is Nothing = False Then
+                    If sql <> "" Then
+                        If sql.Contains("SELECT") Or sql.Contains("FROM") _
+                    Or sql.Contains("WHERE") Or sql.Contains("GROUP BY") _
+                    Or sql.Contains("HAVING") Or sql.Contains("ORDER BY") Then
+
+#Disable Warning CA2100 ' Review SQL queries for security vulnerabilities
+                            .CommandText &= " " & sql
+#Enable Warning CA2100 ' Review SQL queries for security vulnerabilities
+                        End If
+                    End If
+                End If
+            Next
+            'Close the query properly
+            If Right(.CommandText, 1) <> ";" Then
+                .CommandText &= ";"
+            End If
+        End With
+
+        Return ReadDB(OleDBProcedure, constr, tablename)
+
+    End Function
+    Function ReadDB(OleDBProcedure As OleDb.OleDbCommand, constr As String, Optional TableName As String = "") As DataTable
+        'Step 3
         Dim dtab As New DataTable
         Dim errorMsg As String = ""
 
         Using olecon As New OleDb.OleDbConnection
             'Crear adaptador de datos
-            Dim dada As New OleDb.OleDbDataAdapter
-
-            If OleDBProcedure Is Nothing = False Then
-                If OleDBProcedure.CommandType <> System.Data.CommandType.Text Then
-                    OleDBProcedure.CommandType = System.Data.CommandType.StoredProcedure
-                End If
-            ElseIf TextQuery Is Nothing = False Then
-                OleDBProcedure = New OleDb.OleDbCommand
-                With OleDBProcedure
-                    .CommandType = System.Data.CommandType.Text
-                    'TextQuery usage:
-                    '0: Select |1: From |2: Where |3: Group By |4: Having |5: Order by
-                    For Each sql As String In TextQuery
-                        If sql Is Nothing = False Then
-                            If sql <> "" Then
-                                If sql.Contains("SELECT") Or sql.Contains("FROM") _
-                            Or sql.Contains("WHERE") Or sql.Contains("GROUP BY") _
-                            Or sql.Contains("HAVING") Or sql.Contains("ORDER BY") Then
-
-#Disable Warning CA2100 ' Review SQL queries for security vulnerabilities
-                                    .CommandText &= " " & sql
-#Enable Warning CA2100 ' Review SQL queries for security vulnerabilities
-                                End If
-                            End If
-                        End If
-                    Next
-                    'Close the query properly
-                    If Right(.CommandText, 1) <> ";" Then
-                        .CommandText &= ";"
-                    End If
-                End With
-            End If
-
-            dada.SelectCommand = OleDBProcedure
+            Dim dada As New OleDb.OleDbDataAdapter With {
+                .SelectCommand = OleDBProcedure}
 
             If dada.SelectCommand Is Nothing = False Then
                 'Si la conexión estaba abierta, cerrarla y mostrar mensaje
@@ -151,85 +156,79 @@
     ' END READ 
 
     ' SAVE: Rutinas para grabar registros 
+    Function EditDB(ByVal SingleQuery As String, Optional ByVal constr As String = Nothing, Optional ByRef progreso As ToolStripProgressBar = Nothing) As String
+        'Step 1
+        Dim ArrayQuery(0) As String
+        ArrayQuery(0) = SingleQuery
+
+        Return EditDB(ArrayQuery, constr, progreso)
+    End Function
+    Function EditDB(ByVal ArrayQuery As String(), Optional ByVal constr As String = Nothing, Optional ByRef progreso As ToolStripProgressBar = Nothing) As String
+        'Step 2
+
+        If ArrayQuery Is Nothing = False Then
+            Dim OleDBProcedure As New OleDbCommand With {
+            .CommandType = CommandType.Text}
+
+            Dim index As Integer = 0
+
+            'Check if there is a progress bar
+            If progreso Is Nothing = False Then
+                progreso.Minimum = index
+                progreso.Value = progreso.Minimum
+                progreso.Maximum = ArrayQuery.Length()
+            End If
+
+            For Each query In ArrayQuery
+                If Right(query, 1) <> ";" Then
+                    query &= ";"
+                End If
+                If query.Contains("INSERT") Or query.Contains("UPDATE") Then
+                    OleDBProcedure.CommandText = query
+                    index += 1
+
+                ElseIf query.Contains("DELETE") Then
+                    If My.Settings.delete_enabled Then
+                        OleDBProcedure.CommandText = query
+                        index += 1
+                    Else
+                        MsgBox("No posee permisos para eliminar registros de la tabla seleccionanda.", MsgBoxStyle.Critical, "Error")
+                    End If
+                End If
+            Next
+            Return EditDB(OleDBProcedure, constr, progreso)
+        Else
+            Return Nothing
+        End If
+
+    End Function
     Function EditDB(OleDBProcedure As OleDb.OleDbCommand, Optional ByVal constr As String = Nothing,
-                    Optional sqlSourceList() As String = Nothing, Optional ByRef progreso As ToolStripProgressBar = Nothing) As String
-        Dim sqlValidList() As String
+                    Optional ByRef progreso As ToolStripProgressBar = Nothing) As String
+        'Step 3
+
         Dim RowsAffected As Integer = 0
         Dim result As String = ""
         Dim olecon As New OleDb.OleDbConnection
-        'Para conectarse a la bd en modo de inserción
-        'Se necesita convertir el string a un objeto ConnectionString
-        'antes de aplicarlo al OleDbCommand "Comm"
-        If constr Is Nothing Then
-            constr = My.Settings.CurrentDB
-        End If
-
-        If OleDBProcedure Is Nothing Then
-            OleDBProcedure = New OleDb.OleDbCommand With {
-              .CommandType = System.Data.CommandType.Text}
-
-            If sqlSourceList Is Nothing = False Then
-                'Check if there is a progress bar
-                If progreso Is Nothing = False Then
-                    progreso.Minimum = 0
-                    progreso.Value = progreso.Minimum
-                    progreso.Maximum = sqlSourceList.Length()
-                End If
-                For Each sqlString As String In sqlSourceList
-                    If Right(sqlString, 1) <> ";" Then
-                        sqlString &= ";"
-                    End If
-                    If sqlString.Contains("INSERT") Or sqlString.Contains("UPDATE") Then
-                        sqlValidList.Append(sqlString)
-
-                    ElseIf sqlString.Contains("DELETE") Then
-                        If My.Settings.delete_enabled Then
-                            sqlValidList.Append(sqlString)
-                        Else
-                            MsgBox("No posee permisos para eliminar registros de la tabla seleccionanda.", MsgBoxStyle.Critical, "Error")
-                        End If
-                    End If
-                Next
-
-                'Set connection parameters
-                olecon.ConnectionString = constr
-                OleDBProcedure.Connection = olecon
-                'Open and execute BulkInsert on valid sql statements
-                olecon.Open()
-                For Each sqlString As String In sqlValidList
-                    With sqlString
-                        If progreso Is Nothing = False Then
-                            progreso.Value += 1
-                        End If
-
-#Disable Warning CA2100 ' Review SQL queries for security vulnerabilities
-                        OleDBProcedure.CommandText = sqlString
-#Enable Warning CA2100 ' Review SQL queries for security vulnerabilities
-                        Try
-                            RowsAffected += OleDBProcedure.ExecuteNonQuery()
-                        Catch e As Exception
-                            result &= e.ToString & Chr(13)
-                        End Try
-                    End With
-                Next
-                olecon.Close()
-                'Clear Procedure
-                OleDBProcedure = Nothing
+        If OleDBProcedure Is Nothing = False Then
+            'Para conectarse a la bd en modo de inserción
+            'Se necesita convertir el string a un objeto ConnectionString
+            'antes de aplicarlo al OleDbCommand "Comm"
+            If constr Is Nothing Then
+                constr = My.Settings.CurrentDB
             End If
-        End If
 
-        If OleDBProcedure Is Nothing = False And result <> "" Then
+            'Set connection parameters
             olecon.ConnectionString = constr
             OleDBProcedure.Connection = olecon
+            'Open and execute BulkInsert on valid sql statements
             olecon.Open()
-            'Abrir la conexión y ejecutar
             Try
-                RowsAffected = OleDBProcedure.ExecuteNonQuery()
+                RowsAffected += OleDBProcedure.ExecuteNonQuery()
             Catch e As Exception
-                result = e.ToString
+                result &= e.ToString & Chr(13)
             End Try
             olecon.Close()
-            'SecMan.WriteSQLLog(sql, constr, My.Settings.UserId)
+            'Clear Procedure
         End If
         GC.Collect()
         GC.WaitForPendingFinalizers()
