@@ -14,7 +14,7 @@
 
 	End Sub
 	Private Sub BuscarEmpleadoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarEmpleadoToolStripMenuItem.Click
-		Dim buscar1 As New BusquedaPersona
+		Dim buscar1 As New ConsultaPersona
 		buscar1.genSearchControl1.vista.Text = "EMPLEADO"
 		buscar1.Show()
 
@@ -33,7 +33,7 @@
 
 	'>Proveedores
 	Private Sub BuscarProveedorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarProveedorToolStripMenuItem.Click
-		Dim buscar1 As New BusquedaPersona With {.MdiParent = Me.Parent}
+		Dim buscar1 As New ConsultaPersona With {.MdiParent = Me.Parent}
 		buscar1.genSearchControl1.vista.Text = "PROVEEDOR"
 			buscar1.Show()
 
@@ -45,7 +45,7 @@
 
 	End Sub
 	Private Sub BuscarNotaDePedidoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarNotaDePedidoToolStripMenuItem.Click
-		Dim buscarnp As New BusquedaOrdenTrabajo With {.MdiParent = Me.Parent}
+		Dim buscarnp As New ConsultaOrdenTrabajo With {.MdiParent = Me.Parent}
 		buscarnp.ControlBusqueda1.vista.SelectedIndex = 0
 		buscarnp.Show()
 	End Sub

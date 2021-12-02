@@ -81,12 +81,13 @@
 			modificar.PerformClick()
 		End If
 	End Sub
-	Private Sub ver_Click(sender As Object, e As EventArgs) Handles ver.Click
-		If bs_consulta.Position > -1 Then
-			Process.Start(root & My.Settings.DocFolderOrdenanza & bs_consulta.Current("ruta_copia").ToString)
-		End If
-	End Sub
-	Private Sub modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles modificar.Click
+    Private Sub ver_Click(sender As Object, e As EventArgs) Handles ver.Click
+        Dim path As DataRowView = bs_consulta.Current
+        If path Is Nothing = False Then
+            Process.Start(root & My.Settings.DocFolderOrdenanza & path("ruta_copia").ToString)
+        End If
+    End Sub
+    Private Sub modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles modificar.Click
 		If bs_consulta.Position > -1 Then
             Using ModificarOrdenanza As New ModOrdenanza
                 With ModificarOrdenanza
@@ -98,15 +99,14 @@
             buscar.PerformClick()
 		End If
 	End Sub
-	Private Sub eliminar_Click(sender As Object, e As EventArgs) Handles eliminar.Click
-		With bs_consulta
-			If .Position > -1 Then
-				If MsgBoxResult.Yes = MsgBox("¿Desea eliminar el registro seleccionado?", MsgBoxStyle.YesNo, "Eliminar registro") Then
-                    DbMan.EditDB("DELETE * FROM ordenanza WHERE id=" & .Current("id").ToString, My.Settings.CurrentDB)
-                    buscar.PerformClick()
-                End If
+    Private Sub eliminar_Click(sender As Object, e As EventArgs) Handles eliminar.Click
+        Dim source As DataRowView = bs_consulta.Current
+        If source Is Nothing = False Then
+            If MsgBoxResult.Yes = MsgBox("¿Desea eliminar el registro seleccionado?", MsgBoxStyle.YesNo, "Eliminar registro") Then
+                DbMan.EditDB("DELETE * FROM ordenanza WHERE id=" & source("id").ToString, My.Settings.CurrentDB)
+                buscar.PerformClick()
             End If
-        End With
+        End If
     End Sub
 
 

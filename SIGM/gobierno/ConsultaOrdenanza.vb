@@ -105,9 +105,10 @@
 		End If
 	End Sub
     Private Sub VerClick(sender As Object, e As EventArgs) Handles ver.Click
+        Dim path As DataRowView = bs_consulta.Current
         If bs_consulta.Position > -1 Then
             Try
-                Process.Start(root & My.Settings.DocFolderOrdenanza & bs_consulta.Current("ruta_copia").ToString)
+                Process.Start(root & My.Settings.DocFolderOrdenanza & path("ruta_copia").ToString)
             Catch ex As Exception
                 MsgBox("No se encuentra el archivo.")
             End Try
@@ -126,14 +127,13 @@
 		End If
 	End Sub
 	Private Sub eliminar_Click(sender As Object, e As EventArgs) Handles eliminar.Click
-		With bs_consulta
-			If .Position > -1 Then
-				If MsgBoxResult.Yes = MsgBox("¿Desea eliminar el registro seleccionado?", MsgBoxStyle.YesNo, "Eliminar registro") Then
-                    DbMan.EditDB("DELETE * FROM ordenanza WHERE id=" & .Current("id").ToString, My.Settings.CurrentDB)
-                    buscar.PerformClick()
-                End If
+        Dim source As DataRowView = bs_consulta.Current
+        If source Is Nothing = False Then
+            If MsgBoxResult.Yes = MsgBox("¿Desea eliminar el registro seleccionado?", MsgBoxStyle.YesNo, "Eliminar registro") Then
+                DbMan.EditDB("DELETE * FROM ordenanza WHERE id=" & CInt(source("id")), My.Settings.CurrentDB)
+                buscar.PerformClick()
             End If
-        End With
+        End If
     End Sub
 
 

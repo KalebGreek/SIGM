@@ -17,20 +17,19 @@
 		Me.Close()
 	End Sub
 	Private Sub edit_acta_Click(sender As Object, e As EventArgs) Handles edit_acta.Click
-		With bs_acta
-			If .Position > -1 Then
-				If MsgBoxResult.Yes = MsgBox("¿Desea modificar el acta seleccionada? Se perderán los datos no guardados.", MsgBoxStyle.YesNo) Then
-					fecha_acta.Value = .Current("fecha")
-					acta.Value = .Current("acta")
-					libro.Value = .Current("libro")
-					copia.Text = .Current("copia").ToString
-					nota.Text = .Current("nota").ToString
-					add_acta.Text = "ACTUALIZAR"
-					consulta_acta.Enabled = False
-					MsgBox("Al finalizar, presione ACTUALIZAR para guardar los cambios.")
-				End If
+		Dim source As DataRowView = bs_acta.Current
+		If source Is Nothing = False Then
+			If MsgBoxResult.Yes = MsgBox("¿Desea modificar el acta seleccionada? Se perderán los datos no guardados.", MsgBoxStyle.YesNo) Then
+				fecha_acta.Value = source("fecha")
+				acta.Value = source("acta")
+				libro.Value = source("libro")
+				copia.Text = source("copia").ToString
+				nota.Text = source("nota").ToString
+				add_acta.Text = "ACTUALIZAR"
+				consulta_acta.Enabled = False
+				MsgBox("Al finalizar, presione ACTUALIZAR para guardar los cambios.")
 			End If
-		End With
+		End If
 	End Sub
 	Private Sub del_acta_Click(sender As Object, e As EventArgs) Handles del_acta.Click
 		If bs_acta.Position > -1 _
@@ -52,7 +51,7 @@
 	End Sub
 
 	'###### CARGAR ##########################################################################################
-	Private Function validar(registro As BindingSource, fecha As Date, acta As Integer, libro As Integer,
+	Private Function validar(id As Integer, fecha As Date, acta As Integer, libro As Integer,
 				   ruta_copia As String) As MsgBoxResult
 		Dim msg As New List(Of String)
 
@@ -69,7 +68,7 @@
 		Else
 			Using dtab As DataTable = buscar(libro, acta)
 				If dtab.Rows.Count > 0 Then
-					If dtab.Rows(0)("id") <> registro.Current("id") Then
+					If CInt(dtab.Rows(0)("id")) <> id Then
 						msg.Add("(×) El acta N°" & acta & " del libro N°" &
 							   libro & " ya existe.")
 					End If
@@ -84,7 +83,7 @@
 												  Return value(0) = "("
 											  End Function)
 		If valido > -1 Then
-			Using ver_error As New visor_error("Errores en Acta", msg)
+			Using ver_error As New UIError("Errores en Acta", msg)
 				Dim answer As DialogResult = ver_error.ShowDialog(Me)
 
 				If answer = DialogResult.OK Then
@@ -114,26 +113,31 @@
 	End Function
 
 	Private Sub add_acta_Click(sender As Object, e As EventArgs) Handles add_acta.Click
-		If validar(bs_acta, fecha_acta.Value, acta.Value, libro.Value, copia.Text) = MsgBoxResult.Yes Then
-			With bs_acta
-				If .Position > -1 And consulta_acta.Enabled = False Then 'Actualizar
-					.RemoveCurrent()
+		Dim source As DataRowView = bs_acta.Current
+		If source Is Nothing = False Then
+			If validar(source("id"), fecha_acta.Value, acta.Value, libro.Value, copia.Text) = MsgBoxResult.Yes Then
+				If consulta_acta.Enabled = False Then 'Actualizar
+					bs_acta.RemoveCurrent()
 					consulta_acta.Enabled = True
 				End If
-				.AddNew()
-				.Current("fecha") = fecha_acta.Value
-				.Current("acta") = acta.Value
-				.Current("libro") = libro.Value
-				.Current("copia") = copia.Text
-				.Current("nota") = nota.Text
+
+				Dim nueva_acta As DataRowView = bs_acta.Current
+				nueva_acta("fecha") = fecha_acta.Value
+				nueva_acta("acta") = acta.Value
+				nueva_acta("libro") = libro.Value
+				nueva_acta("copia") = copia.Text
+				nueva_acta("nota") = nota.Text
+
+				bs_acta.Add(nueva_acta)
 				bs_acta.EndEdit()
+
 				bs_acta.Position = -1
 				fecha_acta.Value = Date.Today
 				acta.Value = 0
 				libro.Value = 0
 				copia.Text = ""
 				nota.Text = ""
-			End With
+			End If
 		End If
 	End Sub
 

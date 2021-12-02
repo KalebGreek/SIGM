@@ -53,7 +53,7 @@
           </Paragraph>
         </Paragraphs>
         <Top>8.6544cm</Top>
-        <Left>0.03135cm</Left>
+        <Left>0.05291cm</Left>
         <Height>0.69525cm</Height>
         <Width>20cm</Width>
         <ZIndex>1</ZIndex>
@@ -61,7 +61,7 @@
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>LightGrey</BackgroundColor>
+          <BackgroundColor>Black</BackgroundColor>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
@@ -250,7 +250,7 @@
           </Paragraph>
         </Paragraphs>
         <Top>6.1602cm</Top>
-        <Left>0.03135cm</Left>
+        <Left>0.05291cm</Left>
         <Height>0.69525cm</Height>
         <Width>20cm</Width>
         <ZIndex>7</ZIndex>
@@ -258,7 +258,7 @@
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>LightGrey</BackgroundColor>
+          <BackgroundColor>Black</BackgroundColor>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
@@ -413,7 +413,7 @@
           </Paragraph>
         </Paragraphs>
         <Top>11.03565cm</Top>
-        <Left>0.03135cm</Left>
+        <Left>0.05291cm</Left>
         <Height>0.69525cm</Height>
         <Width>9.88397cm</Width>
         <ZIndex>12</ZIndex>
@@ -421,7 +421,7 @@
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>LightGrey</BackgroundColor>
+          <BackgroundColor>Black</BackgroundColor>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
@@ -550,7 +550,7 @@
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>LightGrey</BackgroundColor>
+          <BackgroundColor>Black</BackgroundColor>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
@@ -869,7 +869,6 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>0cm</Top>
         <Left>0.40177cm</Left>
         <Height>0.54179cm</Height>
         <Width>2.77108cm</Width>
@@ -900,7 +899,6 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>0cm</Top>
         <Left>3.43038cm</Left>
         <Height>0.54179cm</Height>
         <Width>2.95274cm</Width>
@@ -1667,7 +1665,7 @@
           </Paragraph>
         </Paragraphs>
         <Top>0.59618cm</Top>
-        <Left>0.04194cm</Left>
+        <Left>0.0635cm</Left>
         <Height>0.69525cm</Height>
         <Width>20cm</Width>
         <ZIndex>44</ZIndex>
@@ -1675,7 +1673,7 @@
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>LightGrey</BackgroundColor>
+          <BackgroundColor>Black</BackgroundColor>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
@@ -2379,7 +2377,7 @@
           </Paragraph>
         </Paragraphs>
         <Top>11.03565cm</Top>
-        <Left>9.96822cm</Left>
+        <Left>9.98978cm</Left>
         <Height>0.69525cm</Height>
         <Width>9.88397cm</Width>
         <ZIndex>66</ZIndex>
@@ -2387,7 +2385,7 @@
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>LightGrey</BackgroundColor>
+          <BackgroundColor>Black</BackgroundColor>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
@@ -2395,7 +2393,7 @@
     <Height>8.82869in</Height>
     <Style />
   </Body>
-  <Width>7.89053in</Width>
+  <Width>7.89902in</Width>
   <Page>
     <PageHeader>
       <Height>3cm</Height>

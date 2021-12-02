@@ -7,6 +7,7 @@
     Function ReadTableSchema(Optional constr As String = "") As DataTable
         Dim schemaTable As New DataTable
         Dim olecon As New OleDb.OleDbConnection
+        Dim errormsg As String = ""
 
         If constr = "" Then
             constr = My.Settings.CurrentDB
@@ -15,11 +16,19 @@
         Try
             olecon.Open()
             schemaTable = olecon.GetOleDbSchemaTable(OleDb.OleDbSchemaGuid.Tables, Nothing)
-        Catch ex As oledb.OleDbException
-            MsgBox("No se puede conectar a " & constr & Chr(13) & "Detalles:" & ex.Data.ToString)
+            Try
+                'olecon.Close()
+            Catch ex As Exception
+                errormsg = ex.Data.ToString & Chr(13)
+            End Try
+        Catch ex As Exception
+            errormsg += ex.Data.ToString & Chr(13)
             schemaTable = Nothing
         End Try
-        olecon.Close()
+
+        If errormsg.Length > 0 Then
+            MsgBox("No se puede conectar a " & constr & Chr(13) & "Detalles:" & errormsg)
+        End If
         GC.Collect()
         GC.WaitForPendingFinalizers()
         Return schemaTable
@@ -42,12 +51,9 @@
                 If sql Is Nothing = False Then
                     If sql <> "" Then
                         If sql.Contains("SELECT") Or sql.Contains("FROM") _
-                    Or sql.Contains("WHERE") Or sql.Contains("GROUP BY") _
-                    Or sql.Contains("HAVING") Or sql.Contains("ORDER BY") Then
-
-#Disable Warning CA2100 ' Review SQL queries for security vulnerabilities
+                        Or sql.Contains("WHERE") Or sql.Contains("GROUP BY") _
+                        Or sql.Contains("HAVING") Or sql.Contains("ORDER BY") Then
                             .CommandText &= " " & sql
-#Enable Warning CA2100 ' Review SQL queries for security vulnerabilities
                         End If
                     End If
                 End If
@@ -83,7 +89,7 @@
                 'Abrir conexion
                 Try
                     olecon.Open()
-                Catch ex As OleDb.OleDbException
+                Catch ex As Exception
                     Try
                         olecon.ConnectionString = My.Settings.CurrentDB
                         olecon.Close()

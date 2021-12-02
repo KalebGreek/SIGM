@@ -90,18 +90,19 @@ Public Class ConsultaIntimaciones
             sql(4) = "ORDER BY " & tabla_persona & ".razon"
 
             dtab = DbMan.ReadDB(sql, My.Settings.foxConnection)
-            If dtab.Rows.Count > 0 Then
-                If clearFilter Then
-                    .bsCustomFilter = ""
-                End If
-                visor_contribuyente.DataSource = Nothing
-                bs_contribuyente.Filter = ""
 
+            visor_contribuyente.DataSource = Nothing
+            bs_contribuyente = New BindingSource
+            If clearFilter Then
+                .bsCustomFilter = ""
+            End If
+
+            If dtab.Rows.Count > 0 Then
                 bs_contribuyente.DataSource = dtab
-                bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_contribuyente.DataSource.Columns)
+
+                bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(dtab.Columns)
                 .filtro.DataSource = Nothing
                 .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
-
                 .filtro.Text = "titular"
                 .FilterSearch()
                 bs_contribuyente.Filter = .bsCustomFilter
@@ -145,31 +146,58 @@ Public Class ConsultaIntimaciones
         If bs_contribuyente Is Nothing = False And visor_contribuyente.Rows.Count = bs_contribuyente.Count Then
             With bs_contribuyente
                 Dim ColorValue(bs_contribuyente.Count - 1) As Color
+                Dim count As Integer = 0
                 progreso.Value = 0
                 progreso.Maximum = bs_contribuyente.Count
-                For i As Integer = 0 To bs_contribuyente.Count - 1
+
+                For Each drv As DataRowView In bs_contribuyente.List
                     Dim state As String = ""
-
-                    If (bs_contribuyente(i)("estado") Is DBNull.Value) = False Then
-                        state = Trim(bs_contribuyente(i)("estado"))
+                    If drv("estado") Is DBNull.Value = False Then
+                        state = Trim(drv("estado"))
                     End If
-
                     If state = "JUDICIAL" Then
-                        ColorValue(i) = PaletaIntimaciones(1)
+                        ColorValue(count) = PaletaIntimaciones(1)
                     ElseIf state = "PRE-JUDICIAL" Then
-                        ColorValue(i) = PaletaIntimaciones(2)
+                        ColorValue(count) = PaletaIntimaciones(2)
                     ElseIf state = "CARTA DOCUMENTO" Then
-                        ColorValue(i) = PaletaIntimaciones(3)
+                        ColorValue(count) = PaletaIntimaciones(3)
                     ElseIf state = "EN MORA" Then
-                        ColorValue(i) = PaletaIntimaciones(4)
+                        ColorValue(count) = PaletaIntimaciones(4)
                     ElseIf state = "CONTACTADO" Then
-                        ColorValue(i) = PaletaIntimaciones(5)
+                        ColorValue(count) = PaletaIntimaciones(5)
                     ElseIf state = "PLAN DE PAGO" Then
-                        ColorValue(i) = PaletaIntimaciones(6)
+                        ColorValue(count) = PaletaIntimaciones(6)
                     End If
 
-                    progreso.Value = i
+                    count += 1
+                    progreso.Value = count
                 Next
+
+                'For i As Integer = 0 To bs_contribuyente.Count - 1
+                '    Dim state As String = ""
+
+                '    If bs_contribuyente(i)("estado") Is DBNull.Value = False Then
+                '        state = Trim(bs_contribuyente(i)("estado"))
+                '    End If
+
+
+                '    If state = "JUDICIAL" Then
+                '        ColorValue(i) = PaletaIntimaciones(1)
+                '    ElseIf state = "PRE-JUDICIAL" Then
+                '        ColorValue(i) = PaletaIntimaciones(2)
+                '    ElseIf state = "CARTA DOCUMENTO" Then
+                '        ColorValue(i) = PaletaIntimaciones(3)
+                '    ElseIf state = "EN MORA" Then
+                '        ColorValue(i) = PaletaIntimaciones(4)
+                '    ElseIf state = "CONTACTADO" Then
+                '        ColorValue(i) = PaletaIntimaciones(5)
+                '    ElseIf state = "PLAN DE PAGO" Then
+                '        ColorValue(i) = PaletaIntimaciones(6)
+                '    End If
+
+                '    progreso.Value = i
+                'Next
+
                 CtrlMan.DataGridViewTools.Paint(visor_contribuyente, bs_contribuyente, Nothing, ColorValue)
                 progreso.Value += 1
             End With
@@ -195,10 +223,11 @@ Public Class ConsultaIntimaciones
     End Sub
 
     Private Sub HistorialInt_Click(sender As Object, e As EventArgs) Handles historialInt.Click
-        If bs_contribuyente.Position > -1 And GenSearchControl1.vista.SelectedIndex > -1 Then
-            Using modInt As New ModIntimaciones(GenSearchControl1.vista.Text, Val(bs_contribuyente.Current("codigo"))) _
-                With {.Text = "Historial para Cta. " & bs_contribuyente.Current("codigo") & " 
-                                | " & bs_contribuyente.Current("titular")}
+        Dim source As DataRowView = bs_contribuyente.Current
+        If source Is Nothing = False And GenSearchControl1.vista.SelectedIndex > -1 Then
+            Using modInt As New ModIntimaciones(GenSearchControl1.vista.Text, Val(source("codigo"))) _
+               With {.Text = "Historial para Cta. " & source("codigo").ToString & " 
+                                | " & source("titular").ToString}
 
                 modInt.ShowDialog(Me)
             End Using
@@ -208,29 +237,29 @@ Public Class ConsultaIntimaciones
     End Sub
 
     Private Sub print_Click(sender As Object, e As EventArgs) Handles print.Click
-        With bs_contribuyente
-            If bs_contribuyente.Position > -1 And GenSearchControl1.vista.SelectedIndex > -1 Then
-                Dim parametros As New List(Of ReportParameter)
-                Dim tenedor As String = ""
-                Dim direccion As String = Trim(.Current("calle")) & ", " & Trim(.Current("localidad"))
-                If GenSearchControl1.vista.Text <> "comercio" And
-                    GenSearchControl1.vista.Text <> "automovil" Then
-                    tenedor = Trim(.Current("tenedor"))
-                    direccion &= ", " & Trim(.Current("provincia"))
-                End If
-
-                parametros = ParametrosReporte.Intimaciones.DetalleIntimacion(parametros, GenSearchControl1.vista.Text,
-                                                                         .Current("codigo"), opcion_aviso.SelectedIndex, Trim(.Current("titular")),
-                                                                         tenedor, direccion, Today)
-
-                Dim titulo_reporte As String = "Intimación " & GenSearchControl1.vista.Text & " - Cta. N° " & .Current("codigo")
-                Dim ruta_acceso As String = "REPORTES\HACIENDA\INTIMA"
-                Using certificado As New Formularios(titulo_reporte)
-                    certificado.Mostrar(ruta_acceso, parametros)
-                    certificado.ShowDialog()
-                End Using
+        Dim source As DataRowView = bs_contribuyente.Current
+        If source Is Nothing = False And GenSearchControl1.vista.SelectedIndex > -1 Then
+            Dim parametros As New List(Of ReportParameter)
+            Dim tenedor As String = ""
+            Dim direccion As String = Trim(source("calle")) & ", " & Trim(source("localidad"))
+            If GenSearchControl1.vista.Text <> "comercio" And
+                GenSearchControl1.vista.Text <> "automovil" Then
+                tenedor = Trim(source("tenedor"))
+                direccion &= ", " & Trim(source("provincia"))
             End If
-        End With
+
+            parametros = ParametrosReporte.Intimaciones.DetalleIntimacion(parametros, GenSearchControl1.vista.Text,
+                                                                     source("codigo"), opcion_aviso.SelectedIndex, Trim(source("titular")),
+                                                                     tenedor, direccion, Today)
+
+            Dim titulo_reporte As String = "Intimación " & GenSearchControl1.vista.Text & " - Cta. N° " & source("codigo").ToString
+            Dim ruta_acceso As String = "REPORTES\HACIENDA\INTIMA"
+            Using certificado As New Formularios(titulo_reporte)
+                certificado.Mostrar(ruta_acceso, parametros)
+                certificado.ShowDialog()
+            End Using
+        End If
+
     End Sub
 
 

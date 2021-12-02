@@ -46,17 +46,17 @@ Public Class ConsultaContrato
         If e.KeyValue = Keys.Enter And sender Is GenSearchControl1 Then
             GenSearchControl1.search.PerformClick()
         ElseIf e.KeyValue = Keys.Delete Then
-            If bs_contrato.Count > 0 Then
-                If bs_contrato.Position > -1 Then
-                    If DbMan.EditDB("DELETE * FROM contrato WHERE id=" & bs_contrato.Current("contrato_id").ToString, My.Settings.CurrentDB) Then
-                        bs_contrato.RemoveCurrent()
-                    End If
+            Dim source As DataRowView = bs_contrato.Current
+            If source Is Nothing = False Then
+                If DbMan.EditDB("DELETE * FROM contrato WHERE id=" & CInt(source("contrato_id")), My.Settings.CurrentDB) Then
+                    bs_contrato.RemoveCurrent()
                 End If
             End If
         End If
+
     End Sub
 
-    Private Sub nuevoCont_Click(sender As Object, e As EventArgs) Handles nuevoCont.Click
+    Private Sub NuevoCont_Click(sender As Object, e As EventArgs) Handles nuevoCont.Click
         Using modcont1 As New ModContrato
             modcont1.ShowDialog(Me)
         End Using
@@ -65,49 +65,48 @@ Public Class ConsultaContrato
 
     'RUTINAS
     Private Sub BuscarContrato()
+        Dim dtab As New DataTable
         With GenSearchControl1
             .filtro.DataSource = Nothing
             If .vista.Text <> "" Then
-                bs_contrato.DataSource = DbMan.ReadDB(SelectSQL & TableSQL & WhereSQL & " AND seccion='" & .vista.Text & "'",
+                dtab = DbMan.ReadDB(SelectSQL & TableSQL & WhereSQL & " AND seccion='" & .vista.Text & "'",
                                                       My.Settings.CurrentDB)
             End If
-
-            If bs_contrato.Count > 0 Then
+            If dtab.Rows.Count > 0 Then
+                bs_contrato.DataSource = dtab
                 Dim bs_ColumnList As New BindingSource _
-                With {.DataSource = CtrlMan.Fill.GetColumnList(bs_contrato.DataSource.Columns)}
+                    With {.DataSource = CtrlMan.Fill.GetColumnList(dtab.Columns)}
                 CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
-
-                resultado.Visible = True
                 CtrlMan.DataGridViewTools.Load(resultado, bs_contrato, .bsCustomFilter)
             End If
         End With
     End Sub
 
     Private Sub printCont_Click(sender As Object, e As EventArgs) Handles printCont.Click
-        With bs_contrato
-            If bs_contrato.Position > -1 And GenSearchControl1.vista.SelectedIndex > -1 Then
-                Dim parametros As New Generic.List(Of ReportParameter)
-                Dim masculino As Boolean = .Current("cuil") < 27000000000
-                Dim dni0, dni1, dni2 As String
-                dni0 = Mid(.Current("cuil"), 3, 8)
-                dni1 = Mid(.Current("aut1cuil"), 3, 8)
-                dni2 = Mid(.Current("aut2cuil"), 3, 8)
+        Dim source As DataRowView = bs_contrato.Current
 
-                parametros = ParametrosReporte.Contrato.DetalleContrato(parametros, .Current("inicio"),
-                                                                   .Current("autoridad1"), dni1, .Current("aut1cargo"),
-                                                                   .Current("autoridad2"), dni2, .Current("aut2cargo"),
-                                                                   masculino, .Current("razon"), dni0,
-                                                                   .Current("calle"), .Current("altura"), .Current("localidad"),
-                                                                   .Current("descripcion"), .Current("monto"), .Current("dias"),
-                                                                   .Current("codigo"), .Current("seccion"))
+        If source Is Nothing = False And GenSearchControl1.vista.SelectedIndex > -1 Then
+            Dim parametros As New Generic.List(Of ReportParameter)
+            Dim masculino As Boolean = CDbl(source("cuil")) < 27000000000
+            Dim dni0, dni1, dni2 As String
+            dni0 = Mid(source("cuil"), 3, 8)
+            dni1 = Mid(source("aut1cuil"), 3, 8)
+            dni2 = Mid(source("aut2cuil"), 3, 8)
 
-                Dim titulo_reporte As String = "Contrato N° " & CDate(.Current("inicio")).Year & "-" & .Current("codigo") & " - " & .Current("seccion")
-                Dim ruta_acceso As String = "REPORTES\Hacienda\ModeloContrato"
-                Using certificado As New Formularios(titulo_reporte)
-                    certificado.mostrar(ruta_acceso, parametros)
-                    certificado.ShowDialog()
-                End Using
-            End If
-        End With
+            parametros = ParametrosReporte.Contrato.DetalleContrato(parametros, source("inicio"),
+                                                               source("autoridad1"), dni1, source("aut1cargo"),
+                                                               source("autoridad2"), dni2, source("aut2cargo"),
+                                                               masculino, source("razon"), dni0,
+                                                               source("calle"), source("altura"), source("localidad"),
+                                                               source("descripcion"), source("monto"), source("dias"),
+                                                               source("codigo"), source("seccion"))
+
+            Dim titulo_reporte As String = "Contrato N° " & CDate(source("inicio")).Year & "-" & source("codigo").ToString & " - " & source("seccion").ToString
+            Dim ruta_acceso As String = "REPORTES\Hacienda\ModeloContrato"
+            Using certificado As New Formularios(titulo_reporte)
+                certificado.Mostrar(ruta_acceso, parametros)
+                certificado.ShowDialog()
+            End Using
+        End If
     End Sub
 End Class

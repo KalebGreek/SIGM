@@ -3,7 +3,17 @@
         ' This call is required by the designer.
         InitializeComponent()
 
+        'Tomar paleta de colores desde el launcher
+        ColorAsocial = l_accionsocial.BackColor
+        ColorCatastro = l_catastro.BackColor
+        ColorComercio = l_comercio.BackColor
+        ColorFormulario = l_formularios.BackColor
+        ColorGobierno = l_gobierno.BackColor
         ColorHacienda = l_hacienda.BackColor
+        ColorOprivadas = l_oprivadas.BackColor
+        ColorOpublicas = l_opublicas.BackColor
+        ColorPersona = l_persona.BackColor
+        ColorTransito = l_transito.BackColor
 
         ' Add any initialization after the InitializeComponent() call.
     End Sub
@@ -16,7 +26,7 @@
         Dim form1 As New Form
         Using form1
             If TypeOf sender Is Button Then
-                Dim title As String = sender.Text.ToString & " | SIGM Villa de Las Rosas"
+                Dim title As String = CType(sender, Button).Text.ToString & " | SIGM Villa de Las Rosas"
 
                 My.Settings.CurrentMenuColor = CType(sender, Button).BackColor
                 form1.Text = title

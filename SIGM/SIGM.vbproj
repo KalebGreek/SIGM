@@ -259,22 +259,22 @@
     <Compile Include="env\CtrlMan.vb" />
     <Compile Include="env\DbMan.vb" />
     <Compile Include="env\FileMan.vb" />
-    <Compile Include="env\genericForms\genToolContainer.Designer.vb">
-      <DependentUpon>genToolContainer.vb</DependentUpon>
+    <Compile Include="env\genericForms\GenToolContainer.Designer.vb">
+      <DependentUpon>GenToolContainer.vb</DependentUpon>
     </Compile>
-    <Compile Include="env\genericForms\genToolContainer.vb">
+    <Compile Include="env\genericForms\GenToolContainer.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="env\genericForms\genDataVisor.Designer.vb">
-      <DependentUpon>genDataVisor.vb</DependentUpon>
+    <Compile Include="env\genericForms\GenDataUI.Designer.vb">
+      <DependentUpon>GenDataUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="env\genericForms\genDataVisor.vb">
+    <Compile Include="env\genericForms\GenDataUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="env\genericForms\genModDialog.Designer.vb">
-      <DependentUpon>genModDialog.vb</DependentUpon>
+    <Compile Include="env\genericForms\GenModDialog.Designer.vb">
+      <DependentUpon>GenModDialog.vb</DependentUpon>
     </Compile>
-    <Compile Include="env\genericForms\genModDialog.vb">
+    <Compile Include="env\genericForms\GenModDialog.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="env\genericForms\SQLConsole.Designer.vb">
@@ -283,10 +283,10 @@
     <Compile Include="env\genericForms\SQLConsole.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="env\genericQueries\genSearchControl.Designer.vb">
-      <DependentUpon>genSearchControl.vb</DependentUpon>
+    <Compile Include="env\genericQueries\GenSearchControl.Designer.vb">
+      <DependentUpon>GenSearchControl.vb</DependentUpon>
     </Compile>
-    <Compile Include="env\genericQueries\genSearchControl.vb">
+    <Compile Include="env\genericQueries\GenSearchControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="env\SecMan.vb" />
@@ -296,10 +296,10 @@
     <Compile Include="env\menus\GobiernoMenu.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="hacienda\Adelanto\adelanto_page1.Designer.vb">
-      <DependentUpon>adelanto_page1.vb</DependentUpon>
+    <Compile Include="hacienda\Adelanto\AdelantoPage1.Designer.vb">
+      <DependentUpon>AdelantoPage1.vb</DependentUpon>
     </Compile>
-    <Compile Include="hacienda\Adelanto\adelanto_page1.vb">
+    <Compile Include="hacienda\Adelanto\AdelantoPage1.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="hacienda\Adelanto\ModAdelanto.Designer.vb">
@@ -308,7 +308,7 @@
     <Compile Include="hacienda\Adelanto\ModAdelanto.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="hacienda\CalculoAnualImpuesto\CalculoAnual.vb" />
+    <Compile Include="hacienda\CalculoAnualImpuesto\CalcAnualImp.vb" />
     <Compile Include="hacienda\Combustibles\Combustible.vb" />
     <Compile Include="hacienda\Combustibles\CtrlBusquedaCombustiblePorTicket.Designer.vb">
       <DependentUpon>CtrlBusquedaCombustiblePorTicket.vb</DependentUpon>
@@ -396,10 +396,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hacienda\Hacienda.vb" />
-    <Compile Include="acceso.designer.vb">
-      <DependentUpon>acceso.vb</DependentUpon>
+    <Compile Include="Acceso.designer.vb">
+      <DependentUpon>Acceso.vb</DependentUpon>
     </Compile>
-    <Compile Include="acceso.vb">
+    <Compile Include="Acceso.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="catastro\ConsultaCatastro.Designer.vb">
@@ -421,10 +421,10 @@
     <Compile Include="hacienda\ConsultasEspeciales.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="env\visor_error.Designer.vb">
-      <DependentUpon>visor_error.vb</DependentUpon>
+    <Compile Include="env\UIError.Designer.vb">
+      <DependentUpon>UIError.vb</DependentUpon>
     </Compile>
-    <Compile Include="env\visor_error.vb">
+    <Compile Include="env\UIError.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hacienda\ConsultaEmpleado.Designer.vb">
@@ -469,16 +469,16 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="oprivadas\BusquedaExpediente.Designer.vb">
-      <DependentUpon>BusquedaExpediente.vb</DependentUpon>
+    <Compile Include="oprivadas\ConsultaExp.Designer.vb">
+      <DependentUpon>ConsultaExp.vb</DependentUpon>
     </Compile>
-    <Compile Include="oprivadas\BusquedaExpediente.vb">
+    <Compile Include="oprivadas\ConsultaExp.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="oprivadas\BusquedaPropietario.Designer.vb">
-      <DependentUpon>BusquedaPropietario.vb</DependentUpon>
+    <Compile Include="oprivadas\ConsultaProp.Designer.vb">
+      <DependentUpon>ConsultaProp.vb</DependentUpon>
     </Compile>
-    <Compile Include="oprivadas\BusquedaPropietario.vb">
+    <Compile Include="oprivadas\ConsultaProp.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="env\menus\OprivadasMenu.Designer.vb">
@@ -487,47 +487,47 @@
     <Compile Include="env\menus\OprivadasMenu.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="oprivadas\Pagos.vb" />
+    <Compile Include="oprivadas\ObrasPrivadasPagos.vb" />
     <Compile Include="hacienda\Combustibles\ModCombustible.Designer.vb">
       <DependentUpon>ModCombustible.vb</DependentUpon>
     </Compile>
     <Compile Include="hacienda\Combustibles\ModCombustible.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="oprivadas\tasamunicipal\calcTMuniObrasVarias.Designer.vb">
-      <DependentUpon>calcTMuniObrasVarias.vb</DependentUpon>
+    <Compile Include="oprivadas\tasamunicipal\CalcTMuniObrasVarias.Designer.vb">
+      <DependentUpon>CalcTMuniObrasVarias.vb</DependentUpon>
     </Compile>
-    <Compile Include="oprivadas\tasamunicipal\calcTMuniObrasVarias.vb">
+    <Compile Include="oprivadas\tasamunicipal\CalcTMuniObrasVarias.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="oprivadas\tasamunicipal\calcTMuniMensura.Designer.vb">
-      <DependentUpon>calcTMuniMensura.vb</DependentUpon>
+    <Compile Include="oprivadas\tasamunicipal\CalcTMuniMensura.Designer.vb">
+      <DependentUpon>CalcTMuniMensura.vb</DependentUpon>
     </Compile>
-    <Compile Include="oprivadas\tasamunicipal\calcTMuniMensura.vb">
+    <Compile Include="oprivadas\tasamunicipal\CalcTMuniMensura.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="oprivadas\tasamunicipal\calcTMuniPlanosEdif.Designer.vb">
-      <DependentUpon>calcTMuniPlanosEdif.vb</DependentUpon>
+    <Compile Include="oprivadas\tasamunicipal\CalcTMuniPlanosEdif.Designer.vb">
+      <DependentUpon>CalcTMuniPlanosEdif.vb</DependentUpon>
     </Compile>
-    <Compile Include="oprivadas\tasamunicipal\calcTMuniPlanosEdif.vb">
+    <Compile Include="oprivadas\tasamunicipal\CalcTMuniPlanosEdif.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="oprivadas\tasamunicipal\ctrlAddInmuebleEdificacion.Designer.vb">
-      <DependentUpon>ctrlAddInmuebleEdificacion.vb</DependentUpon>
+    <Compile Include="oprivadas\tasamunicipal\CtrlAddInmuebleEdificacion.Designer.vb">
+      <DependentUpon>CtrlAddInmuebleEdificacion.vb</DependentUpon>
     </Compile>
-    <Compile Include="oprivadas\tasamunicipal\ctrlAddInmuebleEdificacion.vb">
+    <Compile Include="oprivadas\tasamunicipal\CtrlAddInmuebleEdificacion.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="oprivadas\tasamunicipal\toolCalculoTasaMunicipal.Designer.vb">
-      <DependentUpon>toolCalculoTasaMunicipal.vb</DependentUpon>
+    <Compile Include="oprivadas\tasamunicipal\CalculoTasaMunicipal.Designer.vb">
+      <DependentUpon>CalculoTasaMunicipal.vb</DependentUpon>
     </Compile>
-    <Compile Include="oprivadas\tasamunicipal\toolCalculoTasaMunicipal.vb">
+    <Compile Include="oprivadas\tasamunicipal\CalculoTasaMunicipal.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="hacienda\Adelanto\BusquedaAdelanto.Designer.vb">
-      <DependentUpon>BusquedaAdelanto.vb</DependentUpon>
+    <Compile Include="hacienda\Adelanto\ConsultaAdelanto.Designer.vb">
+      <DependentUpon>ConsultaAdelanto.vb</DependentUpon>
     </Compile>
-    <Compile Include="hacienda\Adelanto\BusquedaAdelanto.vb">
+    <Compile Include="hacienda\Adelanto\ConsultaAdelanto.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="env\menus\OpublicasMenu.Designer.vb">
@@ -536,10 +536,10 @@
     <Compile Include="env\menus\OpublicasMenu.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="opublicas\NotaPedido\BusquedaOrdenTrabajo.Designer.vb">
-      <DependentUpon>BusquedaOrdenTrabajo.vb</DependentUpon>
+    <Compile Include="opublicas\NotaPedido\ConsultaOrdenTrabajo.Designer.vb">
+      <DependentUpon>ConsultaOrdenTrabajo.vb</DependentUpon>
     </Compile>
-    <Compile Include="opublicas\NotaPedido\BusquedaOrdenTrabajo.vb">
+    <Compile Include="opublicas\NotaPedido\ConsultaOrdenTrabajo.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="opublicas\NotaPedido\ModOrdenTrabajo.Designer.vb">
@@ -549,10 +549,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="opublicas\NotaPedido\NotaPedido.vb" />
-    <Compile Include="persona\BusquedaPersona.Designer.vb">
-      <DependentUpon>BusquedaPersona.vb</DependentUpon>
+    <Compile Include="persona\ConsultaPersona.Designer.vb">
+      <DependentUpon>ConsultaPersona.vb</DependentUpon>
     </Compile>
-    <Compile Include="persona\BusquedaPersona.vb">
+    <Compile Include="persona\ConsultaPersona.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="persona\DomicilioPage.Designer.vb">
@@ -576,28 +576,28 @@
     </Compile>
     <Compile Include="persona\Profesional.vb" />
     <Compile Include="persona\Proveedor.vb" />
-    <Compile Include="persona\tabPersona3Contacto.Designer.vb">
-      <DependentUpon>tabPersona3Contacto.vb</DependentUpon>
+    <Compile Include="persona\TabPersona3Contacto.Designer.vb">
+      <DependentUpon>TabPersona3Contacto.vb</DependentUpon>
     </Compile>
-    <Compile Include="persona\tabPersona3Contacto.vb">
+    <Compile Include="persona\TabPersona3Contacto.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="persona\tabPersona4Adicional.Designer.vb">
-      <DependentUpon>tabPersona4Adicional.vb</DependentUpon>
+    <Compile Include="persona\TabPersona4Adicional.Designer.vb">
+      <DependentUpon>TabPersona4Adicional.vb</DependentUpon>
     </Compile>
-    <Compile Include="persona\tabPersona4Adicional.vb">
+    <Compile Include="persona\TabPersona4Adicional.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="persona\tabPersona2Domicilio.Designer.vb">
-      <DependentUpon>tabPersona2Domicilio.vb</DependentUpon>
+    <Compile Include="persona\TabPersona2Domicilio.Designer.vb">
+      <DependentUpon>TabPersona2Domicilio.vb</DependentUpon>
     </Compile>
-    <Compile Include="persona\tabPersona2Domicilio.vb">
+    <Compile Include="persona\TabPersona2Domicilio.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="persona\tabPersona1Datos.Designer.vb">
-      <DependentUpon>tabPersona1Datos.vb</DependentUpon>
+    <Compile Include="persona\TabPersona1Datos.Designer.vb">
+      <DependentUpon>TabPersona1Datos.vb</DependentUpon>
     </Compile>
-    <Compile Include="persona\tabPersona1Datos.vb">
+    <Compile Include="persona\TabPersona1Datos.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="persona\Domicilio.vb" />
@@ -614,7 +614,7 @@
     <Compile Include="oprivadas\ModPago.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="oprivadas\Oprivadas.vb" />
+    <Compile Include="oprivadas\ObrasPrivadas.vb" />
     <Compile Include="oprivadas\ModExpediente.designer.vb">
       <DependentUpon>ModExpediente.vb</DependentUpon>
     </Compile>
@@ -622,10 +622,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="env\EnvInit.vb" />
-    <Compile Include="env\config.Designer.vb">
-      <DependentUpon>config.vb</DependentUpon>
+    <Compile Include="env\Config.Designer.vb">
+      <DependentUpon>Config.vb</DependentUpon>
     </Compile>
-    <Compile Include="env\config.vb">
+    <Compile Include="env\Config.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -655,10 +655,10 @@
     <Compile Include="reportes\PrintTableDS.vb">
       <DependentUpon>PrintTableDS.xsd</DependentUpon>
     </Compile>
-    <Compile Include="transito\BusquedaMulta.Designer.vb">
-      <DependentUpon>BusquedaMulta.vb</DependentUpon>
+    <Compile Include="transito\ConsultaMulta.Designer.vb">
+      <DependentUpon>ConsultaMulta.vb</DependentUpon>
     </Compile>
-    <Compile Include="transito\BusquedaMulta.vb">
+    <Compile Include="transito\ConsultaMulta.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="transito\ModMulta.Designer.vb">
@@ -667,22 +667,22 @@
     <Compile Include="transito\ModMulta.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="transito\tabMultas3Vehiculo.Designer.vb">
-      <DependentUpon>tabMultas3Vehiculo.vb</DependentUpon>
+    <Compile Include="transito\TabMultas3Vehiculo.Designer.vb">
+      <DependentUpon>TabMultas3Vehiculo.vb</DependentUpon>
     </Compile>
-    <Compile Include="transito\tabMultas3Vehiculo.vb">
+    <Compile Include="transito\TabMultas3Vehiculo.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="transito\tabMultas1Boleta.Designer.vb">
-      <DependentUpon>tabMultas1Boleta.vb</DependentUpon>
+    <Compile Include="transito\TabMultas1Boleta.Designer.vb">
+      <DependentUpon>TabMultas1Boleta.vb</DependentUpon>
     </Compile>
-    <Compile Include="transito\tabMultas1Boleta.vb">
+    <Compile Include="transito\TabMultas1Boleta.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="transito\tabMultas2Persona.Designer.vb">
-      <DependentUpon>tabMultas2Persona.vb</DependentUpon>
+    <Compile Include="transito\TabMultas2Persona.Designer.vb">
+      <DependentUpon>TabMultas2Persona.vb</DependentUpon>
     </Compile>
-    <Compile Include="transito\tabMultas2Persona.vb">
+    <Compile Include="transito\TabMultas2Persona.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="transito\Transito.vb" />
@@ -694,17 +694,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="oprivadas\tasamunicipal\calcTMuniObrasVarias.resx">
-      <DependentUpon>calcTMuniObrasVarias.vb</DependentUpon>
+    <EmbeddedResource Include="oprivadas\tasamunicipal\CalcTMuniObrasVarias.resx">
+      <DependentUpon>CalcTMuniObrasVarias.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\tasamunicipal\calcTMuniMensura.resx">
-      <DependentUpon>calcTMuniMensura.vb</DependentUpon>
+    <EmbeddedResource Include="oprivadas\tasamunicipal\CalcTMuniMensura.resx">
+      <DependentUpon>CalcTMuniMensura.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\tasamunicipal\calcTMuniPlanosEdif.resx">
-      <DependentUpon>calcTMuniPlanosEdif.vb</DependentUpon>
+    <EmbeddedResource Include="oprivadas\tasamunicipal\CalcTMuniPlanosEdif.resx">
+      <DependentUpon>CalcTMuniPlanosEdif.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\tasamunicipal\ctrlAddInmuebleEdificacion.resx">
-      <DependentUpon>ctrlAddInmuebleEdificacion.vb</DependentUpon>
+    <EmbeddedResource Include="oprivadas\tasamunicipal\CtrlAddInmuebleEdificacion.resx">
+      <DependentUpon>CtrlAddInmuebleEdificacion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="reportes\car.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -745,23 +745,23 @@
     <EmbeddedResource Include="env\menus\ComercioMenu.resx">
       <DependentUpon>ComercioMenu.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="acceso.resx">
-      <DependentUpon>acceso.vb</DependentUpon>
+    <EmbeddedResource Include="Acceso.resx">
+      <DependentUpon>Acceso.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="env\genericForms\genToolContainer.resx">
-      <DependentUpon>genToolContainer.vb</DependentUpon>
+    <EmbeddedResource Include="env\genericForms\GenToolContainer.resx">
+      <DependentUpon>GenToolContainer.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="env\genericForms\genDataVisor.resx">
-      <DependentUpon>genDataVisor.vb</DependentUpon>
+    <EmbeddedResource Include="env\genericForms\GenDataUI.resx">
+      <DependentUpon>GenDataUI.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="env\genericForms\genModDialog.resx">
-      <DependentUpon>genModDialog.vb</DependentUpon>
+    <EmbeddedResource Include="env\genericForms\GenModDialog.resx">
+      <DependentUpon>GenModDialog.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="env\genericForms\SQLConsole.resx">
       <DependentUpon>SQLConsole.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="env\genericQueries\genSearchControl.resx">
-      <DependentUpon>genSearchControl.vb</DependentUpon>
+    <EmbeddedResource Include="env\genericQueries\GenSearchControl.resx">
+      <DependentUpon>GenSearchControl.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="gobierno\ConsultaOrdenanza.resx">
       <DependentUpon>ConsultaOrdenanza.vb</DependentUpon>
@@ -769,8 +769,8 @@
     <EmbeddedResource Include="env\menus\GobiernoMenu.resx">
       <DependentUpon>GobiernoMenu.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\Adelanto\adelanto_page1.resx">
-      <DependentUpon>adelanto_page1.vb</DependentUpon>
+    <EmbeddedResource Include="hacienda\Adelanto\AdelantoPage1.resx">
+      <DependentUpon>AdelantoPage1.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\Adelanto\ModAdelanto.resx">
       <DependentUpon>ModAdelanto.vb</DependentUpon>
@@ -849,32 +849,32 @@
     <EmbeddedResource Include="hacienda\Combustibles\ModCombustible.resx">
       <DependentUpon>ModCombustible.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\BusquedaExpediente.resx">
-      <DependentUpon>BusquedaExpediente.vb</DependentUpon>
+    <EmbeddedResource Include="oprivadas\ConsultaExp.resx">
+      <DependentUpon>ConsultaExp.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\BusquedaPropietario.resx">
-      <DependentUpon>BusquedaPropietario.vb</DependentUpon>
+    <EmbeddedResource Include="oprivadas\ConsultaProp.resx">
+      <DependentUpon>ConsultaProp.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="env\menus\OprivadasMenu.resx">
       <DependentUpon>OprivadasMenu.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\tasamunicipal\toolCalculoTasaMunicipal.resx">
-      <DependentUpon>toolCalculoTasaMunicipal.vb</DependentUpon>
+    <EmbeddedResource Include="oprivadas\tasamunicipal\CalculoTasaMunicipal.resx">
+      <DependentUpon>CalculoTasaMunicipal.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\Adelanto\BusquedaAdelanto.resx">
-      <DependentUpon>BusquedaAdelanto.vb</DependentUpon>
+    <EmbeddedResource Include="hacienda\Adelanto\ConsultaAdelanto.resx">
+      <DependentUpon>ConsultaAdelanto.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="env\menus\OpublicasMenu.resx">
       <DependentUpon>OpublicasMenu.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="opublicas\NotaPedido\BusquedaOrdenTrabajo.resx">
-      <DependentUpon>BusquedaOrdenTrabajo.vb</DependentUpon>
+    <EmbeddedResource Include="opublicas\NotaPedido\ConsultaOrdenTrabajo.resx">
+      <DependentUpon>ConsultaOrdenTrabajo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="opublicas\NotaPedido\ModOrdenTrabajo.resx">
       <DependentUpon>ModOrdenTrabajo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="persona\BusquedaPersona.resx">
-      <DependentUpon>BusquedaPersona.vb</DependentUpon>
+    <EmbeddedResource Include="persona\ConsultaPersona.resx">
+      <DependentUpon>ConsultaPersona.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="persona\DomicilioPage.resx">
       <DependentUpon>DomicilioPage.vb</DependentUpon>
@@ -886,17 +886,17 @@
     <EmbeddedResource Include="env\menus\PersonaMenu.resx">
       <DependentUpon>PersonaMenu.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="persona\tabPersona3Contacto.resx">
-      <DependentUpon>tabPersona3Contacto.vb</DependentUpon>
+    <EmbeddedResource Include="persona\TabPersona3Contacto.resx">
+      <DependentUpon>TabPersona3Contacto.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="persona\tabPersona4Adicional.resx">
-      <DependentUpon>tabPersona4Adicional.vb</DependentUpon>
+    <EmbeddedResource Include="persona\TabPersona4Adicional.resx">
+      <DependentUpon>TabPersona4Adicional.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="persona\tabPersona2Domicilio.resx">
-      <DependentUpon>tabPersona2Domicilio.vb</DependentUpon>
+    <EmbeddedResource Include="persona\TabPersona2Domicilio.resx">
+      <DependentUpon>TabPersona2Domicilio.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="persona\tabPersona1Datos.resx">
-      <DependentUpon>tabPersona1Datos.vb</DependentUpon>
+    <EmbeddedResource Include="persona\TabPersona1Datos.resx">
+      <DependentUpon>TabPersona1Datos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="reportes\hacienda\LibreDeudaCome.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -913,15 +913,15 @@
     <EmbeddedResource Include="reportes\hacienda\LibreDeudaAgua.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="env\config.resx">
-      <DependentUpon>config.vb</DependentUpon>
+    <EmbeddedResource Include="env\Config.resx">
+      <DependentUpon>Config.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="launcher.resx">
       <DependentUpon>launcher.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="env\visor_error.resx">
-      <DependentUpon>visor_error.vb</DependentUpon>
+    <EmbeddedResource Include="env\UIError.resx">
+      <DependentUpon>UIError.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="reportes\Formularios.resx">
       <DependentUpon>Formularios.vb</DependentUpon>
@@ -957,6 +957,9 @@
     <EmbeddedResource Include="reportes\sed.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="reportes\spi.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="reportes\sfo.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -984,21 +987,21 @@
     <EmbeddedResource Include="reportes\sug.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="transito\BusquedaMulta.resx">
-      <DependentUpon>BusquedaMulta.vb</DependentUpon>
+    <EmbeddedResource Include="transito\ConsultaMulta.resx">
+      <DependentUpon>ConsultaMulta.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="transito\ModMulta.resx">
       <DependentUpon>ModMulta.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="transito\tabMultas3Vehiculo.resx">
-      <DependentUpon>tabMultas3Vehiculo.vb</DependentUpon>
+    <EmbeddedResource Include="transito\TabMultas3Vehiculo.resx">
+      <DependentUpon>TabMultas3Vehiculo.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="transito\tabMultas1Boleta.resx">
-      <DependentUpon>tabMultas1Boleta.vb</DependentUpon>
+    <EmbeddedResource Include="transito\TabMultas1Boleta.resx">
+      <DependentUpon>TabMultas1Boleta.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="transito\tabMultas2Persona.resx">
-      <DependentUpon>tabMultas2Persona.vb</DependentUpon>
+    <EmbeddedResource Include="transito\TabMultas2Persona.resx">
+      <DependentUpon>TabMultas2Persona.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="env\menus\TransitoMenu.resx">
       <DependentUpon>TransitoMenu.vb</DependentUpon>

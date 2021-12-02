@@ -28,7 +28,7 @@ Partial Class ModAdelanto
 		Me.saveAd = New System.Windows.Forms.Button()
 		Me.newAd = New System.Windows.Forms.Button()
 		Me.wrapper = New System.Windows.Forms.Panel()
-		Me.Ad_page1 = New Sigm.adelanto_page1()
+		Me.Ad_page1 = New Sigm.AdelantoPage1()
 		Me.bottomMenu.SuspendLayout()
 		Me.wrapper.SuspendLayout()
 		Me.SuspendLayout()
@@ -151,5 +151,5 @@ Partial Class ModAdelanto
 	Friend WithEvents newAd As Button
 	Friend WithEvents wrapper As Panel
 	Friend WithEvents print As Button
-	Friend WithEvents Ad_page1 As adelanto_page1
+	Friend WithEvents Ad_page1 As AdelantoPage1
 End Class

@@ -1,4 +1,4 @@
-﻿Public Class BusquedaAdelanto
+﻿Public Class ConsultaAdelanto
 	Public Sub New()
 
 		' This call is required by the designer.
@@ -14,26 +14,27 @@
 
 	'-- EVENTOS UNICOS
 	Private Sub vista_SelectedIndexChanged() Handles GenSearchControl1.CVistaIndexTextChanged
-
 		With GenSearchControl1
 			If .vista.SelectedIndex > -1 Then
 				.filtro.DataSource = Nothing
 				If .vista.Text = "ADELANTO" Then
-					bs_resultado.DataSource = DbMan.ReadDB("SELECT hac_adelanto.id as id, persona.razon, persona.cuil, 
+					Dim dtab As DataTable = DbMan.ReadDB("SELECT hac_adelanto.id as id, persona.razon, persona.cuil, 
 																   hac_adelanto.persona_id, hac_adelanto.fecha, hac_adelanto.monto,
 																   persona.email, persona.telefono										 
-															  FROM hac_adelanto INNER JOIN persona ON hac_adelanto.persona_id=persona.id",
-														   My.Settings.CurrentDB)
+															FROM hac_adelanto INNER JOIN persona ON hac_adelanto.persona_id=persona.id",
+														 My.Settings.CurrentDB)
+
+					If dtab.Rows.Count > 0 Then
+						bs_resultado.DataSource = dtab
+
+						Dim bs_ColumnList As New BindingSource _
+							With {.DataSource = CtrlMan.Fill.GetColumnList(dtab.Columns)}
+						CtrlMan.Fill.SetAutoComplete(GenSearchControl1.filtro, bs_ColumnList, "ColumnName", "DataType")
+						CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, GenSearchControl1.bsCustomFilter)
+						GenSearchControl1.filtro.SelectedIndex = -1
+					End If
 				End If
-
-				If bs_resultado.Count > 0 Then
-					Dim bs_ColumnList As New BindingSource _
-					With {.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource.Columns)}
-
-					CtrlMan.Fill.SetAutoComplete(GenSearchControl1.filtro, bs_ColumnList, "ColumnName", "DataType")
-					CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, GenSearchControl1.bsCustomFilter)
-					GenSearchControl1.filtro.SelectedIndex = -1
-				Else
+				If bs_resultado.Count = 0 Then
 					bs_resultado.Add("No hay resultados.")
 				End If
 			Else
@@ -49,11 +50,10 @@
 				madel.ShowDialog(Me)
 			End Using
 		ElseIf e.KeyValue = Keys.Delete Then
-			If bs_resultado.Count > 0 Then
-				If bs_resultado.Position > -1 Then
-					If DbMan.EditDB("DELETE * FROM hac_adelanto WHERE id=" & bs_resultado.Current("id").ToString, My.Settings.CurrentDB) Then
-						bs_resultado.RemoveCurrent()
-					End If
+			Dim source As DataRowView = bs_resultado.Current
+			If source Is Nothing = False Then
+				If DbMan.EditDB("DELETE * FROM hac_adelanto WHERE id=" & CInt(source("id")), My.Settings.CurrentDB) Then
+					bs_resultado.RemoveCurrent()
 				End If
 			End If
 		End If

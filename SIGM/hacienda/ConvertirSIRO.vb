@@ -103,7 +103,7 @@
         If moroso Then
             'Obtener deuda con mora al día, a 15 días y a 30 días
             dtab_numeros = DbMan.ReadDB("SELECT mora FROM numeros", My.Settings.foxConnection)
-            valor_mora = Replace((dtab_numeros.Rows(0)("mora") / 30) / 100, ",", ".")
+            valor_mora = Replace(CStr(CDec(dtab_numeros.Rows(0)("mora")) / 30 / 100), ",", ".")
 
             sql(0) = "SELECT " & id_servicio & "*1000000+" & tabla_deuda & ".codigo as NroCliente,{" & vence_mora & "} as Vto1, 
                         SUM(" & importe1 & "+FLOOR(" & importe1 & "*({" & vence_mora & "}-" & vence_original & ")*" & valor_mora & ")) as Monto1"

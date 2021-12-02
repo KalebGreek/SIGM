@@ -54,7 +54,6 @@
 		If value <> Nothing Then
 			value = UCase(Trim(value))
 			If Len(value) > 2 Then
-				Dim sqlInsert, sqlSelect As String()
 				DbMan.EditDB("INSERT INTO prov_actividad(actividad) 
 								   VALUES('" & value & "')",
 							 My.Settings.CurrentDB)
@@ -169,7 +168,6 @@
 
 	Public Function Guardar() As Integer
 		If CtrlMan.Validate(Me) Then
-			Dim sqlUpdate As String()
 			'Empleado
 			If EsEmpleado.Checked Then
 				Empleado.guardar(EmpleadoId, PersonaId, alta.Value, jerarquia.Text)
@@ -190,9 +188,9 @@
 			End If
 
 			'Difunto
-			DbMan.EditDB("UPDATE persona
-							 SET difunto=" & difunto.Checked & ", ruta_defuncion='" & ruta_defuncion.Text & "'
-						   WHERE id=" & PersonaId, My.Settings.CurrentDB)
+			DbMan.EditDB("UPDATE persona SET difunto=" & difunto.Checked & ", ruta_defuncion='" & ruta_defuncion.Text & "'
+						   WHERE id=" & PersonaId,
+						 My.Settings.CurrentDB)
 			Return PersonaId
 		Else
 			Return 0

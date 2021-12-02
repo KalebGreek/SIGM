@@ -71,7 +71,6 @@
         'Validar que el Numero está dentro de los límites
         If (Numero >= 0) And (Numero <= Maximo) Then
 
-
             Letra = NumeroRecursivo((Fix(Numero)))              'Convertir el Numero en letras
 
             'Si Numero = 1 agregar leyenda Moneda (Singular)
@@ -130,8 +129,8 @@
         Dim Decenas() As String
         Decenas = {"", "Diez", "Veinte", "Treinta", "Cuarenta", "Cincuenta", "Sesenta", "Setenta", "Ochenta", "Noventa", "Cien"}
 
-        Dim centenas() As String
-        centenas = {"", "Ciento", "Doscientos", "Trescientos", "Cuatrocientos", "Quinientos", "Seiscientos", "Setecientos", "Ochocientos", "Novecientos"}
+        Dim Centenas() As String
+        Centenas = {"", "Ciento", "Doscientos", "Trescientos", "Cuatrocientos", "Quinientos", "Seiscientos", "Setecientos", "Ochocientos", "Novecientos"}
         '**************************************************
 
         Select Case Numero
@@ -140,17 +139,17 @@
             Case 1 To 29
                 Resultado = Unidades(Numero)
             Case 30 To 100
-                Resultado = Decenas(Numero \ 10) + IIf(Numero Mod 10 <> 0, " y " + NumeroRecursivo(Numero Mod 10), "")
+                Resultado = Decenas(Numero \ 10).ToString & IIf(Numero Mod 10 <> 0, " y " & NumeroRecursivo(Numero Mod 10), "").ToString
             Case 101 To 999
-                Resultado = centenas(Numero \ 100) + IIf(Numero Mod 100 <> 0, " " + NumeroRecursivo(Numero Mod 100), "")
+                Resultado = Centenas(Numero \ 100).ToString & IIf(Numero Mod 100 <> 0, " " & NumeroRecursivo(Numero Mod 100).ToString, "").ToString
             Case 1000 To 1999
-                Resultado = "Mil" + IIf(Numero Mod 1000 <> 0, " " + NumeroRecursivo(Numero Mod 1000), "")
+                Resultado = "Mil" & IIf(Numero Mod 1000 <> 0, " " & NumeroRecursivo(Numero Mod 1000), "").ToString
             Case 2000 To 999999
-                Resultado = NumeroRecursivo(Numero \ 1000) + " Mil" + IIf(Numero Mod 1000 <> 0, " " + NumeroRecursivo(Numero Mod 1000), "")
+                Resultado = NumeroRecursivo(Numero \ 1000).ToString & " Mil " & IIf(Numero Mod 1000 <> 0, " " & NumeroRecursivo(Numero Mod 1000), "").ToString
             Case 1000000 To 1999999
-                Resultado = "Un Millón" + IIf(Numero Mod 1000000 <> 0, " " + NumeroRecursivo(Numero Mod 1000000), "")
+                Resultado = "Un Millón " & IIf(Numero Mod 1000000 <> 0, " " & NumeroRecursivo(Numero Mod 1000000), "").ToString
             Case 2000000 To 1999999999
-                Resultado = NumeroRecursivo(Numero \ 1000000) + " Millones" + IIf(Numero Mod 1000000 <> 0, " " + NumeroRecursivo(Numero Mod 1000000), "")
+                Resultado = NumeroRecursivo(Numero \ 1000000).ToString & " Millones " & IIf(Numero Mod 1000000 <> 0, " " & NumeroRecursivo(Numero Mod 1000000), "").ToString
         End Select
 
         NumeroRecursivo = Resultado

@@ -60,7 +60,7 @@
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>LightGrey</BackgroundColor>
+          <BackgroundColor>Black</BackgroundColor>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
@@ -475,26 +475,10 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>  Al mismo tiempo el solicitante declara </Value>
+                <Value>Al mismo tiempo el solicitante declara BAJO JURAMENTO que el mencionado rodado ha sido dado de baja en la Municipalidad de origen, asumiendo toda responsabilidad por deudas de patentamiento o de otro carácter que pudieran surgir.</Value>
                 <Style>
                   <FontFamily>PF DinText Pro</FontFamily>
                   <FontSize>15pt</FontSize>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>BAJO JURAMENTO </Value>
-                <Style>
-                  <FontFamily>PF DinText Pro</FontFamily>
-                  <FontSize>15pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>que el mencionado rodado ha sido dado de baja en la Municipalidad de origen, asumiendo toda responsabilidad por deudas de patentamiento o de otro carácter que pudieran surgir.</Value>
-                <Style>
-                  <FontFamily>PF DinText Pro</FontFamily>
-                  <FontSize>15pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -684,7 +668,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value xml:space="preserve"> </Value>
+                <Value> °</Value>
                 <Style>
                   <FontFamily>PF DinText Pro</FontFamily>
                   <FontSize>16pt</FontSize>
@@ -740,7 +724,7 @@
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>LightGrey</BackgroundColor>
+          <BackgroundColor>Black</BackgroundColor>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>

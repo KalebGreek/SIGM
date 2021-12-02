@@ -6,12 +6,12 @@
 								" LEFT JOIN localidades ON per_domicilio.localidad_id = localidades.id" &
 								" WHERE per_domicilio.principal=True"
 
-	Shared Function Seleccionar(ParentForm As Form, Optional vista As String = "PERSONA") As BindingSource
-		Using SeleccionarPersona As New BusquedaPersona(True) With {.Owner = ParentForm}
+	Shared Function Seleccionar(ParentForm As Form, Optional vista As String = "PERSONA") As DataRowView
+		Using SeleccionarPersona As New ConsultaPersona(True) With {.Owner = ParentForm}
 
 			SeleccionarPersona.genSearchControl1.vista.Text = vista
 			SeleccionarPersona.ShowDialog()
-			Return SeleccionarPersona.bs_resultado
+			Return SeleccionarPersona.PersonSelected
 		End Using
 	End Function
 
@@ -50,7 +50,7 @@
 			End If
 		End If
 		If ProfesionalId > 0 Then
-			dtab_con = Oprivadas.Expediente.ListarPorProfesional(ProfesionalId)
+			dtab_con = ObrasPrivadas.Expediente.ListarPorProfesional(ProfesionalId)
 			If dtab_con.Rows.Count > 0 Then
 				msg.Add("> PROFESIONAL")
 				msg.Add("Esta persona está registrada como profesional en los siguientes expedientes: ")
@@ -79,32 +79,33 @@
 			msg.Add("> TITULAR DE INMUEBLE")
 			msg.Add("Esta persona está registrada como titular en los siguientes inmuebles:")
 			For fila As Integer = 0 To dtab_con.Rows.Count - 1
+				Dim source As DataRow = dtab_con.Rows(fila)
 				msg.Add("-- INMUEBLE " & fila + 1 & " --")
 
-				msg.Add("Designacion: Z" & dtab_con.Rows(0)("zona") & " C" & dtab_con.Rows(0)("circ") & " S" & dtab_con.Rows(0)("secc") &
-					   " M" & dtab_con.Rows(fila)("manz") & " P" & dtab_con.Rows(fila)("parc") & " L" & dtab_con.Rows(fila)("lote"))
+				msg.Add("Designacion: Z" & source("zona").ToString & " C" & source("circ").ToString & " S" & source("secc").ToString &
+					   " M" & source("manz").ToString & " P" & source("parc").ToString & " L" & source("lote").ToString)
 
-				msg.Add("Direccion: " & dtab_con.Rows(fila)("calle") & " " & dtab_con.Rows(fila)("altura"))
+				msg.Add("Direccion: " & source("calle").ToString & " " & source("altura").ToString)
 
-				msg.Add("Barrio: " & dtab_con.Rows(fila)("barrio"))
+				msg.Add("Barrio: " & source("barrio").ToString)
 			Next
 			msg.Add("Debe reemplazar el titular en los immuebles indicados antes de continuar.")
 			Return False
 		End If
 
 		'responsable_expediente
-		dtab_con = Oprivadas.Expediente.ListarPorResponsable(PersonaId)
+		dtab_con = ObrasPrivadas.Expediente.ListarPorResponsable(PersonaId)
 		If dtab_con.Rows.Count > 0 Then
 			msg.Add("> RESPONSABLE DE EXPEDIENTE")
 			msg.Add("Esta persona está registrada como responsable en los siguientes expedientes: ")
 			For fila As Integer = 0 To dtab_con.Rows.Count - 1
-				msg.Add("Expte. N." & dtab_con.Rows(fila)("expediente"))
+				msg.Add("Expte. N." & dtab_con.Rows(fila)("expediente").ToString)
 			Next
 			msg.Add("Debe reemplazar el responsable en los expedientes indicados antes de continuar.")
 		End If
 
 		If msg.Count > 0 Then
-			Using errormsg As New visor_error("Error al eliminar persona", msg)
+			Using errormsg As New UIError("Error al eliminar persona", msg)
 				errormsg.ShowDialog()
 			End Using
 			Return False
@@ -124,7 +125,7 @@
 			End If
 			msg.Add("Desea continuar?")
 
-			Using errormsg As New visor_error("Eliminar persona", msg)
+			Using errormsg As New UIError("Eliminar persona", msg)
 				If errormsg.ShowDialog() = DialogResult.Ignore Then
 					Dim sqlDelete(1) As String
 					sqlDelete(0) = "DELETE FROM per_documento WHERE per_id=" & PersonaId

@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class launcher
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Launcher
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,9 +20,9 @@ Partial Class launcher
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(launcher))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Launcher))
         Me.opendialog = New System.Windows.Forms.OpenFileDialog()
         Me.salir = New System.Windows.Forms.Button()
         Me.opcion = New System.Windows.Forms.Button()
@@ -145,7 +145,7 @@ Partial Class launcher
         'l_catastro
         '
         Me.l_catastro.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.l_catastro.BackColor = System.Drawing.Color.SlateBlue
+        Me.l_catastro.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.l_catastro.BackgroundImage = CType(resources.GetObject("l_catastro.BackgroundImage"), System.Drawing.Image)
         Me.l_catastro.FlatAppearance.BorderSize = 0
         Me.l_catastro.FlatStyle = System.Windows.Forms.FlatStyle.Flat
@@ -181,7 +181,7 @@ Partial Class launcher
         'l_comercio
         '
         Me.l_comercio.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.l_comercio.BackColor = System.Drawing.Color.DeepSkyBlue
+        Me.l_comercio.BackColor = System.Drawing.Color.DarkTurquoise
         Me.l_comercio.BackgroundImage = CType(resources.GetObject("l_comercio.BackgroundImage"), System.Drawing.Image)
         Me.l_comercio.FlatAppearance.BorderSize = 0
         Me.l_comercio.FlatStyle = System.Windows.Forms.FlatStyle.Flat
@@ -307,7 +307,7 @@ Partial Class launcher
         'l_transito
         '
         Me.l_transito.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.l_transito.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.l_transito.BackColor = System.Drawing.Color.DodgerBlue
         Me.l_transito.BackgroundImage = CType(resources.GetObject("l_transito.BackgroundImage"), System.Drawing.Image)
         Me.l_transito.FlatAppearance.BorderSize = 0
         Me.l_transito.FlatStyle = System.Windows.Forms.FlatStyle.Flat
@@ -333,7 +333,7 @@ Partial Class launcher
         Me.FlowLayoutPanel2.Size = New System.Drawing.Size(527, 33)
         Me.FlowLayoutPanel2.TabIndex = 159
         '
-        'launcher
+        'Launcher
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -347,7 +347,7 @@ Partial Class launcher
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MinimumSize = New System.Drawing.Size(500, 400)
-        Me.Name = "launcher"
+        Me.Name = "Launcher"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Hacienda - Villa De Las Rosas"
         Me.Panel1.ResumeLayout(False)
@@ -362,8 +362,8 @@ Partial Class launcher
     Friend WithEvents opcion As System.Windows.Forms.Button
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents logo As System.Windows.Forms.PictureBox
-	Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
-	Friend WithEvents l_hacienda As System.Windows.Forms.Button
+    Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
+    Friend WithEvents l_hacienda As System.Windows.Forms.Button
     Friend WithEvents l_gobierno As System.Windows.Forms.Button
     Friend WithEvents l_catastro As System.Windows.Forms.Button
     Friend WithEvents l_opublicas As System.Windows.Forms.Button
@@ -371,8 +371,8 @@ Partial Class launcher
     Friend WithEvents l_persona As System.Windows.Forms.Button
     Friend WithEvents l_comercio As System.Windows.Forms.Button
     Friend WithEvents l_formularios As System.Windows.Forms.Button
-	Friend WithEvents l_accionsocial As Button
-	Friend WithEvents FlowLayoutPanel2 As FlowLayoutPanel
-	Friend WithEvents l_transito As Button
+    Friend WithEvents l_accionsocial As Button
+    Friend WithEvents FlowLayoutPanel2 As FlowLayoutPanel
+    Friend WithEvents l_transito As Button
     Friend WithEvents l_contrato As Button
 End Class

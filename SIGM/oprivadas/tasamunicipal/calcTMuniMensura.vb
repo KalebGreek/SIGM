@@ -89,8 +89,9 @@ Class calcTMuniMensura
     Private Sub calcular()
         'Zonas
         Dim subtotal, descuento As Decimal
-        If bs_tasa_mensura.Current Is Nothing = False And total_lotes.Value > 0 Then
-            subtotal = CDec(bs_tasa_mensura.Current("valor")) * total_lotes.Value
+        Dim tasa_mensura As DataRowView = bs_tasa_mensura.Current
+        If tasa_mensura Is Nothing = False And total_lotes.Value > 0 Then
+            subtotal = CDec(tasa_mensura("valor")) * total_lotes.Value
         End If
         'Agua corriente
         If factibilidad_agua.Checked Then
@@ -119,8 +120,6 @@ Class calcTMuniMensura
             monto_cuota.Text = FormatCurrency(0, 2)
         End If
         total.Text = FormatCurrency(subtotal - descuento, 2)
-
-
     End Sub
 
 

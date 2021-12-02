@@ -39,10 +39,8 @@ Class CertificadoLibreDeuda
 
     End Sub
     Public Function ValidarCuenta(tipo As String, cuenta As Integer) As DataRow
-        Dim dr As DataRow
-        If tipo.Contains("AGUA") Then
-            dr = agua.Select("codigo=" & cuenta)(0)
-        ElseIf tipo.Contains("AUTO") Then
+        Dim dr As DataRow = agua.Select("codigo=" & cuenta)(0)
+        If tipo.Contains("AUTO") Then
             dr = auto.Select("codigo=" & cuenta)(0)
         ElseIf tipo.Contains("CATA") Then
             dr = catastro.Select("codigo=" & cuenta)(0)

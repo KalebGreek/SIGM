@@ -14,8 +14,8 @@
 
 	Public Sub save()
 		For Each c As Control In wrapper.Controls
-			If TypeOf c Is adelanto_page1 Then
-				CType(c, adelanto_page1).save()
+			If TypeOf c Is AdelantoPage1 Then
+				CType(c, AdelantoPage1).save()
 			End If
 		Next
 	End Sub
@@ -26,7 +26,7 @@
 		For Each c As Control In wrapper.Controls
 			wrapper.Controls.Remove(c)
 		Next
-		wrapper.Controls.Add(New adelanto_page1)
+		wrapper.Controls.Add(New AdelantoPage1)
 	End Sub
 
 	Private Sub print_Click(sender As Object, e As EventArgs) Handles print.Click

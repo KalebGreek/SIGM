@@ -52,7 +52,7 @@
 	End Sub
 
 	Private Sub Buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
-		Using SelPersona As New BusquedaPersona(True) With {.Owner = Me}
+		Using SelPersona As New ConsultaPersona(True) With {.Owner = Me}
 			SelPersona.ShowDialog()
 			BSContratado = SelPersona.bs_resultado
 		End Using
@@ -104,15 +104,19 @@
 			Dim answer As MsgBoxResult = MsgBox("¿Desea guardar este contrato?", MsgBoxStyle.YesNoCancel, "Guardar cambios")
 			If answer = MsgBoxResult.Yes Or answer = MsgBoxResult.No Then
 				If answer = MsgBoxResult.Yes Then
-					Dim sqlInsert As String()
-					sqlInsert.Append("INSERT INTO contrato(codigo, contratado_id, inicio, 
-												dias, monto, descripcion,
-												autoridad1_id, autoridad2_id,
-												seccion, user_id)
-										 VALUES(" & codigo.Value & ", " & CInt(BSContratado.Current("persona_id").ToString) & ", '" & inicio.Value & "',
-												 " & dias.Value & ", " & monto.Value & ", '" & descripcion.Text & "',
-												 " & BSAutoridad1.Current("empleado_id").ToString & ", " & BSAutoridad2.Current("empleado_id").ToString & ",
-												'" & seccion.Text & "', " & My.Settings.UserId & ")")
+					Dim contratado, autoridad1, autoridad2 As DataRowView
+					contratado = BSContratado.Current
+					autoridad1 = BSAutoridad1.Current
+					autoridad2 = BSAutoridad2.Current
+
+					Dim sqlInsert As String = "INSERT INTO contrato(codigo, contratado_id, inicio, 
+																	dias, monto, descripcion,
+																	autoridad1_id, autoridad2_id,
+																	seccion, user_id)
+													VALUES(" & codigo.Value & ", " & contratado("persona_id").ToString & ", '" & inicio.Value & "',
+														   " & dias.Value & ", " & monto.Value & ", '" & descripcion.Text & "',
+														   " & autoridad1("empleado_id").ToString & ", " & autoridad2("empleado_id").ToString & ",
+														  '" & seccion.Text & "', " & My.Settings.UserId & ")"
 
 					DbMan.EditDB(sqlInsert, My.Settings.CurrentDB)
 				End If

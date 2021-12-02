@@ -86,7 +86,7 @@
             If MsgBoxResult.Yes = MsgBox("Desea eliminar este receptor? Se eliminaran todos los tickets relacionados.",
                                          MsgBoxStyle.YesNo) Then
                 'Los tickets se eliminan en cascada
-                DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM hac_combustible_receptor WHERE id=" & receptor.SelectedValue)
+                DbMan.EditDB("DELETE * FROM hac_combustible_receptor WHERE id=" & receptor.SelectedValue.ToString, My.Settings.CurrentDB)
                 FillReceptor()
             End If
         End If
@@ -118,7 +118,7 @@
     Private Sub DelTicket_Click(sender As Object, e As EventArgs) Handles DelTicket.Click
         If bs_historial.Position > -1 Then
             If MsgBoxResult.Yes = MsgBox("Desea eliminar el ticket seleccionado? Esta operacion no se puede deshacer.", MsgBoxStyle.YesNo, "Eliminar Ticket") Then
-                DbMan.editDB(Nothing, My.Settings.CurrentDB, "DELETE * FROM hac_combustible_ticket WHERE id=" & bs_historial.Current("ticket_id"))
+                DbMan.EditDB("DELETE * FROM hac_combustible_ticket WHERE id=" & bs_historial.Current("ticket_id").ToString, My.Settings.CurrentDB)
                 bs_historial.RemoveCurrent()
                 CtrlMan.DataGridViewTools.Load(historial, bs_historial, Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
             End If

@@ -7,25 +7,21 @@
         End Sub
         Shared Function ListAll(BSCuenta As BindingSource, BSCategoria As BindingSource, id As Integer) As BindingSource
             Dim sqlSelect As String
+            Dim cuenta As DataRowView = BSCuenta.Current
+            Dim categoria As DataRowView = BSCategoria.Current
             sqlSelect = "SELECT Id as receptor_id, marca+' | '+dominio+' |'+STR(modelo) AS descripcion"
             sqlSelect &= "FROM hac_combustible_receptor"
 
-            If BSCategoria Is Nothing And BSCuenta Is Nothing Then
+            If cuenta Is Nothing And categoria Is Nothing Then
                 If id > 0 Then
                     sqlSelect &= " WHERE hac_combustible_receptor.id=" & id
                 End If
-            ElseIf BSCategoria Is Nothing Then
-                If BSCuenta.Position > -1 Then
-                    sqlSelect &= " WHERE cuenta=" & BSCuenta.Current("orden").ToString
-                End If
-            ElseIf BSCuenta Is Nothing Then
-                If BSCategoria.Position > -1 Then
-                    sqlSelect &= " WHERE categoria_id=" & BSCategoria.Current("id").ToString
-                End If
+            ElseIf cuenta Is Nothing = False And categoria Is Nothing Then
+                sqlSelect &= " WHERE cuenta=" & cuenta("orden").ToString
+            ElseIf cuenta Is Nothing And categoria Is Nothing = False Then
+                sqlSelect &= " WHERE categoria_id=" & categoria("id").ToString
             Else
-                If BSCategoria.Position > -1 And BSCuenta.Position > -1 Then
-                    sqlSelect &= " WHERE cuenta=" & BSCuenta.Current("orden").ToString & " AND categoria_id=" & BSCategoria.Current("id").ToString
-                End If
+                sqlSelect &= " WHERE cuenta=" & cuenta("orden").ToString & " AND categoria_id=" & categoria("id").ToString
             End If
 
             Dim bs As New BindingSource _

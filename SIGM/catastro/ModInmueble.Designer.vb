@@ -160,7 +160,7 @@ Partial Class ModInmueble
         'Menu1
         '
         Me.Menu1.AutoSize = False
-        Me.Menu1.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Menu1.BackColor = System.Drawing.Color.Gray
         Me.Menu1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Menu1.GripMargin = New System.Windows.Forms.Padding(0)
         Me.Menu1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Partida, Me.ToolStripMenuItem1})
@@ -1418,7 +1418,7 @@ Partial Class ModInmueble
         Me.subtitulo.BackColor = System.Drawing.Color.White
         Me.subtitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.subtitulo.Font = New System.Drawing.Font("PF DinDisplay Pro", 14.0!, System.Drawing.FontStyle.Bold)
-        Me.subtitulo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(225, Byte), Integer), CType(CType(108, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.subtitulo.ForeColor = System.Drawing.Color.Gray
         Me.subtitulo.Location = New System.Drawing.Point(0, 33)
         Me.subtitulo.Margin = New System.Windows.Forms.Padding(0)
         Me.subtitulo.Name = "subtitulo"

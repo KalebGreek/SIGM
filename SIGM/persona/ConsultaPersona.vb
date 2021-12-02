@@ -1,4 +1,5 @@
-﻿Public Class BusquedaPersona
+﻿Public Class ConsultaPersona
+    Public PersonSelected As DataRowView = Nothing
     Public Sub New(Optional SelectionMode As Boolean = False)
 
         ' This call is required by the designer.
@@ -100,8 +101,10 @@
     End Sub
     Public Sub SelectClick(sender As Object, e As EventArgs) Handles genSearchControl1.CSelect
         If bs_resultado.Position > -1 Then
+            PersonSelected = bs_resultado.Current
             Me.Close()
         Else
+            PersonSelected = Nothing
             MsgBox("No se ha seleccionado una persona.")
         End If
     End Sub
@@ -118,23 +121,24 @@
         If e.KeyValue = Keys.F3 Then
             Consultar(False)
         ElseIf sender Is resultado Then
-            If e.KeyValue = Keys.F2 Then
-                If resultado.DataSource.Position > -1 Then
-                    Using mper As New ModPersona(resultado.DataSource.Current("persona_id")) With {.Owner = Me}
+            Dim source As DataRowView = bs_resultado.Current
+            If source Is Nothing = False Then
+                If e.KeyValue = Keys.F2 Then
+                    Using mper As New ModPersona(source("persona_id")) With {.Owner = Me}
                         mper.ShowDialog()
                     End Using
                     genSearchControl1.search.PerformClick()
-                End If
-            ElseIf e.KeyValue = Keys.Delete Then
-                If Persona.Eliminar(resultado.DataSource.Current("persona_id")) Then
-                    resultado.DataSource.RemoveCurrent()
+                ElseIf e.KeyValue = Keys.Delete Then
+                    If Persona.Eliminar(source("persona_id")) Then
+                        bs_resultado.RemoveCurrent()
+                    End If
                 End If
             End If
         End If
     End Sub
 
     Private Sub filtrospersona_CheckedChanged(sender As Object, e As EventArgs) Handles difunto.CheckedChanged, fisica.CheckedChanged
-        If sender.Enabled And Me.Visible Then
+        If DirectCast(sender, CheckBox).Enabled And Me.Visible Then
             Consultar()
         End If
     End Sub

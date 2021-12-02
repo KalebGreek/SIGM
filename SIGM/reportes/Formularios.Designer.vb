@@ -26,8 +26,6 @@ Partial Class Formularios
         Me.ReporteActual = New Microsoft.Reporting.WinForms.ReportViewer()
         Me.top_menu = New System.Windows.Forms.MenuStrip()
         Me.FormulariosToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
-        Me.CerrarFormToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ComercioToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.sic = New System.Windows.Forms.ToolStripMenuItem()
         Me.MesaDeEntradaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -52,6 +50,9 @@ Partial Class Formularios
         Me.slm = New System.Windows.Forms.ToolStripMenuItem()
         Me.smt = New System.Windows.Forms.ToolStripMenuItem()
         Me.spr = New System.Windows.Forms.ToolStripMenuItem()
+        Me.spi = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
+        Me.CerrarFormToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.titulo = New System.Windows.Forms.ToolStripMenuItem()
         Me.SalirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.top_menu.SuspendLayout()
@@ -93,17 +94,6 @@ Partial Class Formularios
         Me.FormulariosToolStripMenuItem1.Size = New System.Drawing.Size(98, 27)
         Me.FormulariosToolStripMenuItem1.Text = "Formularios"
         Me.FormulariosToolStripMenuItem1.Visible = False
-        '
-        'ToolStripSeparator4
-        '
-        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(188, 6)
-        '
-        'CerrarFormToolStripMenuItem
-        '
-        Me.CerrarFormToolStripMenuItem.Name = "CerrarFormToolStripMenuItem"
-        Me.CerrarFormToolStripMenuItem.Size = New System.Drawing.Size(191, 24)
-        Me.CerrarFormToolStripMenuItem.Text = "Cerrar Formulario"
         '
         'ComercioToolStripMenuItem
         '
@@ -167,7 +157,7 @@ Partial Class Formularios
         '
         Me.ConstanciaToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cfo, Me.clm})
         Me.ConstanciaToolStripMenuItem.Name = "ConstanciaToolStripMenuItem"
-        Me.ConstanciaToolStripMenuItem.Size = New System.Drawing.Size(164, 24)
+        Me.ConstanciaToolStripMenuItem.Size = New System.Drawing.Size(180, 24)
         Me.ConstanciaToolStripMenuItem.Text = "Constancia"
         '
         'cfo
@@ -186,7 +176,7 @@ Partial Class Formularios
         '
         Me.InformeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.imh})
         Me.InformeToolStripMenuItem.Name = "InformeToolStripMenuItem"
-        Me.InformeToolStripMenuItem.Size = New System.Drawing.Size(164, 24)
+        Me.InformeToolStripMenuItem.Size = New System.Drawing.Size(180, 24)
         Me.InformeToolStripMenuItem.Text = "Informe"
         '
         'imh
@@ -199,7 +189,7 @@ Partial Class Formularios
         '
         Me.PresentaciónToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ppe, Me.ppm})
         Me.PresentaciónToolStripMenuItem1.Name = "PresentaciónToolStripMenuItem1"
-        Me.PresentaciónToolStripMenuItem1.Size = New System.Drawing.Size(164, 24)
+        Me.PresentaciónToolStripMenuItem1.Size = New System.Drawing.Size(180, 24)
         Me.PresentaciónToolStripMenuItem1.Text = "Presentación"
         '
         'ppe
@@ -216,9 +206,9 @@ Partial Class Formularios
         '
         'SolicitudToolStripMenuItem
         '
-        Me.SolicitudToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.sed, Me.sfo, Me.sin, Me.slm, Me.smt, Me.spr})
+        Me.SolicitudToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.sed, Me.sfo, Me.sin, Me.slm, Me.smt, Me.spr, Me.spi})
         Me.SolicitudToolStripMenuItem.Name = "SolicitudToolStripMenuItem"
-        Me.SolicitudToolStripMenuItem.Size = New System.Drawing.Size(164, 24)
+        Me.SolicitudToolStripMenuItem.Size = New System.Drawing.Size(180, 24)
         Me.SolicitudToolStripMenuItem.Text = "Solicitud"
         '
         'sed
@@ -256,6 +246,23 @@ Partial Class Formularios
         Me.spr.Name = "spr"
         Me.spr.Size = New System.Drawing.Size(248, 24)
         Me.spr.Text = "Prórroga"
+        '
+        'spi
+        '
+        Me.spi.Name = "spi"
+        Me.spi.Size = New System.Drawing.Size(248, 24)
+        Me.spi.Text = "Registro de Pileta"
+        '
+        'ToolStripSeparator4
+        '
+        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(188, 6)
+        '
+        'CerrarFormToolStripMenuItem
+        '
+        Me.CerrarFormToolStripMenuItem.Name = "CerrarFormToolStripMenuItem"
+        Me.CerrarFormToolStripMenuItem.Size = New System.Drawing.Size(191, 24)
+        Me.CerrarFormToolStripMenuItem.Text = "Cerrar Formulario"
         '
         'titulo
         '
@@ -325,4 +332,5 @@ Partial Class Formularios
     Friend WithEvents sed As ToolStripMenuItem
     Friend WithEvents InformeToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents imh As ToolStripMenuItem
+    Friend WithEvents spi As ToolStripMenuItem
 End Class

@@ -50,7 +50,7 @@ Public Class ModCombustibleTicket
 		If receptor_id.Text > 0 Then
 			Using dtab As DataTable = Combustible.Receptor.Seleccionar(receptor_id.Text)
 				receptor_categoria.Text = dtab.Rows(0)("detalle")
-				receptor_marca_observaciones.Text = dtab.Rows(0)("marca") & " " & dtab.Rows(0)("observaciones")
+				receptor_marca_observaciones.Text = dtab.Rows(0)("marca").ToString & " " & dtab.Rows(0)("observaciones").ToString
 				receptor_modelo.Text = dtab.Rows(0)("modelo").ToString()
 				receptor_dominio.Text = dtab.Rows(0)("dominio")
 			End Using
@@ -78,13 +78,12 @@ Public Class ModCombustibleTicket
 		End If
 	End Sub
 	Private Sub SelectProveedor_Click(sender As Object, e As EventArgs) Handles SelectProveedor.Click
-		Using bs As BindingSource = Persona.Seleccionar(Me, "PROVEEDOR")
-			If bs.Position > -1 Then
-				proveedor_razon.Text = bs.Current("razon")
-				proveedor_cuil.Text = bs.Current("cuil")
-				proveedor_id.Text = bs.Current("proveedor_id")
-			End If
-		End Using
+		Dim source As DataRowView = Persona.Seleccionar(Me, "PROVEEDOR")
+		If source Is Nothing Then
+			proveedor_razon.Text = source("razon")
+			proveedor_cuil.Text = source("cuil")
+			proveedor_id.Text = source("proveedor_id")
+		End If
 	End Sub
 
 	'Ticket

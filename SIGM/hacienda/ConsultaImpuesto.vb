@@ -165,21 +165,24 @@
 
             visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, dtab_imp)
         ElseIf sender Is bs_consulta Then
-            'Deuda agrupada para mostrar al pie de la consulta
-            info.Text = "Deuda Total:"
-            'Deuda total desde $1 usando código de la fila seleccionada del impuesto seleccionado
-            'No usa filtros, solo seleccion de impuesto y codigo
-            dtab_deto = Recaudacion.ConsultarDeuda(f1_impuesto.Text, True,
-                                  0, bs_consulta.Current("codigo"),
+            Dim source As DataRowView = bs_consulta.Current
+            If source Is Nothing = False Then
+                'Deuda agrupada para mostrar al pie de la consulta
+                info.Text = "Deuda Total:"
+                'Deuda total desde $1 usando código de la fila seleccionada del impuesto seleccionado
+                'No usa filtros, solo seleccion de impuesto y codigo
+                dtab_deto = Recaudacion.ConsultarDeuda(f1_impuesto.Text, True,
+                                  0, source("codigo"),
                                   Format(fecha.Value.Date, "MM/dd/yyyy"), interes.Value / 100,
                                   False, False, 1, 1,
                                   1898, Today.Year,
                                   True, mostrar_f2.Checked, mostrar_f3.Checked,
                                   progreso)
-            If dtab_deto.Rows.Count > 0 Then
-                info2.Text = "Deuda original: $" & dtab_deto.Rows(0)("original").ToString &
+                If dtab_deto.Rows.Count > 0 Then
+                    info2.Text = "Deuda original: $" & dtab_deto.Rows(0)("original").ToString &
                                  " | Mora: $" & dtab_deto.Rows(0)("mora").ToString &
                                  " | Total: $" & dtab_deto.Rows(0)("total").ToString
+                End If
             End If
         End If
         progreso.Value = 20

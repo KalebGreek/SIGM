@@ -41,7 +41,7 @@
 
     End Sub
     Private Sub AdelantosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AdelantosToolStripMenuItem.Click
-        Dim buscar1 As New BusquedaAdelanto
+        Dim buscar1 As New ConsultaAdelanto
         buscar1.GenSearchControl1.vista.SelectedIndex = 0
         buscar1.Show()
 

@@ -19,8 +19,8 @@ Class CtrlMan 'Control Manager
     End Sub
 
     'General Validation
-    Shared Function Validate(ByRef container As Object, Optional ByRef ErrorTooltip As ToolTip = Nothing,
-                             Optional DefaultColor As Color = Nothing, Optional ErrorColor As Color = Nothing) As Boolean
+    Overloads Shared Function Validate(ByRef container As Object, Optional ByRef ErrorTooltip As ToolTip = Nothing,
+                                       Optional DefaultColor As Color = Nothing, Optional ErrorColor As Color = Nothing) As Boolean
 
         'Flag
         Dim valid As Boolean = True
@@ -167,15 +167,14 @@ Class CtrlMan 'Control Manager
     End Sub
 
     'LOAD ALL THE CONTROLS!!!!1ONE
-    Overloads Shared Function LoadControlData(bs As BindingSource, ByVal target As Object) As Object
-        If bs Is Nothing = False Then
-            If bs.Count > 0 Then
-                target = LoadControls(bs.DataSource.Rows.Item(0), target)
-            End If
+    Overloads Shared Function LoadControlData(drView As DataRowView, ByVal target As Object) As Object
+        If drView Is Nothing = False Then
+            target = LoadControls(drView.Row, target)
         End If
         Return target
     End Function
     Overloads Shared Function LoadControlData(dtab As DataTable, ByVal target As Object) As Object
+        'Only loads the first row of the datatable
         If dtab Is Nothing = False Then
             target = LoadControls(dtab.Rows.Item(0), target)
         End If
@@ -243,7 +242,7 @@ Class CtrlMan 'Control Manager
         ''' <param name="bs">BindingSource containing the column collection.</param>
         ''' <param name="bsFilter">SQL-like filter that is being applied to the BindingSource.</param>
 
-        Overloads Shared Function Load(ByVal TargetVisor As DataGridView,
+        Overloads Shared Function Load(ByRef TargetVisor As DataGridView,
                                        ByRef bs As BindingSource, Optional bsFilter As String = "") As DataGridView
 
             Dim visor As DataGridView = TargetVisor
@@ -280,7 +279,7 @@ Class CtrlMan 'Control Manager
         ''' <param name="TargetVisor">Target DataGridView used to load data.</param>
         ''' <param name="dtab">Datatable linked to the BindingSource of the DataGridView</param>
         Overloads Shared Function Load(ByVal TargetVisor As DataGridView, ByRef bs As BindingSource,
-                                       ByVal dtab As DataTable) As DataGridView
+                                       ByVal dtab As DataTable, Optional bsFilter As String = "") As DataGridView
 
             Dim visor As DataGridView = TargetVisor
 
@@ -295,8 +294,17 @@ Class CtrlMan 'Control Manager
             visor.DataSource = Nothing
             bs.DataSource = Nothing
             bs.DataSource = dtab
-            visor.DataSource = bs
 
+            If bs.DataSource Is Nothing = False Then
+                'Aplicar filtro
+                bs.Filter = bsFilter
+                'Reiniciar posición
+                If bs.Count > 0 Then
+                    bs.Position = 0
+                End If
+                'Enlazar
+                visor.DataSource = bs
+            End If
             If visor.DataSource Is Nothing = False Then
                 'Dar formato
                 visor = FormatColumns(visor)
@@ -520,7 +528,6 @@ Class CtrlMan 'Control Manager
         End Function
 
         Overloads Shared Function SetAutocomplete(target As DateTimePicker, bs As BindingSource, FilterColumn As ComboBox) As DateTimePicker
-
             If target Is Nothing Then
                 target = New DateTimePicker
             End If
@@ -533,16 +540,20 @@ Class CtrlMan 'Control Manager
             If FilterColumn.SelectedIndex > -1 Then
                 'Return and sort range of values to use for the specified column
                 If FilterColumn.SelectedValue.ToString = "System.Date" Then
+                    Dim FirstRow, LastRow As DataRowView
                     bs.Sort = FilterColumn.Text & " ASC"
-
                     bs.MoveFirst()
-                    If bs.Current(FilterColumn.Text) Is DBNull.Value = False Then
-                        target.MinDate = bs.Current(FilterColumn.Text)
+                    FirstRow = bs.Current
+                    bs.MoveLast()
+                    LastRow = bs.Current
+
+                    If FirstRow(FilterColumn.Text) Is DBNull.Value = False Then
+                        target.MinDate = FirstRow(FilterColumn.Text)
                     End If
 
                     bs.MoveLast()
-                    If bs.Current(FilterColumn.Text) Is DBNull.Value = False Then
-                        target.MaxDate = bs.Current(FilterColumn.Text)
+                    If LastRow(FilterColumn.Text) Is DBNull.Value = False Then
+                        target.MaxDate = LastRow(FilterColumn.Text)
                     End If
 
                     If target.MaxDate >= Today Then
@@ -633,7 +644,7 @@ Class CtrlMan 'Control Manager
         'Obtener registros y columnas
         Dim dtab As DataTable = CType(source.DataSource, DataTable).Clone()
 
-        For Each i In source.List
+        For Each i As DataRowView In source.List
             Dim dr As DataRow = dtab.NewRow()
             For Each col As DataColumn In dtab.Columns
                 dr(col) = i(col.ColumnName)

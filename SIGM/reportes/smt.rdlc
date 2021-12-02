@@ -61,7 +61,7 @@
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>LightGrey</BackgroundColor>
+          <BackgroundColor>Black</BackgroundColor>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
@@ -258,7 +258,7 @@
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>LightGrey</BackgroundColor>
+          <BackgroundColor>Black</BackgroundColor>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
@@ -390,7 +390,7 @@
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>LightGrey</BackgroundColor>
+          <BackgroundColor>Black</BackgroundColor>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
@@ -1272,7 +1272,7 @@
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>LightGrey</BackgroundColor>
+          <BackgroundColor>Black</BackgroundColor>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>

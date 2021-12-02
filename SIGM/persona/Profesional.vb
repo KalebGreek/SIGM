@@ -1,11 +1,11 @@
 ﻿Class Profesional
-	Shared SelectSQL As String = "SELECT persona.id as persona_id, Persona.razon, Persona.cuil, Persona.difunto,
+	Shared ReadOnly SelectSQL As String = "SELECT persona.id as persona_id, Persona.razon, Persona.cuil, Persona.difunto,
 											 per_domicilio.calle, per_domicilio.altura, localidades.nombre as localidad,
 											 profesional.id As profesional_id, profesional.titulo_id,
 											 profesional_titulo.descripcion as titulo, 
 											 profesional.matricula as matricula"
 
-	Shared TableSQL As String = " FROM((Persona INNER JOIN (profesional_titulo
+	Shared ReadOnly TableSQL As String = " FROM((Persona INNER JOIN (profesional_titulo
 								INNER JOIN profesional On profesional_titulo.Id = profesional.titulo_id)
 										ON persona.id = profesional.per_id) LEFT JOIN per_domicilio
 										ON persona.id = per_domicilio.per_id) LEFT JOIN localidades

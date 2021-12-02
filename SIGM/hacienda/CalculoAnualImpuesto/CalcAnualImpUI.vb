@@ -12,11 +12,12 @@ Public Class CalcAnualImpUI
     End Sub
 
     Private Sub Impuesto_SelectedIndexChanged(sender As Object, e As EventArgs) Handles impuesto.SelectedIndexChanged
+        Dim source As DataRowView = bs_variables.Current
         tae.Text = 0
         If impuesto.Text = "COMERCIO" Then
-            tae.Text = bs_variables.Current("taecom").ToString
+            tae.Text = source("taecom").ToString
         ElseIf impuesto.Text = "CATASTRO" Then
-            tae.Text = bs_variables.Current("taecat").ToString
+            tae.Text = source("taecat").ToString
         End If
         tae.Text += "%"
     End Sub
@@ -60,12 +61,13 @@ Public Class CalcAnualImpUI
     End Sub
 
     Public Sub Agua()
+        Dim variables As DataRowView = bs_variables.Current
         Dim dtab(3) As DataTable
         Dim sqlInsertList(0) As String
         Dim sql(0) As String
 
         'Tablas: Zonas, Vence, Cuentas,  Deudas
-        CalculoAnual.sql.Agua.CargarTablas(dtab, periodo.Value, CuentaInicial.Value)
+        CalcAnualImp.Sql.Agua.CargarTablas(dtab, periodo.Value, CuentaInicial.Value)
 
         cuentas_modificadas = 0
         total_cuotas = 0
@@ -110,11 +112,11 @@ Public Class CalcAnualImpUI
                 cuota_max = 6
                 cuota = 1
                 Do While cuota <= cuota_max
-                    If CalculoAnual.Sql.Agua.VerificarCuota(dr, cuota, periodo.Value, dtab(3)) Then
+                    If CalcAnualImp.Sql.Agua.VerificarCuota(dr, cuota, periodo.Value, dtab(3)) Then
                         'No existente
                         cuota_mod += 1
                         ReDim Preserve sqlInsertList(total_cuotas)
-                        sqlInsertList(total_cuotas) = CalculoAnual.Sql.Agua.InsertarCuota(dr, cuota, periodo.Value, importe, dtab(1)(0),
+                        sqlInsertList(total_cuotas) = CalcAnualImp.Sql.Agua.InsertarCuota(dr, cuota, periodo.Value, importe, dtab(1)(0),
                                                                 reside, comercio, industria, franqueo)
                         total_cuotas += 1
                     End If
@@ -135,6 +137,7 @@ Public Class CalcAnualImpUI
     End Sub
 
     Public Sub Auto()
+        Dim variables As DataRowView = bs_variables.Current
         Dim dtab_cuenta, dtab_vence, dtab_deuda As DataTable
         Dim sqlInsertList(0) As String
         Dim sql(0) As String
@@ -167,10 +170,10 @@ Public Class CalcAnualImpUI
             cuota = 1
             cuota_max = 4
             Do While cuota <= cuota_max
-                If CalculoAnual.sql.Auto.VerificarCuota(dr, cuota, periodo.Value, dtab_deuda) Then
+                If CalcAnualImp.Sql.Auto.VerificarCuota(dr, cuota, periodo.Value, dtab_deuda) Then
                     cuota_mod += 1
                     ReDim Preserve sqlInsertList(total_cuotas)
-                    sqlInsertList(total_cuotas) = CalculoAnual.sql.Auto.InsertarCuota(dr, cuota, periodo.Value, importe, dtab_vence(0))
+                    sqlInsertList(total_cuotas) = CalcAnualImp.Sql.Auto.InsertarCuota(dr, cuota, periodo.Value, importe, dtab_vence(0))
                     total_cuotas += 1
                 End If
                 cuota += 1
@@ -188,12 +191,13 @@ Public Class CalcAnualImpUI
     End Sub
 
     Public Sub Catastro()
-        'Dim  dtab_vence, dtab_cuenta, dtab_deuda As DataTable
+        'Dim dtab_vence, dtab_cuenta, dtab_deuda As DataTable
+        Dim variables As DataRowView = bs_variables.Current
         Dim cuota, cuota_max As Integer
         Dim sql(2) As String
         Dim dtab(2) As DataTable
         Dim sqlInsertList(0) As String
-        dtab = CalculoAnual.sql.Catastro.CargarTablas(dtab, periodo.Value, CuentaInicial.Value)
+        dtab = CalcAnualImp.sql.Catastro.CargarTablas(dtab, periodo.Value, CuentaInicial.Value)
 
         cuentas_modificadas = 0
         total_cuotas = 0
@@ -201,8 +205,20 @@ Public Class CalcAnualImpUI
         progreso.Maximum = dtab(1).Rows.Count - 1
 
         For Each dr As DataRow In dtab(1).Rows
-            Dim basica, minimo, baldio, alumbrado, pasillo, agrario, comercio, jubilado,
-            vereda, parque, taecat, franqueo, importe, subtotal As New Decimal
+
+            Dim monto_minimo, monto_unidad, monto_pasillo, basica, rec_baldio, monto_baldio,
+                alumbrado_minimo, alumbrado_basico, monto_alumbrado, monto_agrario, monto_comercio,
+                desc_vereda, monto_vereda, desc_parque, monto_parque, desc_agrario1, desc_agrario2,
+                desc_jubilado, monto_jubilado, var_taecat, monto_taecat, monto_franqueo, importe, subtotal As New Decimal
+
+            Dim zona, esquino, comercial As Integer
+            Dim pasillo As Boolean = (CInt(dr("pasillo")) = 1)
+            Dim baldio As Boolean = (CInt(dr("baldio")) = 1)
+            Dim vereda As Boolean = (CInt(dr("vereda")) = 1)
+            Dim parque As Boolean = (CInt(dr("parque")) = 1)
+            comercial = dr("comercial")
+            Dim agrario As Boolean = (CInt(dr("agrario")) = 1)
+            Dim jubilado As Boolean = (CInt(dr("jubilado")) = 1)
             Dim metros As Decimal = 0
             Dim cuota_added As New Integer
             Dim frente(3) As Integer
@@ -211,144 +227,162 @@ Public Class CalcAnualImpUI
             frente(2) = CInt(dr("frente3"))
             frente(3) = CInt(dr("frente4"))
 
+            Dim monto_fijo(3) As Decimal
+            monto_fijo(0) = dr("monto_fijo1")
+            monto_fijo(1) = dr("monto_fijo2")
+            monto_fijo(2) = dr("monto_fijo3")
+            monto_fijo(3) = dr("monto_fijo4")
+
+            zona = CInt(dr("zona"))
+            esquino = CInt(dr("esquino"))
+            var_taecat = CDec(variables("taecat")) / 100
+            monto_minimo = dr("monto_minimo")
+            monto_unidad = dr("monto_unidad")
+            monto_pasillo = dr("monto_pasillo")
+            rec_baldio = dr("rec_baldio")
+            desc_vereda = dr("desc_vereda")
+            desc_parque = dr("desc_parque")
+            desc_agrario1 = dr("desc_agrario1")
+            desc_agrario2 = dr("desc_agrario2")
+            desc_jubilado = dr("desc_jubilado")
+            alumbrado_minimo = dr("alumbrado_minimo")
+            alumbrado_basico = dr("alumbrado_basico")
+
             'Calculo de importes
             basica = 0
-
             If frente(0) > 0 Then  'ESQUINA
                 Dim frentes As Integer = 0
                 metros += frente(0)
                 frentes += 1
 
-                If dr("zona") < 4 Then
+                If zona < 4 Then
                     If frente(1) > 0 Then
                         metros += frente(1)
                         frentes += 1
                     End If
                     If frente(2) > 0 Then
-                        metros += dr("frente3")
+                        metros += frente(2)
                         frentes += 1
                     End If
-                    If dr("frente4") > 0 Then
-                        metros += dr("frente4")
+                    If frente(3) > 0 Then
+                        metros += frente(3)
                         frentes += 1
                     End If
-                    If dr("esquino") = 1 Then
+                    If esquino = 1 Then
                         metros /= frentes
                     End If
                 End If
-                basica = dr("monto_unidad") * metros
+                basica = monto_unidad * metros
             End If
 
-            If dr("zona") = 6 Then
+            If zona = 6 Then
                 'LOTEOS Y BARRIOS PRIVADOS
-                If dr("frente1") > 2500 Then 'M2
-                    basica = dr("monto_fijo4")
-                ElseIf dr("frente1") > 1249 Then 'M2
-                    basica = dr("monto_fijo3")
-                ElseIf dr("frente1") > 799 Then 'M2
-                    basica = dr("monto_fijo2")
+                If frente(0) > 2500 Then 'M2
+                    basica = monto_fijo(3)
+                ElseIf frente(0) > 1249 Then 'M2
+                    basica = monto_fijo(2)
+                ElseIf frente(0) > 799 Then 'M2
+                    basica = monto_fijo(1)
                 Else
-                    basica = dr("monto_fijo1")
+                    basica = monto_fijo(0)
                 End If
-            ElseIf dr("zona") = 5 Then 'ZONA 5
-                Dim fraccion As Integer = dr("frente1") / 200
-                If CInt(dr("frente1")) Mod 200 > 0 Then
+            ElseIf zona = 5 Then 'ZONA 5
+                Dim fraccion As Integer = frente(0) / 200
+                If frente(0) Mod 200 > 0 Then
                     fraccion += 1
                 End If
-                basica = dr("monto_unidad") * fraccion
+                basica = monto_unidad * fraccion
             End If
 
             'Pasillo
-            pasillo = 0
-            If dr("pasillo") = 1 And dr("frente1") < 11 Then
-                pasillo = dr("monto_pasillo")
-                basica = pasillo
+            If pasillo And frente(0) < 11 Then
+                basica = monto_pasillo
             End If
 
             'Minimo
-            minimo = dr("monto_minimo")
-            If basica < minimo Then
-                basica = minimo
+
+            If basica < monto_minimo Then
+                basica = monto_minimo
             End If
 
             'TAE
-            taecat = basica * (bs_variables.Current("taecat") / 100)
+            monto_taecat = basica * var_taecat
 
-            subtotal = basica + taecat
+            subtotal = basica + monto_taecat
 
             'Baldio
-            If dr("baldio") = 1 Then
+            If baldio Then
                 'Recargo por alumbrado en baldío en zonas 1-5
-                If dr("zona") < 6 Then
+                If zona < 6 Then
 
                     If metros > 15 Then
-                        alumbrado = dr("alumbrado_basico") * metros
+                        monto_alumbrado = alumbrado_basico * metros
                     End If
-                    If alumbrado < dr("alumbrado_minimo") Then
-                        alumbrado = dr("alumbrado_minimo")
+                    If monto_alumbrado < alumbrado_minimo Then
+                        monto_alumbrado = alumbrado_minimo
                     End If
 
                     'Recargo por baldío en zonas 1-3
-                    If dr("zona") < 4 Then
-                        baldio = subtotal * (dr("rec_baldio") / 100)
+                    If zona < 4 Then
+                        monto_baldio = subtotal * (rec_baldio / 100)
                     End If
                 End If
 
                 'Descuento por vereda
-                If dr("vereda") = 1 Then
-                    vereda = subtotal * (dr("desc_vereda") / 100)
+                If vereda Then
+                    monto_vereda = subtotal * (desc_vereda / 100)
                 End If
                 'Descuento por parquizado
-                If dr("parque") = 1 Then
-                    parque = subtotal * (dr("desc_parque") / 100)
+                If parque Then
+                    monto_parque = subtotal * (desc_parque / 100)
                 End If
 
             End If
 
             'Recargo Actividad Comercial
-            comercio = 0
-            If dr("comercial") > 1 Then
-                Dim tipo_comercio As Integer = dr("comercial") - 1
-                comercio = subtotal * (dr("rec_comercio" & tipo_comercio) / 100)
+            monto_comercio = 0
+            If comercial > 0 Then
+                Dim tipo_comercio As Integer = comercial - 1
+                monto_comercio = subtotal * (comercial & tipo_comercio) / 100
             End If
 
             'Descuento por Actividad Agropecuaria (Agrario)
-            agrario = 0
-            If dr("agrario") = 1 Then
-                If dr("frente1") > 100 Then
-                    agrario = subtotal * (dr("desc_agrario2") / 100)
-                ElseIf dr("frente1") > 50 Then
-                    agrario = subtotal * (dr("desc_agrario1") / 100)
+            monto_agrario = 0
+            If agrario Then
+                If frente(0) > 100 Then
+                    monto_agrario = subtotal * (desc_agrario2 / 100)
+                ElseIf frente(0) > 50 Then
+                    monto_agrario = subtotal * (desc_agrario1 / 100)
                 End If
             End If
 
             'Descuento por Jubilado
-            jubilado = 0
-            If dr("jubilado") = 1 Then
-                jubilado = subtotal * (dr("desc_jubilado") / 100)
+            monto_jubilado = 0
+            If jubilado Then
+                monto_jubilado = subtotal * (desc_jubilado / 100)
             End If
 
             'Calcular recargos
-            subtotal = subtotal + baldio + comercio + alumbrado
+            subtotal = subtotal + baldio + monto_comercio + monto_alumbrado
             'Calcular descuentos
-            subtotal -= (vereda + parque + agrario + jubilado)
+            subtotal -= (monto_vereda + monto_parque + monto_agrario + monto_jubilado)
 
             'Franqueo
-            franqueo = bs_variables.Current("franqueo").ToString * 6
+            monto_franqueo = CDec(variables("franqueo")) * 6
 
             'Total
-            importe = subtotal + franqueo
+            importe = subtotal + monto_franqueo
 
             'Cuotas
             cuota = 1
             cuota_max = 6
             Do While cuota <= cuota_max
-                If CalculoAnual.sql.Catastro.VerificarCuota(dr, cuota, periodo.Value, dtab(2)) Then
+                If CalcAnualImp.Sql.Catastro.VerificarCuota(dr, cuota, periodo.Value, dtab(2)) Then
                     cuota_added += 1
                     ReDim Preserve sqlInsertList(total_cuotas)
-                    sqlInsertList(total_cuotas) = CalculoAnual.sql.Catastro.InsertarCuota(dr, cuota, periodo.Value, importe,
-                                                                   dtab(0)(0), minimo, basica, baldio, jubilado, pasillo,
-                                                                   agrario, comercio, alumbrado, vereda, parque, franqueo, taecat)
+                    sqlInsertList(total_cuotas) = CalcAnualImp.Sql.Catastro.InsertarCuota(dr, cuota, periodo.Value, importe,
+                                                                   dtab(0)(0), monto_minimo, basica, monto_baldio, monto_jubilado, monto_pasillo,
+                                                                   monto_agrario, monto_comercio, monto_alumbrado, monto_vereda, monto_parque, monto_franqueo, monto_taecat)
                     total_cuotas += 1
                 End If
                 cuota += 1
@@ -365,6 +399,7 @@ Public Class CalcAnualImpUI
     End Sub
 
     Public Sub Comercio()
+        Dim variables As DataRowView = bs_variables.Current
         Dim dtab_cuenta, dtab_vence, dtab_deuda As DataTable
         Dim minimo, taecom, importe, franqueo As New Decimal
         Dim cuota_max As Integer
@@ -403,7 +438,7 @@ Public Class CalcAnualImpUI
             Dim vence As Date = Date.Today
 
 
-            If dr("cuotas") > 0 Then
+            If CInt(dr("cuotas")) > 0 Then
                 cuota_max = dr("cuotas")
 
                 For ncuota As Integer = 1 To cuota_max
@@ -427,18 +462,18 @@ Public Class CalcAnualImpUI
                             vence = dtab_vence(0)("vence5")
                         End If
                     End If
-                    If dr("cantidad") > 1 Then
-                        minimo *= dr("cantidad")
+                    If CInt(dr("cantidad")) > 1 Then
+                        minimo *= CInt(dr("cantidad"))
                     End If
 
-                    taecom = minimo * (bs_variables.Current("taecom") / 100)
-                    franqueo = bs_variables.Current("franqueo")
+                    taecom = minimo * (CDec(variables("taecom")) / 100)
+                    franqueo = variables("franqueo")
                     importe = minimo + taecom + franqueo
 
-                    If CalculoAnual.sql.Comercio.VerificarCuota(dr, ncuota, dtab_deuda) Then
+                    If CalcAnualImp.Sql.Comercio.VerificarCuota(dr, ncuota, dtab_deuda) Then
                         cuota_added += 1
                         ReDim Preserve sqlInsertList(total_cuotas)
-                        sqlInsertList(total_cuotas) = CalculoAnual.sql.Comercio.InsertarCuota(dr, ncuota, periodo.Value, minimo, taecom,
+                        sqlInsertList(total_cuotas) = CalcAnualImp.Sql.Comercio.InsertarCuota(dr, ncuota, periodo.Value, minimo, taecom,
                                                                                                 franqueo, importe, vence)
                         total_cuotas += 1
                     End If
@@ -456,6 +491,7 @@ Public Class CalcAnualImpUI
     End Sub
 
     Public Sub Sepelio()
+        Dim variables As DataRowView = bs_variables.Current
         Dim dtab_cuenta, dtab_deuda As DataTable
         Dim sqlInsertList(0) As String
         Dim sqlSelect As String
@@ -485,28 +521,29 @@ Public Class CalcAnualImpUI
         Dim jubilado, importe As Decimal
         For Each dr As DataRow In dtab_cuenta.Rows
             Dim cuota_mod As New Integer
+            Dim fila As Integer = CInt(dr("fila"))
             jubilado = 0
             importe = 0
 
-            If dr("fila") > 0 Then
-                importe = dr("fila" & dr("fila"))
+            If fila > 0 Then
+                importe = dr("fila" & fila)
             End If
 
-            If importe < dr("minimo") Then
+            If importe < CDec(dr("minimo")) Then
                 importe = dr("minimo")
             End If
 
-            importe *= dr("espacio")
+            importe *= CInt(dr("espacio"))
 
-            If dr("jubilado") = 1 Then
-                jubilado = importe * (dr("desc_jubilado") / 100)
+            If CInt(dr("jubilado")) = 1 Then
+                jubilado = importe * (CDec(dr("desc_jubilado")) / 100)
                 importe -= jubilado
             End If
 
-            If CalculoAnual.sql.Sepelio.VerificarCuota(dr, periodo.Value, dtab_deuda) Then
+            If CalcAnualImp.Sql.Sepelio.VerificarCuota(dr, periodo.Value, dtab_deuda) Then
                 cuota_mod += 1
                 ReDim Preserve sqlInsertList(total_cuotas)
-                sqlInsertList(total_cuotas) = CalculoAnual.sql.Sepelio.InsertarCuota(dr, periodo.Value, importe, vence)
+                sqlInsertList(total_cuotas) = CalcAnualImp.Sql.Sepelio.InsertarCuota(dr, periodo.Value, importe, vence)
 
                 total_cuotas += 1
             End If

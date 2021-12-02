@@ -1,4 +1,4 @@
-﻿Public Class BusquedaMulta
+﻿Public Class ConsultaMulta
     'Private OleDBCmd As New OleDb.OleDbCommand
     Public Sub New()
         ' This call is required by the designer.
@@ -42,7 +42,7 @@
                     bs_resultado.Position = -1
                     bs_resultado.DataSource = dtab
                     CtrlMan.DataGridViewTools.Load(resultado, bs_resultado)
-                    bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource.Columns)
+                    bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(dtab.Columns)
                     .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
                     .filtro.SelectedIndex = 0
 
@@ -57,17 +57,18 @@
         If e.KeyValue = Keys.Enter And sender Is GenSearchControl1.keyword Then
             GenSearchControl1.search.PerformClick()
         ElseIf sender Is resultado Then
-            If bs_resultado.Position > -1 Then
+            Dim source As DataRowView = bs_resultado.Current
+            If source Is Nothing = False Then
                 If e.KeyValue = Keys.F2 Then
                     Using modMulta1 As New ModMulta
-                        modMulta1.boleta.Text = bs_resultado.Current("boleta")
+                        modMulta1.boleta.Text = source("boleta")
                         modMulta1.ShowDialog(Me)
                     End Using
                 ElseIf e.KeyValue = Keys.Delete Then
-                    If MsgBoxResult.Yes = MsgBox("Desea eliminar la multa N° " & bs_resultado.Current("boleta").ToString & "?",
+                    If MsgBoxResult.Yes = MsgBox("Desea eliminar la multa N° " & source("boleta").ToString & "?",
                                                  "Eliminar Multa", MsgBoxStyle.YesNo) Then
 
-                        Transito.Multas.Eliminar(bs_resultado.Current("historial_id"), bs_resultado.Current("vehiculo_id"))
+                        Transito.Multas.Eliminar(source("historial_id"), source("vehiculo_id"))
                         bs_resultado.RemoveCurrent()
                     End If
                 End If

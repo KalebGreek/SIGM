@@ -55,7 +55,7 @@
         End With
         CtrlMan.DataGridViewTools.Load(tabla_consulta, bs_consulta, dtab)
     End Sub
-    Private Sub reset_Click(sender As Object, e As EventArgs) Handles reset.Click
+    Private Sub Reset_Click(sender As Object, e As EventArgs) Handles reset.Click
         tabla_consulta.DataSource = Nothing
         bs_consulta.DataSource = Nothing
         Keyword.Clear()
@@ -66,27 +66,28 @@
         lote.Clear()
     End Sub
 
-    Private Sub cerrar_Click(sender As Object, e As EventArgs)
+    Private Sub Cerrar_Click(sender As Object, e As EventArgs)
         Me.MdiParent = Nothing
         Me.Close()
     End Sub
 
-    Private Sub tabla_consulta_KeyUp(sender As Object, e As KeyEventArgs) Handles tabla_consulta.KeyUp
+    Private Sub Tabla_consulta_KeyUp(sender As Object, e As KeyEventArgs) Handles tabla_consulta.KeyUp
         If e.KeyValue = Keys.F2 Then
-            If bs_consulta.Position > -1 Then
-                If bs_consulta.Current("opr_id") > 0 Then
-                    Using mod_i As New ModInmueble(bs_consulta.Current("opr_id"))
-                        mod_i.zona.Value = bs_consulta.Current("zona")
-                        mod_i.circ.Value = bs_consulta.Current("circ")
-                        mod_i.secc.Value = bs_consulta.Current("secc")
-                        mod_i.manz.Value = bs_consulta.Current("manz")
-                        mod_i.parc.Value = bs_consulta.Current("parc")
-                        mod_i.lote.Value = bs_consulta.Current("lote")
+            Dim source As DataRowView = DirectCast(bs_consulta.Current, DataRowView)
+            If source Is Nothing = False Then
+                If source("opr_id").ToString > 0 Then
+                    Using mod_i As New ModInmueble(source("opr_id"))
+                        mod_i.zona.Value = source("zona")
+                        mod_i.circ.Value = source("circ")
+                        mod_i.secc.Value = source("secc")
+                        mod_i.manz.Value = source("manz")
+                        mod_i.parc.Value = source("parc")
+                        mod_i.lote.Value = source("lote")
                         mod_i.ShowDialog(Me)
                     End Using
                 End If
             End If
-            End If
+        End If
     End Sub
 
     ' END SEARCH 

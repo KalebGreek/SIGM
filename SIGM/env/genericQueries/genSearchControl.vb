@@ -66,12 +66,12 @@
             If NumValue.Visible = False Then
                 NumValue.Minimum = 0
                 NumValue.Value = 0
-                NumValue.Maximum = 1
+                NumValue.Maximum = 999999
             End If
             If MaxNumValue.Visible = False Then
                 MaxNumValue.Minimum = 0
                 MaxNumValue.Value = 0
-                MaxNumValue.Maximum = 1
+                MaxNumValue.Maximum = 999999
             End If
         End If
     End Sub
@@ -188,10 +188,10 @@
 
         NumValue.Minimum = 0
         NumValue.Value = 0
-        NumValue.Maximum = 1
+        NumValue.Maximum = 999999
         MaxNumValue.Minimum = 0
         MaxNumValue.Value = 0
-        MaxNumValue.Maximum = 1
+        MaxNumValue.Maximum = 999999
 
         RaiseEvent CResetClick(sender)
     End Sub

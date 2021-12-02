@@ -1,5 +1,5 @@
 ﻿Imports System.Collections.Generic
-Public Class visor_error
+Public Class UIError
     Public Sub New(titulo As String, contenido As List(Of String))
         ' This call is required by the designer.
         InitializeComponent()

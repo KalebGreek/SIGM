@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class adelanto_page1
+Partial Class AdelantoPage1
 	Inherits System.Windows.Forms.UserControl
 
     'UserControl overrides dispose to clean up the component list.

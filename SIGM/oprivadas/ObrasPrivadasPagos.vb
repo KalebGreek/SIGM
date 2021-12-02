@@ -1,4 +1,4 @@
-﻿Class Pagos
+﻿Class ObrasPrivadasPagos
     Shared Function Consultar(opr_id As Integer, deuda As Boolean) As DataTable
         Dim sqlSelect As String = "SELECT opr_pago.id as id, tipo_deuda, cuota, deuda, vence, fecha_pago, pago
                                      FROM opr_pago
@@ -10,7 +10,7 @@
         Return DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB)
     End Function
     Shared Sub AgregarDeuda(opr_id As Integer, desc As String, monto As Double, cuotas As Integer, fecha As Date)
-        Dim sqlInsert As String
+        Dim sqlInsert As String = ""
         For cuota As Integer = 1 To cuotas 'Agrega monto dividido por cuotas
             'Calcular vencimientos
             'Agregar

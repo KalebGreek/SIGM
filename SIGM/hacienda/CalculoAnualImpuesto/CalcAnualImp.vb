@@ -1,4 +1,4 @@
-﻿Class CalculoAnual
+﻿Class CalcAnualImp
 	Public Class Sql
 		Public Class Agua
 			Shared Function CargarTablas(dtab As DataTable(), periodo As Integer, CuentaInicial As Integer) As DataTable()
@@ -49,20 +49,20 @@
 			Shared Function VerificarCuota(registro As DataRow, cuota As Integer, periodo As Integer,
 											deudas As DataTable) As Boolean
 
-				Dim result As DataRow() = deudas.Select("codigo=" & registro("codigo") & " And moratoria='N' AND cuota=" & cuota & " 
-															  And ano=" & periodo)
+				Dim result As DataRow() = deudas.Select("codigo=" & registro("codigo").ToString & " And moratoria='N' AND cuota=" & cuota.ToString & " 
+															  And ano=" & periodo.ToString)
 
-				Return result.any = 0
+				Return result.Any = 0
 			End Function
 			Shared Function InsertarCuota(registro As DataRow, cuota As Integer, periodo As Integer,
 									 importe As Decimal, vence As DataRow) As String
 				Return "INSERT INTO autocue(cedulon, cuota, ano, moratoria, codigo, razon,
 															marca, modelo, apagar, gastos, total, total1,
 															total2, vencimi1, vencimi2, vencimi3, apagado, fecha, link)
-													VALUES(0, " & cuota & ", " & periodo & ", 'N', " & registro("codigo") & ",
-															'" & Trim(registro("razon")) & "', '" & Trim(registro("marca")) & "',
-															" & registro("modelo") & ", " & importe & ", 0, " & importe & ",
-															" & importe & ", " & importe & ", {" & vence("vence" & cuota) & "}, {}, {}, 0, {}, '')"
+													VALUES(0, " & cuota.ToString & ", " & periodo.ToString & ", 'N', " & registro("codigo").ToString & ",
+															'" & Trim(registro("razon").ToString) & "', '" & Trim(registro("marca").ToString) & "',
+															" & registro("modelo").ToString & ", " & importe.ToString & ", 0, " & importe.ToString & ",
+															" & importe.ToString & ", " & importe.ToString & ", {" & vence("vence" & cuota).ToString & "}, {}, {}, 0, {}, '')"
 			End Function
 		End Class
 		Public Class Catastro
@@ -132,27 +132,17 @@
 				sqlDecValue(11) = FormatNumber(franqueo / 6, 2, TriState.False, TriState.False, TriState.False)
 				sqlDecValue(12) = FormatNumber(taecat / 6, 2, TriState.False, TriState.False, TriState.False)
 				'Valor bimestral
-
-				'Return CInt(DbMan.editDB(Nothing, My.Settings.foxConnection, "INSERT INTO catcue(tipo, mes, agrupado, periodo, codigo, cedulon,
-				'							   importe, original, vencio, pagado, pago, basica, 
-				'							   minimo, baldio, jubilado, esquina, pasillo, agropec, 
-				'							   contado, franqueo, chapa, alumbrado, vereda, parque, 
-				'							   ochoa, ochob, ochoc, ochod, tae, agua, link, comercial)
-				'						VALUES('N', " & cuota & ", '', " & periodo & ", " & registro("codigo") & ", 0,
-				'								" & sqlDecValue(0) & ", " & sqlDecValue(0) & ", {" & vence("vence" & cuota) & "}, 0, {}, " & sqlDecValue(2) & ",
-				'								" & sqlDecValue(1) & ", " & sqlDecValue(3) & ", " & sqlDecValue(4) & ", 0, " & sqlDecValue(5) & ", " & sqlDecValue(6) & ",
-				'							   0, " & sqlDecValue(11) & ", 0, " & sqlDecValue(8) & ", " & sqlDecValue(9) & ", " & sqlDecValue(10) & ",
-				'							   0, 0, 0, 0, " & sqlDecValue(12) & ", 0, '', " & sqlDecValue(7) & ")"))
 				Return "INSERT INTO catcue(tipo, mes, agrupado, periodo, codigo, cedulon,
 											   importe, original, vencio, pagado, pago, basica, 
 											   minimo, baldio, jubilado, esquina, pasillo, agropec, 
 											   contado, franqueo, chapa, alumbrado, vereda, parque, 
 											   ochoa, ochob, ochoc, ochod, tae, agua, link, comercial)
-										VALUES('N', " & cuota & ", '', " & periodo & ", " & registro("codigo") & ", 0,
-												" & sqlDecValue(0) & ", " & sqlDecValue(0) & ", {" & vence("vence" & cuota) & "}, 0, {}, " & sqlDecValue(2) & ",
-												" & sqlDecValue(1) & ", " & sqlDecValue(3) & ", " & sqlDecValue(4) & ", 0, " & sqlDecValue(5) & ", " & sqlDecValue(6) & ",
-											   0, " & sqlDecValue(11) & ", 0, " & sqlDecValue(8) & ", " & sqlDecValue(9) & ", " & sqlDecValue(10) & ",
-											   0, 0, 0, 0, " & sqlDecValue(12) & ", 0, '', " & sqlDecValue(7) & ");"
+										VALUES('N', " & cuota & ", '', " & periodo & ", " & registro("codigo").ToString & ", 0,
+												" & sqlDecValue(0) & ", " & sqlDecValue(0) & ", {" & vence("vence" & cuota).ToString & "}, 0, {}, 
+												" & sqlDecValue(2) & ", " & sqlDecValue(1) & ", " & sqlDecValue(3) & ", " & sqlDecValue(4) & ", 0, 
+												" & sqlDecValue(5) & ", " & sqlDecValue(6) & ", 0, " & sqlDecValue(11) & ", 0, " & sqlDecValue(8) & ", 
+												" & sqlDecValue(9) & ", " & sqlDecValue(10) & ", 0, 0, 0, 0, " & sqlDecValue(12) & ", 0, 
+												'', " & sqlDecValue(7) & ");"
 
 			End Function
 		End Class

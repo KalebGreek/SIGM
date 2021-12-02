@@ -37,7 +37,7 @@ Class Formularios
 
     'Rutinas
 
-    Private Sub MenuList(sender As Object, e As EventArgs)
+    Private Sub MenuList(sender As ToolStripMenuItem, e As EventArgs)
 
         If sender Is clm Then
             Dim param As New List(Of ReportParameter)
@@ -145,5 +145,4 @@ Class Formularios
             End If
         End With
     End Sub
-
 End Class

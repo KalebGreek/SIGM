@@ -4,15 +4,18 @@ Class Acceso
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
-
         ' Add any initialization after the InitializeComponent() call.
-        ConfigInit(Me)
-        ServerList.DataSource = ListDBConnections()
-        ServerList.SelectedIndex = 0
-        user.Focus()
     End Sub
 
     ' GUI 
+    Private Sub Acceso_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+        If Me.Visible Then
+            ConfigInit(Me)
+            ServerList.DataSource = ListDBConnections()
+            ServerList.SelectedIndex = 0
+            user.Focus()
+        End If
+    End Sub
     Private Sub user_GotFocus(sender As Object, e As EventArgs) Handles user.GotFocus
         user.Clear()
     End Sub
@@ -86,6 +89,8 @@ Class Acceso
             user.Focus()
         End If
     End Sub
+
+
     ' END VALIDATION 
 
 End Class

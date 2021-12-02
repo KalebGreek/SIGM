@@ -1,21 +1,21 @@
-﻿Imports Microsoft.Reporting.WinForms
-
-Class ModInmueble
+﻿Class ModInmueble
     Public Sub New(OprId As Integer)
         ' This call is required by the designer.
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
+        Menu1.BackColor = ColorCatastro
+        subtitulo.ForeColor = ColorCatastro
         opr_id.Text = OprId.ToString()
     End Sub
     ' GUI
 
-    Private Sub grupo_mod_VisibleChanged(sender As Object, e As EventArgs) Handles grupo_mod.VisibleChanged
+    Private Sub Grupo_mod_VisibleChanged(sender As Object, e As EventArgs) Handles grupo_mod.VisibleChanged
         If Me.Visible Then
             SelectorCatastro()
         End If
     End Sub
 
-    Private Sub grupo_mod_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grupo_mod.SelectedIndexChanged
+    Private Sub Grupo_mod_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grupo_mod.SelectedIndexChanged
         back.Enabled = True
         siguiente.Text = "SIGUIENTE >"
         If grupo_mod.SelectedIndex = 5 Then
@@ -82,7 +82,6 @@ Class ModInmueble
     End Sub
     Private Sub MostrarResumen()
         catastro_id.Text = Catastro.SeleccionarPartida(zona.Value, circ.Value, secc.Value, manz.Value, parc.Value, lote.Value)
-        BSCat.DataSource = Nothing
         Dim registro As DataRow = Catastro.Seleccionar(catastro_id.Text)
 
         titular_id.Text = 0
@@ -148,7 +147,7 @@ Class ModInmueble
                       " M" & manz.Value & " P" & parc.Value & " L" & lote.Value
     End Sub
 
-    Private Sub Cargar(registro As BindingSource)
+    Private Sub Cargar(registro As DataRow)
 
         Dim sql(3) As String
 
@@ -158,13 +157,10 @@ Class ModInmueble
         titular_id.Text = 0
 
         'detalles
-        If registro.Count > 0 Then
-            CtrlMan.LoadControlData(registro.DataSource, tab_ubicacion)
-            If archivado.Checked Then
-                archivado.Enabled = False
-            End If
+        CtrlMan.LoadControlData(registro, tab_ubicacion)
+        If archivado.Checked Then
+            archivado.Enabled = False
         End If
-
 
         'frentes
         CtrlMan.DataGridViewTools.Load(consulta_frente, BSFrente, Catastro.ListarFrente(catastro_id.Text))
@@ -265,7 +261,7 @@ Class ModInmueble
         End If
 
         If valido = False Then
-            Using error_form As New visor_error("Errores en Inmueble", msg)
+            Using error_form As New UIError("Errores en Inmueble", msg)
                 dr = error_form.ShowDialog(Me)
             End Using
         End If
@@ -306,8 +302,9 @@ Class ModInmueble
             ElseIf .SelectedIndex = 5 Then 'documentos
                 Catastro.Agregar.Documento(BSCopia.DataSource, catastro_id.Text)
             End If
-            If BSCat.Position > -1 Then
-                Cargar(BSCat)
+            Dim registro As DataRow = Catastro.Seleccionar(catastro_id.Text)
+            If registro Is Nothing = False Then
+                Cargar(registro)
             End If
         End With
     End Sub
@@ -325,23 +322,18 @@ Class ModInmueble
     End Sub
 
     Private Sub mod_titular_Click(sender As Object, e As EventArgs) Handles mod_titular.Click
-        Dim bs As BindingSource = Persona.Seleccionar(Me)
-        With bs
-            If .DataSource Is Nothing = False Then
-                If .Position > -1 Then
-                    titular_id.Text = .Current("persona_id").ToString
-                    titular.Text = .Current("razon").ToString
-                    cuil.Text = .Current("cuil").ToString
-                    difunto.Checked = .Current("difunto")
-                End If
-            Else
-                titular_id.Text = 0
-                titular.Clear()
-                cuil.Clear()
-                difunto.Checked = False
-            End If
-            .Dispose()
-        End With
+        Dim source As DataRowView = Persona.Seleccionar(Me)
+        If source Is Nothing = False Then
+            titular_id.Text = source("persona_id").ToString
+            titular.Text = source("razon").ToString
+            cuil.Text = source("cuil").ToString
+            difunto.Checked = source("difunto")
+        Else
+            titular_id.Text = 0
+            titular.Clear()
+            cuil.Clear()
+            difunto.Checked = False
+        End If
     End Sub
     Private Sub titular_TextChanged(sender As Object, e As EventArgs) Handles titular.TextChanged
         info_titular.Text = titular.Text
@@ -382,14 +374,14 @@ Class ModInmueble
                 End With
             End Using
         ElseIf BSFrente.Position > -1 Then
+            Dim FrenteId As Integer = BSFrente.Current("frente_id")
             If sender Is ubicacion_principal Then
-                Dim FrenteId As Integer = BSFrente.Current.Row("frente_id")
-                Catastro.Modificar.Ubicacion(frenteId, catastro_id.Text)
+                Catastro.Modificar.Ubicacion(FrenteId, catastro_id.Text)
             ElseIf sender Is del_frente Then
-                Catastro.Eliminar.Frente(BSFrente)
+                Catastro.Eliminar.Frente(FrenteId)
             End If
         End If
-        CtrlMan.DataGridViewTools.Load(consulta_frente, Catastro.ListarFrente(catastro_id.Text))
+        CtrlMan.DataGridViewTools.Load(consulta_frente, BSFrente, Catastro.ListarFrente(catastro_id.Text))
     End Sub
 
     ' SUPERFICIE
@@ -460,7 +452,7 @@ Class ModInmueble
         If BSCopia.Position > -1 Then
             Try
                 Process.Start(root & My.Settings.DocFolderCatastro & BSCopia.Current("ruta").ToString)
-            Catch ex As LocalProcessingException
+            Catch ex As Exception
                 MsgBox(ex.GetBaseException.Message, MsgBoxStyle.Exclamation, "Error")
             End Try
         End If

@@ -247,7 +247,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>8.22675cm</Top>
+        <Top>8.20262cm</Top>
         <Left>0.03176cm</Left>
         <Height>0.69525cm</Height>
         <Width>20cm</Width>
@@ -256,7 +256,7 @@
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>LightGrey</BackgroundColor>
+          <BackgroundColor>Black</BackgroundColor>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
@@ -490,7 +490,7 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <Top>0.75227cm</Top>
+        <Top>0.72814cm</Top>
         <Left>0.03176cm</Left>
         <Height>0.69525cm</Height>
         <Width>20cm</Width>
@@ -499,7 +499,7 @@
           <Border>
             <Style>None</Style>
           </Border>
-          <BackgroundColor>LightGrey</BackgroundColor>
+          <BackgroundColor>Black</BackgroundColor>
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>

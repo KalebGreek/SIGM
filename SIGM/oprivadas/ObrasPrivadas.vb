@@ -1,4 +1,4 @@
-﻿Class Oprivadas
+﻿Class ObrasPrivadas
 
     Shared ReadOnly SQLTable _
     As String = " FROM ((((profesional_titulo INNER JOIN ((profesional 
@@ -14,9 +14,8 @@
 				INNER JOIN per_domicilio AS per_domicilio_1 ON localidades_1.id = per_domicilio_1.localidad_id) 
 				ON persona_1.id = per_domicilio_1.per_id) LEFT JOIN opr_documento ON oprivadas.Id = opr_documento.opr_id"
 
-    Shared SQLWhere _
-    As String = " WHERE responsable_expediente.principal=True And cat_frente.ubicacion=True
-				AND per_domicilio.principal=True AND per_domicilio_1.principal=True"
+    Shared ReadOnly SQLWhere As String = " WHERE responsable_expediente.principal=True And cat_frente.ubicacion=True
+				                             AND per_domicilio.principal=True AND per_domicilio_1.principal=True"
 
     'As String = " FROM profesional_titulo INNER JOIN ((persona INNER JOIN (profesional INNER JOIN
     '              (oprivadas INNER JOIN responsable_expediente ON oprivadas.Id = responsable_expediente.opr_id)

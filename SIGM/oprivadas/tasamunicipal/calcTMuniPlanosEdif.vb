@@ -1,21 +1,20 @@
 ﻿Imports System.Collections.Generic
 Class calcTMuniPlanosEdif
     Public help_source As New List(Of String)
-    Dim basico, ad_sismico, desc_renovacion, linea_muni1, linea_muni2, ad_linea_muni As Decimal
+    Dim variables(5) As DataRowView
 
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles Me.Load
         If Me.Visible Then
-
             bs_tasa_edificacion.DataSource = DbMan.ReadDB("SELECT id as tasa_edificacion_id, articulo, valor, descripcion 
                                                              FROM opr_tasa_edificacion",
                                                           My.Settings.CurrentDB, "opr_tasa_edificacion")
 
-            basico = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "basico"))("valor")
-            ad_sismico = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "85b"))("valor")
-            desc_renovacion = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "88"))("valor")
-            linea_muni1 = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "93a"))("valor")
-            linea_muni2 = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "93b"))("valor")
-            ad_linea_muni = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "93c"))("valor")
+            variables(0) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "basico")) 'Basico
+            variables(1) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "85b")) 'Antisismico
+            variables(2) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "88")) 'descuento renovacion
+            variables(3) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "93a")) 'linea municipal 1
+            variables(4) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "93b")) 'linea municipal 2
+            variables(5) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "93c")) 'ad linea municipal
 
             bs_indice_inmueble.DataSource = DbMan.ReadDB("SELECT id as tasa_edificacion_id, articulo, valor*alicuota as indice, descripcion
                                                             FROM opr_tasa_edificacion WHERE visible=True ORDER BY descripcion",
@@ -63,6 +62,14 @@ Class calcTMuniPlanosEdif
     Private Sub calcular()
         Dim superficie, total_superficie As Decimal
         Dim ad_categoria, subtotal, descuento As Decimal
+        Dim basico, ad_sismico, desc_renovacion, linea_muni1, linea_muni2, ad_linea_muni As Decimal
+
+        basico = variables(0)("valor")
+        ad_sismico = variables(1)("valor")
+        desc_renovacion = variables(2)("valor")
+        linea_muni1 = variables(3)("valor")
+        linea_muni2 = variables(4)("valor")
+        ad_linea_muni = variables(5)("valor")
 
         'Urbanización
         For Each c As Control In lista_edificacion.Controls

@@ -32,21 +32,18 @@
             BottomMenu.Show()
             wrapper.Show()
         ElseIf sender Is delete Then
-            With bs_intimaciones
-                If .DataSource Is Nothing = False Then
-                    If .Position > -1 Then
-                        If DialogResult.Yes = MessageBox.Show("Desea eliminar este registro?", "Eliminar registro", MessageBoxButtons.YesNo, MessageBoxIcon.Question) Then
-                            Dim ing As Date = .Current("ingreso")
-                            DbMan.EditDB("DELETE FROM hac_intimaciones
+            Dim intimacion As DataRowView = bs_intimaciones.Current
+            If intimacion Is Nothing = False Then
+                If DialogResult.Yes = MessageBox.Show("Desea eliminar este registro?", "Eliminar registro", MessageBoxButtons.YesNo, MessageBoxIcon.Question) Then
+                    Dim ing As Date = intimacion("ingreso")
+                    DbMan.EditDB("DELETE FROM hac_intimaciones
                                                 WHERE codigo=" & codigo.Text & " AND servicio='" & servicio.Text & "'
                                                   AND ingreso={^" & ing.Year & "/" & ing.Month & "/" & ing.Day & "}
-                                                  AND observacion='" & .Current("observacion") & "' AND estado='" & .Current("estado") & "'",
-                                         My.Settings.foxConnection)
+                                                  AND observacion='" & intimacion("observacion").ToString & "' AND estado='" & intimacion("estado").ToString & "'",
+                                 My.Settings.foxConnection)
 
-                        End If
-                    End If
                 End If
-            End With
+            End If
         ElseIf sender Is cancel Then
             visor_intimaciones.Show()
             TopMenu.Show()
@@ -106,14 +103,14 @@
     End Sub
 
     Private Sub visor_intimaciones_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles visor_intimaciones.CellContentDoubleClick
-        With bs_intimaciones
-            If .Position > -1 Then
-                MsgBox("Ingreso:" & .Current("ingreso") & Chr(13) _
-                        & "Estado:" & .Current("estado") & Chr(13) _
-                        & .Current("observacion"), MsgBoxStyle.Information, "Cuenta N°" & codigo.Text)
+        Dim source As DataRowView = bs_intimaciones.Current
+        If source Is Nothing = False Then
+            MsgBox("Ingreso:" & source("ingreso").ToString & Chr(13) _
+                        & "Estado:" & source("estado").ToString & Chr(13) _
+                        & source("observacion").ToString, MsgBoxStyle.Information, "Cuenta N°" & codigo.Text)
 
-            End If
-        End With
+        End If
+
     End Sub
 
 End Class

@@ -1,4 +1,4 @@
-﻿Public Class BusquedaExpediente
+﻿Public Class ConsultaExp
     Private Sub ConsultaPersona_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
         If Me.Visible Then
             'Setting up views
@@ -25,11 +25,11 @@
                 Dim dtab As New DataTable
                 .filtro.DataSource = Nothing
                 If .vista.Text = "EXPEDIENTE" Then
-                    dtab = Oprivadas.Expediente.Buscar.Expediente()
+                    dtab = ObrasPrivadas.Expediente.Buscar.Expediente()
                 ElseIf .vista.Text = "RESPONSABLE" Then
-                    dtab = Oprivadas.Expediente.Buscar.Responsable()
+                    dtab = ObrasPrivadas.Expediente.Buscar.Responsable()
                 ElseIf .vista.Text = "PROFESIONAL" Then
-                    dtab = Oprivadas.Expediente.Buscar.Profesional()
+                    dtab = ObrasPrivadas.Expediente.Buscar.Profesional()
                 End If
                 If dtab Is Nothing = False Then
                     bs_resultado.Filter = ""
@@ -38,8 +38,7 @@
                     bs_resultado.DataSource = dtab
                     CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, .bsCustomFilter)
                     Dim bs_ColumnList As New BindingSource _
-                        With {.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource.Columns)}
-
+                        With {.DataSource = CtrlMan.Fill.GetColumnList(dtab.Columns)}
                     CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
                     .FilterSearch()
                     bs_resultado.Filter = .bsCustomFilter
@@ -57,11 +56,12 @@
     End Sub
 
     Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles resultado.KeyUp
-        If sender Is resultado And resultado.DataSource Is Nothing = False Then
+        If sender Is resultado And TypeOf resultado.DataSource Is BindingSource Then
             If e.KeyValue = Keys.F2 Then
-                If resultado.DataSource.Position > -1 Then
+                Dim source As DataRowView = DirectCast(resultado.DataSource, BindingSource).Current
+                If source Is Nothing = False Then
                     Using mexp As New ModExpediente()
-                        mexp.exp = CInt(resultado.DataSource.Current("expediente"))
+                        mexp.exp = CInt(source("expediente"))
                         mexp.ShowDialog()
                     End Using
                     ControlBusqueda1.search.PerformClick()

@@ -12,7 +12,7 @@
 		End Using
 	End Sub
 	Private Sub BuscarPersonaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarPersonaToolStripMenuItem.Click
-		Dim buscar1 As New BusquedaPersona With {.MdiParent = Me.Parent}
+		Dim buscar1 As New ConsultaPersona With {.MdiParent = Me.Parent}
 		buscar1.Show()
 	End Sub
 	Private Sub BuscarActaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarActaToolStripMenuItem.Click

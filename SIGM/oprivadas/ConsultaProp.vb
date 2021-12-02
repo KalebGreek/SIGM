@@ -1,4 +1,4 @@
-﻿Public Class BusquedaPropietario
+﻿Public Class ConsultaProp
     Public Sub New()
 
         ' This call is required by the designer.
@@ -33,18 +33,16 @@
     End Sub
 
     Private Sub vista_SelectedIndexChanged() Handles genSearchControl1.CVistaIndexTextChanged
-
         With genSearchControl1
             If .vista.SelectedIndex > -1 Then
                 .filtro.DataSource = Nothing
                 If .vista.Text = "PROPIETARIO" Then
                     Dim dtab As DataTable = DbMan.ReadDB("SELECT * FROM catastro", My.Settings.foxConnection)
                     If dtab Is Nothing = False Then
-                        bs_resultado = New BindingSource
-                        bs_resultado.DataSource = dtab
+                        bs_resultado = New BindingSource With {.DataSource = dtab}
                         CtrlMan.DataGridViewTools.Load(resultado, bs_resultado)
                         Dim bs_ColumnList As New BindingSource _
-                            With {.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource.Columns)}
+                            With {.DataSource = CtrlMan.Fill.GetColumnList(dtab.Columns)}
                         .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
                         Consultar()
                     End If

@@ -12,17 +12,17 @@ Class ModExpediente
             End If
             exp = Val(InputBox("Ingrese Nº de Expediente", "Seleccionar Expediente", exp))
             If exp <> Nothing Then
-                bs_expediente.DataSource = Oprivadas.Expediente.Seleccionar(exp)
+                bs_expediente.DataSource = ObrasPrivadas.Expediente.Seleccionar(exp)
                 If bs_expediente.Count = 0 Then
-                    bs_expediente.DataSource = Oprivadas.Expediente.Generar(exp)
+                    bs_expediente.DataSource = ObrasPrivadas.Expediente.Generar(exp)
                 End If
             End If
         Loop Until exp = Nothing Or bs_expediente.DataSource Is Nothing = False
         If exp = Nothing Then
             bs_expediente.DataSource = Nothing
         Else
-            Oprivadas.Expediente.Bloquear(bs_expediente.Current("id"), True)
-            cargar(bs_expediente)
+            ObrasPrivadas.Expediente.Bloquear(bs_expediente.Current("id"), True)
+            cargar(bs_expediente.Current)
         End If
     End Sub
 
@@ -37,7 +37,7 @@ Class ModExpediente
 
     Private Sub ModExpediente_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         If opr_id.Text > 0 And temporal.Visible = False Then
-            Oprivadas.Expediente.Bloquear(opr_id.Text, False)
+            ObrasPrivadas.Expediente.Bloquear(opr_id.Text, False)
         End If
     End Sub
 
@@ -57,16 +57,16 @@ Class ModExpediente
                     Me.Close()
                 End If
             End If
-            bs_expediente.DataSource = Oprivadas.Expediente.Seleccionar(expediente.Text)
-            cargar(bs_expediente)
+            bs_expediente.DataSource = ObrasPrivadas.Expediente.Seleccionar(expediente.Text)
+            cargar(bs_expediente.Current)
         End If
     End Sub
 
     Private Sub grupo_exp_TabIndexChanged(sender As Object, e As EventArgs) Handles grupo_exp.TabIndexChanged
         If Me.Visible Then
-            bs_expediente.DataSource = Oprivadas.Expediente.Seleccionar(expediente.Text)
+            bs_expediente.DataSource = ObrasPrivadas.Expediente.Seleccionar(expediente.Text)
             If bs_expediente.DataSource Is Nothing = False Then
-                cargar(bs_expediente)
+                cargar(bs_expediente.Current)
             End If
         End If
     End Sub
@@ -92,27 +92,27 @@ Class ModExpediente
     '###### END GUI #############################################################################################
 
     '###### VALIDATION ##########################################################################################
-    Private Sub cargar(registro As BindingSource)
+    Private Sub cargar(registro As DataRowView)
         razon.Clear()
         cuil.Clear()
         matricula.Clear()
 
         With registro
-            If .Count > 0 Then
+            If registro Is Nothing = False Then
                 'Reset
                 check_fin_obra.Checked = False
                 fin_obra.Value = fin_obra.MinDate
                 ruta_fin_obra.Text = ""
 
                 'Estos controles estan fuera de GrupoExp
-                opr_id.Text = .Current("id")
-                temporal.Visible = .Current("temporal")
-                expediente.Text = .Current("expediente")
+                opr_id.Text = registro("id")
+                temporal.Visible = registro("temporal")
+                expediente.Text = registro("expediente")
                 '##### EXPEDIENTE (base)
                 CtrlMan.LoadControlData(registro, grupoExp)
                 'Tareas se carga al reves por alguna razon, asi que no sirve
-                tarea.Text = .Current("tarea").ToString
-                tarea2.Text = .Current("tarea2").ToString
+                tarea.Text = registro("tarea").ToString
+                tarea2.Text = registro("tarea2").ToString
                 'Mostrar final de obra
                 check_fin_obra.Checked = fin_obra.Value > fin_obra.MinDate
 
@@ -127,7 +127,7 @@ Class ModExpediente
                 bs_resp.Filter = ""
                 bs_resp.Sort = ""
                 bs_resp.Position = -1
-                bs_resp.DataSource = Oprivadas.Expediente.ListarResponsables(expediente.Text)
+                bs_resp.DataSource = ObrasPrivadas.Expediente.ListarResponsables(expediente.Text)
                 CtrlMan.DataGridViewTools.Load(consulta_resp, bs_resp)
                 'INMUEBLES
                 bs_catastro.Filter = ""
@@ -136,7 +136,7 @@ Class ModExpediente
                 bs_catastro.DataSource = Catastro.ListarInmueblePorExpediente(expediente.Text)
                 CtrlMan.DataGridViewTools.Load(consulta_inmueble, bs_catastro)
                 'PROFESIONAL
-                profesional_id.Text = .Current("profesional_id").ToString
+                profesional_id.Text = registro("profesional_id").ToString
 
                 If profesional_id.Text > 0 Then
                     Dim drow As DataRow = Profesional.Seleccionar(profesional_id.Text, 0)
@@ -211,7 +211,7 @@ Class ModExpediente
                                               End Function)
 
         If valido > -1 Then
-            Using ver_error As New visor_error("Errores en Expediente", msg)
+            Using ver_error As New UIError("Errores en Expediente", msg)
                 Dim answer As DialogResult = ver_error.ShowDialog(Me)
 
                 If answer = DialogResult.OK Then
@@ -229,15 +229,15 @@ Class ModExpediente
         Dim result As MsgBoxResult = validar(pagina)
         If result = MsgBoxResult.Yes Then
             If pagina = 0 Then 'Responsables
-                Oprivadas.Expediente.LimpiarResponsable(opr_id.Text)
-                Oprivadas.Expediente.AgregarResponsable(bs_resp.DataSource, opr_id.Text, bs_resp.Current("persona_id"))
-                Oprivadas.Expediente.ActualizarProfesional(opr_id.Text, profesional_id.Text)
+                ObrasPrivadas.Expediente.LimpiarResponsable(opr_id.Text)
+                ObrasPrivadas.Expediente.AgregarResponsable(bs_resp.DataSource, opr_id.Text, bs_resp.Current("persona_id"))
+                ObrasPrivadas.Expediente.ActualizarProfesional(opr_id.Text, profesional_id.Text)
 
             ElseIf pagina = 1 Then 'Inmuebles
                 'Los cambios se producen en el momento, no es necesario guardar
 
             ElseIf pagina = 2 Then 'Expediente
-                Oprivadas.Expediente.ActualizarDetalle(opr_id.Text, inicio_obra.Value, visado.Checked, fin_obra.Value,
+                ObrasPrivadas.Expediente.ActualizarDetalle(opr_id.Text, inicio_obra.Value, visado.Checked, fin_obra.Value,
                                                        recibe.Text, tarea.Text, tarea2.Text, Trim(observaciones.Text))
 
                 If (visado.Checked And fin_obra.Value <> fin_obra.MinDate) = False Then
@@ -296,21 +296,18 @@ Class ModExpediente
 
     '# PERSONA 
     Private Sub add_resp_Click(sender As Object, e As EventArgs) Handles add_resp.Click
-        Dim bs As BindingSource = Persona.Seleccionar(Me)
-        With bs
-            'Se agrega el registro temporal
-            If .Position > -1 Then
-                bs_resp.AddNew()
-                bs_resp.Current("persona_id") = .Current("persona_id").ToString
-                bs_resp.Current("razon") = .Current("razon").ToString
-                bs_resp.Current("cuil") = .Current("cuil").ToString
-                bs_resp.Current("email") = .Current("email").ToString
-                bs_resp.Current("telefono") = .Current("telefono").ToString
-                bs_resp.Current("difunto") = .Current("difunto")
-                bs_resp.EndEdit()
-            End If
-        End With
-        bs.Dispose()
+        Dim source As DataRowView = Persona.Seleccionar(Me)
+        'Se agrega el registro temporal
+        If source Is Nothing = False Then
+            bs_resp.AddNew()
+            bs_resp.Current("persona_id") = source("persona_id").ToString
+            bs_resp.Current("razon") = source("razon").ToString
+            bs_resp.Current("cuil") = source("cuil").ToString
+            bs_resp.Current("email") = source("email").ToString
+            bs_resp.Current("telefono") = source("telefono").ToString
+            bs_resp.Current("difunto") = source("difunto")
+            bs_resp.EndEdit()
+        End If
     End Sub
     Private Sub del_resp_Click(sender As Object, e As EventArgs) Handles del_resp.Click
         If bs_resp.Position > -1 _
@@ -319,16 +316,16 @@ Class ModExpediente
         End If
     End Sub
     Private Sub mod_prof_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mod_prof.Click
-        Dim bs As BindingSource = Persona.Seleccionar(Me, "PROFESIONAL")
-        If bs.Position > -1 Then
-            CtrlMan.LoadControlData(bs, Panel3)
+        Dim source As DataRowView = Persona.Seleccionar(Me, "PROFESIONAL")
+        If source Is Nothing = False Then
+            CtrlMan.LoadControlData(source, Panel3)
         End If
-        bs.Dispose()
     End Sub
 
     '# INMUEBLE
     Private Sub bs_catastro_PositionChanged(sender As Object, e As EventArgs) Handles bs_catastro.PositionChanged
-        Dim dtab As New DataTable
+        Dim registro As DataRowView = bs_catastro.Current
+
         mod_inmueble.Enabled = False
         titular_id.Text = "0"
         info_titular.Text = " - "
@@ -338,24 +335,22 @@ Class ModExpediente
         info_uso.Text = " - "
         info_cuenta.Text = " - "
 
-        With bs_catastro
-            If .Position > -1 Then
-                mod_inmueble.Enabled = True
-                titular_id.Text = .Current("titular_id")
-                info_titular.Text = .Current("titular").ToString
-                info_cuil.Text = .Current("cuil").ToString
-                info_ubicacion.Text = .Current("calle") & " " & .Current("Altura")
-                info_barrio.Text = .Current("barrio").ToString
-                info_uso.Text = .Current("uso").ToString
-                info_cuenta.Text = .Current("cuenta").ToString
+        If registro Is Nothing Then
+            mod_inmueble.Enabled = True
+            titular_id.Text = registro("titular_id")
+            info_titular.Text = registro("titular").ToString
+            info_cuil.Text = registro("cuil").ToString
+            info_ubicacion.Text = registro("calle").ToString & " " & registro("Altura").ToString
+            info_barrio.Text = registro("barrio").ToString
+            info_uso.Text = registro("uso").ToString
+            info_cuenta.Text = registro("cuenta").ToString
 
-                If .Current("archivado") Then
-                    info_estado.Text = "ARCHIVADO"
-                Else
-                    info_estado.Text = "ACTIVO"
-                End If
+            If registro("archivado") Then
+                info_estado.Text = "ARCHIVADO"
+            Else
+                info_estado.Text = "ACTIVO"
             End If
-        End With
+        End If
     End Sub
     Private Sub add_inmueble_Click(sender As Object, e As EventArgs) Handles add_inmueble.Click
         Using agregar_inmueble As New ModInmueble(opr_id.Text)

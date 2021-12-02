@@ -27,17 +27,15 @@
         Me.Close()
     End Sub
     Private Sub buscar_click(sender As Object, e As EventArgs) Handles buscar.Click
-        Dim bs As BindingSource = Persona.Seleccionar(Me)
-        With bs
-            If .Position > -1 Then
-                cuil.Text = .Current("cuil").ToString
-                razon.Text = .Current("razon").ToString
-                persona_id.Text = .Current("per_id").ToString
-                If MsgBoxResult.Yes = MsgBox("Desea seleccionar esta persona?", MsgBoxStyle.YesNo) Then
-                    grupo_persona.Enabled = False
-                End If
+        Dim source As DataRowView = Persona.Seleccionar(Me)
+        If source Is Nothing = False Then
+            cuil.Text = source("cuil").ToString
+            razon.Text = source("razon").ToString
+            persona_id.Text = source("per_id").ToString
+            If MsgBoxResult.Yes = MsgBox("Desea seleccionar esta persona?", MsgBoxStyle.YesNo) Then
+                grupo_persona.Enabled = False
             End If
-        End With
+        End If
         grupo_datos.Enabled = grupo_persona.Enabled.CompareTo(True)
     End Sub
     ' CARGAR 
@@ -46,13 +44,14 @@
         partida.Visible = False
         partida.DataSource = Nothing
         bs_partida.DataSource = Nothing
-        If bs_rubro.Position > -1 Then
-            Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.foxConnection,
-                                                "SELECT nombre, partida 
+        Dim source As DataRowView = bs_rubro.Current
+        If source Is Nothing = False Then
+            Dim dtab As DataTable = DbMan.ReadDB("SELECT nombre, partida 
 												  FROM hacienda WHERE pertenece='9'
 												   AND anexo='1' AND inciso='1'
-												   AND item='1' AND rubro='" & bs_rubro.Current("rubro") & "'
-												   AND subrubro='01' AND partida>'00' AND subpartida='00'")
+												   AND item='1' AND rubro='" & source("rubro").ToString & "'
+												   AND subrubro='01' AND partida>'00' AND subpartida='00'",
+                                                 My.Settings.foxConnection)
 
             If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then
@@ -68,12 +67,14 @@
         subpartida.Visible = False
         subpartida.DataSource = Nothing
         bs_subpartida.DataSource = Nothing
-        If bs_partida.Position > -1 Then
-            Dim dtab As DataTable = DbMan.ReadDB(Nothing, My.Settings.foxConnection,
-                                                 "SELECT nombre, subpartida 
+        Dim source_partida As DataRowView = bs_partida.Current
+        Dim source_rubro As DataRowView = bs_rubro.Current
+        If source_partida Is Nothing = False And source_rubro Is Nothing = False Then
+            Dim dtab As DataTable = DbMan.ReadDB("SELECT nombre, subpartida 
 												  FROM hacienda WHERE pertenece='9' AND anexo='1' AND inciso='1'
-												  AND item ='1' AND rubro='" & bs_rubro.Current("rubro") & "' AND subrubro='01'
-												  AND partida ='" & bs_partida.Current("partida") & "' AND subpartida>'00'")
+												  AND item ='1' AND rubro='" & source_rubro("rubro").ToString & "' AND subrubro='01'
+												  AND partida ='" & source_partida("partida").ToString & "' AND subpartida>'00'",
+                                                 My.Settings.foxConnection)
 
             If dtab Is Nothing = False Then
                 If dtab.Rows.Count > 0 Then

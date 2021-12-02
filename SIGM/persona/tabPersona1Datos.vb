@@ -38,10 +38,10 @@
 
     Public Function guardar() As Integer
         'Buscar duplicado de CUIL/CUIT
-        Dim dtab As DataTable
-        dtab = DbMan.ReadDB("SELECT id, razon FROM persona WHERE cuil=" & cuil.Text, My.Settings.CurrentDB)
+        Dim dtab As DataTable = DbMan.ReadDB("SELECT id, razon FROM persona WHERE cuil=" & cuil.Text, My.Settings.CurrentDB)
+
         If dtab.Rows.Count > 0 Then
-            ErrorInfo.SetToolTip(cuil, "Este CUIL/CUIT pertenece a " & dtab.Rows(0)("id") & "-" & dtab.Rows(0)("razon"))
+            ErrorInfo.SetToolTip(cuil, "Este CUIL/CUIT pertenece a " & dtab.Rows(0)("id").ToString & "-" & dtab.Rows(0)("razon").ToString)
             cuil.BackColor = Color.MistyRose
         Else
             ErrorInfo.RemoveAll()

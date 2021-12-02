@@ -296,11 +296,9 @@
                 End If
             End If
         End Sub
-        Shared Sub Frente(bsFrente As BindingSource)
+        Shared Sub Frente(id As Integer)
             'Eliminar registro
-            If bsFrente Is Nothing = False Then
-                DbMan.EditDB("DELETE * FROM cat_frente WHERE id=" & CInt(bsFrente.Current("frente_id")), My.Settings.CurrentDB)
-            End If
+            DbMan.EditDB("DELETE * FROM cat_frente WHERE id=" & id, My.Settings.CurrentDB)
         End Sub
     End Class
     ' ROUTINES

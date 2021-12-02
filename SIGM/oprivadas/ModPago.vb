@@ -24,7 +24,7 @@ Public Class ModPago
             bs_pago.Filter = ""
             bs_pago.Sort = ""
             bs_pago.Position = -1
-            bs_pago.DataSource = Pagos.Consultar(opr_id.Text, solo_deuda.Checked)
+            bs_pago.DataSource = ObrasPrivadasPagos.Consultar(opr_id.Text, solo_deuda.Checked)
             visor = CtrlMan.DataGridViewTools.Load(visor, bs_pago)
         End If
     End Sub
@@ -60,7 +60,7 @@ Public Class ModPago
             If e.KeyValue = Keys.Delete And bs_pago.Position > -1 Then
                 If .Current("fecha_pago").ToString = "" Then
                     If MsgBoxResult.Yes = MsgBox("¿Desea eliminar esta deuda?", MsgBoxStyle.YesNo) Then
-                        Pagos.EliminarDeuda(.Current("id"))
+                        ObrasPrivadasPagos.EliminarDeuda(.Current("id"))
                         ConsultarDeudas()
                     End If
                 Else
@@ -79,7 +79,7 @@ Public Class ModPago
 
     Private Sub Add_deuda_Click(sender As Object, e As EventArgs) Handles add_deuda.Click
         If Len(desc.Text) > 4 And monto.Value > 0 And cuota.Value >= 1 Then
-            Pagos.AgregarDeuda(opr_id.Text, desc.Text, monto.Value, cuota.Value,
+            ObrasPrivadasPagos.AgregarDeuda(opr_id.Text, desc.Text, monto.Value, cuota.Value,
                                                fecha.Value)
             fecha.Value = Date.Today
             ConsultarDeudas()
@@ -90,7 +90,7 @@ Public Class ModPago
             If Len(desc.Text) > 0 And monto.Value > 0 And fecha.Value.Date <= Date.Today Then
                 If .Current("fecha_pago").ToString = "" And .Current("pago").ToString = "0,00" Then
                     'Agregar Pago
-                    Pagos.AgregarPago(.Current("id"), fecha.Value, monto.Value)
+                    ObrasPrivadasPagos.AgregarPago(.Current("id"), fecha.Value, monto.Value)
                     'Generar recibo
                     Dim parametros As New Generic.List(Of ReportParameter)
 

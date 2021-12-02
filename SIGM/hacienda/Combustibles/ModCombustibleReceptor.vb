@@ -26,37 +26,38 @@
 
     'RESPONSABLE
     Private Sub AddResponsable_Click(sender As Object, e As EventArgs) Handles AddResponsable.Click
-        Dim bs As BindingSource = Persona.Seleccionar(Me)
-        With bs.DataSource
-            If .Position > -1 Then
-                Dim pos As Integer = bs_responsable.Find("persona_id", .Current("persona_id"))
-                If pos < 0 Then
+        Dim source As DataRowView = Persona.Seleccionar(Me)
+        If source Is Nothing = False Then
+            Dim pos As Integer = bs_responsable.Find("persona_id", source("persona_id"))
+            If pos < 0 Then
 
-                    DbMan.EditDB("INSERT INTO hac_combustible_responsable(receptor_id, persona_id) 
-								      VALUES(" & receptor_id.Text & ", " & .Current("persona_id") & ")",
-                                 My.Settings.CurrentDB)
+                DbMan.EditDB("INSERT INTO hac_combustible_responsable(receptor_id, persona_id) 
+								      VALUES(" & receptor_id.Text & ", " & source("persona_id").ToString & ")",
+                             My.Settings.CurrentDB)
 
-                    Combustible.Responsable.Fill(bs_responsable, responsable, receptor_id.Text)
-                    pos = bs_responsable.Find("persona_id", .Current("persona_id"))
-                End If
-                bs_responsable.Position = pos
+                Combustible.Responsable.Fill(bs_responsable, responsable, receptor_id.Text)
+                pos = bs_responsable.Find("persona_id", source("persona_id").ToString)
             End If
-        End With
+            bs_responsable.Position = pos
+        End If
+
     End Sub
     Private Sub DelResponsable_Click(sender As Object, e As EventArgs) Handles DelResponsable.Click
-        If bs_responsable.Position > -1 And bs_responsable.Count > 1 Then
+        Dim source As DataRowView = bs_responsable.Current
+        If source Is Nothing = False Then
             If MsgBoxResult.Yes = MsgBox("Desea eliminar el responsable seleccionado?.",
                                          MsgBoxStyle.YesNo) Then
 
-                Dim delete_id As Integer = bs_responsable.Current("responsable_id")
+                Dim delete_id As Integer = source("responsable_id")
 
                 DbMan.EditDB("DELETE * FROM hac_combustible_responsable WHERE id=" & delete_id,
                              My.Settings.CurrentDB)
 
                 Combustible.Responsable.Fill(bs_responsable, responsable, receptor_id.Text)
+                source = bs_responsable.Current
 
                 DbMan.EditDB("UPDATE hac_combustible_ticket
-							         SET responsable_id=" & bs_responsable.DataSource.Rows(0)("responsable_id").ToString & "
+							         SET responsable_id=" & source("responsable_id").ToString & "
                                    WHERE responsable_id=" & delete_id,
                              My.Settings.CurrentDB)
 
@@ -80,7 +81,7 @@
         If nueva_cat <> Nothing Then
             nueva_cat = Trim(nueva_cat)
             If Len(nueva_cat) > 2 Then
-                vehiculo = (MsgBoxResult.Yes = MsgBox("Esta categoria incluye vehiculos?", MsgBoxStyle.YesNo))
+                vehiculo = MsgBoxResult.Yes = MsgBox("Esta categoria incluye vehiculos?", MsgBoxStyle.YesNo)
                 DbMan.EditDB("INSERT INTO hac_combustible_categoria_receptor(detalle, vehiculo) 
 					                   VALUES(" & nueva_cat & ", " & vehiculo & ")",
                              My.Settings.CurrentDB)

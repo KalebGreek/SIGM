@@ -1,6 +1,6 @@
-﻿Public Class toolCalculoTasaMunicipal
+﻿Public Class CalculoTasaMunicipal
 	Private Sub SearchClick(sender As Object, e As EventArgs) Handles search.Click
-		Using bprop As New BusquedaPropietario
+		Using bprop As New ConsultaProp
 			bprop.genSearchControl1.vista.Text = "PROPIETARIO"
 			bprop.ShowDialog(Me)
 			With bprop.bs_resultado

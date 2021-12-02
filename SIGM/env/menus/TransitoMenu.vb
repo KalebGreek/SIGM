@@ -7,7 +7,7 @@
 	End Sub
 	'>MULTAS
 	Private Sub BuscarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarToolStripMenuItem.Click
-		Dim buscar1 As New BusquedaMulta With {.MdiParent = Me.Parent}
+		Dim buscar1 As New ConsultaMulta With {.MdiParent = Me.Parent}
 		buscar1.Show()
 
 	End Sub
@@ -20,7 +20,7 @@
 
 	'INFRACTORES
 	Private Sub BuscarToolStripMenuItem1_Click(sender As Object, e As EventArgs)
-		Dim buscar1 As New BusquedaMulta With {.MdiParent = Me.Parent}
+		Dim buscar1 As New ConsultaMulta With {.MdiParent = Me.Parent}
 		buscar1.Show()
 
 	End Sub

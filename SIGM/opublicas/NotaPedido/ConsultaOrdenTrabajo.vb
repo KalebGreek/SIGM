@@ -1,4 +1,4 @@
-﻿Public Class BusquedaOrdenTrabajo
+﻿Public Class ConsultaOrdenTrabajo
 	Public Sub New()
 
 		' This call is required by the designer.
@@ -21,8 +21,9 @@
 				.filtro.DataSource = Nothing
 				If .vista.Text = "NOTA DE PEDIDO" Then
 					Dim bs_ColumnList As New BindingSource
-					bs_resultado.DataSource = NotaPedido.Buscar()
-					bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(bs_resultado.DataSource.Columns)
+					Dim dtab As DataTable = NotaPedido.Buscar()
+					bs_resultado.DataSource = dtab
+					bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(dtab.Columns)
 					CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
 				End If
 				If .filtro.Items.Count > 0 Then
@@ -39,20 +40,19 @@
 		If e.KeyValue = Keys.Enter And sender Is ControlBusqueda1.keyword Then
 			ControlBusqueda1.search.PerformClick()
 		ElseIf sender Is resultado Then
-			If e.KeyValue = Keys.F2 Then
-				If resultado.DataSource Is Nothing = False Then
-					If resultado.DataSource.Position > -1 Then
-						'using mnp As New ModNotaPedido
-						'mnp.cargar(resultado.DataSource.Current("nota_pedido_id"))
-						'mnp.ShowDialog()
-						'end using
-						ControlBusqueda1.search.PerformClick()
-					End If
+			Dim source As DataRowView = bs_resultado.Current
+			If source Is Nothing = False Then
+				If e.KeyValue = Keys.F2 Then
+					'Using mnp As New ModNotaPedido
+					'	mnp.cargar(resultado.DataSource.Current("nota_pedido_id"))
+					'	mnp.ShowDialog()
+					'End Using
+					ControlBusqueda1.search.PerformClick()
 				End If
-			End If
-		ElseIf e.KeyValue = Keys.Delete Then
-			If NotaPedido.Eliminar(resultado.DataSource.Current("nota_pedido_id")) Then
-				resultado.DataSource.RemoveCurrent()
+			ElseIf e.KeyValue = Keys.Delete Then
+				If NotaPedido.Eliminar(source("nota_pedido_id")) Then
+					bs_resultado.RemoveCurrent()
+				End If
 			End If
 		End If
 
