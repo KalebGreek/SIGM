@@ -163,19 +163,20 @@
         End If
 
         'frentes
-        CtrlMan.DataGridViewTools.Load(consulta_frente, BSFrente, Catastro.ListarFrente(catastro_id.Text))
+        CtrlMan.DataGridViewTools.Load(consulta_frente,
+                                       Catastro.ListarFrente(catastro_id.Text))
 
         'superficies
         CtrlMan.LoadControlData(DbMan.ReadDB("SELECT * FROM cat_superficie WHERE catastro_id=" & catastro_id.Text,
                                              My.Settings.CurrentDB), tab_sup)
 
         'caracteristicas
-        CtrlMan.DataGridViewTools.Load(consulta_caract, BSCar,
+        CtrlMan.DataGridViewTools.Load(consulta_caract,
                                        DbMan.ReadDB("SELECT descripcion, activo FROM cat_servicio WHERE catastro_id=" & catastro_id.Text,
                                                     My.Settings.CurrentDB))
 
         'copias
-        CtrlMan.DataGridViewTools.Load(consulta_copia, BSCopia, Documento.Catastro.BuscarDoc(catastro_id.Text))
+        CtrlMan.DataGridViewTools.Load(consulta_copia, BSCopia, FileMan.Catastro.BuscarDoc(catastro_id.Text))
 
     End Sub
 
@@ -432,7 +433,7 @@
         End If
     End Sub
     Private Sub add_copia_Click(sender As Object, e As EventArgs) Handles add_copia.Click
-        Dim ruta As String = Documento.Catastro.CargarCopia(tipo_copia.Text,
+        Dim ruta As String = FileMan.Catastro.CargarCopia(tipo_copia.Text,
                                                            "Z" & zona.Value & " C" & circ.Value & " S" & secc.Value &
                                                           " M" & manz.Value & " P" & parc.Value & " L" & lote.Value)
         If ruta <> "" Then

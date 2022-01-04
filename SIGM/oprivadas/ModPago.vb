@@ -25,7 +25,7 @@ Public Class ModPago
             bs_pago.Sort = ""
             bs_pago.Position = -1
             bs_pago.DataSource = ObrasPrivadasPagos.Consultar(opr_id.Text, solo_deuda.Checked)
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_pago)
+            CtrlMan.DataGridViewTools.Load(visor, bs_pago)
         End If
     End Sub
 

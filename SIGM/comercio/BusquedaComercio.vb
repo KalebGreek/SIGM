@@ -55,7 +55,7 @@ Public Class BusquedaComercio
             With ControlBusqueda1
                 dtab = DbMan.ReadDB(sqlSelect, My.Settings.foxConnection, "dtab1")
                 If dtab.Rows.Count > 0 Then
-                    CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, dtab)
+                    CtrlMan.DataGridViewTools.Load(resultado, dtab)
                     bs_ColumnList.DataSource = CtrlMan.Fill.GetColumnList(dtab.Columns)
                     .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
                 End If

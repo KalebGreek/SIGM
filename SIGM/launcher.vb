@@ -68,7 +68,6 @@
 
                 End If
                 form1.ShowDialog(Me)
-                form1 = Nothing
                 Me.Show()
                 Me.Focus()
             End If
@@ -78,8 +77,6 @@
     Private Sub Salir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles salir.Click
         Me.Close()
     End Sub
-
-
     ' END GUI 
 
 

@@ -80,18 +80,18 @@
         Shared Function ListarPorResponsable(persona_id As Integer) As DataTable
             Dim sql(2) As String
             sql(0) = "SELECT responsable_expediente.Id As id, expediente, per_id"
-            sql(1) = "FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id) 
+            sql(1) = " FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id) 
                             INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id"
-            sql(2) = "WHERE responsable_expediente.per_id=" & persona_id
+            sql(2) = " WHERE responsable_expediente.per_id=" & persona_id
 
             Return DbMan.ReadDB(sql, My.Settings.CurrentDB)
         End Function
         Shared Function ListarPorProfesional(prof_id As Integer) As DataTable
             Dim sql(2) As String
             sql(0) = "SELECT responsable_expediente.Id As id, expediente, profesional_id"
-            sql(1) = "FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id)
+            sql(1) = " FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id)
                             INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id"
-            sql(2) = "WHERE oprivadas.profesional_id=" & prof_id
+            sql(2) = " WHERE oprivadas.profesional_id=" & prof_id
 
             Return DbMan.ReadDB(sql, My.Settings.CurrentDB)
         End Function

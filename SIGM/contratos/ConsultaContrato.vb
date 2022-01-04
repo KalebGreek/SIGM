@@ -7,7 +7,7 @@ Public Class ConsultaContrato
                                            contrato.autoridad1_id, persona1.razon AS autoridad1, persona1.cuil AS aut1cuil, empleado1.jerarquia AS aut1cargo, 
                                            contrato.autoridad2_id, persona2.razon AS autoridad2, persona2.cuil AS aut2cuil, empleado2.jerarquia AS aut2cargo,
                                            contrato.seccion, contrato.user_id"
-    ReadOnly TableSQL As String = "FROM provincias INNER JOIN ((persona AS persona2 INNER JOIN (persona AS persona1 
+    ReadOnly TableSQL As String = " FROM provincias INNER JOIN ((persona AS persona2 INNER JOIN (persona AS persona1 
                                               INNER JOIN ((empleado AS empleado2 INNER JOIN (persona AS persona0 
                                               INNER JOIN (empleado AS empleado1 INNER JOIN contrato 
                                                       ON empleado1.Id = contrato.autoridad1_id) ON persona0.id = contrato.contratado_id) 

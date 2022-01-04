@@ -6,29 +6,31 @@
     ' READ: Rutinas de lectura 
     Function ReadTableSchema(Optional constr As String = "") As DataTable
         Dim schemaTable As New DataTable
-        Dim olecon As New OleDb.OleDbConnection
         Dim errormsg As String = ""
-
         If constr = "" Then
             constr = My.Settings.CurrentDB
         End If
-        olecon.ConnectionString = constr
-        Try
-            olecon.Open()
-            schemaTable = olecon.GetOleDbSchemaTable(OleDb.OleDbSchemaGuid.Tables, Nothing)
-            Try
-                'olecon.Close()
-            Catch ex As Exception
-                errormsg = ex.Data.ToString & Chr(13)
-            End Try
-        Catch ex As Exception
-            errormsg += ex.Data.ToString & Chr(13)
-            schemaTable = Nothing
-        End Try
 
-        If errormsg.Length > 0 Then
-            MsgBox("No se puede conectar a " & constr & Chr(13) & "Detalles:" & errormsg)
-        End If
+        Using olecon As New OleDb.OleDbConnection
+            olecon.ConnectionString = constr
+            Try
+                olecon.Open()
+                schemaTable = olecon.GetOleDbSchemaTable(OleDb.OleDbSchemaGuid.Tables, Nothing)
+                Try
+                    olecon.Close()
+                Catch ex As Exception
+                    errormsg = ex.Data.ToString & Chr(13)
+                End Try
+            Catch ex As Exception
+                errormsg += ex.Data.ToString & Chr(13)
+                schemaTable = Nothing
+            End Try
+
+            If errormsg.Length > 0 Then
+                MsgBox("No se puede conectar a " & constr & Chr(13) & "Detalles:" & errormsg)
+            End If
+        End Using
+
         GC.Collect()
         GC.WaitForPendingFinalizers()
         Return schemaTable
@@ -162,21 +164,39 @@
     ' END READ 
 
     ' SAVE: Rutinas para grabar registros 
-    Function EditDB(ByVal SingleQuery As String, Optional ByVal constr As String = Nothing, Optional ByRef progreso As ToolStripProgressBar = Nothing) As String
+    Function EditDB(ByVal SingleQuery As String, Optional ByVal constr As String = Nothing) As String
         'Step 1
         Dim ArrayQuery(0) As String
         ArrayQuery(0) = SingleQuery
 
-        Return EditDB(ArrayQuery, constr, progreso)
+        Return EditDB(ArrayQuery, constr)
     End Function
-    Function EditDB(ByVal ArrayQuery As String(), Optional ByVal constr As String = Nothing, Optional ByRef progreso As ToolStripProgressBar = Nothing) As String
+
+    Function EditDB(ArrayQuery As String(), Optional ByVal constr As String = Nothing,
+                    Optional ByRef progreso As ToolStripProgressBar = Nothing) As String
         'Step 2
+        Dim RowsAffected As Integer = 0
+        Dim index As Integer = 0
+        Dim result As String = ""
+        Dim olecon As New OleDb.OleDbConnection
+        Dim OleDBProcedure As New OleDb.OleDbCommand
 
         If ArrayQuery Is Nothing = False Then
-            Dim OleDBProcedure As New OleDbCommand With {
-            .CommandType = CommandType.Text}
+            'Format array
+            For Each query In ArrayQuery
+                If Right(query, 1) <> ";" Then
+                    query &= ";"
+                End If
+                If query.Contains("INSERT") Or query.Contains("UPDATE") Then
 
-            Dim index As Integer = 0
+                ElseIf query.Contains("DELETE") Then
+                    If My.Settings.delete_enabled Then
+                    Else
+                        MsgBox("No posee permisos para eliminar registros de la tabla seleccionanda.", MsgBoxStyle.Critical, "Error")
+                        query = ""
+                    End If
+                End If
+            Next
 
             'Check if there is a progress bar
             If progreso Is Nothing = False Then
@@ -185,37 +205,6 @@
                 progreso.Maximum = ArrayQuery.Length()
             End If
 
-            For Each query In ArrayQuery
-                If Right(query, 1) <> ";" Then
-                    query &= ";"
-                End If
-                If query.Contains("INSERT") Or query.Contains("UPDATE") Then
-                    OleDBProcedure.CommandText = query
-                    index += 1
-
-                ElseIf query.Contains("DELETE") Then
-                    If My.Settings.delete_enabled Then
-                        OleDBProcedure.CommandText = query
-                        index += 1
-                    Else
-                        MsgBox("No posee permisos para eliminar registros de la tabla seleccionanda.", MsgBoxStyle.Critical, "Error")
-                    End If
-                End If
-            Next
-            Return EditDB(OleDBProcedure, constr, progreso)
-        Else
-            Return Nothing
-        End If
-
-    End Function
-    Function EditDB(OleDBProcedure As OleDb.OleDbCommand, Optional ByVal constr As String = Nothing,
-                    Optional ByRef progreso As ToolStripProgressBar = Nothing) As String
-        'Step 3
-
-        Dim RowsAffected As Integer = 0
-        Dim result As String = ""
-        Dim olecon As New OleDb.OleDbConnection
-        If OleDBProcedure Is Nothing = False Then
             'Para conectarse a la bd en modo de inserción
             'Se necesita convertir el string a un objeto ConnectionString
             'antes de aplicarlo al OleDbCommand "Comm"
@@ -228,16 +217,24 @@
             OleDBProcedure.Connection = olecon
             'Open and execute BulkInsert on valid sql statements
             olecon.Open()
-            Try
-                RowsAffected += OleDBProcedure.ExecuteNonQuery()
-            Catch e As Exception
-                result &= e.ToString & Chr(13)
-            End Try
+
+            For Each query In ArrayQuery
+                Try
+                    OleDBProcedure.CommandText = query
+                    RowsAffected += OleDBProcedure.ExecuteNonQuery()
+                Catch e As Exception
+                    result &= e.ToString & Chr(13)
+                End Try
+                If progreso Is Nothing = False Then
+                    progreso.Increment(1)
+                End If
+            Next
+
             olecon.Close()
             'Clear Procedure
+            GC.Collect()
+            GC.WaitForPendingFinalizers()
         End If
-        GC.Collect()
-        GC.WaitForPendingFinalizers()
 
         If RowsAffected > 0 Then
             result = RowsAffected

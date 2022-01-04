@@ -27,7 +27,6 @@ Partial Class SQLConsole
         Me.QueryResult = New System.Windows.Forms.DataGridView()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.nav_result = New System.Windows.Forms.BindingNavigator(Me.components)
-        Me.bs_result = New System.Windows.Forms.BindingSource(Me.components)
         Me.BindingNavigatorCountItem = New System.Windows.Forms.ToolStripLabel()
         Me.BindingNavigatorMoveFirstItem = New System.Windows.Forms.ToolStripButton()
         Me.BindingNavigatorMovePreviousItem = New System.Windows.Forms.ToolStripButton()
@@ -51,7 +50,6 @@ Partial Class SQLConsole
         Me.SplitContainer1.SuspendLayout()
         CType(Me.nav_result, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.nav_result.SuspendLayout()
-        CType(Me.bs_result, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -62,7 +60,9 @@ Partial Class SQLConsole
         Me.QueryResult.AllowUserToOrderColumns = True
         Me.QueryResult.AllowUserToResizeRows = False
         Me.QueryResult.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.QueryResult.CausesValidation = False
         Me.QueryResult.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical
+        Me.QueryResult.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.QueryResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.QueryResult.Dock = System.Windows.Forms.DockStyle.Fill
         Me.QueryResult.Location = New System.Drawing.Point(0, 0)
@@ -101,7 +101,6 @@ Partial Class SQLConsole
         '
         Me.nav_result.AddNewItem = Nothing
         Me.nav_result.AutoSize = False
-        Me.nav_result.BindingSource = Me.bs_result
         Me.nav_result.CountItem = Me.BindingNavigatorCountItem
         Me.nav_result.DeleteItem = Nothing
         Me.nav_result.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -126,7 +125,7 @@ Partial Class SQLConsole
         '
         Me.BindingNavigatorCountItem.Name = "BindingNavigatorCountItem"
         Me.BindingNavigatorCountItem.Size = New System.Drawing.Size(49, 15)
-        Me.BindingNavigatorCountItem.Text = "of {0}"
+        Me.BindingNavigatorCountItem.Text = "de {0}"
         Me.BindingNavigatorCountItem.ToolTipText = "Total number of items"
         '
         'BindingNavigatorMoveFirstItem
@@ -294,29 +293,27 @@ Partial Class SQLConsole
         CType(Me.nav_result, System.ComponentModel.ISupportInitialize).EndInit()
         Me.nav_result.ResumeLayout(False)
         Me.nav_result.PerformLayout()
-        CType(Me.bs_result, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents QueryResult As DataGridView
-	Friend WithEvents SplitContainer1 As SplitContainer
-	Friend WithEvents nav_result As BindingNavigator
-	Friend WithEvents BindingNavigatorCountItem As ToolStripLabel
-	Friend WithEvents BindingNavigatorMoveFirstItem As ToolStripButton
-	Friend WithEvents BindingNavigatorMovePreviousItem As ToolStripButton
-	Friend WithEvents BindingNavigatorSeparator As ToolStripSeparator
-	Friend WithEvents BindingNavigatorPositionItem As ToolStripTextBox
-	Friend WithEvents BindingNavigatorSeparator1 As ToolStripSeparator
-	Friend WithEvents BindingNavigatorMoveNextItem As ToolStripButton
-	Friend WithEvents BindingNavigatorMoveLastItem As ToolStripButton
-	Friend WithEvents BindingNavigatorSeparator2 As ToolStripSeparator
-	Friend WithEvents bs_result As BindingSource
-	Friend WithEvents query As ComboBox
-	Friend WithEvents connection As ComboBox
-	Friend WithEvents Panel1 As Panel
-	Friend WithEvents QueryLog As ListBox
-	Friend WithEvents ToolTip1 As ToolTip
-	Friend WithEvents TableList As ListBox
-	Friend WithEvents AddScript As Button
+    Friend WithEvents SplitContainer1 As SplitContainer
+    Friend WithEvents nav_result As BindingNavigator
+    Friend WithEvents BindingNavigatorCountItem As ToolStripLabel
+    Friend WithEvents BindingNavigatorMoveFirstItem As ToolStripButton
+    Friend WithEvents BindingNavigatorMovePreviousItem As ToolStripButton
+    Friend WithEvents BindingNavigatorSeparator As ToolStripSeparator
+    Friend WithEvents BindingNavigatorPositionItem As ToolStripTextBox
+    Friend WithEvents BindingNavigatorSeparator1 As ToolStripSeparator
+    Friend WithEvents BindingNavigatorMoveNextItem As ToolStripButton
+    Friend WithEvents BindingNavigatorMoveLastItem As ToolStripButton
+    Friend WithEvents BindingNavigatorSeparator2 As ToolStripSeparator
+    Friend WithEvents query As ComboBox
+    Friend WithEvents connection As ComboBox
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents QueryLog As ListBox
+    Friend WithEvents ToolTip1 As ToolTip
+    Friend WithEvents TableList As ListBox
+    Friend WithEvents AddScript As Button
+    Public WithEvents QueryResult As DataGridView
 End Class

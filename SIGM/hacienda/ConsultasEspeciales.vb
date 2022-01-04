@@ -84,7 +84,7 @@
         CustomQuery.Text = Trim(CustomQuery.Text)
         If e.KeyValue = Keys.Enter And Len(CustomQuery.Text) > 5 Then
             Dim dtab As DataTable = DbMan.ReadDB(CustomQuery.Text, Connection.Text)
-            CtrlMan.DataGridViewTools.Load(QueryView, bs_query, dtab)
+            CtrlMan.DataGridViewTools.Load(QueryView, dtab)
             CustomQuery.Items.Insert(0, CustomQuery.Text)
             CustomQuery.Text = ""
         End If
@@ -112,25 +112,25 @@
                 CustomTable.Enabled = False
                 If vista = "HACIENDA - INGRESOS" Then
                     sql(0) = "SELECT *"
-                    sql(1) = "FROM hacienda"
-                    sql(2) = "WHERE sumado = 2 AND pertenece='8'"
-                    sql(3) = "ORDER BY orden"
+                    sql(1) = " FROM hacienda"
+                    sql(2) = " WHERE sumado = 2 AND pertenece='8'"
+                    sql(3) = " ORDER BY orden"
 
                 ElseIf vista = "HACIENDA - EGRESOS" Then
                     sql(0) = "SELECT *"
-                    sql(1) = "FROM hacienda"
-                    sql(2) = "WHERE sumado = 2 and pertenece='9'"
-                    sql(3) = "ORDER BY orden"
+                    sql(1) = " FROM hacienda"
+                    sql(2) = " WHERE sumado = 2 and pertenece='9'"
+                    sql(3) = " ORDER BY orden"
 
                 ElseIf vista = "INGRESOS CONSOLIDADOS" Then
                     Hacienda.ConsolidarCuentas(Today)
                     sql(0) = "SELECT *"
-                    sql(1) = "FROM ingresos"
+                    sql(1) = " FROM ingresos"
 
                 ElseIf vista = "EGRESOS CONSOLIDADOS" Then
                     Hacienda.ConsolidarCuentas(Today)
                     sql(0) = "SELECT *"
-                    sql(1) = "FROM egresos"
+                    sql(1) = " FROM egresos"
 
 
                 ElseIf vista = "BANCOS - SALDO" Then
@@ -165,18 +165,18 @@
 
                 ElseIf vista = "CAJA" Then
                     sql(0) = "SELECT * "
-                    sql(1) = "FROM caja"
-                    sql(2) = "ORDER BY fecha"
+                    sql(1) = " FROM caja"
+                    sql(2) = " ORDER BY fecha"
 
                 ElseIf vista = "COMPARAR INGRESOS" Then
                     sql(0) = "SELECT caja.fecha, movimis.documento as movimis_documento,
                                      SUM(movimis.pagado) as suma_movimis_pagado, caja.recibo as caja_recibo,
                                      caja.importe as caja_importe, SUM(movimis.pagado)-importe as diferencia, 
 							         movimis.detalle"
-                    sql(1) = "FROM caja INNER JOIN movimis ON caja.recibo=movimis.documento"
-                    sql(2) = "WHERE movimis.orden<900000000000"
-                    sql(3) = "GROUP BY caja.fecha, movimis.documento, caja.recibo, caja.importe, movimis.detalle"
-                    sql(4) = "ORDER BY caja.fecha"
+                    sql(1) = " FROM caja INNER JOIN movimis ON caja.recibo=movimis.documento"
+                    sql(2) = " WHERE movimis.orden<900000000000"
+                    sql(3) = " GROUP BY caja.fecha, movimis.documento, caja.recibo, caja.importe, movimis.detalle"
+                    sql(4) = " ORDER BY caja.fecha"
 
                 ElseIf vista = "COMPARAR EGRESOS" Then
                     'cambiar caja por pagos y corregir tema de documento <> orden
@@ -185,12 +185,12 @@
                                      movimis.pagado as movimis_pagado, opagos.orden as opagos_orden,
                                      opagos.importe as opagos_importe, SUM(movimis.pagado)-opagos.importe as diferencia,
                                      movimis.detalle, movimis.orden, hacienda.nombre"
-                    sql(1) = "FROM opagos INNER JOIN (movimis INNER JOIN hacienda ON movimis.orden=hacienda.orden)
+                    sql(1) = " FROM opagos INNER JOIN (movimis INNER JOIN hacienda ON movimis.orden=hacienda.orden)
 							ON opagos.factura=movimis.detalle"
-                    sql(2) = "WHERE movimis.orden>899999999999"
-                    sql(3) = "GROUP BY opagos.dia, movimis.documento, movimis.detalle, movimis.pagado, opagos.orden,
+                    sql(2) = " WHERE movimis.orden>899999999999"
+                    sql(3) = " GROUP BY opagos.dia, movimis.documento, movimis.detalle, movimis.pagado, opagos.orden,
 							opagos.importe, movimis.orden, hacienda.nombre"
-                    sql(4) = "ORDER BY opagos.dia"
+                    sql(4) = " ORDER BY opagos.dia"
 
                 ElseIf vista = "PERSONALIZADA" Then
                     Dim TableName As String
@@ -210,7 +210,7 @@
 
                     If TableName <> "" Then
                         sql(0) = "SELECT *"
-                        sql(1) = "FROM " & TableName
+                        sql(1) = " FROM " & TableName
                         CustomTable.Text = TableName
                     Else
                         CustomTable.Text = "Seleccionar tabla.."

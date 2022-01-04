@@ -288,17 +288,17 @@ Partial Class CalcAnualImpUI
 	Friend WithEvents impuesto As System.Windows.Forms.ComboBox
 	Friend WithEvents Label4 As System.Windows.Forms.Label
 	Friend WithEvents CuentaInicial As System.Windows.Forms.NumericUpDown
-	Friend WithEvents PanelInfo As System.Windows.Forms.Panel
-	Friend WithEvents Label1 As System.Windows.Forms.Label
-	Friend WithEvents periodo As System.Windows.Forms.NumericUpDown
-	Friend WithEvents info As System.Windows.Forms.Label
-	Friend WithEvents tae As TextBox
-	Friend WithEvents Label2 As Label
-	Friend WithEvents StatusStrip1 As StatusStrip
-	Friend WithEvents progreso As ToolStripProgressBar
-	Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
-	Friend WithEvents Label3 As Label
-	Friend WithEvents Label5 As Label
-	Friend WithEvents Label6 As Label
-	Friend WithEvents bs_variables As BindingSource
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents periodo As System.Windows.Forms.NumericUpDown
+    Friend WithEvents tae As TextBox
+    Friend WithEvents Label2 As Label
+    Friend WithEvents StatusStrip1 As StatusStrip
+    Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents bs_variables As BindingSource
+    Public WithEvents PanelInfo As Panel
+    Public WithEvents info As Label
+    Public WithEvents progreso As ToolStripProgressBar
 End Class

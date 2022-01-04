@@ -60,11 +60,11 @@
             '### Valor específico?
             If (keyword Is Nothing = False And deuda_por_cuenta) Or deuda_agrupada Then
                 If filtro_cuenta = 0 And Val(keyword) > 0 Then
-                    sql(2) += " " & ext_persona & ".codigo=" & Val(keyword) & " And"
+                    sql(2) += " " & ext_persona & ".codigo=" & Val(keyword) & " AND"
                 ElseIf filtro_cuenta = 1 And Val(keyword) > 999999 Then
                     sql(2) += " documento=" & Val(keyword) & " And"
                 ElseIf filtro_cuenta = 2 Then
-                    sql(2) += " " & ext_persona & ".razon Like '%" & keyword & "%'"
+                    sql(2) += " " & ext_persona & ".razon LIKE '%" & keyword & "%'"
                     If impuesto.Contains("COME") = False Then
                         sql(2) += " OR " & ext_persona & ".tenedor LIKE '%" & keyword & "%'"
                     End If

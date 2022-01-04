@@ -39,7 +39,7 @@
 
 	Private Sub bs_receptor_PositionChanged(sender As Object, e As EventArgs) Handles bs_receptor.PositionChanged, bs_receptor.CurrentChanged
 		If Me.Visible Then
-            CtrlMan.DataGridViewTools.Load(historial, bs_historial, Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
+            CtrlMan.DataGridViewTools.Load(historial, Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
         End If
     End Sub
 
@@ -112,7 +112,7 @@
                 End If
             End Using
         End If
-        CtrlMan.DataGridViewTools.Load(historial, bs_historial, Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
+        CtrlMan.DataGridViewTools.Load(historial, Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
     End Sub
 
     Private Sub DelTicket_Click(sender As Object, e As EventArgs) Handles DelTicket.Click
@@ -120,7 +120,7 @@
             If MsgBoxResult.Yes = MsgBox("Desea eliminar el ticket seleccionado? Esta operacion no se puede deshacer.", MsgBoxStyle.YesNo, "Eliminar Ticket") Then
                 DbMan.EditDB("DELETE * FROM hac_combustible_ticket WHERE id=" & bs_historial.Current("ticket_id").ToString, My.Settings.CurrentDB)
                 bs_historial.RemoveCurrent()
-                CtrlMan.DataGridViewTools.Load(historial, bs_historial, Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
+                CtrlMan.DataGridViewTools.Load(historial, Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
             End If
 		End If
 	End Sub

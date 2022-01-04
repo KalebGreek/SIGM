@@ -53,11 +53,11 @@
         Dim sql(5) As String
         sql(0) = "SELECT (" & var_padron(1) & "*1000000)+codigo as NroCliente, razon as Descripcion, 
                          " & var_padron(2) & " as Complemento, mail as CorreoElectronico"
-        sql(1) = "FROM " & var_padron(0)
-        sql(2) = "WHERE codigo>0 AND mail LIKE '%@%'"
+        sql(1) = " FROM " & var_padron(0)
+        sql(2) = " WHERE codigo>0 AND mail LIKE '%@%'"
 
         Dim dtab As DataTable = DbMan.ReadDB(sql, My.Settings.foxConnection)
-        CtrlMan.DataGridViewTools.Load(DataView, bs, dtab)
+        CtrlMan.DataGridViewTools.Load(DataView, dtab)
 
     End Sub
 
@@ -107,12 +107,12 @@
 
             sql(0) = "SELECT " & id_servicio & "*1000000+" & tabla_deuda & ".codigo as NroCliente,{" & vence_mora & "} as Vto1, 
                         SUM(" & importe1 & "+FLOOR(" & importe1 & "*({" & vence_mora & "}-" & vence_original & ")*" & valor_mora & ")) as Monto1"
-            sql(1) = "FROM " & tabla_deuda & " INNER JOIN " & tabla_padron & " 
+            sql(1) = " FROM " & tabla_deuda & " INNER JOIN " & tabla_padron & " 
                     ON " & tabla_deuda & ".codigo=" & tabla_padron & ".codigo"
             'No se sobrescribe la fecha de deudas no vencidas
-            sql(2) = "WHERE " & tabla_deuda & ".codigo>0 AND " & importe1 & ">0 AND " & vence_original & "<DATE() 
+            sql(2) = " WHERE " & tabla_deuda & ".codigo>0 AND " & importe1 & ">0 AND " & vence_original & "<DATE() 
                     AND " & pagado & "=0 AND " & tabla_padron & ".mail LIKE '%@%'"
-            sql(3) = "GROUP BY " & tabla_deuda & ".codigo"
+            sql(3) = " GROUP BY " & tabla_deuda & ".codigo"
             dtab_mora = DbMan.ReadDB(sql, My.Settings.foxConnection)
 
             If dtab_mora Is Nothing = False Then
@@ -121,10 +121,10 @@
         Else
             sql(0) = "SELECT " & id_servicio & "*1000000+" & tabla_deuda & ".codigo as NroCliente, " & vence_original & " as Vto1, 
                      " & importe1 & " as Monto1"
-            sql(1) = "FROM " & tabla_deuda & " INNER JOIN " & tabla_padron & " 
+            sql(1) = " FROM " & tabla_deuda & " INNER JOIN " & tabla_padron & " 
                     ON " & tabla_deuda & ".codigo=" & tabla_padron & ".codigo"
             'No se sobrescribe la fecha de deudas no vencidas
-            sql(2) = "WHERE " & tabla_deuda & ".codigo>0 AND " & importe1 & ">0 AND " & vence_original & "=>DATE() 
+            sql(2) = " WHERE " & tabla_deuda & ".codigo>0 AND " & importe1 & ">0 AND " & vence_original & "=>DATE() 
                     AND " & pagado & "=0 AND " & tabla_padron & ".mail LIKE '%@%'"
             dtab_corriente = DbMan.ReadDB(sql, My.Settings.foxConnection)
 
@@ -133,7 +133,7 @@
             End If
         End If
 
-        CtrlMan.DataGridViewTools.Load(DataView, bs, dtab_total)
+        CtrlMan.DataGridViewTools.Load(DataView, dtab_total)
     End Sub
 
     Sub CargarNovedadesSIRO()

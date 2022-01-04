@@ -68,8 +68,8 @@
 	Private Function SeekLastContract(contrato_id As Integer) As Integer
 		Dim Sql(2) As String
 		Sql(0) = "SELECT MAX(codigo) as ultimo"
-		Sql(1) = "FROM contrato"
-		Sql(2) = "WHERE seccion='" & seccion.Text & "'"
+		Sql(1) = " FROM contrato"
+		Sql(2) = " WHERE seccion='" & seccion.Text & "'"
 		Dim dr As DataRow = DbMan.ReadDB(Sql, My.Settings.CurrentDB).Rows(0)
 		If dr("ultimo") Is DBNull.Value = False Then
 			contrato_id = CInt(dr("ultimo")) + 1

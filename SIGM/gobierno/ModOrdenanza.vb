@@ -47,7 +47,7 @@
         End With
     End Sub
     Private Sub cargar_doc_Click(sender As Object, e As EventArgs) Handles cargar_doc.Click
-        ruta_doc.Text = Documento.Gobierno.CopiaOrdenanza(Val(codigo.Text))
+        ruta_doc.Text = FileMan.Gobierno.CopiaOrdenanza(Val(codigo.Text))
     End Sub
     ' VALIDAR 
     Private Function ValidarCodigo(ordenanza_id As Integer, codigo As Integer) As Boolean

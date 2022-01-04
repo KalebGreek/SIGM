@@ -80,7 +80,7 @@
             End If
         End With
         bs_resultado.ResumeBinding()
-        resultado = CtrlMan.DataGridViewTools.Load(resultado, bs_resultado)
+        CtrlMan.DataGridViewTools.Load(resultado, bs_resultado)
     End Sub
 
     '-- EVENTOS UNICOS
@@ -93,7 +93,7 @@
         genSearchControl1.FilterSearch()
         bs_resultado.Filter = genSearchControl1.bsCustomFilter
     End Sub
-    Private Sub vistaSelectedIndexChanged() Handles genSearchControl1.CVistaIndexTextChanged, genSearchControl1.CResetClick
+    Private Sub VistaSelectedIndexChanged() Handles genSearchControl1.CVistaIndexTextChanged, genSearchControl1.CResetClick
         resultado.DataSource = Nothing
         If genSearchControl1.vista.SelectedIndex > -1 Then
             Consultar(True)
@@ -137,7 +137,7 @@
         End If
     End Sub
 
-    Private Sub filtrospersona_CheckedChanged(sender As Object, e As EventArgs) Handles difunto.CheckedChanged, fisica.CheckedChanged
+    Private Sub FiltrosPersona_CheckedChanged(sender As Object, e As EventArgs) Handles difunto.CheckedChanged, fisica.CheckedChanged
         If DirectCast(sender, CheckBox).Enabled And Me.Visible Then
             Consultar()
         End If

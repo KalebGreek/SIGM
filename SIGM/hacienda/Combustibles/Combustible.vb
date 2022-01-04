@@ -10,7 +10,7 @@
             Dim cuenta As DataRowView = BSCuenta.Current
             Dim categoria As DataRowView = BSCategoria.Current
             sqlSelect = "SELECT Id as receptor_id, marca+' | '+dominio+' |'+STR(modelo) AS descripcion"
-            sqlSelect &= "FROM hac_combustible_receptor"
+            sqlSelect &= " FROM hac_combustible_receptor"
 
             If cuenta Is Nothing And categoria Is Nothing Then
                 If id > 0 Then
@@ -100,7 +100,7 @@
             sqlSelect = " WHERE hac_combustible_items.ticket_id=" & ticket_id
 
             Dim dtab As DataTable = DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB)
-            CtrlMan.DataGridViewTools.Load(visor, bs, dtab)
+            CtrlMan.DataGridViewTools.Load(visor, dtab)
         End Sub
 
         Shared Function SelectTicket(id As Integer) As DataTable

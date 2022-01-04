@@ -30,55 +30,55 @@ Partial Class ConsultaImpuesto
         Me.progreso = New System.Windows.Forms.ToolStripProgressBar()
         Me.info = New System.Windows.Forms.ToolStripStatusLabel()
         Me.info2 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.bs_consulta = New System.Windows.Forms.BindingSource(Me.components)
-        Me.bs_historial = New System.Windows.Forms.BindingSource(Me.components)
-        Me.bs_cuentas = New System.Windows.Forms.BindingSource(Me.components)
-        Me.bs_persona = New System.Windows.Forms.BindingSource(Me.components)
+        Me.BSConsulta = New System.Windows.Forms.BindingSource(Me.components)
+        Me.BSHistorial = New System.Windows.Forms.BindingSource(Me.components)
+        Me.BSCuentas = New System.Windows.Forms.BindingSource(Me.components)
+        Me.BSPersona = New System.Windows.Forms.BindingSource(Me.components)
         Me.consulta_printdocument = New System.Drawing.Printing.PrintDocument()
         Me.PrintDialog = New System.Windows.Forms.PrintDialog()
-        Me.f3_clave = New System.Windows.Forms.TextBox()
-        Me.f3_campo = New System.Windows.Forms.ComboBox()
-        Me.mostrar_f3 = New System.Windows.Forms.CheckBox()
-        Me.imp_search = New System.Windows.Forms.Button()
-        Me.f1b_maximo = New System.Windows.Forms.NumericUpDown()
+        Me.F4ValorClave = New System.Windows.Forms.TextBox()
+        Me.F4CampoClave = New System.Windows.Forms.ComboBox()
+        Me.F4Mostrar = New System.Windows.Forms.CheckBox()
+        Me.EjecutarConsultaDeuda = New System.Windows.Forms.Button()
+        Me.F2Maximo = New System.Windows.Forms.NumericUpDown()
         Me.et_hasta = New System.Windows.Forms.Label()
-        Me.f1b_deuda_total = New System.Windows.Forms.ComboBox()
-        Me.mostrar_f1b = New System.Windows.Forms.CheckBox()
-        Me.f1b_minimo = New System.Windows.Forms.NumericUpDown()
-        Me.f2_año_maximo = New System.Windows.Forms.NumericUpDown()
-        Me.f2_año_minimo = New System.Windows.Forms.NumericUpDown()
-        Me.mostrar_f2 = New System.Windows.Forms.CheckBox()
-        Me.visor = New System.Windows.Forms.DataGridView()
-        Me.grupo_imp = New System.Windows.Forms.FlowLayoutPanel()
-        Me.et_con_imp = New System.Windows.Forms.Label()
+        Me.F2DeudaTotal = New System.Windows.Forms.ComboBox()
+        Me.F2Mostrar = New System.Windows.Forms.CheckBox()
+        Me.F2Minimo = New System.Windows.Forms.NumericUpDown()
+        Me.F3AñoMaximo = New System.Windows.Forms.NumericUpDown()
+        Me.F3AñoMinimo = New System.Windows.Forms.NumericUpDown()
+        Me.F3Mostrar = New System.Windows.Forms.CheckBox()
+        Me.VisorConsulta = New System.Windows.Forms.DataGridView()
+        Me.FiltroConsulta = New System.Windows.Forms.FlowLayoutPanel()
+        Me.EtGrupoFiltroConsulta = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.f1_impuesto = New System.Windows.Forms.ComboBox()
+        Me.F1Servicio = New System.Windows.Forms.ComboBox()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.f1_Deudor = New System.Windows.Forms.RadioButton()
-        Me.f1_SinDeuda = New System.Windows.Forms.RadioButton()
+        Me.F1Deudor = New System.Windows.Forms.RadioButton()
+        Me.F1SinDeuda = New System.Windows.Forms.RadioButton()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.fecha = New System.Windows.Forms.DateTimePicker()
+        Me.F1Vencimiento = New System.Windows.Forms.DateTimePicker()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.interes = New System.Windows.Forms.NumericUpDown()
+        Me.F1Interes = New System.Windows.Forms.NumericUpDown()
         Me.grupo_deuda_total = New System.Windows.Forms.FlowLayoutPanel()
-        Me.f1b_importe_mora = New System.Windows.Forms.RadioButton()
-        Me.f1b_importe = New System.Windows.Forms.RadioButton()
-        Me.f1b_mora = New System.Windows.Forms.RadioButton()
+        Me.F2ImporteMora = New System.Windows.Forms.RadioButton()
+        Me.F2Importe = New System.Windows.Forms.RadioButton()
+        Me.F2Mora = New System.Windows.Forms.RadioButton()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.CtrlVenc1 = New Sigm.CtrlVenceImpuesto()
-        Me.ImprimirConsulta = New System.Windows.Forms.Button()
+        Me.ImprimirConsultaDeuda = New System.Windows.Forms.Button()
         Me.StatusStrip1.SuspendLayout()
-        CType(Me.bs_consulta, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.bs_historial, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.bs_cuentas, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.bs_persona, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.f1b_maximo, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.f1b_minimo, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.f2_año_maximo, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.f2_año_minimo, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.visor, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.grupo_imp.SuspendLayout()
-        CType(Me.interes, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BSConsulta, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BSHistorial, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BSCuentas, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BSPersona, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.F2Maximo, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.F2Minimo, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.F3AñoMaximo, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.F3AñoMinimo, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.VisorConsulta, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.FiltroConsulta.SuspendLayout()
+        CType(Me.F1Interes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grupo_deuda_total.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -135,75 +135,75 @@ Partial Class ConsultaImpuesto
         Me.info2.Text = "-"
         Me.info2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'bs_consulta
+        'BSConsulta
         '
         '
         'PrintDialog
         '
         Me.PrintDialog.UseEXDialog = True
         '
-        'f3_clave
+        'F4ValorClave
         '
-        Me.f3_clave.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.f3_clave.Enabled = False
-        Me.f3_clave.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.f3_clave.Location = New System.Drawing.Point(2, 518)
-        Me.f3_clave.Margin = New System.Windows.Forms.Padding(2, 0, 0, 0)
-        Me.f3_clave.Name = "f3_clave"
-        Me.f3_clave.Size = New System.Drawing.Size(271, 27)
-        Me.f3_clave.TabIndex = 89
+        Me.F4ValorClave.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.F4ValorClave.Enabled = False
+        Me.F4ValorClave.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F4ValorClave.Location = New System.Drawing.Point(2, 518)
+        Me.F4ValorClave.Margin = New System.Windows.Forms.Padding(2, 0, 0, 0)
+        Me.F4ValorClave.Name = "F4ValorClave"
+        Me.F4ValorClave.Size = New System.Drawing.Size(271, 27)
+        Me.F4ValorClave.TabIndex = 89
         '
-        'f3_campo
+        'F4CampoClave
         '
-        Me.f3_campo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.f3_campo.Enabled = False
-        Me.f3_campo.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.f3_campo.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.f3_campo.FormattingEnabled = True
-        Me.f3_campo.Location = New System.Drawing.Point(101, 489)
-        Me.f3_campo.Margin = New System.Windows.Forms.Padding(0)
-        Me.f3_campo.Name = "f3_campo"
-        Me.f3_campo.Size = New System.Drawing.Size(171, 27)
-        Me.f3_campo.TabIndex = 88
+        Me.F4CampoClave.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.F4CampoClave.Enabled = False
+        Me.F4CampoClave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.F4CampoClave.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F4CampoClave.FormattingEnabled = True
+        Me.F4CampoClave.Location = New System.Drawing.Point(101, 489)
+        Me.F4CampoClave.Margin = New System.Windows.Forms.Padding(0)
+        Me.F4CampoClave.Name = "F4CampoClave"
+        Me.F4CampoClave.Size = New System.Drawing.Size(171, 27)
+        Me.F4CampoClave.TabIndex = 88
         '
-        'mostrar_f3
+        'F4Mostrar
         '
-        Me.mostrar_f3.BackColor = System.Drawing.Color.Transparent
-        Me.mostrar_f3.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.mostrar_f3.Location = New System.Drawing.Point(2, 491)
-        Me.mostrar_f3.Margin = New System.Windows.Forms.Padding(2)
-        Me.mostrar_f3.Name = "mostrar_f3"
-        Me.mostrar_f3.Size = New System.Drawing.Size(97, 25)
-        Me.mostrar_f3.TabIndex = 87
-        Me.mostrar_f3.Text = "Filtrar por"
-        Me.mostrar_f3.UseVisualStyleBackColor = False
+        Me.F4Mostrar.BackColor = System.Drawing.Color.Transparent
+        Me.F4Mostrar.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F4Mostrar.Location = New System.Drawing.Point(2, 491)
+        Me.F4Mostrar.Margin = New System.Windows.Forms.Padding(2)
+        Me.F4Mostrar.Name = "F4Mostrar"
+        Me.F4Mostrar.Size = New System.Drawing.Size(97, 25)
+        Me.F4Mostrar.TabIndex = 87
+        Me.F4Mostrar.Text = "Filtrar por"
+        Me.F4Mostrar.UseVisualStyleBackColor = False
         '
-        'imp_search
+        'EjecutarConsultaDeuda
         '
-        Me.imp_search.BackColor = System.Drawing.SystemColors.Control
-        Me.imp_search.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.imp_search.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.imp_search.Location = New System.Drawing.Point(2, 547)
-        Me.imp_search.Margin = New System.Windows.Forms.Padding(2)
-        Me.imp_search.Name = "imp_search"
-        Me.imp_search.Size = New System.Drawing.Size(140, 28)
-        Me.imp_search.TabIndex = 72
-        Me.imp_search.Text = "Consulta (F3)"
-        Me.imp_search.UseVisualStyleBackColor = False
+        Me.EjecutarConsultaDeuda.BackColor = System.Drawing.SystemColors.Control
+        Me.EjecutarConsultaDeuda.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.EjecutarConsultaDeuda.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.EjecutarConsultaDeuda.Location = New System.Drawing.Point(2, 547)
+        Me.EjecutarConsultaDeuda.Margin = New System.Windows.Forms.Padding(2)
+        Me.EjecutarConsultaDeuda.Name = "EjecutarConsultaDeuda"
+        Me.EjecutarConsultaDeuda.Size = New System.Drawing.Size(140, 28)
+        Me.EjecutarConsultaDeuda.TabIndex = 72
+        Me.EjecutarConsultaDeuda.Text = "Consulta (F3)"
+        Me.EjecutarConsultaDeuda.UseVisualStyleBackColor = False
         '
-        'f1b_maximo
+        'F2Maximo
         '
-        Me.f1b_maximo.DecimalPlaces = 2
-        Me.f1b_maximo.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.f1b_maximo.Location = New System.Drawing.Point(188, 23)
-        Me.f1b_maximo.Margin = New System.Windows.Forms.Padding(0)
-        Me.f1b_maximo.Maximum = New Decimal(New Integer() {99999999, 0, 0, 0})
-        Me.f1b_maximo.Name = "f1b_maximo"
-        Me.f1b_maximo.Size = New System.Drawing.Size(86, 27)
-        Me.f1b_maximo.TabIndex = 84
-        Me.f1b_maximo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.f1b_maximo.ThousandsSeparator = True
-        Me.f1b_maximo.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.F2Maximo.DecimalPlaces = 2
+        Me.F2Maximo.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F2Maximo.Location = New System.Drawing.Point(188, 23)
+        Me.F2Maximo.Margin = New System.Windows.Forms.Padding(0)
+        Me.F2Maximo.Maximum = New Decimal(New Integer() {99999999, 0, 0, 0})
+        Me.F2Maximo.Name = "F2Maximo"
+        Me.F2Maximo.Size = New System.Drawing.Size(86, 27)
+        Me.F2Maximo.TabIndex = 84
+        Me.F2Maximo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.F2Maximo.ThousandsSeparator = True
+        Me.F2Maximo.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
         'et_hasta
         '
@@ -216,145 +216,145 @@ Partial Class ConsultaImpuesto
         Me.et_hasta.Text = "-"
         Me.et_hasta.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
-        'f1b_deuda_total
+        'F2DeudaTotal
         '
-        Me.f1b_deuda_total.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.f1b_deuda_total.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.f1b_deuda_total.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.f1b_deuda_total.FormattingEnabled = True
-        Me.f1b_deuda_total.Items.AddRange(New Object() {"MAS DE", "MENOS DE", "RANGO"})
-        Me.f1b_deuda_total.Location = New System.Drawing.Point(2, 23)
-        Me.f1b_deuda_total.Margin = New System.Windows.Forms.Padding(2, 0, 0, 0)
-        Me.f1b_deuda_total.Name = "f1b_deuda_total"
-        Me.f1b_deuda_total.Size = New System.Drawing.Size(84, 27)
-        Me.f1b_deuda_total.TabIndex = 80
+        Me.F2DeudaTotal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.F2DeudaTotal.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.F2DeudaTotal.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F2DeudaTotal.FormattingEnabled = True
+        Me.F2DeudaTotal.Items.AddRange(New Object() {"MAS DE", "MENOS DE", "RANGO"})
+        Me.F2DeudaTotal.Location = New System.Drawing.Point(2, 23)
+        Me.F2DeudaTotal.Margin = New System.Windows.Forms.Padding(2, 0, 0, 0)
+        Me.F2DeudaTotal.Name = "F2DeudaTotal"
+        Me.F2DeudaTotal.Size = New System.Drawing.Size(84, 27)
+        Me.F2DeudaTotal.TabIndex = 80
         '
-        'mostrar_f1b
+        'F2Mostrar
         '
-        Me.mostrar_f1b.BackColor = System.Drawing.Color.Transparent
-        Me.mostrar_f1b.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.mostrar_f1b.Location = New System.Drawing.Point(2, 139)
-        Me.mostrar_f1b.Margin = New System.Windows.Forms.Padding(2)
-        Me.mostrar_f1b.Name = "mostrar_f1b"
-        Me.mostrar_f1b.Size = New System.Drawing.Size(271, 23)
-        Me.mostrar_f1b.TabIndex = 82
-        Me.mostrar_f1b.Text = "Deuda Agrupada"
-        Me.mostrar_f1b.UseVisualStyleBackColor = False
+        Me.F2Mostrar.BackColor = System.Drawing.Color.Transparent
+        Me.F2Mostrar.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F2Mostrar.Location = New System.Drawing.Point(2, 139)
+        Me.F2Mostrar.Margin = New System.Windows.Forms.Padding(2)
+        Me.F2Mostrar.Name = "F2Mostrar"
+        Me.F2Mostrar.Size = New System.Drawing.Size(271, 23)
+        Me.F2Mostrar.TabIndex = 82
+        Me.F2Mostrar.Text = "Deuda Agrupada"
+        Me.F2Mostrar.UseVisualStyleBackColor = False
         '
-        'f1b_minimo
+        'F2Minimo
         '
-        Me.f1b_minimo.DecimalPlaces = 2
-        Me.f1b_minimo.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.f1b_minimo.Location = New System.Drawing.Point(88, 23)
-        Me.f1b_minimo.Margin = New System.Windows.Forms.Padding(2, 0, 0, 0)
-        Me.f1b_minimo.Maximum = New Decimal(New Integer() {99999999, 0, 0, 0})
-        Me.f1b_minimo.Name = "f1b_minimo"
-        Me.f1b_minimo.Size = New System.Drawing.Size(84, 27)
-        Me.f1b_minimo.TabIndex = 78
-        Me.f1b_minimo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.f1b_minimo.ThousandsSeparator = True
-        Me.f1b_minimo.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.F2Minimo.DecimalPlaces = 2
+        Me.F2Minimo.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F2Minimo.Location = New System.Drawing.Point(88, 23)
+        Me.F2Minimo.Margin = New System.Windows.Forms.Padding(2, 0, 0, 0)
+        Me.F2Minimo.Maximum = New Decimal(New Integer() {99999999, 0, 0, 0})
+        Me.F2Minimo.Name = "F2Minimo"
+        Me.F2Minimo.Size = New System.Drawing.Size(84, 27)
+        Me.F2Minimo.TabIndex = 78
+        Me.F2Minimo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.F2Minimo.ThousandsSeparator = True
+        Me.F2Minimo.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
-        'f2_año_maximo
+        'F3AñoMaximo
         '
-        Me.f2_año_maximo.Enabled = False
-        Me.f2_año_maximo.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.f2_año_maximo.Location = New System.Drawing.Point(211, 218)
-        Me.f2_año_maximo.Margin = New System.Windows.Forms.Padding(0)
-        Me.f2_año_maximo.Maximum = New Decimal(New Integer() {2050, 0, 0, 0})
-        Me.f2_año_maximo.Minimum = New Decimal(New Integer() {2001, 0, 0, 0})
-        Me.f2_año_maximo.Name = "f2_año_maximo"
-        Me.f2_año_maximo.ReadOnly = True
-        Me.f2_año_maximo.Size = New System.Drawing.Size(63, 27)
-        Me.f2_año_maximo.TabIndex = 75
-        Me.f2_año_maximo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.f2_año_maximo.Value = New Decimal(New Integer() {2001, 0, 0, 0})
+        Me.F3AñoMaximo.Enabled = False
+        Me.F3AñoMaximo.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F3AñoMaximo.Location = New System.Drawing.Point(211, 218)
+        Me.F3AñoMaximo.Margin = New System.Windows.Forms.Padding(0)
+        Me.F3AñoMaximo.Maximum = New Decimal(New Integer() {2050, 0, 0, 0})
+        Me.F3AñoMaximo.Minimum = New Decimal(New Integer() {2001, 0, 0, 0})
+        Me.F3AñoMaximo.Name = "F3AñoMaximo"
+        Me.F3AñoMaximo.ReadOnly = True
+        Me.F3AñoMaximo.Size = New System.Drawing.Size(63, 27)
+        Me.F3AñoMaximo.TabIndex = 75
+        Me.F3AñoMaximo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.F3AñoMaximo.Value = New Decimal(New Integer() {2001, 0, 0, 0})
         '
-        'f2_año_minimo
+        'F3AñoMinimo
         '
-        Me.f2_año_minimo.Enabled = False
-        Me.f2_año_minimo.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.f2_año_minimo.Location = New System.Drawing.Point(101, 218)
-        Me.f2_año_minimo.Margin = New System.Windows.Forms.Padding(0)
-        Me.f2_año_minimo.Maximum = New Decimal(New Integer() {2050, 0, 0, 0})
-        Me.f2_año_minimo.Minimum = New Decimal(New Integer() {2000, 0, 0, 0})
-        Me.f2_año_minimo.Name = "f2_año_minimo"
-        Me.f2_año_minimo.ReadOnly = True
-        Me.f2_año_minimo.Size = New System.Drawing.Size(63, 27)
-        Me.f2_año_minimo.TabIndex = 69
-        Me.f2_año_minimo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.f2_año_minimo.Value = New Decimal(New Integer() {2000, 0, 0, 0})
+        Me.F3AñoMinimo.Enabled = False
+        Me.F3AñoMinimo.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F3AñoMinimo.Location = New System.Drawing.Point(101, 218)
+        Me.F3AñoMinimo.Margin = New System.Windows.Forms.Padding(0)
+        Me.F3AñoMinimo.Maximum = New Decimal(New Integer() {2050, 0, 0, 0})
+        Me.F3AñoMinimo.Minimum = New Decimal(New Integer() {2000, 0, 0, 0})
+        Me.F3AñoMinimo.Name = "F3AñoMinimo"
+        Me.F3AñoMinimo.ReadOnly = True
+        Me.F3AñoMinimo.Size = New System.Drawing.Size(63, 27)
+        Me.F3AñoMinimo.TabIndex = 69
+        Me.F3AñoMinimo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.F3AñoMinimo.Value = New Decimal(New Integer() {2000, 0, 0, 0})
         '
-        'mostrar_f2
+        'F3Mostrar
         '
-        Me.mostrar_f2.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.mostrar_f2.Location = New System.Drawing.Point(2, 220)
-        Me.mostrar_f2.Margin = New System.Windows.Forms.Padding(2)
-        Me.mostrar_f2.Name = "mostrar_f2"
-        Me.mostrar_f2.Size = New System.Drawing.Size(97, 25)
-        Me.mostrar_f2.TabIndex = 73
-        Me.mostrar_f2.Text = "Periodo"
-        Me.mostrar_f2.UseVisualStyleBackColor = True
+        Me.F3Mostrar.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F3Mostrar.Location = New System.Drawing.Point(2, 220)
+        Me.F3Mostrar.Margin = New System.Windows.Forms.Padding(2)
+        Me.F3Mostrar.Name = "F3Mostrar"
+        Me.F3Mostrar.Size = New System.Drawing.Size(97, 25)
+        Me.F3Mostrar.TabIndex = 73
+        Me.F3Mostrar.Text = "Periodo"
+        Me.F3Mostrar.UseVisualStyleBackColor = True
         '
-        'visor
+        'VisorConsulta
         '
-        Me.visor.AllowUserToAddRows = False
-        Me.visor.AllowUserToDeleteRows = False
-        Me.visor.AllowUserToResizeRows = False
-        Me.visor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.visor.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.visor.Location = New System.Drawing.Point(0, 0)
-        Me.visor.Name = "visor"
-        Me.visor.ReadOnly = True
-        Me.visor.RowHeadersVisible = False
-        Me.visor.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
-        Me.visor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.visor.Size = New System.Drawing.Size(443, 606)
-        Me.visor.TabIndex = 5
+        Me.VisorConsulta.AllowUserToAddRows = False
+        Me.VisorConsulta.AllowUserToDeleteRows = False
+        Me.VisorConsulta.AllowUserToResizeRows = False
+        Me.VisorConsulta.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.VisorConsulta.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.VisorConsulta.Location = New System.Drawing.Point(0, 0)
+        Me.VisorConsulta.Name = "VisorConsulta"
+        Me.VisorConsulta.ReadOnly = True
+        Me.VisorConsulta.RowHeadersVisible = False
+        Me.VisorConsulta.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
+        Me.VisorConsulta.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.VisorConsulta.Size = New System.Drawing.Size(443, 606)
+        Me.VisorConsulta.TabIndex = 5
         '
-        'grupo_imp
+        'FiltroConsulta
         '
-        Me.grupo_imp.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.grupo_imp.Controls.Add(Me.et_con_imp)
-        Me.grupo_imp.Controls.Add(Me.Label3)
-        Me.grupo_imp.Controls.Add(Me.f1_impuesto)
-        Me.grupo_imp.Controls.Add(Me.Label5)
-        Me.grupo_imp.Controls.Add(Me.f1_Deudor)
-        Me.grupo_imp.Controls.Add(Me.f1_SinDeuda)
-        Me.grupo_imp.Controls.Add(Me.Label4)
-        Me.grupo_imp.Controls.Add(Me.fecha)
-        Me.grupo_imp.Controls.Add(Me.Label2)
-        Me.grupo_imp.Controls.Add(Me.interes)
-        Me.grupo_imp.Controls.Add(Me.mostrar_f1b)
-        Me.grupo_imp.Controls.Add(Me.grupo_deuda_total)
-        Me.grupo_imp.Controls.Add(Me.mostrar_f2)
-        Me.grupo_imp.Controls.Add(Me.f2_año_minimo)
-        Me.grupo_imp.Controls.Add(Me.Label1)
-        Me.grupo_imp.Controls.Add(Me.f2_año_maximo)
-        Me.grupo_imp.Controls.Add(Me.CtrlVenc1)
-        Me.grupo_imp.Controls.Add(Me.mostrar_f3)
-        Me.grupo_imp.Controls.Add(Me.f3_campo)
-        Me.grupo_imp.Controls.Add(Me.f3_clave)
-        Me.grupo_imp.Controls.Add(Me.imp_search)
-        Me.grupo_imp.Controls.Add(Me.ImprimirConsulta)
-        Me.grupo_imp.Dock = System.Windows.Forms.DockStyle.Right
-        Me.grupo_imp.Location = New System.Drawing.Point(443, 0)
-        Me.grupo_imp.Name = "grupo_imp"
-        Me.grupo_imp.Size = New System.Drawing.Size(278, 606)
-        Me.grupo_imp.TabIndex = 6
+        Me.FiltroConsulta.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.FiltroConsulta.Controls.Add(Me.EtGrupoFiltroConsulta)
+        Me.FiltroConsulta.Controls.Add(Me.Label3)
+        Me.FiltroConsulta.Controls.Add(Me.F1Servicio)
+        Me.FiltroConsulta.Controls.Add(Me.Label5)
+        Me.FiltroConsulta.Controls.Add(Me.F1Deudor)
+        Me.FiltroConsulta.Controls.Add(Me.F1SinDeuda)
+        Me.FiltroConsulta.Controls.Add(Me.Label4)
+        Me.FiltroConsulta.Controls.Add(Me.F1Vencimiento)
+        Me.FiltroConsulta.Controls.Add(Me.Label2)
+        Me.FiltroConsulta.Controls.Add(Me.F1Interes)
+        Me.FiltroConsulta.Controls.Add(Me.F2Mostrar)
+        Me.FiltroConsulta.Controls.Add(Me.grupo_deuda_total)
+        Me.FiltroConsulta.Controls.Add(Me.F3Mostrar)
+        Me.FiltroConsulta.Controls.Add(Me.F3AñoMinimo)
+        Me.FiltroConsulta.Controls.Add(Me.Label1)
+        Me.FiltroConsulta.Controls.Add(Me.F3AñoMaximo)
+        Me.FiltroConsulta.Controls.Add(Me.CtrlVenc1)
+        Me.FiltroConsulta.Controls.Add(Me.F4Mostrar)
+        Me.FiltroConsulta.Controls.Add(Me.F4CampoClave)
+        Me.FiltroConsulta.Controls.Add(Me.F4ValorClave)
+        Me.FiltroConsulta.Controls.Add(Me.EjecutarConsultaDeuda)
+        Me.FiltroConsulta.Controls.Add(Me.ImprimirConsultaDeuda)
+        Me.FiltroConsulta.Dock = System.Windows.Forms.DockStyle.Right
+        Me.FiltroConsulta.Location = New System.Drawing.Point(443, 0)
+        Me.FiltroConsulta.Name = "FiltroConsulta"
+        Me.FiltroConsulta.Size = New System.Drawing.Size(278, 606)
+        Me.FiltroConsulta.TabIndex = 6
         '
-        'et_con_imp
+        'EtGrupoFiltroConsulta
         '
-        Me.et_con_imp.BackColor = System.Drawing.Color.FromArgb(CType(CType(155, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.et_con_imp.Dock = System.Windows.Forms.DockStyle.Top
-        Me.et_con_imp.Font = New System.Drawing.Font("PF DinDisplay Pro", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.et_con_imp.ForeColor = System.Drawing.Color.White
-        Me.et_con_imp.Location = New System.Drawing.Point(0, 0)
-        Me.et_con_imp.Margin = New System.Windows.Forms.Padding(0)
-        Me.et_con_imp.Name = "et_con_imp"
-        Me.et_con_imp.Size = New System.Drawing.Size(289, 22)
-        Me.et_con_imp.TabIndex = 148
-        Me.et_con_imp.Text = " FILTROS"
+        Me.EtGrupoFiltroConsulta.BackColor = System.Drawing.Color.FromArgb(CType(CType(155, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.EtGrupoFiltroConsulta.Dock = System.Windows.Forms.DockStyle.Top
+        Me.EtGrupoFiltroConsulta.Font = New System.Drawing.Font("PF DinDisplay Pro", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.EtGrupoFiltroConsulta.ForeColor = System.Drawing.Color.White
+        Me.EtGrupoFiltroConsulta.Location = New System.Drawing.Point(0, 0)
+        Me.EtGrupoFiltroConsulta.Margin = New System.Windows.Forms.Padding(0)
+        Me.EtGrupoFiltroConsulta.Name = "EtGrupoFiltroConsulta"
+        Me.EtGrupoFiltroConsulta.Size = New System.Drawing.Size(289, 22)
+        Me.EtGrupoFiltroConsulta.TabIndex = 148
+        Me.EtGrupoFiltroConsulta.Text = " FILTROS"
         '
         'Label3
         '
@@ -367,18 +367,18 @@ Partial Class ConsultaImpuesto
         Me.Label3.Text = "Servicio"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
-        'f1_impuesto
+        'F1Servicio
         '
-        Me.f1_impuesto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.f1_impuesto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.f1_impuesto.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.f1_impuesto.FormattingEnabled = True
-        Me.f1_impuesto.Items.AddRange(New Object() {"AGUAS", "AUTOMOVIL", "CATASTRO", "COMERCIO", "SEPELIO", "BARRIOS"})
-        Me.f1_impuesto.Location = New System.Drawing.Point(67, 30)
-        Me.f1_impuesto.Margin = New System.Windows.Forms.Padding(2, 8, 2, 2)
-        Me.f1_impuesto.Name = "f1_impuesto"
-        Me.f1_impuesto.Size = New System.Drawing.Size(206, 27)
-        Me.f1_impuesto.TabIndex = 88
+        Me.F1Servicio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.F1Servicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.F1Servicio.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F1Servicio.FormattingEnabled = True
+        Me.F1Servicio.Items.AddRange(New Object() {"AGUAS", "AUTOMOVIL", "CATASTRO", "COMERCIO", "SEPELIO", "BARRIOS"})
+        Me.F1Servicio.Location = New System.Drawing.Point(67, 30)
+        Me.F1Servicio.Margin = New System.Windows.Forms.Padding(2, 8, 2, 2)
+        Me.F1Servicio.Name = "F1Servicio"
+        Me.F1Servicio.Size = New System.Drawing.Size(206, 27)
+        Me.F1Servicio.TabIndex = 88
         '
         'Label5
         '
@@ -389,31 +389,31 @@ Partial Class ConsultaImpuesto
         Me.Label5.TabIndex = 164
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'f1_Deudor
+        'F1Deudor
         '
-        Me.f1_Deudor.AutoSize = True
-        Me.f1_Deudor.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.f1_Deudor.ForeColor = System.Drawing.Color.Red
-        Me.f1_Deudor.Location = New System.Drawing.Point(68, 59)
-        Me.f1_Deudor.Margin = New System.Windows.Forms.Padding(0)
-        Me.f1_Deudor.Name = "f1_Deudor"
-        Me.f1_Deudor.Size = New System.Drawing.Size(74, 23)
-        Me.f1_Deudor.TabIndex = 150
-        Me.f1_Deudor.Text = "Deudor"
-        Me.f1_Deudor.UseVisualStyleBackColor = True
+        Me.F1Deudor.AutoSize = True
+        Me.F1Deudor.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F1Deudor.ForeColor = System.Drawing.Color.Red
+        Me.F1Deudor.Location = New System.Drawing.Point(68, 59)
+        Me.F1Deudor.Margin = New System.Windows.Forms.Padding(0)
+        Me.F1Deudor.Name = "F1Deudor"
+        Me.F1Deudor.Size = New System.Drawing.Size(74, 23)
+        Me.F1Deudor.TabIndex = 150
+        Me.F1Deudor.Text = "Deudor"
+        Me.F1Deudor.UseVisualStyleBackColor = True
         '
-        'f1_SinDeuda
+        'F1SinDeuda
         '
-        Me.f1_SinDeuda.AutoSize = True
-        Me.f1_SinDeuda.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.f1_SinDeuda.ForeColor = System.Drawing.Color.Green
-        Me.f1_SinDeuda.Location = New System.Drawing.Point(142, 59)
-        Me.f1_SinDeuda.Margin = New System.Windows.Forms.Padding(0)
-        Me.f1_SinDeuda.Name = "f1_SinDeuda"
-        Me.f1_SinDeuda.Size = New System.Drawing.Size(100, 23)
-        Me.f1_SinDeuda.TabIndex = 151
-        Me.f1_SinDeuda.Text = "Sin deudas"
-        Me.f1_SinDeuda.UseVisualStyleBackColor = True
+        Me.F1SinDeuda.AutoSize = True
+        Me.F1SinDeuda.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F1SinDeuda.ForeColor = System.Drawing.Color.Green
+        Me.F1SinDeuda.Location = New System.Drawing.Point(142, 59)
+        Me.F1SinDeuda.Margin = New System.Windows.Forms.Padding(0)
+        Me.F1SinDeuda.Name = "F1SinDeuda"
+        Me.F1SinDeuda.Size = New System.Drawing.Size(100, 23)
+        Me.F1SinDeuda.TabIndex = 151
+        Me.F1SinDeuda.Text = "Sin deudas"
+        Me.F1SinDeuda.UseVisualStyleBackColor = True
         '
         'Label4
         '
@@ -426,14 +426,14 @@ Partial Class ConsultaImpuesto
         Me.Label4.Text = "Vencimiento tope"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'fecha
+        'F1Vencimiento
         '
-        Me.fecha.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.fecha.Location = New System.Drawing.Point(148, 82)
-        Me.fecha.Margin = New System.Windows.Forms.Padding(0)
-        Me.fecha.Name = "fecha"
-        Me.fecha.Size = New System.Drawing.Size(125, 27)
-        Me.fecha.TabIndex = 162
+        Me.F1Vencimiento.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.F1Vencimiento.Location = New System.Drawing.Point(148, 82)
+        Me.F1Vencimiento.Margin = New System.Windows.Forms.Padding(0)
+        Me.F1Vencimiento.Name = "F1Vencimiento"
+        Me.F1Vencimiento.Size = New System.Drawing.Size(125, 27)
+        Me.F1Vencimiento.TabIndex = 162
         '
         'Label2
         '
@@ -445,30 +445,30 @@ Partial Class ConsultaImpuesto
         Me.Label2.Text = "Interes diario (%)"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'interes
+        'F1Interes
         '
-        Me.interes.DecimalPlaces = 4
-        Me.interes.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.interes.Increment = New Decimal(New Integer() {1, 0, 0, 262144})
-        Me.interes.Location = New System.Drawing.Point(148, 110)
-        Me.interes.Margin = New System.Windows.Forms.Padding(0)
-        Me.interes.Minimum = New Decimal(New Integer() {1, 0, 0, 262144})
-        Me.interes.Name = "interes"
-        Me.interes.Size = New System.Drawing.Size(125, 27)
-        Me.interes.TabIndex = 159
-        Me.interes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.interes.ThousandsSeparator = True
-        Me.interes.Value = New Decimal(New Integer() {1315, 0, 0, 262144})
+        Me.F1Interes.DecimalPlaces = 4
+        Me.F1Interes.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F1Interes.Increment = New Decimal(New Integer() {1, 0, 0, 262144})
+        Me.F1Interes.Location = New System.Drawing.Point(148, 110)
+        Me.F1Interes.Margin = New System.Windows.Forms.Padding(0)
+        Me.F1Interes.Minimum = New Decimal(New Integer() {1, 0, 0, 262144})
+        Me.F1Interes.Name = "F1Interes"
+        Me.F1Interes.Size = New System.Drawing.Size(125, 27)
+        Me.F1Interes.TabIndex = 159
+        Me.F1Interes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.F1Interes.ThousandsSeparator = True
+        Me.F1Interes.Value = New Decimal(New Integer() {1315, 0, 0, 262144})
         '
         'grupo_deuda_total
         '
-        Me.grupo_deuda_total.Controls.Add(Me.f1b_importe_mora)
-        Me.grupo_deuda_total.Controls.Add(Me.f1b_importe)
-        Me.grupo_deuda_total.Controls.Add(Me.f1b_mora)
-        Me.grupo_deuda_total.Controls.Add(Me.f1b_deuda_total)
-        Me.grupo_deuda_total.Controls.Add(Me.f1b_minimo)
+        Me.grupo_deuda_total.Controls.Add(Me.F2ImporteMora)
+        Me.grupo_deuda_total.Controls.Add(Me.F2Importe)
+        Me.grupo_deuda_total.Controls.Add(Me.F2Mora)
+        Me.grupo_deuda_total.Controls.Add(Me.F2DeudaTotal)
+        Me.grupo_deuda_total.Controls.Add(Me.F2Minimo)
         Me.grupo_deuda_total.Controls.Add(Me.et_hasta)
-        Me.grupo_deuda_total.Controls.Add(Me.f1b_maximo)
+        Me.grupo_deuda_total.Controls.Add(Me.F2Maximo)
         Me.grupo_deuda_total.Enabled = False
         Me.grupo_deuda_total.Location = New System.Drawing.Point(0, 164)
         Me.grupo_deuda_total.Margin = New System.Windows.Forms.Padding(0)
@@ -477,42 +477,42 @@ Partial Class ConsultaImpuesto
         Me.grupo_deuda_total.TabIndex = 152
         Me.grupo_deuda_total.Visible = False
         '
-        'f1b_importe_mora
+        'F2ImporteMora
         '
-        Me.f1b_importe_mora.Checked = True
-        Me.f1b_importe_mora.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.f1b_importe_mora.Location = New System.Drawing.Point(0, 0)
-        Me.f1b_importe_mora.Margin = New System.Windows.Forms.Padding(0)
-        Me.f1b_importe_mora.Name = "f1b_importe_mora"
-        Me.f1b_importe_mora.Size = New System.Drawing.Size(130, 23)
-        Me.f1b_importe_mora.TabIndex = 157
-        Me.f1b_importe_mora.TabStop = True
-        Me.f1b_importe_mora.Text = "Importe + Mora"
-        Me.f1b_importe_mora.UseVisualStyleBackColor = True
+        Me.F2ImporteMora.Checked = True
+        Me.F2ImporteMora.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F2ImporteMora.Location = New System.Drawing.Point(0, 0)
+        Me.F2ImporteMora.Margin = New System.Windows.Forms.Padding(0)
+        Me.F2ImporteMora.Name = "F2ImporteMora"
+        Me.F2ImporteMora.Size = New System.Drawing.Size(130, 23)
+        Me.F2ImporteMora.TabIndex = 157
+        Me.F2ImporteMora.TabStop = True
+        Me.F2ImporteMora.Text = "Importe + Mora"
+        Me.F2ImporteMora.UseVisualStyleBackColor = True
         '
-        'f1b_importe
+        'F2Importe
         '
-        Me.f1b_importe.AutoSize = True
-        Me.f1b_importe.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.f1b_importe.Location = New System.Drawing.Point(130, 0)
-        Me.f1b_importe.Margin = New System.Windows.Forms.Padding(0)
-        Me.f1b_importe.Name = "f1b_importe"
-        Me.f1b_importe.Size = New System.Drawing.Size(80, 23)
-        Me.f1b_importe.TabIndex = 155
-        Me.f1b_importe.Text = "Importe"
-        Me.f1b_importe.UseVisualStyleBackColor = True
+        Me.F2Importe.AutoSize = True
+        Me.F2Importe.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F2Importe.Location = New System.Drawing.Point(130, 0)
+        Me.F2Importe.Margin = New System.Windows.Forms.Padding(0)
+        Me.F2Importe.Name = "F2Importe"
+        Me.F2Importe.Size = New System.Drawing.Size(80, 23)
+        Me.F2Importe.TabIndex = 155
+        Me.F2Importe.Text = "Importe"
+        Me.F2Importe.UseVisualStyleBackColor = True
         '
-        'f1b_mora
+        'F2Mora
         '
-        Me.f1b_mora.AutoSize = True
-        Me.f1b_mora.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.f1b_mora.Location = New System.Drawing.Point(210, 0)
-        Me.f1b_mora.Margin = New System.Windows.Forms.Padding(0)
-        Me.f1b_mora.Name = "f1b_mora"
-        Me.f1b_mora.Size = New System.Drawing.Size(60, 23)
-        Me.f1b_mora.TabIndex = 156
-        Me.f1b_mora.Text = "Mora"
-        Me.f1b_mora.UseVisualStyleBackColor = True
+        Me.F2Mora.AutoSize = True
+        Me.F2Mora.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.F2Mora.Location = New System.Drawing.Point(210, 0)
+        Me.F2Mora.Margin = New System.Windows.Forms.Padding(0)
+        Me.F2Mora.Name = "F2Mora"
+        Me.F2Mora.Size = New System.Drawing.Size(60, 23)
+        Me.F2Mora.TabIndex = 156
+        Me.F2Mora.Text = "Mora"
+        Me.F2Mora.UseVisualStyleBackColor = True
         '
         'Label1
         '
@@ -538,27 +538,27 @@ Partial Class ConsultaImpuesto
         Me.CtrlVenc1.TabIndex = 147
         Me.CtrlVenc1.Visible = False
         '
-        'ImprimirConsulta
+        'ImprimirConsultaDeuda
         '
-        Me.ImprimirConsulta.BackColor = System.Drawing.SystemColors.Control
-        Me.ImprimirConsulta.Enabled = False
-        Me.ImprimirConsulta.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ImprimirConsulta.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ImprimirConsulta.Location = New System.Drawing.Point(146, 547)
-        Me.ImprimirConsulta.Margin = New System.Windows.Forms.Padding(2)
-        Me.ImprimirConsulta.Name = "ImprimirConsulta"
-        Me.ImprimirConsulta.Size = New System.Drawing.Size(127, 28)
-        Me.ImprimirConsulta.TabIndex = 163
-        Me.ImprimirConsulta.Text = "Imprimir (F4)"
-        Me.ImprimirConsulta.UseVisualStyleBackColor = False
+        Me.ImprimirConsultaDeuda.BackColor = System.Drawing.SystemColors.Control
+        Me.ImprimirConsultaDeuda.Enabled = False
+        Me.ImprimirConsultaDeuda.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.ImprimirConsultaDeuda.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ImprimirConsultaDeuda.Location = New System.Drawing.Point(146, 547)
+        Me.ImprimirConsultaDeuda.Margin = New System.Windows.Forms.Padding(2)
+        Me.ImprimirConsultaDeuda.Name = "ImprimirConsultaDeuda"
+        Me.ImprimirConsultaDeuda.Size = New System.Drawing.Size(127, 28)
+        Me.ImprimirConsultaDeuda.TabIndex = 163
+        Me.ImprimirConsultaDeuda.Text = "Imprimir (F4)"
+        Me.ImprimirConsultaDeuda.UseVisualStyleBackColor = False
         '
         'ConsultaImpuesto
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(721, 630)
-        Me.Controls.Add(Me.visor)
-        Me.Controls.Add(Me.grupo_imp)
+        Me.Controls.Add(Me.VisorConsulta)
+        Me.Controls.Add(Me.FiltroConsulta)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
@@ -572,18 +572,18 @@ Partial Class ConsultaImpuesto
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
-        CType(Me.bs_consulta, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.bs_historial, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.bs_cuentas, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.bs_persona, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.f1b_maximo, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.f1b_minimo, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.f2_año_maximo, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.f2_año_minimo, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.visor, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.grupo_imp.ResumeLayout(False)
-        Me.grupo_imp.PerformLayout()
-        CType(Me.interes, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BSConsulta, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BSHistorial, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BSCuentas, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BSPersona, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.F2Maximo, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.F2Minimo, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.F3AñoMaximo, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.F3AñoMinimo, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.VisorConsulta, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.FiltroConsulta.ResumeLayout(False)
+        Me.FiltroConsulta.PerformLayout()
+        CType(Me.F1Interes, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grupo_deuda_total.ResumeLayout(False)
         Me.grupo_deuda_total.PerformLayout()
         Me.ResumeLayout(False)
@@ -592,45 +592,45 @@ Partial Class ConsultaImpuesto
     End Sub
     Friend WithEvents basura1 As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents basura2 As System.Windows.Forms.ToolStripStatusLabel
-    Friend WithEvents bs_cuentas As System.Windows.Forms.BindingSource
-    Friend WithEvents bs_historial As System.Windows.Forms.BindingSource
-	Friend WithEvents bs_persona As System.Windows.Forms.BindingSource
+    Friend WithEvents BSCuentas As System.Windows.Forms.BindingSource
+    Friend WithEvents BSHistorial As System.Windows.Forms.BindingSource
+	Friend WithEvents BSPersona As System.Windows.Forms.BindingSource
 	Friend WithEvents StatusStrip1 As System.Windows.Forms.StatusStrip
 	Friend WithEvents info As System.Windows.Forms.ToolStripStatusLabel
 	Friend WithEvents info2 As System.Windows.Forms.ToolStripStatusLabel
 	Friend WithEvents progreso As System.Windows.Forms.ToolStripProgressBar
 	Friend WithEvents consulta_printdocument As System.Drawing.Printing.PrintDocument
 	Friend WithEvents PrintDialog As System.Windows.Forms.PrintDialog
-	Friend WithEvents f3_clave As System.Windows.Forms.TextBox
-	Friend WithEvents f3_campo As System.Windows.Forms.ComboBox
-	Friend WithEvents mostrar_f3 As System.Windows.Forms.CheckBox
-	Friend WithEvents imp_search As System.Windows.Forms.Button
-	Friend WithEvents f1b_maximo As System.Windows.Forms.NumericUpDown
+	Friend WithEvents F4ValorClave As System.Windows.Forms.TextBox
+	Friend WithEvents F4CampoClave As System.Windows.Forms.ComboBox
+	Friend WithEvents F4Mostrar As System.Windows.Forms.CheckBox
+	Friend WithEvents EjecutarConsultaDeuda As System.Windows.Forms.Button
+	Friend WithEvents F2Maximo As System.Windows.Forms.NumericUpDown
 	Friend WithEvents et_hasta As System.Windows.Forms.Label
-	Friend WithEvents f1b_deuda_total As System.Windows.Forms.ComboBox
-	Friend WithEvents mostrar_f1b As System.Windows.Forms.CheckBox
-	Friend WithEvents f1b_minimo As System.Windows.Forms.NumericUpDown
-	Friend WithEvents f2_año_maximo As System.Windows.Forms.NumericUpDown
-	Friend WithEvents f2_año_minimo As System.Windows.Forms.NumericUpDown
-	Friend WithEvents mostrar_f2 As System.Windows.Forms.CheckBox
-	Friend WithEvents visor As System.Windows.Forms.DataGridView
+	Friend WithEvents F2DeudaTotal As System.Windows.Forms.ComboBox
+	Friend WithEvents F2Mostrar As System.Windows.Forms.CheckBox
+	Friend WithEvents F2Minimo As System.Windows.Forms.NumericUpDown
+	Friend WithEvents F3AñoMaximo As System.Windows.Forms.NumericUpDown
+	Friend WithEvents F3AñoMinimo As System.Windows.Forms.NumericUpDown
+	Friend WithEvents F3Mostrar As System.Windows.Forms.CheckBox
+	Friend WithEvents VisorConsulta As System.Windows.Forms.DataGridView
 	Friend WithEvents CtrlVenc1 As CtrlVenceImpuesto
-	Friend WithEvents grupo_imp As FlowLayoutPanel
-	Friend WithEvents et_con_imp As Label
-	Friend WithEvents f1_impuesto As ComboBox
+	Friend WithEvents FiltroConsulta As FlowLayoutPanel
+	Friend WithEvents EtGrupoFiltroConsulta As Label
+	Friend WithEvents F1Servicio As ComboBox
 	Friend WithEvents Label1 As Label
 	Friend WithEvents Label3 As Label
-	Friend WithEvents f1_Deudor As RadioButton
-	Friend WithEvents f1_SinDeuda As RadioButton
+	Friend WithEvents F1Deudor As RadioButton
+	Friend WithEvents F1SinDeuda As RadioButton
 	Friend WithEvents grupo_deuda_total As FlowLayoutPanel
-	Friend WithEvents f1b_importe As RadioButton
-	Friend WithEvents f1b_mora As RadioButton
-	Friend WithEvents f1b_importe_mora As RadioButton
+	Friend WithEvents F2Importe As RadioButton
+	Friend WithEvents F2Mora As RadioButton
+	Friend WithEvents F2ImporteMora As RadioButton
 	Friend WithEvents Label2 As Label
-	Friend WithEvents interes As NumericUpDown
+	Friend WithEvents F1Interes As NumericUpDown
 	Friend WithEvents Label4 As Label
-	Friend WithEvents fecha As DateTimePicker
-	Public WithEvents bs_consulta As BindingSource
-	Friend WithEvents ImprimirConsulta As Button
+	Friend WithEvents F1Vencimiento As DateTimePicker
+	Public WithEvents BSConsulta As BindingSource
+	Friend WithEvents ImprimirConsultaDeuda As Button
 	Friend WithEvents Label5 As Label
 End Class

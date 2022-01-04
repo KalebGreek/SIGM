@@ -182,7 +182,7 @@
 
     Private Sub ValidarConsulta()
         If SeleccionCuenta.SelectedNode Is Nothing = False And Me.Visible Then
-            visor = CtrlMan.DataGridViewTools.Load(visor, bs_consulta, ConsultarMovimientos(SeleccionCuenta.SelectedNode.Name, keyword_movimis.Text, ActivarFiltro.Checked,
+            CtrlMan.DataGridViewTools.Load(visor, ConsultarMovimientos(SeleccionCuenta.SelectedNode.Name, keyword_movimis.Text, ActivarFiltro.Checked,
                                                                         fecha.Checked, inicio.Value, final.Value))
             SumarTotales()
         End If
@@ -233,10 +233,10 @@
         If sumado Then
             If Ingresos.Checked Then
                 sql(0) = "SELECT orden, fecha, autorizado as total_autorizado, sumatodo as total_ingresado,  (sumatodo/autorizado) as porcentaje"
-                sql(1) = "FROM ingresos"
+                sql(1) = " FROM ingresos"
             Else
                 sql(0) = "SELECT orden, fecha, autorizado as total_autorizado, gastado as total_gastado, (gastado/autorizado) as porcentaje"
-                sql(1) = "FROM egresos"
+                sql(1) = " FROM egresos"
             End If
             sql(2) = "WHERE orden=" & orden
         Else
@@ -273,13 +273,13 @@
             If Ingresos.Checked Then
                 sql(0) += ", SUM(autorizado) as total_autorizado, SUM(sumatodo) as total_ingresado,
                            (SUM(sumatodo)/SUM(autorizado)) as porcentaje"
-                sql(1) = "FROM ingresos"
-                sql(4) = "HAVING sumado=2 AND pertenece='8' AND anexo='" & anexo & "'"
+                sql(1) = " FROM ingresos"
+                sql(4) = " HAVING sumado=2 AND pertenece='8' AND anexo='" & anexo & "'"
             Else
                 sql(0) += ", SUM(autorizado) as total_autorizado, SUM(gastado) as total_gastado,
                           (SUM(gastado)/SUM(autorizado)) as porcentaje"
-                sql(1) = "FROM egresos"
-                sql(4) = "HAVING sumado=2 AND pertenece='9' AND anexo='" & anexo & "'"
+                sql(1) = " FROM egresos"
+                sql(4) = " HAVING sumado=2 AND pertenece='9' AND anexo='" & anexo & "'"
             End If
         End If
 

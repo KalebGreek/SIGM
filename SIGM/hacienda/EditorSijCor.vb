@@ -16,7 +16,7 @@
 			result = od.ShowDialog()
 			If result = DialogResult.OK Then
 				If od.FileName <> "" And Len(od.FileName) > 4 Then
-					CtrlMan.DataGridViewTools.Load(DataView, bs, ConverterMan.SIJCORToDataTable(od.FileName))
+					CtrlMan.DataGridViewTools.Load(DataView, ConverterMan.SIJCORToDataTable(od.FileName))
 					path.Text = od.FileName
 				End If
 			End If

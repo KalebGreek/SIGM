@@ -1,7 +1,7 @@
 ﻿Class Empleado
     Const SelectSQL As String = "SELECT empleado.id as empleado_id, persona.id as persona_id, persona.razon, persona.cuil, persona.difunto,
 								                  empleado.alta, empleado.jerarquia"
-    Const TableSQL As String = "FROM persona INNER JOIN empleado ON persona.id=empleado.persona_id"
+    Const TableSQL As String = " FROM persona INNER JOIN empleado ON persona.id=empleado.persona_id"
 
     Shared Function BuscarPorPersona(keyword As String, difunto As Boolean) As DataTable
         Dim sql(3) As String

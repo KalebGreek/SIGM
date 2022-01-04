@@ -117,7 +117,7 @@ Class ModExpediente
                 check_fin_obra.Checked = fin_obra.Value > fin_obra.MinDate
 
                 'CARGAR COPIAS DIGITALES
-                Using copias As DataTable = Documento.OPrivadas.BuscarDoc(opr_id.Text, "FINAL DE OBRA")
+                Using copias As DataTable = FileMan.OPrivadas.BuscarDoc(opr_id.Text, "FINAL DE OBRA")
                     For Each dr As DataRow In copias.Rows
                         ruta_fin_obra.Text = dr("ruta").ToString
                     Next
@@ -241,7 +241,7 @@ Class ModExpediente
                                                        recibe.Text, tarea.Text, tarea2.Text, Trim(observaciones.Text))
 
                 If (visado.Checked And fin_obra.Value <> fin_obra.MinDate) = False Then
-                    Documento.Limpiar("opr_documento", "opr_id", opr_id.Text, "FINAL DE OBRA")
+                    FileMan.Limpiar("opr_documento", "opr_id", opr_id.Text, "FINAL DE OBRA")
                 End If
             End If
         End If
@@ -283,7 +283,7 @@ Class ModExpediente
     End Sub
     Private Sub cargar_fin_obra_Click(sender As Object, e As EventArgs) Handles cargar_fin_obra.Click
         'Selecciona y guarda la copia de Final de Obra en PDF
-        Dim ruta As String = Documento.OPrivadas.CargarFinalObra(opr_id.Text, expediente.Text)
+        Dim ruta As String = FileMan.OPrivadas.CargarFinalObra(opr_id.Text, expediente.Text)
         If ruta <> "" Then
             ruta_fin_obra.Text = ruta
         End If

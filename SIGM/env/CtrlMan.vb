@@ -4,14 +4,13 @@ Class CtrlMan 'Control Manager
     '###### VENTANAS
     'Impedir creación de ventanas que deben abrirse una sola vez en el formulario MDI
     Public Shared Function IsFormOpen(ByVal env As Form, ByVal target As Object) As Boolean
+        Dim result As Boolean = False
         If env.IsMdiContainer Then
             For Each f As Form In env.MdiChildren
-                If f.GetType() Is target.GetType() Then
-                    Return True
-                End If
+                result = f.GetType() Is target.GetType()
             Next
         End If
-        Return False
+        Return result
     End Function
 
     Public Shared Sub SetDoubleBuffered(ByVal control As Control)
@@ -242,16 +241,14 @@ Class CtrlMan 'Control Manager
         ''' <param name="bs">BindingSource containing the column collection.</param>
         ''' <param name="bsFilter">SQL-like filter that is being applied to the BindingSource.</param>
 
-        Overloads Shared Function Load(ByRef TargetVisor As DataGridView,
-                                       ByRef bs As BindingSource, Optional bsFilter As String = "") As DataGridView
+        Overloads Shared Sub Load(ByRef TargetVisor As DataGridView,
+                                       ByRef bs As BindingSource, Optional bsFilter As String = "")
 
-            Dim visor As DataGridView = TargetVisor
-
-            SetDoubleBuffered(visor)
-            visor.SuspendLayout()
+            SetDoubleBuffered(TargetVisor)
+            TargetVisor.SuspendLayout()
 
             'Reset datagridview
-            visor.DataSource = Nothing
+            TargetVisor.DataSource = Nothing
             'Reset sort and filter before adding a new datasource
             bs.Sort = ""
             bs.Filter = ""
@@ -263,55 +260,46 @@ Class CtrlMan 'Control Manager
                     bs.Position = 0
                 End If
                 'Enlazar
-                visor.DataSource = bs
+                TargetVisor.DataSource = bs
             End If
-            If visor.DataSource Is Nothing = False Then
+            If TargetVisor.DataSource Is Nothing = False Then
                 'Dar formato
-                visor = FormatColumns(visor)
+                TargetVisor = FormatColumns(TargetVisor)
             End If
-            visor.ResumeLayout()
-            Return visor
-        End Function
+            TargetVisor.ResumeLayout()
+        End Sub
 
         ''' <summary>
         ''' Validates, formats, and loads data to a DataGridView control from a Datatable.
         ''' </summary>
         ''' <param name="TargetVisor">Target DataGridView used to load data.</param>
         ''' <param name="dtab">Datatable linked to the BindingSource of the DataGridView</param>
-        Overloads Shared Function Load(ByVal TargetVisor As DataGridView, ByRef bs As BindingSource,
-                                       ByVal dtab As DataTable, Optional bsFilter As String = "") As DataGridView
+        Overloads Shared Sub Load(ByRef TargetVisor As DataGridView, ByVal dtab As DataTable, Optional bsFilter As String = "")
+            Dim bs As New BindingSource With {
+            .Position = -1,
+            .Filter = "",
+            .Sort = "",
+            .DataSource = Nothing}
 
-            Dim visor As DataGridView = TargetVisor
+            SetDoubleBuffered(TargetVisor)
+            TargetVisor.SuspendLayout()
 
-            SetDoubleBuffered(visor)
-            visor.SuspendLayout()
-
-            'Reset datagridview and bindingsource   
-            bs.Position = -1
-            bs.Filter = ""
-            bs.Sort = ""
-
-            visor.DataSource = Nothing
-            bs.DataSource = Nothing
-            bs.DataSource = dtab
-
-            If bs.DataSource Is Nothing = False Then
+            If dtab Is Nothing = False Then
+                bs.DataSource = dtab
                 'Aplicar filtro
                 bs.Filter = bsFilter
-                'Reiniciar posición
-                If bs.Count > 0 Then
-                    bs.Position = 0
-                End If
-                'Enlazar
-                visor.DataSource = bs
             End If
-            If visor.DataSource Is Nothing = False Then
+
+            'Reset datagridview 
+            If bs.DataSource Is Nothing = False Then
+                TargetVisor.DataSource = Nothing
+                TargetVisor.Columns.Clear()
+                TargetVisor.DataSource = bs
                 'Dar formato
-                visor = FormatColumns(visor)
+                TargetVisor = FormatColumns(TargetVisor)
             End If
-            visor.ResumeLayout()
-            Return visor
-        End Function
+            TargetVisor.ResumeLayout()
+        End Sub
 
         'Formatting
         Shared Function FormatColumns(ByVal visor As DataGridView) As DataGridView

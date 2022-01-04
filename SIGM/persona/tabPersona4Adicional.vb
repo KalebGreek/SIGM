@@ -44,7 +44,7 @@
 		End If
 	End Sub
 	Private Sub cargar_defu_Click(sender As Object, e As EventArgs) Handles cargar_defu.Click
-		ruta_defuncion.Text = Documento.Persona.CertificadoDefuncion(PersonaId)
+		ruta_defuncion.Text = FileMan.Persona.CertificadoDefuncion(PersonaId)
 	End Sub
 
 	Private Sub add_actividad_Click(sender As Object, e As EventArgs) Handles add_actividad.Click

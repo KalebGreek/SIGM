@@ -7,9 +7,6 @@
         End If
     End Sub
 
-
-
-
     Private Sub query_KeyUp(sender As Object, e As KeyEventArgs) Handles query.KeyUp
         If e.KeyValue = Keys.Enter Then
             query.Text = ExecuteQuery(query.Text)
@@ -75,29 +72,23 @@
             sql = ""
         ElseIf sql <> "" Then
             Dim dtab As New DataTable
-            Dim OleDBCmd As New OleDb.OleDbCommand With {
-                .CommandType = CommandType.Text}
-            With OleDBCmd
-                Replace(sql, "select", "SELECT")
-                Replace(sql, "insert", "INSERT")
-                Replace(sql, "update", "UPDATE")
-                Replace(sql, "delete", "DELETE")
-                .CommandType = CommandType.Text
-                .CommandText = sql
-                If connection.Text <> "" Then
-                    query.Items.Insert(0, OleDBCmd.CommandText)
-                    QueryLog.Items.Insert(0, OleDBCmd.CommandText)
-                    If .CommandText.Contains("INSERT") Or .CommandText.Contains("UPDATE") Or .CommandText.Contains("DELETE") Then
-                        QueryLog.Items.Insert(0, DbMan.editDB(OleDBCmd, connection.Text))
+            Replace(sql, "select", "SELECT")
+            Replace(sql, "insert", "INSERT")
+            Replace(sql, "update", "UPDATE")
+            Replace(sql, "delete", "DELETE")
+            If connection.Text <> "" Then
+                query.Items.Insert(0, sql)
+                QueryLog.Items.Insert(0, sql)
+                If sql.Contains("INSERT") Or sql.Contains("UPDATE") Or sql.Contains("DELETE") Then
+                    QueryLog.Items.Insert(0, DbMan.EditDB(sql, connection.Text))
 
-                    ElseIf .CommandText.Contains("SELECT") Then
-                        CtrlMan.DataGridViewTools.Load(QueryResult, bs_result, DbMan.ReadDB(OleDBCmd, connection.Text))
-                    End If
-                    sql = ""
-                Else
-                    QueryLog.Items.Insert(0, "Ninguna base de datos selecccionada.")
+                ElseIf sql.Contains("SELECT") Then
+                    CtrlMan.DataGridViewTools.Load(QueryResult, DbMan.ReadDB(sql, connection.Text))
                 End If
-            End With
+                sql = ""
+            Else
+                QueryLog.Items.Insert(0, "Ninguna base de datos selecccionada.")
+            End If
         Else
             QueryLog.Items.Insert(0, "Datos insuficientes para realizar la consulta.")
         End If

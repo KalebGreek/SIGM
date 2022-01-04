@@ -100,8 +100,8 @@
 	Shared Function buscar(Optional PersonaId As Integer = 0, Optional libro As Integer = 0, Optional acta As Integer = 0) As DataTable
 		Dim sql(2) As String
 		sql(0) = "SELECT actas.id, per_id, cuil, fecha, acta, libro, copia, nota"
-		sql(1) = "FROM actas INNER JOIN persona ON persona.id=actas.per_id"
-		sql(2) = "WHERE"
+		sql(1) = " FROM actas INNER JOIN persona ON persona.id=actas.per_id"
+		sql(2) = " WHERE"
 
 		If PersonaId > 0 Then
 			sql(2) += " per_id=" & PersonaId
@@ -160,7 +160,7 @@
 	'###### MODIFICAR ##########################################################################################
 	'# ACTAS
 	Private Sub cargar_acta_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cargar_copia_acta.Click
-        Dim ruta As String = Documento.Persona.CopiaActa(per_id.Text, acta.Value, libro.Value)
+        Dim ruta As String = FileMan.Persona.CopiaActa(per_id.Text, acta.Value, libro.Value)
         If ruta <> "" Then
             copia.Text = ruta
         End If

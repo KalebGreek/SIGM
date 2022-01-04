@@ -59,8 +59,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>Sigm.xml</DocumentationFile>
-    <NoWarn>
-    </NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
     <CodeAnalysisRuleSet>SIGM.ruleset</CodeAnalysisRuleSet>
@@ -73,8 +72,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>Sigm.xml</DocumentationFile>
-    <NoWarn>
-    </NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
     <CodeAnalysisRuleSet>SIGM.ruleset</CodeAnalysisRuleSet>
@@ -87,8 +85,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Debug\</OutputPath>
     <DocumentationFile>Sigm.xml</DocumentationFile>
-    <NoWarn>
-    </NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
@@ -98,17 +95,18 @@
     </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <DefineTrace>true</DefineTrace>
+    <DefineTrace>false</DefineTrace>
     <OutputPath>bin\x86\Release\</OutputPath>
     <DocumentationFile>Sigm.xml</DocumentationFile>
-    <NoWarn>
-    </NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
     <CodeAnalysisRuleSet>SIGM.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Optimize>false</Optimize>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <Optimize>true</Optimize>
@@ -142,8 +140,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DocumentationFile>Sigm.xml</DocumentationFile>
-    <NoWarn>
-    </NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>SIGM.ruleset</CodeAnalysisRuleSet>
@@ -156,8 +153,7 @@
     <OutputPath>bin\x64\Release\</OutputPath>
     <DocumentationFile>Sigm.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <NoWarn>
-    </NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>SIGM.ruleset</CodeAnalysisRuleSet>
@@ -258,7 +254,6 @@
     <Compile Include="env\ConverterMan.vb" />
     <Compile Include="env\CtrlMan.vb" />
     <Compile Include="env\DbMan.vb" />
-    <Compile Include="env\FileMan.vb" />
     <Compile Include="env\genericForms\GenToolContainer.Designer.vb">
       <DependentUpon>GenToolContainer.vb</DependentUpon>
     </Compile>
@@ -352,7 +347,7 @@
     <Compile Include="hacienda\CtrlVenceImpuesto.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="docs\Documento.vb" />
+    <Compile Include="env\FileMan.vb" />
     <Compile Include="gobierno\ConsultaOrdenanza.Designer.vb">
       <DependentUpon>ConsultaOrdenanza.vb</DependentUpon>
     </Compile>
@@ -408,10 +403,10 @@
     <Compile Include="catastro\ConsultaCatastro.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="launcher.designer.vb">
-      <DependentUpon>launcher.vb</DependentUpon>
+    <Compile Include="Launcher.designer.vb">
+      <DependentUpon>Launcher.vb</DependentUpon>
     </Compile>
-    <Compile Include="launcher.vb">
+    <Compile Include="Launcher.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="catastro\Catastro.vb" />
@@ -696,12 +691,15 @@
   <ItemGroup>
     <EmbeddedResource Include="oprivadas\tasamunicipal\CalcTMuniObrasVarias.resx">
       <DependentUpon>CalcTMuniObrasVarias.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="oprivadas\tasamunicipal\CalcTMuniMensura.resx">
       <DependentUpon>CalcTMuniMensura.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="oprivadas\tasamunicipal\CalcTMuniPlanosEdif.resx">
       <DependentUpon>CalcTMuniPlanosEdif.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="oprivadas\tasamunicipal\CtrlAddInmuebleEdificacion.resx">
       <DependentUpon>CtrlAddInmuebleEdificacion.vb</DependentUpon>
@@ -723,6 +721,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="env\menus\AccionSocialMenu.resx">
       <DependentUpon>AccionSocialMenu.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="asocial\ModBeneficiario.resx">
       <DependentUpon>ModBeneficiario.vb</DependentUpon>
@@ -732,21 +731,25 @@
     </EmbeddedResource>
     <EmbeddedResource Include="env\menus\CatastroMenu.resx">
       <DependentUpon>CatastroMenu.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="catastro\ModInmueble.resx">
       <DependentUpon>ModInmueble.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="catastro\AgregarFrente.resx">
       <DependentUpon>AgregarFrente.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="comercio\BusquedaComercio.resx">
       <DependentUpon>BusquedaComercio.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="env\menus\ComercioMenu.resx">
       <DependentUpon>ComercioMenu.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Acceso.resx">
       <DependentUpon>Acceso.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="env\genericForms\GenToolContainer.resx">
       <DependentUpon>GenToolContainer.vb</DependentUpon>
@@ -771,6 +774,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\Adelanto\AdelantoPage1.resx">
       <DependentUpon>AdelantoPage1.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\Adelanto\ModAdelanto.resx">
       <DependentUpon>ModAdelanto.vb</DependentUpon>
@@ -860,6 +864,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="oprivadas\tasamunicipal\CalculoTasaMunicipal.resx">
       <DependentUpon>CalculoTasaMunicipal.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\Adelanto\ConsultaAdelanto.resx">
       <DependentUpon>ConsultaAdelanto.vb</DependentUpon>
@@ -917,8 +922,8 @@
       <DependentUpon>Config.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="launcher.resx">
-      <DependentUpon>launcher.vb</DependentUpon>
+    <EmbeddedResource Include="Launcher.resx">
+      <DependentUpon>Launcher.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="env\UIError.resx">
       <DependentUpon>UIError.vb</DependentUpon>

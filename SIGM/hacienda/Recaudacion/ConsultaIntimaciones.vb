@@ -56,7 +56,7 @@ Public Class ConsultaIntimaciones
                          SUM(" & col_importe & ") as deuda, intima2.estado"
             End If
 
-            sql(1) = "FROM (" & tabla_persona & " 
+            sql(1) = " FROM (" & tabla_persona & " 
                          INNER JOIN " & tabla_deuda & " ON " & tabla_persona & ".codigo = " & tabla_deuda & ".codigo) 
                          LEFT JOIN (SELECT codigo, ingreso, estado
 	                                   FROM (SELECT codigo as codigo1, MAX(ingreso) as ingreso1 
@@ -107,7 +107,7 @@ Public Class ConsultaIntimaciones
                 .FilterSearch()
                 bs_contribuyente.Filter = .bsCustomFilter
 
-                visor_contribuyente = CtrlMan.DataGridViewTools.Load(visor_contribuyente, bs_contribuyente)
+                CtrlMan.DataGridViewTools.Load(visor_contribuyente, bs_contribuyente)
             Else
                 bs_contribuyente.DataSource = Nothing
             End If
@@ -115,13 +115,13 @@ Public Class ConsultaIntimaciones
     End Sub
     'Search Box events
 
-    Sub buscar() Handles GenSearchControl1.CSearchClick, GenSearchControl1.CFiltroIndexTextChanged
+    Sub Buscar() Handles GenSearchControl1.CSearchClick, GenSearchControl1.CFiltroIndexTextChanged
         GenSearchControl1.FilterSearch()
         bs_contribuyente.Filter = GenSearchControl1.bsCustomFilter
     End Sub
 
 
-    Private Sub vista_SelectedIndexChanged() Handles GenSearchControl1.CVistaIndexTextChanged
+    Private Sub Vista_SelectedIndexChanged() Handles GenSearchControl1.CVistaIndexTextChanged
 
         If Me.Visible And GenSearchControl1.vista.SelectedIndex > -1 Then
             Consultar(True)
@@ -136,13 +136,13 @@ Public Class ConsultaIntimaciones
 
 
     'BS and DGV Events
-    Private Sub bs_contribuyente_CurrentChanged(sender As Object, e As EventArgs) Handles bs_contribuyente.CurrentChanged,
+    Private Sub Bs_contribuyente_CurrentChanged(sender As Object, e As EventArgs) Handles bs_contribuyente.CurrentChanged,
                                                                                           bs_contribuyente.PositionChanged,
                                                                                           bs_contribuyente.DataSourceChanged
 
         FlowLayoutPanel2.Enabled = GenSearchControl1.vista.SelectedIndex > -1 And bs_contribuyente.Count > 0 And bs_contribuyente.Position > -1
     End Sub
-    Private Sub visor_contribuyente_RowsAdded(sender As Object, e As DataGridViewRowsAddedEventArgs) Handles visor_contribuyente.RowsAdded
+    Private Sub Visor_contribuyente_RowsAdded(sender As Object, e As DataGridViewRowsAddedEventArgs) Handles visor_contribuyente.RowsAdded
         If bs_contribuyente Is Nothing = False And visor_contribuyente.Rows.Count = bs_contribuyente.Count Then
             With bs_contribuyente
                 Dim ColorValue(bs_contribuyente.Count - 1) As Color
@@ -204,7 +204,7 @@ Public Class ConsultaIntimaciones
         End If
     End Sub
     'DGView Events
-    Private Sub visor_contribuyente_KeyUp(sender As Object, e As KeyEventArgs) Handles visor_contribuyente.KeyUp
+    Private Sub Visor_Contribuyente_KeyUp(sender As Object, e As KeyEventArgs) Handles visor_contribuyente.KeyUp
         If e.KeyValue = Keys.F2 Then
             historialInt.PerformClick()
         End If
@@ -236,7 +236,7 @@ Public Class ConsultaIntimaciones
 
     End Sub
 
-    Private Sub print_Click(sender As Object, e As EventArgs) Handles print.Click
+    Private Sub Print_Click(sender As Object, e As EventArgs) Handles print.Click
         Dim source As DataRowView = bs_contribuyente.Current
         If source Is Nothing = False And GenSearchControl1.vista.SelectedIndex > -1 Then
             Dim parametros As New List(Of ReportParameter)
