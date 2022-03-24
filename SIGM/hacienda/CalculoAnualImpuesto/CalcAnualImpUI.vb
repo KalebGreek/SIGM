@@ -8,7 +8,7 @@ Public Class CalcAnualImpUI
         periodo.Minimum = 1990
         periodo.Value = Today.Year
 
-        bs_variables.DataSource = DbMan.ReadDB("SELECT * FROM numeros", My.Settings.foxConnection)
+        bs_variables.DataSource = DbMan.ReadDB("SELECT taecom, taecat FROM numeros", My.Settings.foxConnection)
     End Sub
 
     Private Sub Impuesto_SelectedIndexChanged(sender As Object, e As EventArgs) Handles impuesto.SelectedIndexChanged
@@ -59,6 +59,4 @@ Public Class CalcAnualImpUI
             End If
         End If
     End Sub
-
-
 End Class

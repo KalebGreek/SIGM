@@ -242,7 +242,8 @@ Class CtrlMan 'Control Manager
         ''' <param name="bsFilter">SQL-like filter that is being applied to the BindingSource.</param>
 
         Overloads Shared Sub Load(ByRef TargetVisor As DataGridView,
-                                       ByRef bs As BindingSource, Optional bsFilter As String = "")
+                                  ByRef bs As BindingSource, Optional bsFilter As String = "",
+                                  Optional BindNavigator As BindingNavigator = Nothing)
 
             SetDoubleBuffered(TargetVisor)
             TargetVisor.SuspendLayout()

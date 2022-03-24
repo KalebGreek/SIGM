@@ -36,23 +36,18 @@
 			propietario.Text = ""
 			tenedor.Text = ""
 			obra.Text = ""
-			help.Visible = False
 
 		Else
 			Dim ctl As New UserControl
 			If sender Is ObrasVariasToolStripMenuItem Then
 				ctl = New calcTMuniObrasVarias
-				help.DataSource = CType(ctl, calcTMuniObrasVarias).help_source
 			ElseIf sender Is RelevamientoToolStripMenuItem Then
 				ctl = New calcTMuniPlanosEdif
-				help.DataSource = CType(ctl, calcTMuniPlanosEdif).help_source
 			ElseIf sender Is MensuraToolStripMenuItem Then
 				ctl = New calcTMuniMensura
-				help.DataSource = CType(ctl, calcTMuniMensura).help_source
 			End If
 			wrapper.Controls.Add(ctl)
-			help.Visible = True
-			ctl.Dock = DockStyle.Fill
+			ctl.Dock = DockStyle.Left
 		End If
 
 	End Sub

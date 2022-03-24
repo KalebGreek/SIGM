@@ -43,7 +43,6 @@ Partial Class CalculoTasaMunicipal
         Me.Label8 = New System.Windows.Forms.Label()
         Me.tenedor = New System.Windows.Forms.TextBox()
         Me.wrapper = New System.Windows.Forms.Panel()
-        Me.help = New System.Windows.Forms.ListBox()
         Me.MenuStrip2.SuspendLayout()
         Me.FlowLayoutPanel4.SuspendLayout()
         Me.SuspendLayout()
@@ -230,44 +229,37 @@ Partial Class CalculoTasaMunicipal
         'wrapper
         '
         Me.wrapper.AutoScroll = True
+        Me.wrapper.AutoScrollMinSize = New System.Drawing.Size(20, 0)
+        Me.wrapper.AutoSize = True
+        Me.wrapper.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.wrapper.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.wrapper.Location = New System.Drawing.Point(4, 110)
         Me.wrapper.Margin = New System.Windows.Forms.Padding(0)
+        Me.wrapper.MaximumSize = New System.Drawing.Size(0, 500)
+        Me.wrapper.MinimumSize = New System.Drawing.Size(0, 500)
         Me.wrapper.Name = "wrapper"
-        Me.wrapper.Size = New System.Drawing.Size(557, 482)
+        Me.wrapper.Size = New System.Drawing.Size(2, 500)
         Me.wrapper.TabIndex = 52
         Me.wrapper.Visible = False
         '
-        'help
-        '
-        Me.help.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.help.Font = New System.Drawing.Font("PF DinDisplay Pro", 13.0!)
-        Me.help.FormattingEnabled = True
-        Me.help.ItemHeight = 20
-        Me.help.Location = New System.Drawing.Point(564, 110)
-        Me.help.Name = "help"
-        Me.help.Size = New System.Drawing.Size(222, 482)
-        Me.help.TabIndex = 53
-        Me.help.Visible = False
-        '
-        'toolCalculoTasaMunicipal
+        'CalculoTasaMunicipal
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.Silver
-        Me.Controls.Add(Me.help)
         Me.Controls.Add(Me.wrapper)
         Me.Controls.Add(Me.FlowLayoutPanel4)
         Me.Controls.Add(Me.MenuStrip2)
         Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 14.0!)
         Me.Margin = New System.Windows.Forms.Padding(0)
         Me.MinimumSize = New System.Drawing.Size(800, 600)
-        Me.Name = "toolCalculoTasaMunicipal"
+        Me.Name = "CalculoTasaMunicipal"
         Me.Size = New System.Drawing.Size(800, 603)
         Me.MenuStrip2.ResumeLayout(False)
         Me.MenuStrip2.PerformLayout()
         Me.FlowLayoutPanel4.ResumeLayout(False)
         Me.FlowLayoutPanel4.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents MenuStrip2 As MenuStrip
@@ -285,7 +277,6 @@ Partial Class CalculoTasaMunicipal
     Friend WithEvents Label8 As Label
     Friend WithEvents tenedor As TextBox
     Friend WithEvents wrapper As Panel
-    Friend WithEvents help As ListBox
     Friend WithEvents ObrasVariasToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RelevamientoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MensuraToolStripMenuItem As ToolStripMenuItem

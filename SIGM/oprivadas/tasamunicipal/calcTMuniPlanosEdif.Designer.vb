@@ -61,6 +61,7 @@ Partial Class calcTMuniPlanosEdif
         Me.bs_tasas = New System.Windows.Forms.BindingSource(Me.components)
         Me.bs_tasa_edificacion = New System.Windows.Forms.BindingSource(Me.components)
         Me.bs_indice_inmueble = New System.Windows.Forms.BindingSource(Me.components)
+        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.FlowLayoutPanel2.SuspendLayout()
         Me.lista_edificacion.SuspendLayout()
         CType(Me.monto_linea_municipal, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -70,12 +71,11 @@ Partial Class calcTMuniPlanosEdif
         CType(Me.bs_tasas, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.bs_tasa_edificacion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.bs_indice_inmueble, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.FlowLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'FlowLayoutPanel2
         '
-        Me.FlowLayoutPanel2.AutoSize = True
-        Me.FlowLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.FlowLayoutPanel2.Controls.Add(Me.Label9)
         Me.FlowLayoutPanel2.Controls.Add(Me.Label1)
         Me.FlowLayoutPanel2.Controls.Add(Me.Label17)
@@ -83,37 +83,14 @@ Partial Class calcTMuniPlanosEdif
         Me.FlowLayoutPanel2.Controls.Add(Me.Label8)
         Me.FlowLayoutPanel2.Controls.Add(Me.sup_total)
         Me.FlowLayoutPanel2.Controls.Add(Me.Label10)
-        Me.FlowLayoutPanel2.Controls.Add(Me.Label13)
-        Me.FlowLayoutPanel2.Controls.Add(Me.Label5)
-        Me.FlowLayoutPanel2.Controls.Add(Me.monto_linea_municipal)
-        Me.FlowLayoutPanel2.Controls.Add(Me.Label12)
-        Me.FlowLayoutPanel2.Controls.Add(Me.monto_presentacion_plano)
-        Me.FlowLayoutPanel2.Controls.Add(Me.Label15)
-        Me.FlowLayoutPanel2.Controls.Add(Me.monto_aprobacion_proyecto)
-        Me.FlowLayoutPanel2.Controls.Add(Me.multa_relevamiento)
-        Me.FlowLayoutPanel2.Controls.Add(Me.monto_multa_relevamiento)
-        Me.FlowLayoutPanel2.Controls.Add(Me.descuento_renovacion)
-        Me.FlowLayoutPanel2.Controls.Add(Me.monto_descuento_renovacion)
         Me.FlowLayoutPanel2.Controls.Add(Me.Label28)
         Me.FlowLayoutPanel2.Controls.Add(Me.Label33)
-        Me.FlowLayoutPanel2.Controls.Add(Me.Label32)
-        Me.FlowLayoutPanel2.Controls.Add(Me.Label21)
-        Me.FlowLayoutPanel2.Controls.Add(Me.monto_subtotal)
         Me.FlowLayoutPanel2.Controls.Add(Me.Label11)
-        Me.FlowLayoutPanel2.Controls.Add(Me.Label16)
-        Me.FlowLayoutPanel2.Controls.Add(Me.desc_porcentaje)
-        Me.FlowLayoutPanel2.Controls.Add(Me.monto_descuento)
-        Me.FlowLayoutPanel2.Controls.Add(Me.Label19)
-        Me.FlowLayoutPanel2.Controls.Add(Me.cuotas)
-        Me.FlowLayoutPanel2.Controls.Add(Me.monto_cuota)
-        Me.FlowLayoutPanel2.Controls.Add(Me.Label6)
-        Me.FlowLayoutPanel2.Controls.Add(Me.total)
+        Me.FlowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Left
         Me.FlowLayoutPanel2.Location = New System.Drawing.Point(0, 0)
         Me.FlowLayoutPanel2.Margin = New System.Windows.Forms.Padding(0)
-        Me.FlowLayoutPanel2.MaximumSize = New System.Drawing.Size(460, 0)
-        Me.FlowLayoutPanel2.MinimumSize = New System.Drawing.Size(460, 0)
         Me.FlowLayoutPanel2.Name = "FlowLayoutPanel2"
-        Me.FlowLayoutPanel2.Size = New System.Drawing.Size(460, 376)
+        Me.FlowLayoutPanel2.Size = New System.Drawing.Size(450, 480)
         Me.FlowLayoutPanel2.TabIndex = 52
         '
         'Label9
@@ -124,15 +101,15 @@ Partial Class calcTMuniPlanosEdif
         Me.Label9.Location = New System.Drawing.Point(0, 0)
         Me.Label9.Margin = New System.Windows.Forms.Padding(0)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(479, 25)
+        Me.Label9.Size = New System.Drawing.Size(450, 25)
         Me.Label9.TabIndex = 417
         Me.Label9.Text = "DETALLE DE EDIFICACIONES"
         Me.Label9.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         '
         'Label1
         '
-        Me.Label1.Location = New System.Drawing.Point(0, 27)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+        Me.Label1.Location = New System.Drawing.Point(0, 25)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(309, 25)
         Me.Label1.TabIndex = 55
@@ -141,8 +118,8 @@ Partial Class calcTMuniPlanosEdif
         '
         'Label17
         '
-        Me.Label17.Location = New System.Drawing.Point(309, 27)
-        Me.Label17.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
+        Me.Label17.Location = New System.Drawing.Point(309, 25)
+        Me.Label17.Margin = New System.Windows.Forms.Padding(0)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(116, 25)
         Me.Label17.TabIndex = 425
@@ -151,14 +128,15 @@ Partial Class calcTMuniPlanosEdif
         '
         'lista_edificacion
         '
-        Me.lista_edificacion.AutoSize = True
-        Me.lista_edificacion.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.lista_edificacion.AutoScroll = True
         Me.lista_edificacion.BackColor = System.Drawing.Color.LightGray
         Me.lista_edificacion.Controls.Add(Me.Label3)
-        Me.lista_edificacion.Location = New System.Drawing.Point(0, 52)
+        Me.lista_edificacion.Location = New System.Drawing.Point(0, 50)
         Me.lista_edificacion.Margin = New System.Windows.Forms.Padding(0)
+        Me.lista_edificacion.MaximumSize = New System.Drawing.Size(450, 400)
+        Me.lista_edificacion.MinimumSize = New System.Drawing.Size(450, 400)
         Me.lista_edificacion.Name = "lista_edificacion"
-        Me.lista_edificacion.Size = New System.Drawing.Size(475, 3)
+        Me.lista_edificacion.Size = New System.Drawing.Size(450, 400)
         Me.lista_edificacion.TabIndex = 427
         '
         'Label3
@@ -175,7 +153,7 @@ Partial Class calcTMuniPlanosEdif
         'Label8
         '
         Me.Label8.Font = New System.Drawing.Font("PF DinDisplay Pro", 14.25!)
-        Me.Label8.Location = New System.Drawing.Point(0, 55)
+        Me.Label8.Location = New System.Drawing.Point(0, 450)
         Me.Label8.Margin = New System.Windows.Forms.Padding(0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(320, 25)
@@ -186,7 +164,7 @@ Partial Class calcTMuniPlanosEdif
         'sup_total
         '
         Me.sup_total.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 14.0!)
-        Me.sup_total.Location = New System.Drawing.Point(320, 55)
+        Me.sup_total.Location = New System.Drawing.Point(320, 450)
         Me.sup_total.Margin = New System.Windows.Forms.Padding(0)
         Me.sup_total.Name = "sup_total"
         Me.sup_total.Size = New System.Drawing.Size(101, 25)
@@ -197,7 +175,7 @@ Partial Class calcTMuniPlanosEdif
         'Label10
         '
         Me.Label10.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(0, 80)
+        Me.Label10.Location = New System.Drawing.Point(0, 475)
         Me.Label10.Margin = New System.Windows.Forms.Padding(0)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(381, 4)
@@ -209,17 +187,17 @@ Partial Class calcTMuniPlanosEdif
         Me.Label13.BackColor = System.Drawing.Color.Gray
         Me.Label13.Font = New System.Drawing.Font("PF DinDisplay Pro", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.ForeColor = System.Drawing.Color.White
-        Me.Label13.Location = New System.Drawing.Point(0, 84)
+        Me.Label13.Location = New System.Drawing.Point(0, 0)
         Me.Label13.Margin = New System.Windows.Forms.Padding(0)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(479, 25)
+        Me.Label13.Size = New System.Drawing.Size(450, 25)
         Me.Label13.TabIndex = 396
         Me.Label13.Text = "TASAS"
         Me.Label13.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         '
         'Label5
         '
-        Me.Label5.Location = New System.Drawing.Point(0, 109)
+        Me.Label5.Location = New System.Drawing.Point(0, 25)
         Me.Label5.Margin = New System.Windows.Forms.Padding(0)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(193, 25)
@@ -232,7 +210,7 @@ Partial Class calcTMuniPlanosEdif
         Me.monto_linea_municipal.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.monto_linea_municipal.DecimalPlaces = 2
         Me.monto_linea_municipal.Font = New System.Drawing.Font("PF DinDisplay Pro", 14.25!)
-        Me.monto_linea_municipal.Location = New System.Drawing.Point(193, 111)
+        Me.monto_linea_municipal.Location = New System.Drawing.Point(193, 27)
         Me.monto_linea_municipal.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
         Me.monto_linea_municipal.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         Me.monto_linea_municipal.Name = "monto_linea_municipal"
@@ -242,7 +220,7 @@ Partial Class calcTMuniPlanosEdif
         '
         'Label12
         '
-        Me.Label12.Location = New System.Drawing.Point(0, 137)
+        Me.Label12.Location = New System.Drawing.Point(0, 128)
         Me.Label12.Margin = New System.Windows.Forms.Padding(0)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(193, 25)
@@ -253,7 +231,7 @@ Partial Class calcTMuniPlanosEdif
         'monto_presentacion_plano
         '
         Me.monto_presentacion_plano.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 14.0!)
-        Me.monto_presentacion_plano.Location = New System.Drawing.Point(193, 137)
+        Me.monto_presentacion_plano.Location = New System.Drawing.Point(193, 128)
         Me.monto_presentacion_plano.Margin = New System.Windows.Forms.Padding(0)
         Me.monto_presentacion_plano.Name = "monto_presentacion_plano"
         Me.monto_presentacion_plano.Size = New System.Drawing.Size(229, 25)
@@ -263,7 +241,7 @@ Partial Class calcTMuniPlanosEdif
         '
         'Label15
         '
-        Me.Label15.Location = New System.Drawing.Point(0, 162)
+        Me.Label15.Location = New System.Drawing.Point(0, 103)
         Me.Label15.Margin = New System.Windows.Forms.Padding(0)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(193, 25)
@@ -274,7 +252,7 @@ Partial Class calcTMuniPlanosEdif
         'monto_aprobacion_proyecto
         '
         Me.monto_aprobacion_proyecto.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 14.0!)
-        Me.monto_aprobacion_proyecto.Location = New System.Drawing.Point(193, 162)
+        Me.monto_aprobacion_proyecto.Location = New System.Drawing.Point(193, 103)
         Me.monto_aprobacion_proyecto.Margin = New System.Windows.Forms.Padding(0)
         Me.monto_aprobacion_proyecto.Name = "monto_aprobacion_proyecto"
         Me.monto_aprobacion_proyecto.Size = New System.Drawing.Size(229, 25)
@@ -285,7 +263,7 @@ Partial Class calcTMuniPlanosEdif
         'multa_relevamiento
         '
         Me.multa_relevamiento.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.multa_relevamiento.Location = New System.Drawing.Point(0, 187)
+        Me.multa_relevamiento.Location = New System.Drawing.Point(0, 53)
         Me.multa_relevamiento.Margin = New System.Windows.Forms.Padding(0)
         Me.multa_relevamiento.Name = "multa_relevamiento"
         Me.multa_relevamiento.Size = New System.Drawing.Size(212, 25)
@@ -298,7 +276,7 @@ Partial Class calcTMuniPlanosEdif
         '
         Me.monto_multa_relevamiento.Enabled = False
         Me.monto_multa_relevamiento.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 14.0!)
-        Me.monto_multa_relevamiento.Location = New System.Drawing.Point(212, 187)
+        Me.monto_multa_relevamiento.Location = New System.Drawing.Point(212, 53)
         Me.monto_multa_relevamiento.Margin = New System.Windows.Forms.Padding(0)
         Me.monto_multa_relevamiento.Name = "monto_multa_relevamiento"
         Me.monto_multa_relevamiento.Size = New System.Drawing.Size(210, 25)
@@ -309,7 +287,7 @@ Partial Class calcTMuniPlanosEdif
         'descuento_renovacion
         '
         Me.descuento_renovacion.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.descuento_renovacion.Location = New System.Drawing.Point(0, 212)
+        Me.descuento_renovacion.Location = New System.Drawing.Point(0, 78)
         Me.descuento_renovacion.Margin = New System.Windows.Forms.Padding(0)
         Me.descuento_renovacion.Name = "descuento_renovacion"
         Me.descuento_renovacion.Size = New System.Drawing.Size(212, 25)
@@ -322,7 +300,7 @@ Partial Class calcTMuniPlanosEdif
         '
         Me.monto_descuento_renovacion.Enabled = False
         Me.monto_descuento_renovacion.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 14.0!)
-        Me.monto_descuento_renovacion.Location = New System.Drawing.Point(212, 212)
+        Me.monto_descuento_renovacion.Location = New System.Drawing.Point(212, 78)
         Me.monto_descuento_renovacion.Margin = New System.Windows.Forms.Padding(0)
         Me.monto_descuento_renovacion.Name = "monto_descuento_renovacion"
         Me.monto_descuento_renovacion.Size = New System.Drawing.Size(210, 25)
@@ -333,7 +311,7 @@ Partial Class calcTMuniPlanosEdif
         'Label28
         '
         Me.Label28.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label28.Location = New System.Drawing.Point(0, 237)
+        Me.Label28.Location = New System.Drawing.Point(0, 479)
         Me.Label28.Margin = New System.Windows.Forms.Padding(0)
         Me.Label28.Name = "Label28"
         Me.Label28.Size = New System.Drawing.Size(381, 4)
@@ -343,7 +321,7 @@ Partial Class calcTMuniPlanosEdif
         'Label33
         '
         Me.Label33.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label33.Location = New System.Drawing.Point(0, 241)
+        Me.Label33.Location = New System.Drawing.Point(0, 483)
         Me.Label33.Margin = New System.Windows.Forms.Padding(0)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(381, 4)
@@ -355,17 +333,17 @@ Partial Class calcTMuniPlanosEdif
         Me.Label32.BackColor = System.Drawing.Color.Gray
         Me.Label32.Font = New System.Drawing.Font("PF DinDisplay Pro", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label32.ForeColor = System.Drawing.Color.White
-        Me.Label32.Location = New System.Drawing.Point(0, 245)
+        Me.Label32.Location = New System.Drawing.Point(0, 178)
         Me.Label32.Margin = New System.Windows.Forms.Padding(0)
         Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(479, 25)
+        Me.Label32.Size = New System.Drawing.Size(450, 25)
         Me.Label32.TabIndex = 410
         Me.Label32.Text = "FINANCIACIÓN"
         Me.Label32.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         '
         'Label21
         '
-        Me.Label21.Location = New System.Drawing.Point(0, 270)
+        Me.Label21.Location = New System.Drawing.Point(0, 153)
         Me.Label21.Margin = New System.Windows.Forms.Padding(0)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(193, 25)
@@ -376,7 +354,7 @@ Partial Class calcTMuniPlanosEdif
         'monto_subtotal
         '
         Me.monto_subtotal.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 14.0!)
-        Me.monto_subtotal.Location = New System.Drawing.Point(193, 270)
+        Me.monto_subtotal.Location = New System.Drawing.Point(193, 153)
         Me.monto_subtotal.Margin = New System.Windows.Forms.Padding(0)
         Me.monto_subtotal.Name = "monto_subtotal"
         Me.monto_subtotal.Size = New System.Drawing.Size(229, 25)
@@ -387,7 +365,7 @@ Partial Class calcTMuniPlanosEdif
         'Label11
         '
         Me.Label11.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(0, 295)
+        Me.Label11.Location = New System.Drawing.Point(0, 487)
         Me.Label11.Margin = New System.Windows.Forms.Padding(0)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(458, 0)
@@ -396,7 +374,7 @@ Partial Class calcTMuniPlanosEdif
         '
         'Label16
         '
-        Me.Label16.Location = New System.Drawing.Point(0, 295)
+        Me.Label16.Location = New System.Drawing.Point(0, 231)
         Me.Label16.Margin = New System.Windows.Forms.Padding(0)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(193, 25)
@@ -407,7 +385,7 @@ Partial Class calcTMuniPlanosEdif
         'desc_porcentaje
         '
         Me.desc_porcentaje.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.desc_porcentaje.Location = New System.Drawing.Point(193, 297)
+        Me.desc_porcentaje.Location = New System.Drawing.Point(193, 233)
         Me.desc_porcentaje.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
         Me.desc_porcentaje.Name = "desc_porcentaje"
         Me.desc_porcentaje.Size = New System.Drawing.Size(64, 26)
@@ -417,7 +395,7 @@ Partial Class calcTMuniPlanosEdif
         'monto_descuento
         '
         Me.monto_descuento.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 14.0!)
-        Me.monto_descuento.Location = New System.Drawing.Point(257, 295)
+        Me.monto_descuento.Location = New System.Drawing.Point(257, 231)
         Me.monto_descuento.Margin = New System.Windows.Forms.Padding(0)
         Me.monto_descuento.Name = "monto_descuento"
         Me.monto_descuento.Size = New System.Drawing.Size(165, 25)
@@ -427,7 +405,7 @@ Partial Class calcTMuniPlanosEdif
         '
         'Label19
         '
-        Me.Label19.Location = New System.Drawing.Point(0, 323)
+        Me.Label19.Location = New System.Drawing.Point(0, 203)
         Me.Label19.Margin = New System.Windows.Forms.Padding(0)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(193, 25)
@@ -438,7 +416,7 @@ Partial Class calcTMuniPlanosEdif
         'cuotas
         '
         Me.cuotas.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.cuotas.Location = New System.Drawing.Point(193, 325)
+        Me.cuotas.Location = New System.Drawing.Point(193, 205)
         Me.cuotas.Margin = New System.Windows.Forms.Padding(0, 2, 0, 0)
         Me.cuotas.Maximum = New Decimal(New Integer() {120, 0, 0, 0})
         Me.cuotas.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
@@ -451,7 +429,7 @@ Partial Class calcTMuniPlanosEdif
         'monto_cuota
         '
         Me.monto_cuota.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 14.0!)
-        Me.monto_cuota.Location = New System.Drawing.Point(257, 323)
+        Me.monto_cuota.Location = New System.Drawing.Point(257, 203)
         Me.monto_cuota.Margin = New System.Windows.Forms.Padding(0)
         Me.monto_cuota.Name = "monto_cuota"
         Me.monto_cuota.Size = New System.Drawing.Size(165, 25)
@@ -462,7 +440,7 @@ Partial Class calcTMuniPlanosEdif
         'Label6
         '
         Me.Label6.Font = New System.Drawing.Font("PF DinDisplay Pro", 14.25!)
-        Me.Label6.Location = New System.Drawing.Point(0, 351)
+        Me.Label6.Location = New System.Drawing.Point(0, 259)
         Me.Label6.Margin = New System.Windows.Forms.Padding(0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(193, 25)
@@ -473,7 +451,7 @@ Partial Class calcTMuniPlanosEdif
         'total
         '
         Me.total.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 14.0!)
-        Me.total.Location = New System.Drawing.Point(193, 351)
+        Me.total.Location = New System.Drawing.Point(193, 259)
         Me.total.Margin = New System.Windows.Forms.Padding(0)
         Me.total.Name = "total"
         Me.total.Size = New System.Drawing.Size(229, 25)
@@ -481,20 +459,51 @@ Partial Class calcTMuniPlanosEdif
         Me.total.Text = "$0,00"
         Me.total.TextAlign = System.Drawing.ContentAlignment.BottomRight
         '
+        'FlowLayoutPanel1
+        '
+        Me.FlowLayoutPanel1.Controls.Add(Me.Label13)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Label5)
+        Me.FlowLayoutPanel1.Controls.Add(Me.monto_linea_municipal)
+        Me.FlowLayoutPanel1.Controls.Add(Me.multa_relevamiento)
+        Me.FlowLayoutPanel1.Controls.Add(Me.monto_multa_relevamiento)
+        Me.FlowLayoutPanel1.Controls.Add(Me.descuento_renovacion)
+        Me.FlowLayoutPanel1.Controls.Add(Me.monto_descuento_renovacion)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Label15)
+        Me.FlowLayoutPanel1.Controls.Add(Me.monto_aprobacion_proyecto)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Label12)
+        Me.FlowLayoutPanel1.Controls.Add(Me.monto_presentacion_plano)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Label21)
+        Me.FlowLayoutPanel1.Controls.Add(Me.monto_subtotal)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Label32)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Label19)
+        Me.FlowLayoutPanel1.Controls.Add(Me.cuotas)
+        Me.FlowLayoutPanel1.Controls.Add(Me.monto_cuota)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Label16)
+        Me.FlowLayoutPanel1.Controls.Add(Me.desc_porcentaje)
+        Me.FlowLayoutPanel1.Controls.Add(Me.monto_descuento)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Label6)
+        Me.FlowLayoutPanel1.Controls.Add(Me.total)
+        Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(450, 0)
+        Me.FlowLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
+        Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(450, 480)
+        Me.FlowLayoutPanel1.TabIndex = 53
+        '
         'calcTMuniPlanosEdif
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.AutoScroll = True
+        Me.Controls.Add(Me.FlowLayoutPanel1)
         Me.Controls.Add(Me.FlowLayoutPanel2)
         Me.Font = New System.Drawing.Font("PF DinDisplay Pro Light", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(0)
-        Me.MaximumSize = New System.Drawing.Size(480, 480)
-        Me.MinimumSize = New System.Drawing.Size(480, 480)
+        Me.MaximumSize = New System.Drawing.Size(900, 480)
+        Me.MinimumSize = New System.Drawing.Size(900, 480)
         Me.Name = "calcTMuniPlanosEdif"
-        Me.Size = New System.Drawing.Size(480, 480)
+        Me.Size = New System.Drawing.Size(900, 480)
         Me.Tag = ""
         Me.FlowLayoutPanel2.ResumeLayout(False)
-        Me.FlowLayoutPanel2.PerformLayout()
         Me.lista_edificacion.ResumeLayout(False)
         CType(Me.monto_linea_municipal, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.desc_porcentaje, System.ComponentModel.ISupportInitialize).EndInit()
@@ -503,8 +512,8 @@ Partial Class calcTMuniPlanosEdif
         CType(Me.bs_tasas, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.bs_tasa_edificacion, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.bs_indice_inmueble, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.FlowLayoutPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
@@ -546,4 +555,5 @@ Partial Class calcTMuniPlanosEdif
     Friend WithEvents desc_porcentaje As NumericUpDown
     Friend WithEvents bs_tasa_edificacion As BindingSource
     Friend WithEvents bs_indice_inmueble As BindingSource
+    Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
 End Class

@@ -148,7 +148,7 @@ Public Class ConsultaIntimaciones
                 Dim ColorValue(bs_contribuyente.Count - 1) As Color
                 Dim count As Integer = 0
                 progreso.Value = 0
-                progreso.Maximum = bs_contribuyente.Count
+                progreso.Maximum = bs_contribuyente.Count + 1
 
                 For Each drv As DataRowView In bs_contribuyente.List
                     Dim state As String = ""
@@ -172,31 +172,6 @@ Public Class ConsultaIntimaciones
                     count += 1
                     progreso.Value = count
                 Next
-
-                'For i As Integer = 0 To bs_contribuyente.Count - 1
-                '    Dim state As String = ""
-
-                '    If bs_contribuyente(i)("estado") Is DBNull.Value = False Then
-                '        state = Trim(bs_contribuyente(i)("estado"))
-                '    End If
-
-
-                '    If state = "JUDICIAL" Then
-                '        ColorValue(i) = PaletaIntimaciones(1)
-                '    ElseIf state = "PRE-JUDICIAL" Then
-                '        ColorValue(i) = PaletaIntimaciones(2)
-                '    ElseIf state = "CARTA DOCUMENTO" Then
-                '        ColorValue(i) = PaletaIntimaciones(3)
-                '    ElseIf state = "EN MORA" Then
-                '        ColorValue(i) = PaletaIntimaciones(4)
-                '    ElseIf state = "CONTACTADO" Then
-                '        ColorValue(i) = PaletaIntimaciones(5)
-                '    ElseIf state = "PLAN DE PAGO" Then
-                '        ColorValue(i) = PaletaIntimaciones(6)
-                '    End If
-
-                '    progreso.Value = i
-                'Next
 
                 CtrlMan.DataGridViewTools.Paint(visor_contribuyente, bs_contribuyente, Nothing, ColorValue)
                 progreso.Value += 1

@@ -53,71 +53,71 @@ Class calcTMuniPlanosEdif
             AddHandler ctrl.manage_edificacion, AddressOf manage_edificacion
 
         ElseIf sender Is target.eliminar Then
-            'RemoveHandler target.manage_edificacion, AddressOf manage_edificacion
             target.Dispose()
         End If
         calcular()
     End Sub
 
-    Private Sub calcular()
+    Private Sub Calcular()
         Dim superficie, total_superficie As Decimal
         Dim ad_categoria, subtotal, descuento As Decimal
         Dim basico, ad_sismico, desc_renovacion, linea_muni1, linea_muni2, ad_linea_muni As Decimal
 
-        basico = variables(0)("valor")
-        ad_sismico = variables(1)("valor")
-        desc_renovacion = variables(2)("valor")
-        linea_muni1 = variables(3)("valor")
-        linea_muni2 = variables(4)("valor")
-        ad_linea_muni = variables(5)("valor")
+        If variables(0) Is Nothing = False And Me.Visible Then
+            basico = variables(0)("valor")
+            ad_sismico = variables(1)("valor")
+            desc_renovacion = variables(2)("valor")
+            linea_muni1 = variables(3)("valor")
+            linea_muni2 = variables(4)("valor")
+            ad_linea_muni = variables(5)("valor")
 
-        'Urbanización
-        For Each c As Control In lista_edificacion.Controls
-            If TypeOf c Is ctrlAddInmuebleEdificacion Then
-                ad_categoria = CType(c, ctrlAddInmuebleEdificacion).categoria.SelectedValue
-                superficie = CType(c, ctrlAddInmuebleEdificacion).superficie.Value
-                total_superficie += superficie
-                subtotal += basico * ad_categoria * superficie
+            'Urbanización
+            For Each c As Control In lista_edificacion.Controls
+                If TypeOf c Is ctrlAddInmuebleEdificacion Then
+                    ad_categoria = CType(c, ctrlAddInmuebleEdificacion).categoria.SelectedValue
+                    superficie = CType(c, ctrlAddInmuebleEdificacion).superficie.Value
+                    total_superficie += superficie
+                    subtotal += basico * ad_categoria * superficie
+                End If
+            Next
+            sup_total.Text = total_superficie.ToString & " M²"
+
+            'Tasas
+            subtotal *= (1 + ad_sismico)
+            subtotal += monto_linea_municipal.Value
+
+            monto_presentacion_plano.Text = FormatCurrency(subtotal, 2)
+            monto_aprobacion_proyecto.Text = FormatCurrency(subtotal, 2)
+
+            If multa_relevamiento.Checked Then
+                monto_multa_relevamiento.Text = FormatCurrency(subtotal, 2)
+                subtotal *= 2
+            Else
+                monto_multa_relevamiento.Text = FormatCurrency(0, 2)
             End If
-        Next
-        sup_total.Text = total_superficie.ToString & " M²"
 
-        'Tasas
-        subtotal *= (1 + ad_sismico)
-        subtotal += monto_linea_municipal.Value
+            If descuento_renovacion.Checked Then
+                monto_descuento_renovacion.Text = FormatCurrency(subtotal * desc_renovacion, 2)
+                subtotal -= subtotal * desc_renovacion
+            Else
+                monto_descuento_renovacion.Text = FormatCurrency(0, 2)
+            End If
 
-        monto_presentacion_plano.Text = FormatCurrency(subtotal, 2)
-        monto_aprobacion_proyecto.Text = FormatCurrency(subtotal, 2)
+            'Financiación
+            monto_subtotal.Text = FormatCurrency(subtotal, 2)
 
-        If multa_relevamiento.Checked Then
-            monto_multa_relevamiento.Text = FormatCurrency(subtotal, 2)
-            subtotal *= 2
-        Else
-            monto_multa_relevamiento.Text = FormatCurrency(0, 2)
+            If desc_porcentaje.Value > 0 Then
+                descuento = subtotal * (desc_porcentaje.Value / 100)
+            End If
+            monto_descuento.Text = FormatCurrency(descuento, 2)
+
+            If cuotas.Value > 0 Then
+                monto_cuota.Text = FormatCurrency((subtotal - descuento) / cuotas.Value, 2)
+            Else
+                monto_cuota.Text = FormatCurrency(0, 2)
+            End If
+            total.Text = FormatCurrency(subtotal - descuento, 2)
         End If
-
-        If descuento_renovacion.Checked Then
-            monto_descuento_renovacion.Text = FormatCurrency(subtotal * desc_renovacion, 2)
-            subtotal -= subtotal * desc_renovacion
-        Else
-            monto_descuento_renovacion.Text = FormatCurrency(0, 2)
-        End If
-
-        'Financiación
-        monto_subtotal.Text = FormatCurrency(subtotal, 2)
-
-        If desc_porcentaje.Value > 0 Then
-            descuento = subtotal * (desc_porcentaje.Value / 100)
-        End If
-        monto_descuento.Text = FormatCurrency(descuento, 2)
-
-        If cuotas.Value > 0 Then
-            monto_cuota.Text = FormatCurrency((subtotal - descuento) / cuotas.Value, 2)
-        Else
-            monto_cuota.Text = FormatCurrency(0, 2)
-        End If
-        total.Text = FormatCurrency(subtotal - descuento, 2)
-
     End Sub
 
 

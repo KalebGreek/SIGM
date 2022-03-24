@@ -75,7 +75,7 @@ Partial Class calcTMuniObrasVarias
         Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.FlowLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(410, 308)
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(480, 240)
         Me.FlowLayoutPanel1.TabIndex = 51
         '
         'Label1
@@ -86,7 +86,7 @@ Partial Class calcTMuniObrasVarias
         Me.Label1.Location = New System.Drawing.Point(0, 0)
         Me.Label1.Margin = New System.Windows.Forms.Padding(0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(412, 25)
+        Me.Label1.Size = New System.Drawing.Size(480, 25)
         Me.Label1.TabIndex = 418
         Me.Label1.Text = "OBRAS VARIAS"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft
@@ -96,7 +96,7 @@ Partial Class calcTMuniObrasVarias
         Me.Label2.Location = New System.Drawing.Point(0, 25)
         Me.Label2.Margin = New System.Windows.Forms.Padding(0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(172, 20)
+        Me.Label2.Size = New System.Drawing.Size(244, 20)
         Me.Label2.TabIndex = 55
         Me.Label2.Text = "Costo Frentista ($)"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.BottomRight
@@ -105,7 +105,7 @@ Partial Class calcTMuniObrasVarias
         '
         Me.costo.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.costo.DecimalPlaces = 2
-        Me.costo.Location = New System.Drawing.Point(172, 25)
+        Me.costo.Location = New System.Drawing.Point(244, 25)
         Me.costo.Margin = New System.Windows.Forms.Padding(0)
         Me.costo.Maximum = New Decimal(New Integer() {10000000, 0, 0, 0})
         Me.costo.Name = "costo"
@@ -119,7 +119,7 @@ Partial Class calcTMuniObrasVarias
         Me.Label3.Location = New System.Drawing.Point(0, 51)
         Me.Label3.Margin = New System.Windows.Forms.Padding(0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(172, 20)
+        Me.Label3.Size = New System.Drawing.Size(244, 20)
         Me.Label3.TabIndex = 57
         Me.Label3.Text = "Frente (Mts.)"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.BottomRight
@@ -128,7 +128,7 @@ Partial Class calcTMuniObrasVarias
         '
         Me.metros_frente.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.metros_frente.DecimalPlaces = 2
-        Me.metros_frente.Location = New System.Drawing.Point(172, 51)
+        Me.metros_frente.Location = New System.Drawing.Point(244, 51)
         Me.metros_frente.Margin = New System.Windows.Forms.Padding(0)
         Me.metros_frente.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         Me.metros_frente.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
@@ -143,7 +143,7 @@ Partial Class calcTMuniObrasVarias
         Me.Label4.Location = New System.Drawing.Point(0, 77)
         Me.Label4.Margin = New System.Windows.Forms.Padding(0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(172, 20)
+        Me.Label4.Size = New System.Drawing.Size(244, 20)
         Me.Label4.TabIndex = 59
         Me.Label4.Text = "Ancho Calle (Mts.)"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.BottomRight
@@ -151,7 +151,7 @@ Partial Class calcTMuniObrasVarias
         'metros_calle
         '
         Me.metros_calle.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.metros_calle.Location = New System.Drawing.Point(172, 77)
+        Me.metros_calle.Location = New System.Drawing.Point(244, 77)
         Me.metros_calle.Margin = New System.Windows.Forms.Padding(0)
         Me.metros_calle.Maximum = New Decimal(New Integer() {10000000, 0, 0, 0})
         Me.metros_calle.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
@@ -179,7 +179,7 @@ Partial Class calcTMuniObrasVarias
         Me.Label32.Location = New System.Drawing.Point(0, 107)
         Me.Label32.Margin = New System.Windows.Forms.Padding(0)
         Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(412, 25)
+        Me.Label32.Size = New System.Drawing.Size(480, 25)
         Me.Label32.TabIndex = 419
         Me.Label32.Text = "FINANCIACIÓN"
         Me.Label32.TextAlign = System.Drawing.ContentAlignment.BottomLeft
@@ -189,7 +189,7 @@ Partial Class calcTMuniObrasVarias
         Me.Label42.Location = New System.Drawing.Point(0, 132)
         Me.Label42.Margin = New System.Windows.Forms.Padding(0)
         Me.Label42.Name = "Label42"
-        Me.Label42.Size = New System.Drawing.Size(172, 20)
+        Me.Label42.Size = New System.Drawing.Size(244, 20)
         Me.Label42.TabIndex = 376
         Me.Label42.Text = "Subtotal"
         Me.Label42.TextAlign = System.Drawing.ContentAlignment.BottomRight
@@ -197,7 +197,7 @@ Partial Class calcTMuniObrasVarias
         'monto_subtotal
         '
         Me.monto_subtotal.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 14.0!)
-        Me.monto_subtotal.Location = New System.Drawing.Point(172, 132)
+        Me.monto_subtotal.Location = New System.Drawing.Point(244, 132)
         Me.monto_subtotal.Margin = New System.Windows.Forms.Padding(0)
         Me.monto_subtotal.Name = "monto_subtotal"
         Me.monto_subtotal.Size = New System.Drawing.Size(200, 20)
@@ -210,7 +210,7 @@ Partial Class calcTMuniObrasVarias
         Me.Label9.Location = New System.Drawing.Point(0, 152)
         Me.Label9.Margin = New System.Windows.Forms.Padding(0)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(172, 20)
+        Me.Label9.Size = New System.Drawing.Size(244, 20)
         Me.Label9.TabIndex = 373
         Me.Label9.Text = "Descuento (%)"
         Me.Label9.TextAlign = System.Drawing.ContentAlignment.BottomRight
@@ -218,7 +218,7 @@ Partial Class calcTMuniObrasVarias
         'desc_porcentaje
         '
         Me.desc_porcentaje.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.desc_porcentaje.Location = New System.Drawing.Point(172, 152)
+        Me.desc_porcentaje.Location = New System.Drawing.Point(244, 152)
         Me.desc_porcentaje.Margin = New System.Windows.Forms.Padding(0)
         Me.desc_porcentaje.Name = "desc_porcentaje"
         Me.desc_porcentaje.Size = New System.Drawing.Size(72, 26)
@@ -227,7 +227,7 @@ Partial Class calcTMuniObrasVarias
         'monto_descuento
         '
         Me.monto_descuento.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 14.0!)
-        Me.monto_descuento.Location = New System.Drawing.Point(244, 152)
+        Me.monto_descuento.Location = New System.Drawing.Point(316, 152)
         Me.monto_descuento.Margin = New System.Windows.Forms.Padding(0)
         Me.monto_descuento.Name = "monto_descuento"
         Me.monto_descuento.Size = New System.Drawing.Size(128, 20)
@@ -240,7 +240,7 @@ Partial Class calcTMuniObrasVarias
         Me.Label10.Location = New System.Drawing.Point(0, 178)
         Me.Label10.Margin = New System.Windows.Forms.Padding(0)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(172, 20)
+        Me.Label10.Size = New System.Drawing.Size(244, 20)
         Me.Label10.TabIndex = 374
         Me.Label10.Text = "Cuotas"
         Me.Label10.TextAlign = System.Drawing.ContentAlignment.BottomRight
@@ -248,7 +248,7 @@ Partial Class calcTMuniObrasVarias
         'cuotas
         '
         Me.cuotas.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.cuotas.Location = New System.Drawing.Point(172, 178)
+        Me.cuotas.Location = New System.Drawing.Point(244, 178)
         Me.cuotas.Margin = New System.Windows.Forms.Padding(0)
         Me.cuotas.Maximum = New Decimal(New Integer() {120, 0, 0, 0})
         Me.cuotas.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
@@ -260,7 +260,7 @@ Partial Class calcTMuniObrasVarias
         'monto_cuota
         '
         Me.monto_cuota.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 14.0!)
-        Me.monto_cuota.Location = New System.Drawing.Point(244, 178)
+        Me.monto_cuota.Location = New System.Drawing.Point(316, 178)
         Me.monto_cuota.Margin = New System.Windows.Forms.Padding(0)
         Me.monto_cuota.Name = "monto_cuota"
         Me.monto_cuota.Size = New System.Drawing.Size(128, 20)
@@ -274,7 +274,7 @@ Partial Class calcTMuniObrasVarias
         Me.Label13.Location = New System.Drawing.Point(0, 204)
         Me.Label13.Margin = New System.Windows.Forms.Padding(0)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(172, 20)
+        Me.Label13.Size = New System.Drawing.Size(244, 20)
         Me.Label13.TabIndex = 80
         Me.Label13.Text = "TOTAL"
         Me.Label13.TextAlign = System.Drawing.ContentAlignment.BottomRight
@@ -282,7 +282,7 @@ Partial Class calcTMuniObrasVarias
         'total
         '
         Me.total.Font = New System.Drawing.Font("PF DinDisplay Pro Medium", 14.0!)
-        Me.total.Location = New System.Drawing.Point(172, 204)
+        Me.total.Location = New System.Drawing.Point(244, 204)
         Me.total.Margin = New System.Windows.Forms.Padding(0)
         Me.total.Name = "total"
         Me.total.Size = New System.Drawing.Size(200, 20)
@@ -297,8 +297,10 @@ Partial Class calcTMuniObrasVarias
         Me.Controls.Add(Me.FlowLayoutPanel1)
         Me.Font = New System.Drawing.Font("PF DinDisplay Pro Light", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(0)
+        Me.MaximumSize = New System.Drawing.Size(480, 240)
+        Me.MinimumSize = New System.Drawing.Size(480, 240)
         Me.Name = "calcTMuniObrasVarias"
-        Me.Size = New System.Drawing.Size(410, 308)
+        Me.Size = New System.Drawing.Size(480, 240)
         Me.FlowLayoutPanel1.ResumeLayout(False)
         CType(Me.costo, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.metros_frente, System.ComponentModel.ISupportInitialize).EndInit()

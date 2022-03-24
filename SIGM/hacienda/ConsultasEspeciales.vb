@@ -104,129 +104,34 @@
     'RUTINAS
 
     Private Sub ExecuteQuery(vista As String)
-        Dim ReadTable As Boolean = True
         Dim sql(5) As String
-        If Connection.Text <> "Seleccione una base de datos antes de continuar." Then
-            If vista <> "" Then
-                'Build SQL query
-                CustomTable.Enabled = False
-                If vista = "HACIENDA - INGRESOS" Then
-                    sql(0) = "SELECT *"
-                    sql(1) = " FROM hacienda"
-                    sql(2) = " WHERE sumado = 2 AND pertenece='8'"
-                    sql(3) = " ORDER BY orden"
 
-                ElseIf vista = "HACIENDA - EGRESOS" Then
-                    sql(0) = "SELECT *"
-                    sql(1) = " FROM hacienda"
-                    sql(2) = " WHERE sumado = 2 and pertenece='9'"
-                    sql(3) = " ORDER BY orden"
+        If vista = "PERSONALIZADA" Then
+            Dim TableName As String
+            CustomTable.Enabled = True
+            Dim dtab As New DataTable
+            Do
+                TableName = InputBox("Ingrese nombre de tabla.", "Ingresar Tabla")
+                TableName = Trim(TableName)
 
-                ElseIf vista = "INGRESOS CONSOLIDADOS" Then
-                    Hacienda.ConsolidarCuentas(Today)
-                    sql(0) = "SELECT *"
-                    sql(1) = " FROM ingresos"
-
-                ElseIf vista = "EGRESOS CONSOLIDADOS" Then
-                    Hacienda.ConsolidarCuentas(Today)
-                    sql(0) = "SELECT *"
-                    sql(1) = " FROM egresos"
-
-
-                ElseIf vista = "BANCOS - SALDO" Then
-                    sql(0) = "SELECT MIN(fecha) as fecha FROM bancos"
-
-                    Dim minDateValue As Date = Today
-                    Dim maxDateValue As Date = Today
-                    Using dtab As DataTable = DbMan.ReadDB(sql, Connection.Text)
-                        minDateValue = dtab.Rows(0)("fecha").ToString
-                    End Using
-                    sql(0) = "SELECT banco, 
-                           (SELECT SUM(b3.importe)
-                            FROM bancos as b3
-                            WHERE b3.tipo=2 AND b3.banco=b1.banco
-                            AND fecha=>{" & minDateValue.ToString("MM/dd/yyyy") & "} 
-                            AND fecha<={" & maxDateValue.ToString("MM/dd/yyyy") & "}) AS ingreso,
-                           (SELECT SUM(b2.importe)
-                            FROM bancos as b2
-                            WHERE b2.tipo=1 AND b2.banco=b1.banco
-                            AND fecha=>{" & minDateValue.ToString("MM/dd/yyyy") & "}
-                            AND fecha<={" & maxDateValue.ToString("MM/dd/yyyy") & "}) AS egreso,
-                           (SELECT SUM(b3.importe) FROM bancos as b3
-                            WHERE b3.tipo=2 AND b3.banco=b1.banco
-                            AND fecha=>{" & minDateValue.ToString("MM/dd/yyyy") & "} 
-                            AND fecha<={" & maxDateValue.ToString("MM/dd/yyyy") & "}) - 
-                           (SELECT SUM(b2.importe) FROM bancos as b2
-                            WHERE b2.tipo=1 AND b2.banco=b1.banco
-                            AND fecha=>{" & minDateValue.ToString("MM/dd/yyyy") & "} 
-                            AND fecha<={" & maxDateValue.ToString("MM/dd/yyyy") & "}) AS diferencia"
-                    sql(1) = " FROM bancos as b1"
-                    sql(2) = " GROUP BY banco"
-
-                ElseIf vista = "CAJA" Then
-                    sql(0) = "SELECT * "
-                    sql(1) = " FROM caja"
-                    sql(2) = " ORDER BY fecha"
-
-                ElseIf vista = "COMPARAR INGRESOS" Then
-                    sql(0) = "SELECT caja.fecha, movimis.documento as movimis_documento,
-                                     SUM(movimis.pagado) as suma_movimis_pagado, caja.recibo as caja_recibo,
-                                     caja.importe as caja_importe, SUM(movimis.pagado)-importe as diferencia, 
-							         movimis.detalle"
-                    sql(1) = " FROM caja INNER JOIN movimis ON caja.recibo=movimis.documento"
-                    sql(2) = " WHERE movimis.orden<900000000000"
-                    sql(3) = " GROUP BY caja.fecha, movimis.documento, caja.recibo, caja.importe, movimis.detalle"
-                    sql(4) = " ORDER BY caja.fecha"
-
-                ElseIf vista = "COMPARAR EGRESOS" Then
-                    'cambiar caja por pagos y corregir tema de documento <> orden
-
-                    sql(0) = "SELECT opagos.dia, movimis.documento as movimis_documento,
-                                     movimis.pagado as movimis_pagado, opagos.orden as opagos_orden,
-                                     opagos.importe as opagos_importe, SUM(movimis.pagado)-opagos.importe as diferencia,
-                                     movimis.detalle, movimis.orden, hacienda.nombre"
-                    sql(1) = " FROM opagos INNER JOIN (movimis INNER JOIN hacienda ON movimis.orden=hacienda.orden)
-							ON opagos.factura=movimis.detalle"
-                    sql(2) = " WHERE movimis.orden>899999999999"
-                    sql(3) = " GROUP BY opagos.dia, movimis.documento, movimis.detalle, movimis.pagado, opagos.orden,
-							opagos.importe, movimis.orden, hacienda.nombre"
-                    sql(4) = " ORDER BY opagos.dia"
-
-                ElseIf vista = "PERSONALIZADA" Then
-                    Dim TableName As String
-                    CustomTable.Enabled = True
-                    Dim dtab As New DataTable
-                    Do
-                        TableName = InputBox("Ingrese nombre de tabla.", "Ingresar Tabla")
-                        TableName = Trim(TableName)
-
-                        If Len(TableName) > 0 Then
-                            dtab = DbMan.ReadDB("SELECT * FROM " & TableName, Connection.Text)
-                        Else
-                            TableName = Nothing
-                        End If
-                    Loop Until TableName Is Nothing Or dtab Is Nothing = False
-                    dtab.Dispose()
-
-                    If TableName <> "" Then
-                        sql(0) = "SELECT *"
-                        sql(1) = " FROM " & TableName
-                        CustomTable.Text = TableName
-                    Else
-                        CustomTable.Text = "Seleccionar tabla.."
-                        ReadTable = False
-                    End If
+                If Len(TableName) > 0 Then
+                    dtab = DbMan.ReadDB("SELECT * FROM " & TableName, Connection.Text)
                 Else
-                    ReadTable = False
+                    TableName = Nothing
                 End If
-            Else
-                ReadTable = False
-            End If
-        Else
-            ReadTable = False
-        End If
+            Loop Until TableName Is Nothing Or dtab Is Nothing = False
+            dtab.Dispose()
 
-        If ReadTable Then
+            If TableName <> "" Then
+                sql(0) = "SELECT * FROM " & TableName
+                CustomTable.Text = TableName
+            Else
+                CustomTable.Text = "Seleccionar tabla.."
+            End If
+        ElseIf vista <> "" Then
+            sql = Hacienda.BuildQuery(Connection.Text, vista)
+        End If
+        If sql(0) <> "" Then
             Dim LastQueryView As DataGridView = QueryView
             Dim LastQueryBS As BindingSource = bs_query
             Dim dtab As DataTable
@@ -255,4 +160,7 @@
         End If
     End Sub
 
+    Private Sub Search(sender As Object) Handles GenSearchControl1.CSearchClick
+
+    End Sub
 End Class

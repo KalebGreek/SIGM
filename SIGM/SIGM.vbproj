@@ -162,9 +162,9 @@
     </WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.ReportViewer.WinForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\x86\Debug\Microsoft.ReportViewer.WinForms.DLL</HintPath>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\Microsoft.ReportViewer.WinForms\13.0.0.0__89845dcd8080cc91\Microsoft.ReportViewer.WinForms.DLL</HintPath>
     </Reference>
     <Reference Include="System">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
@@ -384,10 +384,10 @@
     <Compile Include="hacienda\ConsultaMovimientos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="hacienda\ConsultaImpuesto.Designer.vb">
-      <DependentUpon>ConsultaImpuesto.vb</DependentUpon>
+    <Compile Include="hacienda\ConsultaImpuestoUI.Designer.vb">
+      <DependentUpon>ConsultaImpuestoUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="hacienda\ConsultaImpuesto.vb">
+    <Compile Include="hacienda\ConsultaImpuestoUI.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hacienda\Hacienda.vb" />
@@ -452,7 +452,7 @@
     <Compile Include="gobierno\ModEmpleado.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="hacienda\Recaudacion.vb" />
+    <Compile Include="hacienda\ConsultaImpuesto.vb" />
     <Compile Include="hacienda\Recaudacion\ConsultaIntimaciones.Designer.vb">
       <DependentUpon>ConsultaIntimaciones.vb</DependentUpon>
     </Compile>
@@ -834,8 +834,8 @@
       <DependentUpon>ConsultaMovimientos.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\ConsultaImpuesto.resx">
-      <DependentUpon>ConsultaImpuesto.vb</DependentUpon>
+    <EmbeddedResource Include="hacienda\ConsultaImpuestoUI.resx">
+      <DependentUpon>ConsultaImpuestoUI.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\ConsultasEspeciales.resx">
@@ -960,6 +960,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="reportes\sed.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reportes\sti.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="reportes\spi.rdlc">

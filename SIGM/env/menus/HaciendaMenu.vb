@@ -58,10 +58,10 @@
     End Sub
 
     Private Sub ConsultarImpuestoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsultarImpuestoToolStripMenuItem.Click
-        If CtrlMan.IsFormOpen(Me.Parent, ConsultaImpuesto) Then
+        If CtrlMan.IsFormOpen(Me.Parent, ConsultaImpuestoUI) Then
             MsgBox("Debe cerrar el expediente actual antes de continuar.", MsgBoxStyle.Critical, "Expediente Abierto")
         Else
-            Dim ConsultaImpuesto1 As New ConsultaImpuesto _
+            Dim ConsultaImpuesto1 As New ConsultaImpuestoUI _
             With {.MdiParent = Me.Parent}
             ConsultaImpuesto1.Show()
 
