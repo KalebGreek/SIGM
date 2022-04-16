@@ -423,7 +423,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>TERCERA: </Value>
+                    <Value>QUINTA: </Value>
                     <Style>
                       <FontFamily>PF DinText Pro Medium</FontFamily>
                       <FontSize>12pt</FontSize>
@@ -431,7 +431,21 @@
                     </Style>
                   </TextRun>
                   <TextRun>
-                    <Value>El Contratista libera en forma expresa a esta Municipalidad de todo tipo de responsabilidad por las consecuencias que pudieran derivarse de accidentes que sufra el mismo o los empleados a su cargo, como así también la maquinaria. De igual manera, el contratante queda liberado de las obligaciones derivadas de las aplicaciones de leyes provinciales, cargas sociales, leyes impositivas nacionales y provinciales, etc., las cuales serán asumidas en exclusiva por el Contratista, tanto en lo que respecta a su persona como a los empleados a su cargo.</Value>
+                    <Value>El Contratista libera en forma expresa a esta Municipalidad de todo tipo de responsabilidad por las consecuencias que pudieran derivarse de accidentes que sufra el mismo o los empleados a su cargo, como así también la maquinaria. De igual manera, el contratante queda liberado de las obligaciones derivadas de las aplicaciones de leyes provinciales, aportes, cargas sociales, leyes impositivas nacionales y provinciales, etc., todas las cuales serán asumidas en exclusiva por el Contratista, tanto en lo que respecta </Value>
+                    <Style>
+                      <FontFamily>PF DinText Pro</FontFamily>
+                      <FontSize>12pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>a su persona como a los empleados a su cargo.</Value>
                     <Style>
                       <FontFamily>PF DinText Pro</FontFamily>
                       <FontSize>12pt</FontSize>
@@ -444,8 +458,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox3</rd:DefaultName>
-            <Top>8.18941cm</Top>
-            <Left>2.48162cm</Left>
+            <Top>11.22466cm</Top>
+            <Left>2.48163cm</Left>
             <Height>3.60038cm</Height>
             <Width>15.86813cm</Width>
             <ZIndex>5</ZIndex>
@@ -464,7 +478,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>CUARTA: </Value>
+                    <Value>TERCERA: </Value>
                     <Style>
                       <FontFamily>PF DinText Pro Medium</FontFamily>
                       <FontSize>12pt</FontSize>
@@ -499,8 +513,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox3</rd:DefaultName>
-            <Top>12.15668cm</Top>
-            <Left>2.48162cm</Left>
+            <Top>8.21439cm</Top>
+            <Left>2.48163cm</Left>
             <Height>1.21844cm</Height>
             <Width>15.86813cm</Width>
             <ZIndex>6</ZIndex>
@@ -519,7 +533,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>QUINTA: </Value>
+                    <Value>CUARTA: </Value>
                     <Style>
                       <FontFamily>PF DinText Pro Medium</FontFamily>
                       <FontSize>12pt</FontSize>
@@ -540,8 +554,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox3</rd:DefaultName>
-            <Top>13.77376cm</Top>
-            <Left>2.48162cm</Left>
+            <Top>9.79279cm</Top>
+            <Left>2.48163cm</Left>
             <Height>1.02482cm</Height>
             <Width>15.86813cm</Width>
             <ZIndex>7</ZIndex>
@@ -581,7 +595,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox3</rd:DefaultName>
-            <Top>15.19193cm</Top>
+            <Top>15.22368cm</Top>
             <Left>2.48162cm</Left>
             <Height>2.47584cm</Height>
             <Width>15.86813cm</Width>
@@ -674,7 +688,14 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>SECRETARIA DE GOBIERNO Y HACIENDA</Value>
+                      <Value>SECRETARIA DE </Value>
+                      <Style>
+                        <FontFamily>PF DinText Pro</FontFamily>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Parameters!seccion.Value</Value>
                       <Style>
                         <FontFamily>PF DinText Pro</FontFamily>
                         <FontSize>12pt</FontSize>
@@ -705,15 +726,22 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>CONTRATO DE LOCACIÓN DE SERVICIOS - </Value>
+                      <Value>CONTRATO DE LOCACIÓN </Value>
                       <Style>
                         <FontFamily>PF DinText Pro</FontFamily>
                         <FontSize>23pt</FontSize>
                         <Language>es-AR</Language>
                       </Style>
                     </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
                     <TextRun>
-                      <Value>=Parameters!seccion.Value</Value>
+                      <Value>DE SERVICIOS</Value>
                       <Style>
                         <FontFamily>PF DinText Pro</FontFamily>
                         <FontSize>23pt</FontSize>
@@ -783,9 +811,9 @@
         <PageWidth>21cm</PageWidth>
         <InteractiveHeight>28cm</InteractiveHeight>
         <InteractiveWidth>20cm</InteractiveWidth>
-        <LeftMargin>2cm</LeftMargin>
+        <LeftMargin>0cm</LeftMargin>
         <RightMargin>0cm</RightMargin>
-        <TopMargin>2cm</TopMargin>
+        <TopMargin>0cm</TopMargin>
         <BottomMargin>0cm</BottomMargin>
         <ColumnSpacing>0.13cm</ColumnSpacing>
         <Style />

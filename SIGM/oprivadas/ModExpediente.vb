@@ -92,7 +92,7 @@ Class ModExpediente
     '###### END GUI #############################################################################################
 
     '###### VALIDATION ##########################################################################################
-    Private Sub cargar(registro As DataRowView)
+    Private Sub Cargar(registro As DataRowView)
         razon.Clear()
         cuil.Clear()
         matricula.Clear()

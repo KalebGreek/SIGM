@@ -209,6 +209,18 @@
     <Import Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="contratos\ConsultaContrato.Designer.vb">
+      <DependentUpon>ConsultaContrato.vb</DependentUpon>
+    </Compile>
+    <Compile Include="contratos\ConsultaContrato.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="contratos\ModContrato.Designer.vb">
+      <DependentUpon>ModContrato.vb</DependentUpon>
+    </Compile>
+    <Compile Include="contratos\ModContrato.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="env\menus\AccionSocialMenu.Designer.vb">
       <DependentUpon>AccionSocialMenu.vb</DependentUpon>
     </Compile>
@@ -284,6 +296,12 @@
     <Compile Include="env\genericQueries\GenSearchControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="env\menus\MesaEntradasMenu.Designer.vb">
+      <DependentUpon>MesaEntradasMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="env\menus\MesaEntradasMenu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="env\SecMan.vb" />
     <Compile Include="env\menus\GobiernoMenu.Designer.vb">
       <DependentUpon>GobiernoMenu.vb</DependentUpon>
@@ -321,12 +339,6 @@
       <DependentUpon>ModCombustibleTicket.vb</DependentUpon>
     </Compile>
     <Compile Include="hacienda\Combustibles\ModCombustibleTicket.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="contratos\ConsultaContrato.Designer.vb">
-      <DependentUpon>ConsultaContrato.vb</DependentUpon>
-    </Compile>
-    <Compile Include="contratos\ConsultaContrato.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hacienda\ConvertirSIRO.Designer.vb">
@@ -372,10 +384,10 @@
     <Compile Include="hacienda\CalculoAnualImpuesto\CalcAnualImpUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="hacienda\CertificadoLibreDeuda.Designer.vb">
+    <Compile Include="mesaentradas\CertificadoLibreDeuda.Designer.vb">
       <DependentUpon>CertificadoLibreDeuda.vb</DependentUpon>
     </Compile>
-    <Compile Include="hacienda\CertificadoLibreDeuda.vb">
+    <Compile Include="mesaentradas\CertificadoLibreDeuda.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hacienda\ConsultaMovimientos.Designer.vb">
@@ -384,10 +396,10 @@
     <Compile Include="hacienda\ConsultaMovimientos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="hacienda\ConsultaImpuestoUI.Designer.vb">
+    <Compile Include="mesaentradas\ConsultaImpuestoUI.Designer.vb">
       <DependentUpon>ConsultaImpuestoUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="hacienda\ConsultaImpuestoUI.vb">
+    <Compile Include="mesaentradas\ConsultaImpuestoUI.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="hacienda\Hacienda.vb" />
@@ -434,16 +446,10 @@
     <Compile Include="env\menus\HaciendaMenu.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="hacienda\Recaudacion\ModIntimaciones.Designer.vb">
+    <Compile Include="mesaentradas\ModIntimaciones.Designer.vb">
       <DependentUpon>ModIntimaciones.vb</DependentUpon>
     </Compile>
-    <Compile Include="hacienda\Recaudacion\ModIntimaciones.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="contratos\ModContrato.Designer.vb">
-      <DependentUpon>ModContrato.vb</DependentUpon>
-    </Compile>
-    <Compile Include="contratos\ModContrato.vb">
+    <Compile Include="mesaentradas\ModIntimaciones.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="gobierno\ModEmpleado.Designer.vb">
@@ -452,12 +458,42 @@
     <Compile Include="gobierno\ModEmpleado.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="hacienda\ConsultaImpuesto.vb" />
-    <Compile Include="hacienda\Recaudacion\ConsultaIntimaciones.Designer.vb">
+    <Compile Include="mesaentradas\ConsultaImpuesto.vb" />
+    <Compile Include="mesaentradas\ConsultaIntimaciones.Designer.vb">
       <DependentUpon>ConsultaIntimaciones.vb</DependentUpon>
     </Compile>
-    <Compile Include="hacienda\Recaudacion\ConsultaIntimaciones.vb">
+    <Compile Include="mesaentradas\ConsultaIntimaciones.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mesaentradas\tasamunicipal\CalcTMuniMensura.Designer.vb">
+      <DependentUpon>CalcTMuniMensura.vb</DependentUpon>
+    </Compile>
+    <Compile Include="mesaentradas\tasamunicipal\CalcTMuniMensura.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="mesaentradas\tasamunicipal\CalcTMuniObrasVarias.Designer.vb">
+      <DependentUpon>CalcTMuniObrasVarias.vb</DependentUpon>
+    </Compile>
+    <Compile Include="mesaentradas\tasamunicipal\CalcTMuniObrasVarias.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="mesaentradas\tasamunicipal\CalcTMuniPlanosEdif.Designer.vb">
+      <DependentUpon>CalcTMuniPlanosEdif.vb</DependentUpon>
+    </Compile>
+    <Compile Include="mesaentradas\tasamunicipal\CalcTMuniPlanosEdif.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="mesaentradas\tasamunicipal\CalculoTasaMunicipal.Designer.vb">
+      <DependentUpon>CalculoTasaMunicipal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="mesaentradas\tasamunicipal\CalculoTasaMunicipal.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="mesaentradas\tasamunicipal\CtrlAddInmuebleEdificacion.Designer.vb">
+      <DependentUpon>CtrlAddInmuebleEdificacion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="mesaentradas\tasamunicipal\CtrlAddInmuebleEdificacion.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -488,36 +524,6 @@
     </Compile>
     <Compile Include="hacienda\Combustibles\ModCombustible.vb">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="oprivadas\tasamunicipal\CalcTMuniObrasVarias.Designer.vb">
-      <DependentUpon>CalcTMuniObrasVarias.vb</DependentUpon>
-    </Compile>
-    <Compile Include="oprivadas\tasamunicipal\CalcTMuniObrasVarias.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="oprivadas\tasamunicipal\CalcTMuniMensura.Designer.vb">
-      <DependentUpon>CalcTMuniMensura.vb</DependentUpon>
-    </Compile>
-    <Compile Include="oprivadas\tasamunicipal\CalcTMuniMensura.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="oprivadas\tasamunicipal\CalcTMuniPlanosEdif.Designer.vb">
-      <DependentUpon>CalcTMuniPlanosEdif.vb</DependentUpon>
-    </Compile>
-    <Compile Include="oprivadas\tasamunicipal\CalcTMuniPlanosEdif.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="oprivadas\tasamunicipal\CtrlAddInmuebleEdificacion.Designer.vb">
-      <DependentUpon>CtrlAddInmuebleEdificacion.vb</DependentUpon>
-    </Compile>
-    <Compile Include="oprivadas\tasamunicipal\CtrlAddInmuebleEdificacion.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="oprivadas\tasamunicipal\CalculoTasaMunicipal.Designer.vb">
-      <DependentUpon>CalculoTasaMunicipal.vb</DependentUpon>
-    </Compile>
-    <Compile Include="oprivadas\tasamunicipal\CalculoTasaMunicipal.vb">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="hacienda\Adelanto\ConsultaAdelanto.Designer.vb">
       <DependentUpon>ConsultaAdelanto.vb</DependentUpon>
@@ -689,19 +695,28 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="oprivadas\tasamunicipal\CalcTMuniObrasVarias.resx">
-      <DependentUpon>CalcTMuniObrasVarias.vb</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="contratos\ConsultaContrato.resx">
+      <DependentUpon>ConsultaContrato.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\tasamunicipal\CalcTMuniMensura.resx">
+    <EmbeddedResource Include="contratos\ModContrato.resx">
+      <DependentUpon>ModContrato.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="env\menus\MesaEntradasMenu.resx">
+      <DependentUpon>MesaEntradasMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mesaentradas\tasamunicipal\CalcTMuniMensura.resx">
       <DependentUpon>CalcTMuniMensura.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\tasamunicipal\CalcTMuniPlanosEdif.resx">
+    <EmbeddedResource Include="mesaentradas\tasamunicipal\CalcTMuniObrasVarias.resx">
+      <DependentUpon>CalcTMuniObrasVarias.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mesaentradas\tasamunicipal\CalcTMuniPlanosEdif.resx">
       <DependentUpon>CalcTMuniPlanosEdif.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\tasamunicipal\CtrlAddInmuebleEdificacion.resx">
+    <EmbeddedResource Include="mesaentradas\tasamunicipal\CalculoTasaMunicipal.resx">
+      <DependentUpon>CalculoTasaMunicipal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mesaentradas\tasamunicipal\CtrlAddInmuebleEdificacion.resx">
       <DependentUpon>CtrlAddInmuebleEdificacion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="reportes\car.rdlc">
@@ -782,16 +797,13 @@
     <EmbeddedResource Include="env\menus\HaciendaMenu.resx">
       <DependentUpon>HaciendaMenu.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="contratos\ConsultaContrato.resx">
-      <DependentUpon>ConsultaContrato.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="hacienda\ConvertirSIRO.resx">
       <DependentUpon>ConvertirSIRO.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\Recaudacion\ConsultaIntimaciones.resx">
+    <EmbeddedResource Include="mesaentradas\ConsultaIntimaciones.resx">
       <DependentUpon>ConsultaIntimaciones.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\Recaudacion\ModIntimaciones.resx">
+    <EmbeddedResource Include="mesaentradas\ModIntimaciones.resx">
       <DependentUpon>ModIntimaciones.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="reportes\hacienda\intima.rdlc">
@@ -826,7 +838,7 @@
       <DependentUpon>CalcAnualImpUI.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\CertificadoLibreDeuda.resx">
+    <EmbeddedResource Include="mesaentradas\CertificadoLibreDeuda.resx">
       <DependentUpon>CertificadoLibreDeuda.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -834,7 +846,7 @@
       <DependentUpon>ConsultaMovimientos.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="hacienda\ConsultaImpuestoUI.resx">
+    <EmbeddedResource Include="mesaentradas\ConsultaImpuestoUI.resx">
       <DependentUpon>ConsultaImpuestoUI.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -843,9 +855,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\ConsultaEmpleado.resx">
       <DependentUpon>ConsultaEmpleado.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="contratos\ModContrato.resx">
-      <DependentUpon>ModContrato.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="gobierno\ModEmpleado.resx">
       <DependentUpon>ModEmpleado.vb</DependentUpon>
@@ -861,10 +870,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="env\menus\OprivadasMenu.resx">
       <DependentUpon>OprivadasMenu.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="oprivadas\tasamunicipal\CalculoTasaMunicipal.resx">
-      <DependentUpon>CalculoTasaMunicipal.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\Adelanto\ConsultaAdelanto.resx">
       <DependentUpon>ConsultaAdelanto.vb</DependentUpon>

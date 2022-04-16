@@ -35,14 +35,14 @@
         GC.WaitForPendingFinalizers()
         Return schemaTable
     End Function
-    Function ReadDB(SingleQuery As String, constr As String, Optional TableName As String = "") As DataTable
+    Function ReadDB(SingleQuery As String, constr As String, Optional TableName As String = "", Optional FirstResult As Boolean = False) As Object
         'Step 1
         Dim sqlArray(0) As String
         sqlArray(0) = SingleQuery
 
-        Return ReadDB(sqlArray, constr, TableName)
+        Return ReadDB(sqlArray, constr, TableName, FirstResult)
     End Function
-    Function ReadDB(ArrayQuery As String(), constr As String, Optional tablename As String = "") As DataTable
+    Function ReadDB(ArrayQuery As String(), constr As String, Optional TableName As String = "", Optional FirstResult As Boolean = False) As Object
         'Step 2
         Dim OleDBProcedure As New OleDb.OleDbCommand
         With OleDBProcedure
@@ -66,10 +66,10 @@
             End If
         End With
 
-        Return ReadDB(OleDBProcedure, constr, tablename)
+        Return ReadDB(OleDBProcedure, constr, TableName, FirstResult)
 
     End Function
-    Function ReadDB(OleDBProcedure As OleDb.OleDbCommand, constr As String, Optional TableName As String = "") As DataTable
+    Function ReadDB(OleDBProcedure As OleDb.OleDbCommand, constr As String, Optional TableName As String = "", Optional FirstResult As Boolean = False) As Object
         'Step 3
         Dim dtab As New DataTable
         Dim errorMsg As String = ""
@@ -152,7 +152,21 @@
         End Using
         GC.Collect()
         GC.WaitForPendingFinalizers()
-        Return dtab
+
+        If FirstResult Then 'Returns the first row from the datatable
+            Dim dr As DataRow = Nothing
+            If dtab Is Nothing = False Then
+                If dtab.Rows.Count > 0 Then
+                    dr = dtab.Rows(0)
+                End If
+            End If
+
+            Return dr
+        Else
+            Return dtab
+        End If
+
+
     End Function
 
     Function GenerateReportDataset(OleDBProcedure As OleDb.OleDbCommand) As DataSet
@@ -164,7 +178,7 @@
     ' END READ 
 
     ' SAVE: Rutinas para grabar registros 
-    Function EditDB(ByVal SingleQuery As String, Optional ByVal constr As String = Nothing) As String
+    Function EditDB(ByVal SingleQuery As String, Optional ByVal constr As String = Nothing) As Double
         'Step 1
         Dim ArrayQuery(0) As String
         ArrayQuery(0) = SingleQuery
@@ -173,11 +187,11 @@
     End Function
 
     Function EditDB(ArrayQuery As String(), Optional ByVal constr As String = Nothing,
-                    Optional ByRef progreso As ToolStripProgressBar = Nothing) As String
+                    Optional ByRef progreso As ToolStripProgressBar = Nothing) As Double
         'Step 2
-        Dim RowsAffected As Integer = 0
+        Dim RowsAffected As Integer = -1
+        Dim ErrorMsg As String = ""
         Dim index As Integer = 0
-        Dim result As String = ""
         Dim olecon As New OleDb.OleDbConnection
         Dim OleDBProcedure As New OleDb.OleDbCommand
 
@@ -192,7 +206,7 @@
                 ElseIf query.Contains("DELETE") Then
                     If My.Settings.delete_enabled Then
                     Else
-                        MsgBox("No posee permisos para eliminar registros de la tabla seleccionanda.", MsgBoxStyle.Critical, "Error")
+                        ErrorMsg = "No posee permisos para eliminar registros de la tabla seleccionanda."
                         query = ""
                     End If
                 End If
@@ -221,9 +235,9 @@
             For Each query In ArrayQuery
                 Try
                     OleDBProcedure.CommandText = query
-                    RowsAffected += OleDBProcedure.ExecuteNonQuery()
+                    RowsAffected += OleDBProcedure.ExecuteScalar()
                 Catch e As Exception
-                    result &= e.ToString & Chr(13)
+                    ErrorMsg &= e.ToString & Chr(13)
                 End Try
                 If progreso Is Nothing = False Then
                     progreso.Increment(1)
@@ -236,14 +250,10 @@
             GC.WaitForPendingFinalizers()
         End If
 
-        If RowsAffected > 0 Then
-            result = RowsAffected
+        If ErrorMsg <> "" Then
+            MsgBox(ErrorMsg, MsgBoxStyle.Critical, "Error")
         End If
 
-        If result = "" Then
-            result = "Datos insuficientes para realizar la operación."
-        End If
-
-        Return result
+        Return RowsAffected
     End Function
 End Module

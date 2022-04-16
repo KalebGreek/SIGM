@@ -33,6 +33,7 @@ Partial Class Formularios
         Me.InscripciónToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.sia = New System.Windows.Forms.ToolStripMenuItem()
         Me.sid = New System.Windows.Forms.ToolStripMenuItem()
+        Me.sti = New System.Windows.Forms.ToolStripMenuItem()
         Me.sug = New System.Windows.Forms.ToolStripMenuItem()
         Me.ObrasPrivadasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConstanciaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -53,9 +54,6 @@ Partial Class Formularios
         Me.spi = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.CerrarFormToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.titulo = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SalirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.sti = New System.Windows.Forms.ToolStripMenuItem()
         Me.top_menu.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -80,7 +78,7 @@ Partial Class Formularios
         Me.top_menu.AutoSize = False
         Me.top_menu.BackColor = System.Drawing.Color.LightSlateGray
         Me.top_menu.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-        Me.top_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FormulariosToolStripMenuItem1, Me.titulo, Me.SalirToolStripMenuItem})
+        Me.top_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FormulariosToolStripMenuItem1})
         Me.top_menu.Location = New System.Drawing.Point(0, 0)
         Me.top_menu.Name = "top_menu"
         Me.top_menu.Padding = New System.Windows.Forms.Padding(6, 3, 0, 3)
@@ -90,15 +88,16 @@ Partial Class Formularios
         'FormulariosToolStripMenuItem1
         '
         Me.FormulariosToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ComercioToolStripMenuItem, Me.MesaDeEntradaToolStripMenuItem, Me.ObrasPrivadasToolStripMenuItem, Me.ToolStripSeparator4, Me.CerrarFormToolStripMenuItem})
+        Me.FormulariosToolStripMenuItem1.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormulariosToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.FormulariosToolStripMenuItem1.Name = "FormulariosToolStripMenuItem1"
-        Me.FormulariosToolStripMenuItem1.Size = New System.Drawing.Size(98, 27)
-        Me.FormulariosToolStripMenuItem1.Text = "Formularios"
-        Me.FormulariosToolStripMenuItem1.Visible = False
+        Me.FormulariosToolStripMenuItem1.Size = New System.Drawing.Size(126, 27)
+        Me.FormulariosToolStripMenuItem1.Text = "FORMULARIOS"
         '
         'ComercioToolStripMenuItem
         '
         Me.ComercioToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.sic})
+        Me.ComercioToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
         Me.ComercioToolStripMenuItem.Name = "ComercioToolStripMenuItem"
         Me.ComercioToolStripMenuItem.Size = New System.Drawing.Size(191, 24)
         Me.ComercioToolStripMenuItem.Text = "Comercio"
@@ -112,6 +111,7 @@ Partial Class Formularios
         'MesaDeEntradaToolStripMenuItem
         '
         Me.MesaDeEntradaToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.nop, Me.InscripciónToolStripMenuItem, Me.sug})
+        Me.MesaDeEntradaToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
         Me.MesaDeEntradaToolStripMenuItem.Name = "MesaDeEntradaToolStripMenuItem"
         Me.MesaDeEntradaToolStripMenuItem.Size = New System.Drawing.Size(191, 24)
         Me.MesaDeEntradaToolStripMenuItem.Text = "Mesa de Entrada"
@@ -119,14 +119,14 @@ Partial Class Formularios
         'nop
         '
         Me.nop.Name = "nop"
-        Me.nop.Size = New System.Drawing.Size(180, 24)
+        Me.nop.Size = New System.Drawing.Size(179, 24)
         Me.nop.Text = "Nota de Pedido"
         '
         'InscripciónToolStripMenuItem
         '
         Me.InscripciónToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.sia, Me.sid, Me.sti})
         Me.InscripciónToolStripMenuItem.Name = "InscripciónToolStripMenuItem"
-        Me.InscripciónToolStripMenuItem.Size = New System.Drawing.Size(180, 24)
+        Me.InscripciónToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
         Me.InscripciónToolStripMenuItem.Text = "Inscripción"
         '
         'sia
@@ -141,15 +141,22 @@ Partial Class Formularios
         Me.sid.Size = New System.Drawing.Size(232, 24)
         Me.sid.Text = "Automotor con DD.JJ."
         '
+        'sti
+        '
+        Me.sti.Name = "sti"
+        Me.sti.Size = New System.Drawing.Size(232, 24)
+        Me.sti.Text = "Titularidad de Inmueble"
+        '
         'sug
         '
         Me.sug.Name = "sug"
-        Me.sug.Size = New System.Drawing.Size(180, 24)
+        Me.sug.Size = New System.Drawing.Size(179, 24)
         Me.sug.Text = "Uso General"
         '
         'ObrasPrivadasToolStripMenuItem
         '
         Me.ObrasPrivadasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConstanciaToolStripMenuItem, Me.InformeToolStripMenuItem, Me.PresentaciónToolStripMenuItem1, Me.SolicitudToolStripMenuItem})
+        Me.ObrasPrivadasToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
         Me.ObrasPrivadasToolStripMenuItem.Name = "ObrasPrivadasToolStripMenuItem"
         Me.ObrasPrivadasToolStripMenuItem.Size = New System.Drawing.Size(191, 24)
         Me.ObrasPrivadasToolStripMenuItem.Text = "Obras Privadas"
@@ -261,32 +268,10 @@ Partial Class Formularios
         '
         'CerrarFormToolStripMenuItem
         '
+        Me.CerrarFormToolStripMenuItem.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
         Me.CerrarFormToolStripMenuItem.Name = "CerrarFormToolStripMenuItem"
         Me.CerrarFormToolStripMenuItem.Size = New System.Drawing.Size(191, 24)
         Me.CerrarFormToolStripMenuItem.Text = "Cerrar Formulario"
-        '
-        'titulo
-        '
-        Me.titulo.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.titulo.Font = New System.Drawing.Font("PF DinDisplay Pro", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.titulo.ForeColor = System.Drawing.Color.White
-        Me.titulo.Name = "titulo"
-        Me.titulo.Size = New System.Drawing.Size(141, 27)
-        Me.titulo.Text = "FORMULARIOS"
-        '
-        'SalirToolStripMenuItem
-        '
-        Me.SalirToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(180, Byte), Integer))
-        Me.SalirToolStripMenuItem.ForeColor = System.Drawing.Color.White
-        Me.SalirToolStripMenuItem.Name = "SalirToolStripMenuItem"
-        Me.SalirToolStripMenuItem.Size = New System.Drawing.Size(62, 27)
-        Me.SalirToolStripMenuItem.Text = "Volver"
-        '
-        'sti
-        '
-        Me.sti.Name = "sti"
-        Me.sti.Size = New System.Drawing.Size(232, 24)
-        Me.sti.Text = "Titularidad de Inmueble"
         '
         'Formularios
         '
@@ -297,7 +282,6 @@ Partial Class Formularios
         Me.Controls.Add(Me.ReporteActual)
         Me.Controls.Add(Me.top_menu)
         Me.Font = New System.Drawing.Font("PF DinText Pro", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Formularios"
@@ -310,8 +294,6 @@ Partial Class Formularios
     End Sub
     Friend WithEvents top_menu As System.Windows.Forms.MenuStrip
     Friend WithEvents FormulariosToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents titulo As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents SalirToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents CerrarFormToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Private WithEvents ReporteActual As Microsoft.Reporting.WinForms.ReportViewer
@@ -328,17 +310,17 @@ Partial Class Formularios
     Friend WithEvents ConstanciaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents cfo As ToolStripMenuItem
     Friend WithEvents clm As ToolStripMenuItem
-    Friend WithEvents ComercioToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents sic As ToolStripMenuItem
-    Friend WithEvents MesaDeEntradaToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents nop As ToolStripMenuItem
-    Friend WithEvents sug As ToolStripMenuItem
-    Friend WithEvents InscripciónToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents sia As ToolStripMenuItem
-    Friend WithEvents sid As ToolStripMenuItem
     Friend WithEvents sed As ToolStripMenuItem
     Friend WithEvents InformeToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents imh As ToolStripMenuItem
     Friend WithEvents spi As ToolStripMenuItem
+    Friend WithEvents ComercioToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents sic As ToolStripMenuItem
+    Friend WithEvents MesaDeEntradaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents nop As ToolStripMenuItem
+    Friend WithEvents InscripciónToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents sia As ToolStripMenuItem
+    Friend WithEvents sid As ToolStripMenuItem
     Friend WithEvents sti As ToolStripMenuItem
+    Friend WithEvents sug As ToolStripMenuItem
 End Class

@@ -22,8 +22,13 @@
 
         DbMan.EditDB(sqlInsert, My.Settings.CurrentDB)
 
-        Dim dr As DataRow = DbMan.ReadDB("SELECT MAX(id) as id FROM per_domicilio WHERE per_id=" & persona_id, My.Settings.CurrentDB).Rows(0)
-        Return dr("id")
+        Dim dr As DataRow = DbMan.ReadDB("SELECT MAX(id) as id FROM per_domicilio WHERE per_id=" & persona_id, My.Settings.CurrentDB, "", True)
+        If dr Is Nothing Then
+            Return 0
+        Else
+            Return dr("id")
+        End If
+
     End Function
     Shared Function Modificar(domicilio_id As Integer, persona_id As Integer, calle As String,
                               altura As Integer, piso As Integer, dpto As String,

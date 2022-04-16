@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.Reporting.WinForms
 Class Formularios
 
-    Public Sub New(Optional titulo As String = "Informe")
+    Public Sub New(Optional titulo As String = "Formulario")
         ' This call is required by the designer.
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
@@ -38,8 +38,7 @@ Class Formularios
     'Rutinas
 
     Private Sub MenuList(sender As ToolStripMenuItem, e As EventArgs)
-
-        If sender Is clm Then
+        If sender Is clm Then 'Constancia de Linea Municipal
             Dim param As New List(Of ReportParameter)
             Dim razon As String = InputBox("Ingresar Razon Social", "Ingresar Razon Social", "APELLIDO, NOMBRE")
             If Len(razon) > 4 Then
@@ -48,9 +47,6 @@ Class Formularios
             End If
         ElseIf sender Is CerrarFormToolStripMenuItem Then
             ReporteActual.Visible = False
-        ElseIf sender Is SalirToolStripMenuItem Then
-            ReporteActual.Reset()
-            Me.Close()
         Else
             Mostrar("REPORTES\" & sender.Name.ToString)
         End If

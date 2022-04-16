@@ -131,7 +131,7 @@
 		'Está morido? Is it pinning for the fjords?
 		Dim drow As DataRow = DbMan.ReadDB("SELECT id as persona_id, difunto, ruta_defuncion, fisica
 												FROM persona WHERE id=" & PersonaId,
-											 My.Settings.CurrentDB).Rows(0)
+											 My.Settings.CurrentDB, "", True)
 
 		difunto.Enabled = drow("fisica") 'Para estar morido tiene que ser una persona real
 		If difunto.Enabled Then

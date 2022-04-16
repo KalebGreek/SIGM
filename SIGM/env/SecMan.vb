@@ -25,11 +25,14 @@ Class SecMan 'Security Manager
         Dim fecha_hora As String = Date.Today.ToShortDateString & " " & TimeOfDay.ToShortTimeString
         Dim token As String = GetCpuId()
         Dim equipo As String = Environment.MachineName
+        Dim dtab As New DataTable
+
         'Últimos accesos
+
         Dim registro As DataRow = DbMan.ReadDB("SELECT id, fecha_hora, user_id, token, equipo, sesion 
                                                   FROM usr_log
                                                  WHERE user_id=" & user_id & " ORDER BY id DESC",
-                                                My.Settings.CurrentDB).Rows(0)
+                                                My.Settings.CurrentDB, "", True)
 
         If lock Then 'Iniciar sesion
             If registro Is Nothing = False Then
@@ -77,8 +80,7 @@ Class SecMan 'Security Manager
         'Cargar
         My.Settings.delete_enabled = dtab.Rows(0)("delete_permission")
         CtrlMan.LoadControlData(dtab, inicio)
-        inicio.ShowDialog(owner)
-        inicio.Dispose()
+        inicio.Show(owner)
     End Sub
 
     'Read MAC or CPU to identify user/computer

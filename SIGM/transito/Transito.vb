@@ -89,7 +89,7 @@
 			Return sql
 		End Function
 		Shared Function VerificarBoleta(boleta As Double) As Integer
-			Dim drow As DataRow = DbMan.ReadDB("SELECT id, boleta FROM multas_historial WHERE boleta=" & boleta, My.Settings.CurrentDB).Rows(0)
+			Dim drow As DataRow = DbMan.ReadDB("SELECT id, boleta FROM multas_historial WHERE boleta=" & boleta, My.Settings.CurrentDB, "", True)
 			If drow Is Nothing = False Then
 				Return CInt(drow("id"))
 			Else

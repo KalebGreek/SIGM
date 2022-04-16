@@ -15,23 +15,25 @@
             Dim genero As Integer = 0
             Dim valor_cuil As Double = 0
             Dim drow As DataRow = DbMan.ReadDB("SELECT id as persona_id, razon, cuil  FROM persona WHERE id=" & PersonaId,
-                                                My.Settings.CurrentDB).Rows(0)
+                                                My.Settings.CurrentDB, "", True)
 
-            razon.Text = drow("razon").ToString
-            valor_cuil = CDbl(drow("cuil").ToString)
-            If valor_cuil > 20000000000 Then
-                genero = Val(Microsoft.VisualBasic.Left(valor_cuil, 2))
-                If genero > 27 Then
-                    gen.Text = "N/A"
-                ElseIf genero > 23 Then
-                    gen.Text = "Femenino"
-                ElseIf genero > 0 Then
-                    gen.Text = "Masculino"
+            If drow Is Nothing = False Then
+                razon.Text = drow("razon").ToString
+                valor_cuil = CDbl(drow("cuil").ToString)
+                If valor_cuil > 20000000000 Then
+                    genero = Val(Microsoft.VisualBasic.Left(valor_cuil, 2))
+                    If genero > 27 Then
+                        gen.Text = "N/A"
+                    ElseIf genero > 23 Then
+                        gen.Text = "Femenino"
+                    ElseIf genero > 0 Then
+                        gen.Text = "Masculino"
+                    End If
+                    dni.Text = Microsoft.VisualBasic.Mid(drow("cuil").ToString, 3, 8)
+                    cuil.Text = valor_cuil
+                Else
+                    dni.Text = valor_cuil
                 End If
-                dni.Text = Microsoft.VisualBasic.Mid(drow("cuil").ToString, 3, 8)
-                cuil.Text = valor_cuil
-            Else
-                dni.Text = valor_cuil
             End If
         End If
     End Sub

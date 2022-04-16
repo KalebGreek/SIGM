@@ -26,12 +26,12 @@
 		buscar1.Show()
 	End Sub
 	Private Sub CalculosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CalculosToolStripMenuItem.Click
-		Dim calcOprivadas As New genToolContainer With {.MdiParent = Me.Parent}
-		calcOprivadas.Text = "Calculadora"
+		Dim calcTasaMunicipal As New genToolContainer With {.MdiParent = Me.Parent}
+		calcTasaMunicipal.Text = "Calculadora"
 		Dim calcObras As New CalculoTasaMunicipal With {.Dock = DockStyle.Fill}
-		calcOprivadas.Controls.Add(calcObras)
-		calcOprivadas.WindowState = FormWindowState.Maximized
-		calcOprivadas.Show()
+		calcTasaMunicipal.Controls.Add(calcObras)
+		calcTasaMunicipal.WindowState = FormWindowState.Maximized
+		calcTasaMunicipal.Show()
 	End Sub
 
 End Class

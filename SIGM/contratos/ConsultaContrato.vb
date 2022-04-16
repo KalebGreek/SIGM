@@ -15,7 +15,7 @@ Public Class ConsultaContrato
                                                       ON persona0.id = per_domicilio.per_id) ON persona1.id = empleado1.persona_id) 
                                                       ON persona2.id = empleado2.persona_id) INNER JOIN localidades 
                                                       ON per_domicilio.localidad_id = localidades.id) ON provincias.id = localidades.provincia_id"
-    ReadOnly WhereSQL As String = "WHERE per_domicilio.principal=True"
+    ReadOnly WhereSQL As String = " WHERE per_domicilio.principal=True"
 
     Public Sub New()
 
@@ -27,18 +27,14 @@ Public Class ConsultaContrato
         GenSearchControl1.vista.Items.AddRange(New Object() {"HACIENDA", "DEPORTES", "OBRAS PUBLICAS", "TRANSITO", "TURISMO"})
     End Sub
 
-    Shared Sub Consultar() Handles GenSearchControl1.CSearchClick
-        'bs_contrato.Filter = GenSearchControl1.bsCustomFilter
-    End Sub
-
     '-- EVENTOS UNICOS
     Private Sub vista_SelectedIndexChanged() Handles GenSearchControl1.CVistaIndexTextChanged
-        resultado.Visible = False
         With GenSearchControl1
             If .vista.SelectedIndex > -1 Then
                 BuscarContrato()
             Else
                 .reset_search.PerformClick()
+                resultado.DataSource = Nothing
             End If
         End With
     End Sub
@@ -64,7 +60,7 @@ Public Class ConsultaContrato
     End Sub
 
     'RUTINAS
-    Private Sub BuscarContrato()
+    Private Sub BuscarContrato() Handles GenSearchControl1.CSearchClick
         Dim dtab As New DataTable
         With GenSearchControl1
             .filtro.DataSource = Nothing
@@ -78,11 +74,13 @@ Public Class ConsultaContrato
                     With {.DataSource = CtrlMan.Fill.GetColumnList(dtab.Columns)}
                 CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
                 CtrlMan.DataGridViewTools.Load(resultado, bs_contrato, .bsCustomFilter)
+            Else
+                resultado.DataSource = Nothing
             End If
         End With
     End Sub
 
-    Private Sub printCont_Click(sender As Object, e As EventArgs) Handles printCont.Click
+    Private Sub PrintCont_Click(sender As Object, e As EventArgs) Handles printCont.Click
         Dim source As DataRowView = bs_contrato.Current
 
         If source Is Nothing = False And GenSearchControl1.vista.SelectedIndex > -1 Then
@@ -108,5 +106,9 @@ Public Class ConsultaContrato
                 certificado.ShowDialog()
             End Using
         End If
+    End Sub
+
+    Private Sub Consultar(sender As Object)
+
     End Sub
 End Class

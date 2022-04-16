@@ -163,20 +163,21 @@
         End If
 
         'frentes
-        CtrlMan.DataGridViewTools.Load(consulta_frente,
-                                       Catastro.ListarFrente(catastro_id.Text))
+        BSFrente.DataSource = Catastro.ListarFrente(catastro_id.Text)
+        CtrlMan.DataGridViewTools.Load(consulta_frente, BSFrente)
 
         'superficies
         CtrlMan.LoadControlData(DbMan.ReadDB("SELECT * FROM cat_superficie WHERE catastro_id=" & catastro_id.Text,
                                              My.Settings.CurrentDB), tab_sup)
 
         'caracteristicas
-        CtrlMan.DataGridViewTools.Load(consulta_caract,
-                                       DbMan.ReadDB("SELECT descripcion, activo FROM cat_servicio WHERE catastro_id=" & catastro_id.Text,
-                                                    My.Settings.CurrentDB))
+        BSCar.DataSource = DbMan.ReadDB("SELECT descripcion, activo FROM cat_servicio WHERE catastro_id=" & catastro_id.Text,
+                                        My.Settings.CurrentDB)
+        CtrlMan.DataGridViewTools.Load(consulta_caract, BSCar)
 
         'copias
-        CtrlMan.DataGridViewTools.Load(consulta_copia, BSCopia, FileMan.Catastro.BuscarDoc(catastro_id.Text))
+        BSCopia.DataSource = FileMan.Catastro.BuscarDoc(catastro_id.Text)
+        CtrlMan.DataGridViewTools.Load(consulta_copia, BSCopia)
 
     End Sub
 
@@ -382,7 +383,8 @@
                 Catastro.Eliminar.Frente(FrenteId)
             End If
         End If
-        CtrlMan.DataGridViewTools.Load(consulta_frente, BSFrente, Catastro.ListarFrente(catastro_id.Text))
+        BSFrente.DataSource = Catastro.ListarFrente(catastro_id.Text)
+        CtrlMan.DataGridViewTools.Load(consulta_frente, BSFrente)
     End Sub
 
     ' SUPERFICIE

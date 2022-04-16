@@ -21,12 +21,13 @@
 
     'Shared CatastroInsert As String
     'Shared CatastroUpdate As String
-    Const CatastroDelete As String = "DELETE DISTINCTROW catastro.*
-                                  FROM ((((catastro LEFT JOIN cat_documento ON catastro.Id = cat_documento.catastro_id)
-                                  LEFT JOIN cat_frente ON catastro.Id = cat_frente.catastro_id) 
-                                  LEFT JOIN cat_servicio ON catastro.Id = cat_servicio.catastro_id)
-                                  LEFT JOIN cat_superficie ON catastro.Id = cat_superficie.catastro_id)
-                                  LEFT JOIN titular_catastro ON catastro.Id = titular_catastro.cat_id"
+    Const CatastroDelete _
+    As String = "DELETE DISTINCTROW catastro.*
+                               FROM ((((catastro LEFT JOIN cat_documento ON catastro.Id = cat_documento.catastro_id)
+                          LEFT JOIN cat_frente ON catastro.Id = cat_frente.catastro_id) 
+                          LEFT JOIN cat_servicio ON catastro.Id = cat_servicio.catastro_id)
+                          LEFT JOIN cat_superficie ON catastro.Id = cat_superficie.catastro_id)
+                          LEFT JOIN titular_catastro ON catastro.Id = titular_catastro.cat_id"
     '** /READ ONLY **
 
 
@@ -144,36 +145,37 @@
                           WHERE catastro.zona=" & zona & " AND catastro.circ=" & circ & " AND catastro.secc=" & secc & "
                             AND catastro.manz=" & manz & " AND catastro.parc=" & parc & " AND catastro.lote=" & lote
 
-            id = CInt(DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB)(0)("catastro_id"))
-        End If
-        If id = Nothing Then
-            id = -1
+            Dim dtab As DataTable = DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB)
+            If dtab.Rows.Count > 0 Then
+                id = CInt(dtab.Rows(0)("catastro_id"))
+            Else
+                id = 0
+            End If
         End If
         Return id
-
     End Function
-    Shared Function ListarFrente(catastroId As Integer, Optional ubicacion As Boolean = False) As Object
+    Shared Function SeleccionarUbicacion(catastroId As Integer) As String
         Dim sqlSelect As String
-        If ubicacion Then
-            sqlSelect = "SELECT calle, altura"
-            sqlSelect &= " FROM cat_frente"
-            sqlSelect &= " WHERE catastro_id=" & catastroId & " And ubicacion=True"
+        sqlSelect = "SELECT calle, altura"
+        sqlSelect &= " FROM cat_frente"
+        sqlSelect &= " WHERE catastro_id=" & catastroId & " And ubicacion=True"
 
-            Dim dtab As DataTable = DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB)
-            If dtab Is Nothing Then
-                Return " S/N "
-            Else
-                Return dtab.Rows(0)("calle").ToString & " " & dtab.Rows(0)("altura").ToString
-            End If
+        Dim dtab As DataTable = DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB)
+        If dtab Is Nothing Then
+            Return " S/N "
         Else
-            sqlSelect = "SELECT id As frente_id, calle, altura, metros, ubicacion"
-            sqlSelect &= " FROM cat_frente"
-            sqlSelect &= " WHERE catastro_id=" & catastroId
-
-            Return DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB)
+            Return dtab.Rows(0)("calle").ToString & " " & dtab.Rows(0)("altura").ToString
         End If
-    End Function
 
+    End Function
+    Overloads Shared Function ListarFrente(catastroId As Integer) As DataTable
+        Dim sqlSelect As String
+        sqlSelect = "SELECT id As frente_id, calle, altura, metros, ubicacion"
+        sqlSelect &= " FROM cat_frente"
+        sqlSelect &= " WHERE catastro_id=" & catastroId
+
+        Return DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB)
+    End Function
 
     'MOD
     Class Agregar

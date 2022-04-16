@@ -174,7 +174,7 @@ Class CtrlMan 'Control Manager
     End Function
     Overloads Shared Function LoadControlData(dtab As DataTable, ByVal target As Object) As Object
         'Only loads the first row of the datatable
-        If dtab Is Nothing = False Then
+        If dtab Is Nothing = False And dtab.Rows.Count > 0 Then
             target = LoadControls(dtab.Rows.Item(0), target)
         End If
         Return target

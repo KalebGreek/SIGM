@@ -9,7 +9,7 @@ Module EnvInit
 
     'Paleta
     Public ColorPersona, ColorOprivadas, ColorCatastro, ColorHacienda, ColorComercio,
-           ColorFormulario, ColorOpublicas, ColorGobierno, ColorAsocial, ColorTransito As System.Drawing.Color
+           ColorFormulario, ColorOpublicas, ColorContratos, ColorAsocial, ColorTransito As System.Drawing.Color
 
     Public ext_persona, ext_cuenta, ext_vence, ext_historial, ext_variable,
            ext_actividad, ext_muerto, ext_tipo, ext_zona,

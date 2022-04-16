@@ -262,7 +262,6 @@ Partial Class ModInmueble
         Me.opr_id.TabIndex = 922
         Me.opr_id.Text = "-1"
         Me.opr_id.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.opr_id.Visible = False
         '
         'catastro_id
         '
@@ -274,7 +273,6 @@ Partial Class ModInmueble
         Me.catastro_id.TabIndex = 919
         Me.catastro_id.Text = "-1"
         Me.catastro_id.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.catastro_id.Visible = False
         '
         'operacion
         '
@@ -286,7 +284,6 @@ Partial Class ModInmueble
         Me.operacion.TabIndex = 920
         Me.operacion.Text = "-1"
         Me.operacion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.operacion.Visible = False
         '
         'grupo_mod
         '

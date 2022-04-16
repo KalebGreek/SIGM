@@ -45,24 +45,23 @@ Partial Class ConsultaContrato
         Me.resultado.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.resultado.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.resultado.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.resultado.Location = New System.Drawing.Point(0, 36)
+        Me.resultado.Location = New System.Drawing.Point(0, 33)
         Me.resultado.Margin = New System.Windows.Forms.Padding(0)
         Me.resultado.Name = "resultado"
         Me.resultado.ReadOnly = True
         Me.resultado.RowHeadersVisible = False
         Me.resultado.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.resultado.Size = New System.Drawing.Size(439, 325)
+        Me.resultado.Size = New System.Drawing.Size(439, 328)
         Me.resultado.TabIndex = 368
-        Me.resultado.Visible = False
         '
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.Color.LightGray
         Me.Panel2.Controls.Add(Me.FlowLayoutPanel2)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Panel2.Location = New System.Drawing.Point(439, 36)
+        Me.Panel2.Location = New System.Drawing.Point(439, 33)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(145, 325)
+        Me.Panel2.Size = New System.Drawing.Size(145, 328)
         Me.Panel2.TabIndex = 369
         '
         'FlowLayoutPanel2
@@ -72,7 +71,7 @@ Partial Class ConsultaContrato
         Me.FlowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FlowLayoutPanel2.Location = New System.Drawing.Point(0, 0)
         Me.FlowLayoutPanel2.Name = "FlowLayoutPanel2"
-        Me.FlowLayoutPanel2.Size = New System.Drawing.Size(145, 325)
+        Me.FlowLayoutPanel2.Size = New System.Drawing.Size(145, 328)
         Me.FlowLayoutPanel2.TabIndex = 9
         '
         'nuevoCont
@@ -105,7 +104,7 @@ Partial Class ConsultaContrato
         Me.GenSearchControl1.Location = New System.Drawing.Point(0, 0)
         Me.GenSearchControl1.MinimumSize = New System.Drawing.Size(520, 33)
         Me.GenSearchControl1.Name = "GenSearchControl1"
-        Me.GenSearchControl1.Size = New System.Drawing.Size(584, 36)
+        Me.GenSearchControl1.Size = New System.Drawing.Size(584, 33)
         Me.GenSearchControl1.TabIndex = 0
         '
         'ConsultaContrato

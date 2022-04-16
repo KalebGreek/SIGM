@@ -7,8 +7,8 @@
         ColorAsocial = l_accionsocial.BackColor
         ColorCatastro = l_catastro.BackColor
         ColorComercio = l_comercio.BackColor
-        ColorFormulario = l_formularios.BackColor
-        ColorGobierno = l_gobierno.BackColor
+        ColorFormulario = l_mesa_de_entradas.BackColor
+        ColorContratos = l_contratos.BackColor
         ColorHacienda = l_hacienda.BackColor
         ColorOprivadas = l_oprivadas.BackColor
         ColorOpublicas = l_opublicas.BackColor
@@ -19,10 +19,10 @@
     End Sub
     ' GUI 
     'List all buttons
-    Private Sub SeleccionForm(sender As Object, e As EventArgs) Handles l_hacienda.Click, l_gobierno.Click, l_catastro.Click,
+    Private Sub SeleccionForm(sender As Object, e As EventArgs) Handles l_hacienda.Click, l_catastro.Click, l_contratos.Click,
                                                                         l_opublicas.Click, l_oprivadas.Click, l_comercio.Click,
-                                                                        l_persona.Click, l_accionsocial.Click, l_formularios.Click,
-                                                                        l_transito.Click, l_contrato.Click, opcion.Click
+                                                                        l_persona.Click, l_accionsocial.Click, l_mesa_de_entradas.Click,
+                                                                        l_transito.Click, l_formularios.Click, opcion.Click
         Dim form1 As New Form
         Using form1
             If TypeOf sender Is Button Then
@@ -38,9 +38,8 @@
                     If sender Is l_formularios Then
                         form1 = New Formularios(title)
                         CType(form1, Formularios).FormulariosToolStripMenuItem1.Visible = True
-                    ElseIf sender Is l_contrato Then
+                    ElseIf sender Is l_contratos Then
                         form1 = New ConsultaContrato
-
                     Else
                         Dim menu1 As New UserControl
 
@@ -50,10 +49,10 @@
                             menu1 = New CatastroMenu
                         ElseIf sender Is l_comercio Then
                             menu1 = New ComercioMenu
-                        ElseIf sender Is l_gobierno Then
-                            menu1 = New GobiernoMenu
                         ElseIf sender Is l_hacienda Then
                             menu1 = New HaciendaMenu
+                        ElseIf sender Is l_mesa_de_entradas Then
+                            menu1 = New MesaEntradasMenu
                         ElseIf sender Is l_oprivadas Then
                             menu1 = New OprivadasMenu
                         ElseIf sender Is l_opublicas Then
@@ -75,6 +74,8 @@
     End Sub
 
     Private Sub Salir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles salir.Click
+        SecMan.RegisterLogon(My.Settings.UserId, False) 'Cerrar Sesión
+        Acceso.Show()
         Me.Close()
     End Sub
     ' END GUI 

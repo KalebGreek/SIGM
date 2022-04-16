@@ -14,15 +14,16 @@
 
 	End Sub
 	Private Sub BuscarEmpleadoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarEmpleadoToolStripMenuItem.Click
-		Dim buscar1 As New ConsultaPersona
+		Dim buscar1 As New ConsultaPersona With {.MdiParent = Me.Parent}
 		buscar1.genSearchControl1.vista.Text = "EMPLEADO"
 		buscar1.Show()
-
 	End Sub
 
 	'>> contratos
 	Private Sub ContratoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ContratoToolStripMenuItem.Click
-
+		Dim Contrato1 As New ConsultaContrato With {.MdiParent = Me.Parent}
+		Contrato1.GenSearchControl1.filtro.Text = "RAZON"
+		Contrato1.Show()
 	End Sub
 
 	Private Sub BuscarToolStripMenuItem_Click(sender As Object, e As EventArgs)
@@ -35,8 +36,7 @@
 	Private Sub BuscarProveedorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarProveedorToolStripMenuItem.Click
 		Dim buscar1 As New ConsultaPersona With {.MdiParent = Me.Parent}
 		buscar1.genSearchControl1.vista.Text = "PROVEEDOR"
-			buscar1.Show()
-
+		buscar1.Show()
 	End Sub
 
 	'>Nota de pedido

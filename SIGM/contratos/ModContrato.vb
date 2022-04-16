@@ -27,6 +27,7 @@
 	End Sub
 	Private Sub cancelar_Click(sender As Object, e As EventArgs) Handles Cancelar.Click
 		Me.Close()
+
 	End Sub
 
 	Private Sub autoridad1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles autoridad1.SelectedIndexChanged, autoridad1.TextChanged,
@@ -52,15 +53,15 @@
 	End Sub
 
 	Private Sub Buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
-		Using SelPersona As New ConsultaPersona(True) With {.Owner = Me}
-			SelPersona.ShowDialog()
-			BSContratado = SelPersona.bs_resultado
-		End Using
-		If BSContratado.Position > -1 Then
-			razon.Text = BSContratado.Current("razon").ToString
-			cuil.Text = BSContratado.Current("cuil").ToString
+		Dim source As DataRowView = Persona.Seleccionar(Me)
+		If source Is Nothing Then
+			razon.Text = ""
+			cuil.Text = ""
+		Else
+			razon.Text = source("razon")
+			cuil.Text = source("cuil")
+			BSContratado.DataSource = source
 		End If
-
 	End Sub
 
 
@@ -70,11 +71,12 @@
 		Sql(0) = "SELECT MAX(codigo) as ultimo"
 		Sql(1) = " FROM contrato"
 		Sql(2) = " WHERE seccion='" & seccion.Text & "'"
-		Dim dr As DataRow = DbMan.ReadDB(Sql, My.Settings.CurrentDB).Rows(0)
+		Dim dr As DataRow = DbMan.ReadDB(Sql, My.Settings.CurrentDB, "", True)
 		If dr("ultimo") Is DBNull.Value = False Then
-			contrato_id = CInt(dr("ultimo")) + 1
+			Return CInt(dr("ultimo"))
+		Else
+			Return 0
 		End If
-		Return contrato_id
 	End Function
 
 	'###### VALIDAR ##########################################################################################
@@ -85,14 +87,21 @@
 		descripcion.Text = Replace(descripcion.Text, vbCrLf, " • ")
 
 		'Validation
-		If CtrlMan.Validate(FlowLayoutPanel1) And CtrlMan.Validate(FlowLayoutPanel2) _
-	   And CtrlMan.Validate(FlowLayoutPanel3) Then
-			If autoridad1.Text = autoridad2.Text Then
-				autoridad2.BackColor = My.Settings.ErrorColorValue
+		If CtrlMan.Validate(FlowLayoutPanel1) _
+		And CtrlMan.Validate(FlowLayoutPanel2) _
+		And CtrlMan.Validate(FlowLayoutPanel3) Then
+			If SeekLastContract(codigo.Value) = codigo.Value Then
+				codigo.BackColor = My.Settings.ErrorColorValue
 			Else
-				autoridad2.BackColor = My.Settings.DefaultColorValue
-				valido = True
+				codigo.BackColor = My.Settings.DefaultColorValue
+				If autoridad1.Text = autoridad2.Text Then
+					autoridad2.BackColor = My.Settings.ErrorColorValue
+				Else
+					autoridad2.BackColor = My.Settings.DefaultColorValue
+					valido = True
+				End If
 			End If
+
 		End If
 		Return valido
 	End Function
@@ -104,23 +113,31 @@
 			Dim answer As MsgBoxResult = MsgBox("¿Desea guardar este contrato?", MsgBoxStyle.YesNoCancel, "Guardar cambios")
 			If answer = MsgBoxResult.Yes Or answer = MsgBoxResult.No Then
 				If answer = MsgBoxResult.Yes Then
-					Dim contratado, autoridad1, autoridad2 As DataRowView
-					contratado = BSContratado.Current
-					autoridad1 = BSAutoridad1.Current
-					autoridad2 = BSAutoridad2.Current
+					Dim contratado, autoridad1, autoridad2 As Integer
+					Dim fecha_inicio As String = Format(inicio.Value, "MM/dd/yyyy") 'Access
+					contratado = BSContratado.Current("persona_id")
+					autoridad1 = BSAutoridad1.Current("empleado_id")
+					autoridad2 = BSAutoridad2.Current("empleado_id")
 
 					Dim sqlInsert As String = "INSERT INTO contrato(codigo, contratado_id, inicio, 
 																	dias, monto, descripcion,
 																	autoridad1_id, autoridad2_id,
 																	seccion, user_id)
-													VALUES(" & codigo.Value & ", " & contratado("persona_id").ToString & ", '" & inicio.Value & "',
-														   " & dias.Value & ", " & monto.Value & ", '" & descripcion.Text & "',
-														   " & autoridad1("empleado_id").ToString & ", " & autoridad2("empleado_id").ToString & ",
+													VALUES(" & codigo.Value & ", " & contratado & ", #" & fecha_inicio & "#,
+														   " & dias.Value & ", '" & monto.Value & "', '" & descripcion.Text & "',
+														   " & autoridad1 & ", " & autoridad2 & ",
 														  '" & seccion.Text & "', " & My.Settings.UserId & ")"
 
 					DbMan.EditDB(sqlInsert, My.Settings.CurrentDB)
+
+
+					If SeekLastContract(codigo.Value) = codigo.Value Then
+						Me.Close()
+					Else
+						MsgBox("No se guardaron los cambios.")
+					End If
 				End If
-				Me.Close()
+
 			End If
 		End If
 	End Sub

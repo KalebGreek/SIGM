@@ -73,12 +73,10 @@ Class Acceso
             If RegisterLogon(My.Settings.UserId, True) Then
                 Me.Hide()
                 Privileges(Me, My.Settings.UserId) 'Mostrar inicio
-                Dim flist As String = ""
-                For Each f As Form In My.Application.OpenForms
-                    flist &= f.Text & Chr(13)
-                Next
-                Me.Show()
-                RegisterLogon(My.Settings.UserId, False) 'Cerrar Sesión
+                'Dim flist As String = ""
+                'For Each f As Form In My.Application.OpenForms
+                '    flist &= f.Text & Chr(13)
+                'Next
             End If
             My.Settings.UserId = -1
             info.Text = "Ingrese usuario y contraseña."

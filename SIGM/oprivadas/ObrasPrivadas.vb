@@ -108,18 +108,19 @@
         Shared Function Seleccionar(expediente As Integer) As DataTable
             Return DbMan.ReadDB("SELECT * FROM oprivadas WHERE Oprivadas.expediente= " & expediente,
                                 My.Settings.CurrentDB)
+
         End Function
 
         'MODIFICAR
         Shared Function Generar(exp As String) As DataRow
-            Dim drow As DataRow = Seleccionar(exp).Rows(0)
+            Dim dtab As DataTable = Seleccionar(exp)
             Do
-                If drow Is Nothing = False Then
+                If dtab.Rows.Count > 0 Then
                     'Último expediente creado por el usuario
                     If MsgBoxResult.No = MsgBox("¿Desea recuperar datos del último expediente no guardado?" &
                                                 " Presione Sí para recuperar, No para eliminar.",
                                                   MsgBoxStyle.YesNo, "Obras Privadas") Then
-                        LimpiarTemporal(drow("id"), True)
+                        LimpiarTemporal(dtab(0)("id"), True)
                     End If
                 Else
                     'Crear expediente por defecto
@@ -127,9 +128,9 @@
                                             VALUES(" & exp & ", 'MENSURA','SIMPLE', '" & Date.Today.ToShortDateString & "', 0, " & My.Settings.UserId & ", True)"
                     DbMan.EditDB(sqlInsert, My.Settings.CurrentDB)
                 End If
-                drow = Seleccionar(exp).Rows(0)
-            Loop While drow Is Nothing
-            Return drow
+                dtab = Seleccionar(exp)
+            Loop While dtab.Rows.Count = 0
+            Return dtab.Rows(0)
         End Function
 
         Public Shared Sub Bloquear(opr_id As Integer, lock As Boolean)

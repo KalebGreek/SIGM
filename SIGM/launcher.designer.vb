@@ -31,16 +31,16 @@ Partial Class Launcher
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.l_accionsocial = New System.Windows.Forms.Button()
         Me.l_catastro = New System.Windows.Forms.Button()
-        Me.l_contrato = New System.Windows.Forms.Button()
         Me.l_comercio = New System.Windows.Forms.Button()
-        Me.l_formularios = New System.Windows.Forms.Button()
-        Me.l_gobierno = New System.Windows.Forms.Button()
+        Me.l_mesa_de_entradas = New System.Windows.Forms.Button()
         Me.l_hacienda = New System.Windows.Forms.Button()
         Me.l_oprivadas = New System.Windows.Forms.Button()
         Me.l_opublicas = New System.Windows.Forms.Button()
         Me.l_persona = New System.Windows.Forms.Button()
         Me.l_transito = New System.Windows.Forms.Button()
         Me.FlowLayoutPanel2 = New System.Windows.Forms.FlowLayoutPanel()
+        Me.l_formularios = New System.Windows.Forms.Button()
+        Me.l_contratos = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         CType(Me.logo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FlowLayoutPanel1.SuspendLayout()
@@ -59,9 +59,9 @@ Partial Class Launcher
         Me.salir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.salir.Font = New System.Drawing.Font("PF DinText Pro", 13.0!)
         Me.salir.ForeColor = System.Drawing.Color.LightGray
-        Me.salir.Location = New System.Drawing.Point(371, 3)
+        Me.salir.Location = New System.Drawing.Point(393, 3)
         Me.salir.Name = "salir"
-        Me.salir.Size = New System.Drawing.Size(153, 29)
+        Me.salir.Size = New System.Drawing.Size(142, 29)
         Me.salir.TabIndex = 100
         Me.salir.Text = "CERRAR SESIÓN"
         Me.salir.UseVisualStyleBackColor = False
@@ -74,9 +74,9 @@ Partial Class Launcher
         Me.opcion.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.opcion.Font = New System.Drawing.Font("PF DinText Pro", 13.0!)
         Me.opcion.ForeColor = System.Drawing.Color.LightGray
-        Me.opcion.Location = New System.Drawing.Point(255, 3)
+        Me.opcion.Location = New System.Drawing.Point(294, 3)
         Me.opcion.Name = "opcion"
-        Me.opcion.Size = New System.Drawing.Size(110, 29)
+        Me.opcion.Size = New System.Drawing.Size(93, 29)
         Me.opcion.TabIndex = 80
         Me.opcion.Text = "OPCIONES"
         Me.opcion.UseVisualStyleBackColor = False
@@ -87,9 +87,9 @@ Partial Class Launcher
         Me.Panel1.BackColor = System.Drawing.Color.White
         Me.Panel1.Controls.Add(Me.logo)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel1.Location = New System.Drawing.Point(216, 0)
+        Me.Panel1.Location = New System.Drawing.Point(227, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(311, 412)
+        Me.Panel1.Size = New System.Drawing.Size(311, 367)
         Me.Panel1.TabIndex = 153
         '
         'logo
@@ -97,7 +97,7 @@ Partial Class Launcher
         Me.logo.BackColor = System.Drawing.Color.Transparent
         Me.logo.BackgroundImage = Global.Sigm.My.Resources.Resources.logo
         Me.logo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.logo.Location = New System.Drawing.Point(39, 51)
+        Me.logo.Location = New System.Drawing.Point(39, 31)
         Me.logo.Name = "logo"
         Me.logo.Size = New System.Drawing.Size(235, 308)
         Me.logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -108,11 +108,10 @@ Partial Class Launcher
         '
         Me.FlowLayoutPanel1.Controls.Add(Me.l_accionsocial)
         Me.FlowLayoutPanel1.Controls.Add(Me.l_catastro)
-        Me.FlowLayoutPanel1.Controls.Add(Me.l_contrato)
         Me.FlowLayoutPanel1.Controls.Add(Me.l_comercio)
-        Me.FlowLayoutPanel1.Controls.Add(Me.l_formularios)
-        Me.FlowLayoutPanel1.Controls.Add(Me.l_gobierno)
+        Me.FlowLayoutPanel1.Controls.Add(Me.l_contratos)
         Me.FlowLayoutPanel1.Controls.Add(Me.l_hacienda)
+        Me.FlowLayoutPanel1.Controls.Add(Me.l_mesa_de_entradas)
         Me.FlowLayoutPanel1.Controls.Add(Me.l_oprivadas)
         Me.FlowLayoutPanel1.Controls.Add(Me.l_opublicas)
         Me.FlowLayoutPanel1.Controls.Add(Me.l_persona)
@@ -121,7 +120,7 @@ Partial Class Launcher
         Me.FlowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(216, 412)
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(227, 367)
         Me.FlowLayoutPanel1.TabIndex = 158
         '
         'l_accionsocial
@@ -131,12 +130,12 @@ Partial Class Launcher
         Me.l_accionsocial.BackgroundImage = CType(resources.GetObject("l_accionsocial.BackgroundImage"), System.Drawing.Image)
         Me.l_accionsocial.FlatAppearance.BorderSize = 0
         Me.l_accionsocial.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.l_accionsocial.Font = New System.Drawing.Font("PF DinText Pro", 16.0!)
+        Me.l_accionsocial.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
         Me.l_accionsocial.ForeColor = System.Drawing.Color.White
         Me.l_accionsocial.Location = New System.Drawing.Point(3, 3)
         Me.l_accionsocial.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
         Me.l_accionsocial.Name = "l_accionsocial"
-        Me.l_accionsocial.Size = New System.Drawing.Size(210, 32)
+        Me.l_accionsocial.Size = New System.Drawing.Size(222, 32)
         Me.l_accionsocial.TabIndex = 176
         Me.l_accionsocial.Text = "ACCION SOCIAL"
         Me.l_accionsocial.UseVisualStyleBackColor = False
@@ -145,38 +144,20 @@ Partial Class Launcher
         'l_catastro
         '
         Me.l_catastro.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.l_catastro.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.l_catastro.BackColor = System.Drawing.Color.Tomato
         Me.l_catastro.BackgroundImage = CType(resources.GetObject("l_catastro.BackgroundImage"), System.Drawing.Image)
         Me.l_catastro.FlatAppearance.BorderSize = 0
         Me.l_catastro.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.l_catastro.Font = New System.Drawing.Font("PF DinText Pro", 16.0!)
+        Me.l_catastro.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
         Me.l_catastro.ForeColor = System.Drawing.Color.White
         Me.l_catastro.Location = New System.Drawing.Point(3, 39)
         Me.l_catastro.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
         Me.l_catastro.Name = "l_catastro"
-        Me.l_catastro.Size = New System.Drawing.Size(210, 32)
+        Me.l_catastro.Size = New System.Drawing.Size(222, 32)
         Me.l_catastro.TabIndex = 170
         Me.l_catastro.Text = "CATASTRO"
         Me.l_catastro.UseVisualStyleBackColor = False
         Me.l_catastro.Visible = False
-        '
-        'l_contrato
-        '
-        Me.l_contrato.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.l_contrato.BackColor = System.Drawing.Color.Green
-        Me.l_contrato.BackgroundImage = CType(resources.GetObject("l_contrato.BackgroundImage"), System.Drawing.Image)
-        Me.l_contrato.FlatAppearance.BorderSize = 0
-        Me.l_contrato.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.l_contrato.Font = New System.Drawing.Font("PF DinText Pro", 16.0!)
-        Me.l_contrato.ForeColor = System.Drawing.Color.White
-        Me.l_contrato.Location = New System.Drawing.Point(3, 75)
-        Me.l_contrato.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
-        Me.l_contrato.Name = "l_contrato"
-        Me.l_contrato.Size = New System.Drawing.Size(210, 32)
-        Me.l_contrato.TabIndex = 178
-        Me.l_contrato.Text = "CONTRATOS"
-        Me.l_contrato.UseVisualStyleBackColor = False
-        Me.l_contrato.Visible = False
         '
         'l_comercio
         '
@@ -185,52 +166,34 @@ Partial Class Launcher
         Me.l_comercio.BackgroundImage = CType(resources.GetObject("l_comercio.BackgroundImage"), System.Drawing.Image)
         Me.l_comercio.FlatAppearance.BorderSize = 0
         Me.l_comercio.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.l_comercio.Font = New System.Drawing.Font("PF DinText Pro", 16.0!)
+        Me.l_comercio.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
         Me.l_comercio.ForeColor = System.Drawing.Color.White
-        Me.l_comercio.Location = New System.Drawing.Point(3, 111)
+        Me.l_comercio.Location = New System.Drawing.Point(3, 75)
         Me.l_comercio.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
         Me.l_comercio.Name = "l_comercio"
-        Me.l_comercio.Size = New System.Drawing.Size(210, 32)
+        Me.l_comercio.Size = New System.Drawing.Size(222, 32)
         Me.l_comercio.TabIndex = 174
         Me.l_comercio.Text = "COMERCIO"
         Me.l_comercio.UseVisualStyleBackColor = False
         Me.l_comercio.Visible = False
         '
-        'l_formularios
+        'l_mesa_de_entradas
         '
-        Me.l_formularios.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.l_formularios.BackColor = System.Drawing.Color.LightSlateGray
-        Me.l_formularios.BackgroundImage = CType(resources.GetObject("l_formularios.BackgroundImage"), System.Drawing.Image)
-        Me.l_formularios.FlatAppearance.BorderSize = 0
-        Me.l_formularios.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.l_formularios.Font = New System.Drawing.Font("PF DinText Pro", 16.0!)
-        Me.l_formularios.ForeColor = System.Drawing.Color.White
-        Me.l_formularios.Location = New System.Drawing.Point(3, 147)
-        Me.l_formularios.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
-        Me.l_formularios.Name = "l_formularios"
-        Me.l_formularios.Size = New System.Drawing.Size(210, 32)
-        Me.l_formularios.TabIndex = 175
-        Me.l_formularios.Text = "FORMULARIOS"
-        Me.l_formularios.UseVisualStyleBackColor = False
-        Me.l_formularios.Visible = False
-        '
-        'l_gobierno
-        '
-        Me.l_gobierno.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.l_gobierno.BackColor = System.Drawing.Color.IndianRed
-        Me.l_gobierno.BackgroundImage = CType(resources.GetObject("l_gobierno.BackgroundImage"), System.Drawing.Image)
-        Me.l_gobierno.FlatAppearance.BorderSize = 0
-        Me.l_gobierno.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.l_gobierno.Font = New System.Drawing.Font("PF DinText Pro", 16.0!)
-        Me.l_gobierno.ForeColor = System.Drawing.Color.White
-        Me.l_gobierno.Location = New System.Drawing.Point(3, 183)
-        Me.l_gobierno.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
-        Me.l_gobierno.Name = "l_gobierno"
-        Me.l_gobierno.Size = New System.Drawing.Size(210, 32)
-        Me.l_gobierno.TabIndex = 168
-        Me.l_gobierno.Text = "GOBIERNO"
-        Me.l_gobierno.UseVisualStyleBackColor = False
-        Me.l_gobierno.Visible = False
+        Me.l_mesa_de_entradas.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.l_mesa_de_entradas.BackColor = System.Drawing.Color.Indigo
+        Me.l_mesa_de_entradas.BackgroundImage = CType(resources.GetObject("l_mesa_de_entradas.BackgroundImage"), System.Drawing.Image)
+        Me.l_mesa_de_entradas.FlatAppearance.BorderSize = 0
+        Me.l_mesa_de_entradas.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.l_mesa_de_entradas.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
+        Me.l_mesa_de_entradas.ForeColor = System.Drawing.Color.White
+        Me.l_mesa_de_entradas.Location = New System.Drawing.Point(3, 183)
+        Me.l_mesa_de_entradas.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
+        Me.l_mesa_de_entradas.Name = "l_mesa_de_entradas"
+        Me.l_mesa_de_entradas.Size = New System.Drawing.Size(222, 32)
+        Me.l_mesa_de_entradas.TabIndex = 175
+        Me.l_mesa_de_entradas.Text = "MESA DE ENTRADAS"
+        Me.l_mesa_de_entradas.UseVisualStyleBackColor = False
+        Me.l_mesa_de_entradas.Visible = False
         '
         'l_hacienda
         '
@@ -239,14 +202,14 @@ Partial Class Launcher
         Me.l_hacienda.BackgroundImage = CType(resources.GetObject("l_hacienda.BackgroundImage"), System.Drawing.Image)
         Me.l_hacienda.FlatAppearance.BorderSize = 0
         Me.l_hacienda.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.l_hacienda.Font = New System.Drawing.Font("PF DinText Pro", 16.0!)
+        Me.l_hacienda.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
         Me.l_hacienda.ForeColor = System.Drawing.Color.White
-        Me.l_hacienda.Location = New System.Drawing.Point(3, 219)
+        Me.l_hacienda.Location = New System.Drawing.Point(3, 147)
         Me.l_hacienda.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
         Me.l_hacienda.Name = "l_hacienda"
-        Me.l_hacienda.Size = New System.Drawing.Size(210, 32)
+        Me.l_hacienda.Size = New System.Drawing.Size(222, 32)
         Me.l_hacienda.TabIndex = 167
-        Me.l_hacienda.Text = "HACIENDA"
+        Me.l_hacienda.Text = "GOBIERNO Y HACIENDA"
         Me.l_hacienda.UseVisualStyleBackColor = False
         Me.l_hacienda.Visible = False
         '
@@ -257,12 +220,12 @@ Partial Class Launcher
         Me.l_oprivadas.BackgroundImage = CType(resources.GetObject("l_oprivadas.BackgroundImage"), System.Drawing.Image)
         Me.l_oprivadas.FlatAppearance.BorderSize = 0
         Me.l_oprivadas.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.l_oprivadas.Font = New System.Drawing.Font("PF DinText Pro", 16.0!)
+        Me.l_oprivadas.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
         Me.l_oprivadas.ForeColor = System.Drawing.Color.White
-        Me.l_oprivadas.Location = New System.Drawing.Point(3, 255)
+        Me.l_oprivadas.Location = New System.Drawing.Point(3, 219)
         Me.l_oprivadas.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
         Me.l_oprivadas.Name = "l_oprivadas"
-        Me.l_oprivadas.Size = New System.Drawing.Size(210, 32)
+        Me.l_oprivadas.Size = New System.Drawing.Size(222, 32)
         Me.l_oprivadas.TabIndex = 172
         Me.l_oprivadas.Text = "OBRAS PRIVADAS"
         Me.l_oprivadas.UseVisualStyleBackColor = False
@@ -275,12 +238,12 @@ Partial Class Launcher
         Me.l_opublicas.BackgroundImage = CType(resources.GetObject("l_opublicas.BackgroundImage"), System.Drawing.Image)
         Me.l_opublicas.FlatAppearance.BorderSize = 0
         Me.l_opublicas.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.l_opublicas.Font = New System.Drawing.Font("PF DinText Pro", 16.0!)
+        Me.l_opublicas.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
         Me.l_opublicas.ForeColor = System.Drawing.Color.White
-        Me.l_opublicas.Location = New System.Drawing.Point(3, 291)
+        Me.l_opublicas.Location = New System.Drawing.Point(3, 255)
         Me.l_opublicas.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
         Me.l_opublicas.Name = "l_opublicas"
-        Me.l_opublicas.Size = New System.Drawing.Size(210, 32)
+        Me.l_opublicas.Size = New System.Drawing.Size(222, 32)
         Me.l_opublicas.TabIndex = 171
         Me.l_opublicas.Text = "OBRAS PUBLICAS"
         Me.l_opublicas.UseVisualStyleBackColor = False
@@ -293,12 +256,12 @@ Partial Class Launcher
         Me.l_persona.BackgroundImage = CType(resources.GetObject("l_persona.BackgroundImage"), System.Drawing.Image)
         Me.l_persona.FlatAppearance.BorderSize = 0
         Me.l_persona.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.l_persona.Font = New System.Drawing.Font("PF DinText Pro", 16.0!)
+        Me.l_persona.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
         Me.l_persona.ForeColor = System.Drawing.Color.White
-        Me.l_persona.Location = New System.Drawing.Point(3, 327)
+        Me.l_persona.Location = New System.Drawing.Point(3, 291)
         Me.l_persona.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
         Me.l_persona.Name = "l_persona"
-        Me.l_persona.Size = New System.Drawing.Size(210, 32)
+        Me.l_persona.Size = New System.Drawing.Size(222, 32)
         Me.l_persona.TabIndex = 173
         Me.l_persona.Text = "PERSONAS"
         Me.l_persona.UseVisualStyleBackColor = False
@@ -307,16 +270,16 @@ Partial Class Launcher
         'l_transito
         '
         Me.l_transito.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.l_transito.BackColor = System.Drawing.Color.DodgerBlue
+        Me.l_transito.BackColor = System.Drawing.Color.Orange
         Me.l_transito.BackgroundImage = CType(resources.GetObject("l_transito.BackgroundImage"), System.Drawing.Image)
         Me.l_transito.FlatAppearance.BorderSize = 0
         Me.l_transito.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.l_transito.Font = New System.Drawing.Font("PF DinText Pro", 16.0!)
+        Me.l_transito.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
         Me.l_transito.ForeColor = System.Drawing.Color.White
-        Me.l_transito.Location = New System.Drawing.Point(3, 363)
+        Me.l_transito.Location = New System.Drawing.Point(3, 327)
         Me.l_transito.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
         Me.l_transito.Name = "l_transito"
-        Me.l_transito.Size = New System.Drawing.Size(210, 32)
+        Me.l_transito.Size = New System.Drawing.Size(222, 32)
         Me.l_transito.TabIndex = 177
         Me.l_transito.Text = "TRANSITO"
         Me.l_transito.UseVisualStyleBackColor = False
@@ -326,18 +289,53 @@ Partial Class Launcher
         '
         Me.FlowLayoutPanel2.Controls.Add(Me.salir)
         Me.FlowLayoutPanel2.Controls.Add(Me.opcion)
+        Me.FlowLayoutPanel2.Controls.Add(Me.l_formularios)
         Me.FlowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.FlowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.FlowLayoutPanel2.Location = New System.Drawing.Point(0, 412)
+        Me.FlowLayoutPanel2.Location = New System.Drawing.Point(0, 367)
         Me.FlowLayoutPanel2.Name = "FlowLayoutPanel2"
-        Me.FlowLayoutPanel2.Size = New System.Drawing.Size(527, 33)
+        Me.FlowLayoutPanel2.Size = New System.Drawing.Size(538, 33)
         Me.FlowLayoutPanel2.TabIndex = 159
+        '
+        'l_formularios
+        '
+        Me.l_formularios.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.l_formularios.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.l_formularios.FlatAppearance.BorderSize = 0
+        Me.l_formularios.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.l_formularios.Font = New System.Drawing.Font("PF DinText Pro", 13.0!)
+        Me.l_formularios.ForeColor = System.Drawing.Color.LightGray
+        Me.l_formularios.Location = New System.Drawing.Point(160, 3)
+        Me.l_formularios.Name = "l_formularios"
+        Me.l_formularios.Size = New System.Drawing.Size(128, 29)
+        Me.l_formularios.TabIndex = 101
+        Me.l_formularios.Text = "FORMULARIOS"
+        Me.l_formularios.UseVisualStyleBackColor = False
+        Me.l_formularios.Visible = False
+        '
+        'l_contratos
+        '
+        Me.l_contratos.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.l_contratos.BackColor = System.Drawing.Color.LightSlateGray
+        Me.l_contratos.BackgroundImage = CType(resources.GetObject("l_contratos.BackgroundImage"), System.Drawing.Image)
+        Me.l_contratos.FlatAppearance.BorderSize = 0
+        Me.l_contratos.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.l_contratos.Font = New System.Drawing.Font("PF DinText Pro", 14.0!)
+        Me.l_contratos.ForeColor = System.Drawing.Color.White
+        Me.l_contratos.Location = New System.Drawing.Point(3, 111)
+        Me.l_contratos.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
+        Me.l_contratos.Name = "l_contratos"
+        Me.l_contratos.Size = New System.Drawing.Size(222, 32)
+        Me.l_contratos.TabIndex = 178
+        Me.l_contratos.Text = "CONTRATOS"
+        Me.l_contratos.UseVisualStyleBackColor = False
+        Me.l_contratos.Visible = False
         '
         'Launcher
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(527, 445)
+        Me.ClientSize = New System.Drawing.Size(538, 400)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.FlowLayoutPanel1)
         Me.Controls.Add(Me.FlowLayoutPanel2)
@@ -364,15 +362,15 @@ Partial Class Launcher
     Friend WithEvents logo As System.Windows.Forms.PictureBox
     Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
     Friend WithEvents l_hacienda As System.Windows.Forms.Button
-    Friend WithEvents l_gobierno As System.Windows.Forms.Button
     Friend WithEvents l_catastro As System.Windows.Forms.Button
     Friend WithEvents l_opublicas As System.Windows.Forms.Button
     Friend WithEvents l_oprivadas As System.Windows.Forms.Button
     Friend WithEvents l_persona As System.Windows.Forms.Button
     Friend WithEvents l_comercio As System.Windows.Forms.Button
-    Friend WithEvents l_formularios As System.Windows.Forms.Button
+    Friend WithEvents l_mesa_de_entradas As System.Windows.Forms.Button
     Friend WithEvents l_accionsocial As Button
     Friend WithEvents FlowLayoutPanel2 As FlowLayoutPanel
     Friend WithEvents l_transito As Button
-    Friend WithEvents l_contrato As Button
+    Friend WithEvents l_formularios As Button
+    Friend WithEvents l_contratos As Button
 End Class

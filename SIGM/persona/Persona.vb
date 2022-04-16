@@ -10,6 +10,7 @@
 		Using SeleccionarPersona As New ConsultaPersona(True) With {.Owner = ParentForm}
 
 			SeleccionarPersona.genSearchControl1.vista.Text = vista
+			SeleccionarPersona.genSearchControl1.filtro.Text = "razon"
 			SeleccionarPersona.ShowDialog()
 			Return SeleccionarPersona.PersonSelected
 		End Using
