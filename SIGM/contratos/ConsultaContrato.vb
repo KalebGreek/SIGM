@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Reporting.WinForms
+﻿Imports System.ComponentModel
+Imports Microsoft.Reporting.WinForms
 Public Class ConsultaContrato
     ReadOnly SelectSQL As String = "SELECT contrato.id AS contrato_id, contrato.codigo, 
                                            persona0.id AS persona_id, persona0.razon, persona0.cuil,
@@ -25,6 +26,10 @@ Public Class ConsultaContrato
         ' Add any initialization after the InitializeComponent() call.
         GenSearchControl1.BackColor = My.Settings.CurrentMenuColor
         GenSearchControl1.vista.Items.AddRange(New Object() {"HACIENDA", "DEPORTES", "OBRAS PUBLICAS", "TRANSITO", "TURISMO"})
+    End Sub
+    Private Sub ConsultaContrato_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        Me.Owner.Show()
+        Me.Owner.Focus()
     End Sub
 
     '-- EVENTOS UNICOS
@@ -101,14 +106,12 @@ Public Class ConsultaContrato
 
             Dim titulo_reporte As String = "Contrato N° " & CDate(source("inicio")).Year & "-" & source("codigo").ToString & " - " & source("seccion").ToString
             Dim ruta_acceso As String = "REPORTES\Hacienda\ModeloContrato"
-            Using certificado As New Formularios(titulo_reporte)
+            Using certificado As New Formularios(titulo_reporte) With {.Owner = Me}
                 certificado.Mostrar(ruta_acceso, parametros)
                 certificado.ShowDialog()
             End Using
         End If
     End Sub
 
-    Private Sub Consultar(sender As Object)
 
-    End Sub
 End Class

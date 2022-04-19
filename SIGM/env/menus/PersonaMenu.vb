@@ -1,22 +1,22 @@
 ﻿Public Class PersonaMenu
-	Private Sub me_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
-		If e.KeyValue = Keys.F10 Then
-			Dim console1 As New SQLConsole With {.MdiParent = Me.Parent}
-			console1.Show()
+	Public Sub New()
+		' Esta llamada es exigida por el diseñador.
+		InitializeComponent()
+		' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+		CtrlMan.AddMenuEvents(BaseMenu, AddressOf Menu_Events)
+	End Sub
+	Private Sub Menu_Events(sender As Object, e As EventArgs)
+		Dim f1 As Form = Nothing
+		If sender Is NuevaPersonaToolStripMenuItem Then
+			f1 = New ModPersona()
+			f1.ShowDialog(Me.Parent)
+			f1 = Nothing
+		ElseIf sender Is BuscarPersonaToolStripMenuItem Then
+			f1 = New ConsultaPersona
+		End If
+		If f1 Is Nothing = False Then
+			f1.MdiParent = Me.Parent
+			f1.Show()
 		End If
 	End Sub
-	'PERSONA
-	Private Sub NuevaPersonaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevaPersonaToolStripMenuItem.Click
-		Using modper1 As New ModPersona(0)
-			modper1.ShowDialog()
-		End Using
-	End Sub
-	Private Sub BuscarPersonaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarPersonaToolStripMenuItem.Click
-		Dim buscar1 As New ConsultaPersona With {.MdiParent = Me.Parent}
-		buscar1.Show()
-	End Sub
-	Private Sub BuscarActaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarActaToolStripMenuItem.Click
-
-	End Sub
-
 End Class

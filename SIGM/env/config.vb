@@ -37,8 +37,10 @@
             RestablecerToolStripMenuItem.Enabled = False
             MsgBox("Configuración guardada correctamente.")
         End If
+        Me.Owner.Show()
+        Me.Owner.Focus()
         Me.Close()
-	End Sub
+    End Sub
 
     ' VALIDACION
     Private Sub DetectarCambios() Handles conexion_std.TextChanged, conexion_acc.TextChanged,
@@ -206,11 +208,11 @@
         'No elimina registros
         'Genera log de acciones sobre bd de destino
 
-        Using visor As New GenDataUI
-            visor.LoadDtab(DbMan.readTableSchema())
+        Using visor As New GenDataUI With {.Owner = Me}
+            visor.LoadDtab(DbMan.ReadTableSchema())
             visor.ShowDialog()
-            Dim sourceTables As DataTable = DbMan.readTableSchema()
-            Dim destTables As DataTable = DbMan.readTableSchema()
+            Dim sourceTables As DataTable = DbMan.ReadTableSchema()
+            Dim destTables As DataTable = DbMan.ReadTableSchema()
             For Each dr As DataRow In destTables.Rows
                 If dr("TABLE_TYPE").ToString = "TABLE" Then
                     destTables.Rows.Find(dr("TABLE_NAME"))

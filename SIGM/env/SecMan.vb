@@ -1,11 +1,11 @@
-﻿Imports System.Data
-Imports System.Net.NetworkInformation
+﻿Imports System.Net.NetworkInformation
 Class SecMan 'Security Manager
     ' SEGURIDAD
     'Login functions
     Shared Function ValidateUser(user As String, pass As String) As Integer
         If Len(user) >= 5 And Len(pass) >= 5 Then
 
+            'TODO: Implement SHA256
             Using dtab As DataTable = DbMan.ReadDB("SELECT id, usuario, pass FROM usuarios WHERE usuario='" & user & "' AND pass ='" & pass & "'",
                                                    My.Settings.CurrentDB)
                 If dtab Is Nothing Then
@@ -69,18 +69,17 @@ Class SecMan 'Security Manager
             End If
         Else 'Cerrar sesion correctamente
             DbMan.EditDB("UPDATE usr_log SET sesion=" & lock & " WHERE user_id=" & user_id, My.Settings.CurrentDB)
+            My.Settings.UserId = -1
         End If
 
         Return True
     End Function
     Shared Sub Privileges(owner As Form, user_id As Integer)
-        Dim inicio As New launcher
         'Leer
         Dim dtab As DataTable = DbMan.ReadDB("SELECT * FROM usuarios WHERE id=" & user_id, My.Settings.CurrentDB)
         'Cargar
         My.Settings.delete_enabled = dtab.Rows(0)("delete_permission")
-        CtrlMan.LoadControlData(dtab, inicio)
-        inicio.Show(owner)
+        CtrlMan.LoadControlData(dtab, owner)
     End Sub
 
     'Read MAC or CPU to identify user/computer
@@ -112,11 +111,8 @@ Class SecMan 'Security Manager
     End Function
     Shared Function GetCpuId() As String
         Dim computer As String = "."
-        Dim wmi As Object = GetObject("winmgmts:" &
-            "{impersonationLevel=impersonate}!\\" &
-            computer & "\root\cimv2")
-        Dim processors As Object = wmi.ExecQuery("Select * from " &
-            "Win32_Processor")
+        Dim wmi As Object = GetObject("winmgmts:{impersonationLevel=impersonate}!\\" & computer & "\root\cimv2")
+        Dim processors As Object = wmi.ExecQuery("SELECT * FROM Win32_Processor")
 
         Dim cpu_ids As String = ""
         For Each cpu As Object In processors

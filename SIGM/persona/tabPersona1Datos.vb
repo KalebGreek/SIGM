@@ -10,7 +10,7 @@
         PersonaId = PerId
     End Sub
 
-    Public Sub cargar()
+    Public Sub Cargar()
         If PersonaId > 0 Then
             Dim genero As Integer = 0
             Dim valor_cuil As Double = 0
@@ -38,7 +38,7 @@
         End If
     End Sub
 
-    Public Function guardar() As Integer
+    Public Function Guardar() As Integer
         'Buscar duplicado de CUIL/CUIT
         Dim dtab As DataTable = DbMan.ReadDB("SELECT id, razon FROM persona WHERE cuil=" & cuil.Text, My.Settings.CurrentDB)
 
@@ -68,23 +68,11 @@
         Return PersonaId
     End Function
 
-    Private Sub gen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gen.SelectedIndexChanged, gen.SelectedValueChanged, gen.TextChanged
-        If gen.SelectedIndex > -1 And Me.Visible Then
-            If Len(dni.Text) >= 7 And Len(dni.Text) <= 8 Then
+    Private Sub CUIL_Events(sender As Object, e As EventArgs) Handles gen.KeyUp, gen.Click, gen.TextChanged, dni.LostFocus, gen.LostFocus, cuil.LostFocus
+        If Me.Visible Then
+            If gen.SelectedIndex > -1 And Len(dni.Text) >= 7 And Len(dni.Text) <= 8 Then
                 cuil.Text = Persona.CalcularCuil(dni.Text, Microsoft.VisualBasic.Left(gen.Text, 1))
             End If
         End If
     End Sub
-
-    Private Sub dni_KeyUp(sender As Object, e As KeyEventArgs) Handles dni.KeyUp, cuil.KeyUp
-        If sender Is dni Then
-            If e.KeyValue = Keys.Enter Then
-                If Len(dni.Text) >= 7 And Len(dni.Text) <= 8 And gen.SelectedIndex > -1 Then
-                    cuil.Text = Persona.CalcularCuil(dni.Text, Microsoft.VisualBasic.Left(gen.Text, 1))
-                End If
-            End If
-        End If
-    End Sub
-
-
 End Class

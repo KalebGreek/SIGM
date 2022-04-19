@@ -9,9 +9,10 @@
 	End Sub
 	'Events
 	Private Sub buscarPersona_Click(sender As Object, e As EventArgs) Handles buscarPersona.Click
-		Using bper As New ConsultaPersona(True)
+		Using bper As New ConsultaPersona With {.Parent = Me}
+			bper.SelectPerson = True
 			bper.ShowDialog(Me)
-			Dim source As DataRowView = bper.bs_resultado.Current
+			Dim source As DataRowView = bper.PersonSelected
 			If source Is Nothing = False Then
 				persona_id = source("persona_id").ToString
 				razon.Text = source("razon").ToString

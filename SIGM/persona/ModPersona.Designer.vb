@@ -167,12 +167,13 @@ Partial Class ModPersona
         Me.Controls.Add(Me.grupo_mod)
         Me.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
-        Me.MinimumSize = New System.Drawing.Size(250, 250)
+        Me.MaximumSize = New System.Drawing.Size(390, 400)
+        Me.MinimumSize = New System.Drawing.Size(390, 400)
         Me.Name = "ModPersona"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "                                                                                 " &
     "                                                 "
         Me.grupo_mod.ResumeLayout(False)

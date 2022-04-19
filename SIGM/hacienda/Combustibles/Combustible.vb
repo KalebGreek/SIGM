@@ -7,8 +7,13 @@
         End Sub
         Shared Function ListAll(BSCuenta As BindingSource, BSCategoria As BindingSource, id As Integer) As BindingSource
             Dim sqlSelect As String
-            Dim cuenta As DataRowView = BSCuenta.Current
-            Dim categoria As DataRowView = BSCategoria.Current
+            Dim cuenta As DataRowView = Nothing
+            Dim categoria As DataRowView = Nothing
+            If BSCuenta Is Nothing = False And BSCategoria Is Nothing = False Then
+                cuenta = BSCuenta.Current
+                categoria = BSCategoria.Current
+            End If
+
             sqlSelect = "SELECT Id as receptor_id, marca+' | '+dominio+' |'+STR(modelo) AS descripcion"
             sqlSelect &= " FROM hac_combustible_receptor"
 

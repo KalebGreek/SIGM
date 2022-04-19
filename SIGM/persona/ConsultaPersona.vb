@@ -1,21 +1,17 @@
-﻿Public Class ConsultaPersona
-    Public PersonSelected As DataRowView = Nothing
-    Public Sub New(Optional SelectionMode As Boolean = False)
+﻿Imports System.ComponentModel
 
+Public Class ConsultaPersona
+    Public SelectPerson As Boolean = False
+    Public PersonSelected As DataRowView = Nothing
+    Private bs_resultado As BindingSource = Nothing
+    Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
-
         ' Add any initialization after the InitializeComponent() call.
-        'Setting up views
-        genSearchControl1.vista.Items.AddRange(New Object() {"PERSONA", "EMPLEADO", "PROFESIONAL", "PROVEEDOR"})
-        genSearchControl1.selectRow.Visible = SelectionMode
-        genSearchControl1.cancel.Visible = SelectionMode
-
     End Sub
     '-- RUTINAS
     Public Sub Consultar(Optional clearFilter As Boolean = False)
         resultado.DataSource = Nothing
-        bs_resultado.SuspendBinding()
 
         With genSearchControl1
             If .vista.SelectedIndex > -1 Then
@@ -64,7 +60,6 @@
                     End If
 
 
-                    bs_resultado.DataSource = dtab
                     Dim bs_ColumnList As New BindingSource _
                         With {.DataSource = CtrlMan.Fill.GetColumnList(dtab.Columns)}
 
@@ -72,64 +67,74 @@
                     .filtro = CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
 
                     .FilterSearch()
+                    bs_resultado = New BindingSource With {.DataSource = dtab}
                     bs_resultado.Filter = .bsCustomFilter
-
                 End If
             Else
                 .reset_search.PerformClick()
             End If
         End With
-        bs_resultado.ResumeBinding()
         CtrlMan.DataGridViewTools.Load(resultado, bs_resultado)
     End Sub
 
     '-- EVENTOS UNICOS
     Private Sub BusquedaPersona_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
         If Me.Visible And genSearchControl1.vista.SelectedIndex = -1 Then
-            genSearchControl1.vista.SelectedIndex = 0 'First option
-        End If
+            If TypeOf Me.MdiParent Is MainForm Then
+                Me.WindowState = FormWindowState.Maximized
+            End If
+            'Setting up views
+            genSearchControl1.vista.Items.AddRange(New Object() {"PERSONA", "EMPLEADO", "PROFESIONAL", "PROVEEDOR"})
+                genSearchControl1.selectRow.Visible = SelectPerson
+                genSearchControl1.cancel.Visible = SelectPerson
+                genSearchControl1.vista.SelectedIndex = 0 'First option
+                genSearchControl1.filtro.SelectedIndex = 1 'Razon
+
+            End If
     End Sub
     Public Sub SearchClick() Handles genSearchControl1.CSearchClick, genSearchControl1.CFiltroIndexTextChanged
-        genSearchControl1.FilterSearch()
-        bs_resultado.Filter = genSearchControl1.bsCustomFilter
+        If bs_resultado Is Nothing = False Then
+            genSearchControl1.FilterSearch()
+            bs_resultado.Filter = genSearchControl1.bsCustomFilter
+        End If
     End Sub
     Private Sub VistaSelectedIndexChanged() Handles genSearchControl1.CVistaIndexTextChanged, genSearchControl1.CResetClick
-        resultado.DataSource = Nothing
         If genSearchControl1.vista.SelectedIndex > -1 Then
             Consultar(True)
         End If
     End Sub
     Public Sub SelectClick(sender As Object, e As EventArgs) Handles genSearchControl1.CSelect
-        If bs_resultado.Position > -1 Then
-            PersonSelected = bs_resultado.Current
-            Me.Close()
-        Else
-            PersonSelected = Nothing
-            MsgBox("No se ha seleccionado una persona.")
+        PersonSelected = Nothing
+        If bs_resultado Is Nothing = False Then
+            If bs_resultado.Position > -1 Then
+                PersonSelected = bs_resultado.Current()
+            End If
         End If
+        If PersonSelected Is Nothing Then
+            MsgBox("No se ha seleccionado una persona.")
+        Else
+            Me.Close()
+        End If
+
     End Sub
     Public Sub CancelClick(sender As Object, e As EventArgs) Handles genSearchControl1.CCancel
-        resultado.DataSource = Nothing
-        bs_resultado.Sort = ""
-        bs_resultado.Filter = ""
-        bs_resultado.DataSource = Nothing
+        PersonSelected = Nothing
         Me.Close()
     End Sub
-
 
     Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles genSearchControl1.CKeywordKeyUp, resultado.KeyUp
         If e.KeyValue = Keys.F3 Then
             Consultar(False)
         ElseIf sender Is resultado Then
-            Dim source As DataRowView = bs_resultado.Current
-            If source Is Nothing = False Then
+            Dim persona_id As Integer = CInt(bs_resultado.Current("persona_id"))
+            If persona_id > 0 Then
                 If e.KeyValue = Keys.F2 Then
-                    Using mper As New ModPersona(source("persona_id")) With {.Owner = Me}
-                        mper.ShowDialog()
-                    End Using
-                    genSearchControl1.search.PerformClick()
+                    Me.Hide()
+                    Dim mper As New ModPersona With {.PersonaId = persona_id, .MdiParent = Me.MdiParent}
+                    mper.Show()
+                    Me.Close()
                 ElseIf e.KeyValue = Keys.Delete Then
-                    If Persona.Eliminar(source("persona_id")) Then
+                    If Persona.Eliminar(persona_id) Then
                         bs_resultado.RemoveCurrent()
                     End If
                 End If

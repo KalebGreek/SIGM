@@ -1,8 +1,10 @@
-﻿Public Class Launcher
+﻿Imports System.ComponentModel
+
+Public Class Launcher
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
-
+        ' Add any initialization after the InitializeComponent() call.
         'Tomar paleta de colores desde el launcher
         ColorAsocial = l_accionsocial.BackColor
         ColorCatastro = l_catastro.BackColor
@@ -14,11 +16,21 @@
         ColorOpublicas = l_opublicas.BackColor
         ColorPersona = l_persona.BackColor
         ColorTransito = l_transito.BackColor
-
-        ' Add any initialization after the InitializeComponent() call.
+        ConfigInit(Me)
+        Login()
     End Sub
     ' GUI 
     'List all buttons
+    Private Sub Login()
+        Using a As New Acceso
+            a.ShowDialog()
+        End Using
+        If My.Settings.UserId > 0 Then
+            SecMan.Privileges(Me, My.Settings.UserId)
+        Else
+            End
+        End If
+    End Sub
     Private Sub SeleccionForm(sender As Object, e As EventArgs) Handles l_hacienda.Click, l_catastro.Click, l_contratos.Click,
                                                                         l_opublicas.Click, l_oprivadas.Click, l_comercio.Click,
                                                                         l_persona.Click, l_accionsocial.Click, l_mesa_de_entradas.Click,
@@ -66,17 +78,14 @@
                     End If
 
                 End If
-                form1.ShowDialog(Me)
-                Me.Show()
-                Me.Focus()
+                form1.Show(Me)
             End If
         End Using
     End Sub
 
     Private Sub Salir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles salir.Click
         SecMan.RegisterLogon(My.Settings.UserId, False) 'Cerrar Sesión
-        Acceso.Show()
-        Me.Close()
+        Login()
     End Sub
     ' END GUI 
 

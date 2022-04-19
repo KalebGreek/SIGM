@@ -27,9 +27,7 @@ Class ModExpediente
     End Sub
 
     Private Sub ModExpediente_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
-        If Me.Visible And bs_expediente.DataSource Is Nothing Then
-            Me.Close()
-        Else
+        If Me.Visible And exp > 0 Then
             inicio_obra.MaxDate = Date.Today
             fin_obra.MaxDate = Date.Today
         End If

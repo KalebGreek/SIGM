@@ -1,18 +1,18 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class ConsultaPersona
-	Inherits System.Windows.Forms.Form
+    Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
-	Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-		Try
-			If disposing AndAlso components IsNot Nothing Then
-				components.Dispose()
-			End If
-		Finally
-			MyBase.Dispose(disposing)
-		End Try
-	End Sub
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
 
     'Required by the Windows Form Designer
     Private components As System.ComponentModel.IContainer
@@ -20,18 +20,15 @@ Partial Class ConsultaPersona
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
-	Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
         Me.resultado = New System.Windows.Forms.DataGridView()
         Me.PanelFiltros = New System.Windows.Forms.FlowLayoutPanel()
         Me.difunto = New System.Windows.Forms.CheckBox()
         Me.fisica = New System.Windows.Forms.CheckBox()
-        Me.bs_resultado = New System.Windows.Forms.BindingSource(Me.components)
         Me.genSearchControl1 = New Sigm.genSearchControl()
         CType(Me.resultado, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelFiltros.SuspendLayout()
-        CType(Me.bs_resultado, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'resultado
@@ -42,13 +39,13 @@ Partial Class ConsultaPersona
         Me.resultado.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.resultado.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.resultado.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.resultado.Location = New System.Drawing.Point(0, 36)
+        Me.resultado.Location = New System.Drawing.Point(0, 33)
         Me.resultado.Margin = New System.Windows.Forms.Padding(0)
         Me.resultado.Name = "resultado"
         Me.resultado.ReadOnly = True
         Me.resultado.RowHeadersVisible = False
         Me.resultado.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.resultado.Size = New System.Drawing.Size(659, 259)
+        Me.resultado.Size = New System.Drawing.Size(659, 262)
         Me.resultado.TabIndex = 367
         '
         'PanelFiltros
@@ -94,10 +91,10 @@ Partial Class ConsultaPersona
         Me.genSearchControl1.Margin = New System.Windows.Forms.Padding(0)
         Me.genSearchControl1.MinimumSize = New System.Drawing.Size(520, 33)
         Me.genSearchControl1.Name = "genSearchControl1"
-        Me.genSearchControl1.Size = New System.Drawing.Size(659, 36)
+        Me.genSearchControl1.Size = New System.Drawing.Size(659, 33)
         Me.genSearchControl1.TabIndex = 368
         '
-        'BusquedaPersona
+        'ConsultaPersona
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.ClientSize = New System.Drawing.Size(659, 321)
@@ -106,7 +103,7 @@ Partial Class ConsultaPersona
         Me.Controls.Add(Me.PanelFiltros)
         Me.Font = New System.Drawing.Font("PF DinText Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MinimumSize = New System.Drawing.Size(675, 360)
-        Me.Name = "BusquedaPersona"
+        Me.Name = "ConsultaPersona"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
@@ -114,7 +111,6 @@ Partial Class ConsultaPersona
         CType(Me.resultado, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelFiltros.ResumeLayout(False)
         Me.PanelFiltros.PerformLayout()
-        CType(Me.bs_resultado, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -123,7 +119,6 @@ Partial Class ConsultaPersona
     Friend WithEvents resultado As DataGridView
     Friend WithEvents genSearchControl1 As genSearchControl
     Friend WithEvents PanelFiltros As FlowLayoutPanel
-	Friend WithEvents difunto As CheckBox
-	Friend WithEvents fisica As CheckBox
-	Friend WithEvents bs_resultado As BindingSource
+    Friend WithEvents difunto As CheckBox
+    Friend WithEvents fisica As CheckBox
 End Class

@@ -1,15 +1,11 @@
 ﻿Imports System.ComponentModel
 
 Public Class ModPersona
-	Private PersonaId As Integer
-
-	Public Sub New(PerId As Integer)
-
+	Public PersonaId As Integer = 0
+	Public Sub New()
 		' This call is required by the designer.
 		InitializeComponent()
-
 		' Add any initialization after the InitializeComponent() call.
-		PersonaId = PerId
 	End Sub
 
 	'###### GUI ##########################################################################################
@@ -65,7 +61,6 @@ Public Class ModPersona
 		If Guardar(TabControl1.SelectedTab) Then
 			Me.Close()
 		End If
-
 	End Sub
 
 	Private Sub ModPersona_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
@@ -79,6 +74,11 @@ Public Class ModPersona
 				End If
 			Next
 		Next
+
+		If Me.MdiParent Is Nothing = False Then
+			Dim cper As New ConsultaPersona With {.MdiParent = Me.MdiParent}
+			cper.Show()
+		End If
 	End Sub
 
 	Private Sub Cargar(CurrentTabPage As TabPage)

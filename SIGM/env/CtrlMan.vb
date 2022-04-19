@@ -3,14 +3,18 @@ Imports Sigm.CtrlMan
 Class CtrlMan 'Control Manager
     '###### VENTANAS
     'Impedir creación de ventanas que deben abrirse una sola vez en el formulario MDI
-    Public Shared Function IsFormOpen(ByVal env As Form, ByVal target As Object) As Boolean
+    Public Shared Function IsFormOpen(ByVal env As Form, ByVal target As Object) As Form
         Dim result As Boolean = False
         If env.IsMdiContainer Then
             For Each f As Form In env.MdiChildren
                 result = f.GetType() Is target.GetType()
             Next
         End If
-        Return result
+        If result Then
+            Return target
+        Else
+            Return Nothing
+        End If
     End Function
 
     Public Shared Sub SetDoubleBuffered(ByVal control As Control)
@@ -164,6 +168,29 @@ Class CtrlMan 'Control Manager
             Next
         End If
     End Sub
+
+    'Add Events from a Menu to one function
+    Overloads Shared Sub AddMenuEvents(m As MenuStrip, ByRef s As EventHandler)
+        For Each i As Object In m.Items
+            If TypeOf i Is ToolStripMenuItem Then
+                If i.HasDropDownItems Then
+                    AddMenuEvents(i, s)
+                End If
+                AddHandler CType(i, ToolStripMenuItem).Click, s
+            End If
+        Next
+    End Sub
+    Overloads Shared Sub AddMenuEvents(m As ToolStripMenuItem, ByRef s As EventHandler)
+        For Each i As Object In m.DropDownItems
+            If TypeOf i Is ToolStripMenuItem Then
+                If i.HasDropDownItems Then
+                    AddMenuEvents(i, s)
+                End If
+                AddHandler CType(i, ToolStripMenuItem).Click, s
+            End If
+        Next
+    End Sub
+
 
     'LOAD ALL THE CONTROLS!!!!1ONE
     Overloads Shared Function LoadControlData(drView As DataRowView, ByVal target As Object) As Object

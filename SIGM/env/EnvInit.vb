@@ -15,7 +15,7 @@ Module EnvInit
            ext_actividad, ext_muerto, ext_tipo, ext_zona,
            col_tenedor, col_importe, col_pagado, col_periodo, col_vence As String
 
-    Sub tablas_fox(ByVal impuesto As String)
+    Sub Tablas_Fox(ByVal impuesto As String)
         If impuesto.Contains("AGUA") Or impuesto.Contains("aguas") Then 'AGUA
             'Tablas puntuales
             ext_persona = "aguas"

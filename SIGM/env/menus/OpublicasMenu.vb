@@ -1,52 +1,44 @@
 ﻿Public Class OpublicasMenu
-	Private Sub me_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
-		If e.KeyValue = Keys.F10 Then
-			Dim console1 As New SQLConsole With {.MdiParent = Me.Parent}
-			console1.Show()
+	Public Sub New()
+		' Esta llamada es exigida por el diseñador.
+		InitializeComponent()
+		' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+		CtrlMan.AddMenuEvents(BaseMenu, AddressOf Menu_Events)
+	End Sub
+	Private Sub Menu_Events(sender As Object, e As EventArgs)
+		Dim f1 As Form = Nothing
+		'OBRAS PUBLICAS
 
+		'> empleados
+		If sender Is AsistenciaToolStripMenuItem Then
+
+		ElseIf sender Is BuscarEmpleadoToolStripMenuItem Then
+			f1 = New ConsultaPersona
+			CType(f1, ConsultaPersona).genSearchControl1.vista.Text = "EMPLEADO"
+
+			'>> contratos
+		ElseIf sender Is ContratoToolStripMenuItem Then
+			f1 = New ConsultaContrato
+			CType(f1, ConsultaContrato).GenSearchControl1.filtro.Text = "RAZON"
+
+			'>Proveedores
+		ElseIf sender Is BuscarProveedorToolStripMenuItem Then
+			f1 = New ConsultaPersona
+			CType(f1, ConsultaPersona).genSearchControl1.vista.Text = "PROVEEDOR"
+
+			'>Nota de pedido
+		ElseIf sender Is NuevaNotaDePedidoToolStripMenuItem Then
+			f1 = New ModOrdenTrabajo
+
+		ElseIf sender Is BuscarNotaDePedidoToolStripMenuItem Then
+			f1 = New ConsultaOrdenTrabajo
+			CType(f1, ConsultaOrdenTrabajo).ControlBusqueda1.vista.SelectedIndex = 0
 		End If
-	End Sub
-	'OBRAS PUBLICAS
 
-	'> empleados
+		If f1 Is Nothing = False Then
+			f1.MdiParent = Me.Parent
+			f1.Show()
+		End If
 
-	Private Sub AsistenciaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AsistenciaToolStripMenuItem.Click
-
-	End Sub
-	Private Sub BuscarEmpleadoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarEmpleadoToolStripMenuItem.Click
-		Dim buscar1 As New ConsultaPersona With {.MdiParent = Me.Parent}
-		buscar1.genSearchControl1.vista.Text = "EMPLEADO"
-		buscar1.Show()
-	End Sub
-
-	'>> contratos
-	Private Sub ContratoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ContratoToolStripMenuItem.Click
-		Dim Contrato1 As New ConsultaContrato With {.MdiParent = Me.Parent}
-		Contrato1.GenSearchControl1.filtro.Text = "RAZON"
-		Contrato1.Show()
-	End Sub
-
-	Private Sub BuscarToolStripMenuItem_Click(sender As Object, e As EventArgs)
-		'Dim buscar1 As New FormConsultaGen("CONTRATO", Nothing)
-		'buscar1.MdiParent = Me
-		'buscar1.Show()
-	End Sub
-
-	'>Proveedores
-	Private Sub BuscarProveedorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarProveedorToolStripMenuItem.Click
-		Dim buscar1 As New ConsultaPersona With {.MdiParent = Me.Parent}
-		buscar1.genSearchControl1.vista.Text = "PROVEEDOR"
-		buscar1.Show()
-	End Sub
-
-	'>Nota de pedido
-	Private Sub NuevaNotaDePedidoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevaNotaDePedidoToolStripMenuItem.Click
-		'Dim AddModNP As New ModNotaPedido
-
-	End Sub
-	Private Sub BuscarNotaDePedidoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarNotaDePedidoToolStripMenuItem.Click
-		Dim buscarnp As New ConsultaOrdenTrabajo With {.MdiParent = Me.Parent}
-		buscarnp.ControlBusqueda1.vista.SelectedIndex = 0
-		buscarnp.Show()
 	End Sub
 End Class

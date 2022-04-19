@@ -47,7 +47,7 @@
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles AddScript.Click
         Dim ruta As String = ""
         Using filediag As New OpenFileDialog
-            filediag.ShowDialog()
+            filediag.ShowDialog(Me)
             ruta = filediag.FileName
             If My.Computer.FileSystem.FileExists(ruta) Then
                 If MsgBoxResult.Yes = MsgBox("Ejecutar script?", MsgBoxStyle.YesNo) Then

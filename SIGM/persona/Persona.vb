@@ -7,10 +7,8 @@
 								" WHERE per_domicilio.principal=True"
 
 	Shared Function Seleccionar(ParentForm As Form, Optional vista As String = "PERSONA") As DataRowView
-		Using SeleccionarPersona As New ConsultaPersona(True) With {.Owner = ParentForm}
-
-			SeleccionarPersona.genSearchControl1.vista.Text = vista
-			SeleccionarPersona.genSearchControl1.filtro.Text = "razon"
+		Using SeleccionarPersona As New ConsultaPersona With {.Owner = ParentForm}
+			SeleccionarPersona.SelectPerson = True
 			SeleccionarPersona.ShowDialog()
 			Return SeleccionarPersona.PersonSelected
 		End Using

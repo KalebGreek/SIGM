@@ -46,9 +46,9 @@
 		End If
 	End Sub
 
-	Private Sub seccion_SelectedIndexChanged(sender As Object, e As EventArgs) Handles seccion.SelectedIndexChanged
+	Private Sub Seccion_SelectedIndexChanged(sender As Object, e As EventArgs) Handles seccion.SelectedIndexChanged
 		If seccion.Text <> "" And Me.Visible Then
-			codigo.Value = SeekLastContract(codigo.Minimum)
+			codigo.Value = SeekContract(True) + 1
 		End If
 	End Sub
 
@@ -66,18 +66,26 @@
 
 
 	'FUNCTIONS
-	Private Function SeekLastContract(contrato_id As Integer) As Integer
+	Private Function SeekContract(last As Boolean, Optional contrato_id As Decimal = 0) As Integer
 		Dim Sql(2) As String
-		Sql(0) = "SELECT MAX(codigo) as ultimo"
-		Sql(1) = " FROM contrato"
-		Sql(2) = " WHERE seccion='" & seccion.Text & "'"
-		Dim dr As DataRow = DbMan.ReadDB(Sql, My.Settings.CurrentDB, "", True)
-		If dr("ultimo") Is DBNull.Value = False Then
-			Return CInt(dr("ultimo"))
+		If last Then
+			Sql(0) = "SELECT MAX(codigo) as contrato"
+			Sql(1) = " FROM contrato"
+			Sql(2) = " WHERE seccion='" & seccion.Text & "'"
 		Else
-			Return 0
+			Sql(0) = "SELECT codigo as contrato"
+			Sql(1) = " FROM contrato"
+			Sql(2) = " WHERE seccion='" & seccion.Text & "' and codigo=" & contrato_id
 		End If
+		Dim dr As DataRow = DbMan.ReadDB(Sql, My.Settings.CurrentDB, "", True)
+		If dr Is Nothing = False Then
+			If dr("contrato") Is DBNull.Value = False Then
+				contrato_id = CInt(dr("contrato"))
+			End If
+		End If
+		Return contrato_id
 	End Function
+
 
 	'###### VALIDAR ##########################################################################################
 	Private Function ValidarCambios() As Boolean
@@ -90,7 +98,7 @@
 		If CtrlMan.Validate(FlowLayoutPanel1) _
 		And CtrlMan.Validate(FlowLayoutPanel2) _
 		And CtrlMan.Validate(FlowLayoutPanel3) Then
-			If SeekLastContract(codigo.Value) = codigo.Value Then
+			If SeekContract(False, codigo.Value) = codigo.Value Then
 				codigo.BackColor = My.Settings.ErrorColorValue
 			Else
 				codigo.BackColor = My.Settings.DefaultColorValue
@@ -131,7 +139,7 @@
 					DbMan.EditDB(sqlInsert, My.Settings.CurrentDB)
 
 
-					If SeekLastContract(codigo.Value) = codigo.Value Then
+					If SeekContract(False, codigo.Value) = codigo.Value Then
 						Me.Close()
 					Else
 						MsgBox("No se guardaron los cambios.")

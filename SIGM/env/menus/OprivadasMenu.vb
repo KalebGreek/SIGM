@@ -1,37 +1,41 @@
 ﻿Public Class OprivadasMenu
-	Private Sub me_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
-		If e.KeyValue = Keys.F10 Then
-			Dim console1 As New SQLConsole With {.MdiParent = Me.Parent}
-			console1.Show()
+	Public Sub New()
+
+		' Esta llamada es exigida por el diseñador.
+		InitializeComponent()
+
+		' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+
+		CtrlMan.AddMenuEvents(BaseMenu, AddressOf Menu_Events)
+
+	End Sub
+	Private Sub Menu_Events(sender As Object, e As EventArgs)
+		'OBRAS PRIVADAS
+		Dim f1 As Form = Nothing
+		'Expedientes
+		If sender Is NuevoExpedienteToolStripMenuItem Then
+			f1 = New ModExpediente()
+			If CType(f1, ModExpediente).exp = Nothing Then
+				f1 = Nothing
+			End If
+
+		ElseIf sender Is BuscarExpedienteToolStripMenuItem Then
+			f1 = New ConsultaExp
+			'Herramientas
+		ElseIf sender Is BuscarProfesionalToolStripMenuItem Then
+			f1 = New ConsultaPersona
+			CType(f1, ConsultaPersona).genSearchControl1.vista.Text = "PROFESIONAL"
+		ElseIf sender Is CalculosToolStripMenuItem Then
+			f1 = New genToolContainer
+			Dim calcObras As New CalculoTasaMunicipal With {.Dock = DockStyle.Fill}
+			f1.Controls.Add(calcObras)
+			f1.Text = "Calculadora"
+		End If
+
+		If f1 Is Nothing = False Then
+			f1.MdiParent = Me.Parent
+			f1.WindowState = FormWindowState.Maximized
+			f1.Show()
 		End If
 	End Sub
-	'OBRAS PRIVADAS
-	'Expedientes
-	Private Sub NuevoExpedienteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevoExpedienteToolStripMenuItem.Click
-		Using NuevoExp As New ModExpediente()
-			If NuevoExp.bs_expediente.DataSource Is Nothing = False Then
-				NuevoExp.ShowDialog()
-			End If
-		End Using
-	End Sub
-	Private Sub BuscarExpedienteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarExpedienteToolStripMenuItem.Click
-		Dim buscar1 As New ConsultaExp With {.MdiParent = Me.Parent}
-		buscar1.Show()
-	End Sub
-
-	'Herramientas
-	Private Sub BuscarProfesionalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuscarProfesionalToolStripMenuItem.Click
-		Dim buscar1 As New ConsultaPersona With {.MdiParent = Me.Parent}
-		buscar1.genSearchControl1.vista.Text = "PROFESIONAL"
-		buscar1.Show()
-	End Sub
-	Private Sub CalculosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CalculosToolStripMenuItem.Click
-		Dim calcTasaMunicipal As New genToolContainer With {.MdiParent = Me.Parent}
-		calcTasaMunicipal.Text = "Calculadora"
-		Dim calcObras As New CalculoTasaMunicipal With {.Dock = DockStyle.Fill}
-		calcTasaMunicipal.Controls.Add(calcObras)
-		calcTasaMunicipal.WindowState = FormWindowState.Maximized
-		calcTasaMunicipal.Show()
-	End Sub
-
 End Class

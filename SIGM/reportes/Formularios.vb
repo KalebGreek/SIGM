@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Reporting.WinForms
+﻿Imports System.ComponentModel
+Imports Microsoft.Reporting.WinForms
 Class Formularios
 
     Public Sub New(Optional titulo As String = "Formulario")
@@ -34,6 +35,11 @@ Class Formularios
     Private Sub VisorReporte_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
         ReporteActual.Visible = Me.Visible
     End Sub
+    Private Sub Formularios_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        Me.Owner.Show()
+        Me.Owner.Focus()
+    End Sub
+
 
     'Rutinas
 
@@ -141,4 +147,6 @@ Class Formularios
             End If
         End With
     End Sub
+
+
 End Class

@@ -1,83 +1,58 @@
 ﻿Public Class HaciendaMenu
-    Private Sub Me_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
-        If e.KeyValue = Keys.F10 Then
-            Dim console1 As New SQLConsole With {.MdiParent = Me.Parent}
-            console1.Show()
+    Public Sub New()
+
+        ' Esta llamada es exigida por el diseñador.
+        InitializeComponent()
+
+        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+
+        CtrlMan.AddMenuEvents(BaseMenu, AddressOf Menu_Events)
+
+    End Sub
+    Private Sub Menu_Events(sender As Object, e As EventArgs)
+
+        Dim f1 As Form = Nothing
+        If sender Is ConsultasEspecialesStripMenuItem Then
+            Hacienda.ConsolidarCuentas(Today)
+            f1 = New ConsultasEspeciales
+        ElseIf sender Is ConsultaDeMovimientosToolStripMenuItem Then
+            Hacienda.ConsolidarCuentas(Today)
+            f1 = New ConsultaMovimientos
+        ElseIf sender Is CalculoAnualDeImpuestosToolStripMenuItem Then
+            'Es obligatorio usar EN-US para generar las deudas correctamente en Foxpro
+            System.Windows.Forms.Application.CurrentCulture = New System.Globalization.CultureInfo("EN-US")
+            f1 = New CalcAnualImpUI
+            f1.ShowDialog(Me)
+            f1 = Nothing
+            System.Windows.Forms.Application.CurrentCulture = New System.Globalization.CultureInfo("ES-AR")
+        ElseIf sender Is TicketsToolStripMenuItem Then
+            f1 = New ModCombustible
+        ElseIf sender Is SIJCORToolStripMenuItem Then
+            f1 = New EditorSijCor
+        ElseIf sender Is AdelantosToolStripMenuItem Then
+            f1 = New ConsultaAdelanto
+        ElseIf sender Is ConsolidarIngresosYEgresosToolStripMenuItem Then
+            Hacienda.ConsolidarCuentas(Today)
+        ElseIf sender Is ConversorSIROToolStripMenuItem Then
+            f1 = New ConvertirSIRO
+        ElseIf sender Is ConsultarImpuestoToolStripMenuItem Then
+            If CtrlMan.IsFormOpen(Me.Parent, ConsultaImpuestoUI) Is Nothing Then
+                f1 = New ConsultaImpuestoUI
+            Else
+                MsgBox("Debe cerrar la consulta actual antes de continuar.", MsgBoxStyle.Critical, "Consulta abierta")
+                ConsultaImpuestoUI.Focus()
+            End If
+
+        ElseIf sender Is GenerarCertificadoToolStripMenuItem Then
+            f1 = New CertificadoLibreDeuda
+
+        ElseIf sender Is IntimacionesToolStripMenuItem Then
+            f1 = New ConsultaIntimaciones
         End If
-    End Sub
 
-    Private Sub ConsultasEspecialesStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsultasEspecialesStripMenuItem.Click
-        Hacienda.ConsolidarCuentas(Today)
-        Dim arqueo1 As New ConsultasEspeciales _
-        With {.MdiParent = Me.Parent}
-        arqueo1.Show()
-    End Sub
-    Private Sub ConsultaDeMovimientosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsultaDeMovimientosToolStripMenuItem.Click
-        Hacienda.ConsolidarCuentas(Today)
-        Dim movimis1 As New ConsultaMovimientos _
-        With {.MdiParent = Me.Parent}
-        movimis1.Show()
-
-    End Sub
-
-    Private Sub CalculoAnualDeImpuestosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CalculoAnualDeImpuestosToolStripMenuItem.Click
-        System.Windows.Forms.Application.CurrentCulture = New System.Globalization.CultureInfo("EN-US")
-        Using cai As New CalcAnualImpUI
-            cai.ShowDialog()
-        End Using
-        System.Windows.Forms.Application.CurrentCulture = New System.Globalization.CultureInfo("ES-AR")
-    End Sub
-
-    Private Sub TicketsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TicketsToolStripMenuItem.Click
-        Dim mcomb As New ModCombustible _
-        With {.MdiParent = Me.Parent}
-        mcomb.Show()
-
-    End Sub
-    Private Sub SIJCORToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SIJCORToolStripMenuItem.Click
-        Dim sijcor As New EditorSijCor _
-        With {.MdiParent = Me.Parent}
-        sijcor.Show()
-
-    End Sub
-    Private Sub AdelantosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AdelantosToolStripMenuItem.Click
-        Dim buscar1 As New ConsultaAdelanto
-        buscar1.GenSearchControl1.vista.SelectedIndex = 0
-        buscar1.Show()
-
-    End Sub
-    Private Sub ConsolidarIngresosYEgresosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsolidarIngresosYEgresosToolStripMenuItem.Click
-        Hacienda.ConsolidarCuentas(Today)
-    End Sub
-
-    Private Sub ConversorSIROToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConversorSIROToolStripMenuItem.Click
-        Dim convsiro As New ConvertirSIRO _
-        With {.MdiParent = Me.Parent}
-        convsiro.Show()
-
-    End Sub
-
-    Private Sub ConsultarImpuestoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConsultarImpuestoToolStripMenuItem.Click
-        If CtrlMan.IsFormOpen(Me.Parent, ConsultaImpuestoUI) Then
-            MsgBox("Debe cerrar el expediente actual antes de continuar.", MsgBoxStyle.Critical, "Expediente Abierto")
-        Else
-            Dim ConsultaImpuesto1 As New ConsultaImpuestoUI _
-            With {.MdiParent = Me.Parent}
-            ConsultaImpuesto1.Show()
-
+        If f1 Is Nothing = False Then
+            f1.MdiParent = Me.Parent
+            f1.Show()
         End If
-    End Sub
-
-    Private Sub GenerarCertificadoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GenerarCertificadoToolStripMenuItem.Click
-        Using certld As New CertificadoLibreDeuda
-            certld.ShowDialog()
-        End Using
-    End Sub
-
-    Private Sub IntimacionesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IntimacionesToolStripMenuItem.Click
-        Dim ConIntimaciones As New ConsultaIntimaciones _
-       With {.MdiParent = Me.Parent}
-        ConIntimaciones.Show()
-
     End Sub
 End Class
