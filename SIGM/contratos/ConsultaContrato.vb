@@ -28,8 +28,18 @@ Public Class ConsultaContrato
         GenSearchControl1.vista.Items.AddRange(New Object() {"HACIENDA", "DEPORTES", "OBRAS PUBLICAS", "TRANSITO", "TURISMO"})
     End Sub
     Private Sub ConsultaContrato_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        Me.Owner.Show()
-        Me.Owner.Focus()
+        Dim ParentForm As Form = Nothing
+        If Me.Owner Is Nothing = False Then
+            ParentForm = Me.Owner
+        ElseIf Me.Parent Is Nothing = False Then
+            ParentForm = Me.Parent
+        ElseIf Me.MdiParent Is Nothing Then
+            ParentForm = Me.MdiParent
+        End If
+        If ParentForm Is Nothing = False Then
+            ParentForm.Show()
+            ParentForm.Focus()
+        End If
     End Sub
 
     '-- EVENTOS UNICOS

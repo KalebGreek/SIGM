@@ -78,6 +78,7 @@ Public Class ModPersona
 		If Me.MdiParent Is Nothing = False Then
 			Dim cper As New ConsultaPersona With {.MdiParent = Me.MdiParent}
 			cper.Show()
+			cper.Focus()
 		End If
 	End Sub
 

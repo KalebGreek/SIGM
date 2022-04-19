@@ -24,8 +24,16 @@ Class MainForm
 		For Each f As Form In MdiChildren
 			f.Dispose()
 		Next
-		Me.Owner.Show()
-		Me.Owner.Focus()
+		Dim ParentForm As Form = Nothing
+		If Me.Owner Is Nothing = False Then
+			ParentForm = Me.Owner
+		ElseIf Me.Parent Is Nothing = False Then
+			ParentForm = Me.Parent
+		End If
+		If ParentForm Is Nothing = False Then
+			ParentForm.Show()
+			ParentForm.Focus()
+		End If
 	End Sub
 
 End Class
