@@ -16,10 +16,8 @@
 
     'Events
     Public Sub New()
-
         ' This call is required by the designer.
         InitializeComponent()
-
         ' Add any initialization after the InitializeComponent() call.
         DateValue.Value = Today
     End Sub
@@ -31,9 +29,9 @@
     End Sub
 
     'Visibility events
-    Private Sub filtro_SelectedIndexnTextChanged(sender As Object, e As EventArgs) Handles filtro.SelectedIndexChanged, filtro.TextChanged
+    Private Sub Filtro_SelectedIndexnTextChanged(sender As Object, e As EventArgs) Handles filtro.SelectedIndexChanged, filtro.TextChanged
         bsCustomFilter = ""
-
+        filtro.Visible = filtro.Items.Count > 0
         If filtro.Visible And filtro.SelectedIndex > -1 Then
             'String
             keyword.Visible = (filtro.SelectedValue.ToString = GetType(String).ToString)
@@ -90,7 +88,7 @@
             End If
         End If
     End Sub
-    Private Sub keyword_VisibleChanged(sender As Object, e As EventArgs) Handles keyword.VisibleChanged
+    Private Sub Keyword_VisibleChanged(sender As Object, e As EventArgs) Handles keyword.VisibleChanged
         Condition.SelectedIndex = -1
         If keyword.Visible = False Then
             keyword.ResetText()
@@ -98,13 +96,13 @@
         End If
     End Sub
 
-    Private Sub keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles keyword.KeyUp
+    Private Sub Keyword_KeyUp(sender As Object, e As KeyEventArgs) Handles keyword.KeyUp
         If e.KeyValue = Keys.Enter Or e.KeyValue = Keys.F3 Then
             search.PerformClick()
         End If
     End Sub
 
-    Private Sub keyword_ClicknFocus(sender As Object, e As EventArgs) Handles keyword.DoubleClick
+    Private Sub Keyword_ClicknFocus(sender As Object, e As EventArgs) Handles keyword.DoubleClick
         If keyword.Visible Then
             keyword.SelectAll()
         End If
@@ -167,11 +165,11 @@
         End If
     End Sub
 
-    Private Sub search_Click(sender As Object, e As EventArgs) Handles search.Click
+    Private Sub Search_Click(sender As Object, e As EventArgs) Handles search.Click
         RaiseEvent CSearchClick(sender)
     End Sub
 
-    Private Sub reset_search_Click(sender As Object, e As EventArgs) Handles reset_search.Click
+    Private Sub Reset_search_Click(sender As Object, e As EventArgs) Handles reset_search.Click
         bsCustomFilter = ""
         filtro.SelectedIndex = -1
         vista.SelectedIndex = -1
@@ -196,16 +194,16 @@
         RaiseEvent CResetClick(sender)
     End Sub
 
-    Private Sub print_Click(sender As Object, e As EventArgs) Handles print.Click
+    Private Sub Print_Click(sender As Object, e As EventArgs) Handles print.Click
         RaiseEvent CPrint()
     End Sub
 
-    Private Sub selectRow_Click(sender As Object, e As EventArgs) Handles selectRow.Click
+    Private Sub SelectRow_Click(sender As Object, e As EventArgs) Handles selectRow.Click
         RowSelected = True
         RaiseEvent CSelect(sender, e)
     End Sub
 
-    Private Sub cancel_Click(sender As Object, e As EventArgs) Handles cancel.Click
+    Private Sub Cancel_Click(sender As Object, e As EventArgs) Handles cancel.Click
         RaiseEvent CCancel(sender, e)
     End Sub
 
@@ -221,5 +219,6 @@
         End If
         RaiseEvent CFiltroIndexTextChanged()
     End Sub
+
 
 End Class

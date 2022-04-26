@@ -60,27 +60,27 @@
         If dtab Is Nothing = False Then
             CtrlMan.DataGridViewTools.Load(visor, dtab)
             If dtab.Rows.Count = 0 Then
-				MsgBox("No hay resultados.")
-				Me.Text = "Buscar Ordenanza"
-			Else
-				grupo_mod.Enabled = True
-			End If
-		Else
-			MsgBox("No hay resultados.")
-			Me.Text = "Buscar Ordenanza"
-		End If
-	End Sub
+                MsgBox("No hay resultados.")
+                Me.Text = "Buscar Ordenanza"
+            Else
+                grupo_mod.Enabled = True
+            End If
+        Else
+            MsgBox("No hay resultados.")
+            Me.Text = "Buscar Ordenanza"
+        End If
+    End Sub
 
     '###### OPERACIONES ##########################################################################################
     Private Sub consulta_KeyUp(sender As Object, e As KeyEventArgs) Handles visor.KeyUp
-		If e.KeyValue = Keys.Delete Then
-			eliminar.PerformClick()
-		ElseIf e.KeyValue = Keys.Enter Then
-			ver.PerformClick()
-		ElseIf e.KeyValue = Keys.F2 Then
-			modificar.PerformClick()
-		End If
-	End Sub
+        If e.KeyValue = Keys.Delete Then
+            eliminar.PerformClick()
+        ElseIf e.KeyValue = Keys.Enter Then
+            ver.PerformClick()
+        ElseIf e.KeyValue = Keys.F2 Then
+            modificar.PerformClick()
+        End If
+    End Sub
     Private Sub ver_Click(sender As Object, e As EventArgs) Handles ver.Click
         Dim path As DataRowView = bs_consulta.Current
         If path Is Nothing = False Then
@@ -88,7 +88,7 @@
         End If
     End Sub
     Private Sub modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles modificar.Click
-		If bs_consulta.Position > -1 Then
+        If bs_consulta.Position > -1 Then
             Using ModificarOrdenanza As New ModOrdenanza
                 With ModificarOrdenanza
                     .bs_registro = bs_consulta
@@ -97,8 +97,8 @@
                 End With
             End Using
             buscar.PerformClick()
-		End If
-	End Sub
+        End If
+    End Sub
     Private Sub eliminar_Click(sender As Object, e As EventArgs) Handles eliminar.Click
         Dim source As DataRowView = bs_consulta.Current
         If source Is Nothing = False Then

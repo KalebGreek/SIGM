@@ -1,6 +1,6 @@
 Public Class CalcAnualImpUI
-    Dim cuentas_modificadas As Integer
-    Dim total_cuotas As Integer
+    Property CuentasModificadas As Integer
+    Property TotalCuotas As Integer
 
     'Eventos
     Private Sub CalculoAnualImpuesto_Load(sender As Object, e As EventArgs) Handles MyBase.Load

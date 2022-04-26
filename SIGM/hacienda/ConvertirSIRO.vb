@@ -1,10 +1,16 @@
 ﻿Public Class ConvertirSIRO
-    Dim var_PadronAgua(), var_PadronAuto(), var_PadronCatastro(), var_PadronCementerio(),
-        var_PadronComercio(), var_PadronVivienda() As String
-    Dim var_DeudaAgua(), var_DeudaAuto(), var_DeudaCatastro(), var_DeudaCementerio(),
-        var_DeudaComercio(), var_DeudaVivienda() As String
-
-
+    Property Var_PadronAgua As String()
+    Property Var_PadronAuto As String()
+    Property Var_PadronCatastro As String()
+    Property Var_PadronCementerio As String()
+    Property Var_PadronComercio As String()
+    Property Var_PadronVivienda As String()
+    Property Var_DeudaAgua As String()
+    Property Var_DeudaAuto As String()
+    Property Var_DeudaCatastro As String()
+    Property Var_DeudaCementerio As String()
+    Property Var_DeudaComercio As String()
+    Property Var_DeudaVivienda As String()
 
     Public Sub New()
         ' This call is required by the designer.

@@ -58,7 +58,7 @@ Class Acceso
     End Sub
     Private Sub salir_Click(sender As Object, e As EventArgs) Handles salir.Click
         My.Settings.UserId = -1
-        Me.Close()
+        End
     End Sub
     ' END GUI 
 
@@ -68,6 +68,9 @@ Class Acceso
         My.Settings.UserId = ValidateUser(user.Text, pass.Text)
         If My.Settings.UserId > 0 Then 'Iniciar sesión
             RegisterLogon(My.Settings.UserId, True)
+            Dim l As New Launcher
+            CtrlMan.LoadControlData(Privileges(My.Settings.UserId), l)
+            l.Show()
             Me.Close()
         Else
             info.Text = "Usuario o contraseña incorrecta."

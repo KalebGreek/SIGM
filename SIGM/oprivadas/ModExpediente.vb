@@ -1,38 +1,38 @@
 ﻿Imports Microsoft.Reporting.WinForms
 Class ModExpediente
     'Public dtab_exp As DataTable
-    Public exp As Integer
+    Property Exp As Integer
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
-        Do
-            If exp = 0 Then
-                exp = Val(Date.Today.Year) * 10000
-            End If
-            exp = Val(InputBox("Ingrese Nº de Expediente", "Seleccionar Expediente", exp))
-            If exp <> Nothing Then
-                bs_expediente.DataSource = ObrasPrivadas.Expediente.Seleccionar(exp)
-                If bs_expediente.Count = 0 Then
-                    bs_expediente.DataSource = ObrasPrivadas.Expediente.Generar(exp)
-                End If
-            End If
-        Loop Until exp = Nothing Or bs_expediente.DataSource Is Nothing = False
-        If exp = Nothing Then
-            bs_expediente.DataSource = Nothing
-        Else
-            ObrasPrivadas.Expediente.Bloquear(bs_expediente.Current("id"), True)
-            cargar(bs_expediente.Current)
-        End If
     End Sub
 
     Private Sub ModExpediente_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
-        If Me.Visible And exp > 0 Then
+        If Me.Visible Then
             inicio_obra.MaxDate = Date.Today
             fin_obra.MaxDate = Date.Today
+
+            Do
+                If Exp = 0 Then
+                    Exp = Val(Date.Today.Year) * 10000
+                End If
+                Exp = Val(InputBox("Ingrese Nº de Expediente", "Seleccionar Expediente", Exp))
+                If Exp <> Nothing Then
+                    bs_expediente.DataSource = ObrasPrivadas.Expediente.Seleccionar(Exp)
+                    If bs_expediente.Count = 0 Then
+                        bs_expediente.DataSource = ObrasPrivadas.Expediente.Generar(Exp)
+                    End If
+                End If
+            Loop Until Exp = Nothing Or bs_expediente.DataSource Is Nothing = False
+            If Exp = Nothing Then
+                Me.Close()
+            Else
+                ObrasPrivadas.Expediente.Bloquear(bs_expediente.Current("id"), True)
+                Cargar(bs_expediente.Current.Row)
+            End If
         End If
     End Sub
-
     Private Sub ModExpediente_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         If opr_id.Text > 0 And temporal.Visible = False Then
             ObrasPrivadas.Expediente.Bloquear(opr_id.Text, False)
@@ -41,30 +41,29 @@ Class ModExpediente
 
     '###### GUI #################################################################################################
     ' > Expediente
-    Private Sub save_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles save.Click
+    Private Sub Save_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles save.Click
         Dim answer As MsgBoxResult
-        If actualizar(grupo_exp.SelectedIndex) = MsgBoxResult.Yes Then
+        If Actualizar(grupo_exp.SelectedIndex) = MsgBoxResult.Yes Then
             If temporal.Visible Then
                 answer = MsgBox("¿Desea guardar este expediente temporal bajo el N° " & expediente.Text & "?",
                                 MsgBoxStyle.YesNoCancel, "Guardar Expediente")
                 If answer = MsgBoxResult.Yes Then 'Asignar N° de Expediente y quitar temporal
                     DbMan.EditDB("UPDATE oprivadas 
                                      SET expediente=" & expediente.Text & ", temporal=False
-                                   WHERE id=" & opr_id.Text,
-                                 My.Settings.foxConnection)
+                                   WHERE id=" & opr_id.Text)
                     Me.Close()
                 End If
             End If
-            bs_expediente.DataSource = ObrasPrivadas.Expediente.Seleccionar(expediente.Text)
-            cargar(bs_expediente.Current)
+            'bs_expediente.DataSource = ObrasPrivadas.Expediente.Seleccionar(expediente.Text)
+            'Cargar(bs_expediente.Current.Row)
         End If
     End Sub
 
-    Private Sub grupo_exp_TabIndexChanged(sender As Object, e As EventArgs) Handles grupo_exp.TabIndexChanged
+    Private Sub Grupo_exp_TabIndexChanged(sender As Object, e As EventArgs) Handles grupo_exp.TabIndexChanged
         If Me.Visible Then
             bs_expediente.DataSource = ObrasPrivadas.Expediente.Seleccionar(expediente.Text)
             If bs_expediente.DataSource Is Nothing = False Then
-                cargar(bs_expediente.Current)
+                Cargar(bs_expediente.Current.Row)
             End If
         End If
     End Sub
@@ -90,7 +89,7 @@ Class ModExpediente
     '###### END GUI #############################################################################################
 
     '###### VALIDATION ##########################################################################################
-    Private Sub Cargar(registro As DataRowView)
+    Private Sub Cargar(registro As DataRow)
         razon.Clear()
         cuil.Clear()
         matricula.Clear()
@@ -154,61 +153,31 @@ Class ModExpediente
         'La idea sería mostrar los datos en un msgbox cuando apretás "guardar".
         'Si todo sale bien, te muestra el resumen y pregunta, si faltan datos esenciales,
         'muestra el resumen pero no deja elegir si guardar o no.
+        Dim valido As Boolean
         Dim msg As New List(Of String)
 
-        'Personas
         If pagina = -1 Or pagina = 0 Then
-            msg.Add("** PERSONAS **")
-            If bs_resp.Count = 0 Then
-                msg.Add("(×) Debe indicar al menos un responsable.")
-            End If
-            If profesional_id.Text = 0 Then
-                msg.Add("(×) Debe indicar un profesional a cargo.")
-            End If
-            msg.Add(" ")
+            msg = ObrasPrivadas.Expediente.Validar.Personas(bs_resp, profesional_id.Text)
         End If
-
         If pagina = -1 Or pagina = 1 Then
-            'Inmuebles
-            msg.Add("** INMUEBLES **")
-            With bs_catastro
-                If .Count = 0 Then
-                    msg.Add("(×) No se agregó un inmueble.")
-                End If
-                msg.Add(" ")
-            End With
+            msg.AddRange(ObrasPrivadas.Expediente.Validar.Inmuebles(bs_catastro))
         End If
-
         If pagina = -1 Or pagina = 2 Then
-            'Detalles de expediente
-            msg.Add("** EXPEDIENTE **")
-            If tarea.SelectedIndex = -1 Then
-                msg.Add("(×) Seleccione tarea.")
-            ElseIf tarea.Text = "MENSURA" And tarea2.SelectedIndex = -1 Then
-                msg.Add("(×) Seleccione detalle de tarea de mensura.")
-            End If
-            If inicio_obra.Value > Date.Today Then
-                msg.Add("(×) La fecha de inicio de obra es inválida.")
-            End If
-            If recibe.SelectedIndex = -1 Then
-                msg.Add("(×) Debe indicar quien recibe el expediente.")
-            End If
-            If check_fin_obra.Checked Then
-                If fin_obra.Value <= inicio_obra.Value Then
-                    msg.Add("(×) La fecha de fin de de obra es inválida.")
-                End If
-                If ruta_fin_obra.Text = "" Then
-                    msg.Add("(×) Cargar copia de certificado de Fin de Obra.")
-                End If
-            End If
-            msg.Add(" ")
+            msg.AddRange(ObrasPrivadas.Expediente.Validar.Expediente(tarea, tarea2, inicio_obra.Value,
+                                                                     recibe.SelectedIndex, check_fin_obra.Checked,
+                                                                     fin_obra.Value, ruta_fin_obra.ToString))
         End If
 
-        Dim valido As Integer = msg.FindIndex(Function(value As String)
-                                                  Return value(0) = "("
-                                              End Function)
 
-        If valido > -1 Then
+        If pagina < 0 Then
+            valido = msg.Count = 3
+        Else
+            valido = msg.Count = 1
+        End If
+
+        If valido Then
+            Return MsgBoxResult.Yes
+        Else
             Using ver_error As New UIError("Errores en Expediente", msg)
                 Dim answer As DialogResult = ver_error.ShowDialog(Me)
 
@@ -218,24 +187,94 @@ Class ModExpediente
                     Return MsgBoxResult.Cancel
                 End If
             End Using
-        Else
-            Return MsgBoxResult.Yes
         End If
     End Function
 
-    Private Function actualizar(pagina As Integer) As MsgBoxResult
-        Dim result As MsgBoxResult = validar(pagina)
+    'Private Function Validar(Optional pagina As Integer = -1) As MsgBoxResult
+    '    'Hay que reformatear esto para que salte con actualizar()
+    '    'La idea sería mostrar los datos en un msgbox cuando apretás "guardar".
+    '    'Si todo sale bien, te muestra el resumen y pregunta, si faltan datos esenciales,
+    '    'muestra el resumen pero no deja elegir si guardar o no.
+    '    Dim msg As New List(Of String)
+
+    '    'Personas
+    '    If pagina = -1 Or pagina = 0 Then
+    '        msg.Add("** PERSONAS **")
+    '        If bs_resp.Count = 0 Then
+    '            msg.Add("(×) Debe indicar al menos un responsable.")
+    '        End If
+    '        If profesional_id.Text = 0 Then
+    '            msg.Add("(×) Debe indicar un profesional a cargo.")
+    '        End If
+    '        msg.Add(" ")
+    '    End If
+
+    '    If pagina = -1 Or pagina = 1 Then
+    '        'Inmuebles
+    '        msg.Add("** INMUEBLES **")
+    '        With bs_catastro
+    '            If .Count = 0 Then
+    '                msg.Add("(×) No se agregó un inmueble.")
+    '            End If
+    '            msg.Add(" ")
+    '        End With
+    '    End If
+
+    '    If pagina = -1 Or pagina = 2 Then
+    '        'Detalles de expediente
+    '        msg.Add("** EXPEDIENTE **")
+    '        If tarea.SelectedIndex = -1 Then
+    '            msg.Add("(×) Seleccione tarea.")
+    '        ElseIf tarea.Text = "MENSURA" And tarea2.SelectedIndex = -1 Then
+    '            msg.Add("(×) Seleccione detalle de tarea de mensura.")
+    '        End If
+    '        If inicio_obra.Value > Date.Today Then
+    '            msg.Add("(×) La fecha de inicio de obra es inválida.")
+    '        End If
+    '        If recibe.SelectedIndex = -1 Then
+    '            msg.Add("(×) Debe indicar quien recibe el expediente.")
+    '        End If
+    '        If check_fin_obra.Checked Then
+    '            If fin_obra.Value <= inicio_obra.Value Then
+    '                msg.Add("(×) La fecha de fin de de obra es inválida.")
+    '            End If
+    '            If ruta_fin_obra.Text = "" Then
+    '                msg.Add("(×) Cargar copia de certificado de Fin de Obra.")
+    '            End If
+    '        End If
+    '        msg.Add(" ")
+    '    End If
+
+    '    Dim valido As Integer = msg.FindIndex(Function(value As String)
+    '                                              Return value(0) = "("
+    '                                          End Function)
+
+    '    If valido > -1 Then
+    '        Using ver_error As New UIError("Errores en Expediente", msg)
+    '            Dim answer As DialogResult = ver_error.ShowDialog(Me)
+
+    '            If answer = DialogResult.OK Then
+    '                Return MsgBoxResult.No
+    '            Else
+    '                Return MsgBoxResult.Cancel
+    '            End If
+    '        End Using
+    '    Else
+    '        Return MsgBoxResult.Yes
+    '    End If
+    'End Function
+
+    Private Function Actualizar(pagina As Integer) As MsgBoxResult
+        Dim result As MsgBoxResult = Validar(pagina)
         If result = MsgBoxResult.Yes Then
             If pagina = 0 Then 'Responsables
-                ObrasPrivadas.Expediente.LimpiarResponsable(opr_id.Text)
-                ObrasPrivadas.Expediente.AgregarResponsable(bs_resp.DataSource, opr_id.Text, bs_resp.Current("persona_id"))
-                ObrasPrivadas.Expediente.ActualizarProfesional(opr_id.Text, profesional_id.Text)
+                ObrasPrivadas.Expediente.Agregar.Profesional(opr_id.Text, profesional_id.Text)
 
             ElseIf pagina = 1 Then 'Inmuebles
                 'Los cambios se producen en el momento, no es necesario guardar
 
             ElseIf pagina = 2 Then 'Expediente
-                ObrasPrivadas.Expediente.ActualizarDetalle(opr_id.Text, inicio_obra.Value, visado.Checked, fin_obra.Value,
+                ObrasPrivadas.Expediente.Agregar.Detalle(opr_id.Text, inicio_obra.Value, visado.Checked, fin_obra.Value,
                                                        recibe.Text, tarea.Text, tarea2.Text, Trim(observaciones.Text))
 
                 If (visado.Checked And fin_obra.Value <> fin_obra.MinDate) = False Then
@@ -246,7 +285,7 @@ Class ModExpediente
         Return result
     End Function
 
-    Private Sub tarea_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tarea.SelectedIndexChanged
+    Private Sub Tarea_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tarea.SelectedIndexChanged
         tarea2.SelectedIndex = -1
         tarea2.Visible = True
         tarea2.Items.Clear()
@@ -266,11 +305,11 @@ Class ModExpediente
         End If
     End Sub
 
-    Private Sub visado_CheckedChanged(sender As Object, e As EventArgs) Handles visado.CheckedChanged
+    Private Sub Visado_CheckedChanged(sender As Object, e As EventArgs) Handles visado.CheckedChanged
         check_fin_obra.Visible = visado.Checked
         check_fin_obra.Checked = False
     End Sub
-    Private Sub check_fin_obra_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles check_fin_obra.CheckedChanged
+    Private Sub Check_fin_obra_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles check_fin_obra.CheckedChanged
         With check_fin_obra
             fin_obra.Visible = .Checked
             et_fin_obra.Visible = .Checked
@@ -279,41 +318,38 @@ Class ModExpediente
             ver_fin_obra.Visible = .Checked
         End With
     End Sub
-    Private Sub cargar_fin_obra_Click(sender As Object, e As EventArgs) Handles cargar_fin_obra.Click
+    Private Sub Cargar_fin_obra_Click(sender As Object, e As EventArgs) Handles cargar_fin_obra.Click
         'Selecciona y guarda la copia de Final de Obra en PDF
         Dim ruta As String = FileMan.OPrivadas.CargarFinalObra(opr_id.Text, expediente.Text)
         If ruta <> "" Then
             ruta_fin_obra.Text = ruta
         End If
     End Sub
-    Private Sub ver_fin_obra_Click(sender As Object, e As EventArgs) Handles ver_fin_obra.Click, ruta_fin_obra.DoubleClick
+    Private Sub Ver_fin_obra_Click(sender As Object, e As EventArgs) Handles ver_fin_obra.Click, ruta_fin_obra.DoubleClick
         If Len(ruta_fin_obra.Text) > 5 Then
             Process.Start(root & My.Settings.DocFolderOprivadas & ruta_fin_obra.Text)
         End If
     End Sub
 
     '# PERSONA 
-    Private Sub add_resp_Click(sender As Object, e As EventArgs) Handles add_resp.Click
+    Private Sub Add_resp_Click(sender As Object, e As EventArgs) Handles add_resp.Click
         Dim source As DataRowView = Persona.Seleccionar(Me)
         'Se agrega el registro temporal
         If source Is Nothing = False Then
-            bs_resp.AddNew()
-            bs_resp.Current("persona_id") = source("persona_id").ToString
-            bs_resp.Current("razon") = source("razon").ToString
-            bs_resp.Current("cuil") = source("cuil").ToString
-            bs_resp.Current("email") = source("email").ToString
-            bs_resp.Current("telefono") = source("telefono").ToString
-            bs_resp.Current("difunto") = source("difunto")
-            bs_resp.EndEdit()
+            If ObrasPrivadas.Expediente.Agregar.Responsable(bs_resp.DataSource, opr_id.Text, bs_resp.Current("persona_id")) Then
+                Cargar(bs_expediente.Current.Row)
+            End If
         End If
     End Sub
-    Private Sub del_resp_Click(sender As Object, e As EventArgs) Handles del_resp.Click
+    Private Sub Del_resp_Click(sender As Object, e As EventArgs) Handles del_resp.Click
         If bs_resp.Position > -1 _
-                 And MsgBoxResult.Yes = MsgBox("¿Desea eliminar el responsable seleccionado?", MsgBoxStyle.YesNo, "Eliminar Responsable") Then
-            bs_resp.RemoveCurrent()
+           And MsgBoxResult.Yes = MsgBox("¿Desea eliminar el responsable seleccionado?", MsgBoxStyle.YesNo, "Eliminar Responsable") Then
+            If ObrasPrivadas.Expediente.EliminarResponsable(bs_resp.Current.Row) Then
+                Cargar(bs_expediente.Current.Row)
+            End If
         End If
     End Sub
-    Private Sub mod_prof_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mod_prof.Click
+    Private Sub Mod_prof_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mod_prof.Click
         Dim source As DataRowView = Persona.Seleccionar(Me, "PROFESIONAL")
         If source Is Nothing = False Then
             CtrlMan.LoadControlData(source, Panel3)
@@ -321,7 +357,7 @@ Class ModExpediente
     End Sub
 
     '# INMUEBLE
-    Private Sub bs_catastro_PositionChanged(sender As Object, e As EventArgs) Handles bs_catastro.PositionChanged
+    Private Sub Bs_catastro_PositionChanged(sender As Object, e As EventArgs) Handles bs_catastro.PositionChanged
         Dim registro As DataRowView = bs_catastro.Current
 
         mod_inmueble.Enabled = False
@@ -350,7 +386,7 @@ Class ModExpediente
             End If
         End If
     End Sub
-    Private Sub add_inmueble_Click(sender As Object, e As EventArgs) Handles add_inmueble.Click
+    Private Sub Add_inmueble_Click(sender As Object, e As EventArgs) Handles add_inmueble.Click
         Using agregar_inmueble As New ModInmueble(opr_id.Text)
             With agregar_inmueble
                 .ShowDialog(Me)
@@ -364,7 +400,7 @@ Class ModExpediente
             End With
         End Using
     End Sub
-    Private Sub mod_inmueble_Click(sender As Object, e As EventArgs) Handles mod_inmueble.Click
+    Private Sub Mod_inmueble_Click(sender As Object, e As EventArgs) Handles mod_inmueble.Click
         Using agregar_inmueble As New ModInmueble(opr_id.Text)
             With agregar_inmueble
                 If bs_catastro.Position > -1 Then 'Modificar
@@ -386,7 +422,7 @@ Class ModExpediente
             End With
         End Using
     End Sub
-    Private Sub del_inmueble_Click(sender As Object, e As EventArgs) Handles del_inmueble.Click
+    Private Sub Del_inmueble_Click(sender As Object, e As EventArgs) Handles del_inmueble.Click
         With bs_catastro
             If .Position > -1 Then
                 If CBool(.Current("archivado")).ToString = False _
@@ -399,7 +435,7 @@ Class ModExpediente
             End If
         End With
     End Sub
-    Private Sub consulta_inmueble_KeyUp(sender As Object, e As KeyEventArgs) Handles consulta_inmueble.KeyUp
+    Private Sub Consulta_inmueble_KeyUp(sender As Object, e As KeyEventArgs) Handles consulta_inmueble.KeyUp
         If e.KeyValue = Keys.Delete Then
             del_inmueble.PerformClick()
         ElseIf e.KeyValue = Keys.F2 Then

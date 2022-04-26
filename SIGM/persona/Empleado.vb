@@ -33,7 +33,7 @@
         Return DbMan.ReadDB(SelectSQL & TableSQL & sqlSelect, My.Settings.CurrentDB).Rows(0)
     End Function
 
-    Shared Function guardar(empleado_id As Integer, ByVal persona_id As Integer, alta As Date, jerarquia As String) As Integer
+    Shared Function Guardar(empleado_id As Integer, ByVal persona_id As Integer, alta As Date, jerarquia As String) As Integer
         If empleado_id <> 0 Then
             DbMan.EditDB("UPDATE empleado 
                              SET persona_id=" & persona_id & ", alta='" & alta & "', jerarquia='" & jerarquia & "'
@@ -48,7 +48,7 @@
         End If
         Return empleado_id
     End Function
-    Shared Function eliminar(ByVal empleado_id As Integer) As Boolean
+    Shared Function Eliminar(ByVal empleado_id As Integer) As Boolean
         Return DbMan.EditDB("DELETE * FROM empleado WHERE id=" & empleado_id, My.Settings.CurrentDB)
     End Function
 End Class

@@ -41,19 +41,19 @@
         Seleccionar()
     End Sub
 
-    Private Sub boleta_KeyUp(sender As Object, e As KeyEventArgs) Handles boleta.KeyUp
+    Private Sub Boleta_KeyUp(sender As Object, e As KeyEventArgs) Handles boleta.KeyUp
         If e.KeyValue = Keys.Enter Then
             Seleccionar()
         End If
     End Sub
 
-    Private Sub cancel_Click(sender As Object, e As EventArgs) Handles cancel.Click
+    Private Sub Cancel_Click(sender As Object, e As EventArgs) Handles cancel.Click
         If MsgBoxResult.Yes = MsgBox("Se perderán los cambios, desea continuar?", MsgBoxStyle.YesNo) Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub lastPage_Click(sender As Object, e As EventArgs) Handles lastPage.Click
+    Private Sub LastPage_Click(sender As Object, e As EventArgs) Handles lastPage.Click
         With TabControl1
             Transito.Multas.Actualizar(TabMultas1Boleta1, TabMultas2Persona1, TabMultas3Vehiculo1,
                                        multa_id, boleta.Text, True)
@@ -64,7 +64,7 @@
         End With
     End Sub
 
-    Private Sub nextPage_Click(sender As Object, e As EventArgs) Handles nextPage.Click
+    Private Sub NextPage_Click(sender As Object, e As EventArgs) Handles nextPage.Click
         With TabControl1
             Dim valid As Boolean = Transito.Multas.Actualizar(TabMultas1Boleta1, TabMultas2Persona1, TabMultas3Vehiculo1,
                                                               multa_id, boleta.Text, .SelectedIndex < .TabCount - 1)

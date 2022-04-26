@@ -1,7 +1,7 @@
 ﻿Module DbMan 'Database Manager
     'Muestra ultimo comando SQL ejecutado
-    Public last_sql As String = ""
-	Public last_connection As String = ""
+    Property Last_sql As String = ""
+    Property Last_connection As String = ""
 
     ' READ: Rutinas de lectura 
     Function ReadTableSchema(Optional constr As String = "") As DataTable
@@ -165,15 +165,13 @@
         Else
             Return dtab
         End If
-
-
     End Function
 
     Function GenerateReportDataset(OleDBProcedure As OleDb.OleDbCommand) As DataSet
-		Dim ds As New DataSet
-		ds.Tables.Add(DbMan.readDB(OleDBProcedure, My.Settings.CurrentDB))
-		Return ds
-	End Function
+        Dim ds As New DataSet
+        ds.Tables.Add(DbMan.ReadDB(OleDBProcedure, My.Settings.CurrentDB))
+        Return ds
+    End Function
 
     ' END READ 
 

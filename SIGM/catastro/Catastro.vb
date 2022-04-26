@@ -130,7 +130,12 @@
             sqlSelect &= CatastroFrom
             sqlSelect &= " WHERE catastro.id=" & catastroId
 
-            Return DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB)(0)
+            Dim dtab As DataTable = DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB)
+            If dtab Is Nothing = False Then
+                Return dtab(0)
+            Else
+                Return Nothing
+            End If
         Else
             Return Nothing
         End If
@@ -168,7 +173,7 @@
         End If
 
     End Function
-    Overloads Shared Function ListarFrente(catastroId As Integer) As DataTable
+    Shared Function ListarFrente(catastroId As Integer) As DataTable
         Dim sqlSelect As String
         sqlSelect = "SELECT id As frente_id, calle, altura, metros, ubicacion"
         sqlSelect &= " FROM cat_frente"
@@ -177,17 +182,187 @@
         Return DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB)
     End Function
 
+    Class Validar
+        Shared Function Partida(catastro_id As Double, operacion As String) As List(Of String)
+            Dim msg As New List(Of String) From {"** PARTIDA **"}
+
+            If catastro_id = -1 Then
+                msg.Add("(×) Seleccione un inmueble para continuar.")
+            ElseIf catastro_id <> 0 And operacion = "" Then
+                msg.Add("(×) Inmueble no válido.")
+            End If
+
+            Return msg
+        End Function
+        Shared Function Detalles(cuenta As Double, barrio As Integer, uso As Integer, titular_id As Double) As List(Of String)
+            Dim msg As New List(Of String) From {"** DETALLE DE INMUEBLE **"}
+            If Val(cuenta) < 1 Then
+                msg.Add("(×) Ingrese N° de cuenta del inmueble.")
+            End If
+            If barrio = -1 Then
+                msg.Add("(×) Debe seleccionar un barrio antes de continuar.")
+            End If
+            If uso = -1 Then
+                msg.Add("(×) Debe indicar uso del inmueble antes de continuar.")
+            End If
+            If titular_id < 1 Then
+                msg.Add("(×) No se seleccionó un titular.")
+            End If
+
+            Return msg
+        End Function
+        Shared Function Frentes(bs_frente As BindingSource) As List(Of String)
+            Dim msg As New List(Of String) From {"** FRENTES **"}
+
+            If bs_frente.Count = 0 Then
+                msg.Add("(×) No se definió ningún frente de inmueble.")
+            ElseIf bs_frente.Position = -1 Then
+                msg.Add("(×) Debe seleccionar un frente como ubicación del inmueble.")
+            End If
+
+            Return msg
+        End Function
+        Shared Function Superficies(libre As Decimal, cubierto As Decimal) As List(Of String)
+            Dim msg As New List(Of String) From {"** SUPERFICIE **"}
+
+            If libre = 0 Or cubierto = 0 Then
+                msg.Add("(×) No hay superficie declarada.")
+            End If
+
+            Return msg
+        End Function
+        Shared Function Caracteristicas(bs_caracteristica As BindingSource) As List(Of String)
+            Dim msg As New List(Of String) From {"** CARACTERÍSTICAS **"}
+
+            If bs_caracteristica.Count = 0 Then
+                msg.Add("(×) No se definió ningún servicio o característica.")
+            End If
+
+            Return msg
+        End Function
+        Shared Function CopiaDigital(bs_copia As BindingSource) As List(Of String)
+            Dim FoundEscritura As Boolean = False
+            Dim msg As New List(Of String) From {"** COPIAS DIGITALES **"}
+
+            If bs_copia.Count = 0 Then
+                msg.Add("(×) No existen documentos relacionados con este inmueble.")
+            Else
+                For fila As Integer = 0 To bs_copia.Count - 1
+                    bs_copia.Position = fila
+                    If bs_copia.Current("descripcion").ToString = "ESCRITURA O POSESION" Then
+                        FoundEscritura = True
+                    End If
+                Next
+                If FoundEscritura = False Then
+                    msg.Add("(×) Es obligatorio cargar una copia de la Escritura o Posesión del inmueble para continuar.")
+                End If
+            End If
+
+            Return msg
+        End Function
+
+        'Function ValidarInmueble(pagina As Integer) As DialogResult
+        '    Dim msg As New List(Of String)
+        '    Dim valido As Boolean = True
+        '    Dim dr As DialogResult = DialogResult.OK
+
+        '    If pagina = 0 Then 'BÚSQUEDA DE PARTIDA
+        '        msg.Add("** PARTIDA **")
+        '        If catastro_id.Text = -1 Then
+        '            msg.Add("(×) Seleccione un inmueble para continuar.")
+        '            valido = False
+        '        ElseIf catastro_id.Text <> 0 And operacion.Text = "" Then
+        '            msg.Add("(×) Inmueble no válido.")
+        '            valido = False
+        '        End If
+
+        '    ElseIf pagina = 1 Then 'DETALLES
+        '        msg.Add("** DETALLE DE INMUEBLE **")
+        '        If Val(cuenta.Text) < 1 Then
+        '            msg.Add("(×) Ingrese N° de cuenta del inmueble.")
+        '            valido = False
+        '        End If
+        '        If barrio.SelectedIndex = -1 Then
+        '            msg.Add("(×) Debe seleccionar un barrio antes de continuar.")
+        '            valido = False
+        '        End If
+        '        If uso.SelectedIndex = -1 Then
+        '            msg.Add("(×) Debe indicar uso del inmueble antes de continuar.")
+        '            valido = False
+        '        End If
+        '        If titular_id.Text < 1 Then
+        '            msg.Add("(×) No se seleccionó un titular.")
+        '            valido = False
+        '        End If
+
+
+        '    ElseIf pagina = 2 Then 'FRENTES
+        '        msg.Add("** FRENTES **")
+        '        If BSFrente.Count = 0 Then
+        '            msg.Add("(×) No se definió ningún frente de inmueble.")
+        '            valido = False
+        '        ElseIf BSFrente.Position = -1 Then
+        '            msg.Add("(×) Debe seleccionar un frente como ubicación del inmueble.")
+        '            valido = False
+        '        End If
+
+
+        '    ElseIf pagina = 3 Then 'SUPERFICIE
+        '        msg.Add("** SUPERFICIE **")
+        '        If libre.Value = 0 Or cubierto.Value = 0 Then
+        '            msg.Add("(×) No hay superficie declarada.")
+        '            valido = False
+        '        End If
+
+
+        '    ElseIf pagina = 4 Then 'CARACTERÍSTICAS Y SERVICIOS
+        '        msg.Add("** CARACTERÍSTICAS **")
+        '        If BSCar.Count = 0 Then
+        '            msg.Add("(×) No se definió ningún servicio o característica.")
+        '            valido = False
+        '        End If
+
+
+        '    ElseIf pagina = 5 Then 'COPIAS
+        '        msg.Add("** COPIAS DIGITALES **")
+        '        If BSCopia.Count = 0 Then
+        '            msg.Add("(×) No existen documentos relacionados con este inmueble.")
+        '            valido = False
+        '        Else
+        '            valido = False
+        '            For fila As Integer = 0 To BSCopia.Count - 1
+        '                BSCopia.Position = fila
+        '                If BSCopia.Current("descripcion").ToString = "ESCRITURA O POSESION" Then
+        '                    valido = True
+        '                End If
+        '            Next
+        '            If valido = False Then
+        '                msg.Add("(×) Es obligatorio cargar una copia de la Escritura o Posesión del inmueble para continuar.")
+        '            End If
+        '        End If
+        '    End If
+
+        '    If valido = False Then
+        '        Using error_form As New UIError("Errores en Inmueble", msg)
+        '            dr = error_form.ShowDialog(Me)
+        '        End Using
+        '    End If
+        '    Return dr
+        'End Function
+    End Class
+
+
     'MOD
     Class Agregar
         Shared Sub Inmueble(oprId As Integer, ByRef catastroId As Integer, titularId As Integer,
-                                      barrio As String, uso As String, cuenta As Integer, archivado As Boolean,
-                                      zona As Integer, circ As Integer, secc As Integer,
-                                      manz As Integer, parc As Integer, lote As Integer)
+                                  barrio As String, uso As String, cuenta As Integer, archivado As Boolean,
+                                  zona As Integer, circ As Integer, secc As Integer,
+                                  manz As Integer, parc As Integer, lote As Integer)
             'Agregar
             Dim sqlInsert As String
             sqlInsert = "INSERT INTO catastro(user_id, opr_id, zona, circ, secc, manz, parc, lote, barrio, uso, cuenta, archivado) 
                               VALUES(" & My.Settings.UserId & "," & oprId & ", " & zona & ", " & circ & ", " & secc & "," &
-                                     manz & ", " & parc & ", " & lote & ",'" & barrio & "', '" & uso & "', " & cuenta & "," & archivado & ")"
+                                 manz & ", " & parc & ", " & lote & ",'" & barrio & "', '" & uso & "', " & cuenta & "," & archivado & ")"
             DbMan.EditDB(sqlInsert, My.Settings.CurrentDB)
 
             'leer ultimo inmueble
@@ -199,11 +374,11 @@
             If catastroId > 0 And titularId > 0 Then
                 'Guardar titular
                 DbMan.EditDB("DELETE * FROM titular_catastro WHERE cat_id=" & catastroId,
-                             My.Settings.CurrentDB)
+                         My.Settings.CurrentDB)
 
                 DbMan.EditDB("INSERT INTO titular_catastro(cat_id, per_id)
                                    VALUES(" & catastroId & ", " & titularId & ")",
-                             My.Settings.CurrentDB)
+                         My.Settings.CurrentDB)
             End If
 
         End Sub
@@ -211,33 +386,33 @@
             DbMan.EditDB("INSERT INTO cat_frente(catastro_id, calle, altura, metros)
                                 VALUES(" & catastroId & ",'" & calle & "', " & altura & ",
                                       '" & metros & "')",
-                          My.Settings.CurrentDB)
+                      My.Settings.CurrentDB)
         End Sub
         Shared Sub Superficie(catastroId As Integer,
-                                 existente As Decimal, relevamiento As Decimal,
-                                 proyecto As Decimal, terreno As Decimal)
+                             existente As Decimal, relevamiento As Decimal,
+                             proyecto As Decimal, terreno As Decimal)
 
             'cat_superficie
             DbMan.EditDB("DELETE * FROM cat_superficie WHERE catastro_id=" & catastroId,
-                         My.Settings.CurrentDB)
+                     My.Settings.CurrentDB)
 
             DbMan.EditDB("INSERT INTO cat_superficie(catastro_id, existente, proyecto, relevamiento, terreno)
                                VALUES(" & catastroId & ", '" & existente & "', '" & proyecto & "', 
-                                      " & " '" & relevamiento & "', '" & terreno & "')", 
-                         My.Settings.CurrentDB)
+                                      " & " '" & relevamiento & "', '" & terreno & "')",
+                     My.Settings.CurrentDB)
 
         End Sub
         Shared Sub Caracteristica(registro As DataTable, CatastroId As Integer)
             Dim sqlInsert As String = ""
             'cat_servicio
             DbMan.EditDB("DELETE * FROM cat_servicio WHERE catastro_id=" & CatastroId,
-                         My.Settings.CurrentDB)
+                     My.Settings.CurrentDB)
 
             For Each dr As DataRow In registro.Rows
                 sqlInsert = "INSERT INTO cat_servicio(catastro_id, descripcion, activo)
                                   VALUES(" & CatastroId.ToString & ",'" &
-                                         dr("descripcion").ToString & "', " &
-                                         dr("activo").ToString & ")"
+                                     dr("descripcion").ToString & "', " &
+                                     dr("activo").ToString & ")"
             Next
             DbMan.EditDB(sqlInsert, My.Settings.CurrentDB)
         End Sub
@@ -257,22 +432,22 @@
     End Class
     Class Modificar
         Shared Sub Inmueble(OprId As Integer, ByRef CatastroId As Integer, TitularId As Integer,
-                                        barrio As String, uso As String, cuenta As Integer)
+                                    barrio As String, uso As String, cuenta As Integer)
 
             'Modificar
             DbMan.EditDB("UPDATE catastro 
                              SET user_id=" & My.Settings.UserId & ", opr_id=" & OprId & ", 
                                  barrio='" & barrio & "', uso='" & uso & "', cuenta=" & Val(cuenta) & "
                            WHERE id=" & CatastroId,
-                         My.Settings.CurrentDB)
+                     My.Settings.CurrentDB)
 
             If CatastroId > 0 And TitularId > 0 Then
                 'Guardar titular
                 DbMan.EditDB("DELETE * FROM titular_catastro WHERE cat_id=" & CatastroId,
-                             My.Settings.CurrentDB)
+                         My.Settings.CurrentDB)
                 DbMan.EditDB("INSERT INTO titular_catastro(cat_id, per_id) 
                                    VALUES(" & CatastroId & ", " & TitularId & ")",
-                             My.Settings.CurrentDB)
+                         My.Settings.CurrentDB)
             End If
         End Sub
         Shared Sub Ubicacion(FrenteId As Integer, CatastroId As Integer)
@@ -285,7 +460,7 @@
             Dim RowsAffected As Integer = 0
             If UserId > 0 Then 'Solo el usuario que bloqueo el inmueble puede eliminarlo
                 Dim dtab As DataTable = DbMan.ReadDB("SELECT * FROM catastro WHERE id=" & CatastroId & " AND user_id=" & UserId,
-                                                     My.Settings.CurrentDB)
+                                                 My.Settings.CurrentDB)
 
                 Dim sqlDelete(dtab.Rows.Count) As String
                 For Each dr As DataRow In dtab.Rows
@@ -303,10 +478,10 @@
             DbMan.EditDB("DELETE * FROM cat_frente WHERE id=" & id, My.Settings.CurrentDB)
         End Sub
     End Class
-    ' ROUTINES
+    'OTHER PROCEDURES
     Shared Sub CalcularSuperficie(ByRef existente As Decimal, ByRef proyecto As Decimal,
-                                  ByRef relevamiento As Decimal, ByRef terreno As Decimal,
-                                  ByRef libre As Decimal, ByRef cubierto As Decimal)
+                              ByRef relevamiento As Decimal, ByRef terreno As Decimal,
+                              ByRef libre As Decimal, ByRef cubierto As Decimal)
 
         cubierto = proyecto + relevamiento + existente
         If terreno <= cubierto Then

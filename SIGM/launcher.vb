@@ -1,6 +1,4 @@
-﻿Imports System.ComponentModel
-
-Public Class Launcher
+﻿Public Class Launcher
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
@@ -17,24 +15,12 @@ Public Class Launcher
         ColorPersona = l_persona.BackColor
         ColorTransito = l_transito.BackColor
         ConfigInit(Me)
-        Login()
+        CtrlMan.AddMenuEvents(FlowLayoutPanel1, AddressOf SeleccionForm)
     End Sub
+
     ' GUI 
     'List all buttons
-    Private Sub Login()
-        Using a As New Acceso
-            a.ShowDialog()
-        End Using
-        If My.Settings.UserId > 0 Then
-            SecMan.Privileges(Me, My.Settings.UserId)
-        Else
-            End
-        End If
-    End Sub
-    Private Sub SeleccionForm(sender As Object, e As EventArgs) Handles l_hacienda.Click, l_catastro.Click, l_contratos.Click,
-                                                                        l_opublicas.Click, l_oprivadas.Click, l_comercio.Click,
-                                                                        l_persona.Click, l_accionsocial.Click, l_mesa_de_entradas.Click,
-                                                                        l_transito.Click, l_formularios.Click, opcion.Click
+    Private Sub SeleccionForm(sender As Object, e As EventArgs) Handles l_formularios.Click, opcion.Click
         Dim form1 As New Form
         Using form1
             If TypeOf sender Is Button Then
@@ -61,6 +47,8 @@ Public Class Launcher
                             menu1 = New CatastroMenu
                         ElseIf sender Is l_comercio Then
                             menu1 = New ComercioMenu
+                        ElseIf sender Is l_gobierno Then
+                            menu1 = New GobiernoMenu
                         ElseIf sender Is l_hacienda Then
                             menu1 = New HaciendaMenu
                         ElseIf sender Is l_mesa_de_entradas Then
@@ -85,8 +73,11 @@ Public Class Launcher
 
     Private Sub Salir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles salir.Click
         SecMan.RegisterLogon(My.Settings.UserId, False) 'Cerrar Sesión
-        Login()
+        Dim a As New Acceso
+        a.Show()
+        Me.Close()
     End Sub
+
     ' END GUI 
 
 

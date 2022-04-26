@@ -1,7 +1,6 @@
-﻿Imports System.Collections.Generic
-Class calcTMuniPlanosEdif
-    Public help_source As New List(Of String)
-    Dim variables(5) As DataRowView
+﻿Class CalcTMuniPlanosEdif
+    Property Help_source As New List(Of String)
+    Property Variables() As DataRowView
 
     Private Sub Me_Load(sender As Object, e As EventArgs) Handles Me.Load
         If Me.Visible Then
@@ -9,53 +8,53 @@ Class calcTMuniPlanosEdif
                                                              FROM opr_tasa_edificacion",
                                                           My.Settings.CurrentDB, "opr_tasa_edificacion")
 
-            variables(0) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "basico")) 'Basico
-            variables(1) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "85b")) 'Antisismico
-            variables(2) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "88")) 'descuento renovacion
-            variables(3) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "93a")) 'linea municipal 1
-            variables(4) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "93b")) 'linea municipal 2
-            variables(5) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "93c")) 'ad linea municipal
+            Variables(0) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "basico")) 'Basico
+            Variables(1) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "85b")) 'Antisismico
+            Variables(2) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "88")) 'descuento renovacion
+            Variables(3) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "93a")) 'linea municipal 1
+            Variables(4) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "93b")) 'linea municipal 2
+            Variables(5) = bs_tasa_edificacion(bs_tasa_edificacion.Find("articulo", "93c")) 'ad linea municipal
 
             bs_indice_inmueble.DataSource = DbMan.ReadDB("SELECT id as tasa_edificacion_id, articulo, valor*alicuota as indice, descripcion
                                                             FROM opr_tasa_edificacion WHERE visible=True ORDER BY descripcion",
                                                         My.Settings.CurrentDB, "opr_indice_inmueble")
             Dim ctrl As New ctrlAddInmuebleEdificacion(bs_indice_inmueble.DataSource, False)
             lista_edificacion.Controls.Add(ctrl)
-            AddHandler ctrl.manage_edificacion, AddressOf manage_edificacion
+            AddHandler ctrl.Manage_edificacion, AddressOf Manage_edificacion
 
-            calcular()
+            Calcular()
         End If
     End Sub
 
-    Private Sub multa_relevamiento_CheckedChanged(sender As Object, e As EventArgs) Handles multa_relevamiento.CheckedChanged
+    Private Sub Multa_relevamiento_CheckedChanged(sender As Object, e As EventArgs) Handles multa_relevamiento.CheckedChanged
         monto_multa_relevamiento.Enabled = multa_relevamiento.Checked
-        calcular()
+        Calcular()
     End Sub
-    Private Sub descuento_renovacion_CheckedChanged(sender As Object, e As EventArgs) Handles descuento_renovacion.CheckedChanged
+    Private Sub Descuento_renovacion_CheckedChanged(sender As Object, e As EventArgs) Handles descuento_renovacion.CheckedChanged
         monto_descuento_renovacion.Enabled = descuento_renovacion.Checked
-        calcular()
+        Calcular()
     End Sub
-    Private Sub linea_municipal_ValueChanged(sender As Object, e As EventArgs) Handles monto_linea_municipal.ValueChanged
-        calcular()
+    Private Sub Linea_municipal_ValueChanged(sender As Object, e As EventArgs) Handles monto_linea_municipal.ValueChanged
+        Calcular()
     End Sub
-    Private Sub agua_ValueChanged(sender As Object, e As EventArgs)
-        calcular()
+    Private Sub Agua_ValueChanged(sender As Object, e As EventArgs)
+        Calcular()
     End Sub
-    Private Sub desc_porcentaje_ValueChanged(sender As Object, e As EventArgs) Handles desc_porcentaje.ValueChanged, cuotas.ValueChanged, desc_porcentaje.ValueChanged
-        calcular()
+    Private Sub Desc_porcentaje_ValueChanged(sender As Object, e As EventArgs) Handles desc_porcentaje.ValueChanged, cuotas.ValueChanged, desc_porcentaje.ValueChanged
+        Calcular()
     End Sub
 
     'Custom events from AddInmuebleEdificacion add, delete, calculate
-    Private Sub manage_edificacion(sender As Object, target As ctrlAddInmuebleEdificacion)
+    Private Sub Manage_edificacion(sender As Object, target As ctrlAddInmuebleEdificacion)
         If sender Is target.agregar Then
             Dim ctrl As New ctrlAddInmuebleEdificacion(bs_indice_inmueble.DataSource, True)
             lista_edificacion.Controls.Add(ctrl)
-            AddHandler ctrl.manage_edificacion, AddressOf manage_edificacion
+            AddHandler ctrl.Manage_edificacion, AddressOf Manage_edificacion
 
         ElseIf sender Is target.eliminar Then
             target.Dispose()
         End If
-        calcular()
+        Calcular()
     End Sub
 
     Private Sub Calcular()
@@ -63,13 +62,13 @@ Class calcTMuniPlanosEdif
         Dim ad_categoria, subtotal, descuento As Decimal
         Dim basico, ad_sismico, desc_renovacion, linea_muni1, linea_muni2, ad_linea_muni As Decimal
 
-        If variables(0) Is Nothing = False And Me.Visible Then
-            basico = variables(0)("valor")
-            ad_sismico = variables(1)("valor")
-            desc_renovacion = variables(2)("valor")
-            linea_muni1 = variables(3)("valor")
-            linea_muni2 = variables(4)("valor")
-            ad_linea_muni = variables(5)("valor")
+        If Variables(0) Is Nothing = False And Me.Visible Then
+            basico = Variables(0)("valor")
+            ad_sismico = Variables(1)("valor")
+            desc_renovacion = Variables(2)("valor")
+            linea_muni1 = Variables(3)("valor")
+            linea_muni2 = Variables(4)("valor")
+            ad_linea_muni = Variables(5)("valor")
 
             'Urbanización
             For Each c As Control In lista_edificacion.Controls

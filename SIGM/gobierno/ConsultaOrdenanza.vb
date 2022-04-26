@@ -1,112 +1,76 @@
 ﻿Public Class ConsultaOrdenanza
+    Dim bs_resultado As New BindingSource
+    Public Sub New()
 
+        ' Esta llamada es exigida por el diseñador.
+        InitializeComponent()
+        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        GenSearchControl1.vista.Items.AddRange(New Object() {"ORDENANZA"})
+        GenSearchControl1.print.Visible = False
+    End Sub
+
+    '-- EVENTOS UNICOS
     Private Sub ConsultaOrdenanza_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
-        KeyFecha.MaxDate = Date.Today
-        KeyFecha.Value = Date.Today
+        GenSearchControl1.vista.SelectedIndex = 0
     End Sub
-    Private Sub bs_consulta_PositionChanged(sender As Object, e As EventArgs) Handles bs_consulta.PositionChanged
-
-    End Sub
-
-    ' GUI 
-    Private Sub cerrar_Click(sender As Object, e As EventArgs)
-        Me.Close()
-    End Sub
-    ' END GUI 
-
-    ' BUSQUEDA 
-    Private Sub reiniciar_Click(sender As Object, e As EventArgs) Handles reiniciar.Click
-        visor.DataSource = Nothing
-        KeyCodigo.Clear()
-        KeyFecha.Value = Date.Today
-        KeyConcepto.Clear()
-        filtro.SelectedIndex = -1
+    Private Sub Vista_SelectedIndexChanged() Handles GenSearchControl1.CVistaIndexTextChanged
+        BuscarOrdenanza()
     End Sub
 
-    Private Sub filtro_SelectedIndexChanged(sender As Object, e As EventArgs) Handles filtro.SelectedIndexChanged
-        KeyCodigo.Visible = False
-        KeyFecha.Visible = False
-        KeyConcepto.Visible = False
-        If filtro.SelectedIndex > -1 Then
-            With filtro.Text
-                If .Contains("CODIGO") Then
-                    KeyCodigo.Visible = True
-                ElseIf .Contains("FECHA") Then
-                    KeyFecha.Visible = True
-                ElseIf .Contains("CONCEPTO") Then
-                    KeyConcepto.Visible = True
+    Private Sub Search() Handles GenSearchControl1.CSearchClick
+        GenSearchControl1.FilterSearch()
+    End Sub
+    Private Sub FilterResults() Handles GenSearchControl1.CFilter
+        If bs_resultado Is Nothing = False Then
+            bs_resultado.Filter = GenSearchControl1.bsCustomFilter
+        End If
+    End Sub
+
+    Private Sub ResetSearch() Handles GenSearchControl1.CResetClick
+        GenSearchControl1.vista.SelectedIndex = 0
+    End Sub
+
+    Public Sub BuscarOrdenanza()
+        With GenSearchControl1
+            If Me.Visible And .vista.Text <> "" Then
+                .filtro.DataSource = Nothing
+                If .vista.Text = "ORDENANZA" Then
+                    Dim dtab As DataTable = Ordenanza.Listar()
+                    If dtab.Rows.Count > 0 Then
+                        bs_resultado.DataSource = dtab
+                        Dim bs_ColumnList As New BindingSource _
+                        With {.DataSource = CtrlMan.Fill.GetColumnList(dtab.Columns)}
+                        CtrlMan.Fill.SetAutoComplete(.filtro, bs_ColumnList, "ColumnName", "DataType")
+                        CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, .bsCustomFilter)
+                        GenSearchControl1.FilterSearch()
+                        GenSearchControl1.filtro.SelectedIndex = 3 'Concepto
+                    Else
+                        resultado.DataSource = Nothing
+                    End If
+                Else
+                    GenSearchControl1.reset_search.PerformClick()
                 End If
-            End With
-        End If
+            End If
+        End With
     End Sub
 
-    Private Sub KeyCodigo_KeyPress(sender As Object, e As KeyPressEventArgs) Handles KeyCodigo.KeyPress
-        If e.KeyChar = Chr(13) Then
-            buscar.PerformClick()
-        End If
-    End Sub
-    Private Sub KeyFecha_KeyPress(sender As Object, e As KeyPressEventArgs) Handles KeyFecha.KeyPress
-        If e.KeyChar = Chr(13) Then
-            buscar.PerformClick()
-        End If
-    End Sub
-    Private Sub KeyConcepto_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles KeyConcepto.KeyPress
-        If e.KeyChar = Chr(13) Then
-            buscar.PerformClick()
-        End If
-    End Sub
-    Private Sub Buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
-        Dim sql(2) As String
-        Dim dtab As New DataTable
-
-        sql(0) = "SELECT *"
-        sql(1) = " FROM ordenanza"
-
-        grupo_mod.Enabled = False
-        If filtro.SelectedIndex > -1 Then
-            If KeyCodigo.Visible And Val(Microsoft.VisualBasic.Left(KeyCodigo.Text, 4)) > 0 _
-            And Val(Microsoft.VisualBasic.Right(KeyCodigo.Text, 4)) > 1899 Then
-                sql(2) = " WHERE codigo=" & Val(KeyCodigo.Text)
-                Me.Text = "Buscar Ordenanza | " &
-                          Microsoft.VisualBasic.Left(KeyCodigo.Text, Len(KeyCodigo.Text) - 4) & "/" & Microsoft.VisualBasic.Right(KeyCodigo.Text, 4)
-            ElseIf KeyFecha.Visible Then
-                sql(2) = " WHERE fecha='" & KeyFecha.Text & "'"
-                Me.Text = "Buscar Ordenanza | " & KeyFecha.Text
-            ElseIf KeyConcepto.Visible And Len(KeyConcepto.Text) > 3 Then
-                sql(2) = " WHERE concepto LIKE '%" & Trim(KeyConcepto.Text) & "%'"
-                Me.Text = "Buscar Ordenanza | " & KeyConcepto.Text
+    Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles GenSearchControl1.CKeywordKeyUp, resultado.KeyUp
+        If e.KeyValue = Keys.Enter And sender Is GenSearchControl1.keyword Then
+            GenSearchControl1.search.PerformClick()
+        ElseIf sender Is resultado Then
+            If e.KeyValue = Keys.Enter Then
+                ver.PerformClick()
+            ElseIf e.KeyValue = Keys.F2 Then
+                modificar.PerformClick()
+            ElseIf e.KeyValue = Keys.Delete Then
+                eliminar.PerformClick()
             End If
         End If
-
-        dtab = DbMan.ReadDB(sql, My.Settings.CurrentDB)
-
-        If dtab Is Nothing = False Then
-            CtrlMan.DataGridViewTools.Load(visor, dtab)
-            If dtab.Rows.Count = 0 Then
-                MsgBox("No hay resultados.")
-                Me.Text = "Buscar Ordenanza"
-            Else
-                grupo_mod.Enabled = True
-            End If
-        Else
-            MsgBox("No hay resultados.")
-            Me.Text = "Buscar Ordenanza"
-        End If
     End Sub
 
-    ' OPERACIONES 
-    Private Sub consulta_KeyUp(sender As Object, e As KeyEventArgs) Handles visor.KeyUp
-		If e.KeyValue = Keys.Delete Then
-			eliminar.PerformClick()
-		ElseIf e.KeyValue = Keys.Enter Then
-			ver.PerformClick()
-		ElseIf e.KeyValue = Keys.F2 Then
-			modificar.PerformClick()
-		End If
-	End Sub
     Private Sub VerClick(sender As Object, e As EventArgs) Handles ver.Click
-        Dim path As DataRowView = bs_consulta.Current
-        If bs_consulta.Position > -1 Then
+        Dim path As DataRowView = bs_resultado.Current
+        If bs_resultado.Position > -1 Then
             Try
                 Process.Start(root & My.Settings.DocFolderOrdenanza & path("ruta_copia").ToString)
             Catch ex As Exception
@@ -114,31 +78,28 @@
             End Try
         End If
     End Sub
-    Private Sub modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles modificar.Click
-		If bs_consulta.Position > -1 Then
+    Private Sub Modificar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles modificar.Click
+        Dim source As DataRowView = bs_resultado.Current
+        If source Is Nothing = False Then
             Using ModificarOrdenanza As New ModOrdenanza
                 With ModificarOrdenanza
-                    .bs_registro = bs_consulta
+                    .bs_registro = bs_resultado
                     .ShowDialog()
                     .Dispose()
                 End With
             End Using
-            buscar.PerformClick()
-		End If
-	End Sub
-	Private Sub eliminar_Click(sender As Object, e As EventArgs) Handles eliminar.Click
-        Dim source As DataRowView = bs_consulta.Current
+            BuscarOrdenanza()
+        End If
+    End Sub
+    Private Sub Eliminar_Click(sender As Object, e As EventArgs) Handles eliminar.Click
+        Dim source As DataRowView = bs_resultado.Current
         If source Is Nothing = False Then
             If MsgBoxResult.Yes = MsgBox("¿Desea eliminar el registro seleccionado?", MsgBoxStyle.YesNo, "Eliminar registro") Then
                 DbMan.EditDB("DELETE * FROM ordenanza WHERE id=" & CInt(source("id")), My.Settings.CurrentDB)
-                buscar.PerformClick()
+                BuscarOrdenanza()
             End If
         End If
     End Sub
-
-
-
-
 
 
 End Class

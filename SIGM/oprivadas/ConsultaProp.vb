@@ -32,7 +32,7 @@
         Me.Close()
     End Sub
 
-    Private Sub vista_SelectedIndexChanged() Handles genSearchControl1.CVistaIndexTextChanged
+    Private Sub Vista_SelectedIndexChanged() Handles genSearchControl1.CVistaIndexTextChanged
         With genSearchControl1
             If .vista.SelectedIndex > -1 Then
                 .filtro.DataSource = Nothing

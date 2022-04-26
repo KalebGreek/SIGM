@@ -246,7 +246,7 @@
         End If
     End Function
 
-    Overloads Shared Sub Guardar(fecha As Date, descripcion As String, ruta As String, tabla As String, col_id As String, id As Integer)
+    Overloads Shared Sub Guardar(fecha As String, descripcion As String, ruta As String, tabla As String, col_id As String, id As Integer)
         'Guarda una ruta de documento en una tabla
         'Todas las tablas de documentos deben contener las mismas columnas:
         'FOO_ID, FECHA, DESCRIPCION, RUTA
@@ -257,14 +257,14 @@
             Dim sqlUpdate(dtab.Rows.Count) As String
             For Each dr As DataRow In dtab.Rows
                 sqlUpdate(dtab.Rows.IndexOf(dr)) = "UPDATE " & tabla & " 
-                                                       SET fecha='" & fecha.ToShortDateString & "', ruta='" & ruta & "'
+                                                       SET fecha='" & fecha & "', ruta='" & ruta & "'
 							                         WHERE " & col_id & "=" & id & " AND  descripcion='" & descripcion & "'"
 
             Next
             DbMan.EditDB(sqlUpdate, My.Settings.CurrentDB)
         Else
             DbMan.EditDB("INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)
-							   VALUES(" & id & ", #" & fecha & "# ,'" & descripcion & "', '" & ruta & "')",
+							   VALUES(" & id & ", '" & fecha & "' ,'" & descripcion & "', '" & ruta & "')",
                          My.Settings.CurrentDB)
         End If
     End Sub
@@ -274,7 +274,7 @@
             Dim sqlInsert(lista.Rows.Count) As String
             For Each dr As DataRow In lista.Rows
                 sqlInsert(lista.Rows.IndexOf(dr)) = "INSERT INTO " & tabla & "(" & col_id & ", fecha, descripcion, ruta)
-                                                          VALUES(" & id & ", #" & dr("fecha").ToString & "# ,'" & dr("descripcion").ToString & "',
+                                                          VALUES(" & id & ", '" & dr("fecha").ToString & "' ,'" & dr("descripcion").ToString & "',
                                                                  '" & dr("ruta").ToString & "')"
 
             Next

@@ -130,17 +130,17 @@
 
         End Function
 
-        Shared Function SaveTicket(id As Integer, proveedor_id As Integer, responsable_id As Integer, fecha As Date, ticket As Integer) As Boolean
+        Shared Function SaveTicket(id As Integer, proveedor_id As Integer, responsable_id As Integer, fecha As String, ticket As Integer) As Boolean
             Dim sqlInsert As String
             If id > 0 Then
                 sqlInsert = "UPDATE hac_combustible_ticket 
 							    SET proveedor_id=" & proveedor_id & ", responsable_id=" & responsable_id & ",
-								    fecha=#" & fecha & "#, ticket=" & ticket & ", 
+								    fecha='" & fecha & "', ticket=" & ticket & ", 
 								    user_id=" & My.Settings.UserId & "
 							  WHERE hac_combustible_ticket.id=" & id
             Else
                 sqlInsert = "INSERT INTO hac_combustible_ticket(proveedor_id, responsable_id, fecha, ticket, total, user_id) 
-							      VALUES(" & proveedor_id & ", " & responsable_id & ", #" & Date.Today & "#, 0, 0, " & My.Settings.UserId & ")"
+							      VALUES(" & proveedor_id & ", " & responsable_id & ", '" & Date.Today.ToString & "', 0, 0, " & My.Settings.UserId & ")"
             End If
             DbMan.EditDB(sqlInsert, My.Settings.CurrentDB)
             Return True

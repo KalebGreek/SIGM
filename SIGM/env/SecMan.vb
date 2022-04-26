@@ -74,13 +74,13 @@ Class SecMan 'Security Manager
 
         Return True
     End Function
-    Shared Sub Privileges(owner As Form, user_id As Integer)
+    Shared Function Privileges(user_id As Integer) As DataTable
         'Leer
         Dim dtab As DataTable = DbMan.ReadDB("SELECT * FROM usuarios WHERE id=" & user_id, My.Settings.CurrentDB)
         'Cargar
         My.Settings.delete_enabled = dtab.Rows(0)("delete_permission")
-        CtrlMan.LoadControlData(dtab, owner)
-    End Sub
+        Return dtab
+    End Function
 
     'Read MAC or CPU to identify user/computer
     Shared Function GetMacAddress() As String

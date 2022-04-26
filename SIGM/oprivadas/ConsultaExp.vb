@@ -19,7 +19,7 @@
 
     '-- EVENTOS UNICOS
 
-    Private Sub Consultar()
+    Private Sub Listar()
         With ControlBusqueda1
             If .vista.SelectedIndex > -1 Then
                 Dim dtab As New DataTable
@@ -47,12 +47,13 @@
         End With
     End Sub
     Private Sub Buscar() Handles ControlBusqueda1.CSearchClick
-        Consultar()
+        ControlBusqueda1.FilterSearch()
     End Sub
     Private Sub Reiniciar() Handles ControlBusqueda1.CResetClick
+        Listar()
     End Sub
-    Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVistaIndexTextChanged
-        Consultar()
+    Private Sub Vista_SelectedIndexChanged() Handles ControlBusqueda1.CVistaIndexTextChanged
+        Listar()
     End Sub
 
     Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles resultado.KeyUp
@@ -60,11 +61,11 @@
             If e.KeyValue = Keys.F2 Then
                 Dim source As DataRowView = DirectCast(resultado.DataSource, BindingSource).Current
                 If source Is Nothing = False Then
-                    Using mexp As New ModExpediente()
-                        mexp.exp = CInt(source("expediente"))
-                        mexp.ShowDialog()
-                    End Using
-                    ControlBusqueda1.search.PerformClick()
+                    Dim mexp As New ModExpediente()
+                    mexp.exp = CInt(source("expediente"))
+                    mexp.MdiParent = Me.MdiParent
+                    mexp.Show()
+                    Me.Close()
                 End If
             ElseIf e.KeyValue = Keys.Delete Then 'No implementado
                 'If Oprivadas.Expediente.eliminar(resultado.DataSource.Current("expediente_id")) Then

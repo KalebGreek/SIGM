@@ -79,7 +79,7 @@
         'Funciones de listado para evitar borrar expedientes accidentalmente
         Shared Function ListarPorResponsable(persona_id As Integer) As DataTable
             Dim sql(2) As String
-            sql(0) = "SELECT responsable_expediente.Id As id, expediente, per_id"
+            sql(0) = "SELECT responsable_expediente.Id As responsable_id, expediente, per_id"
             sql(1) = " FROM (persona INNER JOIN responsable_expediente On persona.id=responsable_expediente.per_id) 
                             INNER JOIN oprivadas On responsable_expediente.opr_id=oprivadas.id"
             sql(2) = " WHERE responsable_expediente.per_id=" & persona_id
@@ -120,7 +120,7 @@
                     If MsgBoxResult.No = MsgBox("¿Desea recuperar datos del último expediente no guardado?" &
                                                 " Presione Sí para recuperar, No para eliminar.",
                                                   MsgBoxStyle.YesNo, "Obras Privadas") Then
-                        LimpiarTemporal(dtab(0)("id"), True)
+                        LimpiarTemporal(dtab(0)("id"))
                     End If
                 Else
                     'Crear expediente por defecto
@@ -143,59 +143,120 @@
                          My.Settings.CurrentDB)
         End Sub
 
-        Shared Sub LimpiarTemporal(opr_id As Integer, Optional temp As Boolean = False)
+        Shared Sub LimpiarTemporal(opr_id As Integer)
             Dim dtab As DataTable
-            Dim sqlSelect As String = "SELECT id FROM oprivadas 
-                                        WHERE user_id=" & My.Settings.UserId & " And temporal=" & temp
-            Dim sqlDelete As String = "DELETE * FROM oprivadas 
-                                        WHERE user_id=" & My.Settings.UserId & " And temporal=" & temp
             If opr_id > 0 Then
+                Dim sqlSelect As String = "SELECT id FROM oprivadas 
+                                        WHERE user_id=" & My.Settings.UserId & " And temporal=True"
+                Dim sqlDelete As String = "DELETE * FROM oprivadas 
+                                        WHERE user_id=" & My.Settings.UserId & " And temporal=True"
+
                 sqlSelect += " AND id=" & opr_id
                 sqlDelete += " AND id=" & opr_id
+                dtab = DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB)
+                If dtab.Rows.Count > 0 Then
+                    ObrasPrivadas.Expediente.EliminarResponsable(opr_id)
+                    'Buscar inmuebles relacionados y eliminarlos
+                    'Catastro.eliminar(opr_id, inmuebles)
+                    DbMan.EditDB(sqlDelete, My.Settings.CurrentDB)
+                End If
             End If
-            dtab = DbMan.ReadDB(sqlSelect, My.Settings.CurrentDB)
-            If dtab.Rows.Count > 0 Then
-                LimpiarResponsable(opr_id)
-                'Buscar inmuebles relacionados y eliminarlos
-                'Catastro.eliminar(opr_id, inmuebles)
-            End If
-            DbMan.EditDB(sqlDelete, My.Settings.CurrentDB)
         End Sub
+
+        Public Class Validar
+            Shared Function Personas(bs_resp As BindingSource, profesional_id As Double) As List(Of String)
+                Dim msg As New List(Of String) From {"** PERSONAS **"}
+
+                If bs_resp.Count = 0 Then
+                    msg.Add("(×) Debe indicar al menos un responsable.")
+                End If
+                If profesional_id = 0 Then
+                    msg.Add("(×) Debe indicar un profesional a cargo.")
+                End If
+
+                Return msg
+            End Function
+            Shared Function Inmuebles(bs_catastro As BindingSource) As List(Of String)
+                Dim msg As New List(Of String) From {"** INMUEBLES **"}
+
+                If bs_catastro.Count = 0 Then
+                    msg.Add("(×) No se agregó un inmueble.")
+                End If
+
+                Return msg
+            End Function
+            Shared Function Expediente(tarea As ComboBox, tarea2 As ComboBox, inicio_obra As Date, recibe As Integer,
+                                        check_fin_obra As Boolean, fin_obra As Date, ruta_fin_obra As String) As List(Of String)
+                Dim msg As New List(Of String) From {"** EXPEDIENTE **"}
+
+                'Detalles de expediente
+                If tarea.SelectedIndex = -1 Then
+                    msg.Add("(×) Seleccione tarea.")
+                ElseIf tarea.Text = "MENSURA" And tarea2.SelectedIndex = -1 Then
+                    msg.Add("(×) Seleccione detalle de tarea de mensura.")
+                End If
+                If inicio_obra > Date.Today Then
+                    msg.Add("(×) La fecha de inicio de obra es inválida.")
+                End If
+                If recibe = -1 Then
+                    msg.Add("(×) Debe indicar quien recibe el expediente.")
+                End If
+                If check_fin_obra Then
+                    If fin_obra <= inicio_obra Then
+                        msg.Add("(×) La fecha de fin de de obra es inválida.")
+                    End If
+                    If ruta_fin_obra = "" Then
+                        msg.Add("(×) Cargar copia de certificado de Fin de Obra.")
+                    End If
+                End If
+
+                Return msg
+            End Function
+        End Class
 
         'Seccion Persona
-        Shared Sub AgregarResponsable(registro As DataTable, opr_id As Integer, ResponsablePrincipal As Integer)
-            Dim sqlInsert(registro.Rows.Count) As String
-            'Lee desde el bindingsource de Personas
-            For Each dr As DataRow In registro.Rows
-                sqlInsert(registro.Rows.IndexOf(dr)) = "INSERT INTO responsable_expediente(opr_id, per_id, principal)
+        Public Class Agregar
+            Shared Function Responsable(registro As DataTable, opr_id As Integer, ResponsablePrincipal As Integer) As Boolean
+                Dim sqlInsert(registro.Rows.Count - 1) As String
+                'Lee desde el bindingsource de Personas
+                For Each dr As DataRow In registro.Rows
+                    sqlInsert(registro.Rows.IndexOf(dr)) = "INSERT INTO responsable_expediente(opr_id, per_id, principal)
 									                         VALUES(" & opr_id & ", " & dr("persona_id").ToString & ",
 											                        " & CBool(dr("persona_id").ToString = ResponsablePrincipal) & ")"
-            Next
-            DbMan.EditDB(sqlInsert, My.Settings.CurrentDB)
-        End Sub
-        Shared Sub LimpiarResponsable(opr_id As Integer)
-            DbMan.EditDB("DELETE * FROM responsable_expediente WHERE opr_id=" & opr_id, My.Settings.CurrentDB)
-        End Sub
+                Next
+                Return DbMan.EditDB(sqlInsert, My.Settings.CurrentDB) > -1
+            End Function
 
-        Shared Sub ActualizarProfesional(opr_id As Integer, prof_id As Integer)
-            DbMan.EditDB("UPDATE oprivadas SET profesional_id=" & prof_id &
+            'Shared Sub LimpiarResponsables(opr_id As Integer)
+            '    DbMan.EditDB("DELETE * FROM responsable_expediente WHERE opr_id=" & opr_id, My.Settings.CurrentDB)
+            'End Sub
+
+            Shared Sub Profesional(opr_id As Integer, prof_id As Integer)
+                DbMan.EditDB("UPDATE oprivadas SET profesional_id=" & prof_id &
                          " WHERE id=" & opr_id, My.Settings.CurrentDB)
-        End Sub
+            End Sub
 
-        'Seccion Inmueble
+            'Seccion Inmueble
 
-        'Seccion Expediente
-        Shared Sub ActualizarDetalle(opr_id As Integer, inicio_obra As Date, visado As Boolean, fin_obra As Date,
+            'Seccion Expediente
+            Shared Sub Detalle(opr_id As Integer, inicio_obra As Date, visado As Boolean, fin_obra As Date,
                                  recibe As String, tarea As String, tarea2 As String, observaciones As String)
-            Dim sqlUpdate As String = "UPDATE oprivadas SET"
+                Dim sqlUpdate As String = "UPDATE oprivadas SET"
 
-            If visado Then
-                sqlUpdate += " fin_obra='" & fin_obra.ToShortDateString & "',"
-            End If
-            sqlUpdate += " inicio_obra='" & inicio_obra.ToShortDateString & "',  recibe='" & recibe & "', visado=" & visado & ",
+                If visado Then
+                    sqlUpdate += " fin_obra='" & fin_obra.ToShortDateString & "',"
+                End If
+                sqlUpdate += " inicio_obra='" & inicio_obra.ToShortDateString & "',  recibe='" & recibe & "', visado=" & visado & ",
                            tarea='" & tarea & "', tarea2='" & tarea2 & "', observaciones='" & observaciones & "'
                      WHERE id=" & opr_id
-            DbMan.EditDB(sqlUpdate, My.Settings.CurrentDB)
-        End Sub
+                DbMan.EditDB(sqlUpdate, My.Settings.CurrentDB)
+            End Sub
+        End Class
+        Overloads Shared Function EliminarResponsable(source As DataRow) As Boolean
+            Return DbMan.EditDB("DELETE * FROM responsable_expediente WHERE id=" & source("responsable_id"), My.Settings.CurrentDB) > -1
+        End Function
+        Overloads Shared Function EliminarResponsable(opr_id As Double) As Boolean
+            Return DbMan.EditDB("DELETE * FROM responsable_expediente WHERE opr_id=" & opr_id, My.Settings.CurrentDB) > -1
+        End Function
     End Class
 End Class

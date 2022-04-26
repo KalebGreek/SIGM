@@ -43,7 +43,7 @@ Public Class ConsultaContrato
     End Sub
 
     '-- EVENTOS UNICOS
-    Private Sub vista_SelectedIndexChanged() Handles GenSearchControl1.CVistaIndexTextChanged
+    Private Sub Vista_SelectedIndexChanged() Handles GenSearchControl1.CVistaIndexTextChanged
         With GenSearchControl1
             If .vista.SelectedIndex > -1 Then
                 BuscarContrato()
@@ -53,15 +53,15 @@ Public Class ConsultaContrato
             End If
         End With
     End Sub
-    Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles Me.KeyUp, resultado.KeyUp, GenSearchControl1.KeyUp
+    Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles resultado.KeyUp, GenSearchControl1.KeyUp
         If e.KeyValue = Keys.Enter And sender Is GenSearchControl1 Then
             GenSearchControl1.search.PerformClick()
-        ElseIf e.KeyValue = Keys.Delete Then
+        ElseIf e.KeyValue = Keys.Delete And sender Is resultado Then
             Dim source As DataRowView = bs_contrato.Current
-            If source Is Nothing = False Then
-                If DbMan.EditDB("DELETE * FROM contrato WHERE id=" & CInt(source("contrato_id")), My.Settings.CurrentDB) Then
-                    bs_contrato.RemoveCurrent()
-                End If
+            If source Is Nothing = False And
+               MsgBox("Desea borrar este contrato?", MsgBoxStyle.YesNo, "Eliminar Contrato") = MsgBoxResult.Yes And
+               DbMan.EditDB("DELETE * FROM contrato WHERE id=" & CInt(source("contrato_id")), My.Settings.CurrentDB) Then
+                GenSearchControl1.search.PerformClick()
             End If
         End If
 
@@ -74,8 +74,19 @@ Public Class ConsultaContrato
         BuscarContrato()
     End Sub
 
+    Private Sub SearchClick() Handles GenSearchControl1.CSearchClick, GenSearchControl1.CFiltroIndexTextChanged
+        If bs_contrato Is Nothing = False Then
+            GenSearchControl1.FilterSearch()
+            bs_contrato.Filter = GenSearchControl1.bsCustomFilter
+        Else
+            BuscarContrato()
+        End If
+    End Sub
+
+
+
     'RUTINAS
-    Private Sub BuscarContrato() Handles GenSearchControl1.CSearchClick
+    Private Sub BuscarContrato()
         Dim dtab As New DataTable
         With GenSearchControl1
             .filtro.DataSource = Nothing

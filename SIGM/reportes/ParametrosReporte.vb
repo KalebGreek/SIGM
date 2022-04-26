@@ -1,5 +1,4 @@
 ﻿Imports Microsoft.Reporting.WinForms
-Imports System.Collections.Generic
 Class ParametrosReporte
 
     'Genericos 

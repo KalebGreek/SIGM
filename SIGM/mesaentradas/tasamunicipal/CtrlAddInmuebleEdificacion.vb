@@ -1,5 +1,5 @@
-﻿Class ctrlAddInmuebleEdificacion
-    Public Event manage_edificacion(sender As Object, target As Object)
+﻿Class CtrlAddInmuebleEdificacion
+    Public Event Manage_edificacion(sender As Object, target As Object)
 
     Public Sub New(Optional DtabIndiceInmueble As DataTable = Nothing, Optional CanDeleteSelf As Boolean = True)
 
@@ -13,27 +13,27 @@
         agregar.Visible = CanDeleteSelf.CompareTo(True)
     End Sub
 
-    Private Sub ctlAddInmuebleEdificacion_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Private Sub CtlAddInmuebleEdificacion_Load(sender As Object, e As EventArgs) Handles Me.Load
         CtrlMan.Fill.SetAutoComplete(categoria, bs_categoria_inmueble, "descripcion", "indice")
     End Sub
 
-    Private Sub agregar_Click(sender As Object, e As EventArgs) Handles agregar.Click
-        RaiseEvent manage_edificacion(sender, Me)
+    Private Sub Agregar_Click(sender As Object, e As EventArgs) Handles agregar.Click
+        RaiseEvent Manage_edificacion(sender, Me)
     End Sub
 
-    Private Sub eliminar_Click(sender As Object, e As EventArgs) Handles eliminar.Click
-        RaiseEvent manage_edificacion(sender, Me)
+    Private Sub Eliminar_Click(sender As Object, e As EventArgs) Handles eliminar.Click
+        RaiseEvent Manage_edificacion(sender, Me)
     End Sub
 
-    Private Sub categoria_SelectedIndexChanged(sender As Object, e As EventArgs) Handles categoria.SelectedIndexChanged
-        RaiseEvent manage_edificacion(sender, Me)
+    Private Sub Categoria_SelectedIndexChanged(sender As Object, e As EventArgs) Handles categoria.SelectedIndexChanged
+        RaiseEvent Manage_edificacion(sender, Me)
     End Sub
 
-    Private Sub zona_SelectedIndexChanged(sender As Object, e As EventArgs)
-        RaiseEvent manage_edificacion(sender, Me)
+    Private Sub Zona_SelectedIndexChanged(sender As Object, e As EventArgs)
+        RaiseEvent Manage_edificacion(sender, Me)
     End Sub
 
-    Private Sub superficie_ValueChanged(sender As Object, e As EventArgs) Handles superficie.ValueChanged
-        RaiseEvent manage_edificacion(sender, Me)
+    Private Sub Superficie_ValueChanged(sender As Object, e As EventArgs) Handles superficie.ValueChanged
+        RaiseEvent Manage_edificacion(sender, Me)
     End Sub
 End Class

@@ -6,20 +6,20 @@
         ' Add any initialization after the InitializeComponent() call.
         ' CONEXION POR DEFECTO
         If My.Settings.CurrentDB <> "" Then
-			conexion_std.Text = My.Settings.CurrentDB
-		End If
+            conexion_std.Text = My.Settings.CurrentDB
+        End If
         ' CONEXION ACCESS
         If My.Settings.AdbConnection <> "" Then
-			conexion_acc.Text = My.Settings.AdbConnection
-		End If
+            conexion_acc.Text = My.Settings.AdbConnection
+        End If
         ' CONEXION FOX
         If My.Settings.foxConnection <> "" Then
-			conexion_fox.Text = My.Settings.foxConnection
-		End If
+            conexion_fox.Text = My.Settings.foxConnection
+        End If
         ' CONEXION PSQL
         If My.Settings.pgsqlCon_disabled <> "" Then
-			conexion_pgsql.Text = My.Settings.pgsqlCon_disabled
-		End If
+            conexion_pgsql.Text = My.Settings.pgsqlCon_disabled
+        End If
 
         CargarTablasExternas()
     End Sub
@@ -30,8 +30,8 @@
         CargarTablasExternas()
 
         RestablecerToolStripMenuItem.Enabled = False
-	End Sub
-	Private Sub CerrarToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CerrarSinGuardarToolStripMenuItem.Click
+    End Sub
+    Private Sub CerrarToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CerrarSinGuardarToolStripMenuItem.Click
         If MsgBox("¿Desea guardar los cambios?", MsgBoxStyle.YesNo, "Configuración") = MsgBoxResult.Yes Then
             'Guardar conexiones
             RestablecerToolStripMenuItem.Enabled = False
@@ -44,33 +44,33 @@
 
     ' VALIDACION
     Private Sub DetectarCambios() Handles conexion_std.TextChanged, conexion_acc.TextChanged,
-										  conexion_fox.TextChanged, conexion_pgsql.TextChanged,
-										  cata_cuentas.TextChanged, cata_historial.TextChanged,
-										  cata_personas.TextChanged, cata_vencimientos.TextChanged,
-										  come_actividades.TextChanged, come_cuentas.TextChanged,
-										  come_historial.TextChanged, come_personas.TextChanged,
-										  come_variables.TextChanged, come_vencimientos.TextChanged,
-										  auto_cuentas.TextChanged, auto_personas.TextChanged,
-										  auto_tipo.TextChanged, auto_vencimientos.TextChanged,
-										  agua_cuentas.TextChanged, agua_historial.TextChanged,
-										  agua_personas.TextChanged, agua_variables.TextChanged,
-										  agua_vencimientos.TextChanged,
-										  sepe_cuentas.TextChanged, sepe_historial.TextChanged,
-										  sepe_muertos.TextChanged, sepe_personas.TextChanged,
-										  sepe_variables.TextChanged
+                                          conexion_fox.TextChanged, conexion_pgsql.TextChanged,
+                                          cata_cuentas.TextChanged, cata_historial.TextChanged,
+                                          cata_personas.TextChanged, cata_vencimientos.TextChanged,
+                                          come_actividades.TextChanged, come_cuentas.TextChanged,
+                                          come_historial.TextChanged, come_personas.TextChanged,
+                                          come_variables.TextChanged, come_vencimientos.TextChanged,
+                                          auto_cuentas.TextChanged, auto_personas.TextChanged,
+                                          auto_tipo.TextChanged, auto_vencimientos.TextChanged,
+                                          agua_cuentas.TextChanged, agua_historial.TextChanged,
+                                          agua_personas.TextChanged, agua_variables.TextChanged,
+                                          agua_vencimientos.TextChanged,
+                                          sepe_cuentas.TextChanged, sepe_historial.TextChanged,
+                                          sepe_muertos.TextChanged, sepe_personas.TextChanged,
+                                          sepe_variables.TextChanged
 
-		RestablecerToolStripMenuItem.Enabled = True
-	End Sub
+        RestablecerToolStripMenuItem.Enabled = True
+    End Sub
 
     ' RUTINAS
-    Private Sub rutina_fecha_null_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Rutina_fecha_null_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
-		If MsgBoxResult.Yes = MsgBox("Esto reemplazara las fechas con valor NULL en la base de datos seleccionada." & Chr(13) &
-									 "ESTA OPERACION NO SE PUEDE DESHACER." & Chr(13) &
-									 "Desea continuar?", MsgBoxStyle.Critical, "Reparar fechas en tablas Fox") Then
-			RepararFechasNulas()
-		End If
-	End Sub
+        If MsgBoxResult.Yes = MsgBox("Esto reemplazara las fechas con valor NULL en la base de datos seleccionada." & Chr(13) &
+                                     "ESTA OPERACION NO SE PUEDE DESHACER." & Chr(13) &
+                                     "Desea continuar?", MsgBoxStyle.Critical, "Reparar fechas en tablas Fox") Then
+            RepararFechasNulas()
+        End If
+    End Sub
 
     Private Sub RepararFechasNulas()
         Dim d, m, y, cuenta, vence, pago, periodo As String
@@ -128,7 +128,7 @@
             For Each dr As DataRow In dtab.Rows
 
                 sqlUpdateList(dtab.Rows.IndexOf(dr)) = "UPDATE " & cuenta & " 
-                                                           SET " & vence & "=#" & Today.Day & "/" & Today.Month & "/" & dr(periodo).ToString & "#
+                                                           SET " & vence & "='" & Today.Day & "/" & Today.Month & "/" & dr(periodo).ToString & "'
                                                          WHERE codigo=" & dr("codigo").ToString & " AND " & vence & " IS NULL"
             Next
             DbMan.EditDB(sqlUpdateList, conexion_fox.Text)
@@ -223,7 +223,7 @@
         End Using
     End Sub
 
-	Private Sub DetectarCambios(sender As Object, e As EventArgs)
+    Private Sub DetectarCambios(sender As Object, e As EventArgs)
 
-	End Sub
+    End Sub
 End Class

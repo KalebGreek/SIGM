@@ -64,7 +64,7 @@
             End If
         End If
     End Sub
-    Private Sub bs_responsable_PositionChanged(sender As Object, e As EventArgs) Handles bs_responsable.PositionChanged,
+    Private Sub Bs_responsable_PositionChanged(sender As Object, e As EventArgs) Handles bs_responsable.PositionChanged,
                                                                                          bs_responsable.CurrentChanged
         If bs_responsable.Position > -1 Then
             cuil_responsable.Text = bs_responsable.Current("cuil").ToString
@@ -115,7 +115,7 @@
         End If
     End Sub
 
-    Private Sub vehiculo_CheckedChanged(sender As Object, e As EventArgs) Handles vehiculo.CheckedChanged
+    Private Sub Vehiculo_CheckedChanged(sender As Object, e As EventArgs) Handles vehiculo.CheckedChanged
         Combustible.Receptor.FillCategory(bs_categoria, categoria, vehiculo.Checked)
     End Sub
 
@@ -124,8 +124,8 @@
     Private Function SaveReceptor() As Boolean
         Dim saved As Boolean = False
         'Solo Access
-        Dim fecha_alta As String = Format(alta.Value, "MM/dd/yyyy") 'Access
-        Dim fecha_baja As String = Format(baja.Value, "MM/dd/yyyy") 'Access
+        'Dim fecha_alta As String = Format(alta.Value, "MM/dd/yyyy") 'Access
+        'Dim fecha_baja As String = Format(baja.Value, "MM/dd/yyyy") 'Access
         marca.Text = Trim(marca.Text)
         dominio.Text = Trim(dominio.Text)
         observaciones.Text = Trim(observaciones.Text)
@@ -137,7 +137,7 @@
 								     SET cuenta=" & cuenta.SelectedValue.ToString & ", categoria_id=" & categoria.SelectedValue.ToString & ",
 									     marca='" & marca.Text & "', mercosur=" & mercosur.Checked & ", 
 									     dominio='" & dominio.Text & "', modelo=" & modelo.Value & ", 
-									     alta=#" & fecha_alta & "#, baja=#" & fecha_baja & "#,
+									     alta='" & alta.Text & "', baja='" & baja.Text & "',
 									     observaciones='" & observaciones.Text & "'
 								   WHERE id=" & receptor_id.Text,
                                  My.Settings.CurrentDB)
@@ -151,7 +151,7 @@
 									   VALUES(" & cuenta.SelectedValue.ToString & ", 
 											  " & categoria.SelectedValue.ToString & ", '" & marca.Text & "',
                                               " & mercosur.Checked & ", '" & dominio.Text & "', 
-											  " & modelo.Value & ", #" & fecha_alta & "#,
+											  " & modelo.Value & ", '" & alta.Text & "',
 											 '" & observaciones.Text & "')",
                                 My.Settings.CurrentDB)
 
@@ -187,7 +187,7 @@
         SaveReceptor()
     End Sub
 
-    Private Sub cerrar_Click(sender As Object, e As EventArgs) Handles cerrar.Click
+    Private Sub Cerrar_Click(sender As Object, e As EventArgs) Handles cerrar.Click
         If MsgBoxResult.Yes = MsgBox("Desea guardar los cambios?", MsgBoxStyle.YesNo) Then
             If SaveReceptor() Then
                 Me.Close()
@@ -197,7 +197,7 @@
         End If
     End Sub
 
-    Private Sub mercosur_CheckedChanged(sender As Object, e As EventArgs) Handles mercosur.CheckedChanged
+    Private Sub Mercosur_CheckedChanged(sender As Object, e As EventArgs) Handles mercosur.CheckedChanged
         If mercosur.Checked Then
             dominio.MaxLength = 9
         Else

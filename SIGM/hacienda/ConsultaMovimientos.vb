@@ -38,7 +38,7 @@
         GrupoFiltro.Visible = ActivarFiltro.Checked
         ValidarConsulta()
     End Sub
-    Private Sub fecha_CheckedChanged(sender As Object, e As EventArgs) Handles fecha.CheckedChanged
+    Private Sub Fecha_CheckedChanged(sender As Object, e As EventArgs) Handles fecha.CheckedChanged
         inicio.Enabled = fecha.Checked
         final.Enabled = fecha.Checked
         keyword_movimis.Enabled = concepto.Checked
@@ -61,7 +61,7 @@
         End If
     End Sub
 
-    Private Sub inicio_ValueChanged(sender As Object, e As EventArgs) Handles inicio.ValueChanged
+    Private Sub Inicio_ValueChanged(sender As Object, e As EventArgs) Handles inicio.ValueChanged
         inicio.MaxDate = final.Value
         final.MinDate = inicio.Value
         ValidarConsulta()

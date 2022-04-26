@@ -22,9 +22,7 @@ Partial Class ModOrdenanza
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Me.grupo_codigo = New System.Windows.Forms.Panel()
-        Me.verificar = New System.Windows.Forms.Button()
         Me.codigo = New System.Windows.Forms.MaskedTextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.ordenanza_id = New System.Windows.Forms.TextBox()
@@ -35,21 +33,20 @@ Partial Class ModOrdenanza
         Me.Label1 = New System.Windows.Forms.Label()
         Me.fecha = New System.Windows.Forms.DateTimePicker()
         Me.cargar_doc = New System.Windows.Forms.Button()
-        Me.ruta_doc = New System.Windows.Forms.TextBox()
+        Me.ruta_copia = New System.Windows.Forms.TextBox()
         Me.concepto = New System.Windows.Forms.TextBox()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
-        Me.bs_registro = New System.Windows.Forms.BindingSource(Me.components)
+        Me.info = New System.Windows.Forms.Label()
         Me.grupo_codigo.SuspendLayout()
         Me.grupo_datos.SuspendLayout()
         Me.grupo_mod.SuspendLayout()
-        CType(Me.bs_registro, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'grupo_codigo
         '
         Me.grupo_codigo.BackColor = System.Drawing.Color.LightGray
-        Me.grupo_codigo.Controls.Add(Me.verificar)
+        Me.grupo_codigo.Controls.Add(Me.info)
         Me.grupo_codigo.Controls.Add(Me.codigo)
         Me.grupo_codigo.Controls.Add(Me.Label2)
         Me.grupo_codigo.Controls.Add(Me.ordenanza_id)
@@ -58,19 +55,6 @@ Partial Class ModOrdenanza
         Me.grupo_codigo.Name = "grupo_codigo"
         Me.grupo_codigo.Size = New System.Drawing.Size(520, 48)
         Me.grupo_codigo.TabIndex = 377
-        '
-        'verificar
-        '
-        Me.verificar.BackColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(70, Byte), Integer), CType(CType(70, Byte), Integer))
-        Me.verificar.FlatAppearance.BorderSize = 0
-        Me.verificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.verificar.ForeColor = System.Drawing.Color.White
-        Me.verificar.Location = New System.Drawing.Point(207, 9)
-        Me.verificar.Name = "verificar"
-        Me.verificar.Size = New System.Drawing.Size(110, 30)
-        Me.verificar.TabIndex = 20
-        Me.verificar.Text = "Verificar"
-        Me.verificar.UseVisualStyleBackColor = False
         '
         'codigo
         '
@@ -115,7 +99,7 @@ Partial Class ModOrdenanza
         Me.grupo_datos.Controls.Add(Me.Label1)
         Me.grupo_datos.Controls.Add(Me.fecha)
         Me.grupo_datos.Controls.Add(Me.cargar_doc)
-        Me.grupo_datos.Controls.Add(Me.ruta_doc)
+        Me.grupo_datos.Controls.Add(Me.ruta_copia)
         Me.grupo_datos.Controls.Add(Me.concepto)
         Me.grupo_datos.Controls.Add(Me.Label14)
         Me.grupo_datos.Controls.Add(Me.Label24)
@@ -190,32 +174,32 @@ Partial Class ModOrdenanza
         'cargar_doc
         '
         Me.cargar_doc.BackColor = System.Drawing.Color.Transparent
-        Me.cargar_doc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.cargar_doc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.cargar_doc.FlatAppearance.BorderSize = 0
-        Me.cargar_doc.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cargar_doc.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cargar_doc.ForeColor = System.Drawing.Color.White
+        Me.cargar_doc.Font = New System.Drawing.Font("Segoe MDL2 Assets", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cargar_doc.ForeColor = System.Drawing.Color.Black
         Me.cargar_doc.Location = New System.Drawing.Point(458, 43)
         Me.cargar_doc.Margin = New System.Windows.Forms.Padding(0)
         Me.cargar_doc.Name = "cargar_doc"
         Me.cargar_doc.Size = New System.Drawing.Size(32, 32)
         Me.cargar_doc.TabIndex = 50
+        Me.cargar_doc.Text = ""
         Me.cargar_doc.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.cargar_doc.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.cargar_doc.UseVisualStyleBackColor = False
         '
-        'ruta_doc
+        'ruta_copia
         '
-        Me.ruta_doc.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.ruta_doc.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower
-        Me.ruta_doc.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.ruta_doc.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
-        Me.ruta_doc.Location = New System.Drawing.Point(154, 46)
-        Me.ruta_doc.MaxLength = 512
-        Me.ruta_doc.Name = "ruta_doc"
-        Me.ruta_doc.ReadOnly = True
-        Me.ruta_doc.Size = New System.Drawing.Size(298, 27)
-        Me.ruta_doc.TabIndex = 40
+        Me.ruta_copia.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.ruta_copia.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower
+        Me.ruta_copia.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.ruta_copia.Font = New System.Drawing.Font("PF DinDisplay Pro", 12.0!)
+        Me.ruta_copia.Location = New System.Drawing.Point(154, 46)
+        Me.ruta_copia.MaxLength = 512
+        Me.ruta_copia.Name = "ruta_copia"
+        Me.ruta_copia.ReadOnly = True
+        Me.ruta_copia.Size = New System.Drawing.Size(298, 27)
+        Me.ruta_copia.TabIndex = 40
         '
         'concepto
         '
@@ -248,6 +232,15 @@ Partial Class ModOrdenanza
         Me.Label24.TabIndex = 376
         Me.Label24.Text = "Conceptos"
         '
+        'info
+        '
+        Me.info.AutoSize = True
+        Me.info.ForeColor = System.Drawing.Color.Red
+        Me.info.Location = New System.Drawing.Point(203, 13)
+        Me.info.Name = "info"
+        Me.info.Size = New System.Drawing.Size(0, 22)
+        Me.info.TabIndex = 377
+        '
         'ModOrdenanza
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
@@ -268,7 +261,6 @@ Partial Class ModOrdenanza
         Me.grupo_datos.ResumeLayout(False)
         Me.grupo_datos.PerformLayout()
         Me.grupo_mod.ResumeLayout(False)
-        CType(Me.bs_registro, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -276,17 +268,16 @@ Partial Class ModOrdenanza
     Friend WithEvents ordenanza_id As System.Windows.Forms.TextBox
     Friend WithEvents codigo As System.Windows.Forms.MaskedTextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents verificar As System.Windows.Forms.Button
     Friend WithEvents grupo_datos As System.Windows.Forms.Panel
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents fecha As System.Windows.Forms.DateTimePicker
     Friend WithEvents cargar_doc As System.Windows.Forms.Button
-    Friend WithEvents ruta_doc As System.Windows.Forms.TextBox
+    Friend WithEvents ruta_copia As System.Windows.Forms.TextBox
     Friend WithEvents concepto As System.Windows.Forms.TextBox
     Friend WithEvents Label14 As System.Windows.Forms.Label
     Friend WithEvents Label24 As System.Windows.Forms.Label
     Friend WithEvents grupo_mod As System.Windows.Forms.FlowLayoutPanel
     Friend WithEvents Cancelar As System.Windows.Forms.Button
     Friend WithEvents GuardarCambios As System.Windows.Forms.Button
-    Friend WithEvents bs_registro As BindingSource
+    Friend WithEvents info As Label
 End Class

@@ -62,7 +62,7 @@ Class CertificadoLibreDeuda
         End If
     End Sub
 
-    Private Sub servicio_SelectedIndexChanged(sender As Object, e As EventArgs) Handles servicio.SelectedIndexChanged
+    Private Sub Servicio_SelectedIndexChanged(sender As Object, e As EventArgs) Handles servicio.SelectedIndexChanged
         et_cuenta.Visible = (servicio.SelectedIndex > -1)
         Cuenta.Visible = (servicio.SelectedIndex > -1)
         et_razon.Visible = (servicio.SelectedIndex > -1)

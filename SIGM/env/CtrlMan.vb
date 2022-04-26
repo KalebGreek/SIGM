@@ -1,5 +1,4 @@
 ﻿Imports System.Reflection
-Imports Sigm.CtrlMan
 Class CtrlMan 'Control Manager
     '###### VENTANAS
     'Impedir creación de ventanas que deben abrirse una sola vez en el formulario MDI
@@ -115,7 +114,7 @@ Class CtrlMan 'Control Manager
             ElseIf Len(c.Text) < 3 Then
                 c.Tag = "Nombre demasiado corto."
             ElseIf Val(c.Text) > 0 Then
-                c.Tag = "No puede ingresar numeros en el nombre."
+                c.Tag = "No puede ingresar números en el nombre."
             End If
         ElseIf c.Name = "email" Then
             If Len(c.Text) < 1 Then
@@ -123,7 +122,20 @@ Class CtrlMan 'Control Manager
             ElseIf Len(c.Text) < 7 Then 'a@a.ar
                 c.Tag = "E-mail demasiado corto."
             ElseIf c.Text.Contains("@") = False Or c.Text.Contains(".") = False Then
-                c.Tag = "E-mail no valido."
+                c.Tag = "E-mail no válido."
+            End If
+        ElseIf c.Name = "concepto" Then
+            If Len(c.Text) < 1 Then
+                c.Tag = "Ingrese concepto."
+            End If
+            If Len(c.Text) < 8 Then
+                c.Tag = "Descripción de concepto demasiado corta."
+            End If
+        ElseIf c.Name = "ruta" Then
+            If Len(c.Text) < 1 Then
+                c.Tag = "No se cargó un archivo."
+            ElseIf Len(c.Text) < 8 Then 'c:\a.pdf
+                c.Tag = "Ruta de acceso al archivo inválida."
             End If
         End If
     End Sub
@@ -169,7 +181,7 @@ Class CtrlMan 'Control Manager
         End If
     End Sub
 
-    'Add Events from a Menu to one function
+    'Add Events from a Menu to one function or procedure
     Overloads Shared Sub AddMenuEvents(m As MenuStrip, ByRef s As EventHandler)
         For Each i As Object In m.Items
             If TypeOf i Is ToolStripMenuItem Then
@@ -190,7 +202,13 @@ Class CtrlMan 'Control Manager
             End If
         Next
     End Sub
-
+    Overloads Shared Sub AddMenuEvents(m As FlowLayoutPanel, ByRef s As EventHandler)
+        For Each c As Control In m.Controls
+            If TypeOf c Is Button Then
+                AddHandler CType(c, Button).Click, s
+            End If
+        Next
+    End Sub
 
     'LOAD ALL THE CONTROLS!!!!1ONE
     Overloads Shared Function LoadControlData(drView As DataRowView, ByVal target As Object) As Object
@@ -201,8 +219,10 @@ Class CtrlMan 'Control Manager
     End Function
     Overloads Shared Function LoadControlData(dtab As DataTable, ByVal target As Object) As Object
         'Only loads the first row of the datatable
-        If dtab Is Nothing = False And dtab.Rows.Count > 0 Then
-            target = LoadControls(dtab.Rows.Item(0), target)
+        If dtab Is Nothing = False Then
+            If dtab.Rows.Count > 0 Then
+                target = LoadControls(dtab.Rows.Item(0), target)
+            End If
         End If
         Return target
     End Function
@@ -269,8 +289,7 @@ Class CtrlMan 'Control Manager
         ''' <param name="bsFilter">SQL-like filter that is being applied to the BindingSource.</param>
 
         Overloads Shared Sub Load(ByRef TargetVisor As DataGridView,
-                                  ByRef bs As BindingSource, Optional bsFilter As String = "",
-                                  Optional BindNavigator As BindingNavigator = Nothing)
+                                  ByRef bs As BindingSource, Optional bsFilter As String = "")
 
             SetDoubleBuffered(TargetVisor)
             TargetVisor.SuspendLayout()
@@ -537,7 +556,7 @@ Class CtrlMan 'Control Manager
                     target.Maximum = bsMaxValue
                     target.Value = bsMinValue
                 End If
-                End If
+            End If
             target.Update()
 
             Return target

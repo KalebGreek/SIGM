@@ -1,69 +1,69 @@
 ﻿Public Class ConsultaAdelanto
-	Public Sub New()
+    Public Sub New()
 
-		' This call is required by the designer.
-		InitializeComponent()
+        ' This call is required by the designer.
+        InitializeComponent()
 
-		' Add any initialization after the InitializeComponent() call.
-		GenSearchControl1.vista.Items.AddRange(New Object() {"ADELANTO"})
-	End Sub
+        ' Add any initialization after the InitializeComponent() call.
+        GenSearchControl1.vista.Items.AddRange(New Object() {"ADELANTO"})
+    End Sub
 
-	Public Sub Consultar() Handles GenSearchControl1.CSearchClick
-		bs_resultado.Filter = GenSearchControl1.bsCustomFilter
-	End Sub
+    Public Sub Consultar() Handles GenSearchControl1.CSearchClick
+        bs_resultado.Filter = GenSearchControl1.bsCustomFilter
+    End Sub
 
-	'-- EVENTOS UNICOS
-	Private Sub vista_SelectedIndexChanged() Handles GenSearchControl1.CVistaIndexTextChanged
-		With GenSearchControl1
-			If .vista.SelectedIndex > -1 Then
-				.filtro.DataSource = Nothing
-				If .vista.Text = "ADELANTO" Then
-					Dim dtab As DataTable = DbMan.ReadDB("SELECT hac_adelanto.id as id, persona.razon, persona.cuil, 
+    '-- EVENTOS UNICOS
+    Private Sub Vista_SelectedIndexChanged() Handles GenSearchControl1.CVistaIndexTextChanged
+        With GenSearchControl1
+            If .vista.SelectedIndex > -1 Then
+                .filtro.DataSource = Nothing
+                If .vista.Text = "ADELANTO" Then
+                    Dim dtab As DataTable = DbMan.ReadDB("SELECT hac_adelanto.id as id, persona.razon, persona.cuil, 
 																   hac_adelanto.persona_id, hac_adelanto.fecha, hac_adelanto.monto,
 																   persona.email, persona.telefono										 
 															FROM hac_adelanto INNER JOIN persona ON hac_adelanto.persona_id=persona.id",
-														 My.Settings.CurrentDB)
+                                                         My.Settings.CurrentDB)
 
-					If dtab.Rows.Count > 0 Then
-						bs_resultado.DataSource = dtab
+                    If dtab.Rows.Count > 0 Then
+                        bs_resultado.DataSource = dtab
 
-						Dim bs_ColumnList As New BindingSource _
-							With {.DataSource = CtrlMan.Fill.GetColumnList(dtab.Columns)}
-						CtrlMan.Fill.SetAutoComplete(GenSearchControl1.filtro, bs_ColumnList, "ColumnName", "DataType")
-						CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, GenSearchControl1.bsCustomFilter)
-						GenSearchControl1.filtro.SelectedIndex = -1
-					End If
-				End If
-				If bs_resultado.Count = 0 Then
-					bs_resultado.Add("No hay resultados.")
-				End If
-			Else
-				.reset_search.PerformClick()
-			End If
-		End With
-	End Sub
-	Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles Me.KeyUp, resultado.KeyUp, GenSearchControl1.KeyUp
-		If e.KeyValue = Keys.Enter And sender Is GenSearchControl1 Then
-			GenSearchControl1.search.PerformClick()
-		ElseIf e.KeyValue = Keys.F2 Then
-			Using madel As New ModAdelanto
-				madel.ShowDialog(Me)
-			End Using
-		ElseIf e.KeyValue = Keys.Delete Then
-			Dim source As DataRowView = bs_resultado.Current
-			If source Is Nothing = False Then
-				If DbMan.EditDB("DELETE * FROM hac_adelanto WHERE id=" & CInt(source("id")), My.Settings.CurrentDB) Then
-					bs_resultado.RemoveCurrent()
-				End If
-			End If
-		End If
-	End Sub
-	Private Sub Close_Search() Handles GenSearchControl1.CSelect, GenSearchControl1.CCancel
-		Me.Close()
-	End Sub
-	Private Sub Me_Closed(sender As Object, e As EventArgs) Handles Me.Closed
-		If GenSearchControl1.RowSelected = False Then
-			bs_resultado.DataSource = Nothing
-		End If
-	End Sub
+                        Dim bs_ColumnList As New BindingSource _
+                            With {.DataSource = CtrlMan.Fill.GetColumnList(dtab.Columns)}
+                        CtrlMan.Fill.SetAutoComplete(GenSearchControl1.filtro, bs_ColumnList, "ColumnName", "DataType")
+                        CtrlMan.DataGridViewTools.Load(resultado, bs_resultado, GenSearchControl1.bsCustomFilter)
+                        GenSearchControl1.filtro.SelectedIndex = -1
+                    End If
+                End If
+                If bs_resultado.Count = 0 Then
+                    bs_resultado.Add("No hay resultados.")
+                End If
+            Else
+                .reset_search.PerformClick()
+            End If
+        End With
+    End Sub
+    Private Sub KeyShortcuts(sender As Object, e As KeyEventArgs) Handles Me.KeyUp, resultado.KeyUp, GenSearchControl1.KeyUp
+        If e.KeyValue = Keys.Enter And sender Is GenSearchControl1 Then
+            GenSearchControl1.search.PerformClick()
+        ElseIf e.KeyValue = Keys.F2 Then
+            Using madel As New ModAdelanto
+                madel.ShowDialog(Me)
+            End Using
+        ElseIf e.KeyValue = Keys.Delete Then
+            Dim source As DataRowView = bs_resultado.Current
+            If source Is Nothing = False Then
+                If DbMan.EditDB("DELETE * FROM hac_adelanto WHERE id=" & CInt(source("id")), My.Settings.CurrentDB) Then
+                    bs_resultado.RemoveCurrent()
+                End If
+            End If
+        End If
+    End Sub
+    Private Sub Close_Search() Handles GenSearchControl1.CSelect, GenSearchControl1.CCancel
+        Me.Close()
+    End Sub
+    Private Sub Me_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        If GenSearchControl1.RowSelected = False Then
+            bs_resultado.DataSource = Nothing
+        End If
+    End Sub
 End Class

@@ -1,44 +1,44 @@
 ﻿Public Class ModCombustible
-	Private Sub Me_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
-		If Me.Visible Then
-			FillReceptor()
-		End If
-	End Sub
+    Private Sub Me_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+        If Me.Visible Then
+            FillReceptor()
+        End If
+    End Sub
 
     '###### FILTROS  
     Private Sub Filtros_CheckedChanged(sender As Object, e As EventArgs) Handles FiltroCuenta.CheckedChanged,
-																				  FiltroCategoria.CheckedChanged,
-																				  FiltroReceptor.CheckedChanged
+                                                                                  FiltroCategoria.CheckedChanged,
+                                                                                  FiltroReceptor.CheckedChanged
 
-		If Me.Visible Then
-			cuenta.Enabled = FiltroCuenta.Checked
-			categoria.Enabled = FiltroCategoria.Checked
-			vehiculo.Enabled = FiltroCategoria.Checked
-			receptor.Enabled = FiltroReceptor.Checked
+        If Me.Visible Then
+            cuenta.Enabled = FiltroCuenta.Checked
+            categoria.Enabled = FiltroCategoria.Checked
+            vehiculo.Enabled = FiltroCategoria.Checked
+            receptor.Enabled = FiltroReceptor.Checked
 
-			Hacienda.FillCuentasHacienda(bs_cuenta, cuenta, 2, "9", "1", "1", "2", "01")
+            Hacienda.FillCuentasHacienda(bs_cuenta, cuenta, 2, "9", "1", "1", "2", "01")
 
-			Combustible.Receptor.FillCategory(bs_categoria, categoria, vehiculo.Checked)
+            Combustible.Receptor.FillCategory(bs_categoria, categoria, vehiculo.Checked)
 
 
-		End If
-	End Sub
+        End If
+    End Sub
 
-	Private Sub vehiculo_CheckedChanged(sender As Object, e As EventArgs) Handles vehiculo.CheckedChanged
-		If Me.Visible And categoria.Enabled Then
-			Combustible.Receptor.FillCategory(bs_categoria, categoria, vehiculo.Checked)
-		End If
-	End Sub
+    Private Sub Vehiculo_CheckedChanged(sender As Object, e As EventArgs) Handles vehiculo.CheckedChanged
+        If Me.Visible And categoria.Enabled Then
+            Combustible.Receptor.FillCategory(bs_categoria, categoria, vehiculo.Checked)
+        End If
+    End Sub
 
-	Private Sub bs_filtro_PositionChanged(sender As Object, e As EventArgs) Handles bs_categoria.PositionChanged, bs_cuenta.PositionChanged,
-																					bs_categoria.CurrentChanged, bs_cuenta.CurrentChanged
-		If Me.Visible Then
-			FillReceptor()
-		End If
-	End Sub
+    Private Sub Bs_filtro_PositionChanged(sender As Object, e As EventArgs) Handles bs_categoria.PositionChanged, bs_cuenta.PositionChanged,
+                                                                                    bs_categoria.CurrentChanged, bs_cuenta.CurrentChanged
+        If Me.Visible Then
+            FillReceptor()
+        End If
+    End Sub
 
-	Private Sub bs_receptor_PositionChanged(sender As Object, e As EventArgs) Handles bs_receptor.PositionChanged, bs_receptor.CurrentChanged
-		If Me.Visible Then
+    Private Sub Bs_receptor_PositionChanged(sender As Object, e As EventArgs) Handles bs_receptor.PositionChanged, bs_receptor.CurrentChanged
+        If Me.Visible Then
             CtrlMan.DataGridViewTools.Load(historial, Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
         End If
     End Sub
@@ -94,7 +94,7 @@
 
     '###### TICKETS ##########################################################################################
 
-    Private Sub bs_historial_PositionChanged(sender As Object, e As EventArgs) Handles bs_historial.PositionChanged
+    Private Sub Bs_historial_PositionChanged(sender As Object, e As EventArgs) Handles bs_historial.PositionChanged
         EditTicket.Enabled = bs_historial.Position > -1
         DelTicket.Enabled = bs_historial.Position > -1
     End Sub
@@ -122,8 +122,8 @@
                 bs_historial.RemoveCurrent()
                 CtrlMan.DataGridViewTools.Load(historial, Combustible.Ticket.Find(bs_receptor.Current("receptor_id")))
             End If
-		End If
-	End Sub
+        End If
+    End Sub
 
-	'###### VALIDAR ##########################################################################################
+    '###### VALIDAR ##########################################################################################
 End Class

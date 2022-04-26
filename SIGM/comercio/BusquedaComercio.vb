@@ -20,7 +20,7 @@ Public Class BusquedaComercio
 
 
     '-- EVENTOS UNICOS
-    Private Sub vista_SelectedIndexChanged() Handles ControlBusqueda1.CVistaIndexTextChanged
+    Private Sub Vista_SelectedIndexChanged() Handles ControlBusqueda1.CVistaIndexTextChanged
         If ControlBusqueda1.vista.SelectedIndex > -1 Then
             Dim consulta As String = ControlBusqueda1.vista.Text
             Dim sqlSelect As String = ""

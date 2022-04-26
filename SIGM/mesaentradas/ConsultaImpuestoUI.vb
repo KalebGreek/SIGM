@@ -7,8 +7,8 @@
     End Sub
 
     '###### GUI - EVENTOS #############################################################################################
-    Private Sub f1_impuesto_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles F1Servicio.SelectedIndexChanged
-        tablas_fox(F1Servicio.Text)
+    Private Sub F1_impuesto_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles F1Servicio.SelectedIndexChanged
+        Tablas_Fox(F1Servicio.Text)
         With F4CampoClave
             .Items.Clear()
             If F1Servicio.SelectedIndex >= 0 Then
@@ -25,7 +25,7 @@
         End With
     End Sub
     '--------------------------
-    Private Sub mostrar_filtro1b_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles F2Mostrar.CheckedChanged
+    Private Sub Mostrar_filtro1b_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles F2Mostrar.CheckedChanged
         With F2Mostrar
             grupo_deuda_total.Enabled = .Checked
             grupo_deuda_total.Visible = .Checked
@@ -41,7 +41,7 @@
             End If
         End With
     End Sub
-    Private Sub filtro1b_opcion1_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles F2DeudaTotal.SelectedIndexChanged
+    Private Sub Filtro1b_opcion1_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles F2DeudaTotal.SelectedIndexChanged
         F2Minimo.Enabled = True
         F2Maximo.Enabled = True
         If F2DeudaTotal.SelectedIndex = 1 Then
@@ -52,14 +52,14 @@
             F2Maximo.Value = F2Minimo.Value
         End If
     End Sub
-    Private Sub filtro1b_desde_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles F2Minimo.ValueChanged
+    Private Sub Filtro1b_desde_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles F2Minimo.ValueChanged
         With F2Minimo
             If .Value > F2Maximo.Value Then
                 F2Maximo.Value = .Value
             End If
         End With
     End Sub
-    Private Sub filtro1b_hasta_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles F2Maximo.ValueChanged
+    Private Sub Filtro1b_hasta_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles F2Maximo.ValueChanged
         With F2Maximo
             If F2Minimo.Value > .Value Then
                 F2Minimo.Value = .Value
@@ -67,7 +67,7 @@
         End With
     End Sub
     '--------------------------
-    Private Sub mostrar_filtro2_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles F3Mostrar.CheckedChanged
+    Private Sub Mostrar_filtro2_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles F3Mostrar.CheckedChanged
         With F3Mostrar
             F3AñoMinimo.Enabled = .Checked
             Label1.Enabled = .Checked
@@ -77,7 +77,7 @@
         End With
     End Sub
     '--------------------------
-    Private Sub mostrar_filtro3_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles F4Mostrar.CheckedChanged
+    Private Sub Mostrar_filtro3_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles F4Mostrar.CheckedChanged
         With F4Mostrar
             F4CampoClave.Enabled = .Checked
             F4ValorClave.Enabled = .Checked
@@ -90,13 +90,13 @@
     '--------------------------
 
     '#### VENCIMIENTOS ################################
-    Private Sub filtro2_año1_ValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles F3AñoMinimo.ValueChanged
+    Private Sub Filtro2_año1_ValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles F3AñoMinimo.ValueChanged
         If F3AñoMinimo.Value > F3AñoMaximo.Value And F3AñoMaximo.Enabled = True Then
             F3AñoMinimo.Value -= 1
         End If
         CtrlVenc1.Listar(F3AñoMinimo.Value, F3AñoMaximo.Value, F3Mostrar.Checked, F1Servicio.Text)
     End Sub
-    Private Sub filtro2_año2_ValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles F3AñoMaximo.ValueChanged
+    Private Sub Filtro2_año2_ValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles F3AñoMaximo.ValueChanged
         If F3AñoMinimo.Value > F3AñoMaximo.Value Then
             F3AñoMaximo.Value += 1
         End If
@@ -156,7 +156,7 @@
     '#### RUTINAS ################################
 
 
-    Private Sub reset_impuesto()
+    Private Sub Reset_impuesto()
         '## RESET GENERAL
         F1Deudor.Checked = True
         F2Mostrar.Checked = False

@@ -1,7 +1,7 @@
-﻿Class tabPersona2Domicilio
+﻿Class TabPersona2Domicilio
     Inherits System.Windows.Forms.UserControl
 
-    Dim PersonaId As Integer
+    Property PersonaId As Integer
 
     Public Sub New(PerId As Integer)
 

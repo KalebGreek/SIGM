@@ -1,6 +1,4 @@
-﻿Imports System.ComponentModel
-
-Public Class ConsultaPersona
+﻿Public Class ConsultaPersona
     Public SelectPerson As Boolean = False
     Public PersonSelected As DataRowView = Nothing
     Private bs_resultado As BindingSource = Nothing
@@ -85,12 +83,12 @@ Public Class ConsultaPersona
             End If
             'Setting up views
             genSearchControl1.vista.Items.AddRange(New Object() {"PERSONA", "EMPLEADO", "PROFESIONAL", "PROVEEDOR"})
-                genSearchControl1.selectRow.Visible = SelectPerson
-                genSearchControl1.cancel.Visible = SelectPerson
-                genSearchControl1.vista.SelectedIndex = 0 'First option
-                genSearchControl1.filtro.SelectedIndex = 1 'Razon
+            genSearchControl1.selectRow.Visible = SelectPerson
+            genSearchControl1.cancel.Visible = SelectPerson
+            genSearchControl1.vista.SelectedIndex = 0 'First option
+            genSearchControl1.filtro.SelectedIndex = 1 'Razon
 
-            End If
+        End If
     End Sub
     Public Sub SearchClick() Handles genSearchControl1.CSearchClick, genSearchControl1.CFiltroIndexTextChanged
         If bs_resultado Is Nothing = False Then

@@ -1,7 +1,6 @@
 ﻿Imports Microsoft.Reporting.WinForms
-Imports System.Collections.Generic
 Public Class ConsultaIntimaciones
-    Dim PaletaIntimaciones As New List(Of Color)
+    Property PaletaIntimaciones As New List(Of Color)
 
     Public Sub New()
         ' This call is required by the designer.

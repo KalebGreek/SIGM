@@ -285,10 +285,10 @@
     <Compile Include="env\genericForms\GenModDialog.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="env\genericForms\SQLConsole.Designer.vb">
+    <Compile Include="env\SQLConsole.Designer.vb">
       <DependentUpon>SQLConsole.vb</DependentUpon>
     </Compile>
-    <Compile Include="env\genericForms\SQLConsole.vb">
+    <Compile Include="env\SQLConsole.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="env\genericQueries\GenSearchControl.Designer.vb">
@@ -310,6 +310,7 @@
     <Compile Include="env\menus\GobiernoMenu.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="gobierno\Ordenanza.vb" />
     <Compile Include="hacienda\Adelanto\AdelantoPage1.Designer.vb">
       <DependentUpon>AdelantoPage1.vb</DependentUpon>
     </Compile>
@@ -453,10 +454,10 @@
     <Compile Include="mesaentradas\ModIntimaciones.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="gobierno\ModEmpleado.Designer.vb">
+    <Compile Include="hacienda\ModEmpleado.Designer.vb">
       <DependentUpon>ModEmpleado.vb</DependentUpon>
     </Compile>
-    <Compile Include="gobierno\ModEmpleado.vb">
+    <Compile Include="hacienda\ModEmpleado.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="mesaentradas\ConsultaImpuesto.vb" />
@@ -776,7 +777,7 @@
     <EmbeddedResource Include="env\genericForms\GenModDialog.resx">
       <DependentUpon>GenModDialog.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="env\genericForms\SQLConsole.resx">
+    <EmbeddedResource Include="env\SQLConsole.resx">
       <DependentUpon>SQLConsole.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="env\genericQueries\GenSearchControl.resx">
@@ -857,7 +858,7 @@
     <EmbeddedResource Include="hacienda\ConsultaEmpleado.resx">
       <DependentUpon>ConsultaEmpleado.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="gobierno\ModEmpleado.resx">
+    <EmbeddedResource Include="hacienda\ModEmpleado.resx">
       <DependentUpon>ModEmpleado.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="hacienda\Combustibles\ModCombustible.resx">

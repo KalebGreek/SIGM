@@ -1,6 +1,6 @@
 ﻿Class ModIntimaciones
 
-    Public pageCount As Integer = 1
+    Public PageCount As Integer = 1
 
     Public Sub New(serv As String, cod As Integer)
         ' This call is required by the designer.
@@ -14,7 +14,7 @@
     End Sub
 
     ' GUI
-    Private Sub buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
+    Private Sub Buscar_Click(sender As Object, e As EventArgs) Handles buscar.Click
         razon.Text = Trim(BuscarContribuyente(codigo.Text))
     End Sub
 
@@ -62,7 +62,7 @@
         Listar(servicio.Text, codigo.Text)
     End Sub
 
-    Private Sub codigo_KeyUp(sender As Object, e As KeyEventArgs) Handles codigo.KeyUp
+    Private Sub Codigo_KeyUp(sender As Object, e As KeyEventArgs) Handles codigo.KeyUp
         If e.KeyValue = Keys.Enter Then
             razon.Text = Trim(BuscarContribuyente(codigo.Text))
         End If
@@ -102,7 +102,7 @@
         End If
     End Sub
 
-    Private Sub visor_intimaciones_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles visor_intimaciones.CellContentDoubleClick
+    Private Sub Visor_intimaciones_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles visor_intimaciones.CellContentDoubleClick
         Dim source As DataRowView = bs_intimaciones.Current
         If source Is Nothing = False Then
             MsgBox("Ingreso:" & source("ingreso").ToString & Chr(13) _
